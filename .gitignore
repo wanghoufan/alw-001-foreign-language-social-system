@@ -37,6 +37,9 @@ secrets.*
 *.sqlite
 *.sqlite3
 *.db
+/temp/
+/学习资料/
+/SocialMate-Data/
 .tmp/
 .cache_busting/
 
