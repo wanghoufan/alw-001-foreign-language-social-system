@@ -1,5 +1,7 @@
 # 外语社交系统（ALW-001）
 
+[English](./README.en.md)
+
 Local-first 社交知识库 MVP。数据使用项目内独立目录中的 Markdown 文件；本地服务仅监听 `127.0.0.1`，无外部依赖、账号、云端同步或 AI API。
 
 ## 本机运行
