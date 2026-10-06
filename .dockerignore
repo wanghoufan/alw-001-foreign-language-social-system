@@ -1,0 +1,15 @@
+.git
+.gitignore
+.env
+.env.*
+!.env.example
+SocialMate-Data
+DockerData
+DockerBackups
+node_modules
+coverage
+test
+scripts
+*.log
+*.tmp
+.DS_Store

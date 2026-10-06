@@ -7,7 +7,7 @@ import { fileURLToPath } from 'node:url';
 const ROOT = path.dirname(fileURLToPath(import.meta.url));
 export const DATA_DIR = path.resolve(process.env.SOCIALMATE_DATA_DIR || path.join(ROOT, 'SocialMate-Data'));
 const PORT = Number(process.env.PORT || 4173);
-const HOST = '127.0.0.1';
+const HOST = process.env.HOST || '127.0.0.1';
 const MAX_BODY = 1024 * 1024;
 
 const send = (res, status, value, type = 'application/json; charset=utf-8') => {

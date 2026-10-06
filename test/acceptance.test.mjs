@@ -49,7 +49,7 @@ test('Test D — National Day topic has before/during/after and requested varian
 test('Test E — Live practice prompt defines Haikou gym, level, timing and debrief',async()=>{
   const html=await (await fetch(base+'/')).text();
   assert.match(html,/option>海口健身房/);assert.match(html,/Level \$\{level\.n\} · \$\{level\.short\}/);
-  for(const s of ['10分钟','真人','第一次认识的外国女生','结束练习','中文复盘','预测任何真实人物的反应'])assert.ok(html.includes(s),s);
+  for(const s of ['10分钟','结束练习','预测任何真实人物的反应','可下载的 .md 文件','oral_practice_session','对话转录','理解与回应','表达问题与自然说法','互动节奏与追问分享','值得复用的表达','下次练习目标','不确定或无法判断的部分','SocialMate-Data/Practice/Sessions/','8位随机十六进制标识','Asia/Shanghai','不得补造'])assert.ok(html.includes(s),s);
   for(const s of ["n:1,short:'很友好'","n:2,short:'正常交流'","n:3,short:'稍微冷淡'","n:4,short:'嘈杂酒吧'","n:5,short:'自由实战'",'怎么选','会主动提问、接话','偶尔有自然停顿','回答较短','酒吧噪声','不照顾你的练习节奏','levelSelect.onchange=updateLevel','level.desc'])assert.ok(html.includes(s),s);
 });
 test('Test F — restart keeps person, interaction and topic files on disk',async()=>{
