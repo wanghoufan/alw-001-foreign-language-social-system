@@ -4,13 +4,11 @@
 
 Local-first 社交知识库 MVP：准备聊天话题、按场景练口语、把真实交流整理成人物档案，数据全部保存在你自己的 Markdown 文件里。本地服务仅监听 `127.0.0.1`，无外部依赖、账号、云端同步或 AI API。
 
-<p align="center">
-  <img src="assets/home.png" alt="首页：左侧功能导航，右侧内容区" width="420">
-  <img src="assets/topics.png" alt="话题库：左侧话题列表与搜索，右侧阅读区" width="420">
-</p>
-<p align="center">
-  <img src="assets/practice.png" alt="口语练习：场景与难度选择，生成练习提示词" width="420">
-</p>
+![首页：左侧功能导航，右侧内容区](assets/home.png)
+
+![话题库：左侧话题列表与搜索，右侧阅读区](assets/topics.png)
+
+![口语练习：场景与难度选择，生成练习提示词](assets/practice.png)
 
 ## 它能做什么
 

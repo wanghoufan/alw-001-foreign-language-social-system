@@ -8,13 +8,11 @@ profiles — all stored as plain Markdown files you own. The local server listen
 only on `127.0.0.1` (your own machine). There are no external dependencies, no
 accounts, no cloud sync, and no AI API calls.
 
-<p align="center">
-  <img src="assets/home.png" alt="Home: left navigation sidebar, right content area" width="420">
-  <img src="assets/topics.png" alt="Topics: searchable list on the left, reading pane on the right" width="420">
-</p>
-<p align="center">
-  <img src="assets/practice.png" alt="Speaking practice: scenario and difficulty selection with prompt generation" width="420">
-</p>
+![Home: left navigation sidebar, right content area](assets/home.png)
+
+![Topics: searchable list on the left, reading pane on the right](assets/topics.png)
+
+![Speaking practice: scenario and difficulty selection with prompt generation](assets/practice.png)
 
 ## What it does
 
