@@ -8,10 +8,10 @@ document.documentElement.dataset.theme=choice;
 }catch(e){}})();
 </script>
 <link rel="stylesheet" href="/styles.css"></head>
-<body><header><div class="brand"><span class="brand-mark">S</span><b>SocialMate</b></div><nav class="tabs" id="tabs"></nav><div id="toolbar-search"></div><div class="theme-switch" id="theme-switch"></div><div class="local-status"><i></i><span>数据仅保存在本机</span></div></header><main><section id="view"></section><footer>资料保存在本机 Markdown 文件中。要整理聊天内容，请使用“AI 整理”页复制提示词并交给可访问本项目文件的 AI。</footer></main>
+<body><div class="shell"><aside class="sidebar"><div class="brand"><span class="brand-mark">S</span><b>SocialMate</b></div><nav class="tabs" id="tabs"></nav><div class="sidebar-foot"><div class="theme-switch" id="theme-switch"></div><div class="local-status"><i></i><span>数据仅保存在本机</span></div></div></aside><main><section id="view"></section><footer>资料保存在本机 Markdown 文件中。要整理聊天内容，请使用“AI 整理”页复制提示词并交给可访问本项目文件的 AI。</footer></main></div>
 <script>
 /* ========== 常量 ========== */
-const pages=[['Today','今日'],['People','人物'],['Topics','话题'],['Practice','口语练习'],['Review','AI 整理']];
+const pages=[['Today','今日','◷'],['People','人物','☺'],['Topics','话题','▤'],['Practice','口语练习','◉'],['Review','AI 整理','✎']];
 const levels=[{n:1,short:'很友好',desc:'对方特别友好，会主动提问、接话并帮你把对话聊下去。适合刚开始练习。'},{n:2,short:'正常交流',desc:'像普通真人一样有来有回，会回应也会提问，偶尔有自然停顿。适合大多数练习，建议从这里开始。'},{n:3,short:'稍微冷淡',desc:'对方偏冷，回答较短，不会总主动接话。你需要练习追问，也分享自己的内容。'},{n:4,short:'嘈杂酒吧',desc:'模拟酒吧噪声，交流内容比较零碎，可能需要重复或确认听到的信息。适合练听辨和接话。'},{n:5,short:'自由实战',desc:'自由、接近真实节奏的交流；对方不刻意放慢，也不照顾你的练习节奏。挑战最高。'}];
 const THEMES=[['light','晨光'],['dark','墨夜'],['forest','松林']];
 const THEME_META={light:'#eef2f7',dark:'#0f1420',forest:'#f4f1e8'};
@@ -72,7 +72,7 @@ const view=document.querySelector('#view'),tabs=document.querySelector('#tabs');
 function go(page){current=page;const target='/'+page;if(location.hash!=='#'+target)history.pushState(null,'','#'+target);render()}
 window.addEventListener('popstate',()=>{const p=fromHash();if(p!==current){current=p;render()}});
 function nav(){
-  tabs.innerHTML=pages.map(([key,label])=>`<button class="${key===current?'active':''}" data-page="${key}" ${key===current?'aria-current="page"':''}>${label}</button>`).join('');
+  tabs.innerHTML=pages.map(([key,label,icon])=>`<button class="${key===current?'active':''}" data-page="${key}" ${key===current?'aria-current="page"':''}><span class="tab-icon">${icon}</span><span>${label}</span></button>`).join('');
   tabs.querySelectorAll('button').forEach(b=>b.onclick=()=>go(b.dataset.page));
 }
 async function api(url,opts){const r=await fetch(url,opts);const j=await r.json();if(!r.ok)throw Error(j.error||r.status);return j}
@@ -82,7 +82,6 @@ async function render(){
   nav();
   document.title=pages.find(p=>p[0]===current)[1]+' · SocialMate';
   document.querySelector('main').classList.toggle('wide-topic',current==='Topics');
-  document.querySelector('#toolbar-search').innerHTML='';
   let data;
   try{data=await api('/api/files')}catch(e){view.innerHTML=`<div class="card danger">无法读取本地数据：${esc(e.message)}</div>`;return}
   files=data.files;const people=data.people;let html='';
@@ -91,7 +90,7 @@ async function render(){
 
   if(current==='People'){html=`<h1>人物档案</h1><p class="muted">记录新认识的人，回看已确认的信息，准备下一次自然续聊。</p><div class="card"><h2>记录新认识的人</h2><div class="grid"><label>姓名<input id="new-name" placeholder="例如 Alex" required></label><label>国家 / 地区<input id="new-country"></label><label>城市<input id="new-city" value="海口"></label><label>语言（逗号分隔）<input id="new-languages" placeholder="English, 中文"></label><label>已确认兴趣（逗号分隔）<input id="new-interests" placeholder="健身, 咖啡"></label></div><p><button class="action primary" id="create-person">创建本地档案</button></p><div id="person-result"></div></div><div class="people-tools"><input id="people-search" type="search" placeholder="搜索人物姓名或路径" aria-label="搜索人物"></div><div class="grid" id="people-grid">${people.map(p=>`<article class="card person-card" data-person="${esc(p.toLowerCase())}"><h2>${esc(p.split('/')[1])}</h2><p class="muted">${esc(p)}</p><button class="action" data-read="${esc(p)}">打开档案</button><div class="profile hidden" id="${encodeURIComponent(p)}"></div></article>`).join('')||'<div class="empty-state">尚无人档案。先在上方创建第一份档案。</div>'}</div>`;}
 
-  if(current==='Topics'){const topicTitle=p=>p.split('/').pop().replace(/\.md$/i,'').replace(/[-_]/g,' ');html=`<section class="topics-page"><div class="topics-layout"><aside class="topics-sidebar"><div class="topic-list-label">${data.topics.length} 个话题包</div><div id="topic-list">${data.topics.map(p=>`<button class="topic-link" data-topic="${esc(p)}"><span class="topic-link-icon">▤</span><span><strong>${esc(topicTitle(p))}</strong><small>${esc(p.split('/').slice(1,-1).join(' / ')||'话题')}</small></span></button>`).join('')||'<p class="no-topics">还没有话题包。</p>'}</div></aside><article class="topic-reader" id="topic-reader"><div class="reader-empty"><div><div class="empty-icon">▤</div><p>选择左侧话题，内容会在这里展开。</p></div></div></article></div></section>`;}
+  if(current==='Topics'){const topicTitle=p=>p.split('/').pop().replace(/\.md$/i,'').replace(/[-_]/g,' ');html=`<section class="topics-page"><div class="topics-layout"><aside class="topics-sidebar"><div class="topic-list-label">${data.topics.length} 个话题包</div><input class="topic-search" id="topic-search" type="search" placeholder="搜索话题…" aria-label="搜索话题名称"><div id="topic-list">${data.topics.map(p=>`<button class="topic-link" data-topic="${esc(p)}"><span class="topic-link-icon">▤</span><span><strong>${esc(topicTitle(p))}</strong><small>${esc(p.split('/').slice(1,-1).join(' / ')||'话题')}</small></span></button>`).join('')||'<p class="no-topics">还没有话题包。</p>'}</div></aside><article class="topic-reader" id="topic-reader"><div class="reader-empty"><div><div class="empty-icon">▤</div><p>选择左侧话题，内容会在这里展开。</p></div></div></article></div></section>`;}
 
   if(current==='Practice')html=`<div class="practice-page"><h1>口语练习</h1><p class="muted">选择场景和难度，复制提示词到 ChatGPT Live。练完后，AI 会按固定格式生成可下载的 Markdown 复盘文件。</p><div class="card"><div class="row"><select id="scene"><option>海口健身房</option><option>咖啡店</option><option>酒吧</option><option>第一次见面</option></select><select id="level">${levels.map(level=>`<option value="${level.n}" ${level.n===2?'selected':''}>Level ${level.n} · ${level.short}</option>`).join('')}</select></div><div class="level-help"><b id="level-summary">推荐起步：Level 2 · 正常交流</b><p id="level-selected"></p><details open><summary>5 个 Level 分别是什么意思？</summary><ol>${levels.map(level=>`<li><b>Level ${level.n} · ${level.short}：</b>${level.desc}</li>`).join('')}</ol><p><b>怎么选：</b>初次练习选 1；日常模拟选 2；想练短回答选 3；想练嘈杂环境听力选 4；准备自由实战选 5。</p></details></div><div class="practice-actions"><button class="action primary" id="prompt">生成提示词</button><button class="action" id="copy-practice" disabled>复制提示词</button></div><textarea id="practice" placeholder="点击「生成提示词」，生成后可一键复制到 GPT Live"></textarea><p class="practice-save-hint">练习记录下载后保存到项目内：<code>SocialMate-Data/Practice/Sessions/</code></p></div></div>`;
 
@@ -126,7 +125,6 @@ async function render(){
   }
 
   if(current==='Topics'&&data.topics.length){
-    document.querySelector('#toolbar-search').innerHTML='<input class="topic-search" id="topic-search" type="search" placeholder="搜索话题名称" aria-label="搜索话题名称">';
     const topicList=document.querySelector('#topic-list'),reader=document.querySelector('#topic-reader'),search=document.querySelector('#topic-search');
     const openTopic=async p=>{
       topicList.querySelectorAll('.topic-link').forEach(b=>b.classList.toggle('active',b.dataset.topic===p));
