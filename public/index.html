@@ -13,7 +13,7 @@ document.documentElement.dataset.theme=resolved;
 /* ========== 常量 ========== */
 const pages=[['Today','今日'],['People','人物'],['Topics','话题'],['Practice','口语练习'],['Review','AI 整理']];
 const levels=[{n:1,short:'很友好',desc:'对方特别友好，会主动提问、接话并帮你把对话聊下去。适合刚开始练习。'},{n:2,short:'正常交流',desc:'像普通真人一样有来有回，会回应也会提问，偶尔有自然停顿。适合大多数练习，建议从这里开始。'},{n:3,short:'稍微冷淡',desc:'对方偏冷，回答较短，不会总主动接话。你需要练习追问，也分享自己的内容。'},{n:4,short:'嘈杂酒吧',desc:'模拟酒吧噪声，交流内容比较零碎，可能需要重复或确认听到的信息。适合练听辨和接话。'},{n:5,short:'自由实战',desc:'自由、接近真实节奏的交流；对方不刻意放慢，也不照顾你的练习节奏。挑战最高。'}];
-const THEMES=[['system','跟随系统','swatch-system'],['light','晨光 · 浅色','swatch-light'],['dark','墨夜 · 深色','swatch-dark'],['forest','松林 · 暖绿','swatch-forest']];
+const THEMES=[['system','系统'],['light','晨光'],['dark','墨夜'],['forest','松林']];
 const THEME_META={light:'#eef2f7',dark:'#0f1420',forest:'#f4f1e8'};
 
 /* ========== 主题 ========== */
@@ -28,14 +28,8 @@ function applyTheme(choice){
 function currentChoice(){try{return localStorage.getItem('sm-theme')||'system'}catch(e){return 'system'}}
 function renderThemeSwitch(choice){
   const box=document.querySelector('#theme-switch');if(!box)return;
-  const cur=THEMES.find(t=>t[0]===choice)||THEMES[0];
-  box.innerHTML=`<button class="theme-toggle" aria-haspopup="true" aria-expanded="false" title="切换主题"><span class="theme-dot"></span><span class="theme-name">${cur[1]}</span></button><div class="theme-menu" hidden>${THEMES.map(t=>`<button data-theme-choice="${t[0]}" class="${t[0]===choice?'active':''}"><span class="theme-swatch ${t[2]}"></span>${t[1]}</button>`).join('')}</div>`;
-  const toggle=box.querySelector('.theme-toggle'),menu=box.querySelector('.theme-menu');
-  const close=()=>{menu.hidden=true;toggle.setAttribute('aria-expanded','false')};
-  toggle.onclick=e=>{e.stopPropagation();menu.hidden=!menu.hidden;toggle.setAttribute('aria-expanded',String(!menu.hidden))};
-  menu.querySelectorAll('[data-theme-choice]').forEach(b=>b.onclick=()=>{try{localStorage.setItem('sm-theme',b.dataset.themeChoice)}catch(e){}applyTheme(b.dataset.themeChoice);close();toast('已切换到「'+b.textContent.trim()+'」')});
-  document.addEventListener('click',close,{once:true});
-  document.addEventListener('keydown',function esc(e){if(e.key==='Escape'){close();document.removeEventListener('keydown',esc)}});
+  box.innerHTML=THEMES.map(t=>`<button data-theme-choice="${t[0]}" class="${t[0]===choice?'active':''}" title="${t[0]==='system'?'跟随系统外观':t[1]+'主题'}">${t[1]}</button>`).join('');
+  box.querySelectorAll('[data-theme-choice]').forEach(b=>b.onclick=()=>{try{localStorage.setItem('sm-theme',b.dataset.themeChoice)}catch(e){}applyTheme(b.dataset.themeChoice)});
 }
 mq.addEventListener?.('change',()=>{if(currentChoice()==='system')applyTheme('system')});
 applyTheme(currentChoice());

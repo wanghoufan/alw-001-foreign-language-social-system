@@ -104,34 +104,11 @@ header .tabs button{padding:9px 12px;white-space:nowrap}
 .local-status{margin-left:auto;white-space:nowrap;display:flex;align-items:center;gap:8px;color:var(--muted);font-size:12px}
 .local-status i{width:8px;height:8px;border-radius:50%;background:var(--dot-ok);box-shadow:0 0 0 4px var(--ok-bg)}
 
-/* ========== 主题切换器 ========== */
-.theme-switch{position:relative}
-.theme-toggle{
-  display:flex;align-items:center;gap:8px;
-  border:1px solid var(--line-strong);border-radius:999px;
-  background:var(--panel);color:var(--muted);
-  padding:7px 12px;font-size:12px;font-weight:650;
-  transition:border-color .16s,color .16s;
-}
-.theme-toggle:hover{border-color:var(--accent);color:var(--accent)}
-.theme-dot{width:12px;height:12px;border-radius:50%;background:linear-gradient(140deg,var(--accent),var(--accent-2));flex:0 0 auto}
-.theme-menu{
-  position:absolute;right:0;top:calc(100% + 8px);min-width:168px;
-  background:var(--panel);border:1px solid var(--line);border-radius:14px;
-  box-shadow:var(--shadow);padding:6px;z-index:30;
-}
-.theme-menu button{
-  width:100%;display:flex;align-items:center;gap:10px;
-  border:0;border-radius:9px;background:transparent;color:var(--ink);
-  padding:9px 10px;font-size:13px;text-align:left;
-}
-.theme-menu button:hover{background:var(--accent-hover)}
-.theme-menu button.active{background:var(--accent-soft);color:var(--accent);font-weight:700}
-.theme-swatch{width:14px;height:14px;border-radius:50%;flex:0 0 auto;border:1px solid var(--line-strong)}
-.swatch-system{background:conic-gradient(#f4f4f4 0 50%,#2a3247 50% 100%)}
-.swatch-light{background:linear-gradient(140deg,#2f6bed,#0fb6a0)}
-.swatch-dark{background:linear-gradient(140deg,#171d2c,#2a3348)}
-.swatch-forest{background:linear-gradient(140deg,#2f6b52,#c08a3e)}
+/* ========== 主题切换器（分段控件） ========== */
+.theme-switch{display:flex;align-items:center;gap:2px;background:var(--panel-soft);border:1px solid var(--line);border-radius:999px;padding:3px}
+.theme-switch button{border:0;border-radius:999px;background:transparent;color:var(--muted);font-size:12px;font-weight:650;padding:6px 12px;white-space:nowrap;transition:background .16s,color .16s,box-shadow .16s}
+.theme-switch button:hover{color:var(--accent)}
+.theme-switch button.active{background:linear-gradient(140deg,var(--accent),var(--accent-2));color:#fff;box-shadow:0 2px 8px var(--focus-ring)}
 
 /* ========== 主体与导航 ========== */
 main{max-width:1440px;margin:26px auto 0;padding:0 28px}
@@ -272,8 +249,7 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9em;back
   header{height:auto;min-height:76px;padding:9px 16px;display:grid;grid-template-columns:1fr auto auto;grid-template-areas:"brand theme status" "tabs tabs tabs" "search search search";gap:6px 12px}
   .brand{grid-area:brand}
   .theme-switch{grid-area:theme}
-  .theme-toggle .theme-name{display:none}
-  .theme-toggle{padding:8px}
+  .theme-switch button{padding:5px 9px;font-size:11px}
   .local-status{grid-area:status;margin-left:0}
   header .tabs{grid-area:tabs;flex-wrap:wrap}
   #toolbar-search{grid-area:search;min-width:0;max-width:none;width:100%;display:none}
