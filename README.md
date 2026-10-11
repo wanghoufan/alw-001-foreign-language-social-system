@@ -1,8 +1,25 @@
-# 外语社交系统（ALW-001）
+# SocialMate（外语社交系统 · ALW-001）
 
 [English](./README.en.md)
 
-Local-first 社交知识库 MVP。数据使用项目内独立目录中的 Markdown 文件；本地服务仅监听 `127.0.0.1`，无外部依赖、账号、云端同步或 AI API。
+Local-first 社交知识库 MVP：准备聊天话题、按场景练口语、把真实交流整理成人物档案，数据全部保存在你自己的 Markdown 文件里。本地服务仅监听 `127.0.0.1`，无外部依赖、账号、云端同步或 AI API。
+
+<p align="center">
+  <img src="assets/home.png" alt="首页：左侧功能导航，右侧内容区" width="420">
+  <img src="assets/topics.png" alt="话题库：左侧话题列表与搜索，右侧阅读区" width="420">
+</p>
+<p align="center">
+  <img src="assets/practice.png" alt="口语练习：场景与难度选择，生成练习提示词" width="420">
+</p>
+
+## 它能做什么
+
+- **话题库**：浏览本机 Markdown 话题包，左侧列表支持搜索，右侧直接阅读，并记住上次读到的话题。
+- **口语练习**：选择场景和 5 档难度（从"很友好"到"自由实战"），一键生成并复制练习提示词，粘贴到 ChatGPT Live 开始对话。
+- **AI 整理**：复制整理提示词，连同聊天内容交给一个能访问本项目文件的 AI，它会按项目规则把交流写进对应人物档案。
+- **人物档案**：在本机创建新档案、按姓名搜索、就地展开阅读 Markdown 主档。
+- **三套主题**：晨光（浅色）、墨夜（深色）、松林（暖绿纸感），顶栏分段控件一键直切，偏好持久保存。
+- **wiki 式布局**：左侧功能导航、右侧内容直达，切换功能不发生页面跳转。
 
 ## 本机运行
 
@@ -44,7 +61,6 @@ Markdown 文件是唯一数据真源。人物主档编辑须经过 Review 的预
 - `node scripts/initialize-data.mjs` 初始化目录和模板。
 - `node --test` 运行本地服务验收测试。
 - GitHub：`wanghoufan/alw-001-foreign-language-social-system`（private）
-
 
 ## 口语练习记录
 
