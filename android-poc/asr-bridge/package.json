@@ -1,0 +1,20 @@
+{
+  "name": "alw001-asr-bridge",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "ALW-001 腾讯云实时英文 ASR 服务端桥接（无密钥时使用本地 mock）",
+  "engines": {
+    "node": ">=22.9.0"
+  },
+  "scripts": {
+    "start": "node --env-file-if-exists=.env bin/asr-bridge.js",
+    "start:mock": "ASR_FORCE_MOCK=1 node --env-file-if-exists=.env bin/asr-bridge.js",
+    "suggest": "node bin/suggest.js",
+    "test": "node --test",
+    "test:verbose": "node --test --test-reporter=spec"
+  },
+  "dependencies": {
+    "ws": "^8.22.1"
+  }
+}

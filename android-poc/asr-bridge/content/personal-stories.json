@@ -1,0 +1,4 @@
+{
+  "stories": [],
+  "note": "Only add stories explicitly confirmed by the user. Required: confirmed=true and textEn. Optional: id, titleCn, titleEn, textCn, questionEn, source. The loader ignores unconfirmed entries; it never invents personal content."
+}

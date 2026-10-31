@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "city": "海口",
+    "city_folder": "Haikou",
+    "name": "龙兴路",
+    "en_name": "Longxing Road",
+    "cn": "海口龙华区的一条小街，适合街拍。",
+    "en": "Longxing Road is in the Guomao area of Longhua District, Haikou. This short street has become a favorite photo spot."
+  },
+  {
+    "id": 2,
+    "city": "三亚",
+    "city_folder": "Sanya",
+    "name": "亚龙湾",
+    "en_name": "Yalong Bay",
+    "cn": "三亚的海湾，水质清澈。",
+    "en": "Yalong Bay is a famous beach in Sanya with clear water and white sand."
+  }
+]
