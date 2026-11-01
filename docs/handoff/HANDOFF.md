@@ -8,6 +8,7 @@
 - 风险与红线：`docs/risks.md`
 - 踩坑：`agent.md`
 - Android 验收台账：`android-poc/IMPLEMENTATION_STATUS.md`
+- N03 逐项验收（PASS/PARTIAL/NOT_RUN + 证据路径）：`docs/plan/ALW001-N03-SDD-V1.1/ACCEPTANCE.md`
 - 全部实测证据与已验/未验边界：`socialmate-v1.2/QA.md`
 - 组合服务：`bash socialmate-v1.2/service-v040.sh ensure`（8790 ASR + 8791 UI/AI）
 - 多人档案 E2E（自跑自清）：`node socialmate-v1.2/qa-people-e2e.mjs`
@@ -19,33 +20,29 @@
 
 ## 1. 当前进展
 
-- **复盘 → 确认 → 本机档案 → 正式人物主档已打通**：停止录音 → `/v12/history?session=` 本轮原文 → 本地/云端复盘 → 逐条勾选编辑归属 → 显式确认 → 写 `SocialMate-Data/Profile`（只追加、会话+段号+指纹去重）+ 追加到 `People/<slug>/00-profile.md` 对应章节（带来源与幂等标记，0600/0700，写前备份、失败回滚）。
-- **新建人物已开放（A2）**：人物下拉可选「＋ 新建人物主档…」，填姓名 + 英文目录标识即按模板建目录；只在该人物分到事实时才建，回滚时删除空档案。
-- 写入边界：`/v12/api/review/apply` 需归档令牌 + 归档真实会话校验段号；人物只能选真实 `People` slug 或显式新建；60s/12 次限流；同源校验改为「Origin 与 Host 一致」，覆盖 Tailscale `8443`。
-- Android **0.6.0（15）** 已装 Note 11 5G（`install -r` 保留数据）：留存默认关、断网补传四态、自适应图标 + Android 12+ SplashScreen、WebView 安全导出桥；APK `972eed42…`。
-- **N03（SDD V1.1）已交付 P0→P3**：验收表 `docs/plan/ALW001-N03-SDD-V1.1/ACCEPTANCE.md`；人物在线主档/历史检索/事实撤回/见面前准备/接话卡/收藏均已在真机走通，前端源仍是 `socialmate-v1.2/source/V1.1-baseline.html`（重建可复现）。
-- **无 USB 链路已验收**：`adb reverse` 为空，录音→`wss:10000`→ASR→`https:8443` 聊天页→`/alw` 归档全程走 Tailscale。
-- **归档**：final-only 逐字落 `~/Documents/SocialMate/Conversations/YYYY/MM/`；历史 UI（列表 / 原文 / 按 UTC 日期导出）已完成并真机验收。
-- **海南 PWA** 已上线 gh-pages：115/115、中英、筛选、单点 `Share place` 均通；清单回发按用户决定暂停。
-- **DeepSeek 独立授权**端到端通过；累计 0.213634 / 1 元。ASR 0.129189 / 1 元。
-- 测试：`verify-v040.sh` 全绿（**215 项 Node + 12 Android core + APK 构建**，N03 新增 2c 步 6 个测试文件）；`qa-people-e2e.mjs` 10/10。
+- **N03（SDD V1.1）P0→P3 已交付并推送**：`68a77ce`（HEAD==origin/main）；验收表 `docs/plan/ALW001-N03-SDD-V1.1/ACCEPTANCE.md`；Android **0.6.0（15）** `972eed42…` 已 `install -r` 装 Note 11（保留数据）。
+- 手机端新增：留存默认关＋三同意独立、断网补传四态、在线人物主档（详情带来源 / slug 建议 / 显式新建 / 事实撤回）、历史检索分页、见面前准备、一条接话+一条追问（窄屏内联到字幕下方）、收藏闭环、自适应图标 + Android 12+ Splash、SAF 导出桥。
+- 复盘→确认→档案仍是 N02 链路：`/v12/history?session=` → 本地/云端复盘 → 勾选 → 确认 → `Profile` + `People/<slug>/00-profile.md`（来源与幂等标记、0600/0700、备份回滚）。
+- 写接口一律令牌 + 同源（Origin 与 Host 一致）+ 60s/12 次限流；令牌只进 `sessionStorage`，关闭即失效。
+- 归档：final-only 逐字落 `~/Documents/SocialMate/Conversations/YYYY/MM/`；历史 UI 支持词/人/日期/分页与 UTC 导出。
+- 无 USB 链路、PWA 115/115、DeepSeek 与 ASR 授权链路均已验；账本 0.213634 / 0.129189（各 1 元，未重置）。
+- 测试：`verify-v040.sh` **215 Node + 12 Android core + APK 构建**全绿；`qa-people-e2e` 10/10；`ai-gateway` 124/124；`asr-bridge` 40/40。
 
 ## 2. 下一步
 
-1. **真人全链**（需用户在场）：真人说话 → 停止 → 点「本轮原文与复盘」→ 勾选 → 确认保存 → 重开「关于我」。
-2. **现场双人**：本人对着发射器说话，看 `spk_0 / spk_1` 与聊天页字幕是否稳定。
-3. 服务重启/断网后手机自动重连与 outbox 补传的真机复测。
-4. 借到 iPhone 后补 PWA Safari 验收。
+1. **视觉档位等用户选**：①只改原生顶栏（去掉三个大按钮）②顶栏 + 聊天页层次（推荐）③整页重做对齐原型。
+2. 大清理等用户说「大阶段结束」再动（临时产物已清，`.local/qa`、`release/` 保留）。
+3. 真人全链与现场双人（需用户在场）。
+4. 借到 Android 12+ 机与 iPhone 后补启动画面实拍与 PWA Safari。
 
 ## 3. 未完成
 
-- 真人说话 → App 内按钮 → 确认保存未跑（需真人产生 final）；本轮真机证据是「隔离实例 + 合成会话 + 真实点击」，已标 PARTIAL。
-- 现场真人双人 NOT_RUN（非硬件无声问题）。
-- PWA 机型矩阵缺 **iPhone Safari**；国内访问速度可能波动，无自定义域名。
-- 历史 UI 的「按日期导出」只在 Mac 与桌面浏览器验过，**手机内未点过下载**。
-- 服务只绑回环，真机依赖 Tailscale 或 `adb reverse`；映射断开后页面需重连。
-- `spk_N` 只是聚类编号，不保证真实身份；UI 固定「待确认」。
-- 新建人物要靠用户填英文目录标识（暂不做中文转拼音），中文名只进 front matter `name`。
+- 真机「新建人物 / 撤回事实」写正式主档：只做单测 + 临时目录，未动真实档案 → PARTIAL。
+- Android 12+ 系统启动画面实拍、软键盘遮挡（本机 IME 不绘制键盘）→ NOT_RUN。
+- 真人说话/双人对话 → NOT_RUN；iPhone Safari 缺设备。
+- `spk_N` 只是聚类编号，UI 固定「说话人待确认」。
+- 中文名建人走 `person-YYYYMMDD-xxxx`，不转拼音（不为建人调第三方）。
+- 服务只绑回环：真机靠 Tailscale 或 `adb reverse`，映射断开页面需重连。
 
 ## 4. 红线
 
@@ -74,6 +71,8 @@
 - 2026-11-01：会后复盘闭环：`session-review.mjs`（本地规则 / DeepSeek 双引擎）、`POST /v12/api/review` 与 `/apply`、历史详情复盘 UI 与 `?session=` 深链、Android 0.5.3 入口按钮；定向 13/13；真实 AI 成本 0.002574 元（累计 0.213634 / 1 元）；写入链路在临时档案目录验完，正式档案未被污染。
 - 2026-11-01 N02：`people-store.mjs` + `review-confirm.mjs` 打通「确认 → People 正式主档」；`/apply` 加令牌+段号+限流；修复 Tailscale 同源 403；`current.md` 收紧 0600；真机（隔离实例+合成会话）点击式确认保存与二次读取 PASS；`verify-v040.sh` 158 项全绿；测试基建修 3 处历史红灯。
 
+- 2026-11-01 N03：SDD V1.1 P0→P3；0.6.0（15）`972eed42…`；215 Node + 12 core 全绿；手机端接话卡原在屏外（y≈917）改内联并折叠会话设置；`68a77ce` 已推送；Android 12+ Splash、IME 遮挡 NOT_RUN。
+
 ## 6. 接续提示词
 
-先读本文件 §0–§6、`socialmate-v1.2/QA.md` 与 `docs/architecture-facts.md`，服务用 `bash socialmate-v1.2/service-v040.sh ensure` 起来后按 §2 继续。不关 TLS 校验、不超 1 元 ASR/DeepSeek 预算、不覆盖 V1.4 与海南资料。
+先读本文件 §0–§6 与 `docs/plan/ALW001-N03-SDD-V1.1/ACCEPTANCE.md`，用 `bash socialmate-v1.2/service-v040.sh ensure` 起服务后按 §2 继续（视觉档位等用户选）。不关 TLS 校验、不超 1 元 ASR/DeepSeek 预算、不覆盖 V1.4 与海南资料、不写真实档案。

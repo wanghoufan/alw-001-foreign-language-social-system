@@ -97,3 +97,13 @@
 - 接口：`GET/POST /suggest`；WS `{"type":"suggest"}` → `type:"suggestions"`；CLI `npm run suggest -- "<topic>"`。
 - 建议：question 为英文模板，share 逐字引用来源；返回 `source/ref/title/basis`；不调用大模型，不读取 `temp/intros-*`。
 - 真机：Note 11 0.3.1 已验证从 V1.4 返回 P002 建议（截图 `android-poc/artifacts/dualmic-20261031/suggest-0.3.1-note11.png`）。
+
+## N03（SDD V1.1，2026-11-01）
+
+- Android：**0.6.0（versionCode 15）**，APK `android-poc/app/build/outputs/apk/debug/app-debug.apk`，SHA-256 `972eed42d9fe1722e9f47d63f0bd69a073878747560eb2392e3dae42d24861b1`；交付副本 `release/SocialMate-0.6.0-vc15-debug.apk`（`/release/` 与 `*.apk` 已 gitignore）。
+- 图标/启动：`res/mipmap-anydpi-v26/ic_launcher(.round)` + `drawable/ic_socialmate_foreground|monochrome` + `values/colors.xml`；Android 12+ 启动用 `values-v31`、`values-night-v31` 的 `windowSplashScreenBackground/AnimatedIcon`，**无** `core-splashscreen` 依赖、无独立 Splash Activity、无 sleep。
+- 私有 API 新增（均需 `x-archive-token`）：`GET /v12/api/people/<slug>`（详情/来源/人工段落）、`GET /v12/api/people/slug-suggest`、`POST /v12/api/people`（`confirm:true`）、`GET /v12/api/people/<slug>/prep`、`POST …/facts/revoke`、`GET/POST/DELETE /v12/api/favorites`、`GET /api/archive/sessions?q=&person=&from=&to=&limit=&cursor=`（`/v12` 同源反代）。
+- 归档状态机：`SessionArchive` 退避 3/10/30/60s（≤6 次、单飞、`NetworkCallback` 触发），四态文案「手机已保存 / 待上传 N 条 / 已同步 Mac / 失败可重试」，仅 2xx 算已同步。
+- WebView 导出：`SocialMateAndroid.saveText(name,text)` 仅在 `isPrivatePanelUrl` 同源页面注入，桥内再校验 `trustedPageUrl`；落盘走 `ACTION_CREATE_DOCUMENT`，清单无 `WRITE_EXTERNAL_STORAGE`。
+- 手机端布局：≤930px 时 `#coachresults` 由 `layoutCoach()` 搬进 `#coachinline`（字幕与输入框之间），`chatsetup` 折叠为一行；紧凑覆盖样式在 `<style id="n03-mobile-compact">`。
+- 服务：组合 8790+8791、归档 8781 未变；预算账本未重置（ASR 0.129189、DeepSeek 0.213634 / 各 1 元）。

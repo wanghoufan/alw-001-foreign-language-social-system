@@ -79,4 +79,7 @@
 - V1.4 是唯一正式软件介绍主稿；禁止用 `temp/intros-A～I` 替换。
 - 不把仅代码完成 / MOCK / 合成语音 / 编译通过写成真人验收通过。
 - DeepSeek 仅在用户授权的 1 元累计额度内自动调用；超限不得绕过预算闸或改大上限。预算 ledger 落 `.local/`，不要提交。
-- Note 11 为 0.4.0；Note 12T 当前未安装本项目 APK。两台设备操作必须显式 serial，不能共用 reverse/会话。
+- Note 11 为 **0.6.0（15）**；Note 12T 当前未安装本项目 APK。两台设备操作必须显式 serial，不能共用 reverse/会话。
+- `ADB_SERIAL` 对 Note 11 必须用 mDNS 名 `adb-WGBMXWDIAIFMPFCQ-1AcFJM._adb-tls-connect._tcp`，写型号 `21091116AC` 会被脚本判成「非授权设备」。
+- 用改写 App `shared_prefs` 的方式验证归档补传前，必须 `pidof` 确认进程已退出：进程存活会沿用内存里的旧配置，合成会话可能被写进**真实**归档目录（本轮发生过一次，已删并还原）。
+- 手机 UI 是「原生工具栏 + WebView」两层：只改 Web 不会更新原生资源；改 native（图标/启动/文案）必须重建 APK 并 `install -r`。

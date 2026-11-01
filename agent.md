@@ -2,6 +2,13 @@
 
 更新：2026-11-01
 
+## N03 新增坑
+
+- `ADB_SERIAL` 要填 mDNS 名 `adb-WGBMXWDIAIFMPFCQ-1AcFJM._adb-tls-connect._tcp`；填型号 `21091116AC` 会被 `adb-preflight-preview.sh` 判成「非授权设备」直接 BLOCKED。
+- 用 `run-as` 改写 `shared_prefs` 验证归档补传：先 `am force-stop` + `pidof` 确认为空再改，否则进程里缓存的旧 `archive_url` 会把**合成会话**发进真实归档（本轮发生过，事后删文件并还原令牌）。
+- 字幕改成「只追加气泡」后，`test-live-asr.mjs` 断言 `#content` 会假红：harness 里 `#messages` 与 `#content` 是两个独立桩节点，可见性要两处一起看。
+- `killed: 143` 的临时 node 服务是正常收尾（kill 后退出码 143），别当失败重跑。
+
 ## 构建
 
 - Gradle 8.9 从 `services.gradle.org` 会 307 到 GitHub，直连可能长时间 0 字节；用本机代理把 ZIP 下到 `~/.gradle/alw001-bootstrap` 再跑 `build-apk.sh`。
