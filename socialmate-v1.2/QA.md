@@ -312,7 +312,7 @@ V0.4.0 APK 实际输出路径：`android-poc/app/build/outputs/apk/debug/app-deb
   - 生成链接 `http://127.0.0.1:8901/public-share.html?selected=3,39,41`；
   - 新导航打开该链接 → 显示 “A list shared with you · 3”，三条与选择一致；
   - Service Worker 注册 `true`，manifest 已加载。
-- 包：`2026-10-31 … ALW001 Hainan Guide-Public Share - V1.1.zip`，SHA-256 `cfdf40ac83f27cd81cf96571ff5dca6378a66a7e8bad7df6648de8718ad5401d`，7 文件 167,675 字节。
+- 包：`2026-10-31 … ALW001 Hainan Guide-Public Share - V1.1.zip`，SHA-256 `b46252247c15d07415b3cd7801b0e5551ce35c014a139c4ae464b4c27741d119`，7 文件 167,675 字节。
 - **未部署**：没有公开 HTTPS 链接；部署需用户明确授权（可先给临时域名）。
 
 ### 2026-11-01 Mac 会话归档接收端（鉴权 + 幂等 + 原子写）
@@ -339,3 +339,10 @@ V0.4.0 APK 实际输出路径：`android-poc/app/build/outputs/apk/debug/app-deb
 - Note 12T Pro：`adb install` 与 `pm install-create/commit` 均被 MIUI `INSTALL_FAILED_USER_RESTRICTED` 拒绝，需用户开启「通过 USB 安装」。
 - Note 11：已安装 Tailscale（`com.tailscale.ipn`），但未登录/未建立 VPN；`ping mac-mini.tail4e4317.ts.net` 返回 `unknown host`，因此 App 无法走 Tailscale HTTPS。
 - 结论：会话归档代码与接收端已可用，但「完全脱离 USB 的日常链路」**未验收**；当前 ASR/UI 仍需 `adb reverse`，归档可用 Tailscale 一旦手机 Tailscale 登录即可切换。
+
+### 2026-11-01 海南 PWA 真机原生浏览器（Redmi Note 11 / MIUI 浏览器）
+
+- 用局域网只服务 7 个白名单文件（`--bind 0.0.0.0:8902`，无任何私有 API），Note 11 原生浏览器打开 `http://192.168.31.61:8902/public-share.html`。
+- 实测：`115 / 115 places`、城市/分类筛选、英文正文正常；详情页点「☆ Add to my list」→ 按钮变「★ Saved to my list」；返回列表后顶栏 `My list (1)`；打开清单显示 `My list · 1`、`Share link (only place IDs)`、`Send list to SocialMate`。
+- 证据：`socialmate-v1.2/screenshots/pwa-v11-note11.png`、`pwa-v11-note11-selected.png`、`pwa-v11-note11-mylist.png`。
+- 仍然：未部署公网 HTTPS；局域网测试不构成公开发布。

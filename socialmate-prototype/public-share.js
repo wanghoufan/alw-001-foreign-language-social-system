@@ -221,6 +221,7 @@
       wants.add(id);
     }
     saveWants();
+    updateWantsButton();
     if (selected === id) detail(byId.get(id));
     else filter();
     if (!$('#myList').hidden) renderMyList();

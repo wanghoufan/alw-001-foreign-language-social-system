@@ -33,6 +33,9 @@ status() {
 }
 
 case "${1:-status}" in
+  status)
+    status
+    ;;
   start|ensure)
     ensure_token
     if [ -f "$PID_FILE" ] && kill -0 "$(cat "$PID_FILE")" 2>/dev/null; then

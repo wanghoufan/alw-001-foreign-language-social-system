@@ -24,6 +24,7 @@
 - 2026-11-01：Android 0.5.0 归档链路真机通过：真实语音 → 腾讯云 final → 手机 outbox → Mac Markdown/JSON（逐字，含识别错误）；断网重试与「不留存不落盘」均实测。
 - 2026-11-01：Mac 归档接收端上线（8781，令牌必填、512KB、幂等、原子写），Tailscale `/alw` HTTPS 健康检查通过。
 - 2026-11-01：海南公开 PWA V1.1 完成选择/清单/分享链接回显/离线缓存；115 卡、选 3 处刷新保留、链接跨会话回显均通过。
+- 2026-11-01：PWA 真机原生浏览器（Note 11 / MIUI）通过：115/115、详情收藏、`My list (1)`、分享链接与回传按钮可见。
 - 2026-11-01：Mac 收尾完成；组合服务单进程提供 8790/8791，`/api/asr/status` 为 `combined:true`。
 - Note 11 已装 0.4.0（保留数据，61 个数据文件）；APK SHA-256 `da46425f7e5e1e69b243ac87171bf47f1301c2f32a25c52a23399236fdf69b7e`。
 - 回归 **102/102 Node + 2/2 TLS + 12 Android**；Gradle `BUILD SUCCESSFUL`。
@@ -76,7 +77,7 @@
 - 2026-11-01：真机 WebView、MOCK 全链、真实腾讯云/DeepSeek、真人单人与 TTS-B 真实环境测试完成；新增 1 元预算闸。
 - 2026-11-01：Mac 收尾：TLS 根因=CodeArts kernel 注入并在 service 剥离；102/102 + TLS 2/2 + 12；APK 0.4.0 SHA `da46425f…`；九项 UI PASS；ASR 1 元闸与双音色 A/B 分离通过；BOYA `-180 dBFS` 阻断手机现场双人。
 - 2026-11-01：本机档案：`profile-store` 5/5、API 三分支（无确认 400 / 确认 200 / 回读一致）、同源点击端到端通过；服务重启后 `combined:true` 与预算不变。
-- 2026-11-01：归档：10/10 单元测试；接收端 401/201/duplicate/400 四分支；Android 0.5.0 真机 real-final → Mac 落盘；PWA 浏览器 E2E 通过。
+- 2026-11-01：归档：10/10 单元测试；接收端 401/201/duplicate/400 四分支；Android 0.5.0 真机 real-final → Mac 落盘；PWA 浏览器 E2E 与 Note 11 原生浏览器均通过。
 
 ## 6. 接续提示词
 
