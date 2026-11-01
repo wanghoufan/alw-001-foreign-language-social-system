@@ -3,6 +3,7 @@ package app.socialmate.dualmic;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
@@ -69,7 +70,8 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
     private SessionArchive archive;
     private CheckBox retentionConsent;
     private TextView archiveStatusView;
-    private EditText archiveUrlInput, archiveTokenInput;
+    private EditText archiveUrlInput, archiveTokenInput, uiUrlInput;
+    private SharedPreferences config;
 
     private static final String[] TRACK_LABELS = {
             "混音 → 说话人分离 (mix)",
@@ -84,6 +86,7 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
         if ((getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0) {
             WebView.setWebContentsDebuggingEnabled(true);
         }
+        config = getSharedPreferences("socialmate-config", MODE_PRIVATE);
         archive = new SessionArchive(this);
         buildUi();
         refreshDeviceInfo();
@@ -202,10 +205,16 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
         advancedTools.setBackground(surface(0xFFFFFFFF, 0xFFE2E9EA, 16));
         text(advancedTools, "仅调试时需要修改服务地址或音轨。普通使用保持默认混音。", 14);
         urlInput = new EditText(this);
-        urlInput.setText(DEFAULT_URL);
+        urlInput.setText(config.getString("asr_url", DEFAULT_URL));
         urlInput.setTextSize(16);
         urlInput.setSingleLine(true);
         advancedTools.addView(urlInput, new LinearLayout.LayoutParams(-1, dp(54)));
+        text(advancedTools, "聊天页地址（本机或 Tailscale HTTPS）", 14);
+        uiUrlInput = new EditText(this);
+        uiUrlInput.setText(config.getString("ui_url", PRIVATE_UI_URL));
+        uiUrlInput.setTextSize(14);
+        uiUrlInput.setSingleLine(true);
+        advancedTools.addView(uiUrlInput, new LinearLayout.LayoutParams(-1, dp(52)));
 
         trackPicker = new Spinner(this);
         trackPicker.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, TRACK_LABELS));
@@ -339,16 +348,34 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
         }
     }
 
-    /** Recording start passes live=1 so the page auto-opens a session and reconnects subtitles after refresh. */
-    private String privateUiUrl() {
-        return PRIVATE_UI_URL + (running ? "?live=1" : "");
+    /** 配置的聊天页基地址；默认本机，可改为 Tailscale HTTPS。 */
+    private String privateUiBase() {
+        String value = config.getString("ui_url", PRIVATE_UI_URL);
+        if (value == null) value = PRIVATE_UI_URL;
+        value = value.trim();
+        while (value.endsWith("/")) value = value.substring(0, value.length() - 1);
+        if (value.endsWith("/v12")) value = value.substring(0, value.length() - 4);
+        return value;
     }
 
-    private static boolean isPrivatePanelUrl(Uri uri) {
-        return uri != null &&
-                "http".equalsIgnoreCase(uri.getScheme()) &&
-                "127.0.0.1".equals(uri.getHost()) &&
-                uri.getPort() == 8791;
+    /** Recording start passes live=1 so the page auto-opens a session and reconnects subtitles after refresh. */
+    private String privateUiUrl() {
+        return privateUiBase() + "/v12" + (running ? "?live=1" : "");
+    }
+
+    /** 只允许停留在配置的同一 origin；其他链接交给系统浏览器。 */
+    private boolean isPrivatePanelUrl(Uri uri) {
+        if (uri == null) return false;
+        try {
+            Uri base = Uri.parse(privateUiBase());
+            return uri.getScheme() != null && base.getScheme() != null
+                    && uri.getScheme().equalsIgnoreCase(base.getScheme())
+                    && uri.getHost() != null && base.getHost() != null
+                    && uri.getHost().equalsIgnoreCase(base.getHost())
+                    && uri.getPort() == base.getPort();
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     @Override public void onBackPressed() {
@@ -400,6 +427,9 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
             return;
         }
         String base = urlInput.getText().toString().trim();
+        config.edit().putString("asr_url", base)
+                .putString("ui_url", uiUrlInput == null ? PRIVATE_UI_URL : uiUrlInput.getText().toString().trim())
+                .apply();
         if (!base.startsWith("ws://") && !base.startsWith("wss://")) {
             status.setText("服务端地址必须以 ws:// 或 wss:// 开头");
             return;
