@@ -12,6 +12,7 @@
 - 组合服务：`socialmate-v1.2/service-v040.sh`（8790 ASR + 8791 UI/AI，一个进程）
 - 本机档案：`SocialMate-Data/Profile/`（`GET/PUT /api/profile`，说明见 `docs/architecture-facts.md` §本机档案）
 - 会话归档：`socialmate-v1.2/archive-service.sh` + `socialmate-prototype/ai-gateway/archive-receiver.mjs`（8781，令牌鉴权；Tailscale `/alw`）
+- 私有入口：Tailscale `443/alw`→8781、`8443`→8791、`10000`→8790（仅 tailnet）
 - 海南公开 PWA：**https://wanghoufan.github.io/alw-001-foreign-language-social-system/**（gh-pages 分支，7 文件 + index）
 - V0.4.0 QA：`socialmate-v1.2/QA.md`
 - V1.2 正式 UI：`socialmate-v1.2/index.html`（ZIP `dist/SocialMate-V1.2-UI.zip`）
@@ -27,6 +28,7 @@
 - 2026-11-01：PWA 真机原生浏览器（Note 11 / MIUI）通过：115/115、详情收藏、`My list (1)`、分享链接与回传按钮可见。
 - 2026-11-01：PWA 已部署 GitHub Pages：公开资源 200、私有 API 全 404、手机公网 HTTPS 显示 115/115。
 - 2026-11-01：BOYA 复测非静音（A -24.1 / B -27.96 dBFS，L−R=0，0 削波）→ MONO_MIX 确认；TTS 三声源聚成 spk_0/1/2。
+- 2026-11-01：Note 12T Pro（UKCESWB67PUO7LPB / 100.94.116.99）USB 物理拔除后，经 Tailscale `wss:10000` + `https:8443` + `/alw` 完成录音→ASR→归档，全程零 `adb reverse`。
 - 2026-11-01：Mac 收尾完成；组合服务单进程提供 8790/8791，`/api/asr/status` 为 `combined:true`。
 - Note 11 已装 0.4.0（保留数据，61 个数据文件）；APK SHA-256 `da46425f7e5e1e69b243ac87171bf47f1301c2f32a25c52a23399236fdf69b7e`。
 - 回归 **102/102 Node + 2/2 TLS + 12 Android**；Gradle `BUILD SUCCESSFUL`。
@@ -52,7 +54,7 @@
 - Note 12T 当前未安装本项目 APK；未操作。
 - 无 USB/公网方案、正式分享页未接；个人故事文件仍为空。
 - 本机档案已可持久化，但尚未与会话收尾摘要、正式 `People/*.md` 归档打通；界面同步按钮只写私有快照。
-- 无 USB 日常链路未验收：Note 12T 被 MIUI 拒绝安装，Note 11 Tailscale 未登录（DNS unknown host）；当前 ASR/UI 仍需 adb reverse，归档已支持 Tailscale URL。
+- 无 USB 传输已验收（Note 12T Pro）；但坏证书拒绝未构造测试，无 USB 轮次未再次捕获用户新语音（用户语音已在 04:41 轮证明）。Note 11 的 Tailscale 仍未登录。
 - 归档 UI 历史列表、日期范围批量导出、正式 People Markdown 合并仍未做。
 - 海南 PWA 已部署 GitHub Pages；国内速度可能波动、无自定义域名，机型矩阵仅 Note 11。
 - 服务只绑本机回环，真机依赖无线/USB `adb reverse`；端口映射断开后页面会重连失败。

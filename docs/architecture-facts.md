@@ -63,7 +63,8 @@
 - Android `SessionArchive`：仅 `final`、逐字不 trim；勾选留存才写 `filesDir/archive/current.json`（原子写），停止后移入 `outbox/`，上传 2xx 才移入 `exported/`。
 - 归档地址与令牌存在本机 SharedPreferences（`socialmate-archive`），默认 `https://mac-mini.tail4e4317.ts.net/alw/api/archive/session`；未配置时显示「待配置」。
 - Mac `archive-receiver.mjs`：`127.0.0.1:8781`，`SM_ARCHIVE_TOKEN` 必填；`POST /api/archive/session`，≤512KB，令牌比对用 timingSafeEqual；`GET /health`。
-- Tailscale Serve：`/alw` → 8781（原有 `/` → 8779 不变）；真证书 HTTPS，只有 tailnet 可达。
+- Tailscale Serve：`443 /alw` → 8781、`8443` → 8791、`10000` → 8790（原有 `/` → 8779 不变）；真证书，只有 tailnet 可达。
+- App 地址可配置：`socialmate-config`（`asr_url`、`ui_url`）、`socialmate-archive`（`archive_url`、`archive_token`）；默认本机，可切 Tailscale。
 - 落盘：`~/Documents/SocialMate/Conversations/YYYY/MM/SocialMate-YYYY-MM-DD-HHMMSS-<sessionId>.md|.json`，0600；JSON 最后提交，重放幂等。
 
 ## 海南公开 PWA（2026-11-01）
