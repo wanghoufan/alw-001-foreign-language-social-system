@@ -358,7 +358,7 @@ V0.4.0 APK 实际输出路径：`android-poc/app/build/outputs/apk/debug/app-deb
 | PWA-05 | PASS | 已部署 GitHub Pages：公开资源 200，`/api/profile`、`/api/asr/live`、`/api/ai/analyze` 全部 404；包内无录音权限 |
 | APP-01 | PARTIAL | 本次 `BUILD SUCCESSFUL`、APK hash 已重算；按用户红线未跑全量回归，stage1b 未重跑 |
 | APP-02 | PASS（真人语音与双说话人） | BOYA 轮次 4 条 final；Note 12T 轮次用户真声 `spk_0` + TTS `spk_1`，双说话人分离；DeepSeek 建议卡本轮未重验 |
-| APP-03 | PARTIAL | Note 12T Pro（Tailscale 100.94.116.99）已用 wss:10000 + https:8443 + /alw 全程无 adb reverse 跑通；物理拔线复测与坏证书拒绝未做 |
+| APP-03 | PASS（传输）/ NOT_RUN（坏证书拒绝） | USB 物理拔除后仅 Wi-Fi ADB，`reverse` 为空；ASR `wss:10000`、UI `https:8443`、归档 `/alw` 均跑通并落盘 |
 | APP-04 | PASS | 真机 final 逐字写入 Mac MD/JSON（含识别错误）；断网 → 待导出 → 恢复后补传，无重复 |
 | APP-05 | PASS | 录音同意与留存同意分离；不勾选留存零落盘；ASR 预算 0.0423/1 元，AI 预算未变 |
 | APP-06 | PASS（非静音）/ N/A（真分轨） | 2026-11-01 复测 A -24.1、B -27.96 dBFS，L−R=0，0 削波，`routeVerified=true` → 确认 MONO_MIX；真分轨不成立，固定走混音+说话人分离 |
@@ -408,3 +408,13 @@ V0.4.0 APK 实际输出路径：`android-poc/app/build/outputs/apk/debug/app-deb
   - 原文两条：用户真声「不能分开的3个档位吗？」→ `spk_0`；TTS「对着手机说4句英文。」→ `spk_1`，**双说话人分离成立**。
 - 未完成：物理拔掉 USB 后复测；坏证书/非法令牌拒绝（令牌 401 已在 Mac 侧验证）；DeepSeek 同意与建议卡未在本轮启用。
 - PWA 测试口径：公开页面只用手机自带浏览器（Note 11 `com.android.browser` 已验证），不使用 Chrome。
+
+### 2026-11-01 USB 物理拔除后的无 USB 验收（Note 12T Pro）
+
+- 拔线后设备只剩 `192.168.31.105:5555`（Wi-Fi ADB），`adb reverse --list` 为空。
+- 链路：ASR `wss://mac-mini.tail4e4317.ts.net:10000/asr`、聊天页 `https://…:8443/v12?live=1`、归档 `https://…/alw/api/archive/session`。
+- 三轮会话全部停止后自动归档到 Mac，未出现 outbox 积压：
+  - `2026-11-01-044131`：用户真声「不能分开的3个档位吗？」→ `spk_0`，TTS → `spk_1`（双说话人）；
+  - `2026-11-01-051542`、`051644`：仅捕获 TTS 与系统提示音，未捕获用户新语音。
+- 结论：**传输链路已不依赖 USB**；用户语音能力已在 `044131` 轮证明。坏证书/非法令牌拒绝仅完成令牌 401（Mac 侧），TLS 坏证书未构造测试。
+- 证据哈希：`051542` MD `a2f57c59bfdee0085bdc3ab56ac3d27fa79667ea48a6818f94fbea317ba91944`、JSON `6286775527abb8d2584827c67ef6749876cfd6c83b568b7b591128d04cafdb8f`。
