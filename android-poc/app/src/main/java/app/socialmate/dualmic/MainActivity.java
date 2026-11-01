@@ -117,13 +117,16 @@ public final class MainActivity extends Activity {
         TextView t = new TextView(this);
         t.setText(value);
         t.setTextSize(sp);
+        // 背景固定浅色，文字颜色也固定，避免系统深色模式把字变白（白字白底看不见）。
+        t.setTextColor(0xFF1C293A);
         t.setPadding(0, dp(7), 0, dp(7));
         root.addView(t);
         return t;
     }
     private Button button(LinearLayout root, String caption, View.OnClickListener action) {
         Button b = new Button(this);
-        b.setAllCaps(false); b.setText(caption); b.setTextSize(16); b.setOnClickListener(action);
+        b.setAllCaps(false); b.setText(caption); b.setTextSize(16); b.setTextColor(0xFF1C293A);
+        b.setOnClickListener(action);
         root.addView(b, new LinearLayout.LayoutParams(-1, dp(51)));
         return b;
     }

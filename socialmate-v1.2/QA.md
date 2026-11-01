@@ -494,3 +494,14 @@ V0.4.0 APK 实际输出路径：`android-poc/app/build/outputs/apk/debug/app-deb
   - 写入链路用临时档案目录 `SM_PROFILE_DIR=/tmp/sm-apply-smoke` 实测：首次 `{stories:1, notes:1, people:1, sources:2}`，重复提交 `unchanged:true` + 两条 `DUPLICATE`；`current.md` 含「来源记录」段；`current.json` 权限 0600（`current.md` 为 0644，与既有行为一致）。测完已重启回默认目录，正式档案仍为 `profile:null`（未被测试污染）。
 - Android 0.5.3（versionCode 13）：`本轮原文与复盘` 按钮入录音页，未开始录音时 `enabled=false`（真机 Note 11 5G 已装并截图 `screenshots/android-053-review-entry-note11.png`，APK SHA-256 `98f2591d…`）。
 - 未完成（NOT_RUN）：真机「停止录音 → 点入口 → WebView 内确认保存」未跑（需要真人说话产生 final；本轮的按钮态与页面深链分别验证）；正式 `SocialMate-Data/People/<slug>/00-profile.md` 仍不自动改写，需下一步单独设计（当前只写本机 Profile）。
+
+### 2026-11-01 Android 深色模式文字不可见（真机 Note 11 5G，缺陷修复 0.5.4）
+
+- 现象：系统处于深色模式（`cmd uimode night` → `Night mode: yes`）时，App 正文几乎不可见，只剩按钮文字可读；`uiautomator dump` 能读到文本，说明控件存在、纯属对比度问题。
+- 根因：`res/values-night/styles.xml` 把 `AppTheme` 继承到深色 `@android:style/Theme.Material.NoActionBar`，TextView/CheckBox 默认文字色变白；而页面底色（`0xFFF5F7F8`）、卡片（`0xFFFFFFFF`）全部写死浅色 → **白字白底**。此前只有部分标题/按钮显式设了颜色，所以只有按钮看得清。
+- 修复：
+  - `values-night/styles.xml` 强制 `Theme.Material.Light.NoActionBar`（本 UI 是固定浅色设计，不应跟随系统深色）；
+  - `AsrActivity` / `MainActivity` 的 `text()` 统一 `setTextColor(0xFF1C293A)`，CheckBox、普通按钮、EditText（含 hint）、Spinner（自定义 getView/getDropDownView）都补显式颜色。
+- 版本：**0.5.4（versionCode 14）**，APK SHA-256 `b5dda555f7c7428556331a9ba5b0b226445502e20c4205eef3e3c8ed18192aca`；已装 Note 11 5G，深色模式下重启后两页文字全部可读。
+- 证据截图：`screenshots/android-054-readable-main-note11.png`、`screenshots/android-054-readable-asr-note11.png`（对比旧图 `android-053-review-entry-note11.png`）。
+- 边界：未逐台验证深色模式下 WebView 内的 V1.2 页面（该页面自带浅色/深色切换，不受 Android 主题影响）。

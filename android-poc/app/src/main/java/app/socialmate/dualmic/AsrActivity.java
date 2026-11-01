@@ -103,6 +103,8 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
         TextView t = new TextView(this);
         t.setText(value);
         t.setTextSize(sp);
+        // 页面与卡片底色固定浅色，文字颜色也固定，避免系统深色模式把字变成白色（白字白底看不见）。
+        t.setTextColor(0xFF1C293A);
         t.setPadding(0, dp(6), 0, dp(6));
         root.addView(t);
         return t;
@@ -113,6 +115,7 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
         b.setAllCaps(false);
         b.setText(caption);
         b.setTextSize(16);
+        b.setTextColor(0xFF1C293A);
         b.setOnClickListener(action);
         root.addView(b, new LinearLayout.LayoutParams(-1, dp(52)));
         return b;
@@ -181,11 +184,13 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
         recordingConsent = new CheckBox(this);
         recordingConsent.setText("我已告知并获得同行者同意录音，且了解音频会发送到自己配置的腾讯云 ASR 服务。");
         recordingConsent.setTextSize(16);
+        recordingConsent.setTextColor(0xFF1C293A);
         recordingConsent.setPadding(0, dp(6), 0, dp(8));
         recordingCard.addView(recordingConsent, new LinearLayout.LayoutParams(-1, -2));
         retentionConsent = new CheckBox(this);
         retentionConsent.setText("允许把本次已定稿原文保存到手机并自动导出到我的 Mac（不上传云端；不勾选则不留存）。");
         retentionConsent.setTextSize(15);
+        retentionConsent.setTextColor(0xFF1C293A);
         retentionConsent.setChecked(true);
         retentionConsent.setPadding(0, 0, 0, dp(8));
         recordingCard.addView(retentionConsent, new LinearLayout.LayoutParams(-1, -2));
@@ -207,29 +212,52 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
         urlInput = new EditText(this);
         urlInput.setText(config.getString("asr_url", DEFAULT_URL));
         urlInput.setTextSize(16);
+        urlInput.setTextColor(0xFF1C293A);
+        urlInput.setHintTextColor(0xFF6B7889);
         urlInput.setSingleLine(true);
         advancedTools.addView(urlInput, new LinearLayout.LayoutParams(-1, dp(54)));
         text(advancedTools, "聊天页地址（本机或 Tailscale HTTPS）", 14);
         uiUrlInput = new EditText(this);
         uiUrlInput.setText(config.getString("ui_url", PRIVATE_UI_URL));
         uiUrlInput.setTextSize(14);
+        uiUrlInput.setTextColor(0xFF1C293A);
+        uiUrlInput.setHintTextColor(0xFF6B7889);
         uiUrlInput.setSingleLine(true);
         advancedTools.addView(uiUrlInput, new LinearLayout.LayoutParams(-1, dp(52)));
 
         trackPicker = new Spinner(this);
-        trackPicker.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, TRACK_LABELS));
+        trackPicker.setBackgroundColor(0xFFFFFFFF);
+        trackPicker.setAdapter(new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_dropdown_item, TRACK_LABELS) {
+            @Override public View getView(int position, View convertView, ViewGroup parent) {
+                TextView v = (TextView) super.getView(position, convertView, parent);
+                v.setTextColor(0xFF1C293A);
+                v.setTextSize(15);
+                return v;
+            }
+            @Override public View getDropDownView(int position, View convertView, ViewGroup parent) {
+                TextView v = (TextView) super.getDropDownView(position, convertView, parent);
+                v.setTextColor(0xFF1C293A);
+                v.setTextSize(15);
+                return v;
+            }
+        });
         advancedTools.addView(trackPicker, new LinearLayout.LayoutParams(-1, dp(58)));
 
         text(advancedTools, "原文归档接收端（只存本机；令牌不写入日志）", 15);
         archiveUrlInput = new EditText(this);
         archiveUrlInput.setText(archive.archiveUrl());
         archiveUrlInput.setTextSize(14);
+        archiveUrlInput.setTextColor(0xFF1C293A);
+        archiveUrlInput.setHintTextColor(0xFF6B7889);
         archiveUrlInput.setSingleLine(true);
         advancedTools.addView(archiveUrlInput, new LinearLayout.LayoutParams(-1, dp(52)));
         archiveTokenInput = new EditText(this);
         archiveTokenInput.setText(archive.token());
         archiveTokenInput.setHint("归档令牌（只存本机）");
         archiveTokenInput.setTextSize(14);
+        archiveTokenInput.setTextColor(0xFF1C293A);
+        archiveTokenInput.setHintTextColor(0xFF6B7889);
         archiveTokenInput.setSingleLine(true);
         archiveTokenInput.setInputType(android.text.InputType.TYPE_CLASS_TEXT
                 | android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD);

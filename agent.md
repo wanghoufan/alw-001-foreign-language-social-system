@@ -82,3 +82,8 @@
 - 测写入路径时用 `SM_PROFILE_DIR=/tmp/xxx` 重启服务，别把测试候选写进正式 `SocialMate-Data/Profile`；测完重启回默认目录并用 `/api/profile` 确认仍是 `null`。
 - ASR 会重复定稿同一句，复盘候选容易出现近似重复（只差一个词）；去重按归一化子串 + 词集 Jaccard ≥ 0.8，保留更完整的一条。
 - 说话人只有聚类编号：任何候选 `attribution` 都只能是 `unknown`，让用户在界面上选「关于我 / 人物 / 不保存」。
+
+## 深色模式 / 配色
+
+- 这个 App 的布局是固定浅色（`0xFFF5F7F8` / `0xFFFFFFFF` 写死），所以**不能**让主题继承深色 `Theme.Material`：`values-night` 里必须保持 Light，否则 TextView 默认文字变白，白字白底等于看不见（0.5.3 及更早版本在深色模式下就是这种情况）。
+- 新增控件不要依赖主题默认文字色，`text()` 已统一 `setTextColor(0xFF1C293A)`；CheckBox / Spinner / EditText 需要单独补色（Spinner 要自定义 `getView` 与 `getDropDownView`）。

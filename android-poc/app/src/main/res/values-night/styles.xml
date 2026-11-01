@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="AppTheme" parent="@android:style/Theme.Material.NoActionBar" />
+    <!--
+      本 UI 是固定的浅色设计（卡片、页面底色都写死为白色/浅灰）。
+      系统进入深色模式时若继承 Theme.Material（深色），TextView/CheckBox 默认文字会变白，
+      在白色卡片上直接看不见（真机 Note 11 深色模式实测）。
+      这里强制浅色，保证文字与背景对比度。
+    -->
+    <style name="AppTheme" parent="@android:style/Theme.Material.Light.NoActionBar" />
 </resources>
