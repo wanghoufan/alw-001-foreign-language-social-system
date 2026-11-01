@@ -53,7 +53,8 @@
 
 ## 本机档案（2026-11-01 新增）
 
-- 存储：`SocialMate-Data/Profile/current.json`（权威，0600）+ `current.md`（人读）。
+- 存储：`SocialMate-Data/Profile/current.json`（权威，0600）+ `current.md`（人读，0600）。
+- 目录 0700；临时文件 0600；服务启动时 `tightenPermissions()` 把历史遗留的 0644（如 `current.md`）收紧到 0600，只改权限不改正文。
 - 写入：`PUT /api/profile`，必须带 `confirm:true`（服务层校验，缺失返回 400 `CONFIRM_REQUIRED`）；单次 ≤64KB，只保留 stories/people 已知字段。
 - 读取：`GET /api/profile`；V1.2 页面加载时若服务端 `updatedAt` 更新才恢复，否则保留本地。
 - 界面：`/v12` 的「关于我」页有「同步到本机档案」按钮，`profile-sync.js` 由服务端同源提供；`file://` 或离线时脚本静默失效，仍纯 localStorage。
@@ -69,7 +70,18 @@
 - 落盘：`~/Documents/SocialMate/Conversations/YYYY/MM/SocialMate-YYYY-MM-DD-HHMMSS-<sessionId>.md|.json`，0600；JSON 最后提交，重放幂等。
 - 历史 UI（2026-11-01）：`archive-history.mjs` 只读扫描上述目录；`GET /api/archive/{list,session,export}` 需 `x-archive-token`，日期区间按 **UTC** 比较；`GET /history` 只返回静态壳（无数据）。私有 UI 经 `server.mjs` 的 `/v12/history` 与 `/v12/api/archive/*` 同源反代（仅 GET，令牌透传，归档端未启动返回 503 `ARCHIVE_UNAVAILABLE`）。
 
-## 海南公开 PWA（2026-11-01）
+## 会后复盘确认写入（2026-11-01 N02）
+
+- 模块：`session-review.mjs`（复盘引擎）→ `review-confirm.mjs`（事务编排）→ `profile-store.mjs`（本机档案）+ `people-store.mjs`（正式人物主档）。
+- `POST /v12/api/review`：`x-archive-token` 必填；`mode=local` 0 次外部请求，`mode=ai` 需当轮 `consent:true` + 1 元预算闸。
+- `POST /v12/api/review/apply`：令牌必填 → 先经归档服务取会话（令牌无效 401 / 会话不存在 404）→ 段号必须命中该会话真实段号（否则 `SEGMENT_NOT_FOUND`）→ 再写盘。限流：同一进程 60s 内最多 12 次、最小间隔 400ms，超出 429。
+- 人物归属：只接受用户显式选择的**真实人物主档 slug**（`GET /v12/api/people` 列出现有 `People/<slug>/00-profile.md`）；未选择 → `PERSON_NOT_SELECTED`，不新建人物、不按显示名猜人。
+- 写入顺序：先 People（逐文件原子替换 + 写前备份 `.sm-backup/` + 写后自检 `sm-src:<key>`），再 Profile；Profile 失败时用备份回滚 People，杜绝“界面说已保存、实际只写了一半”。
+- 幂等：`sessionId + 段号 + 文本指纹`；People 行内嵌入不可见 `<!--sm-src:key-->` 标记用于跨重启去重。用户改写候选时，`sources[].original` 保留原始候选文本。
+- People 分节映射：`interest/work/hainan/common/plan/preference/topics/basic/avoid` → 模板同名 `# 章节`；只追加到章节末尾，不动 front matter 与人工段落；文件 0600、目录 0700。
+- 同源校验：`Origin` 与本次请求 `Host`（或 `x-forwarded-host`）一致即视为同源，覆盖 Tailscale Serve 的 `https://<host>:8443`；只认 `127.0.0.1:<port>` 会把真机 POST 全部 403。
+
+
 
 - 源文件：`socialmate-prototype/public-share.html/js` + `public-places.js` + `styles.css` + `manifest.webmanifest` + `sw.js` + `icon.svg`。
 - 打包：`node socialmate-prototype/package-public-share.cjs`；只允许 7 文件，拒绝 `/api`、profile/asr/ai、DeepSeek、麦克风与私有页面引用。

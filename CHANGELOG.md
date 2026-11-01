@@ -3,7 +3,15 @@
 ## 2026-11-01
 
 - 修复深色模式文字不可见：`values-night` 曾把主题继承到深色 `Theme.Material`，而页面/卡片写死浅色，导致白字白底；改为强制浅色主题，并给正文、CheckBox、按钮、EditText、Spinner 补显式文字色。Android **0.5.4（14）** 真机（Note 11 5G，深色模式）两页文字均清晰可读。
-- 会后复盘闭环（P0）：停止录音后可查看本轮原文 → 生成复盘（本地规则 / 云端 AI 二选一）→ 逐条勾选编辑归属 → 显式确认写入本机档案。
+- **正式人物主档同步（N02 P1）**：新增 `people-store.mjs` 与 `review-confirm.mjs`。用户确认的候选若归属到某个真实 `People/<slug>/00-profile.md`，会追加到对应语义章节（兴趣/工作学习/共同点/偏好等），保留 front matter 与人工段落、只追加不改写；每条事实带「会话 ID · 段号 · 确认时间」来源与不可见 `<!--sm-src:key-->` 幂等标记。写盘为「备份 → 临时文件 → 原子替换 → 写后自检」，失败用备份回滚；文件 0600、目录 0700。先写 People 再写 Profile，Profile 失败时自动回滚 People，避免“界面说已保存、实际只写一半”。
+- **复盘写入服务端边界收紧（N02 P0.2）**：`POST /v12/api/review/apply` 现在必须带归档令牌，并用归档里的真实会话校验 `sessionId` 与段号（无令牌 401 / 假令牌 401 / 会话不存在 404 / 段号不存在则整条拒收 `SEGMENT_NOT_FOUND`）；`confirm:true` 不再能自证来源。新增 60s/12 次 + 400ms 间隔限流（429）。人物事实只接受用户显式选择的真实人物 slug，未选择则 `PERSON_NOT_SELECTED`，不再按显示名猜人或自动建人。新增 `GET /v12/api/people`（需令牌）供复盘页选择归属目标。用户改写候选时保留原始候选文本 `sources[].original`。
+- **修复真机经 Tailscale 的 POST 全部 403**：`originOK` 此前只认 `http://127.0.0.1:<port>`，真机从 `https://<host>:8443` 打开时 Origin 与 Host 同源却被拒。改为「Origin 的 host:port 等于本次请求 Host（或 `x-forwarded-host`）即为同源」，跨源页面仍 403。
+- **隐私权限收紧（N02 P2）**：`SocialMate-Data/Profile/current.md` 由 0644 改 0600（与服务层一致的显式 mode），档案目录 0700、临时文件 0600；服务启动时巡检并收紧历史 0644 文件，只改权限不改正文。
+- 复盘页 UI：人物归属改为从真实人物主档下拉选择 + 章节下拉；403 错误按 `code` 区分（来源被拒 / 未勾选 AI 同意），不再把任何 403 都说成“未勾选同意”。
+- 测试基建修复（与本次功能无关的历史红灯）：`test-display-and-ai.mjs`/`test-live-asr.mjs` 取「最后一个 script」被 `profile-sync.js` 外部脚本顶掉，导致 16 项误报；`test-android-wiring.mjs` 仍断言 0.4.0/versionCode 9/明文开启。均按原测试意图改为取真实内联主脚本、断言版本号格式与 `usesCleartextTraffic=false`。
+- 预检脚本 `verify-v040.sh` 新增 2b 步：归档/复盘/本机档案/人物主档写入链路 52 项定向测试（临时目录，不碰真实档案）。
+- 真机（Note 11 5G，0.5.4/14）实走：「本轮原文与复盘」→ WebView 深链到本轮原文 → 生成本地复盘（0 次 AI）→ 勾选候选 → 选 Test-Anna + 兴趣章节 → 确认保存 → 「已保存：人物备注 +1 · 人物主档 +1」→ 重开页面重复保存得 `DUPLICATE`、档案字节不变 → 「关于我」回读两处事实。测试全程用**隔离实例 + 虚构会话 + 临时目录**，真实 `SocialMate-Data` 未被写入。
+- **会后复盘闭环（P0，上一轮）**：停止录音后可查看本轮原文 → 生成复盘（本地规则 / 云端 AI 二选一）→ 逐条勾选编辑归属 → 显式确认写入本机档案。
   - 新增 `session-review.mjs`：本地引擎 `aiUsed:false`、0 次外部请求；AI 引擎候选必须带真实段号，指不到段号的直接丢弃；近似重复候选只留更完整的一条；所有候选归属一律「未知」。
   - 新增 `POST /v12/api/review`（归档令牌 + local/ai 双模式，AI 需当轮同意且受 1 元预算闸）与 `POST /v12/api/review/apply`（`confirm:true` 必填、只追加不覆盖、按会话+段号+文本指纹去重）。
   - 归档历史详情页新增复盘区块与 `?session=` 深链；Android 0.5.3 录音页新增「本轮原文与复盘」按钮。

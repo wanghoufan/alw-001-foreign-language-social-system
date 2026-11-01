@@ -14,22 +14,32 @@ const live=fs.readFileSync(path.join(root,"socialmate-prototype/ai-gateway/live-
 const gateway=fs.readFileSync(path.join(root,"socialmate-prototype/ai-gateway/server.mjs"),"utf8");
 const ui=fs.readFileSync(path.join(root,"socialmate-v1.2/index.html"),"utf8");
 test("Android version and network permissions for localhost private UI",()=>{
-  assert.match(gradle,/versionCode 9/);
-  assert.match(gradle,/versionName '0\.4\.0'/);
+  // 不断言具体版本数字（会随迭代增长）：断言版本号存在且格式合法、构建号递增。
+  const versionCode=Number((gradle.match(/versionCode\s+(\d+)/)||[])[1]);
+  const versionName=(gradle.match(/versionName\s+'([^']+)'/)||[])[1];
+  assert.ok(Number.isInteger(versionCode)&&versionCode>=14,"versionCode 必须存在且不小于已发布的 14");
+  assert.match(versionName||"",/^\d+\.\d+\.\d+$/,"versionName 必须是 主.次.修订");
   assert.match(manifest,/android\.permission\.INTERNET/);
-  assert.match(manifest,/usesCleartextTraffic="true"/);
+  // 0.5.2 起关闭全局明文，仅经 network_security_config 放行回环。
+  assert.match(manifest,/usesCleartextTraffic="false"/);
+  assert.match(manifest,/networkSecurityConfig/);
+  const netsec=fs.readFileSync(path.join(root,"android-poc/app/src/main/res/xml/network_security_config.xml"),"utf8");
+  assert.match(netsec,/cleartextTrafficPermitted="false"/);
+  assert.match(netsec,/127\.0\.0\.1/);
 });
 test("single Android Activity keeps recorder in foreground while showing WebView",()=>{
   assert.match(android,/screenRoot\.addView\(webPanel/);
   assert.match(android,/showSocialMatePanel\(\);/);
   assert.match(android,/PRIVATE_UI_URL = "http:\/\/127\.0\.0\.1:8791\/v12"/);
+  assert.match(android,/privateUiUrl\(\)/);
   assert.match(android,/socialMateWebView\.reload\(\)/);
   assert.match(android,/stopStreaming\("切到后台"\)/);
   assert.doesNotMatch(android,/addJavascriptInterface\s*\(/);
   assert.match(android,/setAllowFileAccess\(false\)/);
   assert.match(android,/setAllowContentAccess\(false\)/);
   assert.match(android,/isPrivatePanelUrl\(uri\)/);
-  assert.match(android,/PRIVATE_UI_URL \+ \(running \? "\?live=1" : ""\)/);
+  // 聊天页地址由 privateUiUrl() 统一拼接（0.5.3 起支持配置 ui_url 并剥离尾部 /v12）。
+  assert.match(android,/privateUiBase\(\) \+ "\/v12"/);
   assert.match(android,/FLAG_DEBUGGABLE.*setWebContentsDebuggingEnabled|setWebContentsDebuggingEnabled\(true\)/);
   assert.match(gateway,/\/api\/asr\/status/);
   assert.match(gateway,/features:\{asrLive:bridge\.combined/);

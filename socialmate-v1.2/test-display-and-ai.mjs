@@ -12,7 +12,8 @@ function payload(value){
   return JSON.parse(value.match(/<script type="application\/json" id="dataset">([\s\S]*?)<\/script>/)[1]);
 }
 const D=payload(html);
-const js=[...html.matchAll(/<script(?:\s+[^>]*)?>([\s\S]*?)<\/script>/g)].map(x=>x[1]).at(-1);
+// 取真正的主逻辑内联脚本：外部引用（src=...）与 dataset 的 JSON 脚本不算。
+const js=[...html.matchAll(/<script(?![^>]*\bsrc=)(?![^>]*application\/json)[^>]*>([\s\S]*?)<\/script>/g)].map(x=>x[1]).filter(x=>x.trim()).at(-1);
 
 function createHarness({origin='null',cloudResult=null,stored={}}={}){
   const nodes=new Map(),handlers={},calls=[];

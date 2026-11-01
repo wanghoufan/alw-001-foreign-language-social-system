@@ -27,6 +27,14 @@ LOG="$LOGDIR/verify-$(date '+%Y%m%d-%H%M%S').log"
   "$NODE_BIN" --test socialmate-prototype/ai-gateway/core.test.mjs \
      socialmate-prototype/ai-gateway/asr-final-adapter.test.mjs \
      socialmate-prototype/ai-gateway/live-asr-hub.test.mjs
+  echo "2b. 归档 / 复盘 / 本机档案 / 人物主档写入链路测试（临时目录，不碰真实档案）"
+  "$NODE_BIN" --test socialmate-prototype/ai-gateway/conversation-archive.test.mjs \
+     socialmate-prototype/ai-gateway/archive-history.test.mjs \
+     socialmate-prototype/ai-gateway/profile-store.test.mjs \
+     socialmate-prototype/ai-gateway/profile-apply.test.mjs \
+     socialmate-prototype/ai-gateway/session-review.test.mjs \
+     socialmate-prototype/ai-gateway/people-store.test.mjs \
+     socialmate-prototype/ai-gateway/review-confirm.test.mjs
   echo "3. ASR bridge protocol / event callback tests"
   NPM_BIN="$(dirname "$NODE_BIN")/npm"
   [[ -x "$NPM_BIN" ]] || NPM_BIN="$(command -v npm || true)"

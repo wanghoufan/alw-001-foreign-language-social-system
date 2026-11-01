@@ -18,33 +18,31 @@
 
 ## 1. 当前进展
 
-- **会后复盘闭环已落地**：停止录音 → `/v12/history?session=` 本轮原文 → 本地/云端复盘 → 逐条勾选编辑归属 → 显式确认写 `SocialMate-Data/Profile`（只追加、按会话+段号+文本指纹去重、来源入 `sources`）。Android **0.5.3（13）** 录音页新增「本轮原文与复盘」。
-- Android **0.5.2（versionCode 12）** 已装 Note 12T Pro；明文只放行回环、坏证书默认拒绝（细节见 `docs/architecture-facts.md` §Android）。
+- **复盘 → 确认 → 本机档案 → 正式人物主档已打通**：停止录音 → `/v12/history?session=` 本轮原文 → 本地/云端复盘 → 逐条勾选编辑归属 → 显式确认 → 写 `SocialMate-Data/Profile`（只追加、会话+段号+指纹去重）+ 追加到 `People/<slug>/00-profile.md` 对应章节（带来源与幂等标记，0600/0700，写前备份、失败回滚）。
+- 写入边界：`/v12/api/review/apply` 需归档令牌 + 归档真实会话校验段号；人物只能选真实 `People` slug；60s/12 次限流；同源校验改为「Origin 与 Host 一致」，覆盖 Tailscale `8443`。
+- Android **0.5.4（14）** 已装 Note 11 5G（深色模式文字可读）；本轮无 Android 源码改动，重建 APK 与已装版本哈希一致 `b5dda555…`。
 - **无 USB 链路已验收**：`adb reverse` 为空，录音→`wss:10000`→ASR→`https:8443` 聊天页→`/alw` 归档全程走 Tailscale。
 - **归档**：final-only 逐字落 `~/Documents/SocialMate/Conversations/YYYY/MM/`；历史 UI（列表 / 原文 / 按 UTC 日期导出）已完成并真机验收。
 - **海南 PWA** 已上线 gh-pages：115/115、中英、筛选、单点 `Share place` 均通；清单回发按用户决定暂停。
-- **DeepSeek 独立授权**端到端通过：未勾选 0 次 `/api/ai/*`，勾选后出真实建议卡；累计 0.21106 / 1 元。ASR 0.129 / 1 元。
-- 测试：归档 10/10、历史 5/5；其余回归 102/102 Node + 12 Android（本轮未重跑）。
-- BOYA 确认为 **MONO_MIX**（A -24.1 / B -27.96 dBFS，L−R=0）；现场真人双人仍 NOT_RUN。
+- **DeepSeek 独立授权**端到端通过；累计 0.213634 / 1 元。ASR 0.129189 / 1 元。
+- 测试：`verify-v040.sh` 全绿（158 项 Node + 12 Android core + APK 构建）。
 
 ## 2. 下一步
 
-1. **现场双人**（需用户在场）：本人对着发射器说话，看 `spk_0 / spk_1` 与聊天页字幕是否稳定。
-2. 真机走一遍「停止录音 → 本轮原文与复盘 → 勾选 → 确认保存」（需真人说话产生 final）。
-3. 借到 iPhone 后补 PWA Safari 验收。
-4. 复盘候选落正式 `SocialMate-Data/People/<slug>/00-profile.md`：需先定模板与写入约定，当前只写本机 Profile。
-5. 确认后的话题/人物再落 `SocialMate-Data/People/<slug>/00-profile.md`，与正式 Markdown 对齐。
+1. **真人全链**（需用户在场）：真人说话 → 停止 → 点「本轮原文与复盘」→ 勾选 → 确认保存 → 重开「关于我」。
+2. **现场双人**：本人对着发射器说话，看 `spk_0 / spk_1` 与聊天页字幕是否稳定。
+3. 服务重启/断网后手机自动重连与 outbox 补传的真机复测。
+4. 借到 iPhone 后补 PWA Safari 验收。
 
 ## 3. 未完成
 
-- 真机复盘端到端点击未跑；按钮态与深链分别验过（0.5.3 真机截图在 `socialmate-v1.2/screenshots/`）。
-- 本机档案未与正式 `People/*.md` 打通（本轮只落 Profile）。
+- 真人说话 → App 内按钮 → 确认保存未跑（需真人产生 final）；本轮真机证据是「隔离实例 + 合成会话 + 真实点击」，已标 PARTIAL。
 - 现场真人双人 NOT_RUN（非硬件无声问题）。
 - PWA 机型矩阵缺 **iPhone Safari**；国内访问速度可能波动，无自定义域名。
-- 真机点 `☆ Want to go` 后计数 0→1 未取到 a11y 证据（星标不在 a11y 树，一次点击后浏览器跳走）。
 - 历史 UI 的「按日期导出」只在 Mac 与桌面浏览器验过，**手机内未点过下载**。
 - 服务只绑回环，真机依赖 Tailscale 或 `adb reverse`；映射断开后页面需重连。
 - `spk_N` 只是聚类编号，不保证真实身份；UI 固定「待确认」。
+- 新建人物主档仍未开放：只在已存在的 `People/<slug>/` 里追加，新建/合并人物必须由用户在文件系统侧决定。
 
 ## 4. 红线
 
@@ -73,6 +71,7 @@
 - 2026-11-01：Android 0.5.2 关闭全局明文、仅放行回环；真机差分验证明文与自签名证书边界。
 - 2026-11-01：DeepSeek 授权端到端；PWA Note 12T Pro 自带浏览器 `115/115` 与 `?selected` 回显；**清单回发按用户决定暂停**（代码保留）。
 - 2026-11-01：会后复盘闭环：`session-review.mjs`（本地规则 / DeepSeek 双引擎）、`POST /v12/api/review` 与 `/apply`、历史详情复盘 UI 与 `?session=` 深链、Android 0.5.3 入口按钮；定向 13/13；真实 AI 成本 0.002574 元（累计 0.213634 / 1 元）；写入链路在临时档案目录验完，正式档案未被污染。
+- 2026-11-01 N02：`people-store.mjs` + `review-confirm.mjs` 打通「确认 → People 正式主档」；`/apply` 加令牌+段号+限流；修复 Tailscale 同源 403；`current.md` 收紧 0600；真机（隔离实例+合成会话）点击式确认保存与二次读取 PASS；`verify-v040.sh` 158 项全绿；测试基建修 3 处历史红灯。
 
 ## 6. 接续提示词
 

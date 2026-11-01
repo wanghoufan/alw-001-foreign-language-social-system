@@ -505,3 +505,39 @@ V0.4.0 APK 实际输出路径：`android-poc/app/build/outputs/apk/debug/app-deb
 - 版本：**0.5.4（versionCode 14）**，APK SHA-256 `b5dda555f7c7428556331a9ba5b0b226445502e20c4205eef3e3c8ed18192aca`；已装 Note 11 5G，深色模式下重启后两页文字全部可读。
 - 证据截图：`screenshots/android-054-readable-main-note11.png`、`screenshots/android-054-readable-asr-note11.png`（对比旧图 `android-053-review-entry-note11.png`）。
 - 边界：未逐台验证深色模式下 WebView 内的 V1.2 页面（该页面自带浅色/深色切换，不受 Android 主题影响）。
+
+### 2026-11-01 N02 · 复盘确认写入 + 正式人物主档同步（P0/P1/P2）
+
+**改动范围**：`ai-gateway/{people-store,review-confirm,profile-store,server}.mjs`、`archive-history.html`、`verify-v040.sh`、两个测试夹具修正。Android 源码未改，APK 仍为 **0.5.4（versionCode 14）**，重建 SHA-256 `b5dda555f7c7428556331a9ba5b0b226445502e20c4205eef3e3c8ed18192aca`（与手机内已装版本一致，无需重装）。
+
+**自动化**：`bash socialmate-v1.2/verify-v040.sh` 全绿 —— 前端 24、TLS/安装引导 4、网关 15、归档/复盘/档案/人物写入 52、ASR 桥 40、重建后前端 23（共 158 项 Node 测试）+ 12 项 Android core 断言 + APK 构建；日志 `socialmate-v1.2/.local/qa/verify-20261101-192916.log`。
+
+**接口边界实测（真服务 8791，curl）**：
+
+| 场景 | 结果 |
+|---|---|
+| `review/apply` 无令牌 | **401** `TOKEN_REQUIRED` |
+| `review/apply` 假令牌 | **401** `UNAUTHORIZED` |
+| `review/apply` 不存在的会话 | **404** `SESSION_NOT_FOUND` |
+| `review/apply` 段号不存在 | 200 + `skipped[].reason=SEGMENT_NOT_FOUND`，档案无改动 |
+| 人物候选未选人 | 200 + `PERSON_NOT_SELECTED`，两处都不写 |
+| 连续两次写入 | 第二次 **429** `RATE_LIMITED` |
+| `api/people` 无令牌 / 有令牌 | 401 / 200（返回 `Test-Anna`） |
+| 经 Tailscale 同源 POST（Host=Origin） | **200**（修复前为 403 `ORIGIN_REJECTED`） |
+| 跨源页面 Origin=evil.example.com | **403** `ORIGIN_REJECTED` |
+| 全程真实 `SocialMate-Data/Profile` | 未生成目录（`ls` 报 No such file），真实 People 主档 mtime 仍为 10-04 |
+
+**真机闭环（Note 11 5G，Android 0.5.4/14，深色模式）**：
+- 环境：隔离实例（归档 8789 + 网关 8799，`SM_CONVERSATION_DIR`/`SM_PROFILE_DIR`/`SM_PEOPLE_DIR` 全指临时目录），会话为**虚构合成样本** `sess_isotest20261101_a1b2c3`（3 段，provider `synthetic`、`MOCK` 标记）；设备侧 `adb reverse tcp:8791 tcp:8799` 使 App 常规入口指向隔离实例，不触碰真实服务与真实档案。
+- 操作路径：App →「查看聊天与推荐」（复用既有 WebView）→ `Page.navigate` 到 `/v12/history?session=…` → 页面内输入令牌 → 真实点击「连接并读取」→ 深链落到本轮原文（3 段逐字可见）→ 真实点击「生成本地复盘（不调用 AI）」→ 3 条候选（引擎徽标「本地规则 · 未调用任何 AI」）→ 真实点击第 3 条勾选框 → 选择人物 `Test-Anna` 与章节「兴趣」→ 真实点击「确认保存到本机档案」→ 页面显示「已保存：人物备注 +1 · 人物主档 +1（Test-Anna:interest）」。
+- 落盘核对：`People/Test-Anna/00-profile.md` 的「# 兴趣」章节内新增 `- My favourite food is Hainan chicken rice.（来源：会话 sess_isotest… · 段 3 · 2026-11-01 11:25 用户确认）<!--sm-src:989ae4c4e1ff8ff7-->`，front matter 与人工段落未变；`current.json`/`current.md`/人物主档均 0600，目录 0700。
+- 二次读取：重新打开同一深链 → 重新生成本地复盘 → 同样勾选并保存 → 「没有新增内容（DUPLICATE）· 档案未改动」，文件字节不变；「关于我」页回读显示两条事实（`I usually go hiking…` / `My favourite food is Hainan chicken rice.`）。
+- 消耗：本轮 **0 次外部 AI 请求**（本地规则），DeepSeek 账本仍为 0.213634/1 元；ASR 账本 0.129189/1 元未变。
+- 证据截图：`screenshots/android-054-review-saved-note11.png`（保存成功）、`screenshots/android-054-profile-synced-note11.png`（关于我回读）。
+- 测试后已删除两项 `adb reverse`、关闭隔离实例、清除 WebView 内两条虚构事实与临时令牌，`adb reverse --list` 为空。
+
+**判定**：
+- PASS：服务端边界（401/404/429/段号/人物归属）、People 分节追加与幂等、权限 0600/0700、Profile⇄People 事务回滚、真机点击式确认保存与二次读取、复原清理。
+- PARTIAL：真机链路走的是隔离实例 + 合成会话（因无可代办真人说话产生 final），不是“真人全链 PASS”；真机深链由 `Page.navigate` 触发而非点 App 的「本轮原文与复盘」按钮（该按钮需有已导出的本轮会话）。
+- NOT_RUN：真人说话 → 停止 → App 内按钮 → 确认保存的完整真人链；两位真人同时说话的 BOYA 聚类有效性；服务重启/断网后手机自动重连重传的真机复测。
+- N/A：横屏 —— `MainActivity`/`AsrActivity` 均 `android:screenOrientation="portrait"`，无横屏态（截图 `screenshots/android-054-landscape-note11.png` 证实旋转设置被忽略）。

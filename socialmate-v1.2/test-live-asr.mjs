@@ -8,7 +8,8 @@ import {fileURLToPath} from "node:url";
 const root=path.dirname(fileURLToPath(import.meta.url));
 const html=fs.readFileSync(path.join(root,"index.html"),"utf8");
 const dataset=JSON.parse(html.match(/<script type="application\/json" id="dataset">([\s\S]*?)<\/script>/)[1]);
-const logic=[...html.matchAll(/<script(?:\s+[^>]*)?>([\s\S]*?)<\/script>/g)].map(x=>x[1]).at(-1);
+// 取真正的主逻辑内联脚本：外部引用（src=...）与 dataset 的 JSON 脚本不算。
+const logic=[...html.matchAll(/<script(?![^>]*\bsrc=)(?![^>]*application\/json)[^>]*>([\s\S]*?)<\/script>/g)].map(x=>x[1]).filter(x=>x.trim()).at(-1);
 
 function createHarness({origin="http://127.0.0.1:8791",cloudConsent=true,search="",manualStart=true,immediateTimers=false}={}){
   const nodes=new Map(),hooks={},apiCalls=[],streams=[];

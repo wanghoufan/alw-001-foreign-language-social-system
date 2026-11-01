@@ -9,7 +9,9 @@ import path from "node:path";
 import {fileURLToPath} from "node:url";
 import {analyze,AiError,status} from "./core.mjs";
 import {liveAsrHub} from "./live-asr-hub.mjs";
-import {readProfile,writeProfile,applyProfileCandidates} from "./profile-store.mjs";
+import {readProfile,writeProfile,tightenPermissions} from "./profile-store.mjs";
+import {listPeople} from "./people-store.mjs";
+import {confirmReview} from "./review-confirm.mjs";
 import {buildAiReview,buildLocalReview} from "./session-review.mjs";
 const here=path.dirname(fileURLToPath(import.meta.url));
 const proto=path.resolve(here,"..");
@@ -137,6 +139,19 @@ async function loadArchivedSession(sessionId,token){
 }
 let corpus=null;
 let activeRequest=false,lastRequestAt=0; // One private user; avoid accidental rapid repeated billed calls.
+// 写入类接口的限流：单机单人场景，防止误连点与脚本重放把档案写乱。
+const APPLY_WINDOW_MS=60_000, APPLY_MAX=12, APPLY_MIN_GAP_MS=400;
+let applyHits=[],applyLastAt=0;
+function applyRateLimit(){
+  const now=Date.now();
+  applyHits=applyHits.filter((t)=>now-t<APPLY_WINDOW_MS);
+  if(now-applyLastAt<APPLY_MIN_GAP_MS)
+    return {ok:false,retryAfterMs:APPLY_MIN_GAP_MS-(now-applyLastAt)};
+  if(applyHits.length>=APPLY_MAX)
+    return {ok:false,retryAfterMs:APPLY_WINDOW_MS-(now-applyHits[0])};
+  applyHits.push(now);applyLastAt=now;
+  return {ok:true};
+}
 async function loadData(){
   if(corpus)return corpus;
   const text=await fs.readFile(path.join(proto,"data.js"),"utf8");
@@ -149,7 +164,14 @@ async function loadData(){
 function originOK(req){
   const origin=req.headers.origin;
   // Browser same-origin requests include origin; curl without Origin is allowed only on localhost.
-  return !origin || origin==="http://127.0.0.1:"+PORT || origin==="http://localhost:"+PORT;
+  if(!origin)return true;
+  let parsed;
+  try{parsed=new URL(origin);}catch{return false;}
+  // 真机经由 Tailscale Serve（https://<host>:8443）访问时，Host 由代理原样透传：
+  // 只要 Origin 与本次请求的 Host 相同就是同源，不能只认 127.0.0.1:<port>。
+  const host=String(req.headers["x-forwarded-host"]||req.headers.host||"");
+  if(host&&parsed.host===host)return true;
+  return parsed.host==="127.0.0.1:"+PORT||parsed.host==="localhost:"+PORT;
 }
 const server=http.createServer(async(req,res)=>{
   try{
@@ -238,10 +260,33 @@ const server=http.createServer(async(req,res)=>{
         return json(res,200,{ok:true,review});
       }finally{activeRequest=false;}
     }
-    // 复盘候选确认写入：confirm:true 必填，只追加不覆盖，按会话+段号+文本指纹去重。
+    // 复盘候选确认写入：令牌 + 归档会话（段号可证）双重校验，再走 Profile/People 事务。
+    // confirm:true 只是用户意图声明，不能替代服务端对来源与权限的核验。
     if(url.pathname==="/v12/api/review/apply"&&req.method==="POST"){
+      const token=String(req.headers["x-archive-token"]||"").trim();
+      if(!token)
+        return json(res,401,{ok:false,code:"TOKEN_REQUIRED",error:"确认写入需要归档访问令牌"});
+      const limit=applyRateLimit();
+      if(!limit.ok)
+        return json(res,429,{ok:false,code:"RATE_LIMITED",error:"写入操作过于频繁，请稍后再试",
+          retryAfterMs:limit.retryAfterMs});
       const body=await readPayload(req,256000);
-      return json(res,200,await applyProfileCandidates(body));
+      const sessionId=String(body?.sessionId||"");
+      if(!/^[A-Za-z0-9_-]{8,64}$/.test(sessionId))
+        return json(res,400,{ok:false,code:"INVALID_SESSION_ID",error:"sessionId 格式不合法"});
+      // 先取归档会话：令牌无效 → 401，会话不存在 → 404，段号也以这份真实原文为准。
+      const session=await loadArchivedSession(sessionId,token);
+      const result=await confirmReview(body,session);
+      return json(res,200,result);
+    }
+    if(url.pathname==="/v12/api/people"&&req.method==="GET"){
+      const token=String(req.headers["x-archive-token"]||"").trim();
+      if(!token)
+        return json(res,401,{ok:false,code:"TOKEN_REQUIRED",error:"读取人物主档列表需要归档访问令牌"});
+      const check=await archiveGet("/api/archive/session/__token_probe__",token).catch(()=>null);
+      if(!check)return json(res,503,{ok:false,code:"ARCHIVE_UNAVAILABLE",error:"归档服务未启动或不可达"});
+      if(check.status===401)return json(res,401,{ok:false,code:"UNAUTHORIZED",error:"归档令牌无效"});
+      return json(res,200,{ok:true,people:await listPeople()});
     }
     if(req.method!=="GET")return json(res,405,{ok:false,code:"METHOD_NOT_ALLOWED"});
     if(url.pathname==="/profile-sync.js"){
@@ -293,5 +338,9 @@ server.on("error",(error)=>{
   console.error("[socialmate-ai] HTTP server error:",error.message);
   process.exit(1);
 });
+// 私密目录/文件权限巡检：历史遗留的 0644（如 current.md）在启动时收紧到 0600，不改正文。
+tightenPermissions().then((r)=>{
+  if(r.changed.length)console.log("[socialmate-ai] permissions tightened:",JSON.stringify(r.changed));
+}).catch((error)=>console.error("[socialmate-ai] permission check failed:",error.message));
 server.listen(PORT,HOST,()=>console.log("[socialmate-ai] http://"+HOST+":"+PORT+
   " | models configured:",JSON.stringify(Object.fromEntries(Object.entries(status()).map(([k,x])=>[k,x.configured])))));

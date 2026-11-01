@@ -10,6 +10,14 @@
 - 版本号以 `aapt2 dump badging` 为准，不要凭记忆或 README。
 - `socialmate-v1.2/index.html` 是 `build-v12.py` 的产物：**不要只改 index.html**，否则下次重建就丢（曾把 `/v12/history` 入口手改丢掉）。新增服务态入口要写进 `build-v12.py` 的替换规则，改完跑一次重建并 diff 确认只有预期差异。
 
+## 服务 / 同源 / 真机写入验收
+
+- `originOK` 若只认 `127.0.0.1:<port>`，真机经 Tailscale（`https://<host>:8443`）的所有 **POST 都会 403 `ORIGIN_REJECTED`**；GET 因为浏览器不带 Origin 才“看起来正常”。同源判定应拿 Origin 的 host:port 比本次请求的 Host（含 `x-forwarded-host`）。
+- 复盘页有两个 `.status`（生成状态、保存状态）：`document.querySelector('.review .status')` 拿到的是前者，别据此判定“保存没生效”。
+- CDP 点击前必须在 `scrollIntoView` 之后重新取 `getBoundingClientRect`；坐标过期会点到相邻按钮（曾误点「用云端 AI」触发一次真实计费/403）。
+- 需要真机验证写入链路时，用 `SM_CONVERSATION_DIR`/`SM_PROFILE_DIR`/`SM_PEOPLE_DIR` 起隔离实例 + `adb reverse tcp:8791 tcp:<隔离端口>`，比改 App 的 `ui_url` 安全；收尾要删 reverse、关隔离进程，并清掉 WebView localStorage 里的虚构事实。
+- 测试里 `matchAll(/<script…/).at(-1)` 取最后一个脚本会被 `<script src="/profile-sync.js" defer>` 顶掉，表现为一堆 `hooks.click is not a function` 误报；取内联主逻辑要排除 `src=` 与 `type="application/json"`。
+
 ## MIUI / 真机
 
 - `adb install` 报 `INSTALL_FAILED_USER_RESTRICTED` 不等于 APK 坏；Note 12T 需用户开「通过 USB 安装」，Note 11 可用 `pm install-create/write/commit` 安装。
