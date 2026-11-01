@@ -1,0 +1,68 @@
+[
+  {
+    "case": "running",
+    "cards": [
+      "万绿园",
+      "海口湾滨海步道",
+      "白沙门公园",
+      "健身和锻炼"
+    ],
+    "coach": [
+      "户外跑步",
+      "对话自动匹配 · 模拟",
+      "先自然接一句"
+    ],
+    "manualClosed": true
+  },
+  {
+    "case": "coffee",
+    "cards": [
+      "咖啡",
+      "龙兴路",
+      "滨海新村"
+    ],
+    "coach": [
+      "咖啡",
+      "对话自动匹配 · 模拟",
+      "先自然接一句"
+    ],
+    "manualClosed": true
+  },
+  {
+    "case": "software",
+    "cards": [
+      "喜欢自己做软件",
+      "人生物种测试 · Personality Quiz"
+    ],
+    "coach": [
+      "软件",
+      "对话自动匹配 · 模拟",
+      "先自然接一句"
+    ],
+    "manualClosed": true
+  },
+  {
+    "case": "beach",
+    "cards": [
+      "海口湾滨海步道",
+      "华彩海口湾滨海街区",
+      "云洞图书馆"
+    ],
+    "coach": [
+      "海边",
+      "对话自动匹配 · 模拟",
+      "先自然接一句"
+    ],
+    "manualClosed": true
+  },
+  {
+    "case": "other",
+    "cards": [],
+    "coach": [
+      "继续交流",
+      "对话自动匹配 · 模拟",
+      "先自然接一句"
+    ],
+    "manualClosed": true
+  }
+]

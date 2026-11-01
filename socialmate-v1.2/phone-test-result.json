@@ -1,0 +1,54 @@
+{
+  "viewport": {
+    "w": 392,
+    "h": 735,
+    "dpr": 2.75,
+    "url": "http://192.168.31.61:4318/socialmate-v1.2/",
+    "title": "SocialMate · 外语社交助手 · 可交互预览"
+  },
+  "modal": true,
+  "chat": {
+    "cards": [
+      "万绿园",
+      "海口湾滨海步道",
+      "白沙门公园",
+      "健身和锻炼"
+    ],
+    "coach": [
+      "户外跑步",
+      "对话自动匹配 · 模拟",
+      "先自然接一句",
+      "",
+      "That sounds great! Running outdoors is a nice way to explore a city.",
+      ""
+    ],
+    "bubbles": 1,
+    "manualClosed": true
+  },
+  "detail": {
+    "open": true,
+    "text": "← 返回聊天（会话保留）\n万绿园\n\nEvergreen Park (Wanlüyuan) · 海口 · 海滨日落\n\n中文介绍\n\n海口市龙华区滨海大道38号，海口湾边。万绿园是海口人经常去散步、跑步、野餐的大草坪，天气舒服时很有生活气。比起拍"
+  },
+  "back": {
+    "open": false,
+    "bubbles": 1
+  },
+  "dark": "dark",
+  "overflow": {
+    "sw": 392,
+    "iw": 392
+  },
+  "summary": {
+    "passed": true,
+    "at": "2026-10-31T13:58:07.947Z",
+    "checks": {
+      "cards": true,
+      "coach": true,
+      "manual": true,
+      "detail": true,
+      "keepSession": true,
+      "dark": true,
+      "noOverflow": true
+    }
+  }
+}

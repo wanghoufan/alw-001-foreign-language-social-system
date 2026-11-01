@@ -1,0 +1,78 @@
+{
+  "data": {
+    "apps": 51,
+    "steps": 204,
+    "places": 115,
+    "uniquePlaces": 115,
+    "p39": "万绿园",
+    "p41": "海口湾滨海步道",
+    "p45": "白沙门公园",
+    "tabs": [
+      "▦软件",
+      "⌖海南",
+      "◉聊天",
+      "♙关于我",
+      "♧人物"
+    ]
+  },
+  "chat": {
+    "cards": [
+      "万绿园",
+      "海口湾滨海步道",
+      "白沙门公园",
+      "健身和锻炼"
+    ],
+    "coach": "户外跑步\n对话自动匹配 · 模拟\n先自然接一句\n\nThat sounds great! Running outdoors is a nice way to explore a city.\n\n复制\n再接着追问\nDo you prefer running by the sea or in a park?\n复制\nDo you usually go running in the morning or the evening?\n复制\nHave you explored any of the waterfront parks around Haikou?\n复制\n我也可以分享\n\nThere’s a place called Evergreen Park in Haikou, and there’s also a waterfront walk nearby. I can show you both.\n\n复制",
+    "bubbles": 1,
+    "drawerOpen": true,
+    "drawerText": "← 返回聊天（会话保留）\n万绿园\n\nEvergreen Park (Wanlüyuan) · 海口 · 海滨日落\n\n中文介绍\n\n海口市龙华区滨海大道38号，海口湾边。万绿园是海口人经常去散步、跑步、野餐的大草坪，天气舒服时很有生活气。比起拍一个固定景点，更适合带朋友放松，看草地、椰树和海边城市风景。\n\nEnglish — 可以这样跟朋友说\n\nIt is at No. 38 Binhai Avenue, Longhua District,",
+    "hasMaps": true,
+    "afterClose": {
+      "drawerOpen": false,
+      "bubbles": 1
+    }
+  },
+  "mobile-360": {
+    "sw": 360,
+    "iw": 360,
+    "tab": "◉聊天"
+  },
+  "mobile-390": {
+    "sw": 390,
+    "iw": 390,
+    "tab": "◉聊天"
+  },
+  "mobile-412": {
+    "sw": 412,
+    "iw": 412,
+    "tab": "◉聊天"
+  },
+  "mobile-430": {
+    "sw": 430,
+    "iw": 430,
+    "tab": "◉聊天"
+  },
+  "desktop": {
+    "sw": 1425,
+    "iw": 1440,
+    "tab": "◉聊天"
+  },
+  "initialTheme": "light",
+  "dark": true,
+  "summary": {
+    "passed": true,
+    "at": "2026-10-31T13:49:21.283Z",
+    "checks": {
+      "apps51": true,
+      "steps204": true,
+      "places115": true,
+      "tabs5": true,
+      "autoCards": true,
+      "drawer": true,
+      "keepSession": true,
+      "lightDefault": true,
+      "darkToggle": true,
+      "noOverflow": true
+    }
+  }
+}

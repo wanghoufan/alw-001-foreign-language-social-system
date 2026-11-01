@@ -1,0 +1,26 @@
+import { spawn } from 'child_process';
+import fs from 'fs'; import path from 'path';
+import WebSocket from './vendor/ws/index.js';
+const PORT=9336, file='file://'+path.resolve('socialmate-v1.2/index.html');
+const chrome=spawn('/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',['--headless=new','--disable-gpu','--no-sandbox','--allow-file-access-from-files',`--remote-debugging-port=${PORT}`,'--user-data-dir=/tmp/sm-shots','--window-size=390,844',file],{stdio:'ignore'});
+const sleep=ms=>new Promise(r=>setTimeout(r,ms)); let t;
+for(let i=0;i<40;i++){try{const l=await (await fetch(`http://127.0.0.1:${PORT}/json/list`)).json();t=l.find(x=>x.type==='page'&&x.url.startsWith('file:'));if(t)break}catch{}await sleep(250)}
+const ws=new WebSocket(t.webSocketDebuggerUrl);await new Promise(r=>ws.on('open',r));
+let id=0,pend=new Map();ws.on('message',d=>{const m=JSON.parse(d);if(m.id&&pend.has(m.id)){pend.get(m.id)(m);pend.delete(m.id)}});
+const send=(m,p={})=>new Promise((res,rej)=>{const i=++id;pend.set(i,x=>x.error?rej(new Error(JSON.stringify(x.error))):res(x.result));ws.send(JSON.stringify({id:i,method:m,params:p}))});
+const ev=e=>send('Runtime.evaluate',{expression:e,awaitPromise:true,returnByValue:true});
+const shot=async n=>{const s=await send('Page.captureScreenshot',{format:'png'});fs.writeFileSync(path.resolve('socialmate-v1.2/screenshots',n+'.png'),Buffer.from(s.data,'base64'))};
+await send('Page.enable');await send('Runtime.enable');
+await send('Emulation.setDeviceMetricsOverride',{width:390,height:844,deviceScaleFactor:1,mobile:true});
+await ev(`document.querySelector('[data-nav="chat"]').click()`);await sleep(300);await shot('01-chat-before');
+await ev(`document.querySelector('[data-act="start"]').click()`);await sleep(200);await shot('02-start-confirm');
+await ev(`document.querySelector('#confirm').checked=true;document.querySelector('[data-action="startok"]').click()`);await sleep(250);
+await ev(`document.querySelector('[data-sample="running"]').click()`);await sleep(450);await shot('03-running-suggestions');
+await ev(`document.querySelector('.autorec').click()`);await sleep(350);await shot('04-drawer-place');
+await ev(`document.querySelector('#closeDrawer').click()`);await sleep(250);await shot('05-back-chat');
+await ev(`document.querySelector('[data-nav="software"]').click()`);await sleep(250);await shot('06-software');
+await ev(`document.querySelector('[data-nav="hainan"]').click()`);await sleep(250);await shot('07-hainan');
+await ev(`document.querySelector('[data-nav="self"]').click()`);await sleep(250);await shot('08-self');
+await ev(`document.querySelector('[data-nav="people"]').click()`);await sleep(250);await shot('09-people');
+await ev(`document.querySelector('#theme').click()`);await sleep(300);await shot('10-dark');
+console.log('shots done'); ws.close(); chrome.kill();
