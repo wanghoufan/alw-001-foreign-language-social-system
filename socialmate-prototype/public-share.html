@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f4f6fa">
+  <meta name="description" content="A local's bilingual guide to 115 places around Hainan. Read, search and open the map.">
+  <title>Hainan Local Guide · SocialMate</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .share-page{max-width:820px;margin:auto;padding:22px 17px 90px}
+    .public-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:22px}
+    .public-brand{display:flex;gap:10px;align-items:center;text-decoration:none;color:var(--ink)}
+    .public-brand span{display:block;color:var(--muted);font-size:12px}
+    .public-actions{display:flex;gap:8px;flex-wrap:wrap}
+    .public-card{background:var(--paper);border:1px solid var(--stroke);padding:23px;border-radius:20px}
+    .public-card h1{margin:4px 0 0;font-size:clamp(24px,6vw,36px);letter-spacing:-.7px;line-height:1.2}
+    .public-sub{font-size:14px;color:var(--muted);margin:7px 0 16px}
+    .public-text{font-size:17px;line-height:1.9;margin:17px 0;white-space:pre-wrap}
+    .public-cn{padding:15px 16px;border-radius:12px;background:var(--paper-soft);font-size:15px;line-height:1.8;color:var(--muted);margin-top:15px}
+    .public-row{display:flex;gap:9px;flex-wrap:wrap;margin-top:18px}
+    .public-row .btn{flex:1}
+    .public-results{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
+    .public-item{background:var(--paper);border:1px solid var(--stroke);border-radius:14px;padding:17px;text-align:left;color:var(--ink)}
+    .public-item strong{font-size:17px;display:block;margin:4px 0}
+    .public-item small{color:var(--muted);display:block}
+    .public-item:hover{border-color:var(--brand)}
+    .public-search{display:grid;grid-template-columns:1fr auto;gap:9px;margin:15px 0}
+    .public-search select{border:1px solid var(--stroke);background:var(--paper);padding:10px;border-radius:11px;color:var(--ink);max-width:140px}
+    .public-footer{color:var(--faint);font-size:12px;line-height:1.7;margin:22px 0;text-align:center}
+    .public-note{background:var(--paper);border:1px solid var(--stroke);padding:14px;border-radius:12px;color:var(--muted);font-size:12px}
+    [hidden]{display:none!important}
+    @media(max-width:600px){
+      .share-page{padding:17px 13px 80px}
+      .public-card{padding:18px}
+      .public-results{grid-template-columns:1fr}
+      .public-brand .brand-mini{display:grid}
+      .public-text{font-size:16px}
+      .public-actions{justify-content:flex-end}
+      .public-row{flex-direction:column}
+      .public-row .btn{width:100%}
+    }
+  </style>
+</head>
+<body>
+  <main class="share-page">
+    <header class="public-head">
+      <a href="./public-share.html" class="public-brand" aria-label="Back to all Hainan places">
+        <span class="brand-mini" aria-hidden="true">s.</span>
+        <div><strong>Hainan Local Guide</strong><span>Shared with you from SocialMate</span></div>
+      </a>
+      <div class="public-actions"><button class="pill" id="language" type="button">中文</button></div>
+    </header>
+    <div id="overview">
+      <section class="hero hero-compact"><div><span class="eyebrow">LOCAL PICKS • HAINAN</span><h2>Explore Hainan like a local</h2><p>Places to walk, eat, unwind or take photos — with honest bilingual descriptions and map links.</p></div><div class="hero-stat" aria-hidden="true"><div class="hero-value">115</div><div class="hero-caption">local spots</div></div></section>
+      <div class="public-search">
+        <label class="searchfield"><span aria-hidden="true">⌕</span><input id="publicSearch" type="search" placeholder="Search names, food, cafés, beaches…" aria-label="Search Hainan places"></label>
+        <select id="publicCity" aria-label="Select city"><option value="">All cities</option></select>
+      </div>
+      <div class="pill-group" id="categoryFilters" aria-label="Place categories"></div>
+      <div class="section-heading"><h2>All places</h2><span id="publicCount">115 places</span></div>
+      <div class="public-results" id="publicResults"></div>
+    </div>
+    <article id="publicDetail" hidden></article>
+    <p class="public-footer">Descriptions are for inspiration. Check opening hours, entry rules and local conditions before you go. Map links require internet access.</p>
+    <p class="public-note">Privacy: this read-only page contains only Hainan place information. It does not load personal profiles, private conversations, software source, audio recordings or API credentials.</p>
+  </main>
+  <div id="publicToast" class="toast" hidden role="status" aria-live="polite"></div>
+  <script src="public-places.js"></script>
+  <script src="public-share.js"></script>
+</body>
+</html>

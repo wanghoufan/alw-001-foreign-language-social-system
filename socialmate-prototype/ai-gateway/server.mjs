@@ -1,0 +1,166 @@
+/**
+ * ALW-001 AI preview bridge: private localhost-only server.
+ * cd socialmate-prototype/ai-gateway && node --env-file-if-exists=.env server.mjs
+ * No CORS; only same-origin HTML may use the API from the browser.
+ */
+import http from "node:http";
+import fs from "node:fs/promises";
+import path from "node:path";
+import {fileURLToPath} from "node:url";
+import {analyze,AiError,status} from "./core.mjs";
+import {liveAsrHub} from "./live-asr-hub.mjs";
+const here=path.dirname(fileURLToPath(import.meta.url));
+const proto=path.resolve(here,"..");
+const PORT=Number(process.env.SOCIALMATE_AI_PORT||8791);
+const HOST="127.0.0.1"; // Never bind publicly without authentication and HTTPS.
+// User-authorized DeepSeek budget. Conservative peak rates (yuan / 1M tokens):
+// official pricing 2026-11: cache hit 0.04, miss 2, output 8 for deepseek-flash.
+const BUDGET_LIMIT=Math.max(0,Number(process.env.DEEPSEEK_BUDGET_CNY||1));
+const BUDGET_FILE=process.env.DEEPSEEK_BUDGET_FILE||path.join(here,".local","ai-budget.json");
+const RESERVE_CNY=0.01; // one bounded reply cannot exceed this at current rates
+let budget={spentCny:0,calls:0,updatedAt:null};
+try{budget={...budget,...JSON.parse(await fs.readFile(BUDGET_FILE,"utf8"))};}catch{}
+function budgetStatus(){
+  const spent=Number(budget.spentCny)||0;
+  return {limitCny:BUDGET_LIMIT,spentCny:Number(spent.toFixed(6)),
+    remainingCny:Number(Math.max(0,BUDGET_LIMIT-spent).toFixed(6)),calls:Number(budget.calls)||0,
+    reserveCny:RESERVE_CNY,updatedAt:budget.updatedAt||null};
+}
+export function estimateDeepSeekCost(usage){
+  if(!usage||typeof usage!=="object")return 0.01; // unknown usage: conservative flat reserve
+  const hit=Number(usage.prompt_cache_hit_tokens)||0;
+  const prompt=Number(usage.prompt_tokens)||0;
+  const miss=Number.isFinite(Number(usage.prompt_cache_miss_tokens))
+    ? Number(usage.prompt_cache_miss_tokens)
+    : Math.max(0,prompt-hit);
+  const out=Number(usage.completion_tokens)||0;
+  return (hit*0.04+miss*2+out*8)/1_000_000;
+}
+async function recordDeepSeekUsage(usage){
+  const cost=estimateDeepSeekCost(usage);
+  budget.spentCny=(Number(budget.spentCny)||0)+cost;
+  budget.calls=(Number(budget.calls)||0)+1;
+  budget.updatedAt=new Date().toISOString();
+  await fs.mkdir(path.dirname(BUDGET_FILE),{recursive:true});
+  await fs.writeFile(BUDGET_FILE,JSON.stringify(budget,null,2),"utf8");
+}
+// Set by live-server.mjs only after the in-process ASR bridge is listening.
+// This is what distinguishes the combined service from the old standalone AI-only server.
+let asrBridge=null;
+export function setAsrBridge(bridge){
+  if(!bridge){asrBridge=null;return;}
+  const {mode,mock,port,url,httpServer,activeSessions,budget}=bridge;
+  asrBridge={mode,mock,port,url,httpServer,activeSessions,budget};
+}
+function asrStatus(){
+  if(!asrBridge)return {combined:false,asr:null};
+  const active=typeof asrBridge.activeSessions==="function"?asrBridge.activeSessions():0;
+  const budget=typeof asrBridge.budget==="function"?asrBridge.budget():null;
+  return {combined:true,asr:{mode:asrBridge.mode,mock:asrBridge.mock===true,port:asrBridge.port,
+    url:asrBridge.url,activeSessions:active,...(budget?{budget}:{})}};
+}
+const STATIC=new Map([
+  ["/","index.html"],["/index.html","index.html"],
+  ["/app.js","app.js"],["/styles.css","styles.css"],["/data.js","data.js"],
+  ["/public-share.html","public-share.html"],["/public-share.js","public-share.js"],
+  ["/public-places.js","public-places.js"]
+]);
+const MIME={".html":"text/html; charset=utf-8",".js":"text/javascript; charset=utf-8",".css":"text/css; charset=utf-8"};
+function json(res,code,obj){
+  res.writeHead(code,{"Content-Type":"application/json; charset=utf-8","Cache-Control":"no-store",
+    "X-Content-Type-Options":"nosniff","Referrer-Policy":"no-referrer"});
+  res.end(JSON.stringify(obj));
+}
+async function readPayload(req){
+  let len=0,parts=[];
+  for await (const buf of req){len+=buf.length;if(len>16000)throw new AiError(413,"TOO_LARGE","对话请求不可超过 16KB");parts.push(buf);}
+  try{return JSON.parse(Buffer.concat(parts).toString("utf8"));}
+  catch{throw new AiError(400,"INVALID_JSON","请求不是 JSON");}
+}
+let corpus=null;
+let activeRequest=false,lastRequestAt=0; // One private user; avoid accidental rapid repeated billed calls.
+async function loadData(){
+  if(corpus)return corpus;
+  const text=await fs.readFile(path.join(proto,"data.js"),"utf8");
+  const match=text.match(/window\.SOCIALMATE_DATA\s*=\s*(\{[\s\S]*\});\s*$/);
+  if(!match)throw new Error("无法读取正式原型 data.js");
+  const d=JSON.parse(match[1]);
+  if(d.apps.length<50||d.places.length<115)throw new Error("正式资料未通过 51/115 校验");
+  corpus=d;return corpus;
+}
+function originOK(req){
+  const origin=req.headers.origin;
+  // Browser same-origin requests include origin; curl without Origin is allowed only on localhost.
+  return !origin || origin==="http://127.0.0.1:"+PORT || origin==="http://localhost:"+PORT;
+}
+const server=http.createServer(async(req,res)=>{
+  try{
+    const url=new URL(req.url||"/","http://127.0.0.1:"+PORT);
+    if(!originOK(req))return json(res,403,{ok:false,code:"ORIGIN_REJECTED"});
+    if(url.pathname==="/api/asr/live"&&req.method==="GET"){
+      liveAsrHub.subscribe(req,res);
+      return;
+    }
+    if(url.pathname==="/api/ai/health"&&req.method==="GET"){
+      const bridge=asrStatus();
+      return json(res,200,{ok:true,defaultProvider:"deepseek",providers:status(),
+        service:"ALW001 conversation AI gateway",mode:"real-api-only",
+        features:{asrLive:bridge.combined,combinedService:bridge.combined},
+        asr:bridge.asr,budget:budgetStatus(),
+        note:"不以规则模板冒充真实 AI"});
+    }
+    if(url.pathname==="/api/asr/status"&&req.method==="GET"){
+      const bridge=asrStatus();
+      return json(res,200,{ok:true,...bridge,
+        service:"ALW001 combined ASR + AI gateway"});
+    }
+    if(url.pathname==="/api/ai/analyze"&&req.method==="POST"){
+      if(activeRequest || Date.now()-lastRequestAt<1200)
+        return json(res,429,{ok:false,code:"AI_BUSY",error:"上一轮 AI 尚未结束或请求过于频繁，请稍候"});
+      const body=await readPayload(req);
+      if(body?.provider==="deepseek"){
+        const left=budgetStatus().remainingCny;
+        if(left<=RESERVE_CNY)
+          return json(res,402,{ok:false,code:"BUDGET_EXHAUSTED",
+            error:"DeepSeek 授权额度已用尽（上限 "+BUDGET_LIMIT+" 元）",budget:budgetStatus()});
+      }
+      activeRequest=true;lastRequestAt=Date.now();
+      try{
+        const result=await analyze(body,{data:await loadData()});
+        if(result.provider==="deepseek"){
+          try{await recordDeepSeekUsage(result.usage);}
+          catch(error){console.error("[socialmate-ai] budget ledger write failed:",error.message);}
+          result.budget=budgetStatus();
+        }
+        return json(res,200,{ok:true,...result});
+      }finally{activeRequest=false;}
+    }
+    if(req.method!=="GET")return json(res,405,{ok:false,code:"METHOD_NOT_ALLOWED"});
+    if(url.pathname==="/v12"||url.pathname==="/v12/"){
+      const html=await fs.readFile(path.resolve(proto,"..","socialmate-v1.2","index.html"));
+      return res.writeHead(200,{"Content-Type":"text/html; charset=utf-8",
+        "Cache-Control":"no-store","X-Content-Type-Options":"nosniff"}).end(html);
+    }
+    const file=STATIC.get(url.pathname);
+    if(!file)return json(res,404,{ok:false,code:"NOT_FOUND"});
+    // Fixed allowlist, no directory traversal or dotfiles.
+    const bytes=await fs.readFile(path.join(proto,file));
+    return res.writeHead(200,{"Content-Type":MIME[path.extname(file)]||"application/octet-stream",
+      "Cache-Control":"no-store","X-Content-Type-Options":"nosniff"}).end(bytes);
+  }catch(err){
+    const statusCode=err instanceof AiError?err.status:500;
+    return json(res,statusCode,{ok:false,code:err instanceof AiError?err.code:"INTERNAL_ERROR",
+      error:err instanceof AiError?err.message:"服务内部错误（不暴露凭证和个人资料）"});
+  }
+});
+server.on("error",(error)=>{
+  if(error.code==="EADDRINUSE"){
+    console.error("[socialmate-ai] Port "+PORT+" is already in use. It may be the old standalone server.mjs or another project.");
+    console.error("[socialmate-ai] Run: bash socialmate-v1.2/service-v040.sh ensure");
+    process.exit(1);
+  }
+  console.error("[socialmate-ai] HTTP server error:",error.message);
+  process.exit(1);
+});
+server.listen(PORT,HOST,()=>console.log("[socialmate-ai] http://"+HOST+":"+PORT+
+  " | models configured:",JSON.stringify(Object.fromEntries(Object.entries(status()).map(([k,x])=>[k,x.configured])))));

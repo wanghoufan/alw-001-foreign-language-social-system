@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f5f7fb">
+  <meta name="description" content="SocialMate — mobile-first bilingual social companion, offline interactive design prototype.">
+  <title>SocialMate · 外语社交助手 · 交互原型</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <svg aria-hidden="true" class="symbols" xmlns="http://www.w3.org/2000/svg">
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1zM9 21v-8h6v8"/></symbol>
+    <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></symbol>
+    <symbol id="i-map" viewBox="0 0 24 24"><path d="m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3zM9 3v15M15 6v15"/></symbol>
+    <symbol id="i-mic" viewBox="0 0 24 24"><rect x="9" y="2" width="6" height="13" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v4m-4 0h8"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m16 16 5 5"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h16m-7-7 7 7-7 7"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/></symbol>
+    <symbol id="i-share" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m9 11 6-4M9 13l6 4"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m4 12 5 5L20 6"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="m12 2 2.2 7.8L22 12l-7.8 2.2L12 22l-2.2-7.8L2 12l7.8-2.2z"/></symbol>
+    <symbol id="i-bookmark" viewBox="0 0 24 24"><path d="M5 4a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v18l-7-5-7 5z"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+    <symbol id="i-settings" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="m19.4 15 .1.1 1.6 1.2-2 3.4-1.9-.8a8 8 0 0 1-2.1 1.2l-.3 2h-4l-.3-2a8 8 0 0 1-2.1-1.2l-1.9.8-2-3.4 1.6-1.2a8 8 0 0 1 0-2.4L4.5 11l2-3.4 1.9.8A8 8 0 0 1 10.5 7l.3-2h4l.3 2a8 8 0 0 1 2.1 1.2l1.9-.8 2 3.4-1.6 1.2a8 8 0 0 1-.1 3Z"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 15A8.5 8.5 0 0 1 9 4a8.5 8.5 0 1 0 11 11z"/></symbol>
+    <symbol id="i-filter" viewBox="0 0 24 24"><path d="M4 7h16M7 12h10m-7 5h4"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v13m-5-5 5 5 5-5M4 20h16"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 4v16M4 12h16"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l4 2"/></symbol>
+  </svg>
+
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="主导航">
+      <div class="brand"><div class="brand-mark">s<span>.</span></div><div><strong>SocialMate</strong><small>让聊天更自然</small></div></div>
+      <div class="sidebar-kicker">我的社交工作台</div>
+      <nav id="desktopNav" class="desktop-nav"></nav>
+      <div class="sidebar-bottom">
+        <div class="source-pill"><span class="status-dot"></span><div><b>原型 · 本地资料</b><small>真实语料 · 模拟实时识别</small></div></div>
+        <button class="quiet-button theme-toggle" id="themeDesktop" type="button">切换深色主题</button>
+        <div class="tiny">原型 V1.0 · 不接入真实麦克风</div>
+      </div>
+    </aside>
+
+    <div class="main-area">
+      <header class="topbar">
+        <div class="topbar-title"><div class="brand-mini">s<span>.</span></div><div><span class="eyebrow" id="pageEyebrow">SOFTWARE COLLECTION</span><h1 id="pageTitle">我的软件</h1></div></div>
+        <div class="topbar-actions"><span class="prototype-tag">交互演示版</span><button id="themeMobile" class="icon-btn theme-button" type="button" aria-label="切换主题"><svg><use href="#i-sun"></use></svg></button><button id="settingsButton" class="icon-btn settings-button" type="button" aria-label="显示设置：字体大小和页面间距" title="显示设置"><svg><use href="#i-settings"></use></svg></button></div>
+      </header>
+      <main class="workspace" id="workspace" tabindex="-1" aria-live="polite"></main>
+    </div>
+    <nav id="mobileNav" class="mobile-nav" aria-label="手机底部导航"></nav>
+  </div>
+
+  <div id="drawerBackdrop" class="drawer-backdrop" hidden></div>
+  <aside id="detailDrawer" class="detail-drawer" aria-label="资料详情" aria-hidden="true">
+    <div class="drawer-top"><span class="eyebrow" id="drawerType">资料</span><button class="icon-btn" id="drawerClose" type="button" aria-label="关闭详情"><svg><use href="#i-close"></use></svg></button></div>
+    <div id="drawerBody" class="drawer-body"></div>
+  </aside>
+  <div id="modalRoot"></div>
+  <div id="toast" role="status" aria-live="polite" class="toast" hidden></div>
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

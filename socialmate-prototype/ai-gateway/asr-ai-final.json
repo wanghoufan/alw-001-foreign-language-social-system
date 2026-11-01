@@ -1,0 +1,35 @@
+{
+  "source": "real Tencent final replayed through adapter",
+  "final": {
+    "track": "B",
+    "speaker": "B",
+    "text": "Hello, this is microphone b, I'm testing the right channel.",
+    "startMs": 980,
+    "endMs": 5000,
+    "mock": false
+  },
+  "ai": {
+    "mode": "real-ai",
+    "topic": "麦克风测试",
+    "reply": "Sounds good, I can hear you clearly on this side.",
+    "questions": [
+      "How's the audio on your end?",
+      "Are we ready to start the conversation?"
+    ],
+    "share": "If you ever want a break from testing, I could tell you about places like Wanlvyuan near Haikou Bay where locals go to relax.",
+    "references": [],
+    "latencyMs": 1649,
+    "usage": {
+      "prompt_tokens": 1642,
+      "completion_tokens": 90,
+      "total_tokens": 1732,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "prompt_cache_hit_tokens": 1408,
+      "prompt_cache_miss_tokens": 234
+    },
+    "provider": "deepseek",
+    "model": "deepseek-flash"
+  }
+}

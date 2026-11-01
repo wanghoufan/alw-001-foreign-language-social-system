@@ -1,0 +1,49 @@
+{
+  "finals": [
+    {
+      "track": "B",
+      "speaker": "B",
+      "text": "Hello, this is microphone b, I'm testing the right channel.",
+      "startMs": 980,
+      "endMs": 5000,
+      "mock": false
+    }
+  ],
+  "ai": {
+    "topic": "麦克风测试",
+    "reply": "Sounds like the mic check is coming through clearly on my end.",
+    "questions": [
+      "Can you hear me clearly on your side?",
+      "Are you testing audio for something specific, like a recording or a call?"
+    ],
+    "share": "I don't have confirmed details to share about you yet, but I can point you to a verified spot in Haikou if that's useful.",
+    "references": [
+      {
+        "kind": "place",
+        "id": "30",
+        "title": "福地夜巷"
+      },
+      {
+        "kind": "place",
+        "id": "39",
+        "title": "万绿园"
+      }
+    ],
+    "provider": "deepseek",
+    "model": "deepseek-flash",
+    "mode": "real-ai",
+    "topicHint": "general",
+    "referenceMode": "model+retrieval",
+    "latencyMs": 1820,
+    "usage": {
+      "prompt_tokens": 1642,
+      "completion_tokens": 89,
+      "total_tokens": 1731,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "prompt_cache_hit_tokens": 0,
+      "prompt_cache_miss_tokens": 1642
+    }
+  }
+}

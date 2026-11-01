@@ -1,0 +1,12 @@
+# The desktop developer copies this file to .env LOCALLY; do not commit .env.
+# DeepSeek official (default, model deepseek-flash V4.1 Flash)
+DEEPSEEK_API_KEY=
+# OpenCode Go alternate endpoint and separate API key
+OPENCODE_GO_API_KEY=
+# Optional known official OpenCode Go route, only if current default fails
+# OPENCODE_GO_API_URL=https://opencode.ai/inference/go/openai/v1/chat/completions
+SOCIALMATE_AI_PORT=8791
+# User-authorized cumulative DeepSeek budget in CNY (default 1)
+DEEPSEEK_BUDGET_CNY=1
+# Optional ledger path; default .local/ai-budget.json (gitignored)
+# DEEPSEEK_BUDGET_FILE=/absolute/path/ai-budget.json

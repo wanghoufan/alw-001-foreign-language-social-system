@@ -1,0 +1,99 @@
+[
+  {
+    "id": "self-haikou",
+    "title": "我来自海口",
+    "topic": "生活",
+    "cn": "我在海口出生、长大，目前也主要住在海口。",
+    "en": "I was born and raised in Haikou, and I live here now.",
+    "status": "confirmed",
+    "keywords": [
+      "Haikou",
+      "hometown",
+      "local",
+      "born",
+      "grew up",
+      "家乡",
+      "海口"
+    ]
+  },
+  {
+    "id": "self-other-cities",
+    "title": "去其他城市读书和生活",
+    "topic": "经历",
+    "cn": "我大学在长沙读了四年，后来在重庆待过一年，也曾在广东工作。",
+    "en": "I spent four years at university in Changsha, lived in Chongqing for a year, and worked in Guangdong for a while.",
+    "status": "confirmed",
+    "keywords": [
+      "university",
+      "Changsha",
+      "Chongqing",
+      "Guangdong",
+      "college",
+      "work",
+      "大学",
+      "长沙",
+      "重庆"
+    ]
+  },
+  {
+    "id": "self-apps",
+    "title": "我喜欢自己做软件",
+    "topic": "兴趣",
+    "cn": "我喜欢把生活中的小问题做成可以自己用的软件，平时会用 AI 辅助开发。",
+    "en": "I enjoy building small apps that solve everyday problems. I use AI tools to help me develop them.",
+    "status": "confirmed",
+    "keywords": [
+      "app",
+      "software",
+      "AI",
+      "build",
+      "project",
+      "coding",
+      "软件"
+    ]
+  },
+  {
+    "id": "self-fitness",
+    "title": "平时健身",
+    "topic": "兴趣",
+    "cn": "我平时喜欢健身，也会关注训练和拉伸。",
+    "en": "I'm into working out and I like learning more about training and stretching.",
+    "status": "confirmed",
+    "keywords": [
+      "gym",
+      "fitness",
+      "workout",
+      "stretch",
+      "exercise",
+      "健身"
+    ]
+  },
+  {
+    "id": "self-dance",
+    "title": "喜欢学舞",
+    "topic": "兴趣",
+    "cn": "我喜欢尝试学跳舞，特别是有规律的舞蹈动作和节奏。",
+    "en": "I like learning dance routines, especially when I can break them down into simple steps.",
+    "status": "review",
+    "keywords": [
+      "dance",
+      "K-pop",
+      "music",
+      "跳舞"
+    ]
+  },
+  {
+    "id": "self-coffee",
+    "title": "喜欢喝拿铁",
+    "topic": "兴趣",
+    "cn": "我喜欢中度烘焙咖啡，平时也会做拿铁。",
+    "en": "I like medium-roast coffee, and I often make lattes at home.",
+    "status": "confirmed",
+    "keywords": [
+      "coffee",
+      "latte",
+      "cafe",
+      "咖啡"
+    ]
+  }
+]
