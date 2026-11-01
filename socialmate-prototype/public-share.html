@@ -4,6 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#f4f6fa">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" href="./icon.svg" type="image/svg+xml">
+  <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="description" content="A local's bilingual guide to 115 places around Hainan. Read, search and open the map.">
   <title>Hainan Local Guide · SocialMate</title>
   <link rel="stylesheet" href="styles.css">
@@ -29,6 +32,19 @@
     .public-search select{border:1px solid var(--stroke);background:var(--paper);padding:10px;border-radius:11px;color:var(--ink);max-width:140px}
     .public-footer{color:var(--faint);font-size:12px;line-height:1.7;margin:22px 0;text-align:center}
     .public-note{background:var(--paper);border:1px solid var(--stroke);padding:14px;border-radius:12px;color:var(--muted);font-size:12px}
+
+    .public-item{display:flex;flex-direction:column;gap:8px;background:var(--paper);border:1px solid var(--stroke);border-radius:14px;padding:14px}
+    .item-open{background:none;border:0;padding:0;text-align:left;color:var(--ink);cursor:pointer;font:inherit;flex:1}
+    .want-btn{align-self:flex-start;border:1px solid var(--stroke);background:var(--paper-soft);color:var(--muted);border-radius:999px;padding:7px 12px;font-size:13px;cursor:pointer;min-height:36px}
+    .want-btn.on{background:var(--pine);border-color:var(--pine);color:#fff}
+    .want-detail.on{background:var(--pine);border-color:var(--pine);color:#fff}
+    .want-list{list-style:none;padding:0;margin:6px 0 14px}
+    .want-list li{display:flex;align-items:center;gap:8px;padding:9px 0;border-bottom:1px solid var(--stroke)}
+    .want-list li small{color:var(--muted);flex:1}
+    .linklike{background:none;border:0;color:var(--pine);font:inherit;padding:0;cursor:pointer;text-align:left}
+    .field{width:100%;border:1px solid var(--stroke);border-radius:10px;padding:10px;background:var(--paper);color:var(--ink);font:inherit}
+    .formlabel{display:block;font-size:12px;color:var(--muted);margin:12px 0 6px}
+    .pill.active,.pill[aria-pressed="true"]{background:var(--pine);color:#fff;border-color:var(--pine)}
     [hidden]{display:none!important}
     @media(max-width:600px){
       .share-page{padding:17px 13px 80px}
@@ -49,7 +65,7 @@
         <span class="brand-mini" aria-hidden="true">s.</span>
         <div><strong>Hainan Local Guide</strong><span>Shared with you from SocialMate</span></div>
       </a>
-      <div class="public-actions"><button class="pill" id="language" type="button">中文</button></div>
+      <div class="public-actions"><button class="pill" id="wantsButton" type="button" aria-pressed="false">My list (0)</button><button class="pill" id="language" type="button">中文</button></div>
     </header>
     <div id="overview">
       <section class="hero hero-compact"><div><span class="eyebrow">LOCAL PICKS • HAINAN</span><h2>Explore Hainan like a local</h2><p>Places to walk, eat, unwind or take photos — with honest bilingual descriptions and map links.</p></div><div class="hero-stat" aria-hidden="true"><div class="hero-value">115</div><div class="hero-caption">local spots</div></div></section>
@@ -59,6 +75,7 @@
       </div>
       <div class="pill-group" id="categoryFilters" aria-label="Place categories"></div>
       <div class="section-heading"><h2>All places</h2><span id="publicCount">115 places</span></div>
+      <section id="myList" hidden></section>
       <div class="public-results" id="publicResults"></div>
     </div>
     <article id="publicDetail" hidden></article>
