@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  明文流量只允许回环地址：ASR 桥接与私有 UI 在 adb reverse 场景下走 127.0.0.1。
+  经 Tailscale 访问时使用 https/wss，无需明文；任何局域网或公网 http:// 都会被系统拒绝，
+  避免会话原文在明文链路上传输。
+-->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="false">
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+    </base-config>
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="false">127.0.0.1</domain>
+        <domain includeSubdomains="false">localhost</domain>
+        <domain includeSubdomains="false">::1</domain>
+    </domain-config>
+</network-security-config>

@@ -438,3 +438,30 @@ V0.4.0 APK 实际输出路径：`android-poc/app/build/outputs/apk/debug/app-deb
   - 无横向溢出（`scrollWidth == clientWidth`）、console error 0、page exception 0、CSP violation 0。
 - 证据截图：`/tmp/hist-list.png`、`/tmp/hist-detail.png`、`/tmp/v12-hist.png`（本机临时目录，未入库）。
 - 未完成（本轮受限）：手机 App 内点击该入口未实测——复测时段手机前台为用户微信（`com.tencent.mm`），未抢占焦点；App WebView 已在同域 `https://mac-mini.tail4e4317.ts.net:8443/v12` 加载，入口链接已在服务端页面中存在（curl 校验）。
+
+### 2026-11-01 DeepSeek 独立授权端到端（真 API，预算内）
+
+- 页面：`http://127.0.0.1:8791/v12?live=1`（与应用同源，桌面 Chrome 驱动，未经手机）。
+- 场景 A（`liveCloudConsent` 未勾选，默认态）：输入 `I love hiking near the sea in Haikou.` 并发送，**`/api/ai/*` 请求数 = 0**，页面无 AI 建议卡。
+- 场景 B（勾选后重发）：命中 `/api/ai/analyze`，并渲染真实建议卡「Baishamen Park near Haidian Sixth East Road… 来源：海南地点库 NO.045」。
+- 计费核对：`/api/ai/health` 的 `calls 49 → 50`、`spentCny 0.20641 → 0.21106`（Δ ≈ **0.0047 元**），`remainingCny 0.78894`，未超 1 元闸。两次请求只产生 1 次计费（另一次为在途取消）。
+- 结论：**未勾选不发文字、勾选后才调用真实模型**；预算闸生效。
+
+### 2026-11-01 Android 0.5.2 明文/证书边界（真机，Note 12T Pro）
+
+- 代码审计：全工程 `grep SslError|onReceivedSslError|proceed()|TrustManager` **零命中** → WebView 与网络请求均使用系统默认信任链，不提供任何证书绕过。
+- 修复：新增 `res/xml/network_security_config.xml`，`cleartextTrafficPermitted=false`，仅对 `127.0.0.1` / `localhost` / `::1` 放行明文；`AndroidManifest` 改为 `usesCleartextTraffic="false"` + `networkSecurityConfig`。
+- APK：**0.5.2（versionCode 12）**，`assembleDebug` 成功，SHA-256 `a7839502f6ad7a55c67b8538182d7c1009b5a945da21856b3d252f60d76d88d0`；`aapt2 dump xmltree` 确认 `usesCleartextTraffic=false` 且 `networkSecurityConfig` 已绑定。
+- 真机差分实测（自建测试服务，测完已关闭）：
+  - 非回环明文 `http://100.125.100.15:8899/v12` → WebView 报 **`net::ERR_CLEARTEXT_NOT_PERMITTED`**，页面标题「网页无法打开」；
+  - 回环明文 `http://127.0.0.1:8899/v12`（adb reverse）→ **正常加载**（证明限制只针对非回环，未误伤 adb reverse 链路）；
+  - 自签名证书 `https://100.125.100.15:8898/v12` → WebView **未渲染任何内容**（文档停留在 `about:blank`），测试服务未收到可用的页面会话；
+  - 恢复真实配置 `https://mac-mini.tail4e4317.ts.net:8443` → 正常加载 `/v12`。
+- 边界：自签名场景没有取到浏览器错误码字符串（页面未 commit，`Runtime`/`Log` 未产生条目），结论依据「未渲染 + 代码无绕过 + 有效证书域名正常」三条；未做证书过期/域名不匹配的单独用例。
+
+### 2026-11-01 归档历史 UI 真机内验收（Android WebView，Note 12T Pro）
+
+- App WebView 实际地址 `https://mac-mini.tail4e4317.ts.net:8443/v12`，`adb reverse --list` 为空。
+- CDP 实测：聊天 Tab 处于选中态；「查看 Mac mini 上已归档的会话历史 →」**可见**，`href=/v12/history`；点击后 URL 变为 `https://mac-mini.tail4e4317.ts.net:8443/v12/history`。
+- 页面内填入令牌后：状态「已连接 · 令牌已保存在本浏览器」，列表 `共 2 个会话（扫描 2 份记录）`，点开详情渲染原文 `Token rejection check.`；无横向溢出、无 JS 异常。
+- 唯一错误日志为 `/favicon.ico` 404（无 favicon，无功能影响）。
