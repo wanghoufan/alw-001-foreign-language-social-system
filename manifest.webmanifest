@@ -1,0 +1,15 @@
+{
+  "name": "Hainan Local Guide",
+  "short_name": "Hainan Guide",
+  "description": "A bilingual guide to 115 places around Hainan. Browse, save a shortlist and share it.",
+  "start_url": "./public-share.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f4f6fa",
+  "theme_color": "#146f61",
+  "lang": "en",
+  "icons": [
+    {"src": "./icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any"},
+    {"src": "./icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "maskable"}
+  ]
+}
