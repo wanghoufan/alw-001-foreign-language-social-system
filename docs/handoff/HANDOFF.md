@@ -19,6 +19,7 @@
 ## 1. 当前进展
 
 - 2026-11-01：本机档案持久化落地：`GET/PUT /api/profile` + 「关于我」显式同步按钮；存储模块 5/5 定向测试通过，同源浏览器点击端到端写入成功（临时目录，未留测试数据）。
+- 2026-11-01：会话归档核心模块 `conversation-archive.mjs` 落地：仅 final、留存同意闸、sessionId 幂等、revision 冲突、原子写 0600；8/8 定向测试；**尚未接 Android outbox 与网络入口**。
 - 2026-11-01：Mac 收尾完成；组合服务单进程提供 8790/8791，`/api/asr/status` 为 `combined:true`。
 - Note 11 已装 0.4.0（保留数据，61 个数据文件）；APK SHA-256 `da46425f7e5e1e69b243ac87171bf47f1301c2f32a25c52a23399236fdf69b7e`。
 - 回归 **102/102 Node + 2/2 TLS + 12 Android**；Gradle `BUILD SUCCESSFUL`。
@@ -36,6 +37,7 @@
 4. 需要跨网络时再设计无 USB/TLS/鉴权方案；当前不开放公网。
 5. 无硬件可继续：把「停止录音 → 本轮摘要 → 待确认档案更新」接通，摘要必须由用户确认后才写入 `SocialMate-Data/Profile`。
 6. 无硬件可继续：确认后的话题/人物再落成 `SocialMate-Data/People/<slug>/00-profile.md`，与现有正式 Markdown 对齐；当前只写私有快照，不改正式人物目录。
+7. 会话归档（见 `docs/plan/ALW001-SocialMate-Development-Plan-V1.1.md` M1/M2）：核心写入模块已就绪，下一步先做 Android 端 final-only outbox，再在**鉴权+加密入口**之后挂接收端点；未鉴权端口一律不开。
 
 ## 3. 未完成
 
@@ -43,6 +45,7 @@
 - Note 12T 当前未安装本项目 APK；未操作。
 - 无 USB/公网方案、正式分享页未接；个人故事文件仍为空。
 - 本机档案已可持久化，但尚未与会话收尾摘要、正式 `People/*.md` 归档打通；界面同步按钮只写私有快照。
+- 会话归档只有核心写入模块：Android outbox、鉴权加密入口、UI 历史列表、真机断网重放均未实现/未验收。
 - 服务只绑本机回环，真机依赖无线/USB `adb reverse`；端口映射断开后页面会重连失败。
 - `spk_N` 只是聚类编号，不保证真实身份；UI 固定“待确认”。
 
