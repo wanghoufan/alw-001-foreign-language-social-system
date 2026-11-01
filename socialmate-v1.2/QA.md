@@ -357,8 +357,8 @@ V0.4.0 APK 实际输出路径：`android-poc/app/build/outputs/apk/debug/app-deb
 | PWA-04 | PARTIAL | Note 11 MIUI 原生浏览器实机通过并截图；小米/OPPO/iPhone Safari 未覆盖 |
 | PWA-05 | PASS | 已部署 GitHub Pages：公开资源 200，`/api/profile`、`/api/asr/live`、`/api/ai/analyze` 全部 404；包内无录音权限 |
 | APP-01 | PARTIAL | 本次 `BUILD SUCCESSFUL`、APK hash 已重算；按用户红线未跑全量回归，stage1b 未重跑 |
-| APP-02 | PASS（真人语音）/ NOT_RUN（真人双人） | 用户本人对 BOYA 说 4 句英文，4 条 final 全部正确并自动归档；DeepSeek 建议卡本轮未重验 |
-| APP-03 | BLOCKED | Note 12T 安装被 MIUI 拒绝；Note 11 Tailscale 未登录，无 USB 链路未验收 |
+| APP-02 | PASS（真人语音与双说话人） | BOYA 轮次 4 条 final；Note 12T 轮次用户真声 `spk_0` + TTS `spk_1`，双说话人分离；DeepSeek 建议卡本轮未重验 |
+| APP-03 | PARTIAL | Note 12T Pro（Tailscale 100.94.116.99）已用 wss:10000 + https:8443 + /alw 全程无 adb reverse 跑通；物理拔线复测与坏证书拒绝未做 |
 | APP-04 | PASS | 真机 final 逐字写入 Mac MD/JSON（含识别错误）；断网 → 待导出 → 恢复后补传，无重复 |
 | APP-05 | PASS | 录音同意与留存同意分离；不勾选留存零落盘；ASR 预算 0.0423/1 元，AI 预算未变 |
 | APP-06 | PASS（非静音）/ N/A（真分轨） | 2026-11-01 复测 A -24.1、B -27.96 dBFS，L−R=0，0 削波，`routeVerified=true` → 确认 MONO_MIX；真分轨不成立，固定走混音+说话人分离 |
@@ -395,3 +395,16 @@ V0.4.0 APK 实际输出路径：`android-poc/app/build/outputs/apk/debug/app-deb
   - 页面标题 `Hainan Local Guide · SocialMate`，地点数据 115 条。
 - 手机复验：Note 11 原生浏览器通过公网 HTTPS 打开，显示 `115 / 115 places`、`My list`、`☆ Want to go`；截图 `screenshots/pwa-v11-https-note11.png`。
 - 边界：GitHub Pages 国内直连速度可能波动；无自定义域名；未做 Xiaomi/OPPO/iPhone 全矩阵。
+
+### 2026-11-01 Note 12T Pro 无 USB 私有链路（Tailscale）
+
+- 设备核对：**UKCESWB67PUO7LPB = Redmi Note 12T Pro（23054RA19C / Android 15）**，Tailscale `100.94.116.99`；此前误用 indq5xfi6hovay4d（Redmi Note 12 Pro），已更正。
+- 安装：APK 0.5.1（versionCode 11）安装成功；SHA-256 `304e01664e2d44e730c708ea485d888c9cf692d2e0ef8470ea5df12fa90f6757`。
+- 配置：`asr_url=wss://mac-mini.tail4e4317.ts.net:10000/asr`、`ui_url=https://mac-mini.tail4e4317.ts.net:8443`、归档 `/alw/api/archive/session`；**`adb reverse --list` 为空**。
+- 实测：
+  - ASR 连接成功，服务端 `activeSessions=1`；状态「已连接 · 48000 Hz · 2 声道 · mix」；
+  - WebView 实际 URL（CDP）`https://mac-mini.tail4e4317.ts.net:8443/v12?live=1`；
+  - 停止后自动归档到 Mac：`SocialMate-2026-11-01-044131-sess_20261101T044131_7f46c2.md`；
+  - 原文两条：用户真声「不能分开的3个档位吗？」→ `spk_0`；TTS「对着手机说4句英文。」→ `spk_1`，**双说话人分离成立**。
+- 未完成：物理拔掉 USB 后复测；坏证书/非法令牌拒绝（令牌 401 已在 Mac 侧验证）；DeepSeek 同意与建议卡未在本轮启用。
+- PWA 测试口径：公开页面只用手机自带浏览器（Note 11 `com.android.browser` 已验证），不使用 Chrome。
