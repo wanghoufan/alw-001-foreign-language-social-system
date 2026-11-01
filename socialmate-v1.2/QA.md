@@ -357,7 +357,7 @@ V0.4.0 APK 实际输出路径：`android-poc/app/build/outputs/apk/debug/app-deb
 | PWA-04 | PARTIAL | Note 11 MIUI 原生浏览器实机通过并截图；小米/OPPO/iPhone Safari 未覆盖 |
 | PWA-05 | PARTIAL | 包内无私有路由、无录音权限；**未部署 HTTPS**，未做公网路由枚举 |
 | APP-01 | PARTIAL | 本次 `BUILD SUCCESSFUL`、APK hash 已重算；按用户红线未跑全量回归，stage1b 未重跑 |
-| APP-02 | PARTIAL | 真机真实语音 → 腾讯云 final → 字幕/归档；本轮未重新验证 DeepSeek 建议卡 |
+| APP-02 | PASS（真人语音）/ NOT_RUN（真人双人） | 用户本人对 BOYA 说 4 句英文，4 条 final 全部正确并自动归档；DeepSeek 建议卡本轮未重验 |
 | APP-03 | BLOCKED | Note 12T 安装被 MIUI 拒绝；Note 11 Tailscale 未登录，无 USB 链路未验收 |
 | APP-04 | PASS | 真机 final 逐字写入 Mac MD/JSON（含识别错误）；断网 → 待导出 → 恢复后补传，无重复 |
 | APP-05 | PASS | 录音同意与留存同意分离；不勾选留存零落盘；ASR 预算 0.0423/1 元，AI 预算未变 |
@@ -375,3 +375,11 @@ V0.4.0 APK 实际输出路径：`android-poc/app/build/outputs/apk/debug/app-deb
   - 本轮**未录到用户本人语音**（三次尝试只捕获 Mac 外放），真人双人仍 **NOT_RUN**。
 - 归档：每轮 final 均自动写入 Mac（`sess_20261101T0407*`、`0408*`、`0409*`），测试后已清理；JSON 示例 SHA-256 `a937ca6eb5d510994bc0073e526d1a5d98d8f7713175b816afbf587a83c1ac10`。
 - 阻塞：需用户本人对着 BOYA 发射器说话（或两位真人）才能完成 APP-02 真人双人验收。
+
+### 2026-11-01 真人语音归档（Note 11 + BOYA，用户本人参与）
+
+- 用户在界面上自行完成：录音同意 → 开始 → 对发射器说 4 句英文 → 停止。
+- 腾讯云 final 4 条，**全部 `spk_0`（单人，符合预期）**，识别文本与口述一致；每句均带时间戳、轨道 mix、provider tencent、`mock:false`。
+- 自动导出到 Mac：`SocialMate-2026-11-01-041251-sess_20261101T041251_d71d90.md/.json`。
+  - MD SHA-256 `ee3f73cb2c2c12feca8636583f493725ea9a9aef86910fcd78fd3234d9648300`；JSON SHA-256 `65c1f926cd6b584208d764ba35268e3a3c9154d2333e11547b23919843063016`；权限 0600。
+- 结论：**真人语音 → 腾讯云 ASR → 手机归档 → Mac 落盘** 全链路成立；说话人双人严格分离仍建议两位真人复测（TTS 双声源已能分 `spk_0/spk_1`）。
