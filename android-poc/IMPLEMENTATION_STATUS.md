@@ -19,7 +19,16 @@
 
 ## 二、博雅真机双麦结论
 
-结论：**MONO_MIX（dual-mono，混合单声道），不是真分轨。**
+结论：**MONO_MIX（dual-mono，混合单声道），不是真分轨。**（2026-11-01 重新实测，发射器已开机，电平正常）
+
+### 2026-11-01 复测（Note 11 5G + BOYA mini）
+
+- 路由：`USB_DEVICE #587 · USB-Audio - BOYA mini`，`routeVerified=true`，48000 Hz / 2 声道 / UNPROCESSED。
+- A 段：L/R = **-24.1 / -24.1 dBFS**（L−R = 0.0 dB），削波 0。
+- B 段：L/R = **-27.96 / -27.96 dBFS**（L−R ≈ -0.0000007 dB），削波 0，frames 240000。
+- 结论：两路都有正常电平（不再是 `-180 dBFS` 静音），但左右完全一致 → **MONO_MIX 成立**；固定走混音 + 说话人分离，不再追真分轨。
+- 诊断文件：`/sdcard/Android/data/app.socialmate.dualmic/files/Music/dualmic/20261101-1204*_A`、`…1205*_B`。
+
 
 - 设备：USB-Audio - BOYA mini（VID 0x3634 / PID 0x4155），48000 Hz、2 声道、`UNPROCESSED`。
 - 路由：A/B 两段均 `routeVerified=true`，请求与实际路由为同一 USB 设备。

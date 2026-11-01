@@ -361,6 +361,17 @@ V0.4.0 APK 实际输出路径：`android-poc/app/build/outputs/apk/debug/app-deb
 | APP-03 | BLOCKED | Note 12T 安装被 MIUI 拒绝；Note 11 Tailscale 未登录，无 USB 链路未验收 |
 | APP-04 | PASS | 真机 final 逐字写入 Mac MD/JSON（含识别错误）；断网 → 待导出 → 恢复后补传，无重复 |
 | APP-05 | PASS | 录音同意与留存同意分离；不勾选留存零落盘；ASR 预算 0.0423/1 元，AI 预算未变 |
-| APP-06 | BLOCKED | BOYA 仍为历史 `-180 dBFS`，本轮未接硬件复测 |
+| APP-06 | PASS（非静音）/ N/A（真分轨） | 2026-11-01 复测 A -24.1、B -27.96 dBFS，L−R=0，0 削波，`routeVerified=true` → 确认 MONO_MIX；真分轨不成立，固定走混音+说话人分离 |
 | APP-07 | NOT_RUN | 新归档 UI 未做独立截图评审（仅 uiautomator 文本核对） |
 | APP-08 | PARTIAL | 手机断网重试通过；Mac 服务重启/弱网切换未单独复测 |
+
+### 2026-11-01 BOYA 复测与说话人分离（Note 11 5G）
+
+- 发射器开机后重新实测：A 段 L/R **-24.1 / -24.1 dBFS**、B 段 **-27.96 / -27.96 dBFS**，`leftMinusRightDb ≈ 0`，削波 **0**，`routeVerified=true`；不再是历史 `-180 dBFS` 静音。
+- 结论：硬件确有正常电平，但左右声道完全相同 → **MONO_MIX 确认**；产品固定用 mix + 腾讯云说话人分离。
+- 实时会话复测（mix，真实腾讯云）：
+  - 三个声源（中文提示音 + Samantha + Daniel）→ `spk_0 / spk_1 / spk_2` 三个聚类；
+  - 两个声源（中文提示音 + 英文女声）→ `spk_0 / spk_1`；
+  - 本轮**未录到用户本人语音**（三次尝试只捕获 Mac 外放），真人双人仍 **NOT_RUN**。
+- 归档：每轮 final 均自动写入 Mac（`sess_20261101T0407*`、`0408*`、`0409*`），测试后已清理；JSON 示例 SHA-256 `a937ca6eb5d510994bc0073e526d1a5d98d8f7713175b816afbf587a83c1ac10`。
+- 阻塞：需用户本人对着 BOYA 发射器说话（或两位真人）才能完成 APP-02 真人双人验收。
