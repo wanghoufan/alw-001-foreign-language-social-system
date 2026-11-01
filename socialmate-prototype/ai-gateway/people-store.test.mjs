@@ -4,7 +4,7 @@ import os from "node:os";
 import path from "node:path";
 import test from "node:test";
 
-import {appendPeopleFacts, listPeople, sourceKey} from "./people-store.mjs";
+import {appendPeopleFacts, createPersonFile, listPeople, removeEmptyPersonFile, sourceKey} from "./people-store.mjs";
 
 const TEMPLATE = `---
 name: Anna
@@ -128,4 +128,52 @@ test("listPeople 只列真实主档，排除模板", async (t) => {
   const people = await listPeople();
   assert.deepEqual(people.map((p) => p.slug), ["anna", "bob"]);
   assert.deepEqual(people.map((p) => p.name), ["Anna", "Bob"]);
+});
+
+test("按模板新建人物主档：姓名入 front matter，权限 0700/0600", async (t) => {
+  const dir = await tempPeople(t);
+  await fs.mkdir(path.join(dir, "_template"), {recursive: true});
+  await fs.writeFile(path.join(dir, "_template", "00-profile.md"), TEMPLATE.replace("name: Anna", "name:"), "utf8");
+
+  const result = await createPersonFile({slug: "bruno", name: "Bruno"});
+  assert.equal(result.created, true);
+  const file = path.join(dir, "bruno", "00-profile.md");
+  const md = await fs.readFile(file, "utf8");
+  assert.match(md, /^name: Bruno$/m);
+  assert.ok(md.includes("# 兴趣"), "模板章节必须保留");
+  assert.equal(((await fs.stat(file)).mode & 0o777).toString(8), "600");
+  assert.equal(((await fs.stat(path.join(dir, "bruno"))).mode & 0o777).toString(8), "700");
+
+  const again = await createPersonFile({slug: "bruno", name: "另一位"});
+  assert.equal(again.created, false);
+  assert.equal(await fs.readFile(file, "utf8"), md, "已存在的档案不能被覆盖");
+});
+
+test("新建人物拒绝非法标识与空姓名", async (t) => {
+  await tempPeople(t);
+  for (const slug of ["../x", "a b", "", "-lead"]) {
+    await assert.rejects(() => createPersonFile({slug, name: "X"}), /人物标识/);
+  }
+  await assert.rejects(() => createPersonFile({slug: "okname", name: "  "}), /姓名/);
+});
+
+test("姓名里的特殊字符不会破坏 front matter", async (t) => {
+  const dir = await tempPeople(t);
+  await createPersonFile({slug: "weird", name: "Aa: #1 \"x\"\n---\n# 基本情况\n注入"});
+  const md = await fs.readFile(path.join(dir, "weird", "00-profile.md"), "utf8");
+  const front = md.slice(0, md.indexOf("\n---", 4));
+  assert.ok(!front.includes("\n# 基本情况"), "换行注入必须被消除");
+  assert.match(front, /^name: /m);
+});
+
+test("removeEmptyPersonFile 只删仍为空的主档", async (t) => {
+  const dir = await tempPeople(t);
+  await createPersonFile({slug: "empty-one", name: "Empty"});
+  assert.equal((await removeEmptyPersonFile("empty-one")).removed, true);
+  await assert.rejects(() => fs.stat(path.join(dir, "empty-one")), /ENOENT/);
+
+  await createPersonFile({slug: "kept", name: "Kept"});
+  await appendPeopleFacts([{...FACT, slug: "kept"}]);
+  assert.equal((await removeEmptyPersonFile("kept")).removed, false);
+  assert.ok((await fs.readFile(path.join(dir, "kept", "00-profile.md"), "utf8")).includes("sm-src:"));
 });

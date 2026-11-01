@@ -541,3 +541,19 @@ V0.4.0 APK 实际输出路径：`android-poc/app/build/outputs/apk/debug/app-deb
 - PARTIAL：真机链路走的是隔离实例 + 合成会话（因无可代办真人说话产生 final），不是“真人全链 PASS”；真机深链由 `Page.navigate` 触发而非点 App 的「本轮原文与复盘」按钮（该按钮需有已导出的本轮会话）。
 - NOT_RUN：真人说话 → 停止 → App 内按钮 → 确认保存的完整真人链；两位真人同时说话的 BOYA 聚类有效性；服务重启/断网后手机自动重连重传的真机复测。
 - N/A：横屏 —— `MainActivity`/`AsrActivity` 均 `android:screenOrientation="portrait"`，无横屏态（截图 `screenshots/android-054-landscape-note11.png` 证实旋转设置被忽略）。
+
+### 2026-11-01 N02-A2 · 开放「新建人物主档」+ 多人档案回归
+
+**决策**：用户选择 A2 —— 复盘页可点「＋ 新建人物主档…」，自动生成目录 + 模板；B 项要求建立多人测试档案并由开发者自跑测试。
+
+**实现**：`people-store.createPersonFile()`（按 `_template/00-profile.md` 建 0700 目录 + 0600 主档，只写 front matter `name`，姓名做换行/特殊字符清洗）、`removeEmptyPersonFile()`（回滚时删本轮新建且仍为空的主档）、`review-confirm` 只在**该人物确实分到事实**时才建目录。
+
+**多人档案端到端（`node socialmate-v1.2/qa-people-e2e.mjs`，10/10 PASS，可重复运行）**：临时目录建 3 个虚构人物（Ann Lee / Bea Santos / Cheng Yu，各带一条人工写入条目）→ 起隔离归档(8789)+网关(8799)+随机令牌 → 写入 2 个虚构会话 → 3 条事实分别落 3 人 + 1 条「关于我」→ 断言每人只多自己那条、无交叉污染、front matter 与人工条目保留、主档 0600/目录 0700/本机档案 0600、重复保存字节不变、显式新建第 4 人（Dee Wong）、越权与非法输入被拒（无令牌 401 / 段号越界 / 未选人）、无孤立空目录。脚本自带拆除与临时目录清理。
+
+**真机复核（Note 11 5G，0.5.4/14，深色模式，隔离实例 + 合成会话）**：页面选「保存到人物」→「＋ 新建人物主档…」→ 填 `Eli Tan` / `Eli-Tan` → 章节「对方近期计划」→ 确认保存 → 页面显示「已保存：人物备注 +1 · 人物主档 +1（Eli-Tan:plan） · 新建人物 Eli-Tan」；Mac 侧核对 `People/Eli-Tan/00-profile.md` front matter 为 `name: Eli Tan`、事实落在「# 对方近期计划」、0600/0700、其余 4 个档案零改动。截图 `screenshots/android-054-review-newperson-note11.png`。
+
+**过程中发现并修复的真实缺陷**：页面把下拉哨兵值 `__new__` 当作 `peopleSlug` 提交（真机首次保存报 `UNKNOWN_PERSON`）。已改为提交用户填写的标识，并在 QA 脚本里加静态守卫（断言页面含 `r.newSlug.value.trim()` 且不再直接使用 `personSelect.value` 作 slug）。
+
+**测试基线**：`node --test`（ai-gateway）**75/75**；`verify-v040.sh` 全绿（前端 24 + TLS/安装 4 + 网关 15 + 归档/复盘/档案/人物 60 + ASR 桥 40 + 重建后前端 23 = **166 项** + 12 Android core + APK 构建），日志 `socialmate-v1.2/.local/qa/verify-20261101-193940.log`。
+
+**边界（不变）**：仍然不允许「按显示名猜人」「自动合并人物」；新建人物必须由用户在页面上显式点选并填写标识；真实 `SocialMate-Data/` 在本轮测试中零写入（`Profile/` 目录仍不存在，`People/Test-Anna` mtime 仍为 10-04）。

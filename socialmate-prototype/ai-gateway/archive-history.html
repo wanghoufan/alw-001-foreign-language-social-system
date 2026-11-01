@@ -432,7 +432,7 @@ a.back{font-size:13px;color:var(--pine);text-decoration:none;display:inline-bloc
       personSelect.classList.add("hidden");
       const placeholder = document.createElement("option");
       placeholder.value = "";
-      placeholder.textContent = people.length ? "选择人物…" : "没有正式人物主档";
+      placeholder.textContent = people.length ? "选择人物…" : "没有人物主档，可新建";
       personSelect.appendChild(placeholder);
       people.forEach((p) => {
         const opt = document.createElement("option");
@@ -440,6 +440,21 @@ a.back{font-size:13px;color:var(--pine);text-decoration:none;display:inline-bloc
         opt.textContent = p.name === p.slug ? p.name : `${p.name}（${p.slug}）`;
         personSelect.appendChild(opt);
       });
+      const newOption = document.createElement("option");
+      newOption.value = "__new__";
+      newOption.textContent = "＋ 新建人物主档…";
+      personSelect.appendChild(newOption);
+      // 新建人物需要姓名 + 目录标识；标记只允许字母数字，避免中文路径与目录穿越。
+      const newName = document.createElement("input");
+      newName.className = "name";
+      newName.placeholder = "人物姓名";
+      newName.dataset.role = "personName";
+      newName.classList.add("hidden");
+      const newSlug = document.createElement("input");
+      newSlug.className = "name";
+      newSlug.placeholder = "目录标识（英文/数字，如 anna）";
+      newSlug.dataset.role = "personSlug";
+      newSlug.classList.add("hidden");
       const sectionSelect = document.createElement("select");
       sectionSelect.dataset.role = "section";
       sectionSelect.classList.add("hidden");
@@ -449,7 +464,7 @@ a.back{font-size:13px;color:var(--pine);text-decoration:none;display:inline-bloc
         opt.textContent = "写入章节：" + text;
         sectionSelect.appendChild(opt);
       });
-      headRow.append(check, label, target, personSelect, sectionSelect);
+      headRow.append(check, label, target, personSelect, sectionSelect, newName, newSlug);
 
       const text = document.createElement("textarea");
       text.value = item.text;
@@ -458,7 +473,7 @@ a.back{font-size:13px;color:var(--pine);text-decoration:none;display:inline-bloc
         `段 ${item.source.segmentIndex + 1} · ${item.source.clock} · ${item.source.speakerId}（聚类编号，身份未知）· 原文：「${item.source.quote}」`);
       box.append(headRow, text, src);
       host.appendChild(box);
-      const row = {item, check, target, personSelect, sectionSelect, text};
+      const row = {item, check, target, personSelect, sectionSelect, newName, newSlug, text};
       rows.push(row);
 
       check.addEventListener("change", () => { if (check.checked && target.value === "skip") target.value = "self"; });
@@ -466,9 +481,16 @@ a.back{font-size:13px;color:var(--pine);text-decoration:none;display:inline-bloc
         const isPerson = target.value === "person";
         personSelect.classList.toggle("hidden", !isPerson);
         sectionSelect.classList.toggle("hidden", !isPerson);
+        const isNew = isPerson && personSelect.value === "__new__";
+        newName.classList.toggle("hidden", !isNew);
+        newSlug.classList.toggle("hidden", !isNew);
       };
       target.addEventListener("change", syncPersonUi);
-      personSelect.addEventListener("change", () => { if (personSelect.value) check.checked = true; });
+      personSelect.addEventListener("change", () => {
+        syncPersonUi();
+        if (personSelect.value) check.checked = true;
+      });
+      newName.addEventListener("input", () => { if (newName.value.trim()) check.checked = true; });
     });
 
     const tools = el("div", "row");
@@ -481,7 +503,7 @@ a.back{font-size:13px;color:var(--pine);text-decoration:none;display:inline-bloc
     host.appendChild(saveStatus);
     host.appendChild(el("p", "hint",
       "保存到「关于我」写入本机档案；保存到人物会同时追加到正式人物主档 People/<slug>/00-profile.md 的对应章节，"
-      + "只追加、不改人工写的段落，重复保存不会新增第二条。"));
+      + "只追加、不改人工写的段落，重复保存不会新增第二条。没有对应人物时可选「新建人物主档」，先起英文目录标识再建。"));
 
     pickAll.addEventListener("click", () => {
       rows.forEach((r) => {
@@ -496,14 +518,32 @@ a.back{font-size:13px;color:var(--pine);text-decoration:none;display:inline-bloc
       const items = [];
       for (const r of rows) {
         if (!r.check.checked || r.target.value === "skip") continue;
+        const isNew = r.personSelect.value === "__new__";
         if (r.target.value === "person" && !r.personSelect.value) {
-          saveStatus.textContent = "人物候选必须选择具体人物（来自正式人物主档），或改成不保存";
+          saveStatus.textContent = "人物候选必须选择具体人物（来自正式人物主档）或点「新建人物主档」，也可改成不保存";
           saveStatus.className = "status err";
           return;
         }
+        if (isNew) {
+          const name = r.newName.value.trim();
+          const slug = r.newSlug.value.trim();
+          if (!name) {
+            saveStatus.textContent = "新建人物需要填写姓名";
+            saveStatus.className = "status err";
+            return;
+          }
+          if (!/^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$/.test(slug)) {
+            saveStatus.textContent = "新建人物的目录标识只能用英文字母/数字/下划线/连字符（如 anna）";
+            saveStatus.className = "status err";
+            return;
+          }
+        }
         items.push({
           kind: r.target.value,
-          peopleSlug: r.target.value === "person" ? r.personSelect.value : undefined,
+          // 新建人物时提交用户填的目录标识，不能把下拉里的哨兵值 "__new__" 当 slug 传上去。
+          peopleSlug: r.target.value !== "person" ? undefined : (isNew ? r.newSlug.value.trim() : r.personSelect.value),
+          createPerson: isNew ? true : undefined,
+          personName: isNew ? r.newName.value.trim() : undefined,
           section: r.target.value === "person" ? r.sectionSelect.value : undefined,
           text: r.text.value.trim(),
           originalText: r.item.text,
@@ -528,6 +568,8 @@ a.back{font-size:13px;color:var(--pine);text-decoration:none;display:inline-bloc
           if (result.added.notes) parts.push(`人物备注 +${result.added.notes}`);
           const peopleAdded = (result.people && result.people.added) || [];
           if (peopleAdded.length) parts.push(`人物主档 +${peopleAdded.length}（${peopleAdded.map((p) => p.slug + ":" + p.section).join("、")}）`);
+          const peopleCreated = (result.people && result.people.created) || [];
+          if (peopleCreated.length) parts.push(`新建人物 ${peopleCreated.join("、")}`);
           const dup = (result.skipped || []).filter((x) => x.reason === "DUPLICATE").length;
           saveStatus.textContent = `已保存：${parts.join(" · ") || "无"}${dup ? ` · 已去重 ${dup} 条` : ""} · 更新时间 ${result.updatedAt}`;
         }

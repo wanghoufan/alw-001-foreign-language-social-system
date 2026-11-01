@@ -136,3 +136,88 @@ test("段号指不到原文时两处都不写", async (t) => {
   assert.equal(await fs.readFile(path.join(people, "anna", "00-profile.md"), "utf8"), before);
   await assert.rejects(() => fs.stat(path.join(profile, "current.json")), /ENOENT/);
 });
+
+test("显式新建人物：先建模板再写事实，其余人物档案不变", async (t) => {
+  const {people, profile} = await setup(t);
+  const annaBefore = await fs.readFile(path.join(people, "anna", "00-profile.md"), "utf8");
+  const result = await confirmReview({
+    confirm: true, sessionId: SESSION.sessionId,
+    items: [{kind: "person", createPerson: true, peopleSlug: "bruno", personName: "Bruno",
+      section: "interest", text: "He likes hiking.", segmentIndex: 0}],
+  }, SESSION);
+
+  assert.deepEqual(result.people.created, ["bruno"]);
+  assert.equal(result.people.added[0].slug, "bruno");
+  const md = await fs.readFile(path.join(people, "bruno", "00-profile.md"), "utf8");
+  assert.match(md, /^name: Bruno$/m);
+  assert.ok(md.includes("He likes hiking."));
+  assert.ok(md.includes("# 兴趣"));
+  assert.equal(await fs.readFile(path.join(people, "anna", "00-profile.md"), "utf8"), annaBefore);
+  const stored = JSON.parse(await fs.readFile(path.join(profile, "current.json"), "utf8"));
+  assert.equal(stored.people[0].peopleSlug, "bruno");
+});
+
+test("只勾了「关于我」时，不会留下空的新建人物档案", async (t) => {
+  const {people} = await setup(t);
+  const result = await confirmReview({
+    confirm: true, sessionId: SESSION.sessionId,
+    items: [{kind: "self", text: "I like hiking on Sunday.", segmentIndex: 0}],
+  }, SESSION);
+  assert.equal(result.added.stories, 1);
+  assert.deepEqual(result.people.created, []);
+  await assert.rejects(() => fs.stat(path.join(people, "bruno")), /ENOENT/);
+});
+
+test("新建人物但本机档案写入失败：事实回滚，新建的空主档被删掉", async (t) => {
+  const {people} = await setup(t);
+  await fs.writeFile(process.env.SM_PROFILE_DIR, "not a directory", "utf8");
+  await assert.rejects(() => confirmReview({
+    confirm: true, sessionId: SESSION.sessionId,
+    items: [{kind: "person", createPerson: true, peopleSlug: "bruno", personName: "Bruno",
+      section: "interest", text: "He likes hiking.", segmentIndex: 0}],
+  }, SESSION), (error) => {
+    assert.deepEqual(error.peopleCreatedRemoved, ["bruno"]);
+    return true;
+  });
+  await assert.rejects(() => fs.stat(path.join(people, "bruno")), /ENOENT/,
+    "回滚后不应留下只写了模板的空档案");
+});
+
+test("多人档案：三条事实分别落在各自人物，互不污染", async (t) => {
+  const {people} = await setup(t, {anna: TEMPLATE, bob: BOB, chen: TEMPLATE.replace("name: Anna", "name: Chen")});
+  const session = {
+    sessionId: "sess_20261101T130000_multi01",
+    segments: [
+      {speakerId: "spk_0", startMs: 0, endMs: 1000, textOriginal: "I like hiking."},
+      {speakerId: "spk_1", startMs: 1000, endMs: 2000, textOriginal: "I work at a cafe."},
+      {speakerId: "spk_2", startMs: 2000, endMs: 3000, textOriginal: "I love Hainan food."},
+      {speakerId: "spk_0", startMs: 3000, endMs: 4000, textOriginal: "I usually run on Sunday."},
+    ],
+  };
+  const snapshot = async () => ({
+    anna: await fs.readFile(path.join(people, "anna", "00-profile.md"), "utf8"),
+    bob: await fs.readFile(path.join(people, "bob", "00-profile.md"), "utf8"),
+    chen: await fs.readFile(path.join(people, "chen", "00-profile.md"), "utf8"),
+  });
+  const before = await snapshot();
+
+  const result = await confirmReview({
+    confirm: true, sessionId: session.sessionId,
+    items: [
+      {kind: "person", peopleSlug: "anna", section: "interest", text: "She likes hiking.", segmentIndex: 0},
+      {kind: "person", peopleSlug: "bob", section: "work", text: "He works at a cafe.", segmentIndex: 1},
+      {kind: "person", peopleSlug: "chen", section: "preference", text: "She loves Hainan food.", segmentIndex: 2},
+      {kind: "self", text: "I usually run on Sunday.", segmentIndex: 3},
+    ],
+  }, session);
+
+  assert.equal(result.people.added.length, 3);
+  const after = await snapshot();
+  assert.ok(after.anna.includes("She likes hiking."));
+  assert.ok(after.bob.includes("He works at a cafe."));
+  assert.ok(after.chen.includes("She loves Hainan food."));
+  assert.ok(!after.anna.includes("He works at a cafe."), "A 的档案不能出现 B 的事实");
+  assert.ok(!after.bob.includes("She loves Hainan food."), "B 的档案不能出现 C 的事实");
+  assert.ok(after.bob.startsWith(before.bob.slice(0, 40)), "front matter 必须保留");
+  assert.equal(result.added.stories, 1);
+});

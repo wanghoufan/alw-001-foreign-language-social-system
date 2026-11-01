@@ -11,7 +11,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 
-import {appendPeopleFacts, listPeople, peopleRoot} from "./people-store.mjs";
+import {appendPeopleFacts, createPersonFile, listPeople, peopleRoot, removeEmptyPersonFile} from "./people-store.mjs";
 import {commitProfilePlan, planProfileCandidates} from "./profile-store.mjs";
 
 async function restore(files) {
@@ -32,10 +32,15 @@ async function restore(files) {
  * @param {object} input        { confirm, sessionId, items }
  * @param {object} session      已由归档服务校验过的会话原文（含 segments）
  * @param {object} [options]    {knownPeople} 覆盖默认的人物索引（测试用）
+ *
+ * 新建人物（用户在页面显式点「新建人物」并填姓名/标识）：
+ * - 先按模板校验，只在该人物**确实分到了事实**时才真正建目录，避免留下空档案；
+ * - 建完再追加事实；后续任一步失败，清掉本轮新建且仍为空的主档。
  */
 export async function confirmReview(input, session, options = {}) {
   const segments = Array.isArray(session?.segments) ? session.segments : [];
   const validSegmentIndexes = segments.map((_, index) => index);
+  const items = Array.isArray(input?.items) ? input.items : [];
 
   let knownPeople = options.knownPeople;
   if (!knownPeople) {
@@ -43,12 +48,34 @@ export async function confirmReview(input, session, options = {}) {
     for (const person of await listPeople()) knownPeople[person.slug] = {name: person.name};
   }
 
+  // 收集「新建人物」请求：只放行显式 createPerson:true 且有姓名/合法标识的条目。
+  const pendingCreate = new Map();
+  for (const item of items) {
+    if (item?.kind !== "person" || item?.createPerson !== true) continue;
+    const slug = String(item?.peopleSlug || "").trim();
+    const name = String(item?.personName || item?.name || "").trim();
+    if (!/^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$/.test(slug) || !name) continue;
+    if (!knownPeople[slug]) pendingCreate.set(slug, name);
+  }
+  for (const [slug, name] of pendingCreate) knownPeople[slug] = {name, pendingCreate: true};
+
   const plan = await planProfileCandidates({...input, sessionId: session?.sessionId || input?.sessionId},
     {validSegmentIndexes, knownPeople});
 
+  const created = [];
   let peopleResult = {added: [], skipped: [], files: []};
-  if (plan.peopleFacts.length) {
-    peopleResult = await appendPeopleFacts(plan.peopleFacts);
+  try {
+    // 只为真正产生了事实的新人物建主档，避免“点了新建但什么都没写”留下空目录。
+    const needed = new Set(plan.peopleFacts.map((fact) => fact.slug));
+    for (const [slug, name] of pendingCreate) {
+      if (!needed.has(slug)) continue;
+      const result = await createPersonFile({slug, name});
+      if (result.created) created.push(result.slug);
+    }
+    if (plan.peopleFacts.length) peopleResult = await appendPeopleFacts(plan.peopleFacts);
+  } catch (error) {
+    for (const slug of created) await removeEmptyPersonFile(slug).catch(() => {});
+    throw error;
   }
 
   let result;
@@ -56,7 +83,13 @@ export async function confirmReview(input, session, options = {}) {
     result = await commitProfilePlan(plan);
   } catch (error) {
     const restored = await restore(peopleResult.added);
+    const removed = [];
+    for (const slug of created) {
+      const outcome = await removeEmptyPersonFile(slug).catch(() => null);
+      if (outcome?.removed) removed.push(slug);
+    }
     error.peopleRolledBack = restored;
+    error.peopleCreatedRemoved = removed;
     throw error;
   }
 
@@ -64,6 +97,7 @@ export async function confirmReview(input, session, options = {}) {
     ...result,
     people: {
       added: peopleResult.added.map(({slug, section, file}) => ({slug, section, file})),
+      created,
       skipped: peopleResult.skipped,
     },
   };

@@ -76,6 +76,7 @@
 - `POST /v12/api/review`：`x-archive-token` 必填；`mode=local` 0 次外部请求，`mode=ai` 需当轮 `consent:true` + 1 元预算闸。
 - `POST /v12/api/review/apply`：令牌必填 → 先经归档服务取会话（令牌无效 401 / 会话不存在 404）→ 段号必须命中该会话真实段号（否则 `SEGMENT_NOT_FOUND`）→ 再写盘。限流：同一进程 60s 内最多 12 次、最小间隔 400ms，超出 429。
 - 人物归属：只接受用户显式选择的**真实人物主档 slug**（`GET /v12/api/people` 列出现有 `People/<slug>/00-profile.md`）；未选择 → `PERSON_NOT_SELECTED`，不新建人物、不按显示名猜人。
+- 新建人物（用户 2026-11-01 选择 A2 开放）：页面上选「＋ 新建人物主档…」并填姓名 + 英文目录标识，请求带 `createPerson:true`；服务端先按 `_template/00-profile.md` 建目录（0700）与主档（0600，只写 `name`），**且只在该人物确实分到事实时才建**，否则不留空档案；回滚时删除本轮新建且仍为空的主档。标识必须 `^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$`，姓名做 front matter 注入清洗。
 - 写入顺序：先 People（逐文件原子替换 + 写前备份 `.sm-backup/` + 写后自检 `sm-src:<key>`），再 Profile；Profile 失败时用备份回滚 People，杜绝“界面说已保存、实际只写了一半”。
 - 幂等：`sessionId + 段号 + 文本指纹`；People 行内嵌入不可见 `<!--sm-src:key-->` 标记用于跨重启去重。用户改写候选时，`sources[].original` 保留原始候选文本。
 - People 分节映射：`interest/work/hainan/common/plan/preference/topics/basic/avoid` → 模板同名 `# 章节`；只追加到章节末尾，不动 front matter 与人工段落；文件 0600、目录 0700。

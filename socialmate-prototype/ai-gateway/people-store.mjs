@@ -89,8 +89,77 @@ export async function listPeople() {
   return out;
 }
 
-/** 解析 Markdown：保留 front matter 原样，记录每个 `# 标题` 的行区间。 */
-function parseMarkdown(text) {
+const FALLBACK_TEMPLATE = [
+  "---", "name:", "country:", "city:", "languages: []", "status_in_hainan:", "occupation:",
+  "relationship_stage: new_contact", "first_met:", "last_contact:", "contact_channels: []", "tags: []",
+  "---", "", "# 基本情况", "", "# 兴趣", "", "# 海南生活", "", "# 工作 / 学习", "",
+  "# 共同点", "", "# 对方近期计划", "", "# 已确认偏好", "", "# 不宜重复询问", "", "# 后续可以继续的话题", "",
+].join("\n");
+
+/** front matter 里的名字必须是单行安全值：去掉控制字符，含特殊符号时加引号。 */
+function yamlSafeName(value) {
+  const oneLine = String(value || "").replace(/[\u0000-\u001f\u007f]/g, " ").replace(/\s+/g, " ").trim().slice(0, 60);
+  if (!oneLine) return "";
+  return /[:#\[\]{}&*!|>'"%@`]/.test(oneLine)
+    ? `"${oneLine.replace(/"/g, "'")}"`
+    : oneLine;
+}
+
+/**
+ * 用户显式点「新建人物」时，用 `_template/00-profile.md` 生成一份正式主档。
+ * 只建目录与模板文件，不写任何事实；已存在则原样返回，绝不覆盖。
+ */
+export async function createPersonFile({slug, name, root = peopleRoot()}) {
+  const safeSlug = assertSlug(slug);
+  const safeName = yamlSafeName(name);
+  if (!safeName) throw fail(400, "PERSON_NAME_REQUIRED", "新建人物需要填写姓名");
+
+  const dir = path.join(root, safeSlug);
+  const file = path.join(dir, "00-profile.md");
+  try {
+    await fs.stat(file);
+    return {slug: safeSlug, created: false, existing: true, file: path.relative(root, file)};
+  } catch (error) {
+    if (error.code !== "ENOENT") throw error;
+  }
+
+  let template;
+  try {
+    template = await fs.readFile(path.join(root, "_template", "00-profile.md"), "utf8");
+  } catch {
+    template = FALLBACK_TEMPLATE;
+  }
+  const body = /^name\s*:/m.test(template)
+    ? template.replace(/^name\s*:.*$/m, `name: ${safeName}`)
+    : template.replace(/^---\r?\n/, `---\nname: ${safeName}\n`);
+
+  await fs.mkdir(dir, {recursive: true, mode: 0o700});
+  await chmodQuiet(dir, 0o700);
+  // 新建主档也走「临时文件 → 原子替换」，避免留下半截文件。
+  const temp = path.join(dir, `.00-profile.${process.pid}.tmp`);
+  await fs.writeFile(temp, body, {encoding: "utf8", mode: 0o600});
+  await chmodQuiet(temp, 0o600);
+  await fs.rename(temp, file);
+  await chmodQuiet(file, 0o600);
+  return {slug: safeSlug, created: true, file: path.relative(root, file)};
+}
+
+/** 回滚用：删除本轮新建、且仍只有模板内容（无 sm-src 标记）的人物主档。 */
+export async function removeEmptyPersonFile(slug, root = peopleRoot()) {
+  const safeSlug = assertSlug(slug);
+  const dir = path.join(root, safeSlug);
+  const file = path.join(dir, "00-profile.md");
+  try {
+    const text = await fs.readFile(file, "utf8");
+    if (text.includes("sm-src:")) return {slug: safeSlug, removed: false};
+  } catch {
+    return {slug: safeSlug, removed: false};
+  }
+  await fs.rm(dir, {recursive: true, force: true});
+  return {slug: safeSlug, removed: true};
+}
+
+/** 解析 Markdown：保留 front matter 原样，记录每个 `# 标题` 的行区间。 */function parseMarkdown(text) {
   const lines = String(text).split("\n");
   let bodyStart = 0;
   if (lines[0] === "---") {

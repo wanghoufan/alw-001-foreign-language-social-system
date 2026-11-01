@@ -10,6 +10,7 @@
 - Android 验收台账：`android-poc/IMPLEMENTATION_STATUS.md`
 - 全部实测证据与已验/未验边界：`socialmate-v1.2/QA.md`
 - 组合服务：`bash socialmate-v1.2/service-v040.sh ensure`（8790 ASR + 8791 UI/AI）
+- 多人档案 E2E（自跑自清）：`node socialmate-v1.2/qa-people-e2e.mjs`
 - 会话归档：`socialmate-v1.2/archive-service.sh`（8781，令牌鉴权；历史 UI `/v12/history`）
 - 私有入口：Tailscale `443/alw`→8781、`8443`→8791、`10000`→8790（仅 tailnet）
 - 海南公开 PWA：**https://wanghoufan.github.io/alw-001-foreign-language-social-system/**（gh-pages，7 文件）
@@ -19,7 +20,8 @@
 ## 1. 当前进展
 
 - **复盘 → 确认 → 本机档案 → 正式人物主档已打通**：停止录音 → `/v12/history?session=` 本轮原文 → 本地/云端复盘 → 逐条勾选编辑归属 → 显式确认 → 写 `SocialMate-Data/Profile`（只追加、会话+段号+指纹去重）+ 追加到 `People/<slug>/00-profile.md` 对应章节（带来源与幂等标记，0600/0700，写前备份、失败回滚）。
-- 写入边界：`/v12/api/review/apply` 需归档令牌 + 归档真实会话校验段号；人物只能选真实 `People` slug；60s/12 次限流；同源校验改为「Origin 与 Host 一致」，覆盖 Tailscale `8443`。
+- **新建人物已开放（A2）**：人物下拉可选「＋ 新建人物主档…」，填姓名 + 英文目录标识即按模板建目录；只在该人物分到事实时才建，回滚时删除空档案。
+- 写入边界：`/v12/api/review/apply` 需归档令牌 + 归档真实会话校验段号；人物只能选真实 `People` slug 或显式新建；60s/12 次限流；同源校验改为「Origin 与 Host 一致」，覆盖 Tailscale `8443`。
 - Android **0.5.4（14）** 已装 Note 11 5G（深色模式文字可读）；本轮无 Android 源码改动，重建 APK 与已装版本哈希一致 `b5dda555…`。
 - **无 USB 链路已验收**：`adb reverse` 为空，录音→`wss:10000`→ASR→`https:8443` 聊天页→`/alw` 归档全程走 Tailscale。
 - **归档**：final-only 逐字落 `~/Documents/SocialMate/Conversations/YYYY/MM/`；历史 UI（列表 / 原文 / 按 UTC 日期导出）已完成并真机验收。
@@ -42,7 +44,7 @@
 - 历史 UI 的「按日期导出」只在 Mac 与桌面浏览器验过，**手机内未点过下载**。
 - 服务只绑回环，真机依赖 Tailscale 或 `adb reverse`；映射断开后页面需重连。
 - `spk_N` 只是聚类编号，不保证真实身份；UI 固定「待确认」。
-- 新建人物主档仍未开放：只在已存在的 `People/<slug>/` 里追加，新建/合并人物必须由用户在文件系统侧决定。
+- 新建人物要靠用户填英文目录标识（暂不做中文转拼音），中文名只进 front matter `name`。
 
 ## 4. 红线
 
@@ -56,10 +58,8 @@
 ## 5. 三日流水
 
 - 2026-10-31：APK 0.3.2 → Note 11/12T 启动；双麦 `MONO_MIX` 实测；ASR 桥接 34/34；内容层（V1.4 51 + 海南 115）真机建议验证；端口 8787→8790。
-- 2026-10-31：AI 网关修 `x-opencode-session`、thinking 关闭、JSON 宽松解析与单次重试、常规话题不推地点；12/12。
 - 2026-10-31：V1.2 UI 落地；修「从聊天卡片进详情会切走 Tab、丢会话视图」；5 话题回归。
 - 2026-10-31：真实腾讯云 ASR 跑通（A/B + 混音）；修 `speaker_diarization` 与 `sentence_list`；35/35。
-- 2026-10-31：海南指南迁入 `docs/成果整理/Hainan-Travel-Guide/`；清 `.DS_Store`；ASR 桥接建空 `.env`。
 - 2026-10-31：确认 `socialmate-prototype/` 由另一智能体开发中，只读核对、保留未提交改动。
 - 2026-11-01：V0.4.0 服务阻塞修复：新增 `service-v040.sh`、`/api/asr/status`、组合服务自动恢复、安装脚本 `--serial/--skip-install`。
 - 2026-11-01：真机 WebView + MOCK 全链 + 真实腾讯云/DeepSeek + 单人/TTS-B 测完；新增 1 元预算闸。
