@@ -82,6 +82,10 @@
 - 2026-11-01：Mac 收尾：TLS 根因=CodeArts kernel 注入并在 service 剥离；102/102 + TLS 2/2 + 12；APK 0.4.0 SHA `da46425f…`；九项 UI PASS；ASR 1 元闸与双音色 A/B 分离通过；BOYA `-180 dBFS` 阻断手机现场双人。
 - 2026-11-01：本机档案：`profile-store` 5/5、API 三分支（无确认 400 / 确认 200 / 回读一致）、同源点击端到端通过；服务重启后 `combined:true` 与预算不变。
 - 2026-11-01：归档：10/10 单元测试；接收端 401/201/duplicate/400 四分支；Android 0.5.0 真机 real-final → Mac 落盘；PWA 浏览器 E2E 与 Note 11 原生浏览器均通过。
+- 2026-11-01：归档历史 UI 完成——`archive-history.mjs` 只读索引 + `/api/archive/{list,session,export}`（令牌鉴权），私有 UI 以 `/v12/history` 与 `/v12/api/archive/*` 同源反代；聊天页加入口；5/5 新测试 + 原有 10/10 通过；真机 WebView 内可进入并读到原文。
+- 2026-11-01：Android 0.5.2（versionCode 12）关闭全局明文、仅放行回环；真机差分：非回环明文 `ERR_CLEARTEXT_NOT_PERMITTED`、回环明文正常、自签名证书页面不渲染；APK SHA-256 `a7839502…d88d0`。
+- 2026-11-01：DeepSeek 独立授权端到端：未勾选 0 次 `/api/ai/*`；勾选后真实调用出建议卡，单次约 0.0047 元，累计 0.21106/1 元。
+- 2026-11-01：PWA 真机矩阵补 Note 12T Pro 自带浏览器：`115/115` 与 `?selected=3,39,41` → `3/115`、`A list shared with you · 3`；iPhone Safari、微信/WhatsApp 实际发回仍缺真人设备。
 
 ## 6. 接续提示词
 

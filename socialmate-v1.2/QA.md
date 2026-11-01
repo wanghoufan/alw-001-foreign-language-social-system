@@ -465,3 +465,11 @@ V0.4.0 APK 实际输出路径：`android-poc/app/build/outputs/apk/debug/app-deb
 - CDP 实测：聊天 Tab 处于选中态；「查看 Mac mini 上已归档的会话历史 →」**可见**，`href=/v12/history`；点击后 URL 变为 `https://mac-mini.tail4e4317.ts.net:8443/v12/history`。
 - 页面内填入令牌后：状态「已连接 · 令牌已保存在本浏览器」，列表 `共 2 个会话（扫描 2 份记录）`，点开详情渲染原文 `Token rejection check.`；无横向溢出、无 JS 异常。
 - 唯一错误日志为 `/favicon.ico` 404（无 favicon，无功能影响）。
+
+### 2026-11-01 海南公开 PWA 真机矩阵（Note 12T Pro 自带浏览器）
+
+- 浏览器：`com.android.browser`（小米自带，非 Chrome；Chrome 为系统默认但不用于本项验收）。
+- 基础页面：标题 `Hainan Local Guide · SocialMate`、`Shared with you from SocialMate`、`My list (0)`、`115 / 115 places`、城市/分类筛选与中英切换均在。
+- 分享链接回传：打开 `?selected=3,39,41` → `3 / 115 places`、`A list shared with you · 3`，卡片出现 `003 Qilou Old Street 骑楼老街`、`039 Evergreen Park (Wanlüyuan) 万绿园`，与链接参数一致；`My list (0)` 保持为 0（「My list」是接收者自己的清单，分享链接只负责筛选展示，语义正确）。
+- 证据截图：`screenshots/pwa-v11-shared-link-note12t.png`。
+- 未完成：① 在真机上点 `☆ Want to go` 后计数从 0 变 1 未取到无障碍证据（卡片星标未进入 a11y 树，一次点击后浏览器跳走，未复现）；② `分享/复制` 的 `navigator.share` 或剪贴板回退未在真机实测；③ **iPhone Safari 未测**（无 iPhone 设备）；④ **微信/WhatsApp 实际发回给本人未测**（需真人会话，不能自动化代发）。

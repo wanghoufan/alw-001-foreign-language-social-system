@@ -2,6 +2,7 @@
 
 ## 2026-11-01
 
+- 海南 PWA 真机矩阵补充：Note 12T Pro 自带浏览器验证 `115/115` 与共享链接 `?selected=3,39,41` → `3/115`、`A list shared with you · 3`；iPhone Safari 与微信/WhatsApp 实际发回仍需真人设备。
 - Android 0.5.2（versionCode 12）：新增 `network_security_config.xml`，关闭全局明文、仅放行回环；真机差分验证非回环明文报 `ERR_CLEARTEXT_NOT_PERMITTED`、回环明文正常、自签名证书页面不渲染。
 - DeepSeek 独立授权端到端：未勾选 `liveCloudConsent` 时 `/api/ai/*` 请求 0 次；勾选后真实调用并出建议卡，单次成本约 0.0047 元（累计 0.21106 / 上限 1 元）。
 - 归档历史 UI 在 Android WebView 内实测可进入并读取列表与原文。
