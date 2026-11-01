@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="AppTheme" parent="@android:style/Theme.Material.Light.NoActionBar" />
+    <!--
+      固定浅色设计：窗口直接铺品牌底色，冷启动不闪白/闪黑。
+      Android 12+ 的系统 SplashScreen 图标与底色在 values-v31 / values-night-v31 里追加；
+      这里不新增 Splash Activity，冷启动直接进真实首页。
+    -->
+    <style name="AppTheme" parent="@android:style/Theme.Material.Light.NoActionBar">
+        <item name="android:windowBackground">@color/socialmate_icon_background</item>
+    </style>
 </resources>

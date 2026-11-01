@@ -58,3 +58,10 @@ docs/成果整理/Hainan-Travel-Guide/artifacts/
 docs/成果整理/Hainan-Travel-Guide/candidates/
 docs/成果整理/Hainan-Travel-Guide/original/
 docs/成果整理/Hainan-Travel-Guide/logs/
+
+# 本机安装包与交付物（体积大、可重建，不入库）
+/release/
+*.apk
+
+# 智能体工作区（记忆/日志，私有）
+.workbuddy/

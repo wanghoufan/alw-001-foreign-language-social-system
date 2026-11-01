@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- SocialMate 品牌色（来源 docs/plan/ALW001-N03-SDD-V1.1/assets/socialmate_brand_colors.xml） -->
+    <color name="socialmate_icon_background">#F5F7F3</color>
+    <color name="socialmate_brand_teal">#0C7766</color>
+    <color name="socialmate_brand_navy">#1E3C54</color>
+</resources>

@@ -34,7 +34,18 @@ test("single Android Activity keeps recorder in foreground while showing WebView
   assert.match(android,/privateUiUrl\(\)/);
   assert.match(android,/socialMateWebView\.reload\(\)/);
   assert.match(android,/stopStreaming\("切到后台"\)/);
-  assert.doesNotMatch(android,/addJavascriptInterface\s*\(/);
+  // 0.6.0 起为「历史 Markdown 导出」新增受限原生桥：必须在私有同源页面才注入，
+  // 且桥方法内部再校验一次可信页面地址（不能因为页面已注入就放任任意调用）。
+  assert.match(android,/addJavascriptInterface\(new SaveTextBridge\(\), BRIDGE_NAME\)/);
+  assert.match(android,/onPageFinished\(WebView view, String url\)/);
+  assert.match(android,/isPrivatePanelUrl\(parsed\)[\s\S]{0,120}attachSaveBridge\(true\)/);
+  assert.match(android,/removeJavascriptInterface\(BRIDGE_NAME\)/);
+  assert.match(android,/String page = trustedPageUrl;[\s\S]{0,120}isPrivatePanelUrl/);
+  assert.match(android,/@JavascriptInterface/);
+  // 落盘一律走 SAF，绝不申请全盘存储权限。
+  // Java 侧提到「不使用 WRITE_EXTERNAL_STORAGE」是注释；真正要保证的是清单里没有申请。
+  assert.doesNotMatch(manifest,/WRITE_EXTERNAL_STORAGE/);
+  assert.match(android,/ACTION_CREATE_DOCUMENT/);
   assert.match(android,/setAllowFileAccess\(false\)/);
   assert.match(android,/setAllowContentAccess\(false\)/);
   assert.match(android,/isPrivatePanelUrl\(uri\)/);

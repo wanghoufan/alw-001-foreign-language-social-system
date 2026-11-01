@@ -60,6 +60,9 @@ function createHarness({origin="http://127.0.0.1:8791",cloudConsent=true,search=
   }
   return {click,node,apiCalls,streams,hooks};
 }
+// 字幕改为「只追加气泡」后不会再整页重绘：测试 harness 里 #messages 与 #content 是两个
+// 独立桩节点（真实浏览器里 #messages 在 #content 内），所以可见性断言要同时看两处。
+const visibleHtml=(h)=>h.node("#messages").innerHTML+h.node("#content").innerHTML;
 const finalEvent=(id,{mock=false,when=1200}={})=>({
   type:"final",final:true,mock,provider:mock?"mock":"tencent",
   sessionId:"test-session",track:"mix",speaker:"spk_0",index:id,
@@ -80,8 +83,8 @@ test("mock final produces visible mock subtitle, NO model billing",()=>{
   const h=createHarness();h.click({act:"connect-asr"});
   h.streams[0].emit("asr",finalEvent(1,{mock:true}));
   assert.equal(h.apiCalls.length,0);
-  assert.match(h.node("#content").innerHTML,/模拟音频|MOCK/);
-  assert.match(h.node("#content").innerHTML,/说话人待确认/);
+  assert.match(visibleHtml(h),/模拟音频|MOCK/);
+  assert.match(visibleHtml(h),/说话人待确认/);
 });
 test("real final triggers one AI call, preserves unknown speaker, deduplicates replay",async()=>{
   const h=createHarness();h.click({act:"connect-asr"});
@@ -102,7 +105,7 @@ test("live captions without cloud consent never send text to model",()=>{
   const h=createHarness({cloudConsent:false});h.click({act:"connect-asr"});
   h.streams[0].emit("asr",finalEvent(1));
   assert.equal(h.apiCalls.length,0);
-  assert.match(h.node("#content").innerHTML,/I like running outdoors/);
+  assert.match(visibleHtml(h),/I like running outdoors/);
 });
 test("file-only preview must not open live stream",()=>{
   const h=createHarness({origin:"null"});h.click({act:"connect-asr"});
@@ -122,7 +125,7 @@ test("live=1 auto-opens a session and reconnects after a dropped SSE stream",()=
   assert.equal(h.streams[0].url,"/api/asr/live");
   h.streams[0].emit("ready",{ok:true});
   h.streams[0].emit("asr",finalEvent(1,{mock:true}));
-  assert.match(h.node("#content").innerHTML,/\[mock\] speech detected/);
+  assert.match(visibleHtml(h),/\[mock\] speech detected/);
   assert.equal(h.apiCalls.length,0);
   // Network drop -> onerror -> automatic EventSource reconnect, no user tap.
   h.streams[0].onerror();

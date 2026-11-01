@@ -22,12 +22,13 @@
 - **复盘 → 确认 → 本机档案 → 正式人物主档已打通**：停止录音 → `/v12/history?session=` 本轮原文 → 本地/云端复盘 → 逐条勾选编辑归属 → 显式确认 → 写 `SocialMate-Data/Profile`（只追加、会话+段号+指纹去重）+ 追加到 `People/<slug>/00-profile.md` 对应章节（带来源与幂等标记，0600/0700，写前备份、失败回滚）。
 - **新建人物已开放（A2）**：人物下拉可选「＋ 新建人物主档…」，填姓名 + 英文目录标识即按模板建目录；只在该人物分到事实时才建，回滚时删除空档案。
 - 写入边界：`/v12/api/review/apply` 需归档令牌 + 归档真实会话校验段号；人物只能选真实 `People` slug 或显式新建；60s/12 次限流；同源校验改为「Origin 与 Host 一致」，覆盖 Tailscale `8443`。
-- Android **0.5.4（14）** 已装 Note 11 5G（深色模式文字可读）；本轮无 Android 源码改动，重建 APK 与已装版本哈希一致 `b5dda555…`。
+- Android **0.6.0（15）** 已装 Note 11 5G（`install -r` 保留数据）：留存默认关、断网补传四态、自适应图标 + Android 12+ SplashScreen、WebView 安全导出桥；APK `972eed42…`。
+- **N03（SDD V1.1）已交付 P0→P3**：验收表 `docs/plan/ALW001-N03-SDD-V1.1/ACCEPTANCE.md`；人物在线主档/历史检索/事实撤回/见面前准备/接话卡/收藏均已在真机走通，前端源仍是 `socialmate-v1.2/source/V1.1-baseline.html`（重建可复现）。
 - **无 USB 链路已验收**：`adb reverse` 为空，录音→`wss:10000`→ASR→`https:8443` 聊天页→`/alw` 归档全程走 Tailscale。
 - **归档**：final-only 逐字落 `~/Documents/SocialMate/Conversations/YYYY/MM/`；历史 UI（列表 / 原文 / 按 UTC 日期导出）已完成并真机验收。
 - **海南 PWA** 已上线 gh-pages：115/115、中英、筛选、单点 `Share place` 均通；清单回发按用户决定暂停。
 - **DeepSeek 独立授权**端到端通过；累计 0.213634 / 1 元。ASR 0.129189 / 1 元。
-- 测试：`verify-v040.sh` 全绿（158 项 Node + 12 Android core + APK 构建）。
+- 测试：`verify-v040.sh` 全绿（**215 项 Node + 12 Android core + APK 构建**，N03 新增 2c 步 6 个测试文件）；`qa-people-e2e.mjs` 10/10。
 
 ## 2. 下一步
 

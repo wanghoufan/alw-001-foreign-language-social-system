@@ -10,7 +10,9 @@ import {fileURLToPath} from "node:url";
 import {analyze,AiError,status} from "./core.mjs";
 import {liveAsrHub} from "./live-asr-hub.mjs";
 import {readProfile,writeProfile,tightenPermissions} from "./profile-store.mjs";
-import {listPeople} from "./people-store.mjs";
+import {createPersonFile,listPeople,suggestSlug} from "./people-store.mjs";
+import {getPersonDetail,getPersonPrep,revokePersonFact} from "./person-detail.mjs";
+import {addFavorite,listFavorites,removeFavorite} from "./favorites-store.mjs";
 import {confirmReview} from "./review-confirm.mjs";
 import {buildAiReview,buildLocalReview} from "./session-review.mjs";
 const here=path.dirname(fileURLToPath(import.meta.url));
@@ -77,55 +79,59 @@ function json(res,code,obj){
 }
 const ARCHIVE_HOST="127.0.0.1";
 const ARCHIVE_PORT=Number(process.env.SM_ARCHIVE_PORT||8781);
-// 只反代归档服务的 GET 只读接口；令牌原样透传，不在本服务记录或输出。
-// 归档端未启动时返回 503，让前端能区分“没开服务”和“令牌错误”。
-function proxyArchive(req,res,url){
-  if(req.method!=="GET")return json(res,405,{ok:false,code:"METHOD_NOT_ALLOWED"});
-  const target=url.pathname.replace(/^\/v12/,"")+url.search;
-  const upstream=http.request({host:ARCHIVE_HOST,port:ARCHIVE_PORT,path:target,method:"GET",
-    headers:{"x-archive-token":String(req.headers["x-archive-token"]||"")},
-    timeout:8000},(up)=>{
-      res.writeHead(up.statusCode||502,{
-        "Content-Type":up.headers["content-type"]||"application/json; charset=utf-8",
-        "Cache-Control":"no-store","X-Content-Type-Options":"nosniff"});
-      up.pipe(res);
+/**
+ * 归档服务的只读客户端（令牌只放在请求头里透传，本服务不记录、不回显）。
+ * 抽成可注入对象，测试才能把「归档服务」换成假实现，不去碰用户真实的 8781。
+ */
+export function createArchiveClient({host=ARCHIVE_HOST,port=ARCHIVE_PORT}={}){
+  /** 缓冲式读取：会后复盘要整份 JSON，令牌只作为请求头。 */
+  function get(pathname,token,timeoutMs=8000){
+    return new Promise((resolve,reject)=>{
+      const upstream=http.request({host,port,path:pathname,method:"GET",
+        headers:{"x-archive-token":token},timeout:timeoutMs},(up)=>{
+          let body="";
+          up.setEncoding("utf8");
+          up.on("data",(chunk)=>{body+=chunk;if(body.length>4_000_000)up.destroy();});
+          up.on("end",()=>resolve({status:up.statusCode||502,body}));
+        });
+      upstream.on("timeout",()=>upstream.destroy(new Error("archive timeout")));
+      upstream.on("error",reject);
+      upstream.end();
     });
-  upstream.on("timeout",()=>upstream.destroy(new Error("archive timeout")));
-  upstream.on("error",()=>{
-    if(!res.headersSent)json(res,503,{ok:false,code:"ARCHIVE_UNAVAILABLE",
-      error:"归档服务未启动（socialmate-v1.2/archive-service.sh start）"});
-    else res.destroy();
-  });
-  upstream.end();
+  }
+  // 只反代归档服务的 GET 只读接口；归档端未启动时返回 503，让前端能区分“没开服务”和“令牌错误”。
+  function proxy(req,res,url){
+    if(req.method!=="GET")return json(res,405,{ok:false,code:"METHOD_NOT_ALLOWED"});
+    const target=url.pathname.replace(/^\/v12/,"")+url.search;
+    const upstream=http.request({host,port,path:target,method:"GET",
+      headers:{"x-archive-token":String(req.headers["x-archive-token"]||"")},
+      timeout:8000},(up)=>{
+        res.writeHead(up.statusCode||502,{
+          "Content-Type":up.headers["content-type"]||"application/json; charset=utf-8",
+          "Cache-Control":"no-store","X-Content-Type-Options":"nosniff"});
+        up.pipe(res);
+      });
+    upstream.on("timeout",()=>upstream.destroy(new Error("archive timeout")));
+    upstream.on("error",()=>{
+      if(!res.headersSent)json(res,503,{ok:false,code:"ARCHIVE_UNAVAILABLE",
+        error:"归档服务未启动（socialmate-v1.2/archive-service.sh start）"});
+      else res.destroy();
+    });
+    upstream.end();
+  }
+  return {host,port,get,proxy};
 }
+const defaultArchive=createArchiveClient();
 async function readPayload(req,maxBytes=16000){
   let len=0,parts=[];
   for await (const buf of req){len+=buf.length;if(len>maxBytes)throw new AiError(413,"TOO_LARGE","请求体超过上限");parts.push(buf);}
   try{return JSON.parse(Buffer.concat(parts).toString("utf8"));}
   catch{throw new AiError(400,"INVALID_JSON","请求不是 JSON");}
 }
-/**
- * 会后复盘要读会话原文，因此必须复用归档接收端的令牌校验，而不是在本服务另存一份令牌。
- * 令牌只作为请求头透传给 127.0.0.1 上的归档服务，不写入日志、不回显给前端。
- */
-function archiveGet(pathname,token,timeoutMs=8000){
-  return new Promise((resolve,reject)=>{
-    const upstream=http.request({host:ARCHIVE_HOST,port:ARCHIVE_PORT,path:pathname,method:"GET",
-      headers:{"x-archive-token":token},timeout:timeoutMs},(up)=>{
-        let body="";
-        up.setEncoding("utf8");
-        up.on("data",(chunk)=>{body+=chunk;if(body.length>4_000_000)up.destroy();});
-        up.on("end",()=>resolve({status:up.statusCode||502,body}));
-      });
-    upstream.on("timeout",()=>upstream.destroy(new Error("archive timeout")));
-    upstream.on("error",reject);
-    upstream.end();
-  });
-}
-async function loadArchivedSession(sessionId,token){
+async function loadArchivedSession(sessionId,token,archive=defaultArchive){
   let result;
   try{
-    result=await archiveGet("/api/archive/session/"+encodeURIComponent(sessionId),token);
+    result=await archive.get("/api/archive/session/"+encodeURIComponent(sessionId),token);
   }catch{
     throw new AiError(503,"ARCHIVE_UNAVAILABLE","归档服务未启动或不可达");
   }
@@ -141,16 +147,19 @@ let corpus=null;
 let activeRequest=false,lastRequestAt=0; // One private user; avoid accidental rapid repeated billed calls.
 // 写入类接口的限流：单机单人场景，防止误连点与脚本重放把档案写乱。
 const APPLY_WINDOW_MS=60_000, APPLY_MAX=12, APPLY_MIN_GAP_MS=400;
-let applyHits=[],applyLastAt=0;
-function applyRateLimit(){
-  const now=Date.now();
-  applyHits=applyHits.filter((t)=>now-t<APPLY_WINDOW_MS);
-  if(now-applyLastAt<APPLY_MIN_GAP_MS)
-    return {ok:false,retryAfterMs:APPLY_MIN_GAP_MS-(now-applyLastAt)};
-  if(applyHits.length>=APPLY_MAX)
-    return {ok:false,retryAfterMs:APPLY_WINDOW_MS-(now-applyHits[0])};
-  applyHits.push(now);applyLastAt=now;
-  return {ok:true};
+/** 每个 handler 实例独立的限流器：测试可拿到干净状态，生产仍只有一个实例。 */
+function createRateLimiter(){
+  let hits=[],lastAt=0;
+  return ()=>{
+    const now=Date.now();
+    hits=hits.filter((t)=>now-t<APPLY_WINDOW_MS);
+    if(now-lastAt<APPLY_MIN_GAP_MS)
+      return {ok:false,retryAfterMs:APPLY_MIN_GAP_MS-(now-lastAt)};
+    if(hits.length>=APPLY_MAX)
+      return {ok:false,retryAfterMs:APPLY_WINDOW_MS-(now-hits[0])};
+    hits.push(now);lastAt=now;
+    return {ok:true};
+  };
 }
 async function loadData(){
   if(corpus)return corpus;
@@ -161,7 +170,7 @@ async function loadData(){
   if(d.apps.length<50||d.places.length<115)throw new Error("正式资料未通过 51/115 校验");
   corpus=d;return corpus;
 }
-function originOK(req){
+function originOK(req,port=PORT){
   const origin=req.headers.origin;
   // Browser same-origin requests include origin; curl without Origin is allowed only on localhost.
   if(!origin)return true;
@@ -171,12 +180,20 @@ function originOK(req){
   // 只要 Origin 与本次请求的 Host 相同就是同源，不能只认 127.0.0.1:<port>。
   const host=String(req.headers["x-forwarded-host"]||req.headers.host||"");
   if(host&&parsed.host===host)return true;
-  return parsed.host==="127.0.0.1:"+PORT||parsed.host==="localhost:"+PORT;
+  return parsed.host==="127.0.0.1:"+port||parsed.host==="localhost:"+port;
 }
-const server=http.createServer(async(req,res)=>{
+/**
+ * 生成请求处理器。默认使用真实归档客户端与本机端口；
+ * 测试可注入假 archive 并在随机端口起一个临时 httptest 服务器，避免占用 8790/8791/8781。
+ */
+export function createHandler(options={}){
+  const archive=options.archive||defaultArchive;
+  const port=Number(options.port)||PORT;
+  const rateLimit=options.rateLimit||createRateLimiter();
+  return async(req,res)=>{
   try{
-    const url=new URL(req.url||"/","http://127.0.0.1:"+PORT);
-    if(!originOK(req))return json(res,403,{ok:false,code:"ORIGIN_REJECTED"});
+    const url=new URL(req.url||"/","http://127.0.0.1:"+port);
+    if(!originOK(req,port))return json(res,403,{ok:false,code:"ORIGIN_REJECTED"});
     if(url.pathname==="/api/asr/live"&&req.method==="GET"){
       liveAsrHub.subscribe(req,res);
       return;
@@ -237,7 +254,7 @@ const server=http.createServer(async(req,res)=>{
       const sessionId=String(body?.sessionId||"");
       if(!/^[A-Za-z0-9_-]{8,64}$/.test(sessionId))
         return json(res,400,{ok:false,code:"INVALID_SESSION_ID",error:"sessionId 格式不合法"});
-      const session=await loadArchivedSession(sessionId,token);
+      const session=await loadArchivedSession(sessionId,token,archive);
       if(mode==="local"){
         const review=buildLocalReview(session);
         return json(res,200,{ok:true,review});
@@ -266,7 +283,7 @@ const server=http.createServer(async(req,res)=>{
       const token=String(req.headers["x-archive-token"]||"").trim();
       if(!token)
         return json(res,401,{ok:false,code:"TOKEN_REQUIRED",error:"确认写入需要归档访问令牌"});
-      const limit=applyRateLimit();
+      const limit=rateLimit();
       if(!limit.ok)
         return json(res,429,{ok:false,code:"RATE_LIMITED",error:"写入操作过于频繁，请稍后再试",
           retryAfterMs:limit.retryAfterMs});
@@ -275,18 +292,113 @@ const server=http.createServer(async(req,res)=>{
       if(!/^[A-Za-z0-9_-]{8,64}$/.test(sessionId))
         return json(res,400,{ok:false,code:"INVALID_SESSION_ID",error:"sessionId 格式不合法"});
       // 先取归档会话：令牌无效 → 401，会话不存在 → 404，段号也以这份真实原文为准。
-      const session=await loadArchivedSession(sessionId,token);
+      const session=await loadArchivedSession(sessionId,token,archive);
       const result=await confirmReview(body,session);
       return json(res,200,result);
     }
-    if(url.pathname==="/v12/api/people"&&req.method==="GET"){
+    // 所有 /v12/api/people* 都用同一种令牌校验：令牌只放请求头，由归档服务判定有效性。
+    const peopleToken=async(res,action)=>{
       const token=String(req.headers["x-archive-token"]||"").trim();
-      if(!token)
-        return json(res,401,{ok:false,code:"TOKEN_REQUIRED",error:"读取人物主档列表需要归档访问令牌"});
-      const check=await archiveGet("/api/archive/session/__token_probe__",token).catch(()=>null);
-      if(!check)return json(res,503,{ok:false,code:"ARCHIVE_UNAVAILABLE",error:"归档服务未启动或不可达"});
-      if(check.status===401)return json(res,401,{ok:false,code:"UNAUTHORIZED",error:"归档令牌无效"});
+      if(!token){
+        json(res,401,{ok:false,code:"TOKEN_REQUIRED",error:action+"需要归档访问令牌"});
+        return null;
+      }
+      const check=await archive.get("/api/archive/session/__token_probe__",token).catch(()=>null);
+      if(!check){
+        json(res,503,{ok:false,code:"ARCHIVE_UNAVAILABLE",error:"归档服务未启动或不可达"});
+        return null;
+      }
+      if(check.status===401){
+        json(res,401,{ok:false,code:"UNAUTHORIZED",error:"归档令牌无效"});
+        return null;
+      }
+      return token;
+    };
+    if(url.pathname==="/v12/api/people"&&req.method==="GET"){
+      const token=await peopleToken(res,"读取人物主档列表");
+      if(!token)return;
       return json(res,200,{ok:true,people:await listPeople()});
+    }
+    // P1-02：显式新建人物。只有用户点了「确认新建」并带 confirm=true 才会落盘；
+    // 已存在同名目录时原样返回（created:false），不覆盖任何已有内容。
+    if(url.pathname==="/v12/api/people"&&req.method==="POST"){
+      const token=await peopleToken(res,"新建人物");
+      if(!token)return;
+      const limit=rateLimit();
+      if(!limit.ok)
+        return json(res,429,{ok:false,code:"RATE_LIMITED",error:"写入操作过于频繁，请稍后再试",
+          retryAfterMs:limit.retryAfterMs});
+      const body=await readPayload(req,16000);
+      if(body?.confirm!==true)
+        return json(res,400,{ok:false,code:"CONFIRM_REQUIRED",error:"新建人物需要用户显式确认"});
+      const created=await createPersonFile({slug:String(body?.slug||""),name:String(body?.name||"")});
+      return json(res,200,{ok:true,created:created.created,existing:created.existing===true,
+        person:{slug:created.slug,name:String(body?.name||"").trim()}});
+    }
+    // P1-02：只给建议，不创建。返回可用性判断与确定可用的备选，创建仍走上面的显式确认路径。
+    if(url.pathname==="/v12/api/people/slug-suggest"&&req.method==="GET"){
+      const token=await peopleToken(res,"读取人物主档列表");
+      if(!token)return;
+      const suggestion=await suggestSlug(url.searchParams.get("name")||"");
+      return json(res,200,{ok:true,slug:suggestion.slug,available:suggestion.available,
+        alternative:suggestion.alternative});
+    }
+    const personMatch=url.pathname.match(/^\/v12\/api\/people\/([^/]+)$/);
+    if(personMatch&&req.method==="GET"){
+      const token=await peopleToken(res,"读取人物详情");
+      if(!token)return;
+      let slug;
+      try{slug=decodeURIComponent(personMatch[1]);}
+      catch{return json(res,400,{ok:false,code:"INVALID_PERSON_SLUG",error:"人物标识不合法"});}
+      // 会话原文只用于补日期与话题；取不到时详情仍然返回，来源仍以主档里的记录为准。
+      const loadSession=async(sessionId)=>{
+        try{return await loadArchivedSession(sessionId,token,archive);}
+        catch{return null;}
+      };
+      const detail=await getPersonDetail(slug,{loadSession});
+      return json(res,200,{ok:true,...detail});
+    }
+    // P2-01：见面前准备，纯本地规则，0 次外部请求。
+    if(url.pathname.match(/^\/v12\/api\/people\/[^/]+\/prep$/)&&req.method==="GET"){
+      const token=await peopleToken(res,"读取人物详情");
+      if(!token)return;
+      let slug;
+      try{slug=decodeURIComponent(url.pathname.split("/")[4]||"");}
+      catch{return json(res,400,{ok:false,code:"INVALID_PERSON_SLUG",error:"人物标识不合法"});}
+      const prep=await getPersonPrep(slug);
+      return json(res,200,{ok:true,items:prep.items,empty:prep.empty,
+        emptyReason:prep.empty?prep.emptyReason:null});
+    }
+    // P1-04：事实精准撤回。令牌 + 写限流 + 二次确认；无法定位来源时安全拒绝。
+    if(url.pathname.match(/^\/v12\/api\/people\/[^/]+\/facts\/revoke$/)&&req.method==="POST"){
+      const token=await peopleToken(res,"撤回已确认事实");
+      if(!token)return;
+      const limit=rateLimit();
+      if(!limit.ok)
+        return json(res,429,{ok:false,code:"RATE_LIMITED",error:"写入操作过于频繁，请稍后再试",
+          retryAfterMs:limit.retryAfterMs});
+      let slug;
+      try{slug=decodeURIComponent(url.pathname.split("/")[4]||"");}
+      catch{return json(res,400,{ok:false,code:"INVALID_PERSON_SLUG",error:"人物标识不合法"});}
+      const body=await readPayload(req,16000);
+      const result=await revokePersonFact(slug,{factId:body?.factId,confirm:body?.confirm===true});
+      return json(res,200,result);
+    }
+    // P2-03：收藏表达（本机 Markdown/JSON，不碰 Profile）。
+    if(url.pathname==="/v12/api/favorites"&&req.method==="GET"){
+      return json(res,200,{ok:true,...await listFavorites()});
+    }
+    if(url.pathname==="/v12/api/favorites"&&req.method==="POST"){
+      const body=await readPayload(req,16000);
+      const result=await addFavorite(body);
+      return json(res,200,result);
+    }
+    const favoriteMatch=url.pathname.match(/^\/v12\/api\/favorites\/([^/]+)$/);
+    if(favoriteMatch&&req.method==="DELETE"){
+      let id;
+      try{id=decodeURIComponent(favoriteMatch[1]);}
+      catch{return json(res,400,{ok:false,code:"INVALID_FAVORITE_ID",error:"收藏标识不合法"});}
+      return json(res,200,await removeFavorite(id));
     }
     if(req.method!=="GET")return json(res,405,{ok:false,code:"METHOD_NOT_ALLOWED"});
     if(url.pathname==="/profile-sync.js"){
@@ -310,7 +422,7 @@ const server=http.createServer(async(req,res)=>{
           "default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; connect-src 'self'; img-src 'self' data:; base-uri 'none'; form-action 'none'"}).end(html);
     }
     if(url.pathname.startsWith("/v12/api/archive/")){
-      await proxyArchive(req,res,url);
+      await archive.proxy(req,res,url);
       return;
     }
     const file=STATIC.get(url.pathname);
@@ -328,7 +440,11 @@ const server=http.createServer(async(req,res)=>{
     return json(res,500,{ok:false,code:"INTERNAL_ERROR",
       error:"服务内部错误（不暴露凭证和个人资料）"});
   }
-});
+  };
+}
+// 兼容既有启动方式：直接 `node server.mjs` 或由 live-server.mjs 导入时都必须监听 8791。
+// 测试用 SM_AI_NO_LISTEN=1 阻止自动监听，再在随机端口自建实例。
+const server=http.createServer(createHandler());
 server.on("error",(error)=>{
   if(error.code==="EADDRINUSE"){
     console.error("[socialmate-ai] Port "+PORT+" is already in use. It may be the old standalone server.mjs or another project.");
@@ -339,8 +455,12 @@ server.on("error",(error)=>{
   process.exit(1);
 });
 // 私密目录/文件权限巡检：历史遗留的 0644（如 current.md）在启动时收紧到 0600，不改正文。
-tightenPermissions().then((r)=>{
-  if(r.changed.length)console.log("[socialmate-ai] permissions tightened:",JSON.stringify(r.changed));
-}).catch((error)=>console.error("[socialmate-ai] permission check failed:",error.message));
-server.listen(PORT,HOST,()=>console.log("[socialmate-ai] http://"+HOST+":"+PORT+
-  " | models configured:",JSON.stringify(Object.fromEntries(Object.entries(status()).map(([k,x])=>[k,x.configured])))));
+// 测试模式（SM_AI_NO_LISTEN=1）下不启动监听也不做启动巡检，避免碰到真实数据目录。
+if(process.env.SM_AI_NO_LISTEN!=="1"){
+  tightenPermissions().then((r)=>{
+    if(r.changed.length)console.log("[socialmate-ai] permissions tightened:",JSON.stringify(r.changed));
+  }).catch((error)=>console.error("[socialmate-ai] permission check failed:",error.message));
+  server.listen(PORT,HOST,()=>console.log("[socialmate-ai] http://"+HOST+":"+PORT+
+    " | models configured:",JSON.stringify(Object.fromEntries(Object.entries(status()).map(([k,x])=>[k,x.configured])))));
+}
+export {server};

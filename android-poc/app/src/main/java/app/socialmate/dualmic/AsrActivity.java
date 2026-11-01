@@ -2,9 +2,14 @@ package app.socialmate.dualmic;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.Network;
 import android.net.Uri;
+import android.webkit.DownloadListener;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -46,8 +51,10 @@ import java.util.Locale;
  */
 public final class AsrActivity extends Activity implements AsrClient.Listener {
     private static final int REQUEST_MIC = 201;
+    private static final int REQUEST_SAVE_TEXT = 202;
     private static final String DEFAULT_URL = "ws://127.0.0.1:8790/asr";
     private static final String PRIVATE_UI_URL = "http://127.0.0.1:8791/v12";
+    private static final String BRIDGE_NAME = "SocialMateAndroid";
 
     private final List<AsrClient> clients = Collections.synchronizedList(new ArrayList<>());
     private final StringBuilder finals = new StringBuilder();
@@ -70,8 +77,16 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
     private SessionArchive archive;
     private CheckBox retentionConsent;
     private TextView archiveStatusView;
+    private TextView retentionHint;
+    private TextView webHint;
     private EditText archiveUrlInput, archiveTokenInput, uiUrlInput;
     private SharedPreferences config;
+    private ConnectivityManager.NetworkCallback networkCallback;
+    /** 待保存的导出文本（SAF 回调时才真正写盘）。 */
+    private String pendingSaveName, pendingSaveText;
+    private boolean bridgeAttached;
+    /** 主线维护的「当前可信页面地址」；JavaBridge 线程只读它，不直接调用 WebView。 */
+    private volatile String trustedPageUrl;
 
     private static final String[] TRACK_LABELS = {
             "混音 → 说话人分离 (mix)",
@@ -88,13 +103,59 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
         }
         config = getSharedPreferences("socialmate-config", MODE_PRIVATE);
         archive = new SessionArchive(this);
+        archive.setListener(this::setArchiveStatus);
         buildUi();
         refreshDeviceInfo();
+        registerNetworkRecovery();
+        // 冷启动/重启后 outbox 里的待传文件会自动补传（幂等键是 sessionId，重复上传不会重复归档）。
         archive.flushAsync(this::setArchiveStatus);
+    }
+
+    /** 网络恢复即补传；本 Activity 生命周期内注册，onDestroy 注销，不做常驻轮询。 */
+    private void registerNetworkRecovery() {
+        try {
+            ConnectivityManager manager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+            if (manager == null) return;
+            networkCallback = new ConnectivityManager.NetworkCallback() {
+                @Override public void onAvailable(Network network) {
+                    SessionArchive target = archive;
+                    if (target != null) target.onNetworkAvailable();
+                }
+            };
+            manager.registerDefaultNetworkCallback(networkCallback);
+        } catch (Exception e) {
+            networkCallback = null;
+        }
+    }
+
+    private void unregisterNetworkRecovery() {
+        if (networkCallback == null) return;
+        try {
+            ConnectivityManager manager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+            if (manager != null) manager.unregisterNetworkCallback(networkCallback);
+        } catch (Exception ignored) {
+        }
+        networkCallback = null;
     }
 
     private void setArchiveStatus(String text) {
         if (archiveStatusView != null) archiveStatusView.setText(text);
+    }
+
+    /** 留存开关的即时反馈：改动立刻影响下一次会话，并让「默认不留存」一眼可见。 */
+    private void refreshRetentionHint() {
+        if (retentionHint == null) return;
+        boolean checked = retentionConsent != null && retentionConsent.isChecked();
+        String suffix = running ? "（本轮录音中，改动从下一次会话生效）" : "";
+        if (checked) {
+            retentionHint.setText("当前：本轮原文留存已开 · 停止录音后自动导出到 Mac" + suffix);
+            retentionHint.setBackground(surface(0xFFFDF3E4, 0xFFE7CFA6, 12));
+        } else {
+            retentionHint.setText("当前：不留存（默认）· 本轮 0 条写盘、0 条上传到 Mac" + suffix);
+            retentionHint.setBackground(surface(0xFFEEF4F2, 0xFFD5E4DE, 12));
+        }
+        retentionHint.setTextColor(0xFF1C293A);
+        if (archiveStatusView != null && !running && archive != null) setArchiveStatus(archive.describe());
     }
 
     private int dp(int v) { return (int) (getResources().getDisplayMetrics().density * v + 0.5f); }
@@ -162,6 +223,25 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
         });
     }
 
+    /** 聊天页容器：底部取「导航栏 / 软键盘」的较大值，键盘弹出时不遮住输入框。 */
+    private void applyWebInsets(View container) {
+        container.setOnApplyWindowInsetsListener((v, insets) -> {
+            int top, bottom;
+            if (Build.VERSION.SDK_INT >= 30) {
+                android.graphics.Insets bars = insets.getInsets(WindowInsets.Type.systemBars());
+                android.graphics.Insets ime = insets.getInsets(WindowInsets.Type.ime());
+                top = bars.top;
+                bottom = Math.max(bars.bottom, ime.bottom);
+            } else {
+                top = insets.getSystemWindowInsetTop();
+                bottom = insets.getSystemWindowInsetBottom();
+            }
+            v.setPadding(0, top, 0, bottom);
+            return insets;
+        });
+        container.requestApplyInsets();
+    }
+
     private void buildUi() {
         ScrollView scroller = new ScrollView(this);
         LinearLayout root = new LinearLayout(this);
@@ -177,23 +257,37 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
         LinearLayout hero = section(root);
         text(hero, "SocialMate · 实时对话", 24).setTextColor(0xFF176E63);
         text(hero, "实时字幕、自然接话与可靠资料推荐", 16);
-        text(hero, "开始录音前请先确认录音同意。AI 文字上传另在聊天页独立授权，默认关闭。", 14);
+        text(hero, "开始录音前请先确认录音同意。原文留存默认关闭，AI 文字上传在聊天页单独授权，三项互不代替。", 14);
         text(hero, "版本 " + appVersion(), 13);
 
         LinearLayout recordingCard = section(root);
+        // 三项同意彼此独立：①录音知情 ②原文留存（默认关） ③云端 AI 传文字（在聊天页，本轮不在此处开关）。
+        text(recordingCard, "① 录音知情同意（每次开始录音前都要勾选）", 15).setTextColor(0xFF176E63);
         recordingConsent = new CheckBox(this);
         recordingConsent.setText("我已告知并获得同行者同意录音，且了解音频会发送到自己配置的腾讯云 ASR 服务。");
         recordingConsent.setTextSize(16);
         recordingConsent.setTextColor(0xFF1C293A);
-        recordingConsent.setPadding(0, dp(6), 0, dp(8));
+        recordingConsent.setPadding(0, dp(2), 0, dp(10));
         recordingCard.addView(recordingConsent, new LinearLayout.LayoutParams(-1, -2));
+
+        text(recordingCard, "② 本轮原文留存（默认不留存，可随时改）", 15).setTextColor(0xFF176E63);
         retentionConsent = new CheckBox(this);
-        retentionConsent.setText("允许把本次已定稿原文保存到手机并自动导出到我的 Mac（不上传云端；不勾选则不留存）。");
+        retentionConsent.setText("允许把本轮已定稿原文先存到手机，再导出到我自己的 Mac。不勾选＝不留存：0 条写盘、0 条上传。");
         retentionConsent.setTextSize(15);
         retentionConsent.setTextColor(0xFF1C293A);
-        retentionConsent.setChecked(true);
-        retentionConsent.setPadding(0, 0, 0, dp(8));
+        retentionConsent.setChecked(false);
+        retentionConsent.setPadding(0, dp(2), 0, dp(6));
         recordingCard.addView(retentionConsent, new LinearLayout.LayoutParams(-1, -2));
+        retentionHint = new TextView(this);
+        retentionHint.setTextSize(14);
+        retentionHint.setTextColor(0xFF1C293A);
+        retentionHint.setPadding(dp(12), dp(9), dp(12), dp(9));
+        retentionHint.setBackground(surface(0xFFEEF4F2, 0xFFD5E4DE, 12));
+        recordingCard.addView(retentionHint, new LinearLayout.LayoutParams(-1, -2));
+        retentionConsent.setOnCheckedChangeListener((v, checked) -> refreshRetentionHint());
+        refreshRetentionHint();
+
+        text(recordingCard, "③ 向云端 AI 发送文字（在聊天页单独授权，默认关闭；录音权限不等于这两项同意）", 13);
 
         Button advancedToggle = button(root, "高级设置与转写诊断  ▾", v -> {
             if (advancedTools == null) return;
@@ -283,8 +377,8 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
         });
 
         status = text(recordingCard, "状态：待连接", 17);
-        archiveStatusView = text(recordingCard, "原文归档：待开始 · 待导出 "
-                + archive.pendingCount() + " 条", 14);
+        archiveStatusView = text(recordingCard, archive.describe(), 14);
+        archiveStatusView.setLineSpacing(dp(2), 1f);
         live = text(advancedTools, "实时（未定稿）：—", 17);
         text(advancedTools, "已定稿转写（按句累积，不会被实时结果覆盖）", 15);
         transcript = new TextView(this);
@@ -318,7 +412,7 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
             webPanel = new LinearLayout(this);
             webPanel.setOrientation(LinearLayout.VERTICAL);
             webPanel.setBackgroundColor(0xFFFFFFFF);
-            applyInsets(webPanel); // Respect status/navigation bars on Android 15 edge-to-edge.
+            applyWebInsets(webPanel); // 顶栏避开状态栏，底部同时避开导航栏与软键盘。
 
             LinearLayout toolbar = new LinearLayout(this);
             toolbar.setOrientation(LinearLayout.HORIZONTAL);
@@ -345,6 +439,15 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
             stopInChat.setTextColor(0xFF9C3434);
             webPanel.addView(toolbar, new LinearLayout.LayoutParams(-1, dp(52)));
 
+            // 导出结果的中文提示条（深色字 + 浅底，深色模式下依然可读）。
+            webHint = new TextView(this);
+            webHint.setTextSize(13);
+            webHint.setTextColor(0xFF1C293A);
+            webHint.setBackgroundColor(0xFFF5F7F8);
+            webHint.setPadding(dp(14), dp(8), dp(14), dp(8));
+            webHint.setText("导出：文件会保存到你选择的目录（不需要存储权限）。");
+            webPanel.addView(webHint, new LinearLayout.LayoutParams(-1, -2));
+
             socialMateWebView = new WebView(this);
             WebSettings settings = socialMateWebView.getSettings();
             settings.setJavaScriptEnabled(true);
@@ -352,6 +455,7 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
             settings.setAllowFileAccess(false);
             settings.setAllowContentAccess(false);
             settings.setMixedContentMode(WebSettings.MIXED_CONTENT_NEVER_ALLOW);
+            // 只在私有 origin 可用的导出桥；其他 origin 既不注入也直接返回 false。
             socialMateWebView.setWebViewClient(new WebViewClient() {
                 @Override public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
                     Uri uri = request.getUrl();
@@ -363,7 +467,26 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
                     }
                     return true;
                 }
+
+                @Override public void onPageFinished(WebView view, String url) {
+                    super.onPageFinished(view, url);
+                    Uri parsed = url == null ? null : Uri.parse(url);
+                    if (isPrivatePanelUrl(parsed)) {
+                        trustedPageUrl = url;
+                        attachSaveBridge(true);
+                    } else {
+                        trustedPageUrl = null;
+                        attachSaveBridge(false);
+                    }
+                }
             });
+            socialMateWebView.setDownloadListener(new DownloadListener() {
+                @Override public void onDownloadStart(String url, String userAgent,
+                                                      String contentDisposition, String mimeType, long contentLength) {
+                    handleWebDownload(url, contentDisposition);
+                }
+            });
+            attachSaveBridge(true);
             webPanel.addView(socialMateWebView, new LinearLayout.LayoutParams(-1, 0, 1f));
             screenRoot.addView(webPanel, new FrameLayout.LayoutParams(-1, -1));
             socialMateWebView.loadUrl(privateUiUrl());
@@ -443,6 +566,183 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
         }
     }
 
+    /** 注入导出桥；非私有 origin 一律撤掉（fail closed）。 */
+    private void attachSaveBridge(boolean allow) {
+        if (socialMateWebView == null) return;
+        if (allow) {
+            if (bridgeAttached) return;
+            socialMateWebView.addJavascriptInterface(new SaveTextBridge(), BRIDGE_NAME);
+            bridgeAttached = true;
+        } else if (bridgeAttached) {
+            socialMateWebView.removeJavascriptInterface(BRIDGE_NAME);
+            bridgeAttached = false;
+        }
+    }
+
+    /**
+     * 前端 window.SocialMateAndroid.saveText(filename, text)。
+     * 返回 true＝已受理（随后请用户选保存位置）；false＝拒绝（非白名单 origin 或参数不合法）。
+     * 不使用 WRITE_EXTERNAL_STORAGE，全部走 SAF，由用户决定落地位置。
+     */
+    private final class SaveTextBridge {
+        @JavascriptInterface
+        public boolean saveText(String filename, String text) {
+            // 注意：@JavascriptInterface 运行在 JavaBridge 线程，绝不能碰 WebView 的任何方法。
+            // 这里只读主线缓存下来的「已确认可信」页面地址做 origin 校验。
+            String page = trustedPageUrl;
+            if (page == null || !isPrivatePanelUrl(Uri.parse(page))) return false;
+            if (text == null || text.isEmpty()) return false;
+            final String name = safeFileName(filename);
+            final String body = text;
+            runOnUiThread(() -> requestSaveText(name, body));
+            return true;
+        }
+    }
+
+    private void handleWebDownload(String url, String contentDisposition) {
+        if (url == null || url.isEmpty()) {
+            setExportStatus("下载失败：链接为空");
+            return;
+        }
+        String pageUrl = socialMateWebView == null ? null : socialMateWebView.getUrl();
+        if (!isPrivatePanelUrl(pageUrl == null ? null : Uri.parse(pageUrl))) {
+            setExportStatus("已拒绝下载：当前页面不是本机私有界面");
+            return;
+        }
+        String name = safeFileName(filenameFromDisposition(contentDisposition, url));
+        if (name == null) name = "SocialMate-导出.md";
+        if (url.startsWith("blob:")) {
+            setExportStatus("正在读取网页内容…");
+            // Fetch the blob inside the page and hand the bytes to the SAF bridge (no file:// tricks).
+            String js = "(function(){try{fetch(" + JSONObject.quote(url) + ")"
+                    + ".then(function(r){return r.text()})"
+                    + ".then(function(t){try{window." + BRIDGE_NAME + ".saveText("
+                    + JSONObject.quote(name) + ",t)}catch(e){}});}catch(e){}})();";
+            socialMateWebView.evaluateJavascript(js, null);
+            return;
+        }
+        if (url.startsWith("data:")) {
+            try {
+                int comma = url.indexOf(',');
+                if (comma < 0) throw new IllegalArgumentException("数据链接格式不正确");
+                String meta = url.substring(5, comma);
+                String payload = url.substring(comma + 1);
+                String text = meta.endsWith(";base64")
+                        ? new String(android.util.Base64.decode(payload, android.util.Base64.DEFAULT),
+                        java.nio.charset.StandardCharsets.UTF_8)
+                        : Uri.decode(payload);
+                requestSaveText(name, text);
+            } catch (Exception e) {
+                setExportStatus("保存失败：" + (e.getMessage() == null ? "数据链接无法解析" : e.getMessage()));
+            }
+            return;
+        }
+        if (url.startsWith("http://") || url.startsWith("https://")) {
+            // 交给系统浏览器/下载器处理，自己绝不申请全盘存储权限。
+            try {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+                setExportStatus("已交给系统浏览器下载：" + name);
+            } catch (Exception e) {
+                setExportStatus("没有可用的下载器，请长按复制文本");
+            }
+            return;
+        }
+        setExportStatus("这种链接暂不支持直接保存");
+    }
+
+    private void requestSaveText(String name, String body) {
+        if (name == null || name.isEmpty()) name = "SocialMate-导出.md";
+        if (isFinishing()) {
+            setExportStatus("保存失败：界面已关闭");
+            return;
+        }
+        pendingSaveName = name;
+        pendingSaveText = body;
+        try {
+            Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+            intent.addCategory(Intent.CATEGORY_OPENABLE);
+            // MIME 要与扩展名一致，否则 DocumentsUI 会给你加个 .txt 后缀。
+            intent.setType(mimeForName(name));
+            intent.putExtra(Intent.EXTRA_TITLE, name);
+            startActivityForResult(intent, REQUEST_SAVE_TEXT);
+            setExportStatus("请选择保存位置：" + name);
+        } catch (Exception e) {
+            pendingSaveName = null;
+            pendingSaveText = null;
+            setExportStatus("保存失败：本机没有可用的文件选择器");
+        }
+    }
+
+    private void setExportStatus(String text) {
+        if (webHint != null) {
+            webHint.setTextColor(0xFF1C293A);
+            webHint.setText(text);
+        }
+        if (status != null && !running) status.setText(text);
+    }
+
+    private static String mimeForName(String name) {
+        String lower = name == null ? "" : name.toLowerCase(Locale.US);
+        if (lower.endsWith(".md") || lower.endsWith(".markdown")) return "text/markdown";
+        if (lower.endsWith(".json")) return "application/json";
+        if (lower.endsWith(".csv")) return "text/csv";
+        return "text/plain";
+    }
+
+    /** 去掉路径分隔符与控制字符，避免写坏文件名。 */
+    private static String safeFileName(String raw) {        if (raw == null) return null;
+        String value = raw.trim().replaceAll("[\\\\/:*?\"<>|\\r\\n\\t]", "_");
+        while (value.startsWith(".")) value = value.substring(1);
+        if (value.length() > 80) value = value.substring(0, 80);
+        return value.isEmpty() ? null : value;
+    }
+
+    private static String filenameFromDisposition(String disposition, String url) {
+        if (disposition != null) {
+            int mark = disposition.toLowerCase(Locale.US).indexOf("filename=");
+            if (mark >= 0) {
+                String value = disposition.substring(mark + "filename=".length()).trim();
+                if (value.startsWith("\"") && value.length() > 1) {
+                    int end = value.indexOf('"', 1);
+                    value = end > 0 ? value.substring(1, end) : value.substring(1);
+                } else {
+                    int semi = value.indexOf(';');
+                    if (semi > 0) value = value.substring(0, semi);
+                }
+                if (!value.trim().isEmpty()) return value.trim();
+            }
+        }
+        try {
+            String path = Uri.parse(url).getLastPathSegment();
+            if (path != null && !path.trim().isEmpty()) return path.trim();
+        } catch (Exception ignored) {
+        }
+        return "SocialMate-导出.md";
+    }
+
+    @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode != REQUEST_SAVE_TEXT) return;
+        String name = pendingSaveName;
+        String body = pendingSaveText;
+        pendingSaveName = null;
+        pendingSaveText = null;
+        String label = name == null ? "导出文件" : name;
+        if (resultCode != RESULT_OK || data == null || data.getData() == null) {
+            setExportStatus("已取消保存：" + label);
+            return;
+        }
+        Uri target = data.getData();
+        try (java.io.OutputStream out = getContentResolver().openOutputStream(target, "wt")) {
+            if (out == null) throw new java.io.IOException("无法写入目标文件");
+            out.write((body == null ? "" : body).getBytes(java.nio.charset.StandardCharsets.UTF_8));
+            out.flush();
+            setExportStatus("已保存到手机：" + label);
+        } catch (Exception e) {
+            setExportStatus("保存失败：" + (e.getMessage() == null ? e.getClass().getSimpleName() : e.getMessage()));
+        }
+    }
+
     @Override public void onBackPressed() {
         if (webPanel != null && webPanel.getVisibility() == View.VISIBLE) {
             webPanel.setVisibility(View.GONE);
@@ -511,10 +811,11 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
 
         if (archiveUrlInput != null) archive.setArchiveUrl(archiveUrlInput.getText().toString());
         if (archiveTokenInput != null) archive.setToken(archiveTokenInput.getText().toString());
+        // 只认「原文留存」复选框；录音权限本身不代表同意留存。
         archive.begin(retentionConsent != null && retentionConsent.isChecked(), appVersion());
-        setArchiveStatus(retentionConsent != null && retentionConsent.isChecked()
-                ? "原文归档：已开启，等待定稿" : "原文归档：未开启（本次不留存）");
+        setArchiveStatus(archive.describe());
         running = true;
+        refreshRetentionHint();
         eventCount = 0;
         lastFinal = "";
         suggestionsView.setText("英文建议：—");
@@ -608,9 +909,13 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
                 clients.clear();
             }
             archive.end();
+            runOnUiThread(() -> {
+                setArchiveStatus(archive.describe());
+                updateReviewEntry();
+            });
             archive.flushAsync(text -> {
                 setArchiveStatus(text);
-                runOnUiThread(this::updateReviewEntry);
+                updateReviewEntry();
             });
             runOnUiThread(() -> {
                 startButton.setEnabled(true);
@@ -620,6 +925,7 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
                 urlInput.setEnabled(true);
                 trackPicker.setEnabled(true);
                 live.setText("实时（未定稿）：—");
+                refreshRetentionHint();
                 if (!status.getText().toString().startsWith("连接/录音失败"))
                     status.setText("状态：已停止 · 收到事件 " + eventCount + " 条"
                             + (archive.lastSessionId() == null ? "" : " · 可点「本轮原文与复盘」"));
@@ -693,6 +999,8 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
                 transcript.setText(finals.toString());
                 String finalText = event.optString("text", "").trim();
                 if (!finalText.isEmpty() && !event.optBoolean("mock", false)) lastFinal = finalText;
+                // 每条 final 落盘后立刻刷新「手机已保存 N 条 / 待上传 N 条」。
+                setArchiveStatus(archive.describe());
             }
         });
     }
@@ -770,7 +1078,15 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
 
     @Override protected void onDestroy() {
         running = false;
+        unregisterNetworkRecovery();
+        if (archive != null) archive.setListener(null);
+        pendingSaveName = null;
+        pendingSaveText = null;
         if (socialMateWebView != null) {
+            if (bridgeAttached) {
+                socialMateWebView.removeJavascriptInterface(BRIDGE_NAME);
+                bridgeAttached = false;
+            }
             socialMateWebView.stopLoading();
             ViewGroup parent = (ViewGroup) socialMateWebView.getParent();
             if (parent != null) parent.removeView(socialMateWebView);

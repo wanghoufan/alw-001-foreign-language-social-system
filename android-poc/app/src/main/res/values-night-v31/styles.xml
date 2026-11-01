@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+      Android 12+ 深色模式：night 限定符优先级高于版本限定符，
+      所以必须单独提供 values-night-v31，否则深色模式会退回 values-night 而丢掉 Splash 属性。
+      本 UI 与启动页都保持固定浅色，深色模式下依旧浅底深字。
+    -->
+    <style name="AppTheme" parent="@android:style/Theme.Material.Light.NoActionBar">
+        <item name="android:windowBackground">@color/socialmate_icon_background</item>
+        <item name="android:windowSplashScreenBackground">@color/socialmate_icon_background</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/ic_socialmate_foreground</item>
+    </style>
+</resources>

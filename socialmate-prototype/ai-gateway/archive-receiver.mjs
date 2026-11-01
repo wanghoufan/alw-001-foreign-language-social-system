@@ -8,7 +8,7 @@ import http from "node:http";
 import path from "node:path";
 import {fileURLToPath} from "node:url";
 import {saveSession} from "./conversation-archive.mjs";
-import {exportSessions, getSession, listSessions} from "./archive-history.mjs";
+import {exportSessions, getSession, listSessions, searchSessions} from "./archive-history.mjs";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const HISTORY_HTML = path.join(HERE, "archive-history.html");
@@ -93,6 +93,30 @@ const server = http.createServer(async (req, res) => {
       return json(res, 200, {ok: true, ...data});
     } catch (error) {
       return json(res, error.status || 500, {ok: false, code: "LIST_FAILED", error: error.message});
+    }
+  }
+  if (url.pathname.endsWith("/api/archive/sessions") && req.method === "GET") {
+    if (!tokenOK(req.headers["x-archive-token"])) {
+      return json(res, 401, {ok: false, code: "UNAUTHORIZED"});
+    }
+    try {
+      const data = await searchSessions({
+        q: url.searchParams.get("q") || "",
+        person: url.searchParams.get("person") || "",
+        from: url.searchParams.get("from") || "",
+        to: url.searchParams.get("to") || "",
+        limit: url.searchParams.get("limit") || undefined,
+        cursor: url.searchParams.get("cursor") || "",
+      });
+      // 只记录条数，绝不记录搜索词或原文。
+      console.log(`[archive] search items=${data.items.length} matched=${data.matched} scanned=${data.scanned}`);
+      return json(res, 200, {ok: true, ...data});
+    } catch (error) {
+      return json(res, error.status || 500, {
+        ok: false,
+        code: error.status === 400 ? "INVALID_QUERY" : "SEARCH_FAILED",
+        error: error.message,
+      });
     }
   }
   if (url.pathname.includes("/api/archive/session/") && req.method === "GET") {

@@ -35,6 +35,13 @@ LOG="$LOGDIR/verify-$(date '+%Y%m%d-%H%M%S').log"
      socialmate-prototype/ai-gateway/session-review.test.mjs \
      socialmate-prototype/ai-gateway/people-store.test.mjs \
      socialmate-prototype/ai-gateway/review-confirm.test.mjs
+  echo "2c. N03 人物详情 / 见面前准备 / 收藏 / 检索 / HTTP 路由（P0-04）"
+  "$NODE_BIN" --test socialmate-prototype/ai-gateway/people-slug.test.mjs \
+     socialmate-prototype/ai-gateway/person-detail.test.mjs \
+     socialmate-prototype/ai-gateway/prep.test.mjs \
+     socialmate-prototype/ai-gateway/favorites-store.test.mjs \
+     socialmate-prototype/ai-gateway/archive-search.test.mjs \
+     socialmate-prototype/ai-gateway/server-routes.test.mjs
   echo "3. ASR bridge protocol / event callback tests"
   NPM_BIN="$(dirname "$NODE_BIN")/npm"
   [[ -x "$NPM_BIN" ]] || NPM_BIN="$(command -v npm || true)"

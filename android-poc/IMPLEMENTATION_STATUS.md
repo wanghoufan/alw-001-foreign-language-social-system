@@ -103,3 +103,16 @@
 - Note 12T Pro 仍为 0.2.1，未同步 0.4.0。
 - Mac 运行方式：`bash socialmate-v1.2/service-v040.sh ensure`（单进程 8790+8791）；`bash socialmate-v1.2/install-phone-v040.sh --serial <serial>` 安装/映射/启动；`bash socialmate-v1.2/verify-v040.sh` 回归。
 - 已实测：MOCK 手机音频→SSE→UI、服务重启自动重连、真实腾讯云 2 条 final、显式同意后 DeepSeek 真实返回与 39/41/45 卡片。测试音频为合成语音，**不是真人验收**。
+
+## N03（2026-11-01）· 0.6.0（versionCode 15）
+
+- APK：`app/build/outputs/apk/debug/app-debug.apk`（206679 B）· SHA-256 `972eed42d9fe1722e9f47d63f0bd69a073878747560eb2392e3dae42d24861b1`
+- 设备：Redmi Note 11 5G（Android 11 / 21091116AC）`install -r` 保留数据；`firstInstallTime` 未变。
+- 新增/修改：
+  - 原文留存默认**未勾选**，三项同意拆分并写清互不代替。
+  - `SessionArchive` 断网退避补传（3/10/30/60s，≤6 次，单飞）+ 网络回调触发；状态四态中文：手机已保存 / 待上传 N 条 / 已同步 Mac / 失败可重试。
+  - 自适应图标（`res/mipmap-anydpi-v26/ic_launcher(.round)`、`drawable/ic_socialmate_foreground|monochrome`、`values/colors.xml`）与 Android 12+ 系统 SplashScreen（`values-v31` + `values-night-v31`，不使用 core-splashscreen、无独立 Splash Activity、无 sleep）。
+  - WebView 受限原生桥 `SocialMateAndroid.saveText`（仅私有同源注入 + 桥内二次校验）+ DownloadListener（blob/data）+ SAF 落盘；不申请存储权限。
+  - Manifest：`icon`/`roundIcon`、`windowSoftInputMode=adjustResize`、`ACCESS_NETWORK_STATE`。
+- 验证：`sh test-core.sh` → PASS 12 core assertions；`bash ../socialmate-v1.2/verify-v040.sh` → 215 Node + 12 core + BUILD SUCCESSFUL。
+- 未验证：Android 12+ 真机启动画面实拍（本机 Android 11 无该 API）；软键盘遮挡（本机输入法不绘制键盘，`mInputMethodWindowVisibleHeight=0`）。

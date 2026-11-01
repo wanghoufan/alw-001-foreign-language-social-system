@@ -7,7 +7,7 @@
 <title>SocialMate · 会话归档历史</title>
 <link rel="icon" href="data:,">
 <style>
-:root{--bg:#f4f6fa;--paper:#fff;--ink:#1c293a;--muted:#6b7889;--stroke:#e4e9ed;--pine:#146f61;--soft:#e8f4ef;--sand:#e8bd87;--err:#b4362f}
+:root{--bg:#f5f7f3;--paper:#fff;--ink:#1e3c54;--muted:#5c6f79;--stroke:#dde5e7;--pine:#0c7766;--soft:#e9f5f1;--sand:#e8bd87;--err:#a3342c}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",system-ui,sans-serif}
 header{position:sticky;top:0;z-index:2;background:var(--paper);border-bottom:1px solid var(--stroke);padding:12px 16px calc(12px + env(safe-area-inset-bottom)*0)}
@@ -53,49 +53,77 @@ a.back{font-size:13px;color:var(--pine);text-decoration:none;display:inline-bloc
 .engine.ai{background:#fdf1e3;color:#8a5a1b}
 .list-mini{font-size:13px;margin:6px 0 0;padding-left:18px}
 .list-mini li{margin:2px 0}
+.hint{font-size:12px;color:var(--muted);margin:6px 0 0;line-height:1.6}
+select{font:inherit;padding:8px 10px;border:1px solid var(--stroke);border-radius:8px;background:#fff;color:inherit;width:100%;min-height:40px}
+.item{position:relative}
+.item .meta-line{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:4px}
+.item .peep{font-size:12px;color:var(--pine);background:var(--soft);border-radius:99px;padding:1px 8px}
+.item .open-hint{font-size:12px;color:var(--muted);margin-top:6px}
+.excerpt{border-left:3px solid var(--pine);background:#f7faf9;border-radius:8px;padding:8px 10px;margin:8px 0 0;font-size:13px;line-height:1.6;word-break:break-word}
+.excerpt .who{display:block;font-size:11px;color:var(--muted);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;margin-bottom:2px}
+.morebar{margin:4px 0 20px}
+.morebar button{width:100%;min-height:44px}
+button{min-height:40px}
+.item{cursor:pointer}
+.item .rowbtns{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.item .rowbtns button{min-height:40px}
+@media(max-width:360px){.grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 <header>
   <h1>会话归档历史</h1>
-  <p>会话原文只读；会后复盘候选必须由你逐条勾选并显式确认，才写入本机档案（归档原文永不改写）</p>
+  <p>默认只看日期 / 段数 / 归属；点开才读原文。原文只读，复盘候选须你逐条勾选确认才写入本机档案。</p>
 </header>
 <main>
   <section class="card" id="authCard">
-    <label for="token">归档访问令牌（保存在本浏览器，不上传）</label>
+    <label for="token">归档访问令牌</label>
     <input id="token" type="password" autocomplete="off" placeholder="从 Mac mini 的 .local/archive-token 复制">
     <div class="row" style="margin-top:10px">
-      <button class="primary" id="connect">连接并读取</button>
-      <button id="forget">清除本机令牌</button>
+      <button class="primary" id="connect">连接</button>
+      <button id="forget">清空令牌</button>
     </div>
+    <p class="hint">首次需粘贴令牌，本次会话有效；关闭页面即失效，不写入长期存储，也不进网址。</p>
     <div class="status" id="authStatus">尚未连接</div>
   </section>
 
   <section class="card" id="listCard">
-    <div class="grid">
+    <label for="q">关键词（在原文里搜）</label>
+    <input id="q" type="search" placeholder="如 hiking / 咖啡 / 跑步" autocomplete="off">
+    <div class="grid" style="margin-top:10px">
+      <div><label for="person">人物</label><select id="person"><option value="">全部</option></select></div>
+      <div><label for="limit">每页</label><select id="limit"><option value="10">10 条</option><option value="20" selected>20 条</option><option value="50">50 条</option></select></div>
+    </div>
+    <div class="grid" style="margin-top:10px">
       <div><label for="from">起始日期（UTC）</label><input id="from" type="date"></div>
       <div><label for="to">结束日期（UTC）</label><input id="to" type="date"></div>
     </div>
     <div class="row" style="margin-top:10px">
-      <button class="primary" id="reload">刷新列表</button>
-      <button id="export">导出该范围 (.md)</button>
+      <button class="primary" id="search">搜索</button>
       <button id="today">今天</button>
+      <button id="clear">清空条件</button>
+      <button id="export">导出该日期范围 (.md)</button>
     </div>
+    <p class="hint">日期按 UTC 归档日筛选：文件名和归档目录都用 UTC，海口是 UTC+8，本地日期可能比这里晚一天（如 UTC 16:30 已是次日 00:30）。</p>
     <div class="status" id="listStatus"></div>
   </section>
 
   <section id="list"></section>
+  <section id="more" class="hidden"><button class="primary" id="moreBtn">加载更多</button></section>
   <section id="detail" class="hidden"></section>
 </main>
 <script>
 (() => {
+  // 令牌只放 sessionStorage：本次会话有效，关闭页面即失效；不写 localStorage、不进网址、不打日志。
   const KEY = "sm-archive-token";
   const $ = (id) => document.getElementById(id);
   // 同一份页面会被两种方式提供：归档服务根路径 /history，或私有 UI 的 /v12/history。
   // 按当前路径推导前缀，保证 request 始终落在同源下的 api/archive/*。
   const PREFIX = location.pathname.replace(/history\/?$/, "");
   let token = "";
-  let cache = [];
+  let items = [];
+  let nextCursor = null;
+  let peopleLoaded = false;
 
   const url = (p) => PREFIX + p;
 
@@ -113,10 +141,26 @@ a.back{font-size:13px;color:var(--pine);text-decoration:none;display:inline-bloc
     el.className = "status" + (kind ? " " + kind : "");
   };
 
+  const fmtLocal = (iso) => {
+    const d = new Date(iso);
+    const p = (n) => String(n).padStart(2, "0");
+    return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}`;
+  };
+
   async function api(path) {
     const res = await fetch(url(path), {headers: {"x-archive-token": token}, cache: "no-store"});
-    if (res.status === 401) throw new Error("令牌无效（401）");
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    if (res.status === 401) {
+      const err = new Error("令牌无效（401）");
+      err.status = 401;
+      throw err;
+    }
+    if (!res.ok) {
+      let data = null;
+      try { data = await res.json(); } catch { data = null; }
+      const err = new Error((data && (data.error || data.code)) || `HTTP ${res.status}`);
+      err.status = res.status;
+      throw err;
+    }
     return res.json();
   }
 
@@ -128,44 +172,101 @@ a.back{font-size:13px;color:var(--pine);text-decoration:none;display:inline-bloc
     return s ? "?" + s : "";
   }
 
+  /** 列表只渲染元数据；命中摘要折叠在卡片里，点开才展开。 */
+  function itemNode(it) {
+    const el = document.createElement("div");
+    el.className = "item";
+    el.tabIndex = 0;
+
+    const t = document.createElement("div");
+    t.className = "t";
+    t.textContent = `${it.date || "日期未知"} · 本地 ${fmtLocal(it.startedAt)}`;
+    if (it.hasFinal === false) {
+      const b = document.createElement("span");
+      b.className = "badge ai";
+      b.textContent = "含未定稿段";
+      t.appendChild(b);
+    }
+
+    const m = document.createElement("div");
+    m.className = "m";
+    m.textContent = `${it.segments.total} 段${it.segments.matched ? ` · 命中 ${it.segments.matched} 段` : ""} · 时长 ${fmtDur(it.durationMs)}`;
+
+    const meta = document.createElement("div");
+    meta.className = "meta-line";
+    if (it.people && it.people.length) {
+      it.people.forEach((p) => {
+        const chip = document.createElement("span");
+        chip.className = "peep";
+        chip.textContent = p.name || p.slug;
+        meta.appendChild(chip);
+      });
+    } else {
+      const chip = document.createElement("span");
+      chip.className = "peep";
+      chip.style.background = "transparent";
+      chip.style.color = "var(--muted)";
+      chip.textContent = "未归属人物";
+      meta.appendChild(chip);
+    }
+
+    const hint = document.createElement("div");
+    hint.className = "open-hint";
+    const hasExcerpt = it.segments.excerpts && it.segments.excerpts.length;
+    hint.textContent = hasExcerpt ? "点开看命中原文摘要 ›" : "点开看原文与复盘 ›";
+
+    const box = document.createElement("div");
+    box.className = "hidden";
+    (it.segments.excerpts || []).forEach((ex) => {
+      const row = document.createElement("div");
+      row.className = "excerpt";
+      const who = document.createElement("span");
+      who.className = "who";
+      who.textContent = `第 ${ex.index + 1} 段 · 说话人 ${ex.speakerId}（聚类编号，身份未知）`;
+      const txt = document.createElement("div");
+      txt.textContent = ex.text;
+      row.append(who, txt);
+      box.appendChild(row);
+    });
+    const openBtn = document.createElement("button");
+    openBtn.textContent = "打开完整原文与复盘";
+    openBtn.addEventListener("click", (e) => { e.stopPropagation(); openDetail(it.sessionId); });
+    const rowbtns = document.createElement("div");
+    rowbtns.className = "rowbtns";
+    rowbtns.appendChild(openBtn);
+    box.appendChild(rowbtns);
+
+    el.append(t, m, meta, hint, box);
+    const toggle = () => {
+      box.classList.toggle("hidden");
+      const open = !box.classList.contains("hidden");
+      hint.textContent = open ? "收起摘要 ˄" : (hasExcerpt ? "点开看命中原文摘要 ›" : "点开看原文与复盘 ›");
+    };
+    el.addEventListener("click", (e) => { if (e.target.closest("button")) return; toggle(); });
+    el.addEventListener("keydown", (e) => { if (e.key === "Enter") toggle(); });
+    return el;
+  }
+
   function renderList(data) {
     const host = $("list");
     host.innerHTML = "";
+    nextCursor = data.nextCursor || null;
     const summary = document.createElement("p");
     summary.className = "summary";
     const skipped = data.skipped ? ` · 跳过损坏 ${data.skipped}` : "";
-    summary.textContent = `共 ${data.total} 个会话（扫描 ${data.scanned} 份记录${skipped}）`;
+    const total = typeof data.matched === "number" ? data.matched : items.length;
+    summary.textContent = `命中 ${total} 个会话 · 已显示 ${items.length} 条${skipped}`;
     host.appendChild(summary);
-    if (!data.items.length) {
+    if (!items.length) {
       const empty = document.createElement("div");
       empty.className = "empty";
-      empty.textContent = "该日期范围内没有归档会话。";
+      empty.textContent = "没有匹配的归档会话。换个关键词或放宽日期范围试试。";
       host.appendChild(empty);
+      $("more").classList.add("hidden");
       return;
     }
-    cache = data.items;
-    data.items.forEach((it, i) => {
-      const el = document.createElement("div");
-      el.className = "item";
-      el.tabIndex = 0;
-      el.dataset.idx = String(i);
-      const t = document.createElement("div");
-      t.className = "t";
-      t.textContent = fmtTime(it.startedAt);
-      if (it.hasAi) {
-        const b = document.createElement("span");
-        b.className = "badge ai";
-        b.textContent = "含 AI";
-        t.appendChild(b);
-      }
-      const m = document.createElement("div");
-      m.className = "m";
-      m.textContent = `时长 ${fmtDur(it.durationMs)} · ${it.segmentCount} 段 · 说话人 ${it.speakers.join("/") || "—"} · rev ${it.revision} · ${it.sessionId.slice(0, 10)}…`;
-      el.append(t, m);
-      el.addEventListener("click", () => openDetail(it.sessionId));
-      el.addEventListener("keydown", (e) => { if (e.key === "Enter") openDetail(it.sessionId); });
-      host.appendChild(el);
-    });
+    items.forEach((it) => host.appendChild(itemNode(it)));
+    $("more").classList.toggle("hidden", !nextCursor);
   }
 
   async function openDetail(sessionId) {
@@ -173,10 +274,13 @@ a.back{font-size:13px;color:var(--pine);text-decoration:none;display:inline-bloc
     try {
       const data = await api(`api/archive/session/${encodeURIComponent(sessionId)}`);
       renderDetail(data);
+      $("more").classList.add("hidden");
       setStatus($("listStatus"), "");
       window.scrollTo({top: 0, behavior: "smooth"});
     } catch (e) {
-      setStatus($("listStatus"), "读取失败：" + e.message, "err");
+      setStatus($("listStatus"), e.status === 404 ? "找不到这一轮会话（404）"
+        : e.status === 401 ? "令牌无效（401），请重新粘贴令牌"
+        : "读取失败：" + e.message, "err");
     }
   }
 
@@ -196,6 +300,7 @@ a.back{font-size:13px;color:var(--pine);text-decoration:none;display:inline-bloc
       host.classList.add("hidden");
       host.innerHTML = "";
       $("list").classList.remove("hidden");
+      $("more").classList.toggle("hidden", !nextCursor);
     });
 
     const h = document.createElement("div");
@@ -591,23 +696,55 @@ a.back{font-size:13px;color:var(--pine);text-decoration:none;display:inline-bloc
     });
   }
 
-  async function loadList() {
-    setStatus($("listStatus"), "读取中…");
+  // 人物筛选只给真实存在的人物主档；读不到时保留「全部」，不阻断搜索。
+  async function loadPeopleOptions() {
+    if (peopleLoaded) return;
     try {
-      const data = await api("api/archive/list" + rangeQuery());
+      const res = await fetch(url("api/people"), {headers: {"x-archive-token": token}, cache: "no-store"});
+      if (!res.ok) throw new Error("HTTP " + res.status);
+      const data = await res.json();
+      const sel = $("person");
+      (Array.isArray(data.people) ? data.people : []).forEach((p) => {
+        const opt = document.createElement("option");
+        opt.value = p.slug;
+        opt.textContent = p.name === p.slug ? p.slug : `${p.name}（${p.slug}）`;
+        sel.appendChild(opt);
+      });
+      peopleLoaded = true;
+    } catch {
+      // 静默降级：人物主档不可用时仍可按关键词与日期搜索。
+    }
+  }
+
+  // reset=true 重新搜索；reset=false 用 cursor 追加下一页。
+  async function search(reset = true) {
+    setStatus($("listStatus"), reset ? "读取中…" : "加载更多…");
+    try {
+      const params = new URLSearchParams();
+      const q = $("q").value.trim();
+      if (q) params.set("q", q);
+      if ($("person").value) params.set("person", $("person").value);
+      if ($("from").value) params.set("from", $("from").value);
+      if ($("to").value) params.set("to", $("to").value);
+      params.set("limit", $("limit").value || "20");
+      if (!reset && nextCursor) params.set("cursor", nextCursor);
+      const data = await api("api/archive/sessions?" + params.toString());
+      items = reset ? (data.items || []).slice() : items.concat(data.items || []);
       renderList(data);
       setStatus($("listStatus"), "");
       $("detail").classList.add("hidden");
       $("list").classList.remove("hidden");
       return true;
     } catch (e) {
-      setStatus($("listStatus"), e.message, e.message.includes("401") ? "err" : "err");
+      setStatus($("listStatus"), e.status === 401 ? "令牌无效（401），请重新粘贴令牌"
+        : e.status === 400 ? "查询条件不合法：" + e.message
+        : "读取失败：" + (e.message || "测试版暂不可用"), "err");
       return false;
     }
   }
 
   $("connect").addEventListener("click", async () => {
-    const v = $("token").value.trim();
+    const v = $("token").value.trim() || token;
     if (!v) return setStatus($("authStatus"), "请先填入令牌", "err");
     token = v;
     try {
@@ -616,11 +753,14 @@ a.back{font-size:13px;color:var(--pine);text-decoration:none;display:inline-bloc
     } catch (e) {
       return setStatus($("authStatus"), "无法连接归档服务：" + e.message, "err");
     }
-    if (await loadList()) {
-      localStorage.setItem(KEY, token);
-      setStatus($("authStatus"), "已连接 · 令牌已保存在本浏览器", "ok");
+    if (await search(true)) {
+      try { sessionStorage.setItem(KEY, token); } catch {}
+      setStatus($("authStatus"), "已连接 · 令牌只在本次会话有效（关闭页面即失效）", "ok");
       $("token").value = "";
+      loadPeopleOptions();
       maybeDeepLink();
+    } else {
+      setStatus($("authStatus"), "令牌无法使用，请重新粘贴", "err");
     }
   });
 
@@ -638,20 +778,34 @@ a.back{font-size:13px;color:var(--pine);text-decoration:none;display:inline-bloc
 
   $("forget").addEventListener("click", () => {
     token = "";
-    localStorage.removeItem(KEY);
+    items = [];
+    nextCursor = null;
+    try { sessionStorage.removeItem(KEY); } catch {}
     $("token").value = "";
     $("list").innerHTML = "";
+    $("more").classList.add("hidden");
     $("detail").classList.add("hidden");
-    setStatus($("authStatus"), "已清除本机令牌");
+    setStatus($("authStatus"), "已清空令牌（本次会话失效）");
     setStatus($("listStatus"), "");
   });
 
-  $("reload").addEventListener("click", loadList);
+  $("search").addEventListener("click", () => search(true));
+  $("q").addEventListener("keydown", (e) => { if (e.key === "Enter") search(true); });
+  $("person").addEventListener("change", () => search(true));
+  $("limit").addEventListener("change", () => search(true));
+  $("moreBtn").addEventListener("click", () => search(false));
+  $("clear").addEventListener("click", () => {
+    $("q").value = "";
+    $("person").value = "";
+    $("from").value = "";
+    $("to").value = "";
+    search(true);
+  });
   $("today").addEventListener("click", () => {
     const d = new Date().toISOString().slice(0, 10);
     $("from").value = d;
     $("to").value = d;
-    loadList();
+    search(true);
   });
 
   $("export").addEventListener("click", async () => {
@@ -678,13 +832,17 @@ a.back{font-size:13px;color:var(--pine);text-decoration:none;display:inline-bloc
     }
   });
 
-  const saved = localStorage.getItem(KEY);
+  // 旧版本曾把令牌长期存在 localStorage：这里只做一次清理，不再写入。
+  try { localStorage.removeItem(KEY); } catch {}
+  // 只在本次会话里恢复：sessionStorage 关闭标签页即清空。
+  let saved = "";
+  try { saved = sessionStorage.getItem(KEY) || ""; } catch { saved = ""; }
   if (saved) {
     token = saved;
-    loadList().then((ok) => {
-      setStatus($("authStatus"), ok ? "已用本机保存的令牌连接" : "本机保存的令牌无法使用，请重新填入",
+    search(true).then((ok) => {
+      setStatus($("authStatus"), ok ? "已用本次会话的令牌连接（关闭页面即失效）" : "本次会话的令牌已失效，请重新粘贴",
         ok ? "ok" : "err");
-      if (ok) maybeDeepLink();
+      if (ok) { loadPeopleOptions(); maybeDeepLink(); }
     });
   }
 })();

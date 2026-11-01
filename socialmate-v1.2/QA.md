@@ -557,3 +557,22 @@ V0.4.0 APK 实际输出路径：`android-poc/app/build/outputs/apk/debug/app-deb
 **测试基线**：`node --test`（ai-gateway）**75/75**；`verify-v040.sh` 全绿（前端 24 + TLS/安装 4 + 网关 15 + 归档/复盘/档案/人物 60 + ASR 桥 40 + 重建后前端 23 = **166 项** + 12 Android core + APK 构建），日志 `socialmate-v1.2/.local/qa/verify-20261101-193940.log`。
 
 **边界（不变）**：仍然不允许「按显示名猜人」「自动合并人物」；新建人物必须由用户在页面上显式点选并填写标识；真实 `SocialMate-Data/` 在本轮测试中零写入（`Profile/` 目录仍不存在，`People/Test-Anna` mtime 仍为 10-04）。
+
+### 2026-11-01 N03（SDD V1.1）· Note 11 5G 真机 + 全量回归
+
+- 设备：Redmi Note 11 5G（21091116AC / Android 11），serial `adb-WGBMXWDIAIFMPFCQ-1AcFJM._adb-tls-connect._tcp`；**全程只用这一台**，未碰 indq5xfi6hovay4d。
+- Stage0：`adb-preflight-preview.sh` 预构建 0.5.4（14）`b5dda555…`，`install -r` Success（保留数据），截图 `n03-sdd-v11-preview-20261101-211046.png`。
+- 最终 APK：**0.6.0（15）** · `972eed42d9fe1722e9f47d63f0bd69a073878747560eb2392e3dae42d24861b1` · 206679 B；`aapt2 dump badging` 见 `application-icon-160:'res/mipmap-anydpi-v26/ic_launcher.xml'`，`dumpsys package` 见 versionCode=15 / versionName=0.6.0，`firstInstallTime` 仍为 2026-10-31。
+- 链路：`adb reverse tcp:8790/8791/8781`，App 用默认 `http://127.0.0.1:8791/v12`；服务重启后 `/api/asr/status` `combined:true`，预算账本未重置（ASR 0.129189、DeepSeek 0.213634 / 各 1 元）。
+- 真机逐项证据（`socialmate-v1.2/.local/qa/`）：
+  - 留存默认未勾选：`n03-qa-consent-215827.png`（两个 CheckBox `checked="false"`，页面写明三项互不代替）。
+  - 人物在线主档：`n03-qa-person-220210.png`（「私有在线 · 正式主档 · 1 位」；详情含见面前准备空态、已确认事实 0 条、人工段落、会话记录）。
+  - 聊天建议卡：`n03-qa-chatcards-v2-222128.png`（自然接话 + 继续追问各一张，含 复制/朗读/☆收藏；修正前两卡在 y≈917 屏外）。
+  - 收藏闭环：`n03-qa-favorites-220506.png`（收藏→关于我可见→取消后回空态）。
+  - 历史检索：`n03-qa-history-220614.png`（令牌本会话有效、关键词/人物/日期/每页、默认只看日期段数归属、UTC 说明）。
+  - 深色可读：`n03-qa-dark-221038.png`（bg #192D35 / fg #B4C6CA）。
+  - 原生桥：CDP `typeof window.SocialMateAndroid.saveText === 'function'`；SAF 流程 `n03-saf-20261101-215057.png` / `n03-saf-saved-20261101-215108.png` / `n03-saf-md-20261101-215256.png`。
+  - 图标：`n03-appicon-20261101-215415.png`；冷启动 `n03-coldstart-*`（Android 11 无系统 Splash API，0.42s 进首页）。
+- P0-02 成功侧（本轮补做）：临时归档实例 8782 + 临时令牌 + `/tmp` 目录，向 App 私有 outbox 注入一条 `provider:mock` 合成会话 → 重开 App 后 outbox 清空、文件进 `exported/`、临时归档收到 `.md`+`.json`；真实归档目录未新增内容（中途一次配置未生效导致合成会话误入真实归档，已删除并核对目录恢复原状，App 配置已按真实令牌还原）。
+- 回归：`verify-v040.sh` → `verify-20261101-222138.log`，**215 项 Node 全绿 + 12 项 Android 核心断言 + Gradle BUILD SUCCESSFUL**；`qa-people-e2e.mjs` 10/10；`ai-gateway node --test` 124/124；`asr-bridge npm test` 40/40。
+- 未做（NOT_RUN）及其原因：软键盘遮挡（本机输入法不绘制键盘面板，`mInputMethodWindowVisibleHeight=0`）；Android 12+ 启动画面实拍（无该版本设备）；真机上「新建人物 / 撤回事实」写正式主档（避免改真实档案，仅单测与临时目录覆盖）；真人双人录音与真实付费链路时延。

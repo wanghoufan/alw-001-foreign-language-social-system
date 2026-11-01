@@ -23,6 +23,9 @@ const MARKER = /<!--\s*sm-src:([A-Za-z0-9]{6,32})\s*-->/g;
 const MAX_TEXT = 300;
 const BACKUP_KEEP = 10;
 
+const SLUG_RESERVED = new Set(["_template"]);
+const SLUG_MAX = 48;
+
 /** 允许写入的语义章节：内部 key → 模板里的二级标题（`# 兴趣` 这种一级标题）。 */
 export const SECTIONS = {
   basic: "基本情况",
@@ -51,6 +54,80 @@ export function assertSlug(slug) {
     throw fail(400, "INVALID_PERSON_SLUG", "人物标识不合法");
   }
   return value;
+}
+
+/**
+ * 显示名 → 建议 slug 的纯规则转换（P1-02）。只做字符转换，绝不据此推断人物身份：
+ * - 拉丁字母名：去重音后转小写 ASCII，非字母数字折叠成单个连字符；
+ * - 中文/其它不受支持字符：无含义短 ID `person-YYYYMMDD-<4位hex>`；
+ * - 重名不覆盖，改为在末尾追加 -2/-3 作为可用替代。
+ * 本函数只读文件系统判断占用，**不会创建任何目录或文件**；创建仍必须走显式 POST + confirm。
+ */
+function latinBase(name) {
+  return String(name || "")
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+/, "")
+    .slice(0, SLUG_MAX)
+    .replace(/-+$/, "");
+}
+
+async function slugTaken(root, slug) {
+  if (SLUG_RESERVED.has(slug) || !SLUG.test(slug) || slug.includes("..")) return true;
+  try {
+    await fs.stat(path.join(root, slug));
+    return true;
+  } catch (error) {
+    if (error.code === "ENOENT") return false;
+    throw error;
+  }
+}
+
+function utcDay(now) {
+  const d = now instanceof Date ? now : new Date(now);
+  const base = Number.isNaN(d.getTime()) ? new Date() : d;
+  return base.toISOString().slice(0, 10).replace(/-/g, "");
+}
+
+/**
+ * @param {string} name 用户输入的显示名
+ * @param {{root?:string, now?:Date|string, randomHex?:string}} [options]
+ * @returns {Promise<{slug:string,available:boolean,alternative:string,base:string}>}
+ */
+export async function suggestSlug(name, options = {}) {
+  const root = options.root || peopleRoot();
+  const display = String(name || "").replace(/[\u0000-\u001f]/g, " ").replace(/\s+/g, " ").trim().slice(0, 60);
+  if (!display) throw fail(400, "PERSON_NAME_REQUIRED", "请先填写姓名，再生成人物标识");
+
+  let base = latinBase(display);
+  if (!base) {
+    const hex = String(options.randomHex || crypto.randomBytes(2).toString("hex"))
+      .toLowerCase().replace(/[^0-9a-f]/g, "").padEnd(4, "0").slice(0, 4);
+    base = `person-${utcDay(options.now || new Date())}-${hex}`;
+  }
+  // 候选序列：base、base-2 … base-99（仍受 SLUG 长度上限保护，超长部分截断后重试）。
+  const candidates = [base];
+  for (let i = 2; i <= 99; i += 1) {
+    const suffix = `-${i}`;
+    candidates.push(base.slice(0, SLUG_MAX - suffix.length).replace(/-+$/, "") + suffix);
+  }
+  // 收集前两个可用候选：第一个用于判断首选是否可用，第二个用作确定可用的备选。
+  const free = [];
+  for (const candidate of candidates) {
+    if (await slugTaken(root, candidate)) continue;
+    free.push(candidate);
+    if (free.length === 2) break;
+  }
+  const baseAvailable = free[0] === base;
+  return {
+    slug: base,
+    available: baseAvailable,
+    // 首选可用时给下一个候选（便于用户主动换一个）；首选被占用时给真正可用的那个。
+    alternative: (baseAvailable ? free[1] : free[0]) || free[0] || base,
+    base,
+  };
 }
 
 async function safeReaddir(dir) {

@@ -1,5 +1,24 @@
 # Changelog
 
+## 2026-11-01 · N03（SDD V1.1，P0→P3 一次做完）
+
+验收表与证据索引：`docs/plan/ALW001-N03-SDD-V1.1/ACCEPTANCE.md`
+
+- **Android 0.6.0（versionCode 15）**，SHA-256 `972eed42d9fe1722e9f47d63f0bd69a073878747560eb2392e3dae42d24861b1`，Note 11 5G（Android 11）`install -r` 保留数据安装。
+- **P0-01 原文留存默认未勾选**：`retentionConsent.setChecked(true)` → `false`；录音知情 / 原文留存 / 云端 AI 三项拆开并写明互不代替；灰条实时显示「当前：不留存（默认）· 本轮 0 条写盘、0 条上传到 Mac」。
+- **P0-02 断网补传 + 中文四态**：`SessionArchive` 增 3/10/30/60s 退避（最多 6 次，不常驻轮询）、单飞上传、`onNetworkAvailable()` 网络恢复即补传；状态统一为「手机已保存 / 待上传 N 条 / 已同步 Mac / 失败可重试」，只有 2xx 才算已同步。
+- **P0-03 令牌不再长期落浏览器**：归档历史页与私有 UI 的令牌都只放 `sessionStorage`（关闭即失效），并清理旧 `localStorage` 残留；令牌仍只走请求头。
+- **P1 人物统一到正式主档**：新增 `GET /v12/api/people/<slug>`（已确认事实带 Session/段号来源、人工段落、上次联系、会话记录）、`GET /v12/api/people/slug-suggest`（拉丁名转 ASCII，中文用 `person-YYYYMMDD-xxxx`，重名给备选）、`POST /v12/api/people`（`confirm:true` 必填，0600/0700，重复不新增）、`POST /v12/api/people/<slug>/facts/revoke`（只删目标事实、保留人工段落、不可定位来源 409 安全拒绝、幂等）。
+- **P1 历史检索**：`GET /api/archive/sessions?q=&person=&from=&to=&limit=&cursor=` 服务端本地检索 + 分页（limit ≤50），搜索词与原文不出本机、不写日志；历史页加关键词/人物/日期/每页/加载更多，默认只显示日期/段数/归属，附 UTC 与本地日期差异说明。
+- **P2 见面前准备**：`GET /v12/api/people/<slug>/prep` 纯本地规则给最多 3 条中英对照，标注「来自已确认资料 / 通用模板」，0 次外部请求。
+- **P2 聊天建议卡**：固定「一条自然接话 + 一条继续追问」，英文优先、中文释义可折叠、长文本折叠、复制/朗读/收藏；手机端把两张卡移到字幕正下方（原先排在整段对话之后、首屏看不到），并把「会话设置」折叠成一行。
+- **P2 收藏表达**：`favorites-store.mjs`（本机 JSON+MD，上限 500，同句归一化去重）+ `GET/POST/DELETE /v12/api/favorites`；聊天卡与复盘句子可收藏，「关于我」可浏览/复制/朗读/取消。
+- **P3 图标与启动**：自适应图标（108dp 前景 + 单色层，`res/mipmap-anydpi-v26/ic_launcher(.round)`，Manifest `icon`/`roundIcon`）与 Android 12+ 系统 SplashScreen（`values-v31` 的 `windowSplashScreenBackground/AnimatedIcon`，未引入 `core-splashscreen`、无独立 Splash Activity、无 sleep）；SVG 母版导出 1024/512 PNG 留证。
+- **P3 导出**：WebView 内新增受限原生桥 `SocialMateAndroid.saveText(filename,text)`（仅私有同源注入，桥内再校验可信页面）+ `DownloadListener`（blob/data），落盘走 `ACTION_CREATE_DOCUMENT`，不申请 `WRITE_EXTERNAL_STORAGE`。
+- **P3 回归**：`verify-v040.sh` 新增 2c 步（N03 六个测试文件），最新一次 **215 项 Node 全绿 + 12 项 Android 核心断言 + Gradle 构建成功**；`qa-people-e2e.mjs` 10/10；`asr-bridge` 40/40。
+- 测试口径更新（按新契约，不是放宽）：字幕改「只追加气泡」后可见性断言同时看 `#messages` 与 `#content`；`test-android-wiring` 由「禁止任何 JS 桥」改为「桥必须在私有同源注入 + 桥内二次校验 + 不申请存储权限」；`POST /v12/api/people` 由 405 改 401（现在是受支持接口）。
+- 边界：未重置 ASR / DeepSeek 账本（0.129189 / 0.213634，上限各 1 元），未改公开 115 地点 PWA，未删除或改写任何真实人物档案；真机未执行「新建人物 / 撤回事实」写真实主档的操作，仅用临时目录与单测覆盖。
+
 ## 2026-11-01
 
 - 修复深色模式文字不可见：`values-night` 曾把主题继承到深色 `Theme.Material`，而页面/卡片写死浅色，导致白字白底；改为强制浅色主题，并给正文、CheckBox、按钮、EditText、Spinner 补显式文字色。Android **0.5.4（14）** 真机（Note 11 5G，深色模式）两页文字均清晰可读。

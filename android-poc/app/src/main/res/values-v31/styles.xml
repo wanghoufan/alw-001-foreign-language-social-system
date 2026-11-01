@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+      Android 12+ 系统 SplashScreen（平台 API，未引入 androidx.core:core-splashscreen）。
+      复用同一个 AppTheme，不新增 Splash Activity，也不 sleep：冷启动播完系统动画就直接进真实首页。
+      图标用 108dp 自适应前景（核心图形在 66dp 安全区内），底色用品牌浅色 #F5F7F3。
+    -->
+    <style name="AppTheme" parent="@android:style/Theme.Material.Light.NoActionBar">
+        <item name="android:windowBackground">@color/socialmate_icon_background</item>
+        <item name="android:windowSplashScreenBackground">@color/socialmate_icon_background</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/ic_socialmate_foreground</item>
+    </style>
+</resources>
