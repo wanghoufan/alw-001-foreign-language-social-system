@@ -241,3 +241,26 @@ test('客户端映射：mix 轨说话人分离 -> speaker_id 转 spk_N，未确�
     await upstream.close();
   }
 });
+
+test('腾讯云 V2 sentence_list 结构可正确展开为事件', () => {
+  const session = new TencentRealtimeSession({ ...CREDS, track: 'mix', wsFactory: () => ({}) });
+  const events = [];
+  session.on('event', (event) => events.push(event));
+  session._handleSpeakerSentences({
+    voice_text_str: 'Hello',
+    sentence_list: [
+      {
+        sentence: 'Hello',
+        sentence_type: 1,
+        sentence_id: 0,
+        speaker_id: 0,
+        start_time: 1200,
+        end_time: 1800,
+      },
+    ],
+  });
+  assert.equal(events.length, 1);
+  assert.equal(events[0].text, 'Hello');
+  assert.equal(events[0].speaker, 'spk_0');
+  assert.equal(events[0].final, true);
+});

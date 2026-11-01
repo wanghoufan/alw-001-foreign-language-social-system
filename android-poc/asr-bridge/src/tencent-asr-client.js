@@ -166,6 +166,7 @@ export class TencentRealtimeSession extends EventEmitter {
       nonce: this.nonce,
       voiceFormat: 1,
       needVad: 1,
+      extraParams: this.speakerDiarization ? { speaker_diarization: 1 } : {},
     }).url;
   }
 
@@ -467,7 +468,17 @@ export class TencentRealtimeSession extends EventEmitter {
   }
 
   _handleSpeakerSentences(sentences) {
-    const list = Array.isArray(sentences) ? sentences : [sentences];
+    // 腾讯云 V2 实际返回 { voice_text_str, sentence_list: [...] }；兼容数组/单句。
+    let list;
+    if (Array.isArray(sentences)) {
+      list = sentences;
+    } else if (Array.isArray(sentences.sentence_list)) {
+      list = sentences.sentence_list;
+    } else if (Array.isArray(sentences.speaker_sentences)) {
+      list = sentences.speaker_sentences;
+    } else {
+      list = [sentences];
+    }
     for (const sentence of list) {
       if (!sentence) continue;
       const text = String(sentence.sentence ?? '').trim();

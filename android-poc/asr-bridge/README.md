@@ -7,7 +7,9 @@
 - 已实测：48k/44.1k → 16k 带限重采样、抗混叠、立体声分轨、等权混音、v2 签名算法自洽、无密钥报错、mock WebSocket 端到端。
 - 已实测 Android 真机联调（MOCK）：Redmi Note 12T Pro 与 Note 11 5G 通过 `adb reverse tcp:8790` 连接本桥接，`mix` 路由 48k/2ch 正常出事件并干净结束（约 49.8 s / 29 事件；约 32.2 s / 4 事件）。
 - 已实测 V1.4 + 海南 115 内容检索与英文建议；Note 11 上 0.3.1 真机从 V1.4 返回 P002 的 question/share 两条建议。
-- **未验证：真实腾讯云连通、真实英文转写、真实说话人分离、计费/并发、v3 接口、真分轨 A/B（当前博雅接收器实测为 MONO_MIX）。** 本机没有 SecretId/SecretKey，不能声称云端已跑通。
+- **真实腾讯云已跑通（2026-10-31）**：`/health` = `mode:"tencent"`；A/B 轨 `16k_en`、混音 `16k_zh_en_speaker_2.0` 均拿到真实英文转写与时间戳（混音 `speaker=spk_0`）。
+- 修复：签名 URL 补 `speaker_diarization=1`；解析 V2 `sentences.sentence_list`。
+- **仍未验证**：多人对话的分离准确率、计费/并发上限、v3 接口、真分轨 A/B（当前博雅接收器实测 `MONO_MIX`）。
 - 无密钥时服务端自动进入 **MOCK 模式**；每条事件都带 `mock: true`，文本以 `[mock]` 开头，日志也会打印 `MOCK MODE`。mock 不是 ASR，只按音频能量分段。
 
 ---

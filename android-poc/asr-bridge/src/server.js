@@ -28,6 +28,7 @@ import {
   resolveCredentials,
 } from './tencent-asr-client.js';
 import { getContentService } from './content/service.js';
+import { asrBudgetStatus, canStartAsr, recordAsrUsage } from './asr-budget.js';
 
 const OUTPUT_RATE = 16_000;
 const VALID_INPUT_RATES = new Set([16_000, 44_100, 48_000]);
@@ -151,6 +152,8 @@ export async function createAsrBridgeServer(options = {}) {
   }
 
   const clients = new Set();
+  // Optional in-process callback for private live UI. Never forward to public network here.
+  const onEvent = typeof options.onEvent === 'function' ? options.onEvent : null;
   const startedAt = Date.now();
 
   const runSuggest = (query, limit) => {
@@ -186,6 +189,7 @@ export async function createAsrBridgeServer(options = {}) {
         uptimeMs: Date.now() - startedAt,
         version: BRIDGE_VERSION,
         outputSampleRate: OUTPUT_RATE,
+        budget: asrBudgetStatus({ env }),
       });
       return;
     }
@@ -315,6 +319,23 @@ export async function createAsrBridgeServer(options = {}) {
     }
 
     const mock = modeInfo.mode === 'mock';
+    if (!mock && !canStartAsr({env})) {
+      const budget = asrBudgetStatus({env});
+      sendJson(
+        ws,
+        makeErrorEvent({
+          track,
+          message:
+            `腾讯云 ASR 预算已用尽（上限 ${budget.limitCny} 元，剩余 ${budget.remainingCny} 元），` +
+            '已拒绝新建会话。',
+          mock: false,
+          code: 'ASR_BUDGET_EXHAUSTED',
+          provider: 'tencent',
+        }),
+      );
+      ws.close(1013, 'asr-budget-exhausted');
+      return;
+    }
     const sessionId = randomUUID();
     const engine = mock ? 'mock' : engineForTrack(track, env);
     const initialSpeaker = track === 'mix' ? 'unknown' : track;
@@ -333,6 +354,7 @@ export async function createAsrBridgeServer(options = {}) {
       eventCount: 0,
       ended: false,
       finalized: false,
+      budgetRecorded: false,
       asrSession: null,
       mockSession: null,
     };
@@ -340,13 +362,18 @@ export async function createAsrBridgeServer(options = {}) {
 
     const sendEvent = (event) => {
       client.eventCount += 1;
-      sendJson(ws, {
+      const output = {
         ...event,
         sessionId,
         inputRate: rate,
         channels,
         outputRate: OUTPUT_RATE,
-      });
+      };
+      sendJson(ws, output);
+      if (onEvent) {
+        try { onEvent(output); }
+        catch (error) { logger.warn('[asr-bridge] optional live callback failed: ' + error.message); }
+      }
     };
 
     const sendSession = (status, text, extra = {}) =>
@@ -436,10 +463,20 @@ export async function createAsrBridgeServer(options = {}) {
       if (client.finalized) return;
       client.finalized = true;
       client.ended = true;
+      let asrBudget = null;
+      if (!mock && !client.budgetRecorded) {
+        client.budgetRecorded = true;
+        const seconds = client.inputBytes / (rate * channels * 2);
+        try {
+          asrBudget = recordAsrUsage(seconds, { env });
+        } catch (error) {
+          logger.warn(`[asr-bridge] ASR budget ledger write failed: ${error.message}`);
+        }
+      }
       sendSession(
         status,
         status === 'error' ? '会话因错误结束' : '会话结束',
-        extra,
+        { ...extra, ...(asrBudget ? { asrBudget } : {}) },
       );
       logger.info(
         `[asr-bridge] close session=${sessionId} status=${status} ` +
@@ -713,5 +750,7 @@ export async function createAsrBridgeServer(options = {}) {
     wss,
     close,
     url: `ws://${host}:${port}/asr`,
+    activeSessions: () => clients.size,
+    budget: () => asrBudgetStatus({ env }),
   };
 }
