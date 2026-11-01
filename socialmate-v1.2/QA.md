@@ -472,5 +472,6 @@ V0.4.0 APK 实际输出路径：`android-poc/app/build/outputs/apk/debug/app-deb
 - 基础页面：标题 `Hainan Local Guide · SocialMate`、`Shared with you from SocialMate`、`My list (0)`、`115 / 115 places`、城市/分类筛选与中英切换均在。
 - 分享链接回传：打开 `?selected=3,39,41` → `3 / 115 places`、`A list shared with you · 3`，卡片出现 `003 Qilou Old Street 骑楼老街`、`039 Evergreen Park (Wanlüyuan) 万绿园`，与链接参数一致；`My list (0)` 保持为 0（「My list」是接收者自己的清单，分享链接只负责筛选展示，语义正确）。
 - 证据截图：`screenshots/pwa-v11-shared-link-note12t.png`。
+- 回发按钮位置留档：`screenshots/pwa-share-panel.png`（`My list` 面板底部 `Send list to SocialMate` / `Copy list` / `Clear all`；该功能已按用户决定暂停验收，截图仅作界面位置记录）。
 - 未完成：① 在真机上点 `☆ Want to go` 后计数从 0 变 1 未取到无障碍证据（卡片星标未进入 a11y 树，一次点击后浏览器跳走，未复现）；② **iPhone Safari 未测**（无 iPhone 设备）。
 - **用户决定（2026-11-01）**：「朋友把勾选清单发回给本人」这一项**暂停**——用户明确表示不需要知道朋友选了什么。因此计划 A3 / PWA-03 中的「回发」部分不再纳入本轮验收，`Send list to SocialMate` 与微信/WhatsApp 回传不做真机实测；相关代码与 `?selected=` 链接能力保留未删，若日后需要可随时恢复验收。

@@ -1,92 +1,75 @@
 # HANDOFF · SocialMate（ALW-001 外语社交系统）
 
-> 交接时间：2026-11-01 ｜ 分支：main ｜ 线上：http://127.0.0.1:4173（Docker）｜ 组合服务：http://127.0.0.1:8791/v12
+> 交接时间：2026-11-01 ｜ 分支：main ｜ 组合服务：http://127.0.0.1:8791/v12
 
 ## 0. 常驻指针
 
-- 架构与构建：`docs/architecture-facts.md`
+- 架构 / 端口 / 版本 / 网络策略：`docs/architecture-facts.md`
 - 风险与红线：`docs/risks.md`
 - 踩坑：`agent.md`
 - Android 验收台账：`android-poc/IMPLEMENTATION_STATUS.md`
-- 内容检索层：`android-poc/asr-bridge/src/content/`（说明见 asr-bridge/README §6.1）
-- 组合服务：`socialmate-v1.2/service-v040.sh`（8790 ASR + 8791 UI/AI，一个进程）
-- 本机档案：`SocialMate-Data/Profile/`（`GET/PUT /api/profile`，说明见 `docs/architecture-facts.md` §本机档案）
-- 会话归档：`socialmate-v1.2/archive-service.sh` + `socialmate-prototype/ai-gateway/archive-receiver.mjs`（8781，令牌鉴权；Tailscale `/alw`）
+- 全部实测证据与已验/未验边界：`socialmate-v1.2/QA.md`
+- 组合服务：`bash socialmate-v1.2/service-v040.sh ensure`（8790 ASR + 8791 UI/AI）
+- 会话归档：`socialmate-v1.2/archive-service.sh`（8781，令牌鉴权；历史 UI `/v12/history`）
 - 私有入口：Tailscale `443/alw`→8781、`8443`→8791、`10000`→8790（仅 tailnet）
-- 海南公开 PWA：**https://wanghoufan.github.io/alw-001-foreign-language-social-system/**（gh-pages 分支，7 文件 + index）
-- V0.4.0 QA：`socialmate-v1.2/QA.md`
-- V1.2 正式 UI：`socialmate-v1.2/index.html`（ZIP `dist/SocialMate-V1.2-UI.zip`）
-- 海南 115 图文指南：`docs/成果整理/Hainan-Travel-Guide/`（说明 `docs/DELIVERY_REPORT.md`，ZIP `artifacts/Hainan_115_Real_Photo_Guide_V3.0.zip`）
+- 海南公开 PWA：**https://wanghoufan.github.io/alw-001-foreign-language-social-system/**（gh-pages，7 文件）
+- V1.2 正式 UI：`socialmate-v1.2/index.html`；海南 115 指南：`docs/成果整理/Hainan-Travel-Guide/`
 - 正式软件介绍主稿：`docs/成果整理/2026-10-31 - Mac Mini - ChatGPT - Bilingual Software Portfolio-Demo Guide - V1.4.md`
 
 ## 1. 当前进展
 
-- 2026-11-01：本机档案持久化落地：`GET/PUT /api/profile` + 「关于我」显式同步按钮；存储模块 5/5 定向测试通过，同源浏览器点击端到端写入成功（临时目录，未留测试数据）。
-- 2026-11-01：Android 0.5.0 归档链路真机通过：真实语音 → 腾讯云 final → 手机 outbox → Mac Markdown/JSON（逐字，含识别错误）；断网重试与「不留存不落盘」均实测。
-- 2026-11-01：Mac 归档接收端上线（8781，令牌必填、512KB、幂等、原子写），Tailscale `/alw` HTTPS 健康检查通过。
-- 2026-11-01：海南公开 PWA V1.1 完成选择/清单/分享链接回显/离线缓存；115 卡、选 3 处刷新保留、链接跨会话回显均通过。
-- 2026-11-01：PWA 真机原生浏览器（Note 11 / MIUI）通过：115/115、详情收藏、`My list (1)`、分享链接与回传按钮可见。
-- 2026-11-01：PWA 已部署 GitHub Pages：公开资源 200、私有 API 全 404、手机公网 HTTPS 显示 115/115。
-- 2026-11-01：BOYA 复测非静音（A -24.1 / B -27.96 dBFS，L−R=0，0 削波）→ MONO_MIX 确认；TTS 三声源聚成 spk_0/1/2。
-- 2026-11-01：Note 12T Pro（UKCESWB67PUO7LPB / 100.94.116.99）USB 物理拔除后，经 Tailscale `wss:10000` + `https:8443` + `/alw` 完成录音→ASR→归档，全程零 `adb reverse`。
-- 2026-11-01：Mac 收尾完成；组合服务单进程提供 8790/8791，`/api/asr/status` 为 `combined:true`。
-- Note 11 已装 0.4.0（保留数据，61 个数据文件）；APK SHA-256 `da46425f7e5e1e69b243ac87171bf47f1301c2f32a25c52a23399236fdf69b7e`。
-- 回归 **102/102 Node + 2/2 TLS + 12 Android**；Gradle `BUILD SUCCESSFUL`。
-- `NODE_TLS_REJECT_UNAUTHORIZED=0` 根因是 CodeArts agent-kernel 注入；`service-v040.sh` 启动前剥离，`live-server.mjs` 仍拒绝 env 文件中的 `=0`；新进程 PID 40845 环境无该变量，真实 TLS 证书验证通过。
-- Note 11 新 UI 九项 PASS：首页 SocialMate、录音同意、实时字幕、AI 独立授权、聊天/后台停止、高级设置、布局；详见 QA。
-- 腾讯云 ASR 1 元预算闸已启用：**0.033884 / 1 元，121.981 秒，8 次**；DeepSeek **0.20641 / 1 元，49 次**。
-- 双音色直连 8790：28.8 秒 7 条 final，A 全 `spk_0`、B 全 `spk_1`，分离成功；手机+BOYA 现场双人仍被 `-180 dBFS` 静音阻断。
-- 细节与证据以 `socialmate-v1.2/QA.md` 为准；不把 MOCK、合成语音或代码级结果写成真人验收。
+- Android **0.5.2（versionCode 12）** 已装 Note 12T Pro；明文只放行回环、坏证书默认拒绝（细节见 `docs/architecture-facts.md` §Android）。
+- **无 USB 链路已验收**：`adb reverse` 为空，录音→`wss:10000`→ASR→`https:8443` 聊天页→`/alw` 归档全程走 Tailscale。
+- **归档**：final-only 逐字落 `~/Documents/SocialMate/Conversations/YYYY/MM/`；历史 UI（列表 / 原文 / 按 UTC 日期导出）已完成并真机验收。
+- **海南 PWA** 已上线 gh-pages：115/115、中英、筛选、单点 `Share place` 均通；清单回发按用户决定暂停。
+- **DeepSeek 独立授权**端到端通过：未勾选 0 次 `/api/ai/*`，勾选后出真实建议卡；累计 0.21106 / 1 元。ASR 0.129 / 1 元。
+- 测试：归档 10/10、历史 5/5；其余回归 102/102 Node + 12 Android（本轮未重跑）。
+- BOYA 确认为 **MONO_MIX**（A -24.1 / B -27.96 dBFS，L−R=0）；现场真人双人仍 NOT_RUN。
 
 ## 2. 下一步
 
-1. BOYA 已开机复测：A -24.1 / B -27.96 dBFS、L−R=0、0 削波 → 确认 MONO_MIX；下一步只需真人对着发射器说话完成双人验收。
-2. 现场双人：用户本人说话（三轮只录到 Mac 外放）；需真人参与，重点看 `spk_0/spk_1` 与聊天页字幕。
-3. 可选：Note 12T 安装 0.4.0；两台手机分别 reverse、分别 `--serial`。
-4. 需要跨网络时再设计无 USB/TLS/鉴权方案；当前不开放公网。
-5. 无硬件可继续：把「停止录音 → 本轮摘要 → 待确认档案更新」接通，摘要必须由用户确认后才写入 `SocialMate-Data/Profile`。
-6. 无硬件可继续：确认后的话题/人物再落成 `SocialMate-Data/People/<slug>/00-profile.md`，与现有正式 Markdown 对齐；当前只写私有快照，不改正式人物目录。
-7. 会话归档（见 `docs/plan/ALW001-SocialMate-Development-Plan-V1.1.md` M1/M2）：核心写入模块已就绪，下一步先做 Android 端 final-only outbox，再在**鉴权+加密入口**之后挂接收端点；未鉴权端口一律不开。
+1. **现场双人**（需用户在场）：本人对着发射器说话，看 `spk_0 / spk_1` 与聊天页字幕是否稳定。
+2. 借到 iPhone 后补 PWA Safari 验收。
+3. 「停止录音 → 本轮摘要 → 用户确认」后写入 `SocialMate-Data/Profile`（当前只写私有快照）。
+4. 确认后的话题/人物再落 `SocialMate-Data/People/<slug>/00-profile.md`，与正式 Markdown 对齐。
 
 ## 3. 未完成
 
-- BOYA 已非静音且确认为 MONO_MIX；真人本人语音尚未录到，现场双人仍 NOT_RUN（不是硬件无声问题）。
-- Note 12T 当前未安装本项目 APK；未操作。
-- 无 USB/公网方案、正式分享页未接；个人故事文件仍为空。
-- 本机档案已可持久化，但尚未与会话收尾摘要、正式 `People/*.md` 归档打通；界面同步按钮只写私有快照。
-- 无 USB 传输已验收（Note 12T Pro）；但坏证书拒绝未构造测试，无 USB 轮次未再次捕获用户新语音（用户语音已在 04:41 轮证明）。Note 11 的 Tailscale 仍未登录。
-- 归档 UI 历史列表、日期范围批量导出、正式 People Markdown 合并仍未做。
-- 海南 PWA 已部署 GitHub Pages；国内速度可能波动、无自定义域名，机型矩阵仅 Note 11。
-- 服务只绑本机回环，真机依赖无线/USB `adb reverse`；端口映射断开后页面会重连失败。
-- `spk_N` 只是聚类编号，不保证真实身份；UI 固定“待确认”。
+- 现场真人双人 NOT_RUN（非硬件无声问题）。
+- 本机档案未与会话收尾摘要、正式 `People/*.md` 打通。
+- PWA 机型矩阵缺 **iPhone Safari**；国内访问速度可能波动，无自定义域名。
+- 真机点 `☆ Want to go` 后计数 0→1 未取到 a11y 证据（星标不在 a11y 树，一次点击后浏览器跳走）。
+- 历史 UI 的「按日期导出」只在 Mac 与桌面浏览器验过，**手机内未点过下载**。
+- 服务只绑回环，真机依赖 Tailscale 或 `adb reverse`；映射断开后页面需重连。
+- `spk_N` 只是聚类编号，不保证真实身份；UI 固定「待确认」。
 
 ## 4. 红线
 
 - 详见 `docs/risks.md`；密钥只在服务端、录音需同意且不入库、MOCK/合成语音/编译通过不得写成真人验收。
-- 不得设置 `NODE_TLS_REJECT_UNAUTHORIZED=0`、不得用 `-k` 或跳过证书校验；服务启动由 `service-v040.sh` 剥离继承值，env 文件由 `live-server.mjs` fail-closed。
-- 腾讯云 ASR 上限 1 元、DeepSeek 上限 1 元；不得自行改大或清账本，超限分别拒绝新会话/返回 402。
-- BOYA 路由正常但 `-180 dBFS` 时先查发射器，不得把静音写成“双麦通过”。
+- 不得设置 `NODE_TLS_REJECT_UNAUTHORIZED=0`、不得用 `-k` 或跳过证书校验；`service-v040.sh` 启动前剥离继承值，env 里的 `=0` 由 `live-server.mjs` 拒绝。
+- 腾讯云 ASR 与 DeepSeek 各上限 1 元；不得改大或清账本，超限分别拒绝新会话 / 返回 402。
+- BOYA 路由正常但 `-180 dBFS` 时先查发射器，不得把静音写成「双麦通过」。
 - V1.4 与海南资料只读；`socialmate-prototype/` 只改 `ai-gateway` 相关文件，保留其他智能体未提交改动，不 reset/clean/覆盖。
 - 端口只停 cwd/命令确属本仓库的进程；未知进程占端口时拒绝 kill；手机操作必须显式 `--serial`。
 
 ## 5. 三日流水
 
-- 2026-10-31：构建 APK 0.3.2；Note 11/12T 安装启动；双麦 `MONO_MIX` 实测；ASR 桥接 34/34；内容层（V1.4 51 + 海南 115）与 Note 11 真机建议验证；端口从 8787 改为 8790。
-- 2026-10-31：AI 网关修复 `x-opencode-session`、thinking 关闭、JSON 宽松解析、无效 JSON 单次重试、常规话题不推地点；12/12 测试通过。
-- 2026-10-31：V1.2 UI 落地（`socialmate-v1.2/`），修复从聊天卡片进详情会切走 Tab、丢失会话视图；5 话题回归通过。
-- 2026-10-31：真实腾讯云 ASR 跑通（A/B + 混音真实转写）；修复 `speaker_diarization` 与 `sentence_list`；测试 35/35。
-- 2026-10-31：海南指南迁入 `docs/成果整理/Hainan-Travel-Guide/`；清理 .DS_Store；ASR 桥接建立空 `.env`。
-- 2026-10-31：确认 `socialmate-prototype/` 由另一智能体开发中；只读核对，保留未提交改动。
-- 2026-11-01：V0.4.0 服务阻塞修复；新增 `service-v040.sh`、`/api/asr/status`、组合服务自动恢复、安装脚本 `--serial/--skip-install`。
-- 2026-11-01：真机 WebView、MOCK 全链、真实腾讯云/DeepSeek、真人单人与 TTS-B 真实环境测试完成；新增 1 元预算闸。
-- 2026-11-01：Mac 收尾：TLS 根因=CodeArts kernel 注入并在 service 剥离；102/102 + TLS 2/2 + 12；APK 0.4.0 SHA `da46425f…`；九项 UI PASS；ASR 1 元闸与双音色 A/B 分离通过；BOYA `-180 dBFS` 阻断手机现场双人。
-- 2026-11-01：本机档案：`profile-store` 5/5、API 三分支（无确认 400 / 确认 200 / 回读一致）、同源点击端到端通过；服务重启后 `combined:true` 与预算不变。
-- 2026-11-01：归档：10/10 单元测试；接收端 401/201/duplicate/400 四分支；Android 0.5.0 真机 real-final → Mac 落盘；PWA 浏览器 E2E 与 Note 11 原生浏览器均通过。
-- 2026-11-01：归档历史 UI 完成——`archive-history.mjs` 只读索引 + `/api/archive/{list,session,export}`（令牌鉴权），私有 UI 以 `/v12/history` 与 `/v12/api/archive/*` 同源反代；聊天页加入口；5/5 新测试 + 原有 10/10 通过；真机 WebView 内可进入并读到原文。
-- 2026-11-01：Android 0.5.2（versionCode 12）关闭全局明文、仅放行回环；真机差分：非回环明文 `ERR_CLEARTEXT_NOT_PERMITTED`、回环明文正常、自签名证书页面不渲染；APK SHA-256 `a7839502…d88d0`。
-- 2026-11-01：DeepSeek 独立授权端到端：未勾选 0 次 `/api/ai/*`；勾选后真实调用出建议卡，单次约 0.0047 元，累计 0.21106/1 元。
-- 2026-11-01：PWA 真机矩阵补 Note 12T Pro 自带浏览器：`115/115` 与 `?selected=3,39,41` → `3/115`、`A list shared with you · 3`；iPhone Safari 仍缺设备。**用户 2026-11-01 决定：不需要知道朋友选了什么，「清单回发」暂停**，计划 A3 / PWA-03 的回发部分不再验收（代码保留未删，可随时恢复）。
+- 2026-10-31：APK 0.3.2 → Note 11/12T 启动；双麦 `MONO_MIX` 实测；ASR 桥接 34/34；内容层（V1.4 51 + 海南 115）真机建议验证；端口 8787→8790。
+- 2026-10-31：AI 网关修 `x-opencode-session`、thinking 关闭、JSON 宽松解析与单次重试、常规话题不推地点；12/12。
+- 2026-10-31：V1.2 UI 落地；修「从聊天卡片进详情会切走 Tab、丢会话视图」；5 话题回归。
+- 2026-10-31：真实腾讯云 ASR 跑通（A/B + 混音）；修 `speaker_diarization` 与 `sentence_list`；35/35。
+- 2026-10-31：海南指南迁入 `docs/成果整理/Hainan-Travel-Guide/`；清 `.DS_Store`；ASR 桥接建空 `.env`。
+- 2026-10-31：确认 `socialmate-prototype/` 由另一智能体开发中，只读核对、保留未提交改动。
+- 2026-11-01：V0.4.0 服务阻塞修复：新增 `service-v040.sh`、`/api/asr/status`、组合服务自动恢复、安装脚本 `--serial/--skip-install`。
+- 2026-11-01：真机 WebView + MOCK 全链 + 真实腾讯云/DeepSeek + 单人/TTS-B 测完；新增 1 元预算闸。
+- 2026-11-01：Mac 收尾：TLS 根因=CodeArts kernel 注入并在 service 剥离；102/102 + TLS 2/2 + 12；0.4.0 SHA `da46425f…`；九项 UI PASS。
+- 2026-11-01：本机档案：`profile-store` 5/5、API 三分支（无确认 400 / 确认 200 / 回读一致）、同源点击端到端通过。
+- 2026-11-01：归档：10/10；接收端 401/201/duplicate/400 四分支；0.5.0 真机 real-final 落盘；PWA E2E 与 Note 11 原生浏览器通过。
+- 2026-11-01：Note 12T Pro USB 物理拔除后零 `adb reverse` 跑通 ASR/UI/归档，双说话人分离成立。
+- 2026-11-01：归档历史 UI 落地（只读索引 + 三个令牌接口 + `/v12` 同源反代 + 聊天页入口），5/5 新测试，真机 WebView 内可读原文。
+- 2026-11-01：Android 0.5.2 关闭全局明文、仅放行回环；真机差分验证明文与自签名证书边界。
+- 2026-11-01：DeepSeek 授权端到端；PWA Note 12T Pro 自带浏览器 `115/115` 与 `?selected` 回显；**清单回发按用户决定暂停**（代码保留）。
 
 ## 6. 接续提示词
 
-先读本文件 §0–§6、`socialmate-v1.2/QA.md` 与 `docs/architecture-facts.md`。服务用 `bash socialmate-v1.2/service-v040.sh ensure`，先确认 BOYA 发射器有电平，再按 `--serial` 重跑手机现场双人；不关闭 TLS 校验、不超 1 元 ASR/DeepSeek 预算、不覆盖 V1.4/海南。
+先读本文件 §0–§6、`socialmate-v1.2/QA.md` 与 `docs/architecture-facts.md`，服务用 `bash socialmate-v1.2/service-v040.sh ensure` 起来后按 §2 继续。不关 TLS 校验、不超 1 元 ASR/DeepSeek 预算、不覆盖 V1.4 与海南资料。

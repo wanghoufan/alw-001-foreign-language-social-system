@@ -26,7 +26,8 @@
 - 页面：`MainActivity` 首页 SocialMate 入口，BOYA 检测折叠在高级工具；`AsrActivity` 先录音同意、再启动 ASR，并在同 Activity 内嵌私有 WebView。
 - 采集：AudioRecord 48000/44100/16000，优先 stereo，音源优先 `UNPROCESSED` → `VOICE_RECOGNITION` → `MIC`；`setPreferredDevice` 指向 USB。
 - 录音文件：`getExternalFilesDir(Music)/dualmic/<timestamp>_<A|B>/`，含 `original/left/right.wav` + `diagnostics.json`。
-- 当前版本：0.4.0（versionCode 9），Debug 签名；双麦页削波 >1% 时显示警告。
+- 当前版本：0.5.2（versionCode 12），Debug 签名；双麦页削波 >1% 时显示警告。
+- 网络策略（0.5.2）：`usesCleartextTraffic=false` + `res/xml/network_security_config.xml`，明文只放行 `127.0.0.1`/`localhost`/`::1`；非回环明文在 WebView 报 `ERR_CLEARTEXT_NOT_PERMITTED`。未覆写 `onReceivedSslError`，坏证书走系统默认拒绝。
 - `AsrActivity` 录音后同 Activity 显示私有 WebView `/v12?live=1`；debug 构建启用 `WebContentsDebuggingEnabled`，用于 Mac CDP 验收。
 
 ## ASR 桥接
@@ -66,12 +67,14 @@
 - Tailscale Serve：`443 /alw` → 8781、`8443` → 8791、`10000` → 8790（原有 `/` → 8779 不变）；真证书，只有 tailnet 可达。
 - App 地址可配置：`socialmate-config`（`asr_url`、`ui_url`）、`socialmate-archive`（`archive_url`、`archive_token`）；默认本机，可切 Tailscale。
 - 落盘：`~/Documents/SocialMate/Conversations/YYYY/MM/SocialMate-YYYY-MM-DD-HHMMSS-<sessionId>.md|.json`，0600；JSON 最后提交，重放幂等。
+- 历史 UI（2026-11-01）：`archive-history.mjs` 只读扫描上述目录；`GET /api/archive/{list,session,export}` 需 `x-archive-token`，日期区间按 **UTC** 比较；`GET /history` 只返回静态壳（无数据）。私有 UI 经 `server.mjs` 的 `/v12/history` 与 `/v12/api/archive/*` 同源反代（仅 GET，令牌透传，归档端未启动返回 503 `ARCHIVE_UNAVAILABLE`）。
 
 ## 海南公开 PWA（2026-11-01）
 
 - 源文件：`socialmate-prototype/public-share.html/js` + `public-places.js` + `styles.css` + `manifest.webmanifest` + `sw.js` + `icon.svg`。
 - 打包：`node socialmate-prototype/package-public-share.cjs`；只允许 7 文件，拒绝 `/api`、profile/asr/ai、DeepSeek、麦克风与私有页面引用。
-- 功能：115 地点、中英切换、城市/分类/关键字、Google/高德、单选详请、想去清单（localStorage）、`?selected=ID,ID` 分享回显、复制/系统分享。
+- 功能：115 地点、中英切换、城市/分类/关键字、Google/高德、单选详请、想去清单（localStorage）、`?selected=ID,ID` 分享回显、`Share place` 分享单点、`My list` 的 `Send list to SocialMate` / `Copy list`。
+- 清单回发：**用户 2026-11-01 决定不需要**（不想知道朋友选了什么），不纳入验收；代码与 `?selected=` 能力保留未删。
 - 运行时零私有 API；SW 只缓存上述静态资源，不缓存任何接口。
 
 ## 内容检索层
