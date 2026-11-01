@@ -32,10 +32,10 @@ function assertIso(value, field) {
 function normalizeSegment(segment, index) {
   if (!segment || typeof segment !== "object") throw new TypeError(`segments[${index}] 必须是对象`);
   if (segment.final !== true) throw new TypeError(`segments[${index}] 不是 final 段，拒绝入库`);
-  const raw = typeof segment.textOriginal === "string" ? segment.textOriginal
+  // 逐字保留：不 trim、不改写，只拒绝真正的空字符串。
+  const text = typeof segment.textOriginal === "string" ? segment.textOriginal
     : (typeof segment.text === "string" ? segment.text : "");
-  const text = raw.trim();
-  if (!text) throw new TypeError(`segments[${index}] 原文为空`);
+  if (!text.length) throw new TypeError(`segments[${index}] 原文为空`);
   if (text.length > LIMITS.text) throw new TypeError(`segments[${index}] 原文超过 ${LIMITS.text} 字`);
   const startMs = Number(segment.startMs);
   const endMs = Number(segment.endMs);
@@ -108,7 +108,8 @@ export function archivePaths(session, root = defaultRoot()) {
   const d = new Date(startedMs);
   const year = String(d.getUTCFullYear());
   const month = pad(d.getUTCMonth() + 1);
-  const base = `SocialMate-${day(startedMs)}-${stamp(startedMs)}-${session.sessionId.slice(0, 8)}`;
+  // 用完整 sessionId 避免短 ID 碰撞；文件名只由校验后的字段派生。
+  const base = `SocialMate-${day(startedMs)}-${stamp(startedMs)}-${session.sessionId}`;
   const dir = path.join(root, year, month);
   return {dir, markdown: path.join(dir, `${base}.md`), json: path.join(dir, `${base}.json`)};
 }
@@ -181,10 +182,21 @@ export async function saveSession(input, {root = defaultRoot()} = {}) {
 
   await fs.mkdir(paths.dir, {recursive: true, mode: 0o700});
   const payload = JSON.stringify({contentHash: hash, session}, null, 2);
-  const tmp = `${paths.json}.${process.pid}.tmp`;
-  await fs.writeFile(tmp, payload, {encoding: "utf8", mode: 0o600});
-  await fs.rename(tmp, paths.json);
-  await fs.writeFile(paths.markdown, renderMarkdown(session), {encoding: "utf8", mode: 0o600});
+  const markdown = renderMarkdown(session);
+  const jsonTmp = `${paths.json}.${process.pid}.tmp`;
+  const mdTmp = `${paths.markdown}.${process.pid}.tmp`;
+  try {
+    await fs.writeFile(mdTmp, markdown, {encoding: "utf8", mode: 0o600});
+    await fs.writeFile(jsonTmp, payload, {encoding: "utf8", mode: 0o600});
+    // JSON 最后提交：以 JSON 作为权威记录；中断时最多留下旧 JSON + 新 Markdown，
+    // 下次重放会按同一 sessionId 重写两者，不会产生半份“已提交”状态。
+    await fs.rename(mdTmp, paths.markdown);
+    await fs.rename(jsonTmp, paths.json);
+  } catch (error) {
+    await fs.rm(mdTmp, {force: true}).catch(() => {});
+    await fs.rm(jsonTmp, {force: true}).catch(() => {});
+    throw error;
+  }
 
   return {status: existing ? "revised" : "created", ...paths, hash};
 }

@@ -66,6 +66,10 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
     private long sessionStartMs;
     private int eventCount;
     private volatile String lastFinal = "";
+    private SessionArchive archive;
+    private CheckBox retentionConsent;
+    private TextView archiveStatusView;
+    private EditText archiveUrlInput, archiveTokenInput;
 
     private static final String[] TRACK_LABELS = {
             "混音 → 说话人分离 (mix)",
@@ -80,8 +84,14 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
         if ((getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0) {
             WebView.setWebContentsDebuggingEnabled(true);
         }
+        archive = new SessionArchive(this);
         buildUi();
         refreshDeviceInfo();
+        archive.flushAsync(this::setArchiveStatus);
+    }
+
+    private void setArchiveStatus(String text) {
+        if (archiveStatusView != null) archiveStatusView.setText(text);
     }
 
     private int dp(int v) { return (int) (getResources().getDisplayMetrics().density * v + 0.5f); }
@@ -170,6 +180,12 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
         recordingConsent.setTextSize(16);
         recordingConsent.setPadding(0, dp(6), 0, dp(8));
         recordingCard.addView(recordingConsent, new LinearLayout.LayoutParams(-1, -2));
+        retentionConsent = new CheckBox(this);
+        retentionConsent.setText("允许把本次已定稿原文保存到手机并自动导出到我的 Mac（不上传云端；不勾选则不留存）。");
+        retentionConsent.setTextSize(15);
+        retentionConsent.setChecked(true);
+        retentionConsent.setPadding(0, 0, 0, dp(8));
+        recordingCard.addView(retentionConsent, new LinearLayout.LayoutParams(-1, -2));
 
         Button advancedToggle = button(root, "高级设置与转写诊断  ▾", v -> {
             if (advancedTools == null) return;
@@ -195,6 +211,25 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
         trackPicker.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, TRACK_LABELS));
         advancedTools.addView(trackPicker, new LinearLayout.LayoutParams(-1, dp(58)));
 
+        text(advancedTools, "原文归档接收端（只存本机；令牌不写入日志）", 15);
+        archiveUrlInput = new EditText(this);
+        archiveUrlInput.setText(archive.archiveUrl());
+        archiveUrlInput.setTextSize(14);
+        archiveUrlInput.setSingleLine(true);
+        advancedTools.addView(archiveUrlInput, new LinearLayout.LayoutParams(-1, dp(52)));
+        archiveTokenInput = new EditText(this);
+        archiveTokenInput.setText(archive.token());
+        archiveTokenInput.setHint("归档令牌（只存本机）");
+        archiveTokenInput.setTextSize(14);
+        archiveTokenInput.setSingleLine(true);
+        archiveTokenInput.setInputType(android.text.InputType.TYPE_CLASS_TEXT
+                | android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        advancedTools.addView(archiveTokenInput, new LinearLayout.LayoutParams(-1, dp(52)));
+        button(advancedTools, "立即重试导出", v -> {
+            if (archiveUrlInput != null) archive.setArchiveUrl(archiveUrlInput.getText().toString());
+            if (archiveTokenInput != null) archive.setToken(archiveTokenInput.getText().toString());
+            archive.flushAsync(this::setArchiveStatus);
+        });
         deviceInfo = text(advancedTools, "输入设备待读取", 14);
         startButton = button(recordingCard, "开始实时对话", v -> startStreaming());
         stylePrimary(startButton);
@@ -208,6 +243,8 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
         });
 
         status = text(recordingCard, "状态：待连接", 17);
+        archiveStatusView = text(recordingCard, "原文归档：待开始 · 待导出 "
+                + archive.pendingCount() + " 条", 14);
         live = text(advancedTools, "实时（未定稿）：—", 17);
         text(advancedTools, "已定稿转写（按句累积，不会被实时结果覆盖）", 15);
         transcript = new TextView(this);
@@ -377,6 +414,11 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
         String[] tracks = dual ? new String[]{"A", "B"}
                 : new String[]{mode == 0 ? "mix" : (mode == 1 ? "A" : "B")};
 
+        if (archiveUrlInput != null) archive.setArchiveUrl(archiveUrlInput.getText().toString());
+        if (archiveTokenInput != null) archive.setToken(archiveTokenInput.getText().toString());
+        archive.begin(retentionConsent != null && retentionConsent.isChecked(), appVersion());
+        setArchiveStatus(retentionConsent != null && retentionConsent.isChecked()
+                ? "原文归档：已开启，等待定稿" : "原文归档：未开启（本次不留存）");
         running = true;
         eventCount = 0;
         lastFinal = "";
@@ -466,6 +508,8 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
                 }
                 clients.clear();
             }
+            archive.end();
+            archive.flushAsync(this::setArchiveStatus);
             runOnUiThread(() -> {
                 startButton.setEnabled(true);
                 stopButton.setEnabled(false);
@@ -525,6 +569,16 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
         }
         if (!"interim".equals(type) && !"final".equals(type)) return;
         eventCount++;
+        if ("final".equals(type)) {
+            archive.addFinal(
+                    event.optString("text", ""),
+                    (long) event.optDouble("startMs", 0),
+                    (long) event.optDouble("endMs", 0),
+                    event.optString("speaker", ""),
+                    client.label(),
+                    event.optString("provider", "tencent"),
+                    event.optBoolean("mock", false));
+        }
         String line = format(event);
         runOnUiThread(() -> {
             if ("interim".equals(type)) {

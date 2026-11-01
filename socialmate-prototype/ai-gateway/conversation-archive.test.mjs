@@ -34,7 +34,7 @@ test("写入 Markdown 与 JSON，文件名与权限符合约定", async (t) => {
   const result = await saveSession(base(), {root});
   assert.equal(result.status, "created");
   assert.match(path.basename(result.markdown),
-    /^SocialMate-2026-11-01-020000-sess_202\.md$/);
+    /^SocialMate-2026-11-01-020000-sess_20261101_abcd1234\.md$/);
 
   const markdown = await fs.readFile(result.markdown, "utf8");
   assert.match(markdown, /以下为 ASR 原始转写/);
@@ -107,4 +107,20 @@ test("归一化不保留音频字段", () => {
   const session = normalizeSession({...base(), wavPath: "/tmp/secret.wav", audio: "base64"});
   assert.equal("wavPath" in session, false);
   assert.equal("audio" in session, false);
+});
+test("原文逐字保留，不 trim", async (t) => {
+  const root = await tempRoot(t);
+  const text = "  Hello,  this is  SocialMate.  ";
+  const result = await saveSession(base({segments: [{...base().segments[0], textOriginal: text}]}), {root});
+  const json = JSON.parse(await fs.readFile(result.json, "utf8"));
+  assert.equal(json.session.segments[0].textOriginal, text);
+  const markdown = await fs.readFile(result.markdown, "utf8");
+  assert.ok(markdown.includes(text));
+});
+
+test("文件名使用完整 sessionId，避免短 ID 碰撞", async (t) => {
+  const root = await tempRoot(t);
+  const a = await saveSession(base({sessionId: "sess_aaaabbbb_1111"}), {root});
+  const b = await saveSession(base({sessionId: "sess_aaaabbbb_2222"}), {root});
+  assert.notEqual(a.markdown, b.markdown);
 });
