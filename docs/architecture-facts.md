@@ -50,6 +50,14 @@
 - DeepSeek 预算：`deepseek-flash` 上限 1 元，按官方高峰价保守估算，ledger `ai-gateway/.local/ai-budget.json` 跨重启保留；不足 0.01 元返回 `402 BUDGET_EXHAUSTED`。
 - ASR 预算随 `/api/asr/status` 的 `asr.budget` 暴露；服务启动前 `service-v040.sh` 会剥离 CodeArts 注入的 `NODE_TLS_REJECT_UNAUTHORIZED=0`，env 文件中的 `=0` 仍由 `live-server.mjs` 拒绝（退出 78）。
 
+## 本机档案（2026-11-01 新增）
+
+- 存储：`SocialMate-Data/Profile/current.json`（权威，0600）+ `current.md`（人读）。
+- 写入：`PUT /api/profile`，必须带 `confirm:true`（服务层校验，缺失返回 400 `CONFIRM_REQUIRED`）；单次 ≤64KB，只保留 stories/people 已知字段。
+- 读取：`GET /api/profile`；V1.2 页面加载时若服务端 `updatedAt` 更新才恢复，否则保留本地。
+- 界面：`/v12` 的「关于我」页有「同步到本机档案」按钮，`profile-sync.js` 由服务端同源提供；`file://` 或离线时脚本静默失效，仍纯 localStorage。
+- 隐私：该目录已被 `.gitignore` 排除，不进公开仓库、不上传云端。
+
 ## 内容检索层
 
 - 语料：V1.4 正式主稿（51 个软件条目）、海南 115 地点 `places.json`、`asr-bridge/content/personal-stories.json`（仅 `confirmed:true`，当前为空）。

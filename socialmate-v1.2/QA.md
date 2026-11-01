@@ -290,3 +290,14 @@ V0.4.0 APK 实际输出路径：`android-poc/app/build/outputs/apk/debug/app-deb
 - ASR 预算：`android-poc/.local/asr-budget.json`
 - 双音色：`.local/qa/two-voice-direct-long-events.jsonl`、`.local/qa/two-voice-direct-long.log`
 - 真机截图：`screenshots/phone-v040-newui-home.png`、`phone-v040-newui-recording.png`、`phone-v040-no-consent.png`、`phone-v040-live-chat.png`、`phone-v040-chat-stopped.png`、`phone-v040-background-stopped.png`、`phone-v040-advanced-boya.png`、`phone-v040-boya-silent.png`、`phone-v040-two-voice-boya-no-caption.png`
+
+### 2026-11-01 本机档案持久化（P2）
+
+- 新增 `GET/PUT /api/profile`：`PUT` 必须 `confirm:true`，缺失返回 400 `CONFIRM_REQUIRED`；只接受 stories/people 已知字段，单次 ≤64KB。
+- 存储：`SocialMate-Data/Profile/current.json`（0600、临时文件 + rename 原子替换）+ `current.md`（人读）；目录已 gitignore。
+- 界面：`/v12`「关于我」新增「同步到本机档案」；`profile-sync.js` 同源加载，`file://`/离线静默失效，仍用 localStorage。
+- 定向测试：`node --test socialmate-prototype/ai-gateway/profile-store.test.mjs` → **5/5 PASS**（无文件返回 null、字段白名单、截断、非法输入、确认标记）。
+- API 实测（隔离端口 + 临时目录）：初始 `profile:null`；无确认 **400**；带确认 **200**；回读 stories/people 一致；`current.json` 权限 `-rw-------`。
+- 端到端（Chrome headless + 同源页面）：脚本加载、按钮存在、`confirm` 后按钮变「已同步」，落盘 **5 条话题 + 1 个人物**、`confirmedByUser:true`；测试用临时目录，结束后删除，未污染正式档案。
+- 服务重启后仍 `combined:true`，ASR/DeepSeek 账本数值未变（0.033884 / 0.20641）。
+- 边界：本章节未跑全量回归；正式 `People/*.md` 归档、会话收尾摘要仍未接通。

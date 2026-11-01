@@ -10,6 +10,7 @@
 - Android 验收台账：`android-poc/IMPLEMENTATION_STATUS.md`
 - 内容检索层：`android-poc/asr-bridge/src/content/`（说明见 asr-bridge/README §6.1）
 - 组合服务：`socialmate-v1.2/service-v040.sh`（8790 ASR + 8791 UI/AI，一个进程）
+- 本机档案：`SocialMate-Data/Profile/`（`GET/PUT /api/profile`，说明见 `docs/architecture-facts.md` §本机档案）
 - V0.4.0 QA：`socialmate-v1.2/QA.md`
 - V1.2 正式 UI：`socialmate-v1.2/index.html`（ZIP `dist/SocialMate-V1.2-UI.zip`）
 - 海南 115 图文指南：`docs/成果整理/Hainan-Travel-Guide/`（说明 `docs/DELIVERY_REPORT.md`，ZIP `artifacts/Hainan_115_Real_Photo_Guide_V3.0.zip`）
@@ -17,6 +18,7 @@
 
 ## 1. 当前进展
 
+- 2026-11-01：本机档案持久化落地：`GET/PUT /api/profile` + 「关于我」显式同步按钮；存储模块 5/5 定向测试通过，同源浏览器点击端到端写入成功（临时目录，未留测试数据）。
 - 2026-11-01：Mac 收尾完成；组合服务单进程提供 8790/8791，`/api/asr/status` 为 `combined:true`。
 - Note 11 已装 0.4.0（保留数据，61 个数据文件）；APK SHA-256 `da46425f7e5e1e69b243ac87171bf47f1301c2f32a25c52a23399236fdf69b7e`。
 - 回归 **102/102 Node + 2/2 TLS + 12 Android**；Gradle `BUILD SUCCESSFUL`。
@@ -32,12 +34,15 @@
 2. 电平恢复后只对 Note 11 重跑手机现场双人（显式 `--serial`），一轮即可；重点看 `spk_0/spk_1` 与聊天页字幕。
 3. 可选：Note 12T 安装 0.4.0；两台手机分别 reverse、分别 `--serial`。
 4. 需要跨网络时再设计无 USB/TLS/鉴权方案；当前不开放公网。
+5. 无硬件可继续：把「停止录音 → 本轮摘要 → 待确认档案更新」接通，摘要必须由用户确认后才写入 `SocialMate-Data/Profile`。
+6. 无硬件可继续：确认后的话题/人物再落成 `SocialMate-Data/People/<slug>/00-profile.md`，与现有正式 Markdown 对齐；当前只写私有快照，不改正式人物目录。
 
 ## 3. 未完成
 
 - 手机 + BOYA 现场双人仍被 `-180 dBFS` 数字静音阻断；双音色直连 ASR 已成功，但不等同手机现场验收。
 - Note 12T 当前未安装本项目 APK；未操作。
 - 无 USB/公网方案、正式分享页未接；个人故事文件仍为空。
+- 本机档案已可持久化，但尚未与会话收尾摘要、正式 `People/*.md` 归档打通；界面同步按钮只写私有快照。
 - 服务只绑本机回环，真机依赖无线/USB `adb reverse`；端口映射断开后页面会重连失败。
 - `spk_N` 只是聚类编号，不保证真实身份；UI 固定“待确认”。
 
@@ -61,6 +66,7 @@
 - 2026-11-01：V0.4.0 服务阻塞修复；新增 `service-v040.sh`、`/api/asr/status`、组合服务自动恢复、安装脚本 `--serial/--skip-install`。
 - 2026-11-01：真机 WebView、MOCK 全链、真实腾讯云/DeepSeek、真人单人与 TTS-B 真实环境测试完成；新增 1 元预算闸。
 - 2026-11-01：Mac 收尾：TLS 根因=CodeArts kernel 注入并在 service 剥离；102/102 + TLS 2/2 + 12；APK 0.4.0 SHA `da46425f…`；九项 UI PASS；ASR 1 元闸与双音色 A/B 分离通过；BOYA `-180 dBFS` 阻断手机现场双人。
+- 2026-11-01：本机档案：`profile-store` 5/5、API 三分支（无确认 400 / 确认 200 / 回读一致）、同源点击端到端通过；服务重启后 `combined:true` 与预算不变。
 
 ## 6. 接续提示词
 
