@@ -9,6 +9,7 @@ import path from "node:path";
 import {fileURLToPath} from "node:url";
 import {analyze,AiError,status} from "./core.mjs";
 import {liveAsrHub} from "./live-asr-hub.mjs";
+import {readProfile,writeProfile} from "./profile-store.mjs";
 const here=path.dirname(fileURLToPath(import.meta.url));
 const proto=path.resolve(here,"..");
 const PORT=Number(process.env.SOCIALMATE_AI_PORT||8791);
@@ -71,9 +72,9 @@ function json(res,code,obj){
     "X-Content-Type-Options":"nosniff","Referrer-Policy":"no-referrer"});
   res.end(JSON.stringify(obj));
 }
-async function readPayload(req){
+async function readPayload(req,maxBytes=16000){
   let len=0,parts=[];
-  for await (const buf of req){len+=buf.length;if(len>16000)throw new AiError(413,"TOO_LARGE","对话请求不可超过 16KB");parts.push(buf);}
+  for await (const buf of req){len+=buf.length;if(len>maxBytes)throw new AiError(413,"TOO_LARGE","请求体超过上限");parts.push(buf);}
   try{return JSON.parse(Buffer.concat(parts).toString("utf8"));}
   catch{throw new AiError(400,"INVALID_JSON","请求不是 JSON");}
 }
@@ -114,6 +115,17 @@ const server=http.createServer(async(req,res)=>{
       return json(res,200,{ok:true,...bridge,
         service:"ALW001 combined ASR + AI gateway"});
     }
+    if(url.pathname==="/api/profile"&&req.method==="GET"){
+      return json(res,200,{ok:true,profile:await readProfile()});
+    }
+    if(url.pathname==="/api/profile"&&req.method==="PUT"){
+      const body=await readPayload(req,65536);
+      if(body?.confirm!==true)
+        return json(res,400,{ok:false,code:"CONFIRM_REQUIRED",error:"写入本机档案需要用户显式确认"});
+      const profile=await writeProfile(body);
+      return json(res,200,{ok:true,updatedAt:profile.updatedAt,
+        stories:profile.stories.length,people:profile.people.length});
+    }
     if(url.pathname==="/api/ai/analyze"&&req.method==="POST"){
       if(activeRequest || Date.now()-lastRequestAt<1200)
         return json(res,429,{ok:false,code:"AI_BUSY",error:"上一轮 AI 尚未结束或请求过于频繁，请稍候"});
@@ -136,6 +148,11 @@ const server=http.createServer(async(req,res)=>{
       }finally{activeRequest=false;}
     }
     if(req.method!=="GET")return json(res,405,{ok:false,code:"METHOD_NOT_ALLOWED"});
+    if(url.pathname==="/profile-sync.js"){
+      const bytes=await fs.readFile(path.join(here,"profile-sync.js"));
+      return res.writeHead(200,{"Content-Type":"text/javascript; charset=utf-8",
+        "Cache-Control":"no-store","X-Content-Type-Options":"nosniff"}).end(bytes);
+    }
     if(url.pathname==="/v12"||url.pathname==="/v12/"){
       const html=await fs.readFile(path.resolve(proto,"..","socialmate-v1.2","index.html"));
       return res.writeHead(200,{"Content-Type":"text/html; charset=utf-8",

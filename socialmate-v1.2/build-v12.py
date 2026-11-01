@@ -30,6 +30,10 @@ html = html.replace(
     "if(related){let kind=related.dataset.related,id=related.dataset.id;\n   setTab(kind==='place'?'hainan':kind==='app'?'software':'self');",
     "if(related){let kind=related.dataset.related,id=related.dataset.id;\n   if(S.tab!=='chat')setTab(kind==='place'?'hainan':kind==='app'?'software':'self');")
 
+# 本机档案同步：仅在 8791 服务下加载，file:// 打开时静默失效
+if 'profile-sync.js' not in html:
+    html = html.replace('</body>', '<script src="/profile-sync.js" defer></script></body>', 1)
+
 out = ROOT / 'index.html'
 out.write_text(html, encoding='utf-8')
 print('built', out, 'apps', len(data['apps']), 'steps', sum(len(a['steps']) for a in data['apps']),
