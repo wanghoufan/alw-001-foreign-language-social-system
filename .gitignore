@@ -46,3 +46,15 @@ secrets.*
 # 系统文件
 .DS_Store
 Thumbs.db
+
+# 运行时与私有产物（公开仓库不入库）
+.local/
+*.pid
+.opencode/
+
+# 公开资料库：只保留可检索的数据与文档，图片/交付包/候选素材本地留存
+docs/成果整理/Hainan-Travel-Guide/images/
+docs/成果整理/Hainan-Travel-Guide/artifacts/
+docs/成果整理/Hainan-Travel-Guide/candidates/
+docs/成果整理/Hainan-Travel-Guide/original/
+docs/成果整理/Hainan-Travel-Guide/logs/
