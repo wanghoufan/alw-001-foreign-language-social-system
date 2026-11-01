@@ -138,7 +138,7 @@ function chat(){
  let active=!!S.session;
  return `<div class="chatgrid">
  <section class="panel conversationpanel">
-   <div class="paneltitle"><span>对话原文</span>${!active?'<button class="btn mainbtn" data-act="start">开始演示</button>':'<small>'+(S.asrState==='off'?'手动演示':'实时字幕')+'</small>'}</div>
+   <div class="paneltitle"><span>对话原文</span>${!active?'<button class="btn mainbtn" data-act="start">开始演示</button>':'<small>'+(S.asrState==='off'?'手动演示':'实时字幕')+'</small>'}</div><p class="info" style="margin:0 0 8px"><a href="/v12/history" target="_self">查看 Mac mini 上已归档的会话历史 →</a></p>
    <div class="chatsetup"><label class="formlabel">正在和谁聊天</label><select id="chatPerson" class="field"><option value="">暂不关联人物</option>${SAV.people.map(p=>`<option value="${p.id}" ${S.person===p.id?'selected':''}>${esc(p.name)}</option>`).join('')}</select>
       <div class="actions"><button type="button" class="btn tinted" data-act="${S.asrState==='off'?'connect-asr':'disconnect-asr'}">${S.asrState==='off'?'连接实时字幕':'停止接收字幕'}</button><span class="live-status">${esc(S.asrState==='off'?'未连接 · 手动演示':S.asrState==='connecting'?'连接中…':S.asrState==='ready'?'接收中':S.asrState==='mock'?'模拟音频 · 非真实识别':S.asrState==='error'?'连接出错':'等待字幕')}</span></div>
       <div class="actions"><button class="btn" data-sample="running">▶ 户外跑步示例</button><button class="btn" data-sample="software">软件</button><button class="btn" data-sample="coffee">咖啡</button></div>

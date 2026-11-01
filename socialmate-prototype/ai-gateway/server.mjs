@@ -72,6 +72,29 @@ function json(res,code,obj){
     "X-Content-Type-Options":"nosniff","Referrer-Policy":"no-referrer"});
   res.end(JSON.stringify(obj));
 }
+const ARCHIVE_HOST="127.0.0.1";
+const ARCHIVE_PORT=Number(process.env.SM_ARCHIVE_PORT||8781);
+// 只反代归档服务的 GET 只读接口；令牌原样透传，不在本服务记录或输出。
+// 归档端未启动时返回 503，让前端能区分“没开服务”和“令牌错误”。
+function proxyArchive(req,res,url){
+  if(req.method!=="GET")return json(res,405,{ok:false,code:"METHOD_NOT_ALLOWED"});
+  const target=url.pathname.replace(/^\/v12/,"")+url.search;
+  const upstream=http.request({host:ARCHIVE_HOST,port:ARCHIVE_PORT,path:target,method:"GET",
+    headers:{"x-archive-token":String(req.headers["x-archive-token"]||"")},
+    timeout:8000},(up)=>{
+      res.writeHead(up.statusCode||502,{
+        "Content-Type":up.headers["content-type"]||"application/json; charset=utf-8",
+        "Cache-Control":"no-store","X-Content-Type-Options":"nosniff"});
+      up.pipe(res);
+    });
+  upstream.on("timeout",()=>upstream.destroy(new Error("archive timeout")));
+  upstream.on("error",()=>{
+    if(!res.headersSent)json(res,503,{ok:false,code:"ARCHIVE_UNAVAILABLE",
+      error:"归档服务未启动（socialmate-v1.2/archive-service.sh start）"});
+    else res.destroy();
+  });
+  upstream.end();
+}
 async function readPayload(req,maxBytes=16000){
   let len=0,parts=[];
   for await (const buf of req){len+=buf.length;if(len>maxBytes)throw new AiError(413,"TOO_LARGE","请求体超过上限");parts.push(buf);}
@@ -157,6 +180,20 @@ const server=http.createServer(async(req,res)=>{
       const html=await fs.readFile(path.resolve(proto,"..","socialmate-v1.2","index.html"));
       return res.writeHead(200,{"Content-Type":"text/html; charset=utf-8",
         "Cache-Control":"no-store","X-Content-Type-Options":"nosniff"}).end(html);
+    }
+    // 归档历史页与归档 API 都经由本服务同源提供，避免手机上出现跨端口/跨源请求。
+    // /v12/history        → 归档历史页（静态壳，不含任何数据）
+    // /v12/api/archive/*  → 反代到本机归档接收端（令牌由调用方以请求头携带）
+    if(url.pathname==="/v12/history"||url.pathname==="/v12/history/"){
+      const html=await fs.readFile(path.join(here,"archive-history.html"));
+      return res.writeHead(200,{"Content-Type":"text/html; charset=utf-8",
+        "Cache-Control":"no-store","X-Content-Type-Options":"nosniff",
+        "Content-Security-Policy":
+          "default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; connect-src 'self'; img-src 'self' data:; base-uri 'none'; form-action 'none'"}).end(html);
+    }
+    if(url.pathname.startsWith("/v12/api/archive/")){
+      await proxyArchive(req,res,url);
+      return;
     }
     const file=STATIC.get(url.pathname);
     if(!file)return json(res,404,{ok:false,code:"NOT_FOUND"});

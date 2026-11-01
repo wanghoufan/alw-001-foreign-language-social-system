@@ -2,6 +2,7 @@
 
 ## 2026-11-01
 
+- 归档历史 UI：新增只读模块 `archive-history.mjs` 与三个令牌鉴权接口（list / session / export）；私有 UI 以 `/v12/history` + `/v12/api/archive/*` 同源反代提供，聊天页新增归档历史入口；日期区间按 UTC 过滤，导出为单份 Markdown。测试：无令牌 401、路径穿越 400、未知 ID 404、非法日期 400、反代 POST 405；浏览器零 console 错误与零横向溢出。
 - Android 0.5.0：新增会话原文归档（仅 final、逐字保留、留存同意闸）与断网 outbox；真机真实语音经腾讯云 ASR 自动导出 Markdown/JSON 到 Mac。
 - Mac 私有归档接收端：`/api/archive/session` 令牌鉴权、512KB 上限、幂等与原子写；Tailscale `/alw` 真证书入口打通。
 - 海南公开 PWA V1.1：想去清单、选择过滤、`?selected=` 分享链接回显、manifest/Service Worker；已部署 GitHub Pages：https://wanghoufan.github.io/alw-001-foreign-language-social-system/

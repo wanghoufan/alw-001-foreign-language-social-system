@@ -3,8 +3,15 @@
  * 必须配置 SM_ARCHIVE_TOKEN，否则拒绝启动；令牌只从环境或本机 .local 文件读取。
  */
 import crypto from "node:crypto";
+import fs from "node:fs/promises";
 import http from "node:http";
+import path from "node:path";
+import {fileURLToPath} from "node:url";
 import {saveSession} from "./conversation-archive.mjs";
+import {exportSessions, getSession, listSessions} from "./archive-history.mjs";
+
+const HERE = path.dirname(fileURLToPath(import.meta.url));
+const HISTORY_HTML = path.join(HERE, "archive-history.html");
 
 const HOST = "127.0.0.1";
 const PORT = Number(process.env.SM_ARCHIVE_PORT || 8781);
@@ -56,6 +63,72 @@ const server = http.createServer(async (req, res) => {
   const url = new URL(req.url || "/", `http://${HOST}:${PORT}`);
   if (url.pathname.endsWith("/health") && req.method === "GET") {
     return json(res, 200, {ok: true, service: "socialmate-archive", auth: "required"});
+  }
+  if (url.pathname.endsWith("/history") && req.method === "GET") {
+    try {
+      const html = await fs.readFile(HISTORY_HTML, "utf8");
+      res.writeHead(200, {
+        "Content-Type": "text/html; charset=utf-8",
+        "Cache-Control": "no-store",
+        "X-Content-Type-Options": "nosniff",
+        "Content-Security-Policy":
+          "default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; connect-src 'self'; img-src 'self' data:; base-uri 'none'; form-action 'none'",
+      });
+      return res.end(html);
+    } catch {
+      return json(res, 500, {ok: false, code: "HISTORY_PAGE_MISSING"});
+    }
+  }
+  if (url.pathname.endsWith("/api/archive/list") && req.method === "GET") {
+    if (!tokenOK(req.headers["x-archive-token"])) {
+      return json(res, 401, {ok: false, code: "UNAUTHORIZED"});
+    }
+    try {
+      const data = await listSessions({
+        from: url.searchParams.get("from") || "",
+        to: url.searchParams.get("to") || "",
+      });
+      // 只输出统计信息，不输出任何原文。
+      console.log(`[archive] list total=${data.total} scanned=${data.scanned} skipped=${data.skipped}`);
+      return json(res, 200, {ok: true, ...data});
+    } catch (error) {
+      return json(res, error.status || 500, {ok: false, code: "LIST_FAILED", error: error.message});
+    }
+  }
+  if (url.pathname.includes("/api/archive/session/") && req.method === "GET") {
+    if (!tokenOK(req.headers["x-archive-token"])) {
+      return json(res, 401, {ok: false, code: "UNAUTHORIZED"});
+    }
+    const sessionId = decodeURIComponent(url.pathname.split("/api/archive/session/")[1] || "");
+    try {
+      const found = await getSession(sessionId);
+      if (!found) return json(res, 404, {ok: false, code: "SESSION_NOT_FOUND"});
+      console.log(`[archive] read session=${sessionId.slice(0, 12)}…`);
+      return json(res, 200, {ok: true, ...found});
+    } catch (error) {
+      return json(res, error.status || 500, {ok: false, code: "READ_FAILED", error: error.message});
+    }
+  }
+  if (url.pathname.endsWith("/api/archive/export") && req.method === "GET") {
+    if (!tokenOK(req.headers["x-archive-token"])) {
+      return json(res, 401, {ok: false, code: "UNAUTHORIZED"});
+    }
+    try {
+      const {markdown, count} = await exportSessions({
+        from: url.searchParams.get("from") || "",
+        to: url.searchParams.get("to") || "",
+      });
+      console.log(`[archive] export count=${count}`);
+      res.writeHead(200, {
+        "Content-Type": "text/markdown; charset=utf-8",
+        "Cache-Control": "no-store",
+        "X-Content-Type-Options": "nosniff",
+        "Content-Disposition": 'attachment; filename="socialmate-export.md"',
+      });
+      return res.end(markdown);
+    } catch (error) {
+      return json(res, error.status || 500, {ok: false, code: "EXPORT_FAILED", error: error.message});
+    }
   }
   if (url.pathname.endsWith("/api/archive/session") && req.method === "POST") {
     if (!tokenOK(req.headers["x-archive-token"])) {

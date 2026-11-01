@@ -418,3 +418,23 @@ V0.4.0 APK 实际输出路径：`android-poc/app/build/outputs/apk/debug/app-deb
   - `2026-11-01-051542`、`051644`：仅捕获 TTS 与系统提示音，未捕获用户新语音。
 - 结论：**传输链路已不依赖 USB**；用户语音能力已在 `044131` 轮证明。坏证书/非法令牌拒绝仅完成令牌 401（Mac 侧），TLS 坏证书未构造测试。
 - 证据哈希：`051542` MD `a2f57c59bfdee0085bdc3ab56ac3d27fa79667ea48a6818f94fbea317ba91944`、JSON `6286775527abb8d2584827c67ef6749876cfd6c83b568b7b591128d04cafdb8f`。
+
+### 2026-11-01 归档历史 UI（会话列表 / 原文 / 同步状态 / 按日期导出）
+
+- 新增只读模块 `socialmate-prototype/ai-gateway/archive-history.mjs`：扫描 `~/Documents/SocialMate/Conversations/YYYY/MM/*.json`，产出元数据列表（不含原文）、按 `sessionId` 取完整会话、按 UTC 日期区间导出合并 Markdown。
+- 归档接收端 `archive-receiver.mjs` 新增三个只读接口，全部要求 `x-archive-token`：
+  - `GET /api/archive/list?from=&to=`（401 无令牌 / 400 日期非法）
+  - `GET /api/archive/session/:id`（404 不存在 / 400 sessionId 非法或路径穿越）
+  - `GET /api/archive/export?from=&to=`（`text/markdown` 附件）
+  - `GET /history`（静态壳，不含任何数据；CSP `default-src 'none'`，仅允许同源连接）
+- 私有 UI 同源接入：`server.mjs` 新增 `GET /v12/history` 与 `GET /v12/api/archive/*` 反代（只放行 GET，令牌透传，归档端未启动时 503 `ARCHIVE_UNAVAILABLE`），避免手机上跨端口/跨源请求。
+- 聊天页入口：`/v12` 对话原文面板新增「查看 Mac mini 上已归档的会话历史 →」。
+- 实测（本机 curl）：
+  - 无令牌 `list`/`session` → **401**；`sessionId` 路径穿越 `..%2f..%2f..%2fetc%2fpasswd` → **400**；未知 ID → **404**；`from=bad` → **400**；
+  - 有令牌：`list` 返回 `total=2 scanned=2 skipped=0`；`2026-11-01` 区间 `total=2`；空区间 `total=0`；`export` 1537 字节；
+  - 反代 `/v12/api/archive/list` 带令牌 200、不带令牌 401、`POST` → **405**。
+- 实测（浏览器，CDP 驱动 412×900 移动视口）：
+  - `/v12/history`：连接状态「已连接 · 令牌已保存在本浏览器」，列表 2 条，点开详情渲染 1 段原文（`Token rejection check.`），返回列表正常；
+  - 无横向溢出（`scrollWidth == clientWidth`）、console error 0、page exception 0、CSP violation 0。
+- 证据截图：`/tmp/hist-list.png`、`/tmp/hist-detail.png`、`/tmp/v12-hist.png`（本机临时目录，未入库）。
+- 未完成（本轮受限）：手机 App 内点击该入口未实测——复测时段手机前台为用户微信（`com.tencent.mm`），未抢占焦点；App WebView 已在同域 `https://mac-mini.tail4e4317.ts.net:8443/v12` 加载，入口链接已在服务端页面中存在（curl 校验）。
