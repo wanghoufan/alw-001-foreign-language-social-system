@@ -346,3 +346,21 @@ V0.4.0 APK 实际输出路径：`android-poc/app/build/outputs/apk/debug/app-deb
 - 实测：`115 / 115 places`、城市/分类筛选、英文正文正常；详情页点「☆ Add to my list」→ 按钮变「★ Saved to my list」；返回列表后顶栏 `My list (1)`；打开清单显示 `My list · 1`、`Share link (only place IDs)`、`Send list to SocialMate`。
 - 证据：`socialmate-v1.2/screenshots/pwa-v11-note11.png`、`pwa-v11-note11-selected.png`、`pwa-v11-note11-mylist.png`。
 - 仍然：未部署公网 HTTPS；局域网测试不构成公开发布。
+
+### 2026-11-01 产品化验收矩阵（V1.2 计划口径）
+
+| 编号 | 结果 | 证据 / 说明 |
+| --- | --- | --- |
+| PWA-01 | PASS | 公开包 7 文件白名单；打包脚本拒绝 `/api`、profile/asr/ai、DeepSeek、麦克风与私有页面 |
+| PWA-02 | PARTIAL | 115 条、搜索/城市/分类、双语详情、详情页地图链接均存在；**未实际打开** Google/Amap 外链 |
+| PWA-03 | PASS（链接）/ NOT_RUN（聊天软件回发） | 选 3 处 → 刷新保留 → 生成 `?selected=` → 新会话回显一致；未通过微信/WhatsApp 实际发送 |
+| PWA-04 | PARTIAL | Note 11 MIUI 原生浏览器实机通过并截图；小米/OPPO/iPhone Safari 未覆盖 |
+| PWA-05 | PARTIAL | 包内无私有路由、无录音权限；**未部署 HTTPS**，未做公网路由枚举 |
+| APP-01 | PARTIAL | 本次 `BUILD SUCCESSFUL`、APK hash 已重算；按用户红线未跑全量回归，stage1b 未重跑 |
+| APP-02 | PARTIAL | 真机真实语音 → 腾讯云 final → 字幕/归档；本轮未重新验证 DeepSeek 建议卡 |
+| APP-03 | BLOCKED | Note 12T 安装被 MIUI 拒绝；Note 11 Tailscale 未登录，无 USB 链路未验收 |
+| APP-04 | PASS | 真机 final 逐字写入 Mac MD/JSON（含识别错误）；断网 → 待导出 → 恢复后补传，无重复 |
+| APP-05 | PASS | 录音同意与留存同意分离；不勾选留存零落盘；ASR 预算 0.0423/1 元，AI 预算未变 |
+| APP-06 | BLOCKED | BOYA 仍为历史 `-180 dBFS`，本轮未接硬件复测 |
+| APP-07 | NOT_RUN | 新归档 UI 未做独立截图评审（仅 uiautomator 文本核对） |
+| APP-08 | PARTIAL | 手机断网重试通过；Mac 服务重启/弱网切换未单独复测 |
