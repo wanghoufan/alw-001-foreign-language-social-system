@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#f4f6fa">
 <title>SocialMate · 会话归档历史</title>
+<link rel="icon" href="data:,">
 <style>
 :root{--bg:#f4f6fa;--paper:#fff;--ink:#1c293a;--muted:#6b7889;--stroke:#e4e9ed;--pine:#146f61;--soft:#e8f4ef;--sand:#e8bd87;--err:#b4362f}
 *{box-sizing:border-box}
@@ -39,12 +40,25 @@ button:disabled{opacity:.5;cursor:default}
 pre.ai{white-space:pre-wrap;word-break:break-word;background:var(--soft);padding:10px;border-radius:8px;font:inherit;font-size:13px}
 a.back{font-size:13px;color:var(--pine);text-decoration:none;display:inline-block;margin-bottom:10px}
 .hidden{display:none}
+.review{border:1px solid var(--stroke);border-radius:10px;padding:12px;margin-top:14px;background:#fbfcfe}
+.review h3{margin:0 0 6px;font-size:15px}
+.review .hint{font-size:12px;color:var(--muted);margin:0 0 10px}
+.cand{border:1px solid var(--stroke);border-radius:9px;padding:10px;margin-bottom:9px;background:#fff}
+.cand .head{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.cand textarea{width:100%;min-height:56px;font:inherit;font-size:13px;padding:7px 9px;border:1px solid var(--stroke);border-radius:7px;margin-top:7px;resize:vertical;background:#fff;color:inherit}
+.cand .src{font-size:11px;color:var(--muted);margin-top:6px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;word-break:break-word}
+.cand select{font:inherit;font-size:12px;padding:5px 8px;border:1px solid var(--stroke);border-radius:7px;background:#fff;color:inherit}
+.cand input.name{font:inherit;font-size:12px;padding:5px 8px;border:1px solid var(--stroke);border-radius:7px;width:120px}
+.engine{display:inline-block;font-size:11px;padding:1px 7px;border-radius:99px;background:var(--soft);color:var(--pine)}
+.engine.ai{background:#fdf1e3;color:#8a5a1b}
+.list-mini{font-size:13px;margin:6px 0 0;padding-left:18px}
+.list-mini li{margin:2px 0}
 </style>
 </head>
 <body>
 <header>
   <h1>会话归档历史</h1>
-  <p>只读查看 Mac mini 上已归档的会话原文 · 不在此页面修改任何文件</p>
+  <p>会话原文只读；会后复盘候选必须由你逐条勾选并显式确认，才写入本机档案（归档原文永不改写）</p>
 </header>
 <main>
   <section class="card" id="authCard">
@@ -173,7 +187,6 @@ a.back{font-size:13px;color:var(--pine);text-decoration:none;display:inline-bloc
     host.innerHTML = "";
     const card = document.createElement("div");
     card.className = "card";
-
     const back = document.createElement("a");
     back.className = "back";
     back.href = "#";
@@ -231,7 +244,244 @@ a.back{font-size:13px;color:var(--pine);text-decoration:none;display:inline-bloc
     }
 
     host.appendChild(card);
+    host.appendChild(buildReviewCard(s));
     $("list").classList.add("hidden");
+  }
+
+  // ── 会后复盘 ────────────────────────────────────────────────────────────
+  // 只使用 /v12 同源私有 UI：复盘要读原文并调用本地服务，归档服务本身不提供 AI 与档案写入。
+  const REVIEW_AVAILABLE = PREFIX.indexOf("/v12") === 0;
+
+  function el(tag, cls, text) {
+    const node = document.createElement(tag);
+    if (cls) node.className = cls;
+    if (text !== undefined) node.textContent = text;
+    return node;
+  }
+
+  async function postJson(path, body) {
+    const res = await fetch(url(path), {
+      method: "POST",
+      headers: {"Content-Type": "application/json", "x-archive-token": token},
+      body: JSON.stringify(body),
+      cache: "no-store",
+    });
+    let data = null;
+    try { data = await res.json(); } catch { data = null; }
+    if (!res.ok) {
+      const err = new Error((data && (data.error || data.code)) || `HTTP ${res.status}`);
+      err.status = res.status;
+      err.payload = data;
+      throw err;
+    }
+    return data;
+  }
+
+  function buildReviewCard(session) {
+    const card = el("div", "review");
+    card.appendChild(el("h3", "", "会后复盘（本轮原文 → 候选 → 你确认 → 本机档案）"));
+    if (!REVIEW_AVAILABLE) {
+      card.appendChild(el("p", "hint",
+        "当前页面由归档服务直接提供，复盘需要经由私有 UI（/v12/history）使用；原文查看不受影响。"));
+      return card;
+    }
+    card.appendChild(el("p", "hint",
+      "本地复盘只用确定性规则，不联网、不计费；云端 AI 需你当轮勾选同意，且只在 1 元授权额度内调用。"));
+
+    const row = el("div", "row");
+    const localBtn = el("button", "primary", "生成本地复盘（不调用 AI）");
+    const consentWrap = el("label", "");
+    consentWrap.style.cssText = "display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted)";
+    const consent = document.createElement("input");
+    consent.type = "checkbox";
+    consent.id = "reviewAiConsent";
+    consentWrap.append(consent, document.createTextNode("允许把本轮原文发送给云端 AI（DeepSeek）"));
+    const aiBtn = el("button", "", "用云端 AI 生成复盘");
+    row.append(localBtn, aiBtn);
+    const status = el("div", "status", "尚未生成复盘");
+    const body = el("div", "");
+    card.append(row, consentWrap, status, body);
+
+    let review = null;
+
+    function setStatus(text, kind) {
+      status.textContent = text;
+      status.className = "status" + (kind ? " " + kind : "");
+    }
+
+    async function generate(mode) {
+      localBtn.disabled = true;
+      aiBtn.disabled = true;
+      setStatus(mode === "ai" ? "正在调用云端模型…（会产生费用）" : "正在生成本地复盘…");
+      body.innerHTML = "";
+      try {
+        const data = await postJson("api/review", {
+          sessionId: session.sessionId, mode,
+          consent: mode === "ai" ? consent.checked : false,
+        });
+        review = data.review;
+        renderReview(body, review, session, setStatus);
+        const used = review.aiUsed
+          ? `已用云端模型 ${review.aiProvider} 生成 · 候选仍需你核对`
+          : "本地规则生成 · 未调用任何 AI";
+        setStatus(used, "ok");
+      } catch (e) {
+        setStatus(e.status === 403 ? "未勾选云端 AI 同意，本次没有任何外部请求（403）"
+          : e.status === 402 ? "云端 AI 授权额度已用尽（402），可改用本地复盘"
+          : e.status === 401 ? "归档令牌无效（401），请重新连接"
+          : "生成失败：" + e.message, "err");
+      } finally {
+        localBtn.disabled = false;
+        aiBtn.disabled = false;
+      }
+    }
+
+    localBtn.addEventListener("click", () => generate("local"));
+    aiBtn.addEventListener("click", () => generate("ai"));
+    return card;
+  }
+
+  function renderReview(host, review, session, setStatus) {
+    host.innerHTML = "";
+    const head = el("div", "t", review.summary.headline || "本轮复盘");
+    head.style.fontSize = "14px";
+    const engine = el("span", "engine" + (review.aiUsed ? " ai" : ""),
+      review.aiUsed ? `云端 AI · ${review.aiProvider}` : "本地规则 · 无 AI");
+    head.appendChild(engine);
+    const meta = el("div", "src",
+      `${review.summary.segments} 段 · 说话人 ${(review.summary.speakers || []).join("/") || "—"} · ${review.note}`);
+    host.append(head, meta);
+
+    const talked = review.summary.talkedAbout || review.summary.topicsLabel || [];
+    if (talked.length) {
+      const ul = el("ul", "list-mini");
+      talked.forEach((t) => ul.appendChild(el("li", "", t)));
+      host.append(el("div", "t", "聊了什么"), ul);
+    }
+    if (review.howToReply && review.howToReply.text) {
+      const p = el("div", "src", (review.howToReply.template ? "模板句（非 AI）" : "AI 建议接话") + "：" + review.howToReply.text);
+      host.append(p);
+    }
+    if (Array.isArray(review.followUps) && review.followUps.length) {
+      const ul = el("ul", "list-mini");
+      review.followUps.forEach((q) => ul.appendChild(el("li", "", q.text + (q.template ? "（模板）" : ""))));
+      host.append(el("div", "t", "下次追问"), ul);
+    }
+    if (Array.isArray(review.warnings) && review.warnings.length) {
+      const ul = el("ul", "list-mini");
+      review.warnings.forEach((w) => ul.appendChild(el("li", "", w)));
+      host.append(el("div", "t", "需要你注意"), ul);
+    }
+
+    const candTitle = el("div", "t", `候选事实（${(review.items || []).length} 条 · 全部为待确认草稿）`);
+    candTitle.style.marginTop = "10px";
+    host.appendChild(candTitle);
+    if (!review.items || !review.items.length) {
+      host.appendChild(el("div", "empty", "本轮没有可自动提取的事实候选；可以在「关于我」里手工记录。"));
+      return;
+    }
+
+    const rows = [];
+    review.items.forEach((item, index) => {
+      const box = el("div", "cand");
+      const headRow = el("div", "head");
+      const check = document.createElement("input");
+      check.type = "checkbox";
+      check.dataset.role = "pick";
+      const label = el("span", "src", `候选 ${index + 1} · 置信 ${item.confidence}`);
+      const target = document.createElement("select");
+      [["self", "保存到「关于我」"], ["person", "保存到人物"], ["skip", "不保存"]]
+        .forEach(([value, text]) => {
+          const opt = document.createElement("option");
+          opt.value = value;
+          opt.textContent = text;
+          target.appendChild(opt);
+        });
+      target.dataset.role = "target";
+      const nameInput = document.createElement("input");
+      nameInput.className = "name";
+      nameInput.placeholder = "人物姓名";
+      nameInput.dataset.role = "name";
+      nameInput.classList.add("hidden");
+      headRow.append(check, label, target, nameInput);
+
+      const text = document.createElement("textarea");
+      text.value = item.text;
+      text.dataset.role = "text";
+      const src = el("div", "src",
+        `段 ${item.source.segmentIndex + 1} · ${item.source.clock} · ${item.source.speakerId}（聚类编号，身份未知）· 原文：「${item.source.quote}」`);
+      box.append(headRow, text, src);
+      host.appendChild(box);
+      const row = {item, check, target, nameInput, text};
+      rows.push(row);
+
+      check.addEventListener("change", () => { if (check.checked && target.value === "skip") target.value = "self"; });
+      target.addEventListener("change", () => nameInput.classList.toggle("hidden", target.value !== "person"));
+      nameInput.addEventListener("input", () => { if (nameInput.value.trim()) check.checked = true; });
+    });
+
+    const tools = el("div", "row");
+    tools.style.marginTop = "10px";
+    const pickAll = el("button", "", "全选保存到「关于我」");
+    const save = el("button", "primary", "确认保存到本机档案");
+    tools.append(pickAll, save);
+    host.appendChild(tools);
+    const saveStatus = el("div", "status", "未勾选任何候选时不会写入任何文件");
+    host.appendChild(saveStatus);
+
+    pickAll.addEventListener("click", () => {
+      rows.forEach((r) => {
+        if (r.target.value === "skip") r.target.value = "self";
+        r.check.checked = true;
+      });
+      saveStatus.textContent = `已勾选 ${rows.length} 条，仍需点「确认保存」`;
+      saveStatus.className = "status";
+    });
+
+    save.addEventListener("click", async () => {
+      const items = [];
+      for (const r of rows) {
+        if (!r.check.checked || r.target.value === "skip") continue;
+        if (r.target.value === "person" && !r.nameInput.value.trim()) {
+          saveStatus.textContent = "有人物候选缺少姓名，请填写或改成不保存";
+          saveStatus.className = "status err";
+          return;
+        }
+        items.push({
+          kind: r.target.value,
+          name: r.target.value === "person" ? r.nameInput.value.trim() : undefined,
+          text: r.text.value.trim(),
+          segmentIndex: r.item.source.segmentIndex,
+        });
+      }
+      if (!items.length) {
+        saveStatus.textContent = "没有勾选任何候选，未写入任何文件";
+        saveStatus.className = "status";
+        return;
+      }
+      save.disabled = true;
+      saveStatus.textContent = "正在写入本机档案…";
+      saveStatus.className = "status";
+      try {
+        const result = await postJson("api/review/apply", {confirm: true, sessionId: session.sessionId, items});
+        if (result.unchanged) {
+          saveStatus.textContent = `没有新增内容（${(result.skipped || []).map((x) => x.reason).join("/")}）· 档案未改动`;
+        } else {
+          const parts = [];
+          if (result.added.stories) parts.push(`关于我 +${result.added.stories}`);
+          if (result.added.notes) parts.push(`人物备注 +${result.added.notes}`);
+          if (result.added.people) parts.push(`新建人物 +${result.added.people}`);
+          const dup = (result.skipped || []).filter((x) => x.reason === "DUPLICATE").length;
+          saveStatus.textContent = `已保存：${parts.join(" · ") || "无"}${dup ? ` · 已去重 ${dup} 条` : ""} · 更新时间 ${result.updatedAt}`;
+        }
+        saveStatus.className = "status ok";
+      } catch (e) {
+        saveStatus.textContent = "保存失败：" + e.message;
+        saveStatus.className = "status err";
+      } finally {
+        save.disabled = false;
+      }
+    });
   }
 
   async function loadList() {
@@ -263,8 +513,21 @@ a.back{font-size:13px;color:var(--pine);text-decoration:none;display:inline-bloc
       localStorage.setItem(KEY, token);
       setStatus($("authStatus"), "已连接 · 令牌已保存在本浏览器", "ok");
       $("token").value = "";
+      maybeDeepLink();
     }
   });
+
+  // 停止录音后 App 会带 ?session=<sessionId> 打开本页，直接落到本轮原文与复盘。
+  function maybeDeepLink() {
+    const wanted = new URLSearchParams(location.search).get("session");
+    if (!wanted) return;
+    if (!/^[A-Za-z0-9_-]{8,64}$/.test(wanted)) {
+      setStatus($("listStatus"), "链接里的会话 ID 不合法", "err");
+      return;
+    }
+    openDetail(wanted);
+    history.replaceState(null, "", location.pathname);
+  }
 
   $("forget").addEventListener("click", () => {
     token = "";
@@ -314,6 +577,7 @@ a.back{font-size:13px;color:var(--pine);text-decoration:none;display:inline-bloc
     loadList().then((ok) => {
       setStatus($("authStatus"), ok ? "已用本机保存的令牌连接" : "本机保存的令牌无法使用，请重新填入",
         ok ? "ok" : "err");
+      if (ok) maybeDeepLink();
     });
   }
 })();

@@ -6,7 +6,9 @@
 
 - Gradle 8.9 从 `services.gradle.org` 会 307 到 GitHub，直连可能长时间 0 字节；用本机代理把 ZIP 下到 `~/.gradle/alw001-bootstrap` 再跑 `build-apk.sh`。
 - 终端默认不继承 JDK/SDK；构建前显式 `export JAVA_HOME=.../Contents/Home` 与 `ANDROID_HOME=...`。
+- 本机可用 JDK：`/opt/homebrew/opt/openjdk@17`；SDK：`~/Library/Android/sdk`。
 - 版本号以 `aapt2 dump badging` 为准，不要凭记忆或 README。
+- `socialmate-v1.2/index.html` 是 `build-v12.py` 的产物：**不要只改 index.html**，否则下次重建就丢（曾把 `/v12/history` 入口手改丢掉）。新增服务态入口要写进 `build-v12.py` 的替换规则，改完跑一次重建并 diff 确认只有预期差异。
 
 ## MIUI / 真机
 
@@ -73,3 +75,10 @@
 - DeepSeek 记账按 usage × 官方高峰价；ledger 在 `.local/ai-budget.json`，改预算/清账本属于用户授权范围，不能自行放宽。
 - 用 `ASR_FORCE_MOCK=1` 重启后，下一次切回真实前要确认该环境变量没有残留，`/health.mode` 必须是 `tencent`。
 - 误杀 Docker 后 `open -a Docker` 可恢复；容器会自动重启，数据未动。
+
+## 会后复盘 / 档案写入
+
+- 复盘要读归档原文，所以 `/v12/api/review` 必须带 `x-archive-token`；令牌由归档服务校验，ai-gateway 不存令牌、不写日志。
+- 测写入路径时用 `SM_PROFILE_DIR=/tmp/xxx` 重启服务，别把测试候选写进正式 `SocialMate-Data/Profile`；测完重启回默认目录并用 `/api/profile` 确认仍是 `null`。
+- ASR 会重复定稿同一句，复盘候选容易出现近似重复（只差一个词）；去重按归一化子串 + 词集 Jaccard ≥ 0.8，保留更完整的一条。
+- 说话人只有聚类编号：任何候选 `attribution` 都只能是 `unknown`，让用户在界面上选「关于我 / 人物 / 不保存」。

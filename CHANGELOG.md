@@ -2,6 +2,12 @@
 
 ## 2026-11-01
 
+- 会后复盘闭环（P0）：停止录音后可查看本轮原文 → 生成复盘（本地规则 / 云端 AI 二选一）→ 逐条勾选编辑归属 → 显式确认写入本机档案。
+  - 新增 `session-review.mjs`：本地引擎 `aiUsed:false`、0 次外部请求；AI 引擎候选必须带真实段号，指不到段号的直接丢弃；近似重复候选只留更完整的一条；所有候选归属一律「未知」。
+  - 新增 `POST /v12/api/review`（归档令牌 + local/ai 双模式，AI 需当轮同意且受 1 元预算闸）与 `POST /v12/api/review/apply`（`confirm:true` 必填、只追加不覆盖、按会话+段号+文本指纹去重）。
+  - 归档历史详情页新增复盘区块与 `?session=` 深链；Android 0.5.3 录音页新增「本轮原文与复盘」按钮。
+  - 定向测试 13/13（复盘引擎 7 + 档案写入 6），既有 profile-store / archive-history 10/10 未回归。
+- 构建可复现：`build-v12.py` 固化 `/v12/history` 入口注入（此前为手改 `index.html`，重建即丢）。
 - 产品决定：用户不需要知道朋友勾选了哪些地点，「清单回发」（计划 A3 / PWA-03）暂停验收；代码保留未删。
 - 海南 PWA 真机矩阵补充：Note 12T Pro 自带浏览器验证 `115/115` 与共享链接 `?selected=3,39,41` → `3/115`、`A list shared with you · 3`；iPhone Safari 与微信/WhatsApp 实际发回仍需真人设备。
 - Android 0.5.2（versionCode 12）：新增 `network_security_config.xml`，关闭全局明文、仅放行回环；真机差分验证非回环明文报 `ERR_CLEARTEXT_NOT_PERMITTED`、回环明文正常、自签名证书页面不渲染。

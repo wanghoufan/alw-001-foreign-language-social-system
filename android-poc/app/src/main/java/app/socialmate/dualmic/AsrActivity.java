@@ -62,7 +62,7 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
     private EditText urlInput;
     private EditText suggestInput;
     private Spinner trackPicker;
-    private Button startButton, stopButton, clearButton, suggestButton;
+    private Button startButton, stopButton, clearButton, suggestButton, reviewButton;
     private TextView status, live, transcript, deviceInfo, suggestionsView;
     private long sessionStartMs;
     private int eventCount;
@@ -245,6 +245,9 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
         button(recordingCard, "查看聊天与推荐", v -> showSocialMatePanel());
         stopButton = button(recordingCard, "停止录音", v -> stopStreaming("用户停止"));
         stopButton.setEnabled(false);
+        // 停止录音后的入口：本机归档原文 → 会后复盘 → 逐条确认后写档案。
+        reviewButton = button(recordingCard, "本轮原文与复盘", v -> openReview());
+        reviewButton.setEnabled(false);
         clearButton = button(advancedTools, "清空转写", v -> {
             finals.setLength(0);
             transcript.setText("");
@@ -363,6 +366,40 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
         return privateUiBase() + "/v12" + (running ? "?live=1" : "");
     }
 
+    /**
+     * 停止录音后的入口：打开本机归档里这一轮的原文与复盘页。
+     * 复用同一个 WebView，不新增底部一级 Tab；原文尚未上传时先重试上传再放行。
+     */
+    private void openReview() {
+        String id = archive.lastSessionId();
+        if (id == null || id.isEmpty()) {
+            status.setText("本轮没有可复盘的内容（未开启原文留存，或没有定稿句子）。");
+            return;
+        }
+        if (!archive.isExported(id)) {
+            status.setText("本轮原文还没上传到 Mac，正在重试上传…");
+            archive.flushAsync(text -> {
+                setArchiveStatus(text);
+                runOnUiThread(this::updateReviewEntry);
+            });
+            return;
+        }
+        showSocialMatePanel();
+        if (socialMateWebView != null) {
+            socialMateWebView.loadUrl(privateUiBase() + "/v12/history?session=" + Uri.encode(id));
+        }
+    }
+
+    /** 复盘入口只在「本轮有留存内容且已停止」时可用，避免让用户点进空会话。 */
+    private void updateReviewEntry() {
+        if (reviewButton == null) return;
+        String id = archive.lastSessionId();
+        boolean has = id != null && !id.isEmpty();
+        boolean exported = has && archive.isExported(id);
+        reviewButton.setEnabled(has && !running);
+        reviewButton.setText(exported || !has ? "本轮原文与复盘" : "本轮原文与复盘（待上传）");
+    }
+
     /** 只允许停留在配置的同一 origin；其他链接交给系统浏览器。 */
     private boolean isPrivatePanelUrl(Uri uri) {
         if (uri == null) return false;
@@ -456,6 +493,10 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
         suggestButton.setEnabled(false);
         startButton.setEnabled(false);
         stopButton.setEnabled(true);
+        if (reviewButton != null) {
+            reviewButton.setEnabled(false);
+            reviewButton.setText("本轮原文与复盘");
+        }
         urlInput.setEnabled(false);
         trackPicker.setEnabled(false);
         status.setText("正在打开麦克风并连接服务端…");
@@ -539,7 +580,10 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
                 clients.clear();
             }
             archive.end();
-            archive.flushAsync(this::setArchiveStatus);
+            archive.flushAsync(text -> {
+                setArchiveStatus(text);
+                runOnUiThread(this::updateReviewEntry);
+            });
             runOnUiThread(() -> {
                 startButton.setEnabled(true);
                 stopButton.setEnabled(false);
@@ -549,7 +593,9 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
                 trackPicker.setEnabled(true);
                 live.setText("实时（未定稿）：—");
                 if (!status.getText().toString().startsWith("连接/录音失败"))
-                    status.setText("状态：已停止 · 收到事件 " + eventCount + " 条");
+                    status.setText("状态：已停止 · 收到事件 " + eventCount + " 条"
+                            + (archive.lastSessionId() == null ? "" : " · 可点「本轮原文与复盘」"));
+                updateReviewEntry();
             });
         }
     }

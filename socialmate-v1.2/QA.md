@@ -475,3 +475,22 @@ V0.4.0 APK 实际输出路径：`android-poc/app/build/outputs/apk/debug/app-deb
 - 回发按钮位置留档：`screenshots/pwa-share-panel.png`（`My list` 面板底部 `Send list to SocialMate` / `Copy list` / `Clear all`；该功能已按用户决定暂停验收，截图仅作界面位置记录）。
 - 未完成：① 在真机上点 `☆ Want to go` 后计数从 0 变 1 未取到无障碍证据（卡片星标未进入 a11y 树，一次点击后浏览器跳走，未复现）；② **iPhone Safari 未测**（无 iPhone 设备）。
 - **用户决定（2026-11-01）**：「朋友把勾选清单发回给本人」这一项**暂停**——用户明确表示不需要知道朋友选了什么。因此计划 A3 / PWA-03 中的「回发」部分不再纳入本轮验收，`Send list to SocialMate` 与微信/WhatsApp 回传不做真机实测；相关代码与 `?selected=` 链接能力保留未删，若日后需要可随时恢复验收。
+
+### 2026-11-01 会后复盘 → 用户确认 → 本机档案（P0，本轮新增）
+
+- 新增 `socialmate-prototype/ai-gateway/session-review.mjs`：两种引擎严格区分。
+  - `local-keyword`：确定性规则，`aiUsed:false`、`aiRequests:0`，只把原文里出现第一人称的句子提为候选；英文接话/追问是模板句并标 `template:true`。
+  - `ai`：DeepSeek 严格 JSON，候选必须带真实段号，指不到段号的候选直接丢弃（`dropped[]` 记录原因）；近似重复候选（子串或词集 Jaccard ≥ 0.8）只留更完整的一条。
+  - 所有候选 `attribution:"unknown"`，说话人只给聚类编号，不自动认定"我/对方"。
+- 新增接口（ai-gateway，仅回环 + 同源 Origin 校验）：
+  - `POST /v12/api/review`：需 `x-archive-token`（由归档服务校验，本服务不留存令牌）；`mode=local` 0 次外部请求；`mode=ai` 需当轮 `consent:true` + 1 元预算闸，未同意直接 403 且不产生任何外部调用。
+  - `POST /v12/api/review/apply`：`confirm:true` 必填；只追加不覆盖；按 `sessionId+段号+文本指纹` 去重；来源写入 `Profile.sources` 并出现在 `current.md` 的「来源记录」。
+- 前端：`/v12/history` 会话详情新增「会后复盘」区块（本地/云端两个入口、逐条勾选+编辑+归属选择、确认保存）；支持 `?session=<id>` 深链直接落到本轮原文。Android 录音页新增「本轮原文与复盘」按钮（停止后可用，打开同一 WebView 的 `/v12/history?session=<id>`）。
+- 定向测试（仅新增/受影响模块）：`session-review.test.mjs` 7/7、`profile-apply.test.mjs` 6/6、既有 `profile-store.test.mjs` + `archive-history.test.mjs` 10/10。
+- 实测（本机 curl + 浏览器 CDP，412×900）：
+  - 无令牌 `review` → 401；未同意 AI → 403 `CONSENT_REQUIRED` 且 `/api/ai/health` calls 50→50（0 次计费）；`apply` 缺 confirm → 400；`sessionId=../../etc/passwd` → 400；`SocialMate-Data/Profile` 全程无文件产生（hash 前后一致）。
+  - 真实 AI 复盘（同意 + 预算闸内）：`deepseek-flash` 返回中文要点、英文接话、3 条追问、3 条候选（均带段号），用量 630 tokens，成本 **0.002574 元**（累计 0.21106 → 0.213634，剩余 0.786366）。
+  - 本地复盘真实会话（3 段、单人 `spk_0`）：去重后 1 条候选；引擎徽标「本地规则 · 无 AI」；未勾选就点确认保存 → 「没有勾选任何候选，未写入任何文件」；页面无横向溢出（412/412）。
+  - 写入链路用临时档案目录 `SM_PROFILE_DIR=/tmp/sm-apply-smoke` 实测：首次 `{stories:1, notes:1, people:1, sources:2}`，重复提交 `unchanged:true` + 两条 `DUPLICATE`；`current.md` 含「来源记录」段；`current.json` 权限 0600（`current.md` 为 0644，与既有行为一致）。测完已重启回默认目录，正式档案仍为 `profile:null`（未被测试污染）。
+- Android 0.5.3（versionCode 13）：`本轮原文与复盘` 按钮入录音页，未开始录音时 `enabled=false`（真机 Note 11 5G 已装并截图 `screenshots/android-053-review-entry-note11.png`，APK SHA-256 `98f2591d…`）。
+- 未完成（NOT_RUN）：真机「停止录音 → 点入口 → WebView 内确认保存」未跑（需要真人说话产生 final；本轮的按钮态与页面深链分别验证）；正式 `SocialMate-Data/People/<slug>/00-profile.md` 仍不自动改写，需下一步单独设计（当前只写本机 Profile）。

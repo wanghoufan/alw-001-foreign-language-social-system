@@ -34,6 +34,13 @@ html = html.replace(
 if 'profile-sync.js' not in html:
     html = html.replace('</body>', '<script src="/profile-sync.js" defer></script></body>', 1)
 
+# 归档历史 / 会后复盘入口：由 8791 同源提供（/v12/history）。基线里没有这一句，
+# 之前是直接手改 index.html 的，重建会丢；这里固化成构建规则保证可复现。
+HISTORY_ENTRY = ('<p class="info" style="margin:0 0 8px"><a href="/v12/history" target="_self">'
+                 '录音结束后：查看原文与会后复盘 →</a></p>\n   ')
+if '/v12/history' not in html:
+    html = html.replace('<div class="chatsetup">', HISTORY_ENTRY + '<div class="chatsetup">', 1)
+
 out = ROOT / 'index.html'
 out.write_text(html, encoding='utf-8')
 print('built', out, 'apps', len(data['apps']), 'steps', sum(len(a['steps']) for a in data['apps']),

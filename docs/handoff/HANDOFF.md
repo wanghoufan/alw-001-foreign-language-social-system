@@ -18,6 +18,7 @@
 
 ## 1. 当前进展
 
+- **会后复盘闭环已落地**：停止录音 → `/v12/history?session=` 本轮原文 → 本地/云端复盘 → 逐条勾选编辑归属 → 显式确认写 `SocialMate-Data/Profile`（只追加、按会话+段号+文本指纹去重、来源入 `sources`）。Android **0.5.3（13）** 录音页新增「本轮原文与复盘」。
 - Android **0.5.2（versionCode 12）** 已装 Note 12T Pro；明文只放行回环、坏证书默认拒绝（细节见 `docs/architecture-facts.md` §Android）。
 - **无 USB 链路已验收**：`adb reverse` 为空，录音→`wss:10000`→ASR→`https:8443` 聊天页→`/alw` 归档全程走 Tailscale。
 - **归档**：final-only 逐字落 `~/Documents/SocialMate/Conversations/YYYY/MM/`；历史 UI（列表 / 原文 / 按 UTC 日期导出）已完成并真机验收。
@@ -29,14 +30,16 @@
 ## 2. 下一步
 
 1. **现场双人**（需用户在场）：本人对着发射器说话，看 `spk_0 / spk_1` 与聊天页字幕是否稳定。
-2. 借到 iPhone 后补 PWA Safari 验收。
-3. 「停止录音 → 本轮摘要 → 用户确认」后写入 `SocialMate-Data/Profile`（当前只写私有快照）。
-4. 确认后的话题/人物再落 `SocialMate-Data/People/<slug>/00-profile.md`，与正式 Markdown 对齐。
+2. 真机走一遍「停止录音 → 本轮原文与复盘 → 勾选 → 确认保存」（需真人说话产生 final）。
+3. 借到 iPhone 后补 PWA Safari 验收。
+4. 复盘候选落正式 `SocialMate-Data/People/<slug>/00-profile.md`：需先定模板与写入约定，当前只写本机 Profile。
+5. 确认后的话题/人物再落 `SocialMate-Data/People/<slug>/00-profile.md`，与正式 Markdown 对齐。
 
 ## 3. 未完成
 
+- 真机复盘端到端点击未跑；按钮态与深链分别验过（0.5.3 真机截图在 `socialmate-v1.2/screenshots/`）。
+- 本机档案未与正式 `People/*.md` 打通（本轮只落 Profile）。
 - 现场真人双人 NOT_RUN（非硬件无声问题）。
-- 本机档案未与会话收尾摘要、正式 `People/*.md` 打通。
 - PWA 机型矩阵缺 **iPhone Safari**；国内访问速度可能波动，无自定义域名。
 - 真机点 `☆ Want to go` 后计数 0→1 未取到 a11y 证据（星标不在 a11y 树，一次点击后浏览器跳走）。
 - 历史 UI 的「按日期导出」只在 Mac 与桌面浏览器验过，**手机内未点过下载**。
@@ -69,6 +72,7 @@
 - 2026-11-01：归档历史 UI 落地（只读索引 + 三个令牌接口 + `/v12` 同源反代 + 聊天页入口），5/5 新测试，真机 WebView 内可读原文。
 - 2026-11-01：Android 0.5.2 关闭全局明文、仅放行回环；真机差分验证明文与自签名证书边界。
 - 2026-11-01：DeepSeek 授权端到端；PWA Note 12T Pro 自带浏览器 `115/115` 与 `?selected` 回显；**清单回发按用户决定暂停**（代码保留）。
+- 2026-11-01：会后复盘闭环：`session-review.mjs`（本地规则 / DeepSeek 双引擎）、`POST /v12/api/review` 与 `/apply`、历史详情复盘 UI 与 `?session=` 深链、Android 0.5.3 入口按钮；定向 13/13；真实 AI 成本 0.002574 元（累计 0.213634 / 1 元）；写入链路在临时档案目录验完，正式档案未被污染。
 
 ## 6. 接续提示词
 

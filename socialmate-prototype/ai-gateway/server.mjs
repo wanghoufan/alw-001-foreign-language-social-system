@@ -9,7 +9,8 @@ import path from "node:path";
 import {fileURLToPath} from "node:url";
 import {analyze,AiError,status} from "./core.mjs";
 import {liveAsrHub} from "./live-asr-hub.mjs";
-import {readProfile,writeProfile} from "./profile-store.mjs";
+import {readProfile,writeProfile,applyProfileCandidates} from "./profile-store.mjs";
+import {buildAiReview,buildLocalReview} from "./session-review.mjs";
 const here=path.dirname(fileURLToPath(import.meta.url));
 const proto=path.resolve(here,"..");
 const PORT=Number(process.env.SOCIALMATE_AI_PORT||8791);
@@ -101,6 +102,39 @@ async function readPayload(req,maxBytes=16000){
   try{return JSON.parse(Buffer.concat(parts).toString("utf8"));}
   catch{throw new AiError(400,"INVALID_JSON","请求不是 JSON");}
 }
+/**
+ * 会后复盘要读会话原文，因此必须复用归档接收端的令牌校验，而不是在本服务另存一份令牌。
+ * 令牌只作为请求头透传给 127.0.0.1 上的归档服务，不写入日志、不回显给前端。
+ */
+function archiveGet(pathname,token,timeoutMs=8000){
+  return new Promise((resolve,reject)=>{
+    const upstream=http.request({host:ARCHIVE_HOST,port:ARCHIVE_PORT,path:pathname,method:"GET",
+      headers:{"x-archive-token":token},timeout:timeoutMs},(up)=>{
+        let body="";
+        up.setEncoding("utf8");
+        up.on("data",(chunk)=>{body+=chunk;if(body.length>4_000_000)up.destroy();});
+        up.on("end",()=>resolve({status:up.statusCode||502,body}));
+      });
+    upstream.on("timeout",()=>upstream.destroy(new Error("archive timeout")));
+    upstream.on("error",reject);
+    upstream.end();
+  });
+}
+async function loadArchivedSession(sessionId,token){
+  let result;
+  try{
+    result=await archiveGet("/api/archive/session/"+encodeURIComponent(sessionId),token);
+  }catch{
+    throw new AiError(503,"ARCHIVE_UNAVAILABLE","归档服务未启动或不可达");
+  }
+  if(result.status===401)throw new AiError(401,"UNAUTHORIZED","归档令牌无效");
+  if(result.status===404)throw new AiError(404,"SESSION_NOT_FOUND","归档里没有这个会话");
+  if(result.status!==200)throw new AiError(502,"ARCHIVE_READ_FAILED","读取归档会话失败（HTTP "+result.status+"）");
+  let parsed;
+  try{parsed=JSON.parse(result.body);}catch{throw new AiError(502,"ARCHIVE_READ_FAILED","归档返回内容不是 JSON");}
+  if(!parsed?.session)throw new AiError(502,"ARCHIVE_READ_FAILED","归档返回缺少会话原文");
+  return parsed.session;
+}
 let corpus=null;
 let activeRequest=false,lastRequestAt=0; // One private user; avoid accidental rapid repeated billed calls.
 async function loadData(){
@@ -170,6 +204,45 @@ const server=http.createServer(async(req,res)=>{
         return json(res,200,{ok:true,...result});
       }finally{activeRequest=false;}
     }
+    // 会后复盘：读的是已归档原文，因此必须带归档令牌（由归档服务校验，本服务不存储令牌）。
+    // mode=local 只用本地规则，0 次外部请求；mode=ai 需要当轮显式同意 + 1 元预算闸。
+    if(url.pathname==="/v12/api/review"&&req.method==="POST"){
+      const token=String(req.headers["x-archive-token"]||"").trim();
+      if(!token)
+        return json(res,401,{ok:false,code:"TOKEN_REQUIRED",error:"读取本轮原文需要归档访问令牌"});
+      const body=await readPayload(req,256000);
+      const mode=body?.mode==="ai"?"ai":"local";
+      const sessionId=String(body?.sessionId||"");
+      if(!/^[A-Za-z0-9_-]{8,64}$/.test(sessionId))
+        return json(res,400,{ok:false,code:"INVALID_SESSION_ID",error:"sessionId 格式不合法"});
+      const session=await loadArchivedSession(sessionId,token);
+      if(mode==="local"){
+        const review=buildLocalReview(session);
+        return json(res,200,{ok:true,review});
+      }
+      if(body?.consent!==true)
+        return json(res,403,{ok:false,code:"CONSENT_REQUIRED",
+          error:"把原文发送给云端模型需要当轮勾选同意；未勾选时不会有任何外部请求"});
+      const left=budgetStatus().remainingCny;
+      if(left<=RESERVE_CNY)
+        return json(res,402,{ok:false,code:"BUDGET_EXHAUSTED",
+          error:"DeepSeek 授权额度已用尽（上限 "+BUDGET_LIMIT+" 元）",budget:budgetStatus()});
+      if(activeRequest||Date.now()-lastRequestAt<1200)
+        return json(res,429,{ok:false,code:"AI_BUSY",error:"上一轮 AI 尚未结束或请求过于频繁，请稍候"});
+      activeRequest=true;lastRequestAt=Date.now();
+      try{
+        const review=await buildAiReview(session,{provider:"deepseek"});
+        try{await recordDeepSeekUsage(review.usage);}
+        catch(error){console.error("[socialmate-ai] budget ledger write failed:",error.message);}
+        review.budget=budgetStatus();
+        return json(res,200,{ok:true,review});
+      }finally{activeRequest=false;}
+    }
+    // 复盘候选确认写入：confirm:true 必填，只追加不覆盖，按会话+段号+文本指纹去重。
+    if(url.pathname==="/v12/api/review/apply"&&req.method==="POST"){
+      const body=await readPayload(req,256000);
+      return json(res,200,await applyProfileCandidates(body));
+    }
     if(req.method!=="GET")return json(res,405,{ok:false,code:"METHOD_NOT_ALLOWED"});
     if(url.pathname==="/profile-sync.js"){
       const bytes=await fs.readFile(path.join(here,"profile-sync.js"));
@@ -202,9 +275,13 @@ const server=http.createServer(async(req,res)=>{
     return res.writeHead(200,{"Content-Type":MIME[path.extname(file)]||"application/octet-stream",
       "Cache-Control":"no-store","X-Content-Type-Options":"nosniff"}).end(bytes);
   }catch(err){
-    const statusCode=err instanceof AiError?err.status:500;
-    return json(res,statusCode,{ok:false,code:err instanceof AiError?err.code:"INTERNAL_ERROR",
-      error:err instanceof AiError?err.message:"服务内部错误（不暴露凭证和个人资料）"});
+    if(err instanceof AiError)
+      return json(res,err.status,{ok:false,code:err.code,error:err.message});
+    const statusCode=Number(err?.status);
+    if(Number.isInteger(statusCode)&&statusCode>=400&&statusCode<500)
+      return json(res,statusCode,{ok:false,code:String(err.code||"REJECTED"),error:err.message});
+    return json(res,500,{ok:false,code:"INTERNAL_ERROR",
+      error:"服务内部错误（不暴露凭证和个人资料）"});
   }
 });
 server.on("error",(error)=>{

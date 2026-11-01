@@ -54,6 +54,8 @@ public final class SessionArchive {
     private boolean retention;
     private volatile boolean uploading;
     private volatile String lastError;
+    /** 最近一次会话 ID；即使用户停止后仍在，用于打开「本轮原文与复盘」。 */
+    private volatile String lastSessionId;
 
     public SessionArchive(Context context) {
         this.context = context.getApplicationContext();
@@ -90,6 +92,17 @@ public final class SessionArchive {
         return files == null ? 0 : files.length;
     }
 
+    /** 本轮会话 ID（仅在开启留存且会话非空时存在）。 */
+    public String lastSessionId() {
+        return lastSessionId;
+    }
+
+    /** 该会话是否已经成功上传到 Mac（决定能否直接查看原文与复盘）。 */
+    public boolean isExported(String sessionId) {
+        if (sessionId == null || sessionId.isEmpty()) return false;
+        return new File(exported, sessionId + ".json").exists();
+    }
+
     public String lastError() {
         return lastError;
     }
@@ -98,10 +111,12 @@ public final class SessionArchive {
     public synchronized void begin(boolean retentionAllowed, String appVersion) {
         retention = retentionAllowed;
         current = null;
+        lastSessionId = null;
         if (!retentionAllowed) return;
         try {
             String stamp = Instant.now().toString().replace("-", "").replace(":", "").replace(".", "");
             String id = "sess_" + stamp.substring(0, 15) + "_" + hex(3);
+            lastSessionId = id;
             JSONObject consent = new JSONObject()
                     .put("recording", true)
                     .put("retention", true)
@@ -152,6 +167,7 @@ public final class SessionArchive {
             if (current.getJSONArray("segments").length() == 0) {
                 // 没有 final 的空会话不落盘。
                 current = null;
+                lastSessionId = null;
                 File tmp = new File(root, "current.json");
                 //noinspection ResultOfMethodCallIgnored
                 tmp.delete();
