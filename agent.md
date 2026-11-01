@@ -46,6 +46,22 @@
 - `NODE_TLS_REJECT_UNAUTHORIZED=0` 来自 CodeArts agent-kernel 注入的工具 shell，不在 zsh 配置、launchd 或项目 `.env`；`service-v040.sh` 启动前会 `unset`，`live-server.mjs` 仍拒绝 env 文件里的 `=0`。不要改用 `-k` 或重新导出该变量绕过。
 - 腾讯云 ASR 预算闸在 `asr-budget.js`：默认 1 元、按 1 元/小时估算、剩余 ≤0.01 元拒绝新会话；账本 `android-poc/.local/asr-budget.json`，`/api/asr/status` 和 `/health` 的 `budget` 可查。
 
+## 验收 / 证据
+
+- 2026-11-01 · 截图交付 · Preview 打开是空白：CDP `captureScreenshot` 同时用 `clip` 与 `captureBeyondViewport`，元素被滚出视口时会截到纯色区域，而命令仍返回 0 · 原因是只校验"命令成功"，没校验"图里有内容"，把成功当结果 · 交付前跑非白像素占比（<0.05 判空图），或先 `Emulation.setDeviceMetricsOverride` 拉高视口再整屏截；发出去之前自己 `open -a Preview` 看一眼。
+- 2026-11-01 · 系统浏览器验收 · 点完拿不到证据：小米自带浏览器点 `☆ Want to go` 后页面跳走，`uiautomator dump` 只剩首页元素 · 原因是第三方浏览器没有 CDP，点击后的状态无法回读 · 行为类交互改用可控 Chrome + CDP 验，真机自带浏览器只验"能打开、能显示、计数对不对"，取不到证据就如实标未验证，别硬猜。
+- 2026-11-01 · 手机验收 · 前台是微信：需要点按的验证会抢用户焦点 · 原因是手机同时是用户日常设备 · 先看 `mCurrentFocus`，装包/改配置不打扰前台，必须点按的验收等设备空闲或交用户；不要为赶进度接管屏幕。
+
+## 代码 / 数据
+
+- 2026-11-01 · 归档索引 · 新测试全红：`getSession` 用 `file.includes(sessionId)` 从文件名反推 ID，fixture 文件名不含 ID 就永远查不到 · 原因把真实目录的命名巧合当成了契约 · 索引一律以数据字段（JSON 内 `sessionId`）为准，文件名只用于展示和排序。
+- 2026-11-01 · 同源接入 · 手机上页面取不到数据：历史页在 8781、私有 UI 在 8791，跨端口 fetch 会被 CSP/CORS 拦 · 原因端口不同就是不同源 · 在同源服务里加只读反向代理（`/v12/api/archive/*` → 8781，仅 GET、令牌透传、下游未起返回 503），前端只认相对路径。
+
+## 交接 / 需求
+
+- 2026-11-01 · 需求争议 · 用户问"我说了要这个功能么"：当场答不出出处 · 原因接手时只读了摘要，没给每条需求建"文件:行"索引 · 争议时先 grep 计划原文并贴出行号，不靠记忆作答；实现前把需求出处记进交接文档或计划旁注。`建议进用户级`
+- 2026-11-01 · 交接文档 · HANDOFF 涨到 10KB 且 §1 与 §5 重复：同一批事件在"当前进展"和"三日流水"各写一遍 · 原因没区分"状态"与"流水"，构建/端口/版本等事实堆在正文 · §1 只写当前状态、§5 只写事件，事实进 `docs/architecture-facts.md`，保持 ≤100 行 / ≤8KB。`建议进用户级`
+
 ## 端口 / 清理
 
 - 8787 被 Docker `keep-fitness` 占用；`lsof -ti tcp:8787` 会同时返回 `com.docker` 和 `node`，kill 前先看 `COMMAND`（曾误杀 Docker 代理）。
