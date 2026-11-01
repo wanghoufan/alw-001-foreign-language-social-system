@@ -301,3 +301,41 @@ V0.4.0 APK 实际输出路径：`android-poc/app/build/outputs/apk/debug/app-deb
 - 端到端（Chrome headless + 同源页面）：脚本加载、按钮存在、`confirm` 后按钮变「已同步」，落盘 **5 条话题 + 1 个人物**、`confirmedByUser:true`；测试用临时目录，结束后删除，未污染正式档案。
 - 服务重启后仍 `combined:true`，ASR/DeepSeek 账本数值未变（0.033884 / 0.20641）。
 - 边界：本章节未跑全量回归；正式 `People/*.md` 归档、会话收尾摘要仍未接通。
+
+### 2026-11-01 海南公开 PWA V1.1（本地构建 + 浏览器端到端）
+
+- 新增用户功能：想去/选择按钮、已选数量、我的清单、取消/清空、按选择过滤、生成只含地点 ID 的分享链接（`?selected=3,39,41`）、收件人打开回显同一清单、`navigator.share` 优先 + 复制回退、manifest/SW/图标。
+- 打包白名单：7 个文件（`public-share.html/js`、`public-places.js`、`styles.css`、`manifest.webmanifest`、`sw.js`、`icon.svg`）；脚本会拒绝 `/api/`、`profile/asr/ai`、`DeepSeek`、`getUserMedia`、`microphone` 以及 `index.html/app.js/data.js/v12` 引用。
+- 浏览器 E2E（Chrome headless 390×844，解包后仅白名单目录 + `python -m http.server 8901`）：
+  - 列表 115 张卡；点击 3/39/41 → `wants=3,39,41`；
+  - 刷新后仍为 `3,39,41`；
+  - 生成链接 `http://127.0.0.1:8901/public-share.html?selected=3,39,41`；
+  - 新导航打开该链接 → 显示 “A list shared with you · 3”，三条与选择一致；
+  - Service Worker 注册 `true`，manifest 已加载。
+- 包：`2026-10-31 … ALW001 Hainan Guide-Public Share - V1.1.zip`，SHA-256 `cfdf40ac83f27cd81cf96571ff5dca6378a66a7e8bad7df6648de8718ad5401d`，7 文件 167,675 字节。
+- **未部署**：没有公开 HTTPS 链接；部署需用户明确授权（可先给临时域名）。
+
+### 2026-11-01 Mac 会话归档接收端（鉴权 + 幂等 + 原子写）
+
+- 新增独立接收端 `socialmate-prototype/ai-gateway/archive-receiver.mjs`，只绑 `127.0.0.1:8781`；`SM_ARCHIVE_TOKEN` 缺失或不足 24 字符直接退出 78（fail closed）；单请求上限 512KB；兼容 Tailscale 前缀 `/alw`。
+- 启动脚本 `socialmate-v1.2/archive-service.sh {start|ensure|stop|status|token}`；令牌生成在 `socialmate-v1.2/.local/archive-token`（0600，gitignore）。
+- 实测：无令牌 **401**；带令牌 **201 created**；重复投递 **200 duplicate**；`consent.retention=false` **400**；`textOriginal` 首尾空格原样保存（`repr` 验证）；`current.json`/`current.md` 权限 `-rw-------`，目录 0700。
+- Tailscale：新增 `/alw` → `127.0.0.1:8781`（原 `/` → 8779 保持不变）；`https://mac-mini.tail4e4317.ts.net/alw/health` 返回 `{"ok":true,...}`。
+
+### 2026-11-01 Android 0.5.0（原文归档 + outbox + 自动导出）
+
+- 构建：`BUILD SUCCESSFUL`，`versionCode=10`、`versionName=0.5.0`；APK SHA-256 `cf7f25d436d382dcf21b43cfa877614fe2c38434e965edb5ade139bb6ed24833`（142,495 字节）。
+- Note 11（Redmi 21091116AC，无线 ADB）`pm install-write/commit` 安装成功。
+- 真实语音链路（Mac `say` 外放 → 手机麦克风 → 腾讯云 ASR）：收到 final `Hello, this is a real voice test for social made archive export.`（识别错误原样保留），停止后自动导出到 Mac：
+  - `SocialMate-2026-11-01-031731-sess_20261101T031731_e80121.md` SHA-256 `cdc11c08214929413104c66e43bcc85b8273489d5a6984f9998cb3120e1b502e`
+  - `.json` SHA-256 `8f112b86202b12064c0dc77dbc45763a2aab1e0c40940627117be92c0ab65cb4`
+- 合成传输测试（明确标注非真人）：预置 outbox → Tailscale 未登录时 `UnknownHostException`；改 adb reverse 后 `201 created`，Mac 落盘。
+- 断网重试：移除 8781 reverse → `ConnectException`，待导出 1；恢复后打开 App 自动补传，outbox 0。
+- 留存闸：取消「允许留存并导出」后跑同流程，outbox/exported 均为 0，不产生归档。
+- APK/测试数据已在验收后清理（Mac 测试归档与手机 exported 目录均删除）。
+
+### 2026-11-01 无 USB 状态（BLOCKED）
+
+- Note 12T Pro：`adb install` 与 `pm install-create/commit` 均被 MIUI `INSTALL_FAILED_USER_RESTRICTED` 拒绝，需用户开启「通过 USB 安装」。
+- Note 11：已安装 Tailscale（`com.tailscale.ipn`），但未登录/未建立 VPN；`ping mac-mini.tail4e4317.ts.net` 返回 `unknown host`，因此 App 无法走 Tailscale HTTPS。
+- 结论：会话归档代码与接收端已可用，但「完全脱离 USB 的日常链路」**未验收**；当前 ASR/UI 仍需 `adb reverse`，归档可用 Tailscale 一旦手机 Tailscale 登录即可切换。

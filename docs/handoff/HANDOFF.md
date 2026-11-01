@@ -11,6 +11,8 @@
 - 内容检索层：`android-poc/asr-bridge/src/content/`（说明见 asr-bridge/README §6.1）
 - 组合服务：`socialmate-v1.2/service-v040.sh`（8790 ASR + 8791 UI/AI，一个进程）
 - 本机档案：`SocialMate-Data/Profile/`（`GET/PUT /api/profile`，说明见 `docs/architecture-facts.md` §本机档案）
+- 会话归档：`socialmate-v1.2/archive-service.sh` + `socialmate-prototype/ai-gateway/archive-receiver.mjs`（8781，令牌鉴权；Tailscale `/alw`）
+- 海南公开 PWA：`socialmate-prototype/.local/releases/…-Public Share - V1.1.zip`（7 文件白名单，未部署）
 - V0.4.0 QA：`socialmate-v1.2/QA.md`
 - V1.2 正式 UI：`socialmate-v1.2/index.html`（ZIP `dist/SocialMate-V1.2-UI.zip`）
 - 海南 115 图文指南：`docs/成果整理/Hainan-Travel-Guide/`（说明 `docs/DELIVERY_REPORT.md`，ZIP `artifacts/Hainan_115_Real_Photo_Guide_V3.0.zip`）
@@ -19,7 +21,9 @@
 ## 1. 当前进展
 
 - 2026-11-01：本机档案持久化落地：`GET/PUT /api/profile` + 「关于我」显式同步按钮；存储模块 5/5 定向测试通过，同源浏览器点击端到端写入成功（临时目录，未留测试数据）。
-- 2026-11-01：会话归档核心模块 `conversation-archive.mjs` 落地：仅 final、留存同意闸、sessionId 幂等、revision 冲突、原子写 0600；8/8 定向测试；**尚未接 Android outbox 与网络入口**。
+- 2026-11-01：Android 0.5.0 归档链路真机通过：真实语音 → 腾讯云 final → 手机 outbox → Mac Markdown/JSON（逐字，含识别错误）；断网重试与「不留存不落盘」均实测。
+- 2026-11-01：Mac 归档接收端上线（8781，令牌必填、512KB、幂等、原子写），Tailscale `/alw` HTTPS 健康检查通过。
+- 2026-11-01：海南公开 PWA V1.1 完成选择/清单/分享链接回显/离线缓存；115 卡、选 3 处刷新保留、链接跨会话回显均通过。
 - 2026-11-01：Mac 收尾完成；组合服务单进程提供 8790/8791，`/api/asr/status` 为 `combined:true`。
 - Note 11 已装 0.4.0（保留数据，61 个数据文件）；APK SHA-256 `da46425f7e5e1e69b243ac87171bf47f1301c2f32a25c52a23399236fdf69b7e`。
 - 回归 **102/102 Node + 2/2 TLS + 12 Android**；Gradle `BUILD SUCCESSFUL`。
@@ -45,7 +49,9 @@
 - Note 12T 当前未安装本项目 APK；未操作。
 - 无 USB/公网方案、正式分享页未接；个人故事文件仍为空。
 - 本机档案已可持久化，但尚未与会话收尾摘要、正式 `People/*.md` 归档打通；界面同步按钮只写私有快照。
-- 会话归档只有核心写入模块：Android outbox、鉴权加密入口、UI 历史列表、真机断网重放均未实现/未验收。
+- 无 USB 日常链路未验收：Note 12T 被 MIUI 拒绝安装，Note 11 Tailscale 未登录（DNS unknown host）；当前 ASR/UI 仍需 adb reverse，归档已支持 Tailscale URL。
+- 归档 UI 历史列表、日期范围批量导出、正式 People Markdown 合并仍未做。
+- 海南 PWA 未部署，无公开 HTTPS 链接（部署需用户授权）。
 - 服务只绑本机回环，真机依赖无线/USB `adb reverse`；端口映射断开后页面会重连失败。
 - `spk_N` 只是聚类编号，不保证真实身份；UI 固定“待确认”。
 
@@ -70,6 +76,7 @@
 - 2026-11-01：真机 WebView、MOCK 全链、真实腾讯云/DeepSeek、真人单人与 TTS-B 真实环境测试完成；新增 1 元预算闸。
 - 2026-11-01：Mac 收尾：TLS 根因=CodeArts kernel 注入并在 service 剥离；102/102 + TLS 2/2 + 12；APK 0.4.0 SHA `da46425f…`；九项 UI PASS；ASR 1 元闸与双音色 A/B 分离通过；BOYA `-180 dBFS` 阻断手机现场双人。
 - 2026-11-01：本机档案：`profile-store` 5/5、API 三分支（无确认 400 / 确认 200 / 回读一致）、同源点击端到端通过；服务重启后 `combined:true` 与预算不变。
+- 2026-11-01：归档：10/10 单元测试；接收端 401/201/duplicate/400 四分支；Android 0.5.0 真机 real-final → Mac 落盘；PWA 浏览器 E2E 通过。
 
 ## 6. 接续提示词
 

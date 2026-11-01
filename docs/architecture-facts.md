@@ -58,6 +58,21 @@
 - 界面：`/v12` 的「关于我」页有「同步到本机档案」按钮，`profile-sync.js` 由服务端同源提供；`file://` 或离线时脚本静默失效，仍纯 localStorage。
 - 隐私：该目录已被 `.gitignore` 排除，不进公开仓库、不上传云端。
 
+## 会话归档与接收端（2026-11-01）
+
+- Android `SessionArchive`：仅 `final`、逐字不 trim；勾选留存才写 `filesDir/archive/current.json`（原子写），停止后移入 `outbox/`，上传 2xx 才移入 `exported/`。
+- 归档地址与令牌存在本机 SharedPreferences（`socialmate-archive`），默认 `https://mac-mini.tail4e4317.ts.net/alw/api/archive/session`；未配置时显示「待配置」。
+- Mac `archive-receiver.mjs`：`127.0.0.1:8781`，`SM_ARCHIVE_TOKEN` 必填；`POST /api/archive/session`，≤512KB，令牌比对用 timingSafeEqual；`GET /health`。
+- Tailscale Serve：`/alw` → 8781（原有 `/` → 8779 不变）；真证书 HTTPS，只有 tailnet 可达。
+- 落盘：`~/Documents/SocialMate/Conversations/YYYY/MM/SocialMate-YYYY-MM-DD-HHMMSS-<sessionId>.md|.json`，0600；JSON 最后提交，重放幂等。
+
+## 海南公开 PWA（2026-11-01）
+
+- 源文件：`socialmate-prototype/public-share.html/js` + `public-places.js` + `styles.css` + `manifest.webmanifest` + `sw.js` + `icon.svg`。
+- 打包：`node socialmate-prototype/package-public-share.cjs`；只允许 7 文件，拒绝 `/api`、profile/asr/ai、DeepSeek、麦克风与私有页面引用。
+- 功能：115 地点、中英切换、城市/分类/关键字、Google/高德、单选详请、想去清单（localStorage）、`?selected=ID,ID` 分享回显、复制/系统分享。
+- 运行时零私有 API；SW 只缓存上述静态资源，不缓存任何接口。
+
 ## 内容检索层
 
 - 语料：V1.4 正式主稿（51 个软件条目）、海南 115 地点 `places.json`、`asr-bridge/content/personal-stories.json`（仅 `confirmed:true`，当前为空）。
