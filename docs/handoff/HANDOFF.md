@@ -85,7 +85,7 @@
 - 2026-11-01：归档历史 UI 完成——`archive-history.mjs` 只读索引 + `/api/archive/{list,session,export}`（令牌鉴权），私有 UI 以 `/v12/history` 与 `/v12/api/archive/*` 同源反代；聊天页加入口；5/5 新测试 + 原有 10/10 通过；真机 WebView 内可进入并读到原文。
 - 2026-11-01：Android 0.5.2（versionCode 12）关闭全局明文、仅放行回环；真机差分：非回环明文 `ERR_CLEARTEXT_NOT_PERMITTED`、回环明文正常、自签名证书页面不渲染；APK SHA-256 `a7839502…d88d0`。
 - 2026-11-01：DeepSeek 独立授权端到端：未勾选 0 次 `/api/ai/*`；勾选后真实调用出建议卡，单次约 0.0047 元，累计 0.21106/1 元。
-- 2026-11-01：PWA 真机矩阵补 Note 12T Pro 自带浏览器：`115/115` 与 `?selected=3,39,41` → `3/115`、`A list shared with you · 3`；iPhone Safari、微信/WhatsApp 实际发回仍缺真人设备。
+- 2026-11-01：PWA 真机矩阵补 Note 12T Pro 自带浏览器：`115/115` 与 `?selected=3,39,41` → `3/115`、`A list shared with you · 3`；iPhone Safari 仍缺设备。**用户 2026-11-01 决定：不需要知道朋友选了什么，「清单回发」暂停**，计划 A3 / PWA-03 的回发部分不再验收（代码保留未删，可随时恢复）。
 
 ## 6. 接续提示词
 
