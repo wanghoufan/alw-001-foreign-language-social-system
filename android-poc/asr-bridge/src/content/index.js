@@ -11,15 +11,23 @@ const HERE = path.dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = path.resolve(HERE, '../../../..');
 const BRIDGE_ROOT = path.resolve(HERE, '../..');
 
+// 海南 115 地点：data/ 下是入库副本（与 dist 产物哈希一致），dist 仅作本地兜底，
+// 避免公开仓库因忽略 dist/ 导致新克隆缺数据。
+const HAINAN_SOURCES = [
+  path.join(REPO_ROOT, 'docs/成果整理/Hainan-Travel-Guide/data/places.json'),
+  path.join(REPO_ROOT, 'docs/成果整理/Hainan-Travel-Guide/dist/Hainan_115_Real_Photo_Guide/places.json'),
+];
+
+function firstExisting(candidates) {
+  return candidates.find((candidate) => fs.existsSync(candidate)) || candidates[0];
+}
+
 export const DEFAULT_PATHS = Object.freeze({
   v14: path.join(
     REPO_ROOT,
     'docs/成果整理/2026-10-31 - Mac Mini - ChatGPT - Bilingual Software Portfolio-Demo Guide - V1.4.md',
   ),
-  hainan: path.join(
-    REPO_ROOT,
-    'docs/成果整理/Hainan-Travel-Guide/dist/Hainan_115_Real_Photo_Guide/places.json',
-  ),
+  hainan: firstExisting(HAINAN_SOURCES),
   stories: path.join(BRIDGE_ROOT, 'content/personal-stories.json'),
 });
 
