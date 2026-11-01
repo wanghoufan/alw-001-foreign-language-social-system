@@ -1,0 +1,15 @@
+{
+  "stage": "B",
+  "requestedDevice": "USB_DEVICE #10982 · USB-Audio - BOYA mini",
+  "routedDevice": "USB_DEVICE #10982 · USB-Audio - BOYA mini",
+  "routeVerified": true,
+  "sampleRate": 48000,
+  "channels": 2,
+  "audioSource": "UNPROCESSED",
+  "frames": 240000,
+  "clippedSamples": 16498,
+  "leftDbfs": -9.770709338463588,
+  "rightDbfs": -9.770706703013198,
+  "leftMinusRightDb": -2.6354503894765458E-6,
+  "note": "Candidate only. Listen to isolated left\/right files. Never interpret stereo as proof of independent transmitters."
+}

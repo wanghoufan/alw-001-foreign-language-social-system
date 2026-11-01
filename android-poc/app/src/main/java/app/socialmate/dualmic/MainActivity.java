@@ -58,6 +58,7 @@ public final class MainActivity extends Activity {
     private String pendingStage;
     private File pendingExport;
     private Spinner sourcePicker;
+    private LinearLayout diagnosticTools;
     private TextView status;
     private TextView meters;
     private TextView resultView;
@@ -81,6 +82,23 @@ public final class MainActivity extends Activity {
     }
 
     private int dp(int value) { return (int) (getResources().getDisplayMetrics().density * value + 0.5f); }
+    private android.graphics.drawable.GradientDrawable surface(int color, int border, int radius) {
+        android.graphics.drawable.GradientDrawable drawable = new android.graphics.drawable.GradientDrawable();
+        drawable.setColor(color);
+        drawable.setCornerRadius(dp(radius));
+        if (border != 0) drawable.setStroke(dp(1), border);
+        return drawable;
+    }
+    private LinearLayout section(LinearLayout parent) {
+        LinearLayout card = new LinearLayout(this);
+        card.setOrientation(LinearLayout.VERTICAL);
+        card.setPadding(dp(18), dp(18), dp(18), dp(18));
+        card.setBackground(surface(0xFFFFFFFF, 0xFFE2E9EA, 18));
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(-1, -2);
+        lp.bottomMargin = dp(16);
+        parent.addView(card, lp);
+        return card;
+    }
     private static void applyInsets(ScrollView scroller) {
         scroller.setOnApplyWindowInsetsListener((v, insets) -> {
             int top, bottom;
@@ -124,9 +142,35 @@ public final class MainActivity extends Activity {
         root.setPadding(dp(20), dp(20), dp(20), dp(25));
         scroller.addView(root);
         setContentView(scroller);
-        text(root, "SocialMate · 博雅双麦检测", 24);
+        // Daily-use entry: the speech/AI conversation is primary; the hardware probe stays available.
+        root.setBackgroundColor(0xFFF5F7F8);
+        LinearLayout welcome = section(root);
+        text(welcome, "SocialMate", 26).setTextColor(0xFF176E63);
+        text(welcome, "外语社交助手 · 实时对话", 17);
+        text(welcome, "听懂英语对话，获得自然接话、追问和真实海南资料推荐。", 16);
+        Button conversation = button(welcome, "开始实时对话  →", v ->
+                startActivity(new Intent(this, AsrActivity.class)));
+        conversation.setTextColor(0xFFFFFFFF);
+        conversation.setBackground(surface(0xFF176E63, 0, 15));
+        conversation.setElevation(dp(2));
+        text(welcome, "录音需同行者同意；将字幕发送给 AI 还需在聊天页单独授权。", 14);
+        Button diagnosticToggle = button(root, "录音设备检测与高级工具  ▾", v -> {
+            if (diagnosticTools == null) return;
+            boolean show = diagnosticTools.getVisibility() != View.VISIBLE;
+            diagnosticTools.setVisibility(show ? View.VISIBLE : View.GONE);
+            ((Button) v).setText(show ? "收起高级工具  ▴" : "录音设备检测与高级工具  ▾");
+        });
+        diagnosticToggle.setTextColor(0xFF176E63);
+        diagnosticTools = new LinearLayout(this);
+        diagnosticTools.setPadding(dp(15), dp(15), dp(15), dp(15));
+        diagnosticTools.setBackground(surface(0xFFFFFFFF, 0xFFE2E9EA, 18));
+        diagnosticTools.setOrientation(LinearLayout.VERTICAL);
+        diagnosticTools.setVisibility(View.GONE);
+        root.addView(diagnosticTools, new LinearLayout.LayoutParams(-1, -2));
+        root = diagnosticTools;
+        text(root, "博雅双麦检测 · 高级工具", 20);
         text(root, "版本 " + appVersion(), 15);
-        text(root, "检测页不联网，只测试安卓能否读取两只麦克风的独立声道；底部 ASR 实验页才会连接你填写的服务端。请先取得被录音者同意。", 16);
+        text(root, "设备检测不会上传音频；仅在实时对话中、取得同意后才会连接云端语音识别。", 16);
         sourcePicker = new Spinner(this);
         root.addView(sourcePicker, new LinearLayout.LayoutParams(-1, dp(58)));
         button(root, "刷新音频设备", v -> refreshDevices());
@@ -135,7 +179,7 @@ public final class MainActivity extends Activity {
         bButton = button(root, "② 只对麦克风 B 说话 5 秒", v -> requestRecording("B"));
         stopButton = button(root, "停止录音", v -> stopCapture());
         exportButton = button(root, "导出 WAV / 检测报告（方便试听）", v -> showExportPicker());
-        button(root, "打开实时英文 ASR 实验页", v -> startActivity(new Intent(this, AsrActivity.class)));
+        button(root, "进入实时对话", v -> startActivity(new Intent(this, AsrActivity.class)));
         status = text(root, "状态：待录音", 17);
         meters = text(root, "左 / 右声道：待检测", 18);
         resultView = text(root, "先用 A 独说，保持 B 安静；再用 B 独说，保持 A 安静。两次结束后自动给出判断。", 17);

@@ -3,6 +3,12 @@ package app.socialmate.dualmic;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.media.AudioDeviceInfo;
 import android.media.AudioManager;
@@ -14,8 +20,11 @@ import android.view.View;
 import android.view.WindowInsets;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.view.ViewGroup;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.ArrayAdapter;
@@ -37,12 +46,18 @@ import java.util.Locale;
 public final class AsrActivity extends Activity implements AsrClient.Listener {
     private static final int REQUEST_MIC = 201;
     private static final String DEFAULT_URL = "ws://127.0.0.1:8790/asr";
+    private static final String PRIVATE_UI_URL = "http://127.0.0.1:8791/v12";
 
     private final List<AsrClient> clients = Collections.synchronizedList(new ArrayList<>());
     private final StringBuilder finals = new StringBuilder();
     private volatile boolean running;
     private volatile AudioRecord recorder;
     private Thread worker;
+    private FrameLayout screenRoot;
+    private LinearLayout webPanel;
+    private LinearLayout advancedTools;
+    private WebView socialMateWebView;
+    private CheckBox recordingConsent;
     private EditText urlInput;
     private EditText suggestInput;
     private Spinner trackPicker;
@@ -61,6 +76,10 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
     @Override public void onCreate(Bundle state) {
         super.onCreate(state);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        // Debug builds only: lets the Mac verify the embedded V1.2 page via CDP.
+        if ((getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0) {
+            WebView.setWebContentsDebuggingEnabled(true);
+        }
         buildUi();
         refreshDeviceInfo();
     }
@@ -86,7 +105,32 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
         return b;
     }
 
-    private static void applyInsets(ScrollView scroller) {
+    private android.graphics.drawable.GradientDrawable surface(int color, int border, int cornerDp) {
+        android.graphics.drawable.GradientDrawable drawable = new android.graphics.drawable.GradientDrawable();
+        drawable.setColor(color);
+        drawable.setCornerRadius(dp(cornerDp));
+        if (border != 0) drawable.setStroke(dp(1), border);
+        return drawable;
+    }
+
+    private LinearLayout section(LinearLayout parent) {
+        LinearLayout card = new LinearLayout(this);
+        card.setOrientation(LinearLayout.VERTICAL);
+        card.setPadding(dp(17), dp(17), dp(17), dp(17));
+        card.setBackground(surface(0xFFFFFFFF, 0xFFE2E9EA, 18));
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(-1, -2);
+        params.bottomMargin = dp(14);
+        parent.addView(card, params);
+        return card;
+    }
+
+    private void stylePrimary(Button button) {
+        button.setTextColor(0xFFFFFFFF);
+        button.setBackground(surface(0xFF176E63, 0, 15));
+        button.setElevation(dp(2));
+    }
+
+    private static void applyInsets(View scroller) {
         scroller.setOnApplyWindowInsetsListener((v, insets) -> {
             int top, bottom;
             if (Build.VERSION.SDK_INT >= 30) {
@@ -109,53 +153,173 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
         root.setPadding(dp(20), dp(20), dp(20), dp(25));
         scroller.addView(root);
         applyInsets(scroller);
-        setContentView(scroller);
+        screenRoot = new FrameLayout(this);
+        screenRoot.addView(scroller, new FrameLayout.LayoutParams(-1, -1));
+        setContentView(screenRoot);
 
-        text(root, "实时英文 ASR（实验）", 24);
-        text(root, "版本 " + appVersion(), 15);
-        text(root, "双麦检测本身不联网；本页会把音频发送到你填写的服务端。密钥只存在服务端，手机不保存任何 SecretId/SecretKey。没有密钥时服务端返回 MOCK，事件会标 [MOCK]，不是真实识别。", 16);
+        root.setBackgroundColor(0xFFF5F7F8);
+        LinearLayout hero = section(root);
+        text(hero, "SocialMate · 实时对话", 24).setTextColor(0xFF176E63);
+        text(hero, "实时字幕、自然接话与可靠资料推荐", 16);
+        text(hero, "开始录音前请先确认录音同意。AI 文字上传另在聊天页独立授权，默认关闭。", 14);
+        text(hero, "版本 " + appVersion(), 13);
 
+        LinearLayout recordingCard = section(root);
+        recordingConsent = new CheckBox(this);
+        recordingConsent.setText("我已告知并获得同行者同意录音，且了解音频会发送到自己配置的腾讯云 ASR 服务。");
+        recordingConsent.setTextSize(16);
+        recordingConsent.setPadding(0, dp(6), 0, dp(8));
+        recordingCard.addView(recordingConsent, new LinearLayout.LayoutParams(-1, -2));
+
+        Button advancedToggle = button(root, "高级设置与转写诊断  ▾", v -> {
+            if (advancedTools == null) return;
+            boolean expanded = advancedTools.getVisibility() != View.VISIBLE;
+            advancedTools.setVisibility(expanded ? View.VISIBLE : View.GONE);
+            ((Button) v).setText(expanded ? "收起高级设置  ▴" : "高级设置与转写诊断  ▾");
+        });
+        advancedToggle.setTextColor(0xFF176E63);
+        advancedTools = new LinearLayout(this);
+        advancedTools.setOrientation(LinearLayout.VERTICAL);
+        advancedTools.setVisibility(View.GONE);
+        root.addView(advancedTools, new LinearLayout.LayoutParams(-1, -2));
+        advancedTools.setPadding(dp(12), dp(12), dp(12), dp(12));
+        advancedTools.setBackground(surface(0xFFFFFFFF, 0xFFE2E9EA, 16));
+        text(advancedTools, "仅调试时需要修改服务地址或音轨。普通使用保持默认混音。", 14);
         urlInput = new EditText(this);
         urlInput.setText(DEFAULT_URL);
         urlInput.setTextSize(16);
         urlInput.setSingleLine(true);
-        root.addView(urlInput, new LinearLayout.LayoutParams(-1, dp(54)));
+        advancedTools.addView(urlInput, new LinearLayout.LayoutParams(-1, dp(54)));
 
         trackPicker = new Spinner(this);
         trackPicker.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, TRACK_LABELS));
-        root.addView(trackPicker, new LinearLayout.LayoutParams(-1, dp(58)));
+        advancedTools.addView(trackPicker, new LinearLayout.LayoutParams(-1, dp(58)));
 
-        deviceInfo = text(root, "输入设备待读取", 14);
-        startButton = button(root, "连接并开始识别", v -> startStreaming());
-        stopButton = button(root, "停止", v -> stopStreaming("用户停止"));
+        deviceInfo = text(advancedTools, "输入设备待读取", 14);
+        startButton = button(recordingCard, "开始实时对话", v -> startStreaming());
+        stylePrimary(startButton);
+        button(recordingCard, "查看聊天与推荐", v -> showSocialMatePanel());
+        stopButton = button(recordingCard, "停止录音", v -> stopStreaming("用户停止"));
         stopButton.setEnabled(false);
-        clearButton = button(root, "清空转写", v -> {
+        clearButton = button(advancedTools, "清空转写", v -> {
             finals.setLength(0);
             transcript.setText("");
             live.setText("");
         });
 
-        status = text(root, "状态：待连接", 17);
-        live = text(root, "实时（未定稿）：—", 17);
-        text(root, "已定稿转写（按句累积，不会被实时结果覆盖）", 15);
+        status = text(recordingCard, "状态：待连接", 17);
+        live = text(advancedTools, "实时（未定稿）：—", 17);
+        text(advancedTools, "已定稿转写（按句累积，不会被实时结果覆盖）", 15);
         transcript = new TextView(this);
         transcript.setTextSize(17);
         transcript.setPadding(0, dp(6), 0, dp(6));
-        root.addView(transcript);
+        advancedTools.addView(transcript);
 
-        text(root, "英文追问建议（V1.4 软件 / 海南 115 / 已确认故事；确定性检索，不是大模型编造）", 15);
+        text(advancedTools, "手动语料检索（备用调试功能）", 15);
         suggestInput = new EditText(this);
         suggestInput.setTextSize(16);
         suggestInput.setSingleLine(true);
         suggestInput.setHint("输入话题，可留空以使用最近一句定稿");
-        root.addView(suggestInput, new LinearLayout.LayoutParams(-1, dp(54)));
-        button(root, "填入示例话题（personality quiz）",
+        advancedTools.addView(suggestInput, new LinearLayout.LayoutParams(-1, dp(54)));
+        button(advancedTools, "填入示例话题（personality quiz）",
                 v -> suggestInput.setText("personality quiz"));
-        suggestButton = button(root, "获取 2–3 条英文建议", v -> requestSuggestions());
+        suggestButton = button(advancedTools, "获取 2–3 条英文建议", v -> requestSuggestions());
         suggestButton.setEnabled(false);
-        suggestionsView = text(root, "英文建议：—", 16);
+        suggestionsView = text(advancedTools, "英文建议：—", 16);
 
-        text(root, "说明：A/B 双轨需要接收器真正输出独立左右声道；当前博雅若为单声道混合，A、B 两轨的内容会相同。混音模式依赖腾讯云说话人分离，重叠说话时可能标错 spk。真实云端未配置密钥时不要把它当作验收通过。", 15);
+        text(advancedTools, "诊断说明：A/B 轨需硬件真正输出独立声道；混音说话人识别不保证身份准确。MOCK 事件不是实际腾讯云识别。", 14);
+    }
+
+    /**
+     * Local-only Android integration of the approved HTML UI.
+     * Same Activity stays foreground; AudioRecord worker continues while WebView is shown.
+     * Requires adb reverse for BOTH tcp:8790 (ASR) and tcp:8791 (private UI).
+     */
+    private void showSocialMatePanel() {
+        if (screenRoot == null) return;
+        if (webPanel == null) {
+            webPanel = new LinearLayout(this);
+            webPanel.setOrientation(LinearLayout.VERTICAL);
+            webPanel.setBackgroundColor(0xFFFFFFFF);
+            applyInsets(webPanel); // Respect status/navigation bars on Android 15 edge-to-edge.
+
+            LinearLayout toolbar = new LinearLayout(this);
+            toolbar.setOrientation(LinearLayout.HORIZONTAL);
+            Button back = new Button(this);
+            back.setText("← 录音控制");
+            back.setTextSize(16);
+            back.setAllCaps(false);
+            back.setOnClickListener(v -> webPanel.setVisibility(View.GONE));
+            toolbar.addView(back, new LinearLayout.LayoutParams(0, dp(52), 1f));
+            Button retry = new Button(this);
+            retry.setText("刷新界面");
+            retry.setTextSize(16);
+            retry.setAllCaps(false);
+            retry.setOnClickListener(v -> {
+                if (socialMateWebView != null) socialMateWebView.reload();
+            });
+            toolbar.addView(retry, new LinearLayout.LayoutParams(0, dp(52), 1f));
+            Button stopInChat = new Button(this);
+            stopInChat.setText("停止录音");
+            stopInChat.setTextSize(15);
+            stopInChat.setAllCaps(false);
+            stopInChat.setOnClickListener(v -> stopStreaming("用户停止"));
+            toolbar.addView(stopInChat, new LinearLayout.LayoutParams(0, dp(52), 1f));
+            stopInChat.setTextColor(0xFF9C3434);
+            webPanel.addView(toolbar, new LinearLayout.LayoutParams(-1, dp(52)));
+
+            socialMateWebView = new WebView(this);
+            WebSettings settings = socialMateWebView.getSettings();
+            settings.setJavaScriptEnabled(true);
+            settings.setDomStorageEnabled(true);
+            settings.setAllowFileAccess(false);
+            settings.setAllowContentAccess(false);
+            settings.setMixedContentMode(WebSettings.MIXED_CONTENT_NEVER_ALLOW);
+            socialMateWebView.setWebViewClient(new WebViewClient() {
+                @Override public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                    Uri uri = request.getUrl();
+                    if (isPrivatePanelUrl(uri)) return false;
+                    // Maps/share links open in the device's normal browser; not an untrusted WebView.
+                    if ("https".equalsIgnoreCase(uri.getScheme()) || "http".equalsIgnoreCase(uri.getScheme())) {
+                        try { startActivity(new Intent(Intent.ACTION_VIEW, uri)); }
+                        catch (Exception ignored) { }
+                    }
+                    return true;
+                }
+            });
+            webPanel.addView(socialMateWebView, new LinearLayout.LayoutParams(-1, 0, 1f));
+            screenRoot.addView(webPanel, new FrameLayout.LayoutParams(-1, -1));
+            socialMateWebView.loadUrl(privateUiUrl());
+        }
+        webPanel.setVisibility(View.VISIBLE);
+        if (socialMateWebView != null) {
+            socialMateWebView.onResume();
+            // If the panel was opened manually before recording, switch it to live mode now.
+            String current = socialMateWebView.getUrl();
+            if (running && (current == null || !current.contains("live=1"))) {
+                socialMateWebView.loadUrl(privateUiUrl());
+            }
+        }
+    }
+
+    /** Recording start passes live=1 so the page auto-opens a session and reconnects subtitles after refresh. */
+    private String privateUiUrl() {
+        return PRIVATE_UI_URL + (running ? "?live=1" : "");
+    }
+
+    private static boolean isPrivatePanelUrl(Uri uri) {
+        return uri != null &&
+                "http".equalsIgnoreCase(uri.getScheme()) &&
+                "127.0.0.1".equals(uri.getHost()) &&
+                uri.getPort() == 8791;
+    }
+
+    @Override public void onBackPressed() {
+        if (webPanel != null && webPanel.getVisibility() == View.VISIBLE) {
+            webPanel.setVisibility(View.GONE);
+            return;
+        }
+        super.onBackPressed();
     }
 
     private String appVersion() {
@@ -174,7 +338,7 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
         } else {
             deviceInfo.setText("输入： " + AudioInputs.describe(usb) + "\n声明声道/采样率： "
                     + numbers(usb.getChannelCounts()) + " / " + numbers(usb.getSampleRates())
-                    + "\n点「连接并开始识别」时才会打开麦克风。");
+                    + "\n点「开始实时对话」时才会打开麦克风。");
         }
     }
 
@@ -190,6 +354,10 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
 
     private void startStreaming() {
         if (running) return;
+        if (recordingConsent == null || !recordingConsent.isChecked()) {
+            status.setText("请在开启录音前先确认已获得同行者的录音同意。");
+            return;
+        }
         if (checkSelfPermission(Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]{Manifest.permission.RECORD_AUDIO}, REQUEST_MIC);
             return;
@@ -219,6 +387,8 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
         urlInput.setEnabled(false);
         trackPicker.setEnabled(false);
         status.setText("正在打开麦克风并连接服务端…");
+        // Same foreground Activity: show the approved UI immediately after recording starts.
+        showSocialMatePanel();
         if (finals.length() > 0) finals.append("\n— 新会话 —\n");
         transcript.setText(finals.toString());
 
@@ -299,6 +469,7 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
             runOnUiThread(() -> {
                 startButton.setEnabled(true);
                 stopButton.setEnabled(false);
+                if (recordingConsent != null) recordingConsent.setChecked(false);
                 suggestButton.setEnabled(false);
                 urlInput.setEnabled(true);
                 trackPicker.setEnabled(true);
@@ -441,6 +612,13 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
 
     @Override protected void onDestroy() {
         running = false;
+        if (socialMateWebView != null) {
+            socialMateWebView.stopLoading();
+            ViewGroup parent = (ViewGroup) socialMateWebView.getParent();
+            if (parent != null) parent.removeView(socialMateWebView);
+            socialMateWebView.destroy();
+            socialMateWebView = null;
+        }
         super.onDestroy();
     }
 }

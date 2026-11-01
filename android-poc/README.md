@@ -79,3 +79,15 @@ adb -s <serial> reverse tcp:8790 tcp:8790
 - 正式软件介绍唯一来源是 `docs/成果整理/2026-10-31 - Mac Mini - ChatGPT - Bilingual Software Portfolio-Demo Guide - V1.4.md`；不得用临时草稿替换。
 
 版本：0.3.2（versionCode 8）｜APK SHA-256：`ceea17ffc2bd51777bcb7223572470affacf803b9183d53e0e2a7afc37243622`。
+
+
+## 0.4.0 新增：同一 Activity 内嵌 SocialMate V1.2 对话面板（源码，**未编译**）
+
+上一节 0.3.2 的 APK 哈希/真人验收结果是历史证据，不能当成新版 0.4.0 的构建或真机通过。
+
+- Android `AsrActivity` 保留现有录音和腾讯云 WebSocket 8790 逻辑；点击「连接并开始识别」后在**同一个 Activity 前台**打开 WebView `http://127.0.0.1:8791/v12`，因此不需要切到外部浏览器导致 `onStop` 停录。
+- 页面顶部「← 录音控制」「刷新界面」。WebView 只允许内部导航到 `127.0.0.1:8791`；其他 HTTP(S) 地图链接走手机正常外部浏览器，未暴露任何 Android JavaScript Bridge。
+- WebView 的字体偏好/数据库及右上角设置沿用 V1.2.1 页面，前台离开 Activity 后仍按原有安全策略停止录音。
+- Mac 必须先执行 `bash socialmate-v1.2/verify-v040.sh`；源码已 bump 到 versionCode 9 / 0.4.0，但尚未在 Mac 真正编译。
+- 手机调试同时执行 `adb reverse tcp:8790 tcp:8790` 与 `adb reverse tcp:8791 tcp:8791`；网关由 `bash socialmate-v1.2/run-live-v040.sh --phone` 一次启动（须在 ASR 服务与 AI 网关没有独立占用端口时启动）。
+- 音频最终字幕经进程内订阅传到 V1.2 页面；需在页面里开始会话、同意云端文字发送（可选）并点击「连接实时字幕」。
