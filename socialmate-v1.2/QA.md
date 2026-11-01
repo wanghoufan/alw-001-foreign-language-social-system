@@ -355,7 +355,7 @@ V0.4.0 APK 实际输出路径：`android-poc/app/build/outputs/apk/debug/app-deb
 | PWA-02 | PARTIAL | 115 条、搜索/城市/分类、双语详情、详情页地图链接均存在；**未实际打开** Google/Amap 外链 |
 | PWA-03 | PASS（链接）/ NOT_RUN（聊天软件回发） | 选 3 处 → 刷新保留 → 生成 `?selected=` → 新会话回显一致；未通过微信/WhatsApp 实际发送 |
 | PWA-04 | PARTIAL | Note 11 MIUI 原生浏览器实机通过并截图；小米/OPPO/iPhone Safari 未覆盖 |
-| PWA-05 | PARTIAL | 包内无私有路由、无录音权限；**未部署 HTTPS**，未做公网路由枚举 |
+| PWA-05 | PASS | 已部署 GitHub Pages：公开资源 200，`/api/profile`、`/api/asr/live`、`/api/ai/analyze` 全部 404；包内无录音权限 |
 | APP-01 | PARTIAL | 本次 `BUILD SUCCESSFUL`、APK hash 已重算；按用户红线未跑全量回归，stage1b 未重跑 |
 | APP-02 | PASS（真人语音）/ NOT_RUN（真人双人） | 用户本人对 BOYA 说 4 句英文，4 条 final 全部正确并自动归档；DeepSeek 建议卡本轮未重验 |
 | APP-03 | BLOCKED | Note 12T 安装被 MIUI 拒绝；Note 11 Tailscale 未登录，无 USB 链路未验收 |
@@ -383,3 +383,15 @@ V0.4.0 APK 实际输出路径：`android-poc/app/build/outputs/apk/debug/app-deb
 - 自动导出到 Mac：`SocialMate-2026-11-01-041251-sess_20261101T041251_d71d90.md/.json`。
   - MD SHA-256 `ee3f73cb2c2c12feca8636583f493725ea9a9aef86910fcd78fd3234d9648300`；JSON SHA-256 `65c1f926cd6b584208d764ba35268e3a3c9154d2333e11547b23919843063016`；权限 0600。
 - 结论：**真人语音 → 腾讯云 ASR → 手机归档 → Mac 落盘** 全链路成立；说话人双人严格分离仍建议两位真人复测（TTS 双声源已能分 `spk_0/spk_1`）。
+
+### 2026-11-01 海南 PWA 公网部署（GitHub Pages，用户授权）
+
+- 地址：**https://wanghoufan.github.io/alw-001-foreign-language-social-system/**
+- 方式：独立 `gh-pages` 分支，只含 `index.html`（public-share 副本）+ 7 个公开文件；`main` 分支与私有内容未改动。
+- 匿名复验（不带任何凭据）：
+  - 首页、`public-share.html/js`、`public-places.js`、`styles.css`、`manifest.webmanifest`、`sw.js`、`icon.svg` 均 **200**；
+  - `?selected=3,39,41` **200**；
+  - `/api/profile`、`/api/asr/live`、`/api/ai/analyze` 均 **404**；
+  - 页面标题 `Hainan Local Guide · SocialMate`，地点数据 115 条。
+- 手机复验：Note 11 原生浏览器通过公网 HTTPS 打开，显示 `115 / 115 places`、`My list`、`☆ Want to go`；截图 `screenshots/pwa-v11-https-note11.png`。
+- 边界：GitHub Pages 国内直连速度可能波动；无自定义域名；未做 Xiaomi/OPPO/iPhone 全矩阵。
