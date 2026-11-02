@@ -101,6 +101,14 @@
     }
   }
 
+  function applyStaticI18n() {
+    var nodes = document.querySelectorAll('[data-zh][data-en]');
+    for (var i = 0; i < nodes.length; i++) {
+      nodes[i].textContent = language === 'en' ? nodes[i].getAttribute('data-en') : nodes[i].getAttribute('data-zh');
+    }
+    document.title = language === 'en' ? 'Hainan Local Guide · SocialMate' : '海南本地指南 · SocialMate';
+  }
+
   function initFilters() {
     var cities = Array.from(new Set(places.map(function (x) { return x.city; })));
     $('#publicCity').innerHTML = '<option value="">' + (language === 'en' ? 'All cities' : '全部城市') + '</option>' +
@@ -317,6 +325,7 @@
     language = language === 'en' ? 'cn' : 'en';
     $('#language').textContent = language === 'en' ? '中文' : 'English';
     document.documentElement.lang = language === 'en' ? 'en' : 'zh-CN';
+    applyStaticI18n();
     initFilters();
     if (selected) detail(byId.get(selected));
     else { filter(); if (!$('#myList').hidden) renderMyList(); }
