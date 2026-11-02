@@ -6,6 +6,10 @@
   var STORE_KEY = 'sm-hainan-wants-v1';
   var MAX_SELECTED = 40;
 
+  var CAT_EN = {'城市街拍':'Street & city','美食夜生活':'Food & nightlife','海滨日落':'Beach & sunset','咖啡小店':'Cafés','自然户外':'Nature & outdoors','人文历史':'Heritage','市集街区':'Markets & streets','亲子':'Family','温泉':'Hot springs','冲浪潜水':'Surf & dive'};
+  var CITY_EN = {'海口':'Haikou','三亚':'Sanya','万宁':'Wanning','文昌':'Wenchang','琼海':'Qionghai','儋州':'Danzhou','五指山':'Wuzhishan','陵水':'Lingshui','东方':'Dongfang','澄迈':'Chengmai','定安':'Ding\'an','屯昌':'Tunchang','临高':'Lingao','昌江':'Changjiang','乐东':'Ledong','保亭':'Baoting','琼中':'Qiongzhong','白沙':'Baisha'};
+  function catLabel(c){ return language === 'en' ? (CAT_EN[c] || c) : c; }
+  function cityLabel(c){ return language === 'en' ? (CITY_EN[c] || c) : c; }
   var language = 'en', category = '', city = '', query = '';
   var listMode = 'all';
   var selected = '';
@@ -61,7 +65,7 @@
     return '<article class="public-item">' +
       '<button class="item-open" type="button" data-open="' + p.id + '">' +
         '<div class="card-meta"><span class="mini-tag">' + String(p.id).padStart(3, '0') +
-        '</span><span>' + esc(p.city) + ' · ' + esc(p.category) + '</span></div>' +
+        '</span><span>' + esc(cityLabel(p.city)) + ' · ' + esc(catLabel(p.category)) + '</span></div>' +
         '<strong>' + esc(label(p)) + '</strong><small>' + esc(subLabel(p)) + '</small>' +
         '<p class="muted">' + esc((language === 'en' ? p.en : p.cn).slice(0, 113)) + '…</p>' +
       '</button>' +
@@ -100,11 +104,11 @@
   function initFilters() {
     var cities = Array.from(new Set(places.map(function (x) { return x.city; })));
     $('#publicCity').innerHTML = '<option value="">' + (language === 'en' ? 'All cities' : '全部城市') + '</option>' +
-      cities.map(function (c) { return '<option value="' + esc(c) + '">' + esc(c) + '</option>'; }).join('');
+      cities.map(function (c) { return '<option value="' + esc(c) + '">' + esc(cityLabel(c)) + '</option>'; }).join('');
     var types = Array.from(new Set(places.map(function (x) { return x.category; })));
     $('#categoryFilters').innerHTML = '<button class="pill active" data-category="">' +
       (language === 'en' ? 'All' : '全部') + '</button>' +
-      types.map(function (c) { return '<button class="pill" data-category="' + esc(c) + '">' + esc(c) + '</button>'; }).join('');
+      types.map(function (c) { return '<button class="pill" data-category="' + esc(c) + '">' + esc(catLabel(c)) + '</button>'; }).join('');
   }
 
   function detail(p) {
@@ -114,7 +118,7 @@
     var on = wants.has(selected);
     $('#publicDetail').innerHTML = '<div class="public-card">' +
       '<div class="card-meta"><span class="mini-tag">NO. ' + String(p.id).padStart(3, '0') +
-      '</span><span>' + esc(p.city) + ' · ' + esc(p.category) + '</span></div>' +
+      '</span><span>' + esc(cityLabel(p.city)) + ' · ' + esc(catLabel(p.category)) + '</span></div>' +
       '<h1>' + esc(label(p)) + '</h1><div class="public-sub">' + esc(subLabel(p)) + '</div>' +
       '<div class="public-sub">' + esc(p.location) + '</div>' +
       '<p class="public-text">' + esc(language === 'en' ? p.en : p.cn) + '</p>' +
