@@ -75,6 +75,7 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
         }
         if (titleView != null) titleView.setText(L("开始录音", "Start recording"));
         if (startButton != null) startButton.setText(L("开始录音", "Record"));
+        try { refreshRetentionHint(); } catch (Exception ignored) { }
     }
     private TextView titleView;
 
@@ -168,12 +169,12 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
     private void refreshRetentionHint() {
         if (retentionHint == null) return;
         boolean checked = retentionConsent != null && retentionConsent.isChecked();
-        String suffix = running ? "（本轮录音中，改动从下一次会话生效）" : "";
+        String suffix = running ? L("（本轮录音中，改动从下一次会话生效）"," (applies from the next session)") : "";
         if (checked) {
-            retentionHint.setText("当前：本轮原文留存已开 · 停止录音后自动导出到 Mac" + suffix);
+            retentionHint.setText(L("当前：本轮原文留存已开 · 停止录音后自动导出到 Mac","Currently: transcript kept · exported to your Mac after stop") + suffix);
             retentionHint.setBackground(surface(0xFFFDF3E4, 0xFFE7CFA6, 12));
         } else {
-            retentionHint.setText("当前：不留存（默认）· 本轮 0 条写盘、0 条上传到 Mac" + suffix);
+            retentionHint.setText(L("当前：不留存（默认）· 本轮 0 条写盘、0 条上传到 Mac","Currently: not kept (default) · 0 written, 0 uploaded") + suffix);
             retentionHint.setBackground(surface(0xFFEEF4F2, 0xFFD5E4DE, 12));
         }
         retentionHint.setTextColor(0xFF1C293A);
@@ -401,7 +402,7 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
         secondary.setOrientation(LinearLayout.HORIZONTAL);
         secondary.setPadding(0, dp(12), 0, 0);
         reviewButton = new TextView(this);
-        reviewButton.setText("本轮原文与复盘");
+        reviewButton.setText(L("本轮原文与复盘","Transcript & review"));reg(reviewButton,"本轮原文与复盘","Transcript & review");
         reviewButton.setTextSize(14);
         reviewButton.setTextColor(0xFF0C7766);
         reviewButton.setPadding(dp(2), dp(8), dp(14), dp(8));
@@ -1067,7 +1068,7 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
         stopButton.setEnabled(true);
         if (reviewButton != null) {
             reviewButton.setEnabled(false);
-            reviewButton.setText("本轮原文与复盘");
+            reviewButton.setText(L("本轮原文与复盘","Transcript & review"));reg(reviewButton,"本轮原文与复盘","Transcript & review");
         }
         urlInput.setEnabled(false);
         trackPicker.setEnabled(false);
