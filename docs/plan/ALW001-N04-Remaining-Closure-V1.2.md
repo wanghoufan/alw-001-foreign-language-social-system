@@ -7,6 +7,13 @@ governance: 单独主开发者模式；沿用原有最终一次Human Gate，不�
 prior_task: SM-ALW001-20261102-N04-PERSONAS (SENT / GUI_SENT)
 do_not_forward_without_approval: true
 
+## 0. 全阶段开发前置条件审计（本次新增加，所有Task必读）
+
+完整证据、关联P0-0→P1-4所有Task的A/B/C/D依赖矩阵和用户一次性准备清单：
+`docs/plan/ALW001-N04-Remaining-Closure-V1.2-PREFLIGHT.md`
+
+本轮**未确认存在A类开工硬阻塞**，有的历史授权/Key或设备状态仍须由开发者S0运行安全探针核验。现阶段无需用户另建新Key、登录Vercel、购买域名或新数据库；如真正有本人必须授权的事项，集中说明，未受阻Task照常推进。N04 V1.2仍是草案，未入转发收件箱。
+
 ## 1. 仓库与原始证据（不是旧版摘要）
 - 当前 `android-poc/app/build.gradle` 的 versionName=0.7.3，versionCode=28。
 - `docs/relay/CURRENT_TASK.md` = SENT，GUI回执 `docs/relay/receipts/SM-ALW001-20261102-N04-PERSONAS.md` 已记录 09:36 转发 WorkBuddy；本次不重发。
