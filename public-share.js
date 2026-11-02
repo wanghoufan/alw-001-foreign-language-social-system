@@ -88,7 +88,7 @@
     var set = visibleSet();
     $('#publicResults').innerHTML = set.length ? set.map(card).join('')
       : '<div class="empty">No matching places. Try another keyword.</div>';
-    $('#publicCount').textContent = set.length + ' / ' + places.length + ' places';
+    $('#publicCount').textContent = set.length + ' / ' + places.length + (language === 'en' ? ' places' : ' 个地点');
     updateWantsButton();
   }
 
