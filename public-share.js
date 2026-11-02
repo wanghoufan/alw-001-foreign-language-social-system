@@ -6,8 +6,8 @@
   var STORE_KEY = 'sm-hainan-wants-v1';
   var MAX_SELECTED = 40;
 
-  var CAT_EN = {'城市街拍':'Street & city','美食夜生活':'Food & nightlife','海滨日落':'Beach & sunset','咖啡小店':'Cafés','自然户外':'Nature & outdoors','人文历史':'Heritage','市集街区':'Markets & streets','亲子':'Family','温泉':'Hot springs','冲浪潜水':'Surf & dive'};
-  var CITY_EN = {'海口':'Haikou','三亚':'Sanya','万宁':'Wanning','文昌':'Wenchang','琼海':'Qionghai','儋州':'Danzhou','五指山':'Wuzhishan','陵水':'Lingshui','东方':'Dongfang','澄迈':'Chengmai','定安':'Ding\'an','屯昌':'Tunchang','临高':'Lingao','昌江':'Changjiang','乐东':'Ledong','保亭':'Baoting','琼中':'Qiongzhong','白沙':'Baisha'};
+  var CAT_EN = {'城市街拍':'Street & city','美食夜生活':'Food & nightlife','海滨日落':'Beach & sunset','自然体验':'Nature & outdoors','海南环岛':'Around the island'};
+  var CITY_EN = {'海口':'Haikou','文昌':'Wenchang','琼海':'Qionghai','万宁':'Wanning','陵水':'Lingshui','三亚':'Sanya','其他地区':'Other areas'};
   function catLabel(c){ return language === 'en' ? (CAT_EN[c] || c) : c; }
   function cityLabel(c){ return language === 'en' ? (CITY_EN[c] || c) : c; }
   var language = 'en', category = '', city = '', query = '';
@@ -181,7 +181,7 @@
     return ids.map(function (id) {
       var p = byId.get(String(id));
       if (!p) return null;
-      return '- ' + p.enName + ' (' + p.city + ') — ' + location.origin + location.pathname + '?place=' + p.id;
+      return '- ' + p.enName + ' (' + cityLabel(p.city) + ') — ' + location.origin + location.pathname + '?place=' + p.id;
     }).filter(Boolean).join('\n');
   }
 
@@ -201,7 +201,7 @@
       '<ul class="want-list">' + ids.map(function (id) {
         var p = byId.get(id);
         return '<li><button class="linklike" type="button" data-open="' + id + '">' + esc(label(p)) +
-          '</button> <small>' + esc(p.city) + '</small>' +
+          '</button> <small>' + esc(cityLabel(p.city)) + '</small>' +
           '<button class="pill" type="button" data-want="' + id + '" aria-label="Remove">×</button></li>';
       }).join('') + '</ul>' +
       '<label class="formlabel" for="shareLink">' + (language === 'en' ? 'Share link (only place IDs)' : '分享链接（只含地点 ID）') + '</label>' +
