@@ -338,6 +338,7 @@
   });
 
   // ---- boot ----
+  applyStaticI18n();
   initFilters();
   var params = new URLSearchParams(location.search);
   var shared = parseSelected(params.get('selected'));
