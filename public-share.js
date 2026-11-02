@@ -106,6 +106,10 @@
     for (var i = 0; i < nodes.length; i++) {
       nodes[i].textContent = language === 'en' ? nodes[i].getAttribute('data-en') : nodes[i].getAttribute('data-zh');
     }
+    var phs = document.querySelectorAll('[data-ph-zh][data-ph-en]');
+    for (var j = 0; j < phs.length; j++) {
+      phs[j].setAttribute('placeholder', language === 'en' ? phs[j].getAttribute('data-ph-en') : phs[j].getAttribute('data-ph-zh'));
+    }
     document.title = language === 'en' ? 'Hainan Local Guide · SocialMate' : '海南本地指南 · SocialMate';
   }
 

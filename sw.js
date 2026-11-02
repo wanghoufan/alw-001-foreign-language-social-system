@@ -1,5 +1,5 @@
 /* 只缓存公开静态资源；不缓存任何 /api、私有数据或用户选择。 */
-const CACHE = 'hainan-public-v6';
+const CACHE = 'hainan-public-v7';
 const ASSETS = [
   './',
   './public-share.html',
