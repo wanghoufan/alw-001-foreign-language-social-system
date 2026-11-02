@@ -1,5 +1,5 @@
 /* 只缓存公开静态资源；不缓存任何 /api、私有数据或用户选择。 */
-const CACHE = 'hainan-public-v3';
+const CACHE = 'hainan-public-v10';
 const ASSETS = [
   './',
   './public-share.html',
@@ -26,6 +26,18 @@ self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET' || url.origin !== location.origin) return;
   // 任何接口路径一律不缓存（不写死私有路由名）
   if (url.pathname.split('/').includes('api')) return;
+
+  // 文档导航走「网络优先」，避免改了 html 用户还看到旧文案；离线再回退缓存。
+  if (event.request.mode === 'navigate') {
+    event.respondWith(
+      fetch(event.request).then((response) => {
+        const copy = response.clone();
+        caches.open(CACHE).then((cache) => cache.put(event.request, copy)).catch(() => {});
+        return response;
+      }).catch(() => caches.match(event.request).then((hit) => hit || caches.match('./public-share.html'))),
+    );
+    return;
+  }
 
   event.respondWith(
     caches.match(event.request, {ignoreSearch: false}).then((hit) => {
