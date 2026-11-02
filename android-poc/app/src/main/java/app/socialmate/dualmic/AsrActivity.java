@@ -627,6 +627,17 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
             attachSaveBridge(true);
             webPanel.addView(socialMateWebView, new LinearLayout.LayoutParams(-1, 0, 1f));
             screenRoot.addView(webPanel, new FrameLayout.LayoutParams(-1, -1));
+            socialMateWebView.setWebViewClient(new android.webkit.WebViewClient() {
+                @Override public void onPageFinished(android.webkit.WebView view, String url) {
+                    String tk = BuildConfig.ARCHIVE_TOKEN;
+                    if (tk != null && !tk.isEmpty()) {
+                        String js = "(function(){try{if(!sessionStorage.getItem('sm-archive-token')){"
+                                + "sessionStorage.setItem('sm-archive-token','" + tk.replace("'", "\\'") + "');"
+                                + "if(window.__smAfterToken)window.__smAfterToken();}}catch(e){}})()";
+                        view.evaluateJavascript(js, null);
+                    }
+                }
+            });
             socialMateWebView.loadUrl(privateUiUrl());
         }
         webPanel.setVisibility(View.VISIBLE);

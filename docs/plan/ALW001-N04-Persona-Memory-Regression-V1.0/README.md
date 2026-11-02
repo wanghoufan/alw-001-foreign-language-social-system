@@ -450,3 +450,39 @@ Ji-eun  → What are you practising in English these days?
 
 
 
+
+---
+
+## N04 人物档案详情重构（2026-11-02，0.7.4 / vc29）
+
+**用户确认结构**：顶部头像首字母 + 姓名 + 国家·职业 + 「演示数据」 + 事实条数 + 中英切换；分组固定为
+`基本情况 · 沟通习惯 · 爱好 · 生活习惯 · 其他`；组内有序列表；逐条编辑/删除；每组批量选择、全选、批量删除、批量改分组；
+底部变更记录倒序时间线，支持撤回。
+
+### 数据落点
+
+| 内容 | 位置 |
+| --- | --- |
+| 事实正文 | `SocialMate-Data/Demo/People/<slug>/00-profile.md`（仍是带 `sm-src` 的可撤回事实） |
+| 分组 + 中英翻译 | `SocialMate-Data/Demo/People/<slug>/facts-meta.json`（按 factId 索引） |
+| 变更记录 | `SocialMate-Data/Demo/changelog.jsonl`（只追加；撤回也追加一条 `undo`） |
+| 真实主档 | `SocialMate-Data/People/` 零写入（前后 41 文件 / sha256 一致） |
+
+旧事实没有 `facts-meta.json` 时：已知母版英文句按内置对照表补中文与分组，其余一律归「其他」，仍能显示与编辑。
+
+### 写接口
+
+- 新增：`POST /v12/api/demo/people/:slug/facts`、`.../facts/:id/edit`、`.../facts/:id/delete`、
+  `.../facts/bulk-delete`、`.../facts/bulk-group`、`.../changelog/:id/undo`
+- 令牌：沿用现有 `x-archive-token`（由归档服务校验，无新增密钥）；同源校验沿用 `originOK`；写限流沿用 `createRateLimiter`。
+- 读：`GET /v12/api/demo/people/:slug` 直接返回 `facts/groups/changelog`；`GET .../changelog` 可单独读取。
+
+### 验证与设备
+
+- `verify-persona-profile.mjs`：39 项全 PASS（分组条数、单条编辑、删除、批量删 2 条、改分组、变更记录动作与条数、
+  新增/修改/删除/改分组撤回、老数据归其他、令牌 401、跨源 403、真实 People sha256 不变）。
+- 真机 `WGBMXWDIAIFMPFCQ`（21091116AC / Android 11），版本 0.7.4 / vc29，
+  APK sha256 `32df58fbe6b1513a3a10dafe22bdc1cc167791edc6d03c5270e06ac3adfca265`。
+- 14 张真机截图：`qa/20261102/shots/persona-*.png`；设备与截图清单：`qa/20261102/persona-profile-device.json`；
+  脚本输出：`qa/20261102/persona-profile-verify.txt`。
+- 版本注入使用 `qa/20261102/version-0.7.4.gradle`，未修改 `android-poc/**` 源码。

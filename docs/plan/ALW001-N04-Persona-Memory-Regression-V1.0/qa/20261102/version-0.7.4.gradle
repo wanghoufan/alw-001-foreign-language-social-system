@@ -1,0 +1,9 @@
+// 仅构建时注入版本，避免修改 android-poc/** 源码。
+allprojects { p ->
+    p.afterEvaluate {
+        if (p.plugins.hasPlugin('com.android.application')) {
+            p.android.defaultConfig.versionCode = 29
+            p.android.defaultConfig.versionName = '0.7.4'
+        }
+    }
+}

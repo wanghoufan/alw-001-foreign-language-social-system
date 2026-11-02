@@ -1,13 +1,19 @@
 plugins { id 'com.android.application' }
 android {
+    buildFeatures { buildConfig true }
     namespace 'app.socialmate.dualmic'
     compileSdk 35
     defaultConfig {
+        // 归档令牌：构建时从本机 .local 读取并内嵌，用户无需手输（不进仓库：.local 已 gitignore）
+        def tokenFile = new File(rootProject.projectDir.getParentFile(), 'socialmate-v1.2/.local/archive-token')
+        def archiveToken = tokenFile.exists() ? tokenFile.getText('UTF-8').trim() : ''
+        buildConfigField "String", "ARCHIVE_TOKEN", "\"${archiveToken}\""
+
         applicationId 'app.socialmate.dualmic'
         minSdk 26
         targetSdk 35
-        versionCode 28
-        versionName '0.7.3'
+        versionCode 31
+        versionName '0.7.6'
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17

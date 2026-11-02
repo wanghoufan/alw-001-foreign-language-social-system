@@ -15,7 +15,7 @@ import {getPersonDetail,getPersonPrep,revokePersonFact} from "./person-detail.mj
 import {addFavorite,listFavorites,removeFavorite} from "./favorites-store.mjs";
 import {confirmReview} from "./review-confirm.mjs";
 import {buildAiReview,buildLocalReview} from "./session-review.mjs";
-import {clearDemo,confirmDemoPending,demoConversationsRoot,demoRoot,demoStatus,ensureDemoSeeded,ignoreDemoPending,injectDemoFinal,listInbox,listPersonas,readPersona,readSession,restoreDemo} from "./demo-store.mjs";
+import {addDemoFact,bulkDeleteDemoFacts,clearDemo,confirmDemoPending,deleteDemoFact,demoConversationsRoot,demoRoot,demoStatus,editDemoFact,ensureDemoSeeded,ignoreDemoPending,injectDemoFinal,listInbox,listPersonas,moveDemoFactsGroup,readDemoChangelog,readPersona,readSession,restoreDemo,undoDemoChangelog} from "./demo-store.mjs";
 import {demoArchiveStatus,pushDemoArchive} from "./demo-archive.mjs";
 const here=path.dirname(fileURLToPath(import.meta.url));
 const proto=path.resolve(here,"..");
@@ -434,6 +434,58 @@ export function createHandler(options={}){
       try{sessionId=decodeURIComponent(demoSessionMatch[1]);}
       catch{return json(res,400,{ok:false,code:"INVALID_SESSION_ID",error:"会话标识不合法"});}
       return json(res,200,{ok:true,demo:true,synthetic:true,session:await readSession(sessionId)});
+    }
+    /* 档案详情：分组事实 + 变更记录（读接口不要求令牌，内容仍是虚构演示）。
+       写接口沿用真实人物档案的令牌 + 同源 + 写限流，不新增明文密钥。 */
+    const demoPersonPath=url.pathname.match(/^\/v12\/api\/demo\/people\/([^/]+)(?:\/(.*))?$/);
+    if(demoPersonPath){
+      let demoSlug;
+      try{demoSlug=decodeURIComponent(demoPersonPath[1]);}
+      catch{return json(res,400,{ok:false,code:"INVALID_PERSON_SLUG",error:"人物标识不合法"});}
+      const rest=demoPersonPath[2]||"";
+      if(rest==="changelog"&&req.method==="GET"){
+        return json(res,200,{ok:true,demo:true,synthetic:true,...await readDemoChangelog(demoSlug)});
+      }
+      const editMatch=rest.match(/^facts\/([^/]+)\/(edit|delete)$/);
+      const undoMatch=rest.match(/^changelog\/([^/]+)\/undo$/);
+      const isProfileWrite=req.method==="POST"&&(
+        rest==="facts"||rest==="facts/bulk-delete"||rest==="facts/bulk-group"||editMatch||undoMatch);
+      if(isProfileWrite){
+        const token=await peopleToken(res,"编辑演示人物档案");
+        if(!token)return;
+        const limit=rateLimit();
+        if(!limit.ok)
+          return json(res,429,{ok:false,code:"RATE_LIMITED",error:"写入操作过于频繁，请稍后再试",
+            retryAfterMs:limit.retryAfterMs});
+        const body=await readPayload(req,128000);
+        if(body?.confirm!==true)
+          return json(res,400,{ok:false,code:"CONFIRM_REQUIRED",error:"修改演示档案需要用户显式确认"});
+        if(rest==="facts"){
+          return json(res,200,await addDemoFact(demoSlug,{text:body.text,group:body.group,confirm:true}));
+        }
+        if(rest==="facts/bulk-delete"){
+          return json(res,200,await bulkDeleteDemoFacts(demoSlug,body.factIds,{confirm:true}));
+        }
+        if(rest==="facts/bulk-group"){
+          return json(res,200,await moveDemoFactsGroup(demoSlug,body.factIds,body.group,{confirm:true}));
+        }
+        if(editMatch){
+          let factId;
+          try{factId=decodeURIComponent(editMatch[1]);}
+          catch{return json(res,400,{ok:false,code:"INVALID_FACT_ID",error:"factId 格式不合法"});}
+          const result=editMatch[2]==="delete"
+            ?await deleteDemoFact(demoSlug,factId,{confirm:true})
+            :await editDemoFact(demoSlug,factId,{text:body.text,lang:body.lang==="en"?"en":"zh",confirm:true});
+          return json(res,200,result);
+        }
+        if(undoMatch){
+          let entryId;
+          try{entryId=decodeURIComponent(undoMatch[1]);}
+          catch{return json(res,400,{ok:false,code:"INVALID_CHANGELOG_ID",error:"变更记录标识不合法"});}
+          return json(res,200,await undoDemoChangelog(demoSlug,entryId,{confirm:true}));
+        }
+        return json(res,404,{ok:false,code:"NOT_FOUND"});
+      }
     }
     /* 演示 final → 待确认 → 人工确认/忽略。全部只写 SocialMate-Data/Demo；
        确认后才写演示人物档案，写的是 Demo/People（appendPeopleFacts 注入 root）。 */

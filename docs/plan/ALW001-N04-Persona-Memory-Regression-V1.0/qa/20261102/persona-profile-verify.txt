@@ -1,0 +1,10 @@
+{
+  "result": "PASS",
+  "checks": 39,
+  "failures": [],
+  "isolatedDemo": "/var/folders/mp/mnxk3h8x4wq5ztr7__vlplp40000gn/T/sm-persona-verify-hnpAdD",
+  "realPeople": {
+    "files": 41,
+    "sha256": "2bfc108aa7e27b0732eb7ea915dc3083e8e807751325c1110332195f5fccb256"
+  }
+}

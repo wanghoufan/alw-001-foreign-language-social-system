@@ -1,0 +1,64 @@
+{
+  "task": "ALW001-N04 Persona Profile · 分组 + 逐条编辑 + 变更记录 + 批量操作",
+  "date": "2026-11-02",
+  "device": {
+    "serial": "WGBMXWDIAIFMPFCQ",
+    "model": "21091116AC",
+    "android": "11",
+    "appId": "app.socialmate.dualmic"
+  },
+  "apk": {
+    "versionName": "0.7.4",
+    "versionCode": 29,
+    "sha256": "32df58fbe6b1513a3a10dafe22bdc1cc167791edc6d03c5270e06ac3adfca265",
+    "path": "android-poc/app/build/outputs/apk/debug/app-debug.apk",
+    "versionInjectedBy": "docs/plan/ALW001-N04-Persona-Memory-Regression-V1.0/qa/20261102/version-0.7.4.gradle",
+    "androidSourceUntouched": true
+  },
+  "verification": {
+    "script": "docs/plan/ALW001-N04-Persona-Memory-Regression-V1.0/verify-persona-profile.mjs",
+    "result": "PASS",
+    "checks": 39,
+    "failures": [],
+    "output": "docs/plan/ALW001-N04-Persona-Memory-Regression-V1.0/qa/20261102/persona-profile-verify.txt",
+    "realPeople": {
+      "files": 41,
+      "sha256": "2bfc108aa7e27b0732eb7ea915dc3083e8e807751325c1110332195f5fccb256",
+      "unchanged": true
+    }
+  },
+  "deviceChecks": {
+    "enteredDemoPersona": true,
+    "groupedListRendered": true,
+    "inlineEditSaved": true,
+    "singleDeleteConfirmed": true,
+    "bulkSelectedTwo": true,
+    "bulkDeletedTwo": true,
+    "changeLogTimeline": true,
+    "undoRestoredFacts": true,
+    "languageToggleZhEn": true,
+    "bulkMoveGroup": true
+  },
+  "screenshots": {
+    "peopleEntry": "docs/plan/ALW001-N04-Persona-Memory-Regression-V1.0/qa/20261102/shots/persona-01d-people.png",
+    "profileGroupedTop": "docs/plan/ALW001-N04-Persona-Memory-Regression-V1.0/qa/20261102/shots/persona-02-profile.png",
+    "profileGroupsAndEmptyStates": "docs/plan/ALW001-N04-Persona-Memory-Regression-V1.0/qa/20261102/shots/persona-03b-groups-life.png",
+    "editOpen": "docs/plan/ALW001-N04-Persona-Memory-Regression-V1.0/qa/20261102/shots/persona-04b-edit-open.png",
+    "editSaved": "docs/plan/ALW001-N04-Persona-Memory-Regression-V1.0/qa/20261102/shots/persona-05-edit-saved.png",
+    "deleteConfirm": "docs/plan/ALW001-N04-Persona-Memory-Regression-V1.0/qa/20261102/shots/persona-06-delete-confirm.png",
+    "deleteDone": "docs/plan/ALW001-N04-Persona-Memory-Regression-V1.0/qa/20261102/shots/persona-07-delete-done.png",
+    "bulkSelected": "docs/plan/ALW001-N04-Persona-Memory-Regression-V1.0/qa/20261102/shots/persona-08-bulk-selected.png",
+    "bulkConfirm": "docs/plan/ALW001-N04-Persona-Memory-Regression-V1.0/qa/20261102/shots/persona-09-bulk-confirm.png",
+    "bulkDone": "docs/plan/ALW001-N04-Persona-Memory-Regression-V1.0/qa/20261102/shots/persona-10-bulk-done.png",
+    "changeLogDeletes": "docs/plan/ALW001-N04-Persona-Memory-Regression-V1.0/qa/20261102/shots/persona-11-changelog.png",
+    "changeLogMixed": "docs/plan/ALW001-N04-Persona-Memory-Regression-V1.0/qa/20261102/shots/persona-11b-changelog-mixed.png",
+    "englishMode": "docs/plan/ALW001-N04-Persona-Memory-Regression-V1.0/qa/20261102/shots/persona-12-en.png",
+    "finalRestored": "docs/plan/ALW001-N04-Persona-Memory-Regression-V1.0/qa/20261102/shots/persona-15-final2.png",
+    "bulkMoveGroup": "docs/plan/ALW001-N04-Persona-Memory-Regression-V1.0/qa/20261102/shots/persona-14-move-group.png"
+  },
+  "notes": [
+    "QA 修改/删除/批量删除/改分组后全部通过「撤回」恢复，最终 Oliver 为 5 条事实、五组结构完整。",
+    "变更记录保留 15 条（新增 5 / 修改 2 / 删除 3 / 撤回 5），撤回本身也追加留痕。",
+    "写接口要求现有归档令牌；QA 通过 WebView sessionStorage 使用本机既有令牌，未新增任何明文密钥。用户侧可在人物页令牌框粘贴一次。"
+  ]
+}

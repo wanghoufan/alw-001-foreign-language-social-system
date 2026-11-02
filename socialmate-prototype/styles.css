@@ -399,26 +399,26 @@ body{font-size:var(--ui-body);line-height:1.65}
  .topbar h1{font-size:calc(var(--ui-body) + .25rem)}
 }
 
-/* ALW-001 · 景点卡：地名一行「中文 English」+ 卡内描述语言胶囊 */
-.place-card .card-meta{position:relative;padding-right:64px}
+/* ALW-001 · 景点卡：地名一行「中文 English」；描述语言走顶部全局胶囊（卡内不再有胶囊） */
 .place-content h3{display:flex;flex-wrap:wrap;align-items:baseline;gap:.35rem}
 .place-content .english-name{
   margin:0;font-weight:400;color:var(--muted);line-height:1.35;letter-spacing:0;
   font-size:max(13px,calc(var(--ui-secondary) - .0625rem));
 }
-.langchip{
-  position:absolute;right:0;top:0;display:inline-flex;align-items:center;
-  border:1px solid var(--stroke);border-radius:999px;overflow:hidden;background:var(--paper-soft);
-}
-.langchip b{
-  font-size:12px;font-weight:600;line-height:1;padding:6px 9px;
-  color:var(--muted);cursor:pointer;user-select:none;
-}
-.langchip b.on{background:var(--brand);color:var(--paper)}
-.langchip b:focus-visible{outline:2px solid var(--brand);outline-offset:-2px}
 .place-content p.place-desc{font-size:var(--ui-body);line-height:1.7;color:var(--muted)}
 .place-content p.place-desc[lang="en"]{font-size:calc(var(--ui-english) + var(--ui-english-extra))}
-@media(max-width:760px){
- .place-card .card-meta{padding-right:56px}
- .langchip b{padding:5px 7px}
+/* 顶部工具条右侧的全局语言胶囊：中 | EN */
+.place-lang-switch{
+  display:inline-flex;align-items:center;flex-shrink:0;
+  border:1px solid var(--stroke);border-radius:999px;overflow:hidden;background:var(--paper-soft);
+}
+.place-lang-switch button{
+  border:0;background:transparent;color:var(--muted);
+  font-size:var(--ui-secondary);font-weight:700;line-height:1;
+  min-width:44px;min-height:36px;padding:9px 11px;
+}
+.place-lang-switch button[aria-pressed="true"]{background:var(--brand);color:var(--paper)}
+.place-lang-switch button:focus-visible{outline:2px solid var(--brand);outline-offset:-2px}
+@media(max-width:380px){
+ .place-lang-switch button{min-width:38px;padding:8px}
 }
