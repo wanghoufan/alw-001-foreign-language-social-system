@@ -59,13 +59,16 @@ function createHarness({origin='null',cloudResult=null,stored={}}={}){
     }};
     handlers.click({target});
   };
-  function start({cloud=false,provider='deepseek/deepseek-flash'}={}){
-    click({nav:'chat'});click({act:'start'});
-    assert.match(el('#modalcontent').innerHTML,/cloudConsent/);
-    el('#confirm').checked=true;el('#cloudConsent').checked=cloud;
-    el('#providerChoice').value=provider;click({action:'startok'});
+  // 产品态入口：主按钮「开始录音」，云端授权是「更多」里的显式勾选（默认不勾）。
+  function start({cloud=false}={}){
+    click({nav:'chat'});
+    el('#liveCloudConsent').checked=cloud;
+    click({act:'start-recording'});
   }
-  return {el,click,start,calls,stored,document};
+  function say(text='I like running outdoors near the sea.'){
+    el('#msg').value=text;click({act:'send'});
+  }
+  return {el,click,start,say,calls,stored,document};
 }
 
 test('V1.2.1 retains 51 apps / 204 steps / 115 official places',()=>{
@@ -125,27 +128,28 @@ test('about me: custom tags are saved and filter matching content',()=>{
 test('without cloud consent, never call any paid API',()=>{
   const h=createHarness({origin:'http://127.0.0.1:8791'});
   h.start({cloud:false});
-  h.click({sample:'running'});
+  h.say();
   assert.equal(h.calls.length,0);
-  assert.match(h.el('#coachresults').innerHTML,/本地规则模拟/);
+  assert.match(h.el('#coachresults').innerHTML,/本地建议/);
 });
 test('cloud consent on file:// still never calls paid API',()=>{
   const h=createHarness({origin:'null'});
-  h.start({cloud:true});h.click({sample:'running'});
+  h.start({cloud:true});h.say();
   assert.equal(h.calls.length,0);
-  assert.match(h.el('#coachresults').innerHTML,/未连接网关/);
+  assert.match(h.el('#coachresults').innerHTML,/仅本地建议/);
 });
 test('cloud consent from private gateway sends API request and renders cited result',async()=>{
   const h=createHarness({origin:'http://127.0.0.1:8791'});
   h.start({cloud:true});
-  h.click({sample:'running'});
+  h.say();
   for(let i=0;i<12;i++)await Promise.resolve();
   assert.equal(h.calls.length,1);
   assert.equal(h.calls[0].url,'/api/ai/analyze');
   assert.equal(h.calls[0].body.provider,'deepseek');
   assert.equal(h.calls[0].body.includePersonal,false);
   assert.equal(h.calls[0].body.consent,true);
-  assert.match(h.el('#coachresults').innerHTML,/真实 AI ·/);
+  assert.match(h.el('#coachresults').innerHTML,/智能建议 ·/);
+  assert.doesNotMatch(h.el('#coachresults').innerHTML,/本地建议/);
   assert.match(h.el('#coachresults').innerHTML,/Do you prefer morning runs/);
   assert.match(h.el('#recresults').innerHTML,/万绿园/);
 });

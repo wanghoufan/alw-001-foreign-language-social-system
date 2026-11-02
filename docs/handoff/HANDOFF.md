@@ -20,8 +20,9 @@
 
 ## 1. 当前进展
 
-- **N03（SDD V1.1）P0→P3 已交付并推送**：`68a77ce`（HEAD==origin/main）；验收表 `docs/plan/ALW001-N03-SDD-V1.1/ACCEPTANCE.md`；Android **0.6.0（15）** `972eed42…` 已 `install -r` 装 Note 11（保留数据）。
-- 手机端新增：留存默认关＋三同意独立、断网补传四态、在线人物主档（详情带来源 / slug 建议 / 显式新建 / 事实撤回）、历史检索分页、见面前准备、一条接话+一条追问（窄屏内联到字幕下方）、收藏闭环、自适应图标 + Android 12+ Splash、SAF 导出桥。
+- **N03b 产品化收口已上机**：Android **0.7.3（28）**；打开即五 Tab、无原生顶栏、录音为底部面板、系统返回键四级回退（改前会白屏卡死）；中英双语覆盖五 Tab/设置/历史页/原生面板；海南卡图片化 + 每卡 `中|EN` 描述切换 + 详情同款切换。
+- **N04 三人物演示闭环（T1→T3 完成）**：演示数据独立 `SocialMate-Data/Demo/`（真实 `People/` 零写入），3 人物 / 9 会话 / 54 段默认可见，清空可恢复；待确认事实确认后当轮专属问题即时变化；9 套会话落 `~/Documents/SocialMate/Demo/Conversations/`，断网补传幂等；QA 产物在 `docs/plan/ALW001-N04-Persona-Memory-Regression-V1.0/qa/20261102/`。
+- 手机端界面形态（N03b）：**打开即五 Tab 主界面、录音是底部面板、Web 顶栏只有品牌名 + `⋮`**（其余收进菜单）；另新增：留存默认关＋三同意独立、断网补传四态、在线人物主档（详情带来源 / slug 建议 / 显式新建 / 事实撤回）、历史检索分页、见面前准备、一条接话+一条追问（窄屏内联到字幕下方）、收藏闭环、自适应图标 + Android 12+ Splash、SAF 导出桥。
 - 复盘→确认→档案仍是 N02 链路：`/v12/history?session=` → 本地/云端复盘 → 勾选 → 确认 → `Profile` + `People/<slug>/00-profile.md`（来源与幂等标记、0600/0700、备份回滚）。
 - 写接口一律令牌 + 同源（Origin 与 Host 一致）+ 60s/12 次限流；令牌只进 `sessionStorage`，关闭即失效。
 - 归档：final-only 逐字落 `~/Documents/SocialMate/Conversations/YYYY/MM/`；历史 UI 支持词/人/日期/分页与 UTC 导出。
@@ -30,10 +31,10 @@
 
 ## 2. 下一步
 
-1. **视觉档位等用户选**：①只改原生顶栏（去掉三个大按钮）②顶栏 + 聊天页层次（推荐）③整页重做对齐原型。
-2. 大清理等用户说「大阶段结束」再动（临时产物已清，`.local/qa`、`release/` 保留）。
-3. 真人全链与现场双人（需用户在场）。
-4. 借到 Android 12+ 机与 iPhone 后补启动画面实拍与 PWA Safari。
+1. 图标三方案等用户拍板（A 声波 / B 双气泡 / C 对话列表，预览图在 `docs/design/icon-options/`，决定后做成自适应图标 + 单色层）。
+2. PWA 详情抽屉接入同一套 `中|EN`（列表卡已完成）；离线只读、真机断网补传仅接口级验证。
+3. 真人全链与现场双人（需用户在场）；iPhone Safari 缺设备。
+4. 架构与构建事实见 `docs/architecture-facts.md`，风险见 `docs/risks.md`，踩坑见 `agent.md`。
 
 ## 3. 未完成
 
@@ -43,6 +44,9 @@
 - `spk_N` 只是聚类编号，UI 固定「说话人待确认」。
 - 中文名建人走 `person-YYYYMMDD-xxxx`，不转拼音（不为建人调第三方）。
 - 服务只绑回环：真机靠 Tailscale 或 `adb reverse`，映射断开页面需重连。
+- 原生面板两条动态文案（留存提示、归档状态）与「本轮原文与复盘」按钮仍是中文，未走词表 → PARTIAL。
+- 演示数据「未归属 final 选人下拉」只有 API + UI 代码，真机未点过 → NOT_RUN。
+- 6 个地点无干净实景，其中 3 个借同类型实景并标「示意」（25/26/69），另 3 个仍占位。
 
 ## 4. 红线
 
@@ -55,24 +59,20 @@
 
 ## 5. 三日流水
 
-- 2026-10-31：APK 0.3.2 → Note 11/12T 启动；双麦 `MONO_MIX` 实测；ASR 桥接 34/34；内容层（V1.4 51 + 海南 115）真机建议验证；端口 8787→8790。
-- 2026-10-31：V1.2 UI 落地；修「从聊天卡片进详情会切走 Tab、丢会话视图」；5 话题回归。
-- 2026-10-31：真实腾讯云 ASR 跑通（A/B + 混音）；修 `speaker_diarization` 与 `sentence_list`；35/35。
-- 2026-10-31：确认 `socialmate-prototype/` 由另一智能体开发中，只读核对、保留未提交改动。
-- 2026-11-01：V0.4.0 服务阻塞修复：新增 `service-v040.sh`、`/api/asr/status`、组合服务自动恢复、安装脚本 `--serial/--skip-install`。
+- 2026-10-31～11-01 早期流水（V0.3.2→0.5.3、双麦、ASR、归档、TLS 根因等）已迁至 `docs/archive/handoff-flow-20261031.md`。
+
 - 2026-11-01：真机 WebView + MOCK 全链 + 真实腾讯云/DeepSeek + 单人/TTS-B 测完；新增 1 元预算闸。
-- 2026-11-01：Mac 收尾：TLS 根因=CodeArts kernel 注入并在 service 剥离；102/102 + TLS 2/2 + 12；0.4.0 SHA `da46425f…`；九项 UI PASS。
 - 2026-11-01：本机档案：`profile-store` 5/5、API 三分支（无确认 400 / 确认 200 / 回读一致）、同源点击端到端通过。
-- 2026-11-01：归档：10/10；接收端 401/201/duplicate/400 四分支；0.5.0 真机 real-final 落盘；PWA E2E 与 Note 11 原生浏览器通过。
 - 2026-11-01：Note 12T Pro USB 物理拔除后零 `adb reverse` 跑通 ASR/UI/归档，双说话人分离成立。
 - 2026-11-01：归档历史 UI 落地（只读索引 + 三个令牌接口 + `/v12` 同源反代 + 聊天页入口），5/5 新测试，真机 WebView 内可读原文。
-- 2026-11-01：Android 0.5.2 关闭全局明文、仅放行回环；真机差分验证明文与自签名证书边界。
 - 2026-11-01：DeepSeek 授权端到端；PWA Note 12T Pro 自带浏览器 `115/115` 与 `?selected` 回显；**清单回发按用户决定暂停**（代码保留）。
-- 2026-11-01：会后复盘闭环：`session-review.mjs`（本地规则 / DeepSeek 双引擎）、`POST /v12/api/review` 与 `/apply`、历史详情复盘 UI 与 `?session=` 深链、Android 0.5.3 入口按钮；定向 13/13；真实 AI 成本 0.002574 元（累计 0.213634 / 1 元）；写入链路在临时档案目录验完，正式档案未被污染。
 - 2026-11-01 N02：`people-store.mjs` + `review-confirm.mjs` 打通「确认 → People 正式主档」；`/apply` 加令牌+段号+限流；修复 Tailscale 同源 403；`current.md` 收紧 0600；真机（隔离实例+合成会话）点击式确认保存与二次读取 PASS；`verify-v040.sh` 158 项全绿；测试基建修 3 处历史红灯。
 
 - 2026-11-01 N03：SDD V1.1 P0→P3；0.6.0（15）`972eed42…`；215 Node + 12 core 全绿；手机端接话卡原在屏外（y≈917）改内联并折叠会话设置；`68a77ce` 已推送；Android 12+ Splash、IME 遮挡 NOT_RUN。
+- 2026-11-02 N03b：0.6.1→0.7.0 连续收口（五 Tab 直达、底部面板、去演示文案、返回键白屏根因修复、字号下限 17/14/13、卡片收紧、Tab 69→57px、字号/图标/名字）。
+- 2026-11-02 N03b：中英双语落地（I18N 词表 306 key、设置里三档语言、历史页 149 key）；海南卡图片化（115 地点补图至 112）+ 每卡 `中|EN`。
+- 2026-11-02 N04：演示命名空间 / 待确认事实联动 / 归档与 QA 产物三子代理并行完成，0.7.3（28），真机截图 `qa/20261102/shots/`。
 
 ## 6. 接续提示词
 
-先读本文件 §0–§6 与 `docs/plan/ALW001-N03-SDD-V1.1/ACCEPTANCE.md`，用 `bash socialmate-v1.2/service-v040.sh ensure` 起服务后按 §2 继续（视觉档位等用户选）。不关 TLS 校验、不超 1 元 ASR/DeepSeek 预算、不覆盖 V1.4 与海南资料、不写真实档案。
+先读本文件 §0–§6 与 `docs/plan/ALW001-N04-Persona-Memory-Regression-V1.0/README.md`，用 `bash socialmate-v1.2/service-v040.sh ensure` 起服务后按 §2 继续（图标方案等用户拍板）。不关 TLS 校验、不超 1 元 ASR/DeepSeek 预算、不覆盖 V1.4 与海南资料、不写真实档案。

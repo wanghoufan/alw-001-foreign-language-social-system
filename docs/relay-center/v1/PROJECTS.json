@@ -1,0 +1,65 @@
+{
+  "schema_version": "1.0.0",
+  "governance_source": "/Users/zzymima0000/Developer/coding/1.Active/000-alw-个人偏好-电脑治理仓库-skill管理/转发管家/说明.md",
+  "authority": "MIGRATED_2026-11-01__READ_ONLY_HISTORY__OFFICIAL_REGISTRY_IS_NOW_000/转发管家/项目登记.json",
+  "migrated_to": "/Users/zzymima0000/Developer/coding/1.Active/000-alw-个人偏好-电脑治理仓库-skill管理/转发管家/项目登记.json",
+  "migrated_at": "2026-11-01T21:22:00+08:00",
+  "hub_project": "001",
+  "hub_path": "/Users/zzymima0000/Developer/coding/1.Active/alw-001-外语社交系统/docs/relay-center/v1/",
+  "trigger": "转发",
+  "dispatch": "COMPUTER_USE_GUI_ONLY",
+  "max_dispatch_per_trigger": 1,
+  "dispatch_sort": [
+    "priority_ascending",
+    "approved_at_ascending",
+    "task_id_lexicographic"
+  ],
+  "projects": [
+    {
+      "id": "ALW-001",
+      "project_reader_id": "001",
+      "root": "/Users/zzymima0000/Developer/coding/1.Active/alw-001-外语社交系统",
+      "folder": "alw-001-外语社交系统",
+      "workspace_identity": "canonical_path",
+      "dispatch_eligible": true,
+      "write_status": "VERIFIED",
+      "current_task": "docs/relay/CURRENT_TASK.md",
+      "receipt_dir": "docs/relay/receipts",
+      "registry_path": "docs/relay/PROJECT_REGISTRATION.json"
+    },
+    {
+      "id": "P054",
+      "project_reader_id": "054",
+      "root": "/Users/zzymima0000/Developer/coding/1.Active/054-ing-后翻个人信息雷达",
+      "folder": "054-ing-后翻个人信息雷达",
+      "workspace_identity": "canonical_path",
+      "dispatch_eligible": true,
+      "write_status": "VERIFIED",
+      "current_task": "docs/relay/CURRENT_TASK.md",
+      "receipt_dir": "docs/relay/receipts",
+      "registry_path": "docs/relay/PROJECT_REGISTRATION.json"
+    },
+    {
+      "id": "P066",
+      "project_reader_id": "066",
+      "root": "/Users/zzymima0000/Developer/coding/1.Active/066-ing-ai 管理网关",
+      "folder": "066-ing-ai 管理网关",
+      "workspace_identity": "canonical_path",
+      "dispatch_eligible": true,
+      "write_status": "VERIFIED",
+      "current_task": "docs/relay/CURRENT_TASK.md",
+      "receipt_dir": "docs/relay/receipts",
+      "registry_path": "docs/relay/PROJECT_REGISTRATION.json"
+    }
+  ],
+  "other_readonly_project_ids": [
+    "000",
+    "016",
+    "040",
+    "057",
+    "058",
+    "059",
+    "060"
+  ],
+  "notes": "Registry does not itself enqueue tasks. On every trigger, refresh each per-project CURRENT_TASK and receipt; never promote SENT to READY."
+}

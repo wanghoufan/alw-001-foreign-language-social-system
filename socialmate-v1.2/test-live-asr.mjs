@@ -11,7 +11,7 @@ const dataset=JSON.parse(html.match(/<script type="application\/json" id="datase
 // 取真正的主逻辑内联脚本：外部引用（src=...）与 dataset 的 JSON 脚本不算。
 const logic=[...html.matchAll(/<script(?![^>]*\bsrc=)(?![^>]*application\/json)[^>]*>([\s\S]*?)<\/script>/g)].map(x=>x[1]).filter(x=>x.trim()).at(-1);
 
-function createHarness({origin="http://127.0.0.1:8791",cloudConsent=true,search="",manualStart=true,immediateTimers=false}={}){
+function createHarness({origin="http://127.0.0.1:8791",cloudConsent=true,search="",manualStart=true,immediateTimers=false,bridge=null}={}){
   const nodes=new Map(),hooks={},apiCalls=[],streams=[];
   const node=q=>{
     if(!nodes.has(q)){
@@ -47,18 +47,19 @@ function createHarness({origin="http://127.0.0.1:8791",cloudConsent=true,search=
       })};
     }
   };
+  if(bridge)window.SocialMateAndroid=bridge;
   const storage={getItem(){return null},setItem(){}};
   const timer=fn=>{if(immediateTimers)fn();return 1;};
   vm.runInNewContext(logic,{window,document,localStorage:storage,
     setTimeout:timer,clearTimeout(){},confirm:()=>true,Date,URL,Blob,console},{timeout:3000});
   const click=dataset=>hooks.click({target:{closest(query){const m=query.match(/^\[data-([a-z]+)\]$/);return m&&Object.hasOwn(dataset,m[1])?{dataset}:null;}}});
   if(manualStart){
-    click({nav:"chat"});click({act:"start"});
-    node("#confirm").checked=true;node("#cloudConsent").checked=cloudConsent;
-    node("#providerChoice").value="deepseek/deepseek-flash";
-    click({action:"startok"});
+    // 产品态入口：聊天页主按钮就是「开始录音」，云端授权是「更多」里的显式勾选。
+    click({nav:"chat"});
+    node("#liveCloudConsent").checked=cloudConsent;
+    click({act:"start-recording"});
   }
-  return {click,node,apiCalls,streams,hooks};
+  return {click,node,apiCalls,streams,hooks,window};
 }
 // 字幕改为「只追加气泡」后不会再整页重绘：测试 harness 里 #messages 与 #content 是两个
 // 独立桩节点（真实浏览器里 #messages 在 #content 内），所以可见性断言要同时看两处。
@@ -69,6 +70,25 @@ const finalEvent=(id,{mock=false,when=1200}={})=>({
   startMs:when,endMs:when+800,text:mock?"[mock] speech detected 800 ms":"I like running outdoors."
 });
 async function drain(){for(let i=0;i<16;i++)await Promise.resolve();}
+test("web CTA hands recording to the native bridge, then only subscribes to captions",()=>{
+  const asked=[];
+  const h=createHarness({manualStart:false,bridge:{requestRecording(){asked.push(Date.now());return ""}}});
+  h.click({act:"start-recording"});
+  assert.equal(asked.length,1,"原生 requestRecording 必须被调用一次（录音同意在原生侧）");
+  assert.equal(h.streams.length,0,"用户还没在原生确认同意，不得先接字幕流");
+  // 原生真正开录后回调这个钩子，页面才开始订阅。
+  h.window.smNativeRecordingStarted();
+  assert.equal(h.streams.length,1,"原生确认开录后必须订阅本机字幕流");
+  assert.equal(h.streams[0].url,"/api/asr/live");
+});
+
+test("without the native bridge the same CTA degrades to the live-caption stream",()=>{
+  const h=createHarness({manualStart:false});
+  h.click({act:"start-recording"});
+  assert.equal(h.streams.length,1);
+  assert.equal(h.streams[0].url,"/api/asr/live");
+});
+
 test("real subtitles use private same-origin EventSource; interim NEVER calls paid AI",()=>{
   const h=createHarness();h.click({act:"connect-asr"});
   assert.equal(h.streams.length,1);
@@ -83,7 +103,7 @@ test("mock final produces visible mock subtitle, NO model billing",()=>{
   const h=createHarness();h.click({act:"connect-asr"});
   h.streams[0].emit("asr",finalEvent(1,{mock:true}));
   assert.equal(h.apiCalls.length,0);
-  assert.match(visibleHtml(h),/模拟音频|MOCK/);
+  assert.match(visibleHtml(h),/非实时/);
   assert.match(visibleHtml(h),/说话人待确认/);
 });
 test("real final triggers one AI call, preserves unknown speaker, deduplicates replay",async()=>{
@@ -96,7 +116,8 @@ test("real final triggers one AI call, preserves unknown speaker, deduplicates r
   assert.equal(h.apiCalls[0].body.consent,true);
   assert.equal(h.apiCalls[0].body.messages[0].speaker,"unknown");
   assert.match(h.node("#content").innerHTML,/说话人待确认/);
-  assert.match(h.node("#coachresults").innerHTML,/真实 AI/);
+  assert.match(h.node("#coachresults").innerHTML,/智能建议/);
+  assert.doesNotMatch(h.node("#coachresults").innerHTML,/本地建议/);
   assert.match(h.node("#recresults").innerHTML,/万绿园/);
   h.streams[0].emit("asr",event);
   assert.equal(h.apiCalls.length,1);

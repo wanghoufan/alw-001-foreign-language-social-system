@@ -116,3 +116,18 @@
   - Manifest：`icon`/`roundIcon`、`windowSoftInputMode=adjustResize`、`ACCESS_NETWORK_STATE`。
 - 验证：`sh test-core.sh` → PASS 12 core assertions；`bash ../socialmate-v1.2/verify-v040.sh` → 215 Node + 12 core + BUILD SUCCESSFUL。
 - 未验证：Android 12+ 真机启动画面实拍（本机 Android 11 无该 API）；软键盘遮挡（本机输入法不绘制键盘，`mInputMethodWindowVisibleHeight=0`）。
+
+## N03b（2026-11-01）· 0.6.6（versionCode 21）
+
+产品化收口，只改入口与界面形态，不动数据链路与授权模型。本轮只做文档同步，未构建、未安装、未真机点击 0.6.6。
+
+- 版本：`app/build.gradle` → `versionName '0.6.6'` / `versionCode 21`（0.6.1→0.6.6 连续小步）。
+- 入口：`MainActivity` 无 `diagnostics` extra 时 `startActivity(new Intent(this, AsrActivity.class))` + `finish()`，桌面图标直接进五 Tab；双麦/设备检测（`diagnosticTools`）只在 `diagnostics=true` 时展示。
+- 顶栏：`AsrActivity` 打开即 `showSocialMatePanel()`（不再先停在原生录音页）；WebView 顶栏压到 40dp，只留品牌名 + `⋮`，录音 / 刷新 / 服务地址 / 设备检测收进 `showOverflowMenu(View anchor)` 的 `PopupMenu`。
+- 录音面板：底部卡片（把手 + 「开始录音」+ 关闭 + 三枚 chip「需双方同意 / 原文默认不留存 / 云端 AI 默认不发」+ 两个勾选项与说明 + 状态行 +「本轮原文与复盘」「停止录音」+ 折叠「高级设置」+ 主按钮「开始录音」），高度随内容，无空白。
+- 前端（`socialmate-v1.2/source/V1.1-baseline.html`）：删除全部演示/示例入口；CTA 改「开始录音」，有桥时 `requestRecording()` 后等 `smNativeRecordingStarted()` 再 `connectLiveASR()`；手动输入移入「更多 · 人物与云端授权」的二级折叠。
+- 验证方式（本轮只跑三条定向，未跑 `verify-v040.sh`）：
+  - `node socialmate-v1.2/test-ui.mjs` → **12/12** 检查通过（含 `noDemoEntry`、`ctaIsRealAction`）。
+  - `node socialmate-v1.2/test-live-asr.mjs` → **9/10**；失败项为「点 CTA 后立即订阅字幕流」，与延迟订阅契约冲突（harness 未调 `smNativeRecordingStarted`）。
+  - `node --test socialmate-v1.2/test-android-wiring.mjs` → **4/7**；失败 3 条为 0.6.0 旧字符串断言（`我已告知并获得同行者同意录音`、`SocialMate · 实时对话`、`stylePrimary(startButton)`）。
+- 待办：上述 3 + 1 条断言需在 `*.mjs` 侧随新界面更新（本轮按约定未改测试/代码）；更新后再补 0.6.6 构建、`install -r` 与真机点击证据。

@@ -14,6 +14,7 @@ real = json.loads(PLACES.read_text(encoding='utf-8'))
 data['places'] = [{
     'id': p['id'], 'cnName': p['name'], 'enName': p['en_name'], 'city': p['city'],
     'category': p['category'], 'cn': p['cn'], 'en': p['en'],
+    'cityFolder': p.get('city_folder', 'Haikou'), 'photoNote': p.get('photo_note') or {25: '示意', 26: '示意', 69: '示意'}.get(p['id'], ''),
     'locationCn': p.get('location_cn', ''), 'locationEn': p.get('location_en', ''),
     'mapAmap': p.get('map_amap', ''), 'mapGoogle': p.get('map_google', ''),
 } for p in real]
@@ -40,6 +41,20 @@ HISTORY_ENTRY = ('<p class="info" style="margin:0 0 8px"><a href="/v12/history" 
                  '录音结束后：查看原文与会后复盘 →</a></p>\n   ')
 if '/v12/history' not in html:
     html = html.replace('<div class="chatsetup">', HISTORY_ENTRY + '<div class="chatsetup">', 1)
+
+# N04 三人物演示母版离线兜底：把不可变 fixtures 内嵌进构建产物。
+# 服务在线时页面用 /v12/api/demo/*（Mac 上 SocialMate-Data/Demo）；服务读不到时
+# 用这份只读母版渲染并显式标「离线只读」，保证手机打开不是空白。
+DEMO_FIXTURE = ROOT.parent / 'docs/plan/ALW001-N04-Persona-Memory-Regression-V1.0/fixtures/demo-personas.json'
+if DEMO_FIXTURE.exists() and 'id="demo-fixture"' not in html:
+    demo = json.loads(DEMO_FIXTURE.read_text(encoding='utf-8'))
+    demo_payload = json.dumps({
+        'fixtureVersion': demo.get('fixtureVersion'),
+        'notice': demo.get('notice'),
+        'personas': demo['personas'],
+    }, ensure_ascii=False).replace('</', '<\\/')
+    html = html.replace('</body>',
+                        '<script type="application/json" id="demo-fixture">' + demo_payload + '</script></body>', 1)
 
 out = ROOT / 'index.html'
 out.write_text(html, encoding='utf-8')

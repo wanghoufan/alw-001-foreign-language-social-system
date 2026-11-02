@@ -65,5 +65,129 @@
   <div id="toast" role="status" aria-live="polite" class="toast" hidden></div>
   <script src="data.js"></script>
   <script src="app.js"></script>
+  <script>
+  /* ALW-001 · 景点卡内中英切换：只切这张卡的描述文字，不整页翻译。
+     app.js 不改动，这里在渲染完成后补齐卡片的语言胶囊与描述文字。 */
+  (function(){
+    var KEY="socialmate-place-lang-v1";
+    var pref={def:"zh",map:{}};
+    try{
+      var saved=JSON.parse(localStorage.getItem(KEY)||"{}");
+      if(saved&&typeof saved==="object"){
+        pref.def=saved.def==="en"?"en":"zh";
+        if(saved.map&&typeof saved.map==="object")pref.map=saved.map;
+      }
+    }catch(e){}
+    var DATA=window.SOCIALMATE_DATA||{places:[]};
+    function save(){try{localStorage.setItem(KEY,JSON.stringify(pref));}catch(e){}}
+    function langOf(id){var v=pref.map[String(id)];return v==="en"||v==="zh"?v:pref.def;}
+    function clip(text,limit){var s=String(text||"").replace(/\s+/g," ").trim();return s.length>limit?s.slice(0,limit-1)+"…":s;}
+    function placeOf(id){return (DATA.places||[]).filter(function(p){return String(p.id)===String(id);})[0];}
+
+    function paintCard(card){
+      var btn=card.querySelector('[data-action="detail-place"]');
+      if(!btn)return;
+      var place=placeOf(btn.dataset.id);
+      if(!place)return;
+      var lang=langOf(place.id);
+      // 地名一行：中文为主，英文浅色紧随
+      var title=card.querySelector("h3"),name=card.querySelector(".english-name");
+      if(title&&name&&name.parentNode!==title)title.appendChild(name);
+      var desc=card.querySelector("p");
+      if(desc){
+        desc.classList.add("place-desc");
+        var text=lang==="en"?clip(place.en,160):clip(place.cn,110);
+        if(desc.textContent!==text)desc.textContent=text;
+        if(lang==="en")desc.setAttribute("lang","en");else desc.removeAttribute("lang");
+      }
+      var chip=card.querySelector(".langchip");
+      if(!chip){
+        chip=document.createElement("span");
+        chip.className="langchip";
+        chip.setAttribute("role","group");
+        chip.setAttribute("aria-label","描述语言");
+        chip.innerHTML='<b role="button" tabindex="0" data-place-lang="zh">中</b><b role="button" tabindex="0" data-place-lang="en">EN</b>';
+        var meta=card.querySelector(".card-meta");
+        if(meta)meta.appendChild(chip);
+      }
+      Array.prototype.forEach.call(chip.querySelectorAll("[data-place-lang]"),function(b){
+        var on=b.dataset.placeLang===lang;
+        b.classList.toggle("on",on);
+        b.setAttribute("aria-pressed",on?"true":"false");
+      });
+    }
+    function paintCards(){
+      Array.prototype.forEach.call(document.querySelectorAll("#workspace .place-card"),paintCard);
+    }
+
+    function syncDefaultButtons(box){
+      Array.prototype.forEach.call(box.querySelectorAll("[data-place-default]"),function(b){
+        var on=b.dataset.placeDefault===pref.def;
+        b.classList.toggle("active",on);
+        b.setAttribute("aria-pressed",on?"true":"false");
+      });
+    }
+    function paintSettings(){
+      var modal=document.querySelector("#modalRoot .settings-modal");
+      if(!modal)return;
+      var box=modal.querySelector("[data-place-default-box]");
+      if(!box){
+        box=document.createElement("div");
+        box.className="field-group";
+        box.setAttribute("data-place-default-box","");
+        box.innerHTML='<label class="field-label">景点描述默认语言</label>'+
+          '<div class="settings-options" role="group" aria-label="景点描述默认语言">'+
+          '<button type="button" class="setting-choice" data-place-default="zh">中文</button>'+
+          '<button type="button" class="setting-choice" data-place-default="en">English</button></div>'+
+          '<p class="subtle-note">只影响景点卡的描述文字；某张卡在右上角单独选过语言时，保留那张卡的选择。</p>';
+        var anchor=modal.querySelector(".settings-preview");
+        if(anchor)modal.insertBefore(box,anchor);else modal.appendChild(box);
+      }
+      syncDefaultButtons(box);
+    }
+
+    document.addEventListener("click",function(e){
+      var def=e.target.closest?e.target.closest("[data-place-default]"):null;
+      if(def){
+        pref.def=def.dataset.placeDefault==="en"?"en":"zh";
+        save();paintCards();paintSettings();return;
+      }
+      var chip=e.target.closest?e.target.closest("[data-place-lang]"):null;
+      if(chip){
+        var card=chip.closest(".place-card");
+        var btn=card&&card.querySelector('[data-action="detail-place"]');
+        if(!btn)return;
+        pref.map[String(btn.dataset.id)]=chip.dataset.placeLang;
+        save();paintCard(card);return;
+      }
+    });
+    document.addEventListener("keydown",function(e){
+      if(e.key!=="Enter"&&e.key!==" ")return;
+      var chip=e.target.closest?e.target.closest("[data-place-lang]"):null;
+      if(!chip)return;
+      e.preventDefault();chip.click();
+    });
+
+    var io=null,queued=false;
+    function paint(){
+      if(io)io.disconnect();
+      try{paintCards();paintSettings();}finally{
+        if(io)io.observe(document.body,{childList:true,subtree:true});
+      }
+    }
+    function schedule(){
+      if(queued)return;
+      queued=true;
+      requestAnimationFrame(function(){queued=false;paint();});
+    }
+    if(window.MutationObserver){
+      io=new MutationObserver(schedule);
+      io.observe(document.body,{childList:true,subtree:true});
+    }
+    paint();
+    window.addEventListener("load",paint);
+    document.addEventListener("visibilitychange",function(){if(!document.hidden)paint();});
+  })();
+  </script>
 </body>
 </html>

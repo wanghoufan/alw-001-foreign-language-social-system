@@ -1,0 +1,1096 @@
+{
+  "schemaVersion": 1,
+  "fixtureVersion": "N04-DEMO-1.0",
+  "fictional": true,
+  "synthetic": true,
+  "mode": "demo-only-isolated",
+  "seedMode": "baseline-with-pending-facts",
+  "createdAt": "2026-11-02T00:14:00.000Z",
+  "notice": "所有姓名/性格/经历/对话均为虚构，仅作为可长期保留的演示数据。虚构人物的人设由场景手动设定，不基于国籍推断性格。绝不能作为真实好友、真人录音或真实腾讯ASR证据。",
+  "sourceOfTruth": "docs/plan/ALW001-N04-Persona-Memory-Regression-V1.0/fixtures/demo-personas.json",
+  "defaultPreviewOnFirstRun": true,
+  "canonicalImmutable": true,
+  "resetPolicy": "demo-namespace-only",
+  "personas": [
+    {
+      "slug": "demo-oliver-uk",
+      "name": "Oliver Reed",
+      "region": "英国·伦敦",
+      "regionEn": "London, United Kingdom",
+      "fictional": true,
+      "personality": "注重计划、讲话简洁、喜欢用实际训练进展交流的健身爱好者（虚构设定，与国籍无推断关系）",
+      "stylePreference": "简短、直接、具体、少闲聊",
+      "conversationCautions": "不主动建议吵闹酒吧，避免给自己或对方编造训练成绩",
+      "topics": [
+        "strength-training",
+        "cycling",
+        "race-training"
+      ],
+      "baselineConfirmedFacts": [
+        {
+          "section": "interest",
+          "text": "Oliver goes strength training three mornings a week.",
+          "source": {
+            "sessionId": "sess_n04_demo_oliver_uk_1",
+            "segmentIndex": 1
+          },
+          "confirmed": true,
+          "confirmedBy": "demo-scenario-author",
+          "demonstration": true
+        },
+        {
+          "section": "plan",
+          "text": "Oliver is working toward his first strict pull-up.",
+          "source": {
+            "sessionId": "sess_n04_demo_oliver_uk_1",
+            "segmentIndex": 3
+          },
+          "confirmed": true,
+          "confirmedBy": "demo-scenario-author",
+          "demonstration": true
+        }
+      ],
+      "pendingCandidate": {
+        "section": "plan",
+        "text": "Oliver is preparing for his first 10-kilometre race in December.",
+        "source": {
+          "sessionId": "sess_n04_demo_oliver_uk_2",
+          "segmentIndex": 3
+        },
+        "confirmed": false,
+        "attribution": "unknown-until-demo-user-confirms",
+        "demonstration": true
+      },
+      "expected": {
+        "beforeCustomized": [
+          "How is the pull-up goal going?",
+          "Have you found a routine that works for your three gym mornings?"
+        ],
+        "afterCustomized": [
+          "How is your 10K training for December going?",
+          "Are easy runs affecting your gym sessions?"
+        ],
+        "generic": [
+          "What has been the highlight of your week?"
+        ],
+        "forbidden": [
+          "You've already completed a 10K.",
+          "I also train six days a week."
+        ]
+      },
+      "sessions": [
+        {
+          "sessionId": "sess_n04_demo_oliver_uk_1",
+          "personSlug": "demo-oliver-uk",
+          "startedAt": "2026-10-20T09:00:00.000Z",
+          "endedAt": "2026-10-20T09:00:30.000Z",
+          "appVersion": "DEMO-N04",
+          "demo": true,
+          "synthetic": true,
+          "provider": "synthetic",
+          "mock": true,
+          "consent": {
+            "recording": true,
+            "retention": true,
+            "cloudAi": false
+          },
+          "revision": 1,
+          "segments": [
+            {
+              "eventId": "demo-demo-oliver-uk-1-0",
+              "index": 0,
+              "startMs": 0,
+              "endMs": 4000,
+              "receivedAt": "2026-10-20T09:00:04.000Z",
+              "speakerId": "spk_0",
+              "track": "mix",
+              "provider": "synthetic",
+              "mock": true,
+              "final": true,
+              "textOriginal": "What do you enjoy doing before work?"
+            },
+            {
+              "eventId": "demo-demo-oliver-uk-1-1",
+              "index": 1,
+              "startMs": 5000,
+              "endMs": 9000,
+              "receivedAt": "2026-10-20T09:00:09.000Z",
+              "speakerId": "spk_1",
+              "track": "mix",
+              "provider": "synthetic",
+              "mock": true,
+              "final": true,
+              "textOriginal": "I go strength training three mornings a week."
+            },
+            {
+              "eventId": "demo-demo-oliver-uk-1-2",
+              "index": 2,
+              "startMs": 10000,
+              "endMs": 14000,
+              "receivedAt": "2026-10-20T09:00:14.000Z",
+              "speakerId": "spk_0",
+              "track": "mix",
+              "provider": "synthetic",
+              "mock": true,
+              "final": true,
+              "textOriginal": "Do you have a particular goal at the gym?"
+            },
+            {
+              "eventId": "demo-demo-oliver-uk-1-3",
+              "index": 3,
+              "startMs": 15000,
+              "endMs": 19000,
+              "receivedAt": "2026-10-20T09:00:19.000Z",
+              "speakerId": "spk_1",
+              "track": "mix",
+              "provider": "synthetic",
+              "mock": true,
+              "final": true,
+              "textOriginal": "I'm working toward my first strict pull-up."
+            },
+            {
+              "eventId": "demo-demo-oliver-uk-1-4",
+              "index": 4,
+              "startMs": 20000,
+              "endMs": 24000,
+              "receivedAt": "2026-10-20T09:00:24.000Z",
+              "speakerId": "spk_0",
+              "track": "mix",
+              "provider": "synthetic",
+              "mock": true,
+              "final": true,
+              "textOriginal": "That sounds like a good challenge."
+            },
+            {
+              "eventId": "demo-demo-oliver-uk-1-5",
+              "index": 5,
+              "startMs": 25000,
+              "endMs": 29000,
+              "receivedAt": "2026-10-20T09:00:29.000Z",
+              "speakerId": "spk_1",
+              "track": "mix",
+              "provider": "synthetic",
+              "mock": true,
+              "final": true,
+              "textOriginal": "Yes, I like keeping a simple training log."
+            }
+          ]
+        },
+        {
+          "sessionId": "sess_n04_demo_oliver_uk_2",
+          "personSlug": "demo-oliver-uk",
+          "startedAt": "2026-10-27T09:00:00.000Z",
+          "endedAt": "2026-10-27T09:00:30.000Z",
+          "appVersion": "DEMO-N04",
+          "demo": true,
+          "synthetic": true,
+          "provider": "synthetic",
+          "mock": true,
+          "consent": {
+            "recording": true,
+            "retention": true,
+            "cloudAi": false
+          },
+          "revision": 1,
+          "segments": [
+            {
+              "eventId": "demo-demo-oliver-uk-2-0",
+              "index": 0,
+              "startMs": 0,
+              "endMs": 4000,
+              "receivedAt": "2026-10-27T09:00:04.000Z",
+              "speakerId": "spk_0",
+              "track": "mix",
+              "provider": "synthetic",
+              "mock": true,
+              "final": true,
+              "textOriginal": "How has your training been going?"
+            },
+            {
+              "eventId": "demo-demo-oliver-uk-2-1",
+              "index": 1,
+              "startMs": 5000,
+              "endMs": 9000,
+              "receivedAt": "2026-10-27T09:00:09.000Z",
+              "speakerId": "spk_1",
+              "track": "mix",
+              "provider": "synthetic",
+              "mock": true,
+              "final": true,
+              "textOriginal": "The pull-up work is progressing, thanks."
+            },
+            {
+              "eventId": "demo-demo-oliver-uk-2-2",
+              "index": 2,
+              "startMs": 10000,
+              "endMs": 14000,
+              "receivedAt": "2026-10-27T09:00:14.000Z",
+              "speakerId": "spk_0",
+              "track": "mix",
+              "provider": "synthetic",
+              "mock": true,
+              "final": true,
+              "textOriginal": "Any new goals?"
+            },
+            {
+              "eventId": "demo-demo-oliver-uk-2-3",
+              "index": 3,
+              "startMs": 15000,
+              "endMs": 19000,
+              "receivedAt": "2026-10-27T09:00:19.000Z",
+              "speakerId": "spk_1",
+              "track": "mix",
+              "provider": "synthetic",
+              "mock": true,
+              "final": true,
+              "textOriginal": "I'm preparing for my first 10-kilometre race in December."
+            },
+            {
+              "eventId": "demo-demo-oliver-uk-2-4",
+              "index": 4,
+              "startMs": 20000,
+              "endMs": 24000,
+              "receivedAt": "2026-10-27T09:00:24.000Z",
+              "speakerId": "spk_0",
+              "track": "mix",
+              "provider": "synthetic",
+              "mock": true,
+              "final": true,
+              "textOriginal": "Have you changed your weekly schedule?"
+            },
+            {
+              "eventId": "demo-demo-oliver-uk-2-5",
+              "index": 5,
+              "startMs": 25000,
+              "endMs": 29000,
+              "receivedAt": "2026-10-27T09:00:29.000Z",
+              "speakerId": "spk_1",
+              "track": "mix",
+              "provider": "synthetic",
+              "mock": true,
+              "final": true,
+              "textOriginal": "I'm trying to fit easy runs around the gym sessions."
+            }
+          ]
+        },
+        {
+          "sessionId": "sess_n04_demo_oliver_uk_3",
+          "personSlug": "demo-oliver-uk",
+          "startedAt": "2026-11-01T09:00:00.000Z",
+          "endedAt": "2026-11-01T09:00:30.000Z",
+          "appVersion": "DEMO-N04",
+          "demo": true,
+          "synthetic": true,
+          "provider": "synthetic",
+          "mock": true,
+          "consent": {
+            "recording": true,
+            "retention": true,
+            "cloudAi": false
+          },
+          "revision": 1,
+          "segments": [
+            {
+              "eventId": "demo-demo-oliver-uk-3-0",
+              "index": 0,
+              "startMs": 0,
+              "endMs": 4000,
+              "receivedAt": "2026-11-01T09:00:04.000Z",
+              "speakerId": "spk_0",
+              "track": "mix",
+              "provider": "synthetic",
+              "mock": true,
+              "final": true,
+              "textOriginal": "How are you balancing your gym work and the 10K plan?"
+            },
+            {
+              "eventId": "demo-demo-oliver-uk-3-1",
+              "index": 1,
+              "startMs": 5000,
+              "endMs": 9000,
+              "receivedAt": "2026-11-01T09:00:09.000Z",
+              "speakerId": "spk_1",
+              "track": "mix",
+              "provider": "synthetic",
+              "mock": true,
+              "final": true,
+              "textOriginal": "I keep the runs easy after heavy lifting days."
+            },
+            {
+              "eventId": "demo-demo-oliver-uk-3-2",
+              "index": 2,
+              "startMs": 10000,
+              "endMs": 14000,
+              "receivedAt": "2026-11-01T09:00:14.000Z",
+              "speakerId": "spk_0",
+              "track": "mix",
+              "provider": "synthetic",
+              "mock": true,
+              "final": true,
+              "textOriginal": "What is the next milestone?"
+            },
+            {
+              "eventId": "demo-demo-oliver-uk-3-3",
+              "index": 3,
+              "startMs": 15000,
+              "endMs": 19000,
+              "receivedAt": "2026-11-01T09:00:19.000Z",
+              "speakerId": "spk_1",
+              "track": "mix",
+              "provider": "synthetic",
+              "mock": true,
+              "final": true,
+              "textOriginal": "I'd like to run the full distance comfortably."
+            },
+            {
+              "eventId": "demo-demo-oliver-uk-3-4",
+              "index": 4,
+              "startMs": 20000,
+              "endMs": 24000,
+              "receivedAt": "2026-11-01T09:00:24.000Z",
+              "speakerId": "spk_0",
+              "track": "mix",
+              "provider": "synthetic",
+              "mock": true,
+              "final": true,
+              "textOriginal": "Thanks for sharing. I hope training goes well."
+            },
+            {
+              "eventId": "demo-demo-oliver-uk-3-5",
+              "index": 5,
+              "startMs": 25000,
+              "endMs": 29000,
+              "receivedAt": "2026-11-01T09:00:29.000Z",
+              "speakerId": "spk_1",
+              "track": "mix",
+              "provider": "synthetic",
+              "mock": true,
+              "final": true,
+              "textOriginal": "Thank you!"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "demo-maya-us",
+      "name": "Maya Torres",
+      "region": "美国·奥斯汀",
+      "regionEn": "Austin, United States",
+      "fictional": true,
+      "personality": "热情健谈，喜欢分享设计、独立音乐演出和新鲜体验的创意从业者（虚构）",
+      "stylePreference": "轻松、积极、开放式、有趣的追问",
+      "conversationCautions": "不要假定她已到海南、已去某场演出或接受邀约",
+      "topics": [
+        "graphic-design",
+        "live-music",
+        "haikou-food"
+      ],
+      "baselineConfirmedFacts": [
+        {
+          "section": "work",
+          "text": "Maya designs posters for small local bands.",
+          "source": {
+            "sessionId": "sess_n04_demo_maya_us_1",
+            "segmentIndex": 1
+          },
+          "confirmed": true,
+          "confirmedBy": "demo-scenario-author",
+          "demonstration": true
+        },
+        {
+          "section": "interest",
+          "text": "Maya enjoys small live-music gigs.",
+          "source": {
+            "sessionId": "sess_n04_demo_maya_us_1",
+            "segmentIndex": 3
+          },
+          "confirmed": true,
+          "confirmedBy": "demo-scenario-author",
+          "demonstration": true
+        }
+      ],
+      "pendingCandidate": {
+        "section": "plan",
+        "text": "Maya is considering a trip to Haikou and wants to try local street food.",
+        "source": {
+          "sessionId": "sess_n04_demo_maya_us_2",
+          "segmentIndex": 3
+        },
+        "confirmed": false,
+        "attribution": "unknown-until-demo-user-confirms",
+        "demonstration": true
+      },
+      "expected": {
+        "beforeCustomized": [
+          "Have you made any new posters for local bands?",
+          "What's the best small gig you've seen recently?"
+        ],
+        "afterCustomized": [
+          "What kind of Haikou street food would you like to try?",
+          "Would you rather explore food stalls or small music venues first?"
+        ],
+        "generic": [
+          "What is something new you discovered this month?"
+        ],
+        "forbidden": [
+          "You already booked your flight to Haikou.",
+          "We saw the concert together."
+        ]
+      },
+      "sessions": [
+        {
+          "sessionId": "sess_n04_demo_maya_us_1",
+          "personSlug": "demo-maya-us",
+          "startedAt": "2026-10-20T14:00:00.000Z",
+          "endedAt": "2026-10-20T14:00:30.000Z",
+          "appVersion": "DEMO-N04",
+          "demo": true,
+          "synthetic": true,
+          "provider": "synthetic",
+          "mock": true,
+          "consent": {
+            "recording": true,
+            "retention": true,
+            "cloudAi": false
+          },
+          "revision": 1,
+          "segments": [
+            {
+              "eventId": "demo-demo-maya-us-1-0",
+              "index": 0,
+              "startMs": 0,
+              "endMs": 4000,
+              "receivedAt": "2026-10-20T14:00:04.000Z",
+              "speakerId": "spk_0",
+              "track": "mix",
+              "provider": "synthetic",
+              "mock": true,
+              "final": true,
+              "textOriginal": "What kind of creative work do you do?"
+            },
+            {
+              "eventId": "demo-demo-maya-us-1-1",
+              "index": 1,
+              "startMs": 5000,
+              "endMs": 9000,
+              "receivedAt": "2026-10-20T14:00:09.000Z",
+              "speakerId": "spk_1",
+              "track": "mix",
+              "provider": "synthetic",
+              "mock": true,
+              "final": true,
+              "textOriginal": "I design posters for small local bands."
+            },
+            {
+              "eventId": "demo-demo-maya-us-1-2",
+              "index": 2,
+              "startMs": 10000,
+              "endMs": 14000,
+              "receivedAt": "2026-10-20T14:00:14.000Z",
+              "speakerId": "spk_0",
+              "track": "mix",
+              "provider": "synthetic",
+              "mock": true,
+              "final": true,
+              "textOriginal": "That sounds fun! Do you listen to their music too?"
+            },
+            {
+              "eventId": "demo-demo-maya-us-1-3",
+              "index": 3,
+              "startMs": 15000,
+              "endMs": 19000,
+              "receivedAt": "2026-10-20T14:00:19.000Z",
+              "speakerId": "spk_1",
+              "track": "mix",
+              "provider": "synthetic",
+              "mock": true,
+              "final": true,
+              "textOriginal": "I love going to small live-music gigs."
+            },
+            {
+              "eventId": "demo-demo-maya-us-1-4",
+              "index": 4,
+              "startMs": 20000,
+              "endMs": 24000,
+              "receivedAt": "2026-10-20T14:00:24.000Z",
+              "speakerId": "spk_0",
+              "track": "mix",
+              "provider": "synthetic",
+              "mock": true,
+              "final": true,
+              "textOriginal": "What do you like about smaller shows?"
+            },
+            {
+              "eventId": "demo-demo-maya-us-1-5",
+              "index": 5,
+              "startMs": 25000,
+              "endMs": 29000,
+              "receivedAt": "2026-10-20T14:00:29.000Z",
+              "speakerId": "spk_1",
+              "track": "mix",
+              "provider": "synthetic",
+              "mock": true,
+              "final": true,
+              "textOriginal": "It's easier to feel connected to the musicians."
+            }
+          ]
+        },
+        {
+          "sessionId": "sess_n04_demo_maya_us_2",
+          "personSlug": "demo-maya-us",
+          "startedAt": "2026-10-27T14:00:00.000Z",
+          "endedAt": "2026-10-27T14:00:30.000Z",
+          "appVersion": "DEMO-N04",
+          "demo": true,
+          "synthetic": true,
+          "provider": "synthetic",
+          "mock": true,
+          "consent": {
+            "recording": true,
+            "retention": true,
+            "cloudAi": false
+          },
+          "revision": 1,
+          "segments": [
+            {
+              "eventId": "demo-demo-maya-us-2-0",
+              "index": 0,
+              "startMs": 0,
+              "endMs": 4000,
+              "receivedAt": "2026-10-27T14:00:04.000Z",
+              "speakerId": "spk_0",
+              "track": "mix",
+              "provider": "synthetic",
+              "mock": true,
+              "final": true,
+              "textOriginal": "Did you find any new bands this week?"
+            },
+            {
+              "eventId": "demo-demo-maya-us-2-1",
+              "index": 1,
+              "startMs": 5000,
+              "endMs": 9000,
+              "receivedAt": "2026-10-27T14:00:09.000Z",
+              "speakerId": "spk_1",
+              "track": "mix",
+              "provider": "synthetic",
+              "mock": true,
+              "final": true,
+              "textOriginal": "Yes, a friend sent me a brilliant playlist."
+            },
+            {
+              "eventId": "demo-demo-maya-us-2-2",
+              "index": 2,
+              "startMs": 10000,
+              "endMs": 14000,
+              "receivedAt": "2026-10-27T14:00:14.000Z",
+              "speakerId": "spk_0",
+              "track": "mix",
+              "provider": "synthetic",
+              "mock": true,
+              "final": true,
+              "textOriginal": "Do you have any travel ideas coming up?"
+            },
+            {
+              "eventId": "demo-demo-maya-us-2-3",
+              "index": 3,
+              "startMs": 15000,
+              "endMs": 19000,
+              "receivedAt": "2026-10-27T14:00:19.000Z",
+              "speakerId": "spk_1",
+              "track": "mix",
+              "provider": "synthetic",
+              "mock": true,
+              "final": true,
+              "textOriginal": "I'm considering a trip to Haikou and want to try local street food."
+            },
+            {
+              "eventId": "demo-demo-maya-us-2-4",
+              "index": 4,
+              "startMs": 20000,
+              "endMs": 24000,
+              "receivedAt": "2026-10-27T14:00:24.000Z",
+              "speakerId": "spk_0",
+              "track": "mix",
+              "provider": "synthetic",
+              "mock": true,
+              "final": true,
+              "textOriginal": "What kinds of dishes are you curious about?"
+            },
+            {
+              "eventId": "demo-demo-maya-us-2-5",
+              "index": 5,
+              "startMs": 25000,
+              "endMs": 29000,
+              "receivedAt": "2026-10-27T14:00:29.000Z",
+              "speakerId": "spk_1",
+              "track": "mix",
+              "provider": "synthetic",
+              "mock": true,
+              "final": true,
+              "textOriginal": "I like trying something people actually eat every day."
+            }
+          ]
+        },
+        {
+          "sessionId": "sess_n04_demo_maya_us_3",
+          "personSlug": "demo-maya-us",
+          "startedAt": "2026-11-01T14:00:00.000Z",
+          "endedAt": "2026-11-01T14:00:30.000Z",
+          "appVersion": "DEMO-N04",
+          "demo": true,
+          "synthetic": true,
+          "provider": "synthetic",
+          "mock": true,
+          "consent": {
+            "recording": true,
+            "retention": true,
+            "cloudAi": false
+          },
+          "revision": 1,
+          "segments": [
+            {
+              "eventId": "demo-demo-maya-us-3-0",
+              "index": 0,
+              "startMs": 0,
+              "endMs": 4000,
+              "receivedAt": "2026-11-01T14:00:04.000Z",
+              "speakerId": "spk_0",
+              "track": "mix",
+              "provider": "synthetic",
+              "mock": true,
+              "final": true,
+              "textOriginal": "Are you still thinking of visiting Haikou?"
+            },
+            {
+              "eventId": "demo-demo-maya-us-3-1",
+              "index": 1,
+              "startMs": 5000,
+              "endMs": 9000,
+              "receivedAt": "2026-11-01T14:00:09.000Z",
+              "speakerId": "spk_1",
+              "track": "mix",
+              "provider": "synthetic",
+              "mock": true,
+              "final": true,
+              "textOriginal": "Yes, I'm checking dates, but nothing is booked yet."
+            },
+            {
+              "eventId": "demo-demo-maya-us-3-2",
+              "index": 2,
+              "startMs": 10000,
+              "endMs": 14000,
+              "receivedAt": "2026-11-01T14:00:14.000Z",
+              "speakerId": "spk_0",
+              "track": "mix",
+              "provider": "synthetic",
+              "mock": true,
+              "final": true,
+              "textOriginal": "Would you like a few local food ideas?"
+            },
+            {
+              "eventId": "demo-demo-maya-us-3-3",
+              "index": 3,
+              "startMs": 15000,
+              "endMs": 19000,
+              "receivedAt": "2026-11-01T14:00:19.000Z",
+              "speakerId": "spk_1",
+              "track": "mix",
+              "provider": "synthetic",
+              "mock": true,
+              "final": true,
+              "textOriginal": "Absolutely, especially casual places."
+            },
+            {
+              "eventId": "demo-demo-maya-us-3-4",
+              "index": 4,
+              "startMs": 20000,
+              "endMs": 24000,
+              "receivedAt": "2026-11-01T14:00:24.000Z",
+              "speakerId": "spk_0",
+              "track": "mix",
+              "provider": "synthetic",
+              "mock": true,
+              "final": true,
+              "textOriginal": "Do you want food options or music venues first?"
+            },
+            {
+              "eventId": "demo-demo-maya-us-3-5",
+              "index": 5,
+              "startMs": 25000,
+              "endMs": 29000,
+              "receivedAt": "2026-11-01T14:00:29.000Z",
+              "speakerId": "spk_1",
+              "track": "mix",
+              "provider": "synthetic",
+              "mock": true,
+              "final": true,
+              "textOriginal": "Maybe food first, then some live music."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "demo-jieun-kr",
+      "name": "Ji-eun Park",
+      "region": "韩国·首尔",
+      "regionEn": "Seoul, South Korea",
+      "fictional": true,
+      "personality": "耐心内敛、偏好安静环境、喜欢街拍与咖啡馆，交流时更乐于回答具体问题的摄影爱好者（虚构）",
+      "stylePreference": "温和、留停顿、一次只问一件事",
+      "conversationCautions": "不要用性格标签定义所有韩国人；不建议在很吵的LiveHouse深入长聊",
+      "topics": [
+        "street-photography",
+        "quiet-cafe",
+        "learning-english"
+      ],
+      "baselineConfirmedFacts": [
+        {
+          "section": "interest",
+          "text": "Ji-eun enjoys photographing old streets.",
+          "source": {
+            "sessionId": "sess_n04_demo_jieun_kr_1",
+            "segmentIndex": 1
+          },
+          "confirmed": true,
+          "confirmedBy": "demo-scenario-author",
+          "demonstration": true
+        },
+        {
+          "section": "preference",
+          "text": "Ji-eun prefers quiet cafes to crowded bars.",
+          "source": {
+            "sessionId": "sess_n04_demo_jieun_kr_1",
+            "segmentIndex": 3
+          },
+          "confirmed": true,
+          "confirmedBy": "demo-scenario-author",
+          "demonstration": true
+        }
+      ],
+      "pendingCandidate": {
+        "section": "plan",
+        "text": "Ji-eun is practising English to talk about her photography.",
+        "source": {
+          "sessionId": "sess_n04_demo_jieun_kr_2",
+          "segmentIndex": 3
+        },
+        "confirmed": false,
+        "attribution": "unknown-until-demo-user-confirms",
+        "demonstration": true
+      },
+      "expected": {
+        "beforeCustomized": [
+          "Have you found another old street you'd like to photograph?",
+          "Did you try any new quiet cafes recently?"
+        ],
+        "afterCustomized": [
+          "Would you like to practise describing a photograph in English?",
+          "What story does your morning-light picture tell?"
+        ],
+        "generic": [
+          "What have you enjoyed this week?"
+        ],
+        "forbidden": [
+          "You love noisy bars.",
+          "Your English is poor."
+        ]
+      },
+      "sessions": [
+        {
+          "sessionId": "sess_n04_demo_jieun_kr_1",
+          "personSlug": "demo-jieun-kr",
+          "startedAt": "2026-10-20T04:00:00.000Z",
+          "endedAt": "2026-10-20T04:00:30.000Z",
+          "appVersion": "DEMO-N04",
+          "demo": true,
+          "synthetic": true,
+          "provider": "synthetic",
+          "mock": true,
+          "consent": {
+            "recording": true,
+            "retention": true,
+            "cloudAi": false
+          },
+          "revision": 1,
+          "segments": [
+            {
+              "eventId": "demo-demo-jieun-kr-1-0",
+              "index": 0,
+              "startMs": 0,
+              "endMs": 4000,
+              "receivedAt": "2026-10-20T04:00:04.000Z",
+              "speakerId": "spk_0",
+              "track": "mix",
+              "provider": "synthetic",
+              "mock": true,
+              "final": true,
+              "textOriginal": "What do you enjoy doing on a quiet weekend?"
+            },
+            {
+              "eventId": "demo-demo-jieun-kr-1-1",
+              "index": 1,
+              "startMs": 5000,
+              "endMs": 9000,
+              "receivedAt": "2026-10-20T04:00:09.000Z",
+              "speakerId": "spk_1",
+              "track": "mix",
+              "provider": "synthetic",
+              "mock": true,
+              "final": true,
+              "textOriginal": "I like taking photographs of old streets."
+            },
+            {
+              "eventId": "demo-demo-jieun-kr-1-2",
+              "index": 2,
+              "startMs": 10000,
+              "endMs": 14000,
+              "receivedAt": "2026-10-20T04:00:14.000Z",
+              "speakerId": "spk_0",
+              "track": "mix",
+              "provider": "synthetic",
+              "mock": true,
+              "final": true,
+              "textOriginal": "Where do you prefer to sit and edit photos?"
+            },
+            {
+              "eventId": "demo-demo-jieun-kr-1-3",
+              "index": 3,
+              "startMs": 15000,
+              "endMs": 19000,
+              "receivedAt": "2026-10-20T04:00:19.000Z",
+              "speakerId": "spk_1",
+              "track": "mix",
+              "provider": "synthetic",
+              "mock": true,
+              "final": true,
+              "textOriginal": "I prefer quiet cafes to crowded bars."
+            },
+            {
+              "eventId": "demo-demo-jieun-kr-1-4",
+              "index": 4,
+              "startMs": 20000,
+              "endMs": 24000,
+              "receivedAt": "2026-10-20T04:00:24.000Z",
+              "speakerId": "spk_0",
+              "track": "mix",
+              "provider": "synthetic",
+              "mock": true,
+              "final": true,
+              "textOriginal": "Do you shoot more in the morning or evening?"
+            },
+            {
+              "eventId": "demo-demo-jieun-kr-1-5",
+              "index": 5,
+              "startMs": 25000,
+              "endMs": 29000,
+              "receivedAt": "2026-10-20T04:00:29.000Z",
+              "speakerId": "spk_1",
+              "track": "mix",
+              "provider": "synthetic",
+              "mock": true,
+              "final": true,
+              "textOriginal": "Usually early morning, when the streets are calm."
+            }
+          ]
+        },
+        {
+          "sessionId": "sess_n04_demo_jieun_kr_2",
+          "personSlug": "demo-jieun-kr",
+          "startedAt": "2026-10-27T04:00:00.000Z",
+          "endedAt": "2026-10-27T04:00:30.000Z",
+          "appVersion": "DEMO-N04",
+          "demo": true,
+          "synthetic": true,
+          "provider": "synthetic",
+          "mock": true,
+          "consent": {
+            "recording": true,
+            "retention": true,
+            "cloudAi": false
+          },
+          "revision": 1,
+          "segments": [
+            {
+              "eventId": "demo-demo-jieun-kr-2-0",
+              "index": 0,
+              "startMs": 0,
+              "endMs": 4000,
+              "receivedAt": "2026-10-27T04:00:04.000Z",
+              "speakerId": "spk_0",
+              "track": "mix",
+              "provider": "synthetic",
+              "mock": true,
+              "final": true,
+              "textOriginal": "Have you taken any interesting photos lately?"
+            },
+            {
+              "eventId": "demo-demo-jieun-kr-2-1",
+              "index": 1,
+              "startMs": 5000,
+              "endMs": 9000,
+              "receivedAt": "2026-10-27T04:00:09.000Z",
+              "speakerId": "spk_1",
+              "track": "mix",
+              "provider": "synthetic",
+              "mock": true,
+              "final": true,
+              "textOriginal": "I found a beautiful old alley last weekend."
+            },
+            {
+              "eventId": "demo-demo-jieun-kr-2-2",
+              "index": 2,
+              "startMs": 10000,
+              "endMs": 14000,
+              "receivedAt": "2026-10-27T04:00:14.000Z",
+              "speakerId": "spk_0",
+              "track": "mix",
+              "provider": "synthetic",
+              "mock": true,
+              "final": true,
+              "textOriginal": "Would you like to share the story in English?"
+            },
+            {
+              "eventId": "demo-demo-jieun-kr-2-3",
+              "index": 3,
+              "startMs": 15000,
+              "endMs": 19000,
+              "receivedAt": "2026-10-27T04:00:19.000Z",
+              "speakerId": "spk_1",
+              "track": "mix",
+              "provider": "synthetic",
+              "mock": true,
+              "final": true,
+              "textOriginal": "I'm practising English to talk about my photography."
+            },
+            {
+              "eventId": "demo-demo-jieun-kr-2-4",
+              "index": 4,
+              "startMs": 20000,
+              "endMs": 24000,
+              "receivedAt": "2026-10-27T04:00:24.000Z",
+              "speakerId": "spk_0",
+              "track": "mix",
+              "provider": "synthetic",
+              "mock": true,
+              "final": true,
+              "textOriginal": "We can take it slowly. Which photo would you start with?"
+            },
+            {
+              "eventId": "demo-demo-jieun-kr-2-5",
+              "index": 5,
+              "startMs": 25000,
+              "endMs": 29000,
+              "receivedAt": "2026-10-27T04:00:29.000Z",
+              "speakerId": "spk_1",
+              "track": "mix",
+              "provider": "synthetic",
+              "mock": true,
+              "final": true,
+              "textOriginal": "The one with the morning light."
+            }
+          ]
+        },
+        {
+          "sessionId": "sess_n04_demo_jieun_kr_3",
+          "personSlug": "demo-jieun-kr",
+          "startedAt": "2026-11-01T04:00:00.000Z",
+          "endedAt": "2026-11-01T04:00:30.000Z",
+          "appVersion": "DEMO-N04",
+          "demo": true,
+          "synthetic": true,
+          "provider": "synthetic",
+          "mock": true,
+          "consent": {
+            "recording": true,
+            "retention": true,
+            "cloudAi": false
+          },
+          "revision": 1,
+          "segments": [
+            {
+              "eventId": "demo-demo-jieun-kr-3-0",
+              "index": 0,
+              "startMs": 0,
+              "endMs": 4000,
+              "receivedAt": "2026-11-01T04:00:04.000Z",
+              "speakerId": "spk_0",
+              "track": "mix",
+              "provider": "synthetic",
+              "mock": true,
+              "final": true,
+              "textOriginal": "Would you like to describe your morning-light photo?"
+            },
+            {
+              "eventId": "demo-demo-jieun-kr-3-1",
+              "index": 1,
+              "startMs": 5000,
+              "endMs": 9000,
+              "receivedAt": "2026-11-01T04:00:09.000Z",
+              "speakerId": "spk_1",
+              "track": "mix",
+              "provider": "synthetic",
+              "mock": true,
+              "final": true,
+              "textOriginal": "Yes, but I may need a little time to find the words."
+            },
+            {
+              "eventId": "demo-demo-jieun-kr-3-2",
+              "index": 2,
+              "startMs": 10000,
+              "endMs": 14000,
+              "receivedAt": "2026-11-01T04:00:14.000Z",
+              "speakerId": "spk_0",
+              "track": "mix",
+              "provider": "synthetic",
+              "mock": true,
+              "final": true,
+              "textOriginal": "Of course. What caught your eye first?"
+            },
+            {
+              "eventId": "demo-demo-jieun-kr-3-3",
+              "index": 3,
+              "startMs": 15000,
+              "endMs": 19000,
+              "receivedAt": "2026-11-01T04:00:19.000Z",
+              "speakerId": "spk_1",
+              "track": "mix",
+              "provider": "synthetic",
+              "mock": true,
+              "final": true,
+              "textOriginal": "The shadows on the walls."
+            },
+            {
+              "eventId": "demo-demo-jieun-kr-3-4",
+              "index": 4,
+              "startMs": 20000,
+              "endMs": 24000,
+              "receivedAt": "2026-11-01T04:00:24.000Z",
+              "speakerId": "spk_0",
+              "track": "mix",
+              "provider": "synthetic",
+              "mock": true,
+              "final": true,
+              "textOriginal": "That's a lovely detail."
+            },
+            {
+              "eventId": "demo-demo-jieun-kr-3-5",
+              "index": 5,
+              "startMs": 25000,
+              "endMs": 29000,
+              "receivedAt": "2026-11-01T04:00:29.000Z",
+              "speakerId": "spk_1",
+              "track": "mix",
+              "provider": "synthetic",
+              "mock": true,
+              "final": true,
+              "textOriginal": "Thank you for giving me time to explain."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

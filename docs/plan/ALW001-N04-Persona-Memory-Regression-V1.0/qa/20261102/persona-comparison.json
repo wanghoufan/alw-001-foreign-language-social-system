@@ -1,0 +1,384 @@
+{
+  "generatedAt": "2026-11-02T02:04:31.054Z",
+  "mode": "real-run",
+  "synthetic": true,
+  "notice": "3 位均为虚构剧本人物；问题由已确认事实本地规则生成，0 次模型调用。",
+  "device": {
+    "serial": "WGBMXWDIAIFMPFCQ",
+    "model": "21091116AC",
+    "android": "11",
+    "versionName": "0.7.3",
+    "versionCode": 28,
+    "apkPath": "/Users/zzymima0000/Developer/coding/1.Active/alw-001-外语社交系统/android-poc/app/build/outputs/apk/debug/app-debug.apk",
+    "apkSha256": "cd4cddcc123e9e39d20f6ca348ca3c014df7b8411ab7321e58dcab5c02e6147f",
+    "label": "真机（合成演示数据，非真人录音）"
+  },
+  "base": "http://127.0.0.1:8791",
+  "personas": [
+    {
+      "slug": "demo-oliver-uk",
+      "name": "Oliver Reed",
+      "region": "英国·伦敦",
+      "regionEn": "London, United Kingdom",
+      "style": "简短、直接、具体、少闲聊",
+      "personality": "注重计划、讲话简洁、喜欢用实际训练进展交流的健身爱好者（虚构设定，与国籍无推断关系）",
+      "topics": [
+        "strength-training",
+        "cycling",
+        "race-training"
+      ],
+      "confirmedFacts": [
+        {
+          "id": "c28765f49d52a9cc",
+          "text": "Oliver goes strength training three mornings a week.",
+          "section": "兴趣",
+          "source": {
+            "sessionId": "sess_n04_demo_oliver_uk_1",
+            "segmentIndex": 1,
+            "date": "2026-10-20T09:00:00.000Z"
+          }
+        },
+        {
+          "id": "5c2ebf0b0d311ca9",
+          "text": "Oliver is working toward his first strict pull-up.",
+          "section": "对方近期计划",
+          "source": {
+            "sessionId": "sess_n04_demo_oliver_uk_1",
+            "segmentIndex": 3,
+            "date": "2026-10-20T09:00:00.000Z"
+          }
+        }
+      ],
+      "pendingCandidates": [
+        {
+          "id": "pnd_41d6e635e09a",
+          "text": "Oliver is preparing for his first 10-kilometre race in December.",
+          "section": "plan",
+          "source": {
+            "sessionId": "sess_n04_demo_oliver_uk_2",
+            "segmentIndex": 3
+          },
+          "receivedAt": "2026-10-27T09:00:30.000Z"
+        }
+      ],
+      "personalized": [
+        {
+          "en": "How is your pull-up goal going?",
+          "zh": "你的引体向上目标进展如何？",
+          "basedOnFact": "Oliver is working toward his first strict pull-up.",
+          "factId": "5c2ebf0b0d311ca9",
+          "source": "confirmed-fact"
+        },
+        {
+          "en": "Have you found a routine that works for your gym mornings?",
+          "zh": "你找到适合早晨健身的节奏了吗？",
+          "basedOnFact": "Oliver goes strength training three mornings a week.",
+          "factId": "c28765f49d52a9cc",
+          "source": "confirmed-fact"
+        }
+      ],
+      "generic": {
+        "en": "What has been the highlight of your week so far?",
+        "zh": "这周到目前为止，你最开心的事是什么？",
+        "source": "template"
+      },
+      "expected": {
+        "beforeCustomized": [
+          "How is the pull-up goal going?",
+          "Have you found a routine that works for your three gym mornings?"
+        ],
+        "afterCustomized": [
+          "How is your 10K training for December going?",
+          "Are easy runs affecting your gym sessions?"
+        ],
+        "generic": [
+          "What has been the highlight of your week?"
+        ],
+        "forbidden": [
+          "You've already completed a 10K.",
+          "I also train six days a week."
+        ]
+      },
+      "cautions": "不主动建议吵闹酒吧，避免给自己或对方编造训练成绩",
+      "actualVsExpectedNote": "母版 expected 是人工撰写的目标文案；实际文案由唯一事实本地规则生成，语义一致但措辞可能不同。"
+    },
+    {
+      "slug": "demo-maya-us",
+      "name": "Maya Torres",
+      "region": "美国·奥斯汀",
+      "regionEn": "Austin, United States",
+      "style": "轻松、积极、开放式、有趣的追问",
+      "personality": "热情健谈，喜欢分享设计、独立音乐演出和新鲜体验的创意从业者（虚构）",
+      "topics": [
+        "graphic-design",
+        "live-music",
+        "haikou-food"
+      ],
+      "confirmedFacts": [
+        {
+          "id": "fff6e1e0abcb1492",
+          "text": "Maya enjoys small live-music gigs.",
+          "section": "兴趣",
+          "source": {
+            "sessionId": "sess_n04_demo_maya_us_1",
+            "segmentIndex": 3,
+            "date": "2026-10-20T14:00:00.000Z"
+          }
+        },
+        {
+          "id": "21f96b54b2b8b599",
+          "text": "Maya designs posters for small local bands.",
+          "section": "工作 / 学习",
+          "source": {
+            "sessionId": "sess_n04_demo_maya_us_1",
+            "segmentIndex": 1,
+            "date": "2026-10-20T14:00:00.000Z"
+          }
+        }
+      ],
+      "pendingCandidates": [
+        {
+          "id": "pnd_0676245faef1",
+          "text": "Maya is considering a trip to Haikou and wants to try local street food.",
+          "section": "plan",
+          "source": {
+            "sessionId": "sess_n04_demo_maya_us_2",
+            "segmentIndex": 3
+          },
+          "receivedAt": "2026-10-27T14:00:30.000Z"
+        }
+      ],
+      "personalized": [
+        {
+          "en": "Have you made any new posters for local bands?",
+          "zh": "最近有为本地乐队做新海报吗？",
+          "basedOnFact": "Maya designs posters for small local bands.",
+          "factId": "21f96b54b2b8b599",
+          "source": "confirmed-fact"
+        },
+        {
+          "en": "What's the best small gig you've seen recently?",
+          "zh": "最近看过最棒的小型演出是哪一场？",
+          "basedOnFact": "Maya enjoys small live-music gigs.",
+          "factId": "fff6e1e0abcb1492",
+          "source": "confirmed-fact"
+        }
+      ],
+      "generic": {
+        "en": "What has been the highlight of your week so far?",
+        "zh": "这周到目前为止，你最开心的事是什么？",
+        "source": "template"
+      },
+      "expected": {
+        "beforeCustomized": [
+          "Have you made any new posters for local bands?",
+          "What's the best small gig you've seen recently?"
+        ],
+        "afterCustomized": [
+          "What kind of Haikou street food would you like to try?",
+          "Would you rather explore food stalls or small music venues first?"
+        ],
+        "generic": [
+          "What is something new you discovered this month?"
+        ],
+        "forbidden": [
+          "You already booked your flight to Haikou.",
+          "We saw the concert together."
+        ]
+      },
+      "cautions": "不要假定她已到海南、已去某场演出或接受邀约",
+      "actualVsExpectedNote": "母版 expected 是人工撰写的目标文案；实际文案由唯一事实本地规则生成，语义一致但措辞可能不同。"
+    },
+    {
+      "slug": "demo-jieun-kr",
+      "name": "Ji-eun Park",
+      "region": "韩国·首尔",
+      "regionEn": "Seoul, South Korea",
+      "style": "温和、留停顿、一次只问一件事",
+      "personality": "耐心内敛、偏好安静环境、喜欢街拍与咖啡馆，交流时更乐于回答具体问题的摄影爱好者（虚构）",
+      "topics": [
+        "street-photography",
+        "quiet-cafe",
+        "learning-english"
+      ],
+      "confirmedFacts": [
+        {
+          "id": "51ccdbeb228b266f",
+          "text": "Ji-eun enjoys photographing old streets.",
+          "section": "兴趣",
+          "source": {
+            "sessionId": "sess_n04_demo_jieun_kr_1",
+            "segmentIndex": 1,
+            "date": "2026-10-20T04:00:00.000Z"
+          }
+        },
+        {
+          "id": "8afadc047edc96e8",
+          "text": "Ji-eun prefers quiet cafes to crowded bars.",
+          "section": "已确认偏好",
+          "source": {
+            "sessionId": "sess_n04_demo_jieun_kr_1",
+            "segmentIndex": 3,
+            "date": "2026-10-20T04:00:00.000Z"
+          }
+        }
+      ],
+      "pendingCandidates": [
+        {
+          "id": "pnd_93ebadcf04c5",
+          "text": "Ji-eun is practising English to talk about her photography.",
+          "section": "plan",
+          "source": {
+            "sessionId": "sess_n04_demo_jieun_kr_2",
+            "segmentIndex": 3
+          },
+          "receivedAt": "2026-10-27T04:00:30.000Z"
+        }
+      ],
+      "personalized": [
+        {
+          "en": "Which café have you enjoyed most recently?",
+          "zh": "最近你最喜欢哪家咖啡店？",
+          "basedOnFact": "Ji-eun prefers quiet cafes to crowded bars.",
+          "factId": "8afadc047edc96e8",
+          "source": "confirmed-fact"
+        },
+        {
+          "en": "What have you been photographing lately?",
+          "zh": "你最近都在拍些什么？",
+          "basedOnFact": "Ji-eun enjoys photographing old streets.",
+          "factId": "51ccdbeb228b266f",
+          "source": "confirmed-fact"
+        }
+      ],
+      "generic": {
+        "en": "Is there anything you would like to try for the first time this month?",
+        "zh": "这个月你想第一次尝试什么？",
+        "source": "template"
+      },
+      "expected": {
+        "beforeCustomized": [
+          "Have you found another old street you'd like to photograph?",
+          "Did you try any new quiet cafes recently?"
+        ],
+        "afterCustomized": [
+          "Would you like to practise describing a photograph in English?",
+          "What story does your morning-light picture tell?"
+        ],
+        "generic": [
+          "What have you enjoyed this week?"
+        ],
+        "forbidden": [
+          "You love noisy bars.",
+          "Your English is poor."
+        ]
+      },
+      "cautions": "不要用性格标签定义所有韩国人；不建议在很吵的LiveHouse深入长聊",
+      "actualVsExpectedNote": "母版 expected 是人工撰写的目标文案；实际文案由唯一事实本地规则生成，语义一致但措辞可能不同。"
+    }
+  ],
+  "crossPersona": {
+    "personalizedTotal": 6,
+    "personalizedDistinct": 6,
+    "duplicatedAcrossPersonas": [],
+    "allPersonalizedDistinct": true,
+    "genericQuestions": [
+      "What has been the highlight of your week so far?",
+      "What has been the highlight of your week so far?",
+      "Is there anything you would like to try for the first time this month?"
+    ],
+    "genericMayRepeat": true,
+    "commonTopics": [],
+    "uniqueTopics": [
+      {
+        "slug": "demo-oliver-uk",
+        "topics": [
+          "strength-training",
+          "cycling",
+          "race-training"
+        ]
+      },
+      {
+        "slug": "demo-maya-us",
+        "topics": [
+          "graphic-design",
+          "live-music",
+          "haikou-food"
+        ]
+      },
+      {
+        "slug": "demo-jieun-kr",
+        "topics": [
+          "street-photography",
+          "quiet-cafe",
+          "learning-english"
+        ]
+      }
+    ],
+    "factDivision": [
+      {
+        "slug": "demo-oliver-uk",
+        "facts": [
+          "Oliver goes strength training three mornings a week.",
+          "Oliver is working toward his first strict pull-up."
+        ],
+        "factSources": [
+          {
+            "sessionId": "sess_n04_demo_oliver_uk_1",
+            "segmentIndex": 1,
+            "date": "2026-10-20T09:00:00.000Z"
+          },
+          {
+            "sessionId": "sess_n04_demo_oliver_uk_1",
+            "segmentIndex": 3,
+            "date": "2026-10-20T09:00:00.000Z"
+          }
+        ]
+      },
+      {
+        "slug": "demo-maya-us",
+        "facts": [
+          "Maya enjoys small live-music gigs.",
+          "Maya designs posters for small local bands."
+        ],
+        "factSources": [
+          {
+            "sessionId": "sess_n04_demo_maya_us_1",
+            "segmentIndex": 3,
+            "date": "2026-10-20T14:00:00.000Z"
+          },
+          {
+            "sessionId": "sess_n04_demo_maya_us_1",
+            "segmentIndex": 1,
+            "date": "2026-10-20T14:00:00.000Z"
+          }
+        ]
+      },
+      {
+        "slug": "demo-jieun-kr",
+        "facts": [
+          "Ji-eun enjoys photographing old streets.",
+          "Ji-eun prefers quiet cafes to crowded bars."
+        ],
+        "factSources": [
+          {
+            "sessionId": "sess_n04_demo_jieun_kr_1",
+            "segmentIndex": 1,
+            "date": "2026-10-20T04:00:00.000Z"
+          },
+          {
+            "sessionId": "sess_n04_demo_jieun_kr_1",
+            "segmentIndex": 3,
+            "date": "2026-10-20T04:00:00.000Z"
+          }
+        ]
+      }
+    ],
+    "assertions": {
+      "eachPersonaHas2Personalized": true,
+      "eachPersonalizedCitesFact": true,
+      "noPersonalizedLeakAcrossPersonas": true,
+      "genericAllowedToRepeat": true
+    }
+  }
+}

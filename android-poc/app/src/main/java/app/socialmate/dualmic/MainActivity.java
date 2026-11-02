@@ -76,6 +76,13 @@ public final class MainActivity extends Activity {
 
     @Override public void onCreate(Bundle state) {
         super.onCreate(state);
+        // 产品形态：点图标直接进主界面（五 Tab），不再先插一页原生卡片。
+        // 双麦检测属于开发工具，只有带 diagnostics=true 显式进入时才展示。
+        if (!getIntent().getBooleanExtra("diagnostics", false)) {
+            startActivity(new Intent(this, AsrActivity.class));
+            finish();
+            return;
+        }
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         buildUi();
         refreshDevices();

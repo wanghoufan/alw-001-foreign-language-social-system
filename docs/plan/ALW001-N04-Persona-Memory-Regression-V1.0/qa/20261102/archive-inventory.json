@@ -1,0 +1,160 @@
+{
+  "generatedAt": "2026-11-02T02:04:26.488Z",
+  "mode": "real-run",
+  "synthetic": true,
+  "macRoot": "/Users/zzymima0000/Documents/SocialMate/Demo/Conversations",
+  "queueRoot": "/Users/zzymima0000/Developer/coding/1.Active/alw-001-外语社交系统/SocialMate-Data/Demo/Conversations",
+  "totals": {
+    "sessions": 9,
+    "segments": 54,
+    "markdown": 9,
+    "json": 9,
+    "bytes": 32736
+  },
+  "files": [
+    {
+      "sessionId": "sess_n04_demo_jieun_kr_1",
+      "personSlug": "demo-jieun-kr",
+      "markdown": {
+        "path": "/Users/zzymima0000/Documents/SocialMate/Demo/Conversations/2026/10/SocialMate-2026-10-20-040000-sess_n04_demo_jieun_kr_1.md",
+        "bytes": 1181,
+        "sha256": "125fac99b1a991c3f56a7667b8f2d580e22b5233c41266408f6c53ffd4b17728"
+      },
+      "json": {
+        "path": "/Users/zzymima0000/Documents/SocialMate/Demo/Conversations/2026/10/SocialMate-2026-10-20-040000-sess_n04_demo_jieun_kr_1.json",
+        "bytes": 2471,
+        "sha256": "b30cb181983d2923d6050b86bf4ec7ecb0d2aa9342ecf726575003653e9e2c6c"
+      },
+      "segments": 6,
+      "verbatim": true
+    },
+    {
+      "sessionId": "sess_n04_demo_jieun_kr_2",
+      "personSlug": "demo-jieun-kr",
+      "markdown": {
+        "path": "/Users/zzymima0000/Documents/SocialMate/Demo/Conversations/2026/10/SocialMate-2026-10-27-040000-sess_n04_demo_jieun_kr_2.md",
+        "bytes": 1196,
+        "sha256": "8eac9bb74e1ede05b9b1d2d00569f06ca5ba765acd73253a52225439898d2290"
+      },
+      "json": {
+        "path": "/Users/zzymima0000/Documents/SocialMate/Demo/Conversations/2026/10/SocialMate-2026-10-27-040000-sess_n04_demo_jieun_kr_2.json",
+        "bytes": 2486,
+        "sha256": "09f8606406fed183f61b317927bea85be3d308446407d01e80312a0c6423a913"
+      },
+      "segments": 6,
+      "verbatim": true
+    },
+    {
+      "sessionId": "sess_n04_demo_jieun_kr_3",
+      "personSlug": "demo-jieun-kr",
+      "markdown": {
+        "path": "/Users/zzymima0000/Documents/SocialMate/Demo/Conversations/2026/11/SocialMate-2026-11-01-040000-sess_n04_demo_jieun_kr_3.md",
+        "bytes": 1154,
+        "sha256": "acac7e04d79c15b56b8cfeffb9d7e5369c6c1656c3ed6c31a4e4178d2b58d104"
+      },
+      "json": {
+        "path": "/Users/zzymima0000/Documents/SocialMate/Demo/Conversations/2026/11/SocialMate-2026-11-01-040000-sess_n04_demo_jieun_kr_3.json",
+        "bytes": 2444,
+        "sha256": "e2828a8287e8fd4794137f424887164633768ca6ceaec9e26f8fad7c3517ff91"
+      },
+      "segments": 6,
+      "verbatim": true
+    },
+    {
+      "sessionId": "sess_n04_demo_maya_us_1",
+      "personSlug": "demo-maya-us",
+      "markdown": {
+        "path": "/Users/zzymima0000/Documents/SocialMate/Demo/Conversations/2026/10/SocialMate-2026-10-20-140000-sess_n04_demo_maya_us_1.md",
+        "bytes": 1171,
+        "sha256": "51961fc7c8b9335ddf18b2883504ea675dc739791ddbdcf1b45620ee0647fe4f"
+      },
+      "json": {
+        "path": "/Users/zzymima0000/Documents/SocialMate/Demo/Conversations/2026/10/SocialMate-2026-10-20-140000-sess_n04_demo_maya_us_1.json",
+        "bytes": 2455,
+        "sha256": "9f2f80c594adb5f08d4247cd63ccd91b410f2d633e983b917866f67c5161fb49"
+      },
+      "segments": 6,
+      "verbatim": true
+    },
+    {
+      "sessionId": "sess_n04_demo_maya_us_2",
+      "personSlug": "demo-maya-us",
+      "markdown": {
+        "path": "/Users/zzymima0000/Documents/SocialMate/Demo/Conversations/2026/10/SocialMate-2026-10-27-140000-sess_n04_demo_maya_us_2.md",
+        "bytes": 1206,
+        "sha256": "56d253f8c8e86e4d9d8e70217446d010421925abecc0e09e4247ecb665238c45"
+      },
+      "json": {
+        "path": "/Users/zzymima0000/Documents/SocialMate/Demo/Conversations/2026/10/SocialMate-2026-10-27-140000-sess_n04_demo_maya_us_2.json",
+        "bytes": 2490,
+        "sha256": "968860a5695c6998084ac3d5b86107134b61a69374a76d56cfcbe159196d7242"
+      },
+      "segments": 6,
+      "verbatim": true
+    },
+    {
+      "sessionId": "sess_n04_demo_maya_us_3",
+      "personSlug": "demo-maya-us",
+      "markdown": {
+        "path": "/Users/zzymima0000/Documents/SocialMate/Demo/Conversations/2026/11/SocialMate-2026-11-01-140000-sess_n04_demo_maya_us_3.md",
+        "bytes": 1177,
+        "sha256": "5813904cd67dd81217f17558b6271d2c0a8d99475cff0bc999c657749794ee67"
+      },
+      "json": {
+        "path": "/Users/zzymima0000/Documents/SocialMate/Demo/Conversations/2026/11/SocialMate-2026-11-01-140000-sess_n04_demo_maya_us_3.json",
+        "bytes": 2461,
+        "sha256": "d47f1cad6b293f7ffa9ac93de3ae0bd6187bd01e8724ae44629d59356748a13e"
+      },
+      "segments": 6,
+      "verbatim": true
+    },
+    {
+      "sessionId": "sess_n04_demo_oliver_uk_1",
+      "personSlug": "demo-oliver-uk",
+      "markdown": {
+        "path": "/Users/zzymima0000/Documents/SocialMate/Demo/Conversations/2026/10/SocialMate-2026-10-20-090000-sess_n04_demo_oliver_uk_1.md",
+        "bytes": 1166,
+        "sha256": "242d5e2f99d59aaef83d1ca3b7d867faa3e2afc579cb097c4c4bdee863e9e9ea"
+      },
+      "json": {
+        "path": "/Users/zzymima0000/Documents/SocialMate/Demo/Conversations/2026/10/SocialMate-2026-10-20-090000-sess_n04_demo_oliver_uk_1.json",
+        "bytes": 2462,
+        "sha256": "f49f4b1024f30bdb304c6ca31e2f330ed2afef28ef61873b3ac3c16522b9050d"
+      },
+      "segments": 6,
+      "verbatim": true
+    },
+    {
+      "sessionId": "sess_n04_demo_oliver_uk_2",
+      "personSlug": "demo-oliver-uk",
+      "markdown": {
+        "path": "/Users/zzymima0000/Documents/SocialMate/Demo/Conversations/2026/10/SocialMate-2026-10-27-090000-sess_n04_demo_oliver_uk_2.md",
+        "bytes": 1159,
+        "sha256": "f471b0cda0048ff3b98c482f44c5d01ec4b235a5e0111e27306485cb17d3b5ce"
+      },
+      "json": {
+        "path": "/Users/zzymima0000/Documents/SocialMate/Demo/Conversations/2026/10/SocialMate-2026-10-27-090000-sess_n04_demo_oliver_uk_2.json",
+        "bytes": 2455,
+        "sha256": "c70f9015443bb2e65bcf300cc60b58ad3d95a8d15555ff2eeb8fdc5a6bd1271e"
+      },
+      "segments": 6,
+      "verbatim": true
+    },
+    {
+      "sessionId": "sess_n04_demo_oliver_uk_3",
+      "personSlug": "demo-oliver-uk",
+      "markdown": {
+        "path": "/Users/zzymima0000/Documents/SocialMate/Demo/Conversations/2026/11/SocialMate-2026-11-01-090000-sess_n04_demo_oliver_uk_3.md",
+        "bytes": 1153,
+        "sha256": "08fedc6eed472ff80311bd5c86323e167bb46ea23fc5f7c9faa5f100cd7798df"
+      },
+      "json": {
+        "path": "/Users/zzymima0000/Documents/SocialMate/Demo/Conversations/2026/11/SocialMate-2026-11-01-090000-sess_n04_demo_oliver_uk_3.json",
+        "bytes": 2449,
+        "sha256": "dbc829f6db7aaa69dc2743f609d3aa6788c02b3b7bf8a8f1b8a494f44cdeac6e"
+      },
+      "segments": 6,
+      "verbatim": true
+    }
+  ]
+}

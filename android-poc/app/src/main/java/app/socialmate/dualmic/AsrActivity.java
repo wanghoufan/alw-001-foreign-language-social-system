@@ -63,13 +63,32 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
     private Thread worker;
     private FrameLayout screenRoot;
     private LinearLayout webPanel;
+    /** 面板文案双语：setLanguage 由网页调用后立刻生效。 */
+    private boolean uiEn = false;
+    private final java.util.List<Object[]> langPairs = new java.util.ArrayList<>();
+    private void reg(TextView tv, String zh, String en) { langPairs.add(new Object[]{tv, zh, en}); }
+    private String L(String zh, String en) { return uiEn ? en : zh; }
+    private void applySheetLanguage() {
+        for (Object[] pair : langPairs) {
+            TextView tv = (TextView) pair[0];
+            tv.setText(uiEn ? (String) pair[2] : (String) pair[1]);
+        }
+        if (titleView != null) titleView.setText(L("开始录音", "Start recording"));
+        if (startButton != null) startButton.setText(L("开始录音", "Record"));
+    }
+    private TextView titleView;
+
+    /** 录音底部面板与其遮罩。 */
+    private LinearLayout sheet;
+    private View sheetScrim;
     private LinearLayout advancedTools;
     private WebView socialMateWebView;
     private CheckBox recordingConsent;
     private EditText urlInput;
     private EditText suggestInput;
     private Spinner trackPicker;
-    private Button startButton, stopButton, clearButton, suggestButton, reviewButton;
+    private Button startButton, clearButton, suggestButton;
+    private TextView stopButton, reviewButton;
     private TextView status, live, transcript, deviceInfo, suggestionsView;
     private long sessionStartMs;
     private int eventCount;
@@ -102,11 +121,14 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
             WebView.setWebContentsDebuggingEnabled(true);
         }
         config = getSharedPreferences("socialmate-config", MODE_PRIVATE);
+    uiEn = config.getBoolean("ui_en", false);
         archive = new SessionArchive(this);
         archive.setListener(this::setArchiveStatus);
         buildUi();
         refreshDeviceInfo();
         registerNetworkRecovery();
+        // 打开 App 直接是五 Tab 主界面；原生录音面板只在用户从「⋮」进入时出现。
+        showSocialMatePanel();
         // 冷启动/重启后 outbox 里的待传文件会自动补传（幂等键是 sessionId，重复上传不会重复归档）。
         archive.flushAsync(this::setArchiveStatus);
     }
@@ -243,162 +265,298 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
     }
 
     private void buildUi() {
-        ScrollView scroller = new ScrollView(this);
-        LinearLayout root = new LinearLayout(this);
-        root.setOrientation(LinearLayout.VERTICAL);
-        root.setPadding(dp(20), dp(20), dp(20), dp(25));
-        scroller.addView(root);
-        applyInsets(scroller);
         screenRoot = new FrameLayout(this);
-        screenRoot.addView(scroller, new FrameLayout.LayoutParams(-1, -1));
         setContentView(screenRoot);
+        buildRecordingSheet();
+    }
 
-        root.setBackgroundColor(0xFFF5F7F8);
-        LinearLayout hero = section(root);
-        text(hero, "SocialMate · 实时对话", 24).setTextColor(0xFF176E63);
-        text(hero, "实时字幕、自然接话与可靠资料推荐", 16);
-        text(hero, "开始录音前请先确认录音同意。原文留存默认关闭，AI 文字上传在聊天页单独授权，三项互不代替。", 14);
-        text(hero, "版本 " + appVersion(), 13);
+    /** 浅灰说明行：一句一条，不做成长说明书。 */
+    private TextView hintRow(LinearLayout parent, String zh, String en) {
+        String value = L(zh, en);
+        TextView t = new TextView(this);
+        t.setText(value);
+        t.setTextSize(14);
+        t.setTextColor(0xFF3C4A5A);
+        t.setPadding(dp(12), dp(10), dp(12), dp(10));
+        t.setBackground(surface(0xFFF3F7F6, 0, 12));
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(-1, -2);
+        lp.bottomMargin = dp(8);
+        parent.addView(t, lp);
+        reg(t, zh, en);
+        return t;
+    }
 
-        LinearLayout recordingCard = section(root);
-        // 三项同意彼此独立：①录音知情 ②原文留存（默认关） ③云端 AI 传文字（在聊天页，本轮不在此处开关）。
-        text(recordingCard, "① 录音知情同意（每次开始录音前都要勾选）", 15).setTextColor(0xFF176E63);
+    private TextView chip(LinearLayout parent, String zh, String en, int bg, int fg) {
+        String value = L(zh, en);
+        TextView t = new TextView(this);
+        t.setText(value);
+        t.setTextSize(12);
+        t.setTextColor(fg);
+        t.setPadding(dp(10), dp(5), dp(10), dp(5));
+        t.setBackground(surface(bg, 0, 999));
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(-2, -2);
+        lp.bottomMargin = dp(10);
+        parent.addView(t, lp);
+        reg(t, zh, en);
+        return t;
+    }
+
+    /**
+     * 录音 = 底部面板（sheet），不是另一个页面：
+     * 主界面永远是五个 Tab，点「开始录音」才浮起这张卡，做完就收起。
+     */
+    private void buildRecordingSheet() {
+        sheetScrim = new View(this);
+        sheetScrim.setBackgroundColor(0x66000000);
+        sheetScrim.setVisibility(View.GONE);
+        sheetScrim.setOnClickListener(v -> hideRecordingSheet());
+        screenRoot.addView(sheetScrim, new FrameLayout.LayoutParams(-1, -1));
+
+        sheet = new LinearLayout(this);
+        sheet.setOrientation(LinearLayout.VERTICAL);
+        sheet.setBackground(surface(0xFFFFFFFF, 0, 26));
+        sheet.setElevation(dp(18));
+        sheet.setVisibility(View.GONE);
+        sheet.setPadding(0, dp(8), 0, dp(10));
+
+        View handle = new View(this);
+        handle.setBackground(surface(0xFFE3E9E8, 0, 999));
+        LinearLayout.LayoutParams handleLp = new LinearLayout.LayoutParams(dp(38), dp(4));
+        handleLp.gravity = android.view.Gravity.CENTER_HORIZONTAL;
+        handleLp.bottomMargin = dp(8);
+        sheet.addView(handle, handleLp);
+
+        LinearLayout titleRow = new LinearLayout(this);
+        titleRow.setOrientation(LinearLayout.HORIZONTAL);
+        titleRow.setGravity(android.view.Gravity.CENTER_VERTICAL);
+        titleRow.setPadding(dp(20), dp(4), dp(12), dp(4));
+        TextView title = new TextView(this);
+        title.setText(L("开始录音", "Start recording"));reg(title,"开始录音", "Start recording");titleView=title;
+        title.setTextSize(19);
+        title.setTextColor(0xFF12232E);
+        title.setTypeface(null, android.graphics.Typeface.BOLD);
+        titleRow.addView(title, new LinearLayout.LayoutParams(0, -2, 1f));
+        TextView close = new TextView(this);
+        close.setText(L("关闭", "Close"));reg(close,"关闭","Close");
+        close.setTextSize(14);
+        close.setTextColor(0xFF6B7A85);
+        close.setPadding(dp(12), dp(10), dp(12), dp(10));
+        close.setOnClickListener(v -> hideRecordingSheet());
+        titleRow.addView(close, new LinearLayout.LayoutParams(-2, -2));
+        sheet.addView(titleRow, new LinearLayout.LayoutParams(-1, -2));
+
+        ScrollView bodyScroll = new ScrollView(this);
+        LinearLayout body = new LinearLayout(this);
+        body.setOrientation(LinearLayout.VERTICAL);
+        body.setPadding(dp(20), dp(6), dp(20), dp(4));
+        bodyScroll.addView(body);
+        sheet.addView(bodyScroll, new LinearLayout.LayoutParams(-1, -2));
+
+        // 一句话说清边界，代替原来的长段落
+        LinearLayout chips = new LinearLayout(this);
+        chips.setOrientation(LinearLayout.HORIZONTAL);
+        chips.setPadding(0, dp(2), 0, dp(10));
+        chip(chips, "需双方同意", "Consent first", 0xFFE9F5F1, 0xFF0C7766);
+        chip(chips, "原文默认不留存", "Not saved by default", 0xFFEEF2F6, 0xFF33546B);
+        chip(chips, "云端 AI 默认不发", "Cloud off by default", 0xFFF5F1EA, 0xFF7A5A2E);
+        body.addView(chips, new LinearLayout.LayoutParams(-1, -2));
+
         recordingConsent = new CheckBox(this);
-        recordingConsent.setText("我已告知并获得同行者同意录音，且了解音频会发送到自己配置的腾讯云 ASR 服务。");
-        recordingConsent.setTextSize(16);
-        recordingConsent.setTextColor(0xFF1C293A);
-        recordingConsent.setPadding(0, dp(2), 0, dp(10));
-        recordingCard.addView(recordingConsent, new LinearLayout.LayoutParams(-1, -2));
+        recordingConsent.setText(L("对方已知情并同意录音", "The other person knows and agrees"));reg(recordingConsent,"对方已知情并同意录音","The other person knows and agrees");
+        recordingConsent.setTextSize(15);
+        recordingConsent.setTextColor(0xFF12232E);
+        recordingConsent.setPadding(0, dp(4), 0, dp(2));
+        body.addView(recordingConsent, new LinearLayout.LayoutParams(-1, -2));
+        hintRow(body, "音频只发送到你自己配置的语音识别服务，不经过第三方。", "Audio goes only to the speech service you configured, never to a third party.");
 
-        text(recordingCard, "② 本轮原文留存（默认不留存，可随时改）", 15).setTextColor(0xFF176E63);
         retentionConsent = new CheckBox(this);
-        retentionConsent.setText("允许把本轮已定稿原文先存到手机，再导出到我自己的 Mac。不勾选＝不留存：0 条写盘、0 条上传。");
+        retentionConsent.setText(L("本轮保存原文，停止后自动同步到我的 Mac","Keep this transcript and sync to my Mac"));reg(retentionConsent,"本轮保存原文，停止后自动同步到我的 Mac","Keep this transcript and sync to my Mac");
         retentionConsent.setTextSize(15);
-        retentionConsent.setTextColor(0xFF1C293A);
+        retentionConsent.setTextColor(0xFF12232E);
         retentionConsent.setChecked(false);
-        retentionConsent.setPadding(0, dp(2), 0, dp(6));
-        recordingCard.addView(retentionConsent, new LinearLayout.LayoutParams(-1, -2));
+        retentionConsent.setPadding(0, dp(8), 0, dp(2));
+        body.addView(retentionConsent, new LinearLayout.LayoutParams(-1, -2));
         retentionHint = new TextView(this);
-        retentionHint.setTextSize(14);
-        retentionHint.setTextColor(0xFF1C293A);
-        retentionHint.setPadding(dp(12), dp(9), dp(12), dp(9));
-        retentionHint.setBackground(surface(0xFFEEF4F2, 0xFFD5E4DE, 12));
-        recordingCard.addView(retentionHint, new LinearLayout.LayoutParams(-1, -2));
+        retentionHint.setTextSize(13);
+        retentionHint.setTextColor(0xFF3C4A5A);
+        retentionHint.setPadding(dp(12), dp(8), dp(12), dp(8));
+        retentionHint.setBackground(surface(0xFFF3F7F6, 0, 12));
+        body.addView(retentionHint, new LinearLayout.LayoutParams(-1, -2));
         retentionConsent.setOnCheckedChangeListener((v, checked) -> refreshRetentionHint());
-        refreshRetentionHint();
 
-        text(recordingCard, "③ 向云端 AI 发送文字（在聊天页单独授权，默认关闭；录音权限不等于这两项同意）", 13);
+        status = new TextView(this);
+        status.setTextSize(14);
+        status.setTextColor(0xFF12232E);
+        status.setPadding(0, dp(12), 0, dp(2));
+        status.setText(L("等待开始","Ready when you are"));reg(status,"等待开始","Ready when you are");
+        body.addView(status, new LinearLayout.LayoutParams(-1, -2));
+        archiveStatusView = new TextView(this);
+        archiveStatusView.setTextSize(12);
+        archiveStatusView.setTextColor(0xFF6B7A85);
+        archiveStatusView.setLineSpacing(dp(1), 1f);
+        archiveStatusView.setText(archive.describe());
+        body.addView(archiveStatusView, new LinearLayout.LayoutParams(-1, -2));
 
-        Button advancedToggle = button(root, "高级设置与转写诊断  ▾", v -> {
-            if (advancedTools == null) return;
-            boolean expanded = advancedTools.getVisibility() != View.VISIBLE;
-            advancedTools.setVisibility(expanded ? View.VISIBLE : View.GONE);
-            ((Button) v).setText(expanded ? "收起高级设置  ▴" : "高级设置与转写诊断  ▾");
-        });
-        advancedToggle.setTextColor(0xFF176E63);
+        LinearLayout secondary = new LinearLayout(this);
+        secondary.setOrientation(LinearLayout.HORIZONTAL);
+        secondary.setPadding(0, dp(12), 0, 0);
+        reviewButton = new TextView(this);
+        reviewButton.setText("本轮原文与复盘");
+        reviewButton.setTextSize(14);
+        reviewButton.setTextColor(0xFF0C7766);
+        reviewButton.setPadding(dp(2), dp(8), dp(14), dp(8));
+        reviewButton.setOnClickListener(v -> openReview());
+        reviewButton.setEnabled(false);
+        reviewButton.setAlpha(0.45f);
+        secondary.addView(reviewButton, new LinearLayout.LayoutParams(0, -2, 1f));
+        stopButton = new TextView(this);
+        stopButton.setText(L("停止录音","Stop"));reg(stopButton,"停止录音","Stop");
+        stopButton.setTextSize(14);
+        stopButton.setTextColor(0xFF9C3434);
+        stopButton.setPadding(dp(14), dp(8), dp(2), dp(8));
+        stopButton.setOnClickListener(v -> stopStreaming("用户停止"));
+        stopButton.setEnabled(false);
+        stopButton.setAlpha(0.45f);
+        secondary.addView(stopButton, new LinearLayout.LayoutParams(-2, -2));
+        body.addView(secondary, new LinearLayout.LayoutParams(-1, -2));
+
+        // 高级：默认折叠，普通用户看不到服务地址、音轨、令牌
+        TextView advancedToggle = new TextView(this);
+        advancedToggle.setText(L("高级设置  ›","Advanced  ›"));reg(advancedToggle,"高级设置  ›","Advanced  ›");
+        advancedToggle.setTextSize(13);
+        advancedToggle.setTextColor(0xFF6B7A85);
+        advancedToggle.setPadding(0, dp(12), 0, dp(8));
+        body.addView(advancedToggle, new LinearLayout.LayoutParams(-1, -2));
         advancedTools = new LinearLayout(this);
         advancedTools.setOrientation(LinearLayout.VERTICAL);
         advancedTools.setVisibility(View.GONE);
-        root.addView(advancedTools, new LinearLayout.LayoutParams(-1, -2));
-        advancedTools.setPadding(dp(12), dp(12), dp(12), dp(12));
-        advancedTools.setBackground(surface(0xFFFFFFFF, 0xFFE2E9EA, 16));
-        text(advancedTools, "仅调试时需要修改服务地址或音轨。普通使用保持默认混音。", 14);
+        body.addView(advancedTools, new LinearLayout.LayoutParams(-1, -2));
+        advancedToggle.setOnClickListener(v -> {
+            boolean show = advancedTools.getVisibility() != View.VISIBLE;
+            advancedTools.setVisibility(show ? View.VISIBLE : View.GONE);
+            advancedToggle.setText(show ? "高级设置  ⌄" : "高级设置  ›");
+        });
+
+        text(advancedTools, "语音识别服务地址", 13);
         urlInput = new EditText(this);
         urlInput.setText(config.getString("asr_url", DEFAULT_URL));
-        urlInput.setTextSize(16);
-        urlInput.setTextColor(0xFF1C293A);
-        urlInput.setHintTextColor(0xFF6B7889);
+        urlInput.setTextSize(14);
+        urlInput.setTextColor(0xFF12232E);
         urlInput.setSingleLine(true);
-        advancedTools.addView(urlInput, new LinearLayout.LayoutParams(-1, dp(54)));
-        text(advancedTools, "聊天页地址（本机或 Tailscale HTTPS）", 14);
+        advancedTools.addView(urlInput, new LinearLayout.LayoutParams(-1, dp(50)));
+        text(advancedTools, "聊天页地址", 13);
         uiUrlInput = new EditText(this);
         uiUrlInput.setText(config.getString("ui_url", PRIVATE_UI_URL));
-        uiUrlInput.setTextSize(14);
-        uiUrlInput.setTextColor(0xFF1C293A);
-        uiUrlInput.setHintTextColor(0xFF6B7889);
+        uiUrlInput.setTextSize(13);
+        uiUrlInput.setTextColor(0xFF12232E);
         uiUrlInput.setSingleLine(true);
-        advancedTools.addView(uiUrlInput, new LinearLayout.LayoutParams(-1, dp(52)));
-
+        advancedTools.addView(uiUrlInput, new LinearLayout.LayoutParams(-1, dp(48)));
         trackPicker = new Spinner(this);
         trackPicker.setBackgroundColor(0xFFFFFFFF);
         trackPicker.setAdapter(new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_dropdown_item, TRACK_LABELS) {
             @Override public View getView(int position, View convertView, ViewGroup parent) {
                 TextView v = (TextView) super.getView(position, convertView, parent);
-                v.setTextColor(0xFF1C293A);
-                v.setTextSize(15);
+                v.setTextColor(0xFF12232E);
+                v.setTextSize(14);
                 return v;
             }
             @Override public View getDropDownView(int position, View convertView, ViewGroup parent) {
                 TextView v = (TextView) super.getDropDownView(position, convertView, parent);
-                v.setTextColor(0xFF1C293A);
-                v.setTextSize(15);
+                v.setTextColor(0xFF12232E);
+                v.setTextSize(14);
                 return v;
             }
         });
-        advancedTools.addView(trackPicker, new LinearLayout.LayoutParams(-1, dp(58)));
-
-        text(advancedTools, "原文归档接收端（只存本机；令牌不写入日志）", 15);
+        advancedTools.addView(trackPicker, new LinearLayout.LayoutParams(-1, dp(52)));
+        text(advancedTools, "原文同步地址（只存本机）", 13);
         archiveUrlInput = new EditText(this);
         archiveUrlInput.setText(archive.archiveUrl());
-        archiveUrlInput.setTextSize(14);
-        archiveUrlInput.setTextColor(0xFF1C293A);
-        archiveUrlInput.setHintTextColor(0xFF6B7889);
+        archiveUrlInput.setTextSize(13);
+        archiveUrlInput.setTextColor(0xFF12232E);
         archiveUrlInput.setSingleLine(true);
-        advancedTools.addView(archiveUrlInput, new LinearLayout.LayoutParams(-1, dp(52)));
+        advancedTools.addView(archiveUrlInput, new LinearLayout.LayoutParams(-1, dp(48)));
         archiveTokenInput = new EditText(this);
         archiveTokenInput.setText(archive.token());
-        archiveTokenInput.setHint("归档令牌（只存本机）");
-        archiveTokenInput.setTextSize(14);
-        archiveTokenInput.setTextColor(0xFF1C293A);
-        archiveTokenInput.setHintTextColor(0xFF6B7889);
+        archiveTokenInput.setHint("访问令牌");
+        archiveTokenInput.setTextSize(13);
+        archiveTokenInput.setTextColor(0xFF12232E);
         archiveTokenInput.setSingleLine(true);
         archiveTokenInput.setInputType(android.text.InputType.TYPE_CLASS_TEXT
                 | android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD);
-        advancedTools.addView(archiveTokenInput, new LinearLayout.LayoutParams(-1, dp(52)));
-        button(advancedTools, "立即重试导出", v -> {
+        advancedTools.addView(archiveTokenInput, new LinearLayout.LayoutParams(-1, dp(48)));
+        Button retryExport = button(advancedTools, "立即重试同步", v -> {
             if (archiveUrlInput != null) archive.setArchiveUrl(archiveUrlInput.getText().toString());
             if (archiveTokenInput != null) archive.setToken(archiveTokenInput.getText().toString());
             archive.flushAsync(this::setArchiveStatus);
         });
-        deviceInfo = text(advancedTools, "输入设备待读取", 14);
-        startButton = button(recordingCard, "开始实时对话", v -> startStreaming());
-        stylePrimary(startButton);
-        button(recordingCard, "查看聊天与推荐", v -> showSocialMatePanel());
-        stopButton = button(recordingCard, "停止录音", v -> stopStreaming("用户停止"));
-        stopButton.setEnabled(false);
-        // 停止录音后的入口：本机归档原文 → 会后复盘 → 逐条确认后写档案。
-        reviewButton = button(recordingCard, "本轮原文与复盘", v -> openReview());
-        reviewButton.setEnabled(false);
-        clearButton = button(advancedTools, "清空转写", v -> {
+        retryExport.setTextSize(14);
+        deviceInfo = text(advancedTools, "输入设备待读取", 12);
+        clearButton = button(advancedTools, "清空本页转写", v -> {
             finals.setLength(0);
-            transcript.setText("");
-            live.setText("");
+            if (transcript != null) transcript.setText("");
+            if (live != null) live.setText("");
         });
+        clearButton.setTextSize(14);
 
-        status = text(recordingCard, "状态：待连接", 17);
-        archiveStatusView = text(recordingCard, archive.describe(), 14);
-        archiveStatusView.setLineSpacing(dp(2), 1f);
-        live = text(advancedTools, "实时（未定稿）：—", 17);
-        text(advancedTools, "已定稿转写（按句累积，不会被实时结果覆盖）", 15);
+        live = new TextView(this);
+        live.setTextSize(13);
+        live.setTextColor(0xFF6B7A85);
         transcript = new TextView(this);
-        transcript.setTextSize(17);
-        transcript.setPadding(0, dp(6), 0, dp(6));
+        transcript.setTextSize(14);
+        transcript.setTextColor(0xFF12232E);
+        advancedTools.addView(live);
         advancedTools.addView(transcript);
-
-        text(advancedTools, "手动语料检索（备用调试功能）", 15);
         suggestInput = new EditText(this);
-        suggestInput.setTextSize(16);
         suggestInput.setSingleLine(true);
-        suggestInput.setHint("输入话题，可留空以使用最近一句定稿");
-        advancedTools.addView(suggestInput, new LinearLayout.LayoutParams(-1, dp(54)));
-        button(advancedTools, "填入示例话题（personality quiz）",
-                v -> suggestInput.setText("personality quiz"));
-        suggestButton = button(advancedTools, "获取 2–3 条英文建议", v -> requestSuggestions());
+        suggestInput.setHint("输入话题，取建议");
+        advancedTools.addView(suggestInput, new LinearLayout.LayoutParams(-1, dp(48)));
+        suggestButton = button(advancedTools, "获取建议", v -> requestSuggestions());
         suggestButton.setEnabled(false);
-        suggestionsView = text(advancedTools, "英文建议：—", 16);
+        suggestionsView = text(advancedTools, "", 13);
 
-        text(advancedTools, "诊断说明：A/B 轨需硬件真正输出独立声道；混音说话人识别不保证身份准确。MOCK 事件不是实际腾讯云识别。", 14);
+        // 底部固定主按钮：与拇指距离最近，且不会被内容滚走
+        LinearLayout footer = new LinearLayout(this);
+        footer.setOrientation(LinearLayout.VERTICAL);
+        footer.setPadding(dp(20), dp(8), dp(20), dp(12));
+        startButton = new Button(this);
+        startButton.setText(L("开始录音","Record"));
+        startButton.setTextSize(16);
+        startButton.setAllCaps(false);
+        startButton.setTextColor(0xFFFFFFFF);
+        startButton.setBackground(surface(0xFF0C7766, 0, 26));
+        startButton.setOnClickListener(v -> startStreaming());
+        footer.addView(startButton, new LinearLayout.LayoutParams(-1, dp(52)));
+        TextView privacy = new TextView(this);
+        privacy.setText(L("开始后保持本页在前台；切到后台会自动停止录音。","Keep this screen open while recording; switching apps stops it."));reg(privacy,"开始后保持本页在前台；切到后台会自动停止录音。","Keep this screen open while recording; switching apps stops it.");
+        privacy.setTextSize(11);
+        privacy.setTextColor(0xFF8A97A0);
+        privacy.setPadding(0, dp(8), 0, 0);
+        privacy.setGravity(android.view.Gravity.CENTER);
+        footer.addView(privacy, new LinearLayout.LayoutParams(-1, -2));
+        // 主按钮跟着内容走（面板高度=内容高度），避免面板被撑高后中间留一大片空白。
+        body.addView(footer, new LinearLayout.LayoutParams(-1, -2));
+
+        FrameLayout.LayoutParams sheetLp = new FrameLayout.LayoutParams(-1, -2);
+        sheetLp.bottomMargin = 0;
+        sheetLp.gravity = android.view.Gravity.BOTTOM;
+        screenRoot.addView(sheet, sheetLp);
+        refreshRetentionHint();
+    }
+
+    private void showRecordingSheet() {
+        if (sheet == null) return;
+        sheet.setVisibility(View.VISIBLE);
+        if (sheetScrim != null) sheetScrim.setVisibility(View.VISIBLE);
+        sheet.setTranslationY(dp(24));
+        sheet.animate().translationY(0).setDuration(180).start();
+        updateReviewEntry();
+    }
+
+    private void hideRecordingSheet() {
+        if (sheet == null) return;
+        sheet.setVisibility(View.GONE);
+        if (sheetScrim != null) sheetScrim.setVisibility(View.GONE);
     }
 
     /**
@@ -414,30 +572,8 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
             webPanel.setBackgroundColor(0xFFFFFFFF);
             applyWebInsets(webPanel); // 顶栏避开状态栏，底部同时避开导航栏与软键盘。
 
-            LinearLayout toolbar = new LinearLayout(this);
-            toolbar.setOrientation(LinearLayout.HORIZONTAL);
-            Button back = new Button(this);
-            back.setText("← 录音控制");
-            back.setTextSize(16);
-            back.setAllCaps(false);
-            back.setOnClickListener(v -> webPanel.setVisibility(View.GONE));
-            toolbar.addView(back, new LinearLayout.LayoutParams(0, dp(52), 1f));
-            Button retry = new Button(this);
-            retry.setText("刷新界面");
-            retry.setTextSize(16);
-            retry.setAllCaps(false);
-            retry.setOnClickListener(v -> {
-                if (socialMateWebView != null) socialMateWebView.reload();
-            });
-            toolbar.addView(retry, new LinearLayout.LayoutParams(0, dp(52), 1f));
-            Button stopInChat = new Button(this);
-            stopInChat.setText("停止录音");
-            stopInChat.setTextSize(15);
-            stopInChat.setAllCaps(false);
-            stopInChat.setOnClickListener(v -> stopStreaming("用户停止"));
-            toolbar.addView(stopInChat, new LinearLayout.LayoutParams(0, dp(52), 1f));
-            stopInChat.setTextColor(0xFF9C3434);
-            webPanel.addView(toolbar, new LinearLayout.LayoutParams(-1, dp(52)));
+            // 不再有原生顶栏：品牌与页标题都在网页里，再加一条只会浪费一行高度。
+            // 次级动作（录音设置 / 刷新 / 服务地址）从网页设置面板回调原生桥触发。
 
             // 导出结果的中文提示条（深色字 + 浅底，深色模式下依然可读）。
             webHint = new TextView(this);
@@ -445,7 +581,9 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
             webHint.setTextColor(0xFF1C293A);
             webHint.setBackgroundColor(0xFFF5F7F8);
             webHint.setPadding(dp(14), dp(8), dp(14), dp(8));
-            webHint.setText("导出：文件会保存到你选择的目录（不需要存储权限）。");
+            // 提示条默认不出现：这是调试期的常驻说明，产品里只在真的导出/失败时弹一句。
+            webHint.setText("");
+            webHint.setVisibility(View.GONE);
             webPanel.addView(webHint, new LinearLayout.LayoutParams(-1, -2));
 
             socialMateWebView = new WebView(this);
@@ -585,6 +723,73 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
      * 不使用 WRITE_EXTERNAL_STORAGE，全部走 SAF，由用户决定落地位置。
      */
     private final class SaveTextBridge {
+        /**
+         * 网页「开始录音」按钮 → 原生录音同意面板。
+         * 录音权限与录音同意的判定留在原生，网页不自行开麦。
+         */
+        /** 网页设置里的「录音与留存设置」。 */
+        @JavascriptInterface
+        public boolean openRecordingPanel() {
+            String page = trustedPageUrl;
+            if (page == null || !isPrivatePanelUrl(Uri.parse(page))) return false;
+            runOnUiThread(AsrActivity.this::showRecordingSheet);
+            return true;
+        }
+
+        /** 网页设置里的「刷新界面」。 */
+        @JavascriptInterface
+        public boolean reloadPage() {
+            String page = trustedPageUrl;
+            if (page == null || !isPrivatePanelUrl(Uri.parse(page))) return false;
+            runOnUiThread(() -> {
+                if (socialMateWebView != null) socialMateWebView.reload();
+            });
+            return true;
+        }
+
+        /** 网页设置里的「语音服务地址」：打开面板并展开高级。 */
+        @JavascriptInterface
+        public boolean openAdvancedSettings() {
+            String page = trustedPageUrl;
+            if (page == null || !isPrivatePanelUrl(Uri.parse(page))) return false;
+            runOnUiThread(() -> {
+                showRecordingSheet();
+                if (advancedTools != null) advancedTools.setVisibility(View.VISIBLE);
+            });
+            return true;
+        }
+
+        /** 双麦自检：仅可调试构建可用。 */
+        @JavascriptInterface
+        public boolean openDiagnostics() {
+            String page = trustedPageUrl;
+            if (page == null || !isPrivatePanelUrl(Uri.parse(page))) return false;
+            boolean debuggable = (getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0;
+            if (!debuggable) return false;
+            runOnUiThread(() -> startActivity(
+                    new Intent(AsrActivity.this, MainActivity.class).putExtra("diagnostics", true)));
+            return true;
+        }
+
+        /** 网页切换界面语言后同步：面板文案立刻跟着换，不必重新进页面。 */
+        @JavascriptInterface
+        public void setLanguage(String lang) {
+            uiEn = "en".equalsIgnoreCase(lang);
+            config.edit().putBoolean("ui_en", uiEn).apply();
+            runOnUiThread(AsrActivity.this::applySheetLanguage);
+        }
+
+        @JavascriptInterface
+        public boolean requestRecording() {
+            String page = trustedPageUrl;
+            if (page == null || !isPrivatePanelUrl(Uri.parse(page))) return false;
+            runOnUiThread(() -> {
+                if (status != null) status.setText(L("先确认同意，再点下方「开始录音」。", "Tick the consent box, then tap Record below."));
+                showRecordingSheet();
+            });
+            return true;
+        }
+
         @JavascriptInterface
         public boolean saveText(String filename, String text) {
             // 注意：@JavascriptInterface 运行在 JavaBridge 线程，绝不能碰 WebView 的任何方法。
@@ -743,12 +948,39 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
         }
     }
 
+    /**
+     * 系统返回键。
+     * 之前的实现是「把 webPanel 设成 GONE」——那就是白屏卡死的根因：网页被藏起来，
+     * Activity 还活着，用户看到一整片空白。正确顺序是：
+     * 录音面板 → 网页里的弹层/抽屉/非首页 Tab → 网页历史 → 退出。
+     */
     @Override public void onBackPressed() {
-        if (webPanel != null && webPanel.getVisibility() == View.VISIBLE) {
-            webPanel.setVisibility(View.GONE);
+        if (sheet != null && sheet.getVisibility() == View.VISIBLE) {
+            hideRecordingSheet();
             return;
         }
-        super.onBackPressed();
+        if (socialMateWebView == null) {
+            super.onBackPressed();
+            return;
+        }
+        socialMateWebView.evaluateJavascript(
+                "(function(){try{return (window.smBack&&window.smBack())?'1':'0'}catch(e){return '0'}})()",
+                value -> {
+                    if ("\"1\"".equals(value)) return;   // 网页自己消费了这次返回
+                    String url = String.valueOf(socialMateWebView.getUrl());
+                    boolean onPrivatePage;
+                    try {
+                        onPrivatePage = isPrivatePanelUrl(Uri.parse(url));
+                    } catch (Exception e) {
+                        onPrivatePage = false;
+                    }
+                    // 只在私有页内部回退；否则历史里可能是一条 about:blank，回退就又是白屏。
+                    if (onPrivatePage && socialMateWebView.canGoBack()) {
+                        socialMateWebView.goBack();
+                        return;
+                    }
+                    finish();
+                });
     }
 
     private String appVersion() {
@@ -829,7 +1061,8 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
         urlInput.setEnabled(false);
         trackPicker.setEnabled(false);
         status.setText("正在打开麦克风并连接服务端…");
-        // Same foreground Activity: show the approved UI immediately after recording starts.
+        // 开始后收起录音面板，回到五 Tab 主界面（字幕在聊天页实时显示）。
+        hideRecordingSheet();
         showSocialMatePanel();
         if (finals.length() > 0) finals.append("\n— 新会话 —\n");
         transcript.setText(finals.toString());
@@ -864,6 +1097,11 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
                 status.setText("已连接 · " + rate + " Hz · " + channels + " 声道 · 正在发送音频（"
                         + String.join("+", tracks) + "）");
                 suggestButton.setEnabled(true);
+                // 通知网页：原生已真正开录，可以订阅字幕了（用户没同意时不会走到这里）。
+                if (socialMateWebView != null) {
+                    socialMateWebView.evaluateJavascript(
+                            "window.smNativeRecordingStarted&&window.smNativeRecordingStarted()", null);
+                }
             });
             rec.startRecording();
             if (rec.getRecordingState() != AudioRecord.RECORDSTATE_RECORDING)

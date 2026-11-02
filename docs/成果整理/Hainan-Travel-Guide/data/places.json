@@ -1153,6 +1153,7 @@
  },
  {
   "id": 25,
+  "photo_note": "示意",
   "city": "海口",
   "city_folder": "Haikou",
   "name": "席地而坐（龙兴路）",
@@ -1201,6 +1202,7 @@
  },
  {
   "id": 26,
+  "photo_note": "示意",
   "city": "海口",
   "city_folder": "Haikou",
   "name": "手帐咖啡好天气（龙兴路）",
@@ -3265,6 +3267,7 @@
  },
  {
   "id": 69,
+  "photo_note": "示意",
   "city": "文昌",
   "city_folder": "Wenchang",
   "name": "三婆与海·糟粕醋文化休闲庄园",

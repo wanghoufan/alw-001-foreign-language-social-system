@@ -1,0 +1,171 @@
+{
+  "generatedAt": "2026-11-02T02:05:27.131Z",
+  "mode": "real-run",
+  "synthetic": true,
+  "device": {
+    "serial": "WGBMXWDIAIFMPFCQ",
+    "model": "21091116AC",
+    "android": "11",
+    "versionName": "0.7.3",
+    "versionCode": 28,
+    "apkPath": "/Users/zzymima0000/Developer/coding/1.Active/alw-001-外语社交系统/android-poc/app/build/outputs/apk/debug/app-debug.apk",
+    "apkSha256": "cd4cddcc123e9e39d20f6ca348ca3c014df7b8411ab7321e58dcab5c02e6147f",
+    "label": "真机（合成演示数据，非真人录音）"
+  },
+  "scope": {
+    "demo": "SocialMate-Data/Demo + ~/Documents/SocialMate/Demo/Conversations",
+    "real": "SocialMate-Data/People + ~/Documents/SocialMate/Conversations"
+  },
+  "before": {
+    "demo": {
+      "ok": true,
+      "demo": true,
+      "synthetic": true,
+      "isolatedRoot": "SocialMate-Data/Demo",
+      "realRoot": "SocialMate-Data/People",
+      "seeded": true,
+      "cleared": false,
+      "clearedAt": null,
+      "seededAt": "2026-11-02T02:04:33.322Z",
+      "fixtureVersion": "N04-DEMO-1.0",
+      "fixtureSha256": "5513b086aff7066ee08995f4aae857ed8a4848aaac51249bf9309dc9a1288263",
+      "personas": 3,
+      "sessions": 9,
+      "segments": 54,
+      "pending": 3,
+      "inbox": 0,
+      "updatedAt": null,
+      "seed": {
+        "seeded": true,
+        "reason": "already"
+      },
+      "demoRoot": "SocialMate-Data/Demo"
+    },
+    "archive": {
+      "total": 9,
+      "delivered": 9,
+      "pending": 0,
+      "remoteFiles": {
+        "md": 9,
+        "json": 9
+      }
+    },
+    "demoTree": {
+      "files": 112,
+      "digest": "d8167d953084827930fdd65177944727c2f1716de7a9a6a110e668e1ffc653b4"
+    },
+    "macDemoArchive": {
+      "files": 18,
+      "digest": "6c27fa687935381954bc393bf41aa4e525467f281a117948c7899367b7d499e3"
+    },
+    "realPeople": {
+      "files": 41,
+      "sha256": "fe662283e3c85553cedea57f8644567e14df66c4cbd44c0c3493902910af4793"
+    },
+    "realArchive": {
+      "files": 4,
+      "sha256": "90d8a1510cf414d5a2078da9d4deed7d43129774eec55ee14bd39f4120649337"
+    }
+  },
+  "afterClear": {
+    "demo": {
+      "ok": true,
+      "demo": true,
+      "synthetic": true,
+      "isolatedRoot": "SocialMate-Data/Demo",
+      "realRoot": "SocialMate-Data/People",
+      "seeded": false,
+      "cleared": true,
+      "clearedAt": "2026-11-02T02:04:39.004Z",
+      "seededAt": null,
+      "fixtureVersion": "N04-DEMO-1.0",
+      "fixtureSha256": "5513b086aff7066ee08995f4aae857ed8a4848aaac51249bf9309dc9a1288263",
+      "personas": 0,
+      "sessions": 0,
+      "segments": 0,
+      "pending": 0,
+      "inbox": 0,
+      "updatedAt": null,
+      "seed": {
+        "seeded": false,
+        "reason": "cleared-by-user"
+      },
+      "demoRoot": "SocialMate-Data/Demo"
+    },
+    "demoTree": {
+      "files": 85,
+      "digest": "3b99e13a15f11917f71d2d89ec76a229d5e7400aac4c2bbb9495d901fb6730d1"
+    },
+    "realPeople": {
+      "files": 41,
+      "sha256": "fe662283e3c85553cedea57f8644567e14df66c4cbd44c0c3493902910af4793"
+    },
+    "realArchive": {
+      "files": 4,
+      "sha256": "90d8a1510cf414d5a2078da9d4deed7d43129774eec55ee14bd39f4120649337"
+    },
+    "note": "清空只搬走演示副本；Mac 演示归档与正式档案不动，退出重进保持 cleared:true。"
+  },
+  "afterRestore": {
+    "demo": {
+      "ok": true,
+      "demo": true,
+      "synthetic": true,
+      "isolatedRoot": "SocialMate-Data/Demo",
+      "realRoot": "SocialMate-Data/People",
+      "seeded": true,
+      "cleared": false,
+      "clearedAt": null,
+      "seededAt": "2026-11-02T02:05:25.888Z",
+      "fixtureVersion": "N04-DEMO-1.0",
+      "fixtureSha256": "5513b086aff7066ee08995f4aae857ed8a4848aaac51249bf9309dc9a1288263",
+      "personas": 3,
+      "sessions": 9,
+      "segments": 54,
+      "pending": 3,
+      "inbox": 0,
+      "updatedAt": null,
+      "seed": {
+        "seeded": true,
+        "reason": "already"
+      },
+      "demoRoot": "SocialMate-Data/Demo"
+    },
+    "archive": {
+      "total": 9,
+      "delivered": 9,
+      "pending": 0,
+      "remoteFiles": {
+        "md": 9,
+        "json": 9
+      }
+    },
+    "demoTree": {
+      "files": 112,
+      "digest": "f08af3b17099ac5f359653c359ed9858385800b091beaf61be11331c96e921e5"
+    },
+    "macDemoArchive": {
+      "files": 18,
+      "digest": "6c27fa687935381954bc393bf41aa4e525467f281a117948c7899367b7d499e3"
+    },
+    "realPeople": {
+      "files": 41,
+      "sha256": "fe662283e3c85553cedea57f8644567e14df66c4cbd44c0c3493902910af4793"
+    },
+    "realArchive": {
+      "files": 4,
+      "sha256": "90d8a1510cf414d5a2078da9d4deed7d43129774eec55ee14bd39f4120649337"
+    },
+    "note": "恢复从不可变母版重建；Mac 演示归档通过幂等重复投递确认，不产生第二份。"
+  },
+  "assertions": {
+    "clearedToZero": true,
+    "restoredToBaseline": true,
+    "demoQueueCleared": true,
+    "macDemoArchiveUntouched": true,
+    "realPeopleUnchanged": true,
+    "realArchiveUnchanged": true,
+    "archiveStillDelivered": true
+  },
+  "liveConfirms": 3
+}

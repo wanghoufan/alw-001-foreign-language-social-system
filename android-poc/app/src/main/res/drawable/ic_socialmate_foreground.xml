@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- 单气泡标记：缩小到 48dp 仍清楚，不再叠加两种颜色 -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android" android:width="108dp" android:height="108dp" android:viewportWidth="108" android:viewportHeight="108">
- <path android:fillColor="#0C7766" android:pathData="M25,32 Q25,24 34,24 H62 Q70,24 70,32 V51 Q70,59 62,59 H49 L39,68 L40,59 H34 Q25,59 25,50 Z"/>
- <path android:fillColor="#1E3C54" android:pathData="M50,48 Q50,41 57,41 H79 Q86,41 86,48 V67 Q86,74 79,74 H76 L82,82 L69,74 H58 Q50,74 50,67 Z"/>
- <path android:fillColor="#FFFFFF" android:pathData="M39,41 a3,3 0,1 1,-6,0 a3,3 0,1 1,6 0"/>
- <path android:fillColor="#FFFFFF" android:pathData="M50,41 a3,3 0,1 1,-6,0 a3,3 0,1 1,6 0"/>
- <path android:fillColor="#FFFFFF" android:pathData="M61,41 a3,3 0,1 1,-6,0 a3,3 0,1 1,6 0"/>
- <path android:fillColor="#FFFFFF" android:pathData="M62.5,57 a2.5,2.5 0,1 1,-5,0 a2.5,2.5 0,1 1,5 0"/>
- <path android:fillColor="#FFFFFF" android:pathData="M71.5,57 a2.5,2.5 0,1 1,-5,0 a2.5,2.5 0,1 1,5 0"/>
- <path android:fillColor="#FFFFFF" android:pathData="M80.5,57 a2.5,2.5 0,1 1,-5,0 a2.5,2.5 0,1 1,5 0"/>
+ <path android:fillColor="#0C7766" android:pathData="M30,34 Q30,26 38,26 H70 Q78,26 78,34 V58 Q78,66 70,66 H54 L40,76 L42,66 H38 Q30,66 30,58 Z"/>
+ <path android:fillColor="#FFFFFF" android:pathData="M44,46 m-3.4,0 a3.4,3.4 0,1 1,6.8 0 a3.4,3.4 0,1 1,-6.8 0"/>
+ <path android:fillColor="#FFFFFF" android:pathData="M54,46 m-3.4,0 a3.4,3.4 0,1 1,6.8 0 a3.4,3.4 0,1 1,-6.8 0"/>
+ <path android:fillColor="#FFFFFF" android:pathData="M64,46 m-3.4,0 a3.4,3.4 0,1 1,6.8 0 a3.4,3.4 0,1 1,-6.8 0"/>
 </vector>

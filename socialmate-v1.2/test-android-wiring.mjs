@@ -31,6 +31,9 @@ test("single Android Activity keeps recorder in foreground while showing WebView
   assert.match(android,/screenRoot\.addView\(webPanel/);
   assert.match(android,/showSocialMatePanel\(\);/);
   assert.match(android,/PRIVATE_UI_URL = "http:\/\/127\.0\.0\.1:8791\/v12"/);
+  // 打开 App 直接是五 Tab 主界面：MainActivity 无 diagnostics 时立即转 AsrActivity。
+  assert.match(mainActivity,/startActivity\(new Intent\(this, AsrActivity\.class\)\)/);
+  assert.match(mainActivity,/getBooleanExtra\("diagnostics", false\)/);
   assert.match(android,/privateUiUrl\(\)/);
   assert.match(android,/socialMateWebView\.reload\(\)/);
   assert.match(android,/stopStreaming\("切到后台"\)/);
@@ -57,8 +60,9 @@ test("single Android Activity keeps recorder in foreground while showing WebView
 });
 test("user must consent before microphone and Tencent cloud audio capture",()=>{
   assert.match(android,/recordingConsent\.isChecked\(\)/);
-  assert.match(android,/我已告知并获得同行者同意录音/);
-  assert.match(android,/recordingConsent\.setChecked\(false\)/);
+  // 0.6.6：录音同意文案产品化，留存开关仍默认未勾选。
+  assert.match(android,/对方已知情并同意录音/);
+  assert.match(android,/retentionConsent\.setChecked\(false\)/);
 });
 test("real final only through localhost in-process event hub; no public webhook",()=>{
   assert.match(bridge,/const onEvent = typeof options\.onEvent/);
@@ -81,12 +85,19 @@ test("daily-use Android entry prioritizes SocialMate conversation and preserves 
 });
 
 test("recording UI prioritizes conversation while retaining stop and diagnostics",()=>{
-  assert.match(android,/SocialMate · 实时对话/);
-  assert.match(android,/开始实时对话/);
+  // 0.6.6：录音是底部面板，标题与主按钮都叫「开始录音」。
+  assert.match(android,/title\.setText\("开始录音"\)/);
+  assert.match(android,/startButton\.setText\("开始录音"\)/);
   assert.match(android,/advancedTools\.setVisibility\(View\.GONE\)/);
   assert.match(android,/advancedTools\.addView\(urlInput/);
   assert.match(android,/advancedTools\.addView\(trackPicker/);
-  assert.match(android,/stopInChat\.setOnClickListener\(v -> stopStreaming\("用户停止"\)\)/);
+  // 0.6.1 起产品态顶栏只留「SocialMate + ⋮」，录音/刷新/设备检测收进溢出菜单。
+  // 0.6.8：原生顶栏整条去掉（品牌与标题都在网页里），次级动作改由网页设置面板回调桥方法。
+  assert.doesNotMatch(android,/showOverflowMenu/);
+  assert.doesNotMatch(android,/back\.setText\("← 录音控制"\)/);
+  assert.match(android,/public boolean openRecordingPanel\(\)/);
+  assert.match(android,/public boolean reloadPage\(\)/);
+  assert.match(android,/public boolean openAdvancedSettings\(\)/);
   assert.match(android,/recordingConsent\.isChecked\(\)/);
   assert.match(android,/showSocialMatePanel\(\);/);
 });
@@ -95,7 +106,11 @@ test("native home and recording controls use restrained accessible card styling"
   assert.match(mainActivity,/private LinearLayout section\(LinearLayout parent\)/);
   assert.match(mainActivity,/conversation\.setBackground\(surface\(0xFF176E63/);
   assert.match(android,/private LinearLayout section\(LinearLayout parent\)/);
-  assert.match(android,/stylePrimary\(startButton\)/);
-  assert.match(android,/stopInChat\.setTextColor\(0xFF9C3434\)/);
+  assert.match(android,/startButton\.setBackground\(surface\(0xFF0C7766/);
+  // 双麦检测是开发工具，只在可调试构建里出现。
+  // 双麦检测是开发工具：桥方法在非可调试构建直接返回 false，网页只显示「仅开发版可用」。
+  assert.match(android,/public boolean openDiagnostics\(\)/);
+  assert.match(android,/if \(!debuggable\) return false;/);
+  assert.doesNotMatch(android,/stopInChat/);
   assert.match(android,/advancedTools\.setVisibility\(View\.GONE\)/);
 });

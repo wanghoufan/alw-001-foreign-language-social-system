@@ -50,12 +50,13 @@ result.data = await evalJs(`(() => {
 result.chat = await evalJs(`(async () => {
   document.querySelector('[data-nav="chat"]').click();
   await new Promise(r=>setTimeout(r,120));
-  document.querySelector('[data-act="start"]').click();
-  await new Promise(r=>setTimeout(r,150));
-  document.querySelector('#confirm').checked = true;
-  document.querySelector('[data-action="startok"]').click();
+  const firstView = document.querySelector('#content').innerHTML;
+  const banned = /开始演示|开始对话演示|模拟输入|模拟识别完成|手动演示|本地规则模拟|data-sample/.test(firstView);
+  const cta = document.querySelector('.chatbar .mainbtn')?.textContent.trim() || '';
+  document.querySelector('[data-act="start-recording"]').click();
   await new Promise(r=>setTimeout(r,250));
-  document.querySelector('[data-sample="running"]').click();
+  document.querySelector('#msg').value = 'I like running outdoors near the sea. Is there a nice park or running route in Haikou?';
+  document.querySelector('[data-act="send"]').click();
   await new Promise(r=>setTimeout(r,400));
   const cards=[...document.querySelectorAll('.autorec b')].map(x=>x.textContent.trim());
   const coach=document.querySelector('#coachresults').innerText;
@@ -67,7 +68,7 @@ result.chat = await evalJs(`(async () => {
   const hasMaps=/maps|高德/i.test(drawerText);
   document.querySelector('#closeDrawer').click();
   await new Promise(r=>setTimeout(r,200));
-  return {cards, coach, bubbles, drawerOpen, drawerText: drawerText.slice(0,220), hasMaps,
+  return {cards, coach, bubbles, drawerOpen, drawerText: drawerText.slice(0,220), hasMaps, banned, cta,
     afterClose:{drawerOpen:document.querySelector('#drawer').classList.contains('open'), bubbles:document.querySelectorAll('.bubble').length}};
 })()`);
 
@@ -91,6 +92,9 @@ const checks = {
   apps51: result.data.apps===51, steps204: result.data.steps===204,
   places115: result.data.places===115 && result.data.uniquePlaces===115,
   tabs5: result.data.tabs.length===5,
+  // 产品界面不得出现开发/演示态入口：只有真实动作「开始录音」（浏览器退回「连接实时字幕」）。
+  noDemoEntry: result.chat.banned===false,
+  ctaIsRealAction: result.chat.cta==='开始录音' || result.chat.cta==='连接实时字幕',
   autoCards: result.chat.cards.includes('万绿园') && result.chat.cards.includes('海口湾滨海步道') && result.chat.cards.includes('白沙门公园'),
   drawer: result.chat.drawerOpen && result.chat.hasMaps,
   keepSession: result.chat.afterClose.bubbles===result.chat.bubbles,

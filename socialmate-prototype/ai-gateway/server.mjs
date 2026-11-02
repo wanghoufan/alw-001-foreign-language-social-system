@@ -15,8 +15,11 @@ import {getPersonDetail,getPersonPrep,revokePersonFact} from "./person-detail.mj
 import {addFavorite,listFavorites,removeFavorite} from "./favorites-store.mjs";
 import {confirmReview} from "./review-confirm.mjs";
 import {buildAiReview,buildLocalReview} from "./session-review.mjs";
+import {clearDemo,confirmDemoPending,demoConversationsRoot,demoRoot,demoStatus,ensureDemoSeeded,ignoreDemoPending,injectDemoFinal,listInbox,listPersonas,readPersona,readSession,restoreDemo} from "./demo-store.mjs";
+import {demoArchiveStatus,pushDemoArchive} from "./demo-archive.mjs";
 const here=path.dirname(fileURLToPath(import.meta.url));
 const proto=path.resolve(here,"..");
+const repoRoot=path.resolve(here,"..","..");
 const PORT=Number(process.env.SOCIALMATE_AI_PORT||8791);
 const HOST="127.0.0.1"; // Never bind publicly without authentication and HTTPS.
 // User-authorized DeepSeek budget. Conservative peak rates (yuan / 1M tokens):
@@ -400,6 +403,101 @@ export function createHandler(options={}){
       catch{return json(res,400,{ok:false,code:"INVALID_FAVORITE_ID",error:"收藏标识不合法"});}
       return json(res,200,await removeFavorite(id));
     }
+    /* N04 演示命名空间：只读写 SocialMate-Data/Demo（与真实 People/归档物理隔离）。
+       内容是 Git 里的虚构母版，不含任何真实主档/录音，因此读接口不需要令牌——
+       否则手机首次打开会只剩空白，违反「默认可见」要求。写接口仍要求 confirm:true + 限流。 */
+    if(url.pathname==="/v12/api/demo/status"&&req.method==="GET"){
+      const seed=await ensureDemoSeeded();
+      return json(res,200,{ok:true,demo:true,synthetic:true,...await demoStatus(),seed,
+        demoRoot:path.relative(repoRoot,demoRoot())});
+    }
+    if(url.pathname==="/v12/api/demo/people"&&req.method==="GET"){
+      await ensureDemoSeeded();
+      const status=await demoStatus();
+      return json(res,200,{ok:true,demo:true,synthetic:true,
+        notice:"虚构合成演示数据，不是真人录音",status,
+        archive:await demoArchiveStatus({demoRoot:demoRoot(),conversationsDir:demoConversationsRoot()}),
+        inbox:await listInbox(),people:await listPersonas()});
+    }
+    const demoPersonMatch=url.pathname.match(/^\/v12\/api\/demo\/people\/([^/]+)$/);
+    if(demoPersonMatch&&req.method==="GET"){
+      await ensureDemoSeeded();
+      let slug;
+      try{slug=decodeURIComponent(demoPersonMatch[1]);}
+      catch{return json(res,400,{ok:false,code:"INVALID_PERSON_SLUG",error:"人物标识不合法"});}
+      return json(res,200,{ok:true,demo:true,synthetic:true,person:await readPersona(slug)});
+    }
+    const demoSessionMatch=url.pathname.match(/^\/v12\/api\/demo\/sessions\/([^/]+)$/);
+    if(demoSessionMatch&&req.method==="GET"){
+      await ensureDemoSeeded();
+      let sessionId;
+      try{sessionId=decodeURIComponent(demoSessionMatch[1]);}
+      catch{return json(res,400,{ok:false,code:"INVALID_SESSION_ID",error:"会话标识不合法"});}
+      return json(res,200,{ok:true,demo:true,synthetic:true,session:await readSession(sessionId)});
+    }
+    /* 演示 final → 待确认 → 人工确认/忽略。全部只写 SocialMate-Data/Demo；
+       确认后才写演示人物档案，写的是 Demo/People（appendPeopleFacts 注入 root）。 */
+    if(url.pathname==="/v12/api/demo/final"&&req.method==="POST"){
+      const limit=rateLimit();
+      if(!limit.ok)
+        return json(res,429,{ok:false,code:"RATE_LIMITED",error:"操作过于频繁，请稍后再试",
+          retryAfterMs:limit.retryAfterMs});
+      const body=await readPayload(req,64000);
+      if(body?.confirm!==true)
+        return json(res,400,{ok:false,code:"CONFIRM_REQUIRED",error:"注入演示 final 需要用户显式确认"});
+      return json(res,200,await injectDemoFinal({...body,confirm:true}));
+    }
+    const demoPendingMatch=url.pathname.match(
+      /^\/v12\/api\/demo\/(?:people\/([^/]+)\/)?pending\/([^/]+)\/(confirm|ignore)$/);
+    if(demoPendingMatch&&req.method==="POST"){
+      const limit=rateLimit();
+      if(!limit.ok)
+        return json(res,429,{ok:false,code:"RATE_LIMITED",error:"操作过于频繁，请稍后再试",
+          retryAfterMs:limit.retryAfterMs});
+      let slug="",pendingId="";
+      try{
+        slug=demoPendingMatch[1]?decodeURIComponent(demoPendingMatch[1]):"";
+        pendingId=decodeURIComponent(demoPendingMatch[2]);
+      }catch{return json(res,400,{ok:false,code:"INVALID_PENDING_ID",error:"待确认标识不合法"});}
+      const body=await readPayload(req,8000);
+      if(body?.confirm!==true)
+        return json(res,400,{ok:false,code:"CONFIRM_REQUIRED",error:"处理待确认事实需要用户显式确认"});
+      const target=slug||(body?.slug?String(body.slug):"");
+      const result=demoPendingMatch[3]==="ignore"
+        ?await ignoreDemoPending(target,pendingId,{confirm:true})
+        :await confirmDemoPending(target,pendingId,{confirm:true,attributionSlug:target});
+      return json(res,200,{...result,realPeopleUntouched:true});
+    }
+    if((url.pathname==="/v12/api/demo/clear"||url.pathname==="/v12/api/demo/restore")&&req.method==="POST"){
+      const limit=rateLimit();
+      if(!limit.ok)
+        return json(res,429,{ok:false,code:"RATE_LIMITED",error:"操作过于频繁，请稍后再试",
+          retryAfterMs:limit.retryAfterMs});
+      const body=await readPayload(req,8000);
+      if(body?.confirm!==true)
+        return json(res,400,{ok:false,code:"CONFIRM_REQUIRED",error:"演示数据操作需要用户显式确认"});
+      const result=url.pathname.endsWith("/clear")
+        ?await clearDemo({confirm:true})
+        :await restoreDemo({confirm:true});
+      return json(res,200,{...result,demo:true,realPeopleUntouched:true});
+    }
+    /* 演示归档（SDD §2.4 / T3）：队列在 SocialMate-Data/Demo，投递目标是 Mac 固定演示目录。
+       只允许本机受控端点，客户端不能传路径；正式归档与真实 People 不参与。 */
+    if(url.pathname==="/v12/api/demo/archive/status"&&req.method==="GET"){
+      return json(res,200,{ok:true,demo:true,synthetic:true,realArchiveUntouched:true,
+        ...await demoArchiveStatus({demoRoot:demoRoot(),conversationsDir:demoConversationsRoot()})});
+    }
+    if(url.pathname==="/v12/api/demo/archive/push"&&req.method==="POST"){
+      const limit=rateLimit();
+      if(!limit.ok)
+        return json(res,429,{ok:false,code:"RATE_LIMITED",error:"同步演示归档过于频繁，请稍后再试",
+          retryAfterMs:limit.retryAfterMs});
+      const body=await readPayload(req,8000);
+      if(body?.confirm!==true)
+        return json(res,400,{ok:false,code:"CONFIRM_REQUIRED",error:"同步演示归档需要用户显式确认"});
+      const result=await pushDemoArchive({demoRoot:demoRoot(),conversationsDir:demoConversationsRoot()});
+      return json(res,200,{...result,demo:true,synthetic:true,realArchiveUntouched:true});
+    }
     if(req.method!=="GET")return json(res,405,{ok:false,code:"METHOD_NOT_ALLOWED"});
     if(url.pathname==="/profile-sync.js"){
       const bytes=await fs.readFile(path.join(here,"profile-sync.js"));
@@ -410,6 +508,24 @@ export function createHandler(options={}){
       const html=await fs.readFile(path.resolve(proto,"..","socialmate-v1.2","index.html"));
       return res.writeHead(200,{"Content-Type":"text/html; charset=utf-8",
         "Cache-Control":"no-store","X-Content-Type-Options":"nosniff"}).end(html);
+    }
+    // 海南地点配图：同源静态图片，路径固定为 /v12/img/<city_folder>/<id3>/<file>.webp
+    // 只为「地点卡片」服务：白名单后缀 + 禁止 .. 穿越，命中失败直接 404。
+    if(url.pathname.startsWith("/v12/img/")){
+      const rel=decodeURIComponent(url.pathname.slice("/v12/img/".length));
+      if(!/^[A-Za-z0-9_-]{1,32}\/\d{3}\/[A-Za-z0-9_-]{1,16}\.webp$/.test(rel))
+        return json(res,400,{ok:false,code:"INVALID_IMAGE_PATH"});
+      const file=path.resolve(proto,"..","docs","成果整理","Hainan-Travel-Guide","images",rel);
+      const rootDir=path.resolve(proto,"..","docs","成果整理","Hainan-Travel-Guide","images");
+      if(!file.startsWith(rootDir+path.sep))
+        return json(res,400,{ok:false,code:"INVALID_IMAGE_PATH"});
+      try{
+        const buf=await fs.readFile(file);
+        return res.writeHead(200,{"Content-Type":"image/webp","Cache-Control":"public, max-age=604800",
+          "X-Content-Type-Options":"nosniff"}).end(buf);
+      }catch{
+        return json(res,404,{ok:false,code:"IMAGE_NOT_FOUND"});
+      }
     }
     // 归档历史页与归档 API 都经由本服务同源提供，避免手机上出现跨端口/跨源请求。
     // /v12/history        → 归档历史页（静态壳，不含任何数据）

@@ -1,5 +1,22 @@
 # Changelog
 
+## 2026-11-01 · N03b 产品化收口（「界面像开发版」→ 一级入口即产品态）
+
+只收口入口与界面形态，不改 N03 的数据链路与授权模型。
+
+1. **打开即五 Tab**：`MainActivity` 无 `diagnostics` extra 时立即 `startActivity(new Intent(this, AsrActivity.class))` + `finish()`；桌面图标不再落到原生卡片首页，双麦/设备检测改为 `diagnostics=true` 才进。
+2. **Web 顶栏瘦身**：`AsrActivity` 打开即 `showSocialMatePanel()`；顶栏由「← 录音控制 / 刷新界面 / 停止录音」三个大按钮改为 40dp 细栏（品牌名 + `⋮`），录音、刷新、服务地址、设备检测收进 `PopupMenu`。
+3. **录音改底部面板**：把手 + 标题「开始录音」+ 关闭 + 三枚说明 chip（需双方同意 / 原文默认不留存 / 云端 AI 默认不发）+ 两个勾选项与说明 + 状态行 +「本轮原文与复盘 / 停止录音」+ 折叠「高级设置」+ 主按钮「开始录音」；面板高度随内容，不留空白。
+4. **前端去演示化**（`socialmate-v1.2/source/V1.1-baseline.html`）：删除「开始演示 / 开始对话演示 / 进入演示 / 模拟输入 / 模拟识别完成 / 手动演示 / 本地规则模拟 / 示例按钮（户外跑步、软件、咖啡）」；主 CTA 统一「开始录音」，有原生桥时调 `window.SocialMateAndroid.requestRecording()` 并**不立即订阅字幕**，等原生回调 `window.smNativeRecordingStarted()` 后再订阅；手动输入收进「更多 · 人物与云端授权」的二级折叠「手动补充一句话」。
+5. **版本推进**：0.6.1(16) → 0.6.2(17) → 0.6.3(18) → 0.6.4(19) → 0.6.5(20) → **0.6.6(21)**（`android-poc/app/build.gradle` 现值）。
+6. **测试口径变更**：`test-android-wiring.mjs` 断言改为「顶栏菜单化 + 打开即进主界面」；`test-live-asr.mjs` 增「原生桥被调用 / 无桥降级」两条；`test-ui.mjs` 增 `noDemoEntry`、`ctaIsRealAction`。
+
+本轮实跑（只跑这三条，未跑全量 `verify-v040.sh`，无新增真机证据）：
+
+- `node socialmate-v1.2/test-ui.mjs` → 12/12 检查通过（含 `noDemoEntry`、`ctaIsRealAction`）。
+- `node socialmate-v1.2/test-live-asr.mjs` → **9 pass / 1 fail**：首条用例仍要求「点 CTA 后立刻订阅字幕流」，与 0.6.6 的「等 `smNativeRecordingStarted()` 再订阅」冲突（harness 未触发该回调，`streams.length` 得 0）。断言待随新契约更新。
+- `node --test socialmate-v1.2/test-android-wiring.mjs` → **4 pass / 3 fail**：失败三条仍在找 0.6.0 的旧字符串（`我已告知并获得同行者同意录音`、`SocialMate · 实时对话`、`stylePrimary(startButton)`），需随底部面板与细顶栏更新。
+
 ## 2026-11-01 · N03（SDD V1.1，P0→P3 一次做完）
 
 验收表与证据索引：`docs/plan/ALW001-N03-SDD-V1.1/ACCEPTANCE.md`

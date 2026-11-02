@@ -1,0 +1,120 @@
+{
+  "result": "PASS",
+  "mode": "real-run",
+  "generatedAt": "2026-11-02T02:04:29.766Z",
+  "base": "http://127.0.0.1:8791",
+  "checks": 39,
+  "failures": [],
+  "macDemoArchive": {
+    "root": "/Users/zzymima0000/Documents/SocialMate/Demo/Conversations",
+    "files": 18,
+    "pairs": {
+      "md": 9,
+      "json": 9
+    },
+    "digest": "6c27fa687935381954bc393bf41aa4e525467f281a117948c7899367b7d499e3"
+  },
+  "queue": {
+    "root": "/Users/zzymima0000/Developer/coding/1.Active/alw-001-外语社交系统/SocialMate-Data/Demo/Conversations",
+    "sessions": 9
+  },
+  "realArchive": {
+    "root": "/Users/zzymima0000/Documents/SocialMate/Conversations",
+    "filesBefore": 4,
+    "filesAfter": 4,
+    "sha256Before": "90d8a1510cf414d5a2078da9d4deed7d43129774eec55ee14bd39f4120649337",
+    "sha256After": "90d8a1510cf414d5a2078da9d4deed7d43129774eec55ee14bd39f4120649337"
+  },
+  "realPeople": {
+    "files": 41,
+    "sha256": "fe662283e3c85553cedea57f8644567e14df66c4cbd44c0c3493902910af4793"
+  },
+  "lifecycle": {
+    "offline": {
+      "pending": 9,
+      "delivered": 0,
+      "errors": 9,
+      "remoteFiles": 0
+    },
+    "recovered": {
+      "created": 9,
+      "delivered": 9,
+      "pending": 0
+    },
+    "repeated": {
+      "created": 0,
+      "duplicates": 9
+    },
+    "cleared": {
+      "ok": true,
+      "demo": true,
+      "isolatedRoot": "SocialMate-Data/Demo",
+      "realRoot": "SocialMate-Data/People",
+      "seeded": false,
+      "cleared": true,
+      "clearedAt": "2026-11-02T02:04:27.772Z",
+      "seededAt": null,
+      "fixtureVersion": "N04-DEMO-1.0",
+      "fixtureSha256": "5513b086aff7066ee08995f4aae857ed8a4848aaac51249bf9309dc9a1288263",
+      "personas": 0,
+      "sessions": 0,
+      "segments": 0,
+      "pending": 0,
+      "inbox": 0,
+      "updatedAt": null
+    },
+    "restored": {
+      "ok": true,
+      "demo": true,
+      "isolatedRoot": "SocialMate-Data/Demo",
+      "realRoot": "SocialMate-Data/People",
+      "seeded": true,
+      "cleared": false,
+      "clearedAt": null,
+      "seededAt": "2026-11-02T02:04:28.534Z",
+      "fixtureVersion": "N04-DEMO-1.0",
+      "fixtureSha256": "5513b086aff7066ee08995f4aae857ed8a4848aaac51249bf9309dc9a1288263",
+      "personas": 3,
+      "sessions": 9,
+      "segments": 54,
+      "pending": 3,
+      "inbox": 0,
+      "updatedAt": null
+    },
+    "final": {
+      "demo": {
+        "ok": true,
+        "demo": true,
+        "synthetic": true,
+        "isolatedRoot": "SocialMate-Data/Demo",
+        "realRoot": "SocialMate-Data/People",
+        "seeded": true,
+        "cleared": false,
+        "clearedAt": null,
+        "seededAt": "2026-11-02T02:04:29.758Z",
+        "fixtureVersion": "N04-DEMO-1.0",
+        "fixtureSha256": "5513b086aff7066ee08995f4aae857ed8a4848aaac51249bf9309dc9a1288263",
+        "personas": 3,
+        "sessions": 9,
+        "segments": 54,
+        "pending": 3,
+        "inbox": 0,
+        "updatedAt": null,
+        "seed": {
+          "seeded": true,
+          "reason": "already"
+        },
+        "demoRoot": "SocialMate-Data/Demo"
+      },
+      "archive": {
+        "total": 9,
+        "delivered": 9,
+        "pending": 0,
+        "remoteFiles": {
+          "md": 9,
+          "json": 9
+        }
+      }
+    }
+  }
+}

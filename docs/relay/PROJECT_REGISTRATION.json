@@ -1,0 +1,15 @@
+{
+  "schema_version": "1.0.0",
+  "project_id": "ALW-001",
+  "project_root": "/Users/zzymima0000/Developer/coding/1.Active/alw-001-外语社交系统",
+  "workspace_folder": "alw-001-外语社交系统",
+  "governance": "preserve project AGENTS.md, existing ORCA roles, Human Gates and approval rules",
+  "delivery_policy": "MAIN_DEVELOPER_OR_CURRENT_PROJECT_OWNER",
+  "trigger": "转发",
+  "status": "REGISTERED",
+  "task_source": "docs/relay/CURRENT_TASK.md",
+  "receipts": "docs/relay/receipts/<task_id>.md",
+  "central_hub_staging": "/Users/zzymima0000/Developer/coding/1.Active/alw-001-外语社交系统/docs/relay-center/v1/START_HERE.md",
+  "dispatch_mode": "COMPUTER_USE_GUI_ONLY",
+  "current_task_note": "Existing N03 SENT; never resubmit"
+}

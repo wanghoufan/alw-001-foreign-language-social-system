@@ -22,11 +22,13 @@
       "白沙门公园",
       "健身和锻炼"
     ],
-    "coach": "本地规则模拟 · 非真实 AI\n户外跑步\n规则模拟\n自然接话\n先接住对方\n\nThat sounds great! Running outdoors is a nice way to explore a city.\n\n复制\n朗读\n☆ 收藏\n继续追问\n把话接下去\n\nDo you prefer running by the sea or in a park?\n\n复制\n朗读\n☆ 收藏\n我也可以分享（可选）",
+    "coach": "本地建议\n户外跑步\n本地建议\n自然接话\n先接住对方\n\nThat sounds great! Running outdoors is a nice way to explore a city.\n\n复制\n朗读\n☆ 收藏\n继续追问\n把话接下去\n\nDo you prefer running by the sea or in a park?\n\n复制\n朗读\n☆ 收藏\n我也可以分享（可选）",
     "bubbles": 1,
     "drawerOpen": true,
     "drawerText": "← 返回聊天（会话保留）\n万绿园\n\nEvergreen Park (Wanlüyuan) · 海口 · 海滨日落\n\n中文介绍\n\n海口市龙华区滨海大道38号，海口湾边。万绿园是海口人经常去散步、跑步、野餐的大草坪，天气舒服时很有生活气。比起拍一个固定景点，更适合带朋友放松，看草地、椰树和海边城市风景。\n\nEnglish — 可以这样跟朋友说\n\nIt is at No. 38 Binhai Avenue, Longhua District,",
     "hasMaps": true,
+    "banned": false,
+    "cta": "连接实时字幕",
     "afterClose": {
       "drawerOpen": false,
       "bubbles": 1
@@ -61,12 +63,14 @@
   "dark": true,
   "summary": {
     "passed": true,
-    "at": "2026-11-01T13:56:36.428Z",
+    "at": "2026-11-01T15:26:31.765Z",
     "checks": {
       "apps51": true,
       "steps204": true,
       "places115": true,
       "tabs5": true,
+      "noDemoEntry": true,
+      "ctaIsRealAction": true,
       "autoCards": true,
       "drawer": true,
       "keepSession": true,

@@ -107,3 +107,11 @@
 - WebView 导出：`SocialMateAndroid.saveText(name,text)` 仅在 `isPrivatePanelUrl` 同源页面注入，桥内再校验 `trustedPageUrl`；落盘走 `ACTION_CREATE_DOCUMENT`，清单无 `WRITE_EXTERNAL_STORAGE`。
 - 手机端布局：≤930px 时 `#coachresults` 由 `layoutCoach()` 搬进 `#coachinline`（字幕与输入框之间），`chatsetup` 折叠为一行；紧凑覆盖样式在 `<style id="n03-mobile-compact">`。
 - 服务：组合 8790+8791、归档 8781 未变；预算账本未重置（ASR 0.129189、DeepSeek 0.213634 / 各 1 元）。
+
+## N03b / N04（2026-11-02）
+
+- **单 Activity + WebView**：`AsrActivity` 承载网页；原生返回键顺序为「录音面板 → 网页弹层/抽屉 → 退回首页 Tab → finish」，只在私有页内 `goBack`（防止回退到 `about:blank` 白屏）。
+- **多语言**：网页 `I18N` 词表（zh/en 各 306 key）+ `t(k)` + `applyLang(pref)`，偏好存 `localStorage['alw-preview-v1'].lang ∈ {zh,en,system}`；原生面板用 `reg(tv,zh,en)` 注册后由 `setLanguage()` 即时切换。历史页独立一套 149 key，读同一字段。
+- **海南配图**：`GET /v12/img/<city_folder>/<id3>/01.webp`，白名单正则 + 根目录前缀校验；缺图走渐变占位。地点卡语言状态 `SAV.placeLang`（默认）+ `SAV.placeLangMap[id]`（单卡覆盖）。
+- **演示命名空间**：`SocialMate-Data/Demo/{People,Conversations,Backups,state.json}`，`demo-store.mjs` 每次读写前 `assertIsolated()`；演示会话落 `~/Documents/SocialMate/Demo/Conversations/`，真实归档目录不受影响。
+- **构建**：`python3 socialmate-v1.2/build-v12.py` 生成 `index.html`（读 `source/places-115.json`，产出 apps 51 / steps 204 / places 115 / stories 5）。

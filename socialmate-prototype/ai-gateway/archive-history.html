@@ -67,36 +67,53 @@ button{min-height:40px}
 .item{cursor:pointer}
 .item .rowbtns{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
 .item .rowbtns button{min-height:40px}
+a.applink{font-size:14px;padding:9px 14px;min-height:40px;border:1px solid var(--stroke);border-radius:9px;background:var(--paper);color:var(--pine);text-decoration:none;display:inline-flex;align-items:center}
+.langbar{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.langbar button{font-size:12px;padding:5px 12px;min-height:32px;border-radius:99px;background:transparent;color:var(--muted)}
+.langbar button[aria-pressed=true]{background:var(--soft);border-color:var(--pine);color:var(--pine);font-weight:600}
 @media(max-width:360px){.grid{grid-template-columns:1fr}}
+@media(prefers-color-scheme:dark){
+ :root{color-scheme:dark;--bg:#0e161d;--paper:#16212b;--ink:#e6eef2;--muted:#9fb2bd;--stroke:#2a3a46;--pine:#63d6c0;--soft:#1c2f2b;--sand:#e8bd87;--err:#ff9a90}
+ input,textarea,select,button,.item,.cand{background:var(--paper)}
+ button.primary{background:var(--pine);color:#071410;border-color:var(--pine)}
+ .review{background:#131d26}
+ .excerpt{background:#152a26}
+ .badge.ai,.engine.ai{background:#3a2c17;color:#f2c88e}
+}
 </style>
 </head>
 <body>
 <header>
-  <h1>会话归档历史</h1>
-  <p>默认只看日期 / 段数 / 归属；点开才读原文。原文只读，复盘候选须你逐条勾选确认才写入本机档案。</p>
+  <h1 id="hTitle">会话归档历史</h1>
+  <p id="hSub">默认只看日期 / 段数 / 归属；点开才读原文。原文只读，复盘候选须你逐条勾选确认才写入本机档案。</p>
+  <div class="langbar" id="langbar" role="group" aria-label="语言">
+    <button type="button" data-lang="zh">中文</button>
+    <button type="button" data-lang="en">English</button>
+    <button type="button" data-lang="system" id="langSys">跟随系统</button>
+  </div>
 </header>
 <main>
   <section class="card" id="authCard">
-    <label for="token">归档访问令牌</label>
+    <label for="token" id="tokenLabel">归档访问令牌</label>
     <input id="token" type="password" autocomplete="off" placeholder="从 Mac mini 的 .local/archive-token 复制">
     <div class="row" style="margin-top:10px">
       <button class="primary" id="connect">连接</button>
       <button id="forget">清空令牌</button>
     </div>
-    <p class="hint">首次需粘贴令牌，本次会话有效；关闭页面即失效，不写入长期存储，也不进网址。</p>
+    <p class="hint" id="tokenHint">首次需粘贴令牌，本次会话有效；关闭页面即失效，不写入长期存储，也不进网址。</p>
     <div class="status" id="authStatus">尚未连接</div>
   </section>
 
   <section class="card" id="listCard">
-    <label for="q">关键词（在原文里搜）</label>
+    <label for="q" id="qLabel">关键词（在原文里搜）</label>
     <input id="q" type="search" placeholder="如 hiking / 咖啡 / 跑步" autocomplete="off">
     <div class="grid" style="margin-top:10px">
-      <div><label for="person">人物</label><select id="person"><option value="">全部</option></select></div>
-      <div><label for="limit">每页</label><select id="limit"><option value="10">10 条</option><option value="20" selected>20 条</option><option value="50">50 条</option></select></div>
+      <div><label for="person" id="personLabel">人物</label><select id="person"><option value="" id="personAll">全部</option></select></div>
+      <div><label for="limit" id="limitLabel">每页</label><select id="limit"><option value="10" data-n="10">10 条</option><option value="20" data-n="20" selected>20 条</option><option value="50" data-n="50">50 条</option></select></div>
     </div>
     <div class="grid" style="margin-top:10px">
-      <div><label for="from">起始日期（UTC）</label><input id="from" type="date"></div>
-      <div><label for="to">结束日期（UTC）</label><input id="to" type="date"></div>
+      <div><label for="from" id="fromLabel">起始日期（UTC）</label><input id="from" type="date"></div>
+      <div><label for="to" id="toLabel">结束日期（UTC）</label><input id="to" type="date"></div>
     </div>
     <div class="row" style="margin-top:10px">
       <button class="primary" id="search">搜索</button>
@@ -104,7 +121,7 @@ button{min-height:40px}
       <button id="clear">清空条件</button>
       <button id="export">导出该日期范围 (.md)</button>
     </div>
-    <p class="hint">日期按 UTC 归档日筛选：文件名和归档目录都用 UTC，海口是 UTC+8，本地日期可能比这里晚一天（如 UTC 16:30 已是次日 00:30）。</p>
+    <p class="hint" id="dateHint">日期按 UTC 归档日筛选：文件名和归档目录都用 UTC，海口是 UTC+8，本地日期可能比这里晚一天（如 UTC 16:30 已是次日 00:30）。</p>
     <div class="status" id="listStatus"></div>
   </section>
 
@@ -116,6 +133,8 @@ button{min-height:40px}
 (() => {
   // 令牌只放 sessionStorage：本次会话有效，关闭页面即失效；不写 localStorage、不进网址、不打日志。
   const KEY = "sm-archive-token";
+  // 与主页面同源同字段：alw-preview-v1.lang（zh | en | system）。
+  const LANG_KEY = "alw-preview-v1";
   const $ = (id) => document.getElementById(id);
   // 同一份页面会被两种方式提供：归档服务根路径 /history，或私有 UI 的 /v12/history。
   // 按当前路径推导前缀，保证 request 始终落在同源下的 api/archive/*。
@@ -124,6 +143,333 @@ button{min-height:40px}
   let items = [];
   let nextCursor = null;
   let peopleLoaded = false;
+
+  const I18N = {
+    zh: {
+      'hist.docTitle': 'SocialMate · 会话归档历史',
+      'hist.title': '会话归档历史',
+      'hist.sub': '默认只看日期 / 段数 / 归属；点开才读原文。原文只读，复盘候选须你逐条勾选确认才写入本机档案。',
+      'hist.langLabel': '语言',
+      'hist.langSystem': '跟随系统',
+      'hist.tokenLabel': '归档访问令牌',
+      'hist.tokenPlaceholder': '从 Mac mini 的 .local/archive-token 复制',
+      'hist.connect': '连接',
+      'hist.forget': '清空令牌',
+      'hist.tokenHint': '首次需粘贴令牌，本次会话有效；关闭页面即失效，不写入长期存储，也不进网址。',
+      'hist.notConnected': '尚未连接',
+      'hist.qLabel': '关键词（在原文里搜）',
+      'hist.qPlaceholder': '如 hiking / 咖啡 / 跑步',
+      'hist.personLabel': '人物',
+      'hist.allPeople': '全部',
+      'hist.limitLabel': '每页',
+      'hist.limitN': '{n} 条',
+      'hist.fromLabel': '起始日期（UTC）',
+      'hist.toLabel': '结束日期（UTC）',
+      'hist.search': '搜索',
+      'hist.today': '今天',
+      'hist.clear': '清空条件',
+      'hist.export': '导出该日期范围 (.md)',
+      'hist.dateHint': '日期按 UTC 归档日筛选：文件名和归档目录都用 UTC，海口是 UTC+8，本地日期可能比这里晚一天（如 UTC 16:30 已是次日 00:30）。',
+      'hist.more': '加载更多',
+      'hist.unknownDate': '日期未知',
+      'hist.itemTitle': '{date} · 本地 {local}',
+      'hist.draftBadge': '含未定稿段',
+      'hist.itemMeta': '{total} 段 · 时长 {dur}',
+      'hist.itemMetaHit': '{total} 段 · 命中 {hit} 段 · 时长 {dur}',
+      'hist.noPerson': '未归属人物',
+      'hist.openExcerpt': '点开看命中原文摘要 ›',
+      'hist.openPlain': '点开看原文与复盘 ›',
+      'hist.excerptWho': '第 {i} 段 · 说话人 {spk}（聚类编号，身份未知）',
+      'hist.openDetail': '打开完整原文与复盘',
+      'hist.collapse': '收起摘要 ˄',
+      'hist.summary': '命中 {total} 个会话 · 已显示 {shown} 条{skipped}',
+      'hist.skipped': ' · 跳过损坏 {n}',
+      'hist.empty': '没有匹配的归档会话。换个关键词或放宽日期范围试试。',
+      'hist.back': '← 返回列表',
+      'hist.detailMeta': '会话 {id} · 时长 {dur} · {segs} 段 · 应用 {ver} · 授权 录音{rec}/云端AI{ai}',
+      'hist.yes': '是',
+      'hist.no': '否',
+      'hist.asrNote': '以下为 ASR 原始转写，逐字保留，未经 AI 改写。说话人仅为聚类编号。',
+      'hist.segMeta': '{clock} · 说话人 {spk} · 轨道 {track} · {provider}',
+      'hist.aiTitle': 'AI 建议（独立生成，不覆盖原文）',
+      'hist.copy': '复制原文',
+      'hist.copied': '已复制原文',
+      'hist.copyEmpty': '没有可复制的原文',
+      'hist.download': '下载 (.md)',
+      'hist.backToApp': '回到 App',
+      'hist.reviewTitle': '会后复盘（本轮原文 → 候选 → 你确认 → 本机档案）',
+      'hist.reviewUnavailable': '当前页面由归档服务直接提供，复盘需要经由私有 UI（/v12/history）使用；原文查看不受影响。',
+      'hist.reviewHint': '本地复盘只用确定性规则，不联网、不计费；云端 AI 需你当轮勾选同意，且只在 1 元授权额度内调用。',
+      'hist.reviewLocal': '生成本地复盘（不调用 AI）',
+      'hist.reviewConsent': '允许把本轮原文发送给云端 AI（DeepSeek）',
+      'hist.reviewAi': '用云端 AI 生成复盘',
+      'hist.reviewIdle': '尚未生成复盘',
+      'hist.reviewAiBusy': '正在调用云端模型…（会产生费用）',
+      'hist.reviewLocalBusy': '正在生成本地复盘…',
+      'hist.reviewAiDone': '已用云端模型 {p} 生成 · 候选仍需你核对',
+      'hist.reviewLocalDone': '本地规则生成 · 未调用任何 AI',
+      'hist.errOrigin': '页面来源未被私有服务接受（403），请从 /v12/history 打开本页',
+      'hist.errConsent': '未勾选云端 AI 同意，本次没有任何外部请求（403）',
+      'hist.err402': '云端 AI 授权额度已用尽（402），可改用本地复盘',
+      'hist.err401': '归档令牌无效（401），请重新连接',
+      'hist.err404': '归档里找不到这一轮会话（404）',
+      'hist.errGen': '生成失败：{msg}',
+      'hist.reviewFallback': '本轮复盘',
+      'hist.engineAi': '云端 AI · {p}',
+      'hist.engineLocal': '本地规则 · 无 AI',
+      'hist.reviewMeta': '{segs} 段 · 说话人 {spk} · {note}',
+      'hist.talked': '聊了什么',
+      'hist.howTemplate': '模板句（非 AI）',
+      'hist.howAi': 'AI 建议接话',
+      'hist.followUps': '下次追问',
+      'hist.templateSuffix': '（模板）',
+      'hist.warnings': '需要你注意',
+      'hist.candTitle': '候选事实（{n} 条 · 全部为待确认草稿）',
+      'hist.candEmpty': '本轮没有可自动提取的事实候选；可以在「关于我」里手工记录。',
+      'hist.candLabel': '候选 {i} · 置信 {c}',
+      'hist.saveSelf': '保存到「关于我」',
+      'hist.savePerson': '保存到人物',
+      'hist.saveSkip': '不保存',
+      'hist.pickPerson': '选择人物…',
+      'hist.noPeople': '没有人物主档，可新建',
+      'hist.newPerson': '＋ 新建人物主档…',
+      'hist.personName': '人物姓名',
+      'hist.personSlug': '目录标识（英文/数字，如 anna）',
+      'hist.sectionPrefix': '写入章节：{name}',
+      'hist.sec.preference': '已确认偏好',
+      'hist.sec.interest': '兴趣',
+      'hist.sec.work': '工作 / 学习',
+      'hist.sec.hainan': '海南生活',
+      'hist.sec.common': '共同点',
+      'hist.sec.plan': '对方近期计划',
+      'hist.sec.topics': '后续可以继续的话题',
+      'hist.sec.basic': '基本情况',
+      'hist.sec.avoid': '不宜重复询问',
+      'hist.candSource': '段 {seg} · {clock} · {spk}（聚类编号，身份未知）· 原文：「{quote}」',
+      'hist.pickAll': '全选保存到「关于我」',
+      'hist.saveAll': '确认保存到本机档案',
+      'hist.saveIdle': '未勾选任何候选时不会写入任何文件',
+      'hist.saveHint': '保存到「关于我」写入本机档案；保存到人物会同时追加到正式人物主档 People/<slug>/00-profile.md 的对应章节，只追加、不改人工写的段落，重复保存不会新增第二条。没有对应人物时可选「新建人物主档」，先起英文目录标识再建。',
+      'hist.picked': '已勾选 {n} 条，仍需点「确认保存」',
+      'hist.errNeedPerson': '人物候选必须选择具体人物（来自正式人物主档）或点「新建人物主档」，也可改成不保存',
+      'hist.errNeedName': '新建人物需要填写姓名',
+      'hist.errSlug': '新建人物的目录标识只能用英文字母/数字/下划线/连字符（如 anna）',
+      'hist.nothingPicked': '没有勾选任何候选，未写入任何文件',
+      'hist.writing': '正在写入本机档案…',
+      'hist.saveUnchanged': '没有新增内容（{reasons}）· 档案未改动',
+      'hist.addedStories': '关于我 +{n}',
+      'hist.addedNotes': '人物备注 +{n}',
+      'hist.addedPeople': '人物主档 +{n}（{list}）',
+      'hist.createdPeople': '新建人物 {list}',
+      'hist.saved': '已保存：{parts} · 更新时间 {time}',
+      'hist.none': '无',
+      'hist.deduped': ' · 已去重 {n} 条',
+      'hist.notWritten': ' · 未写入：{list}',
+      'hist.errSave401': '归档令牌无效（401），请重新连接后再保存',
+      'hist.errSave404': '归档里找不到这一轮会话，不能写入档案（404）',
+      'hist.errSave429': '保存过于频繁，请稍后再试（429）',
+      'hist.errSave409': '该人物档案正在被另一个写入占用，请稍后再试（409）',
+      'hist.errSave': '保存失败：{msg}',
+      'hist.loadingDetail': '读取会话原文…',
+      'hist.errDetail404': '找不到这一轮会话（404）',
+      'hist.errDetail401': '令牌无效（401），请重新粘贴令牌',
+      'hist.errReadFail': '读取失败：{msg}',
+      'hist.loading': '读取中…',
+      'hist.loadingMore': '加载更多…',
+      'hist.errToken401': '令牌无效（401），请重新粘贴令牌',
+      'hist.errBadQuery': '查询条件不合法：{msg}',
+      'hist.errRead': '读取失败：{msg}',
+      'hist.needToken': '请先填入令牌',
+      'hist.notReady': '服务未就绪',
+      'hist.connectFail': '无法连接归档服务：{msg}',
+      'hist.connected': '已连接 · 令牌只在本次会话有效（关闭页面即失效）',
+      'hist.tokenBad': '令牌无法使用，请重新粘贴',
+      'hist.badSessionId': '链接里的会话 ID 不合法',
+      'hist.tokenCleared': '已清空令牌（本次会话失效）',
+      'hist.exporting': '导出中…',
+      'hist.exported': '已导出（{kb} KB）',
+      'hist.exportEmpty': '该范围没有可导出的会话',
+      'hist.exportFail': '导出失败：{msg}',
+      'hist.exportName': 'SocialMate-导出-{range}.md',
+      'hist.downloadName': 'SocialMate-{id}.md',
+      'hist.restored': '已用本次会话的令牌连接（关闭页面即失效）',
+      'hist.restoreExpired': '本次会话的令牌已失效，请重新粘贴',
+      'hist.peopleFail': '读取人物主档失败（HTTP {status}）',
+      'hist.err401': '令牌无效（401）',
+    },
+    en: {
+      'hist.docTitle': 'SocialMate · Session archive',
+      'hist.title': 'Session archive',
+      'hist.sub': 'By default you only see the date, the number of segments and who it belongs to; open a session to read the transcript. The transcript is read-only — review candidates are written to your local profile only after you tick them one by one.',
+      'hist.langLabel': 'Language',
+      'hist.langSystem': 'Follow system',
+      'hist.tokenLabel': 'Archive access token',
+      'hist.tokenPlaceholder': 'Paste from .local/archive-token on the Mac mini',
+      'hist.connect': 'Connect',
+      'hist.forget': 'Clear token',
+      'hist.tokenHint': 'Paste the token once — it lasts for this session only. Closing the page clears it; it is never stored long-term and never put in the URL.',
+      'hist.notConnected': 'Not connected',
+      'hist.qLabel': 'Keyword (searches the transcript)',
+      'hist.qPlaceholder': 'e.g. hiking / coffee / running',
+      'hist.personLabel': 'Person',
+      'hist.allPeople': 'All',
+      'hist.limitLabel': 'Per page',
+      'hist.limitN': '{n}',
+      'hist.fromLabel': 'From date (UTC)',
+      'hist.toLabel': 'To date (UTC)',
+      'hist.search': 'Search',
+      'hist.today': 'Today',
+      'hist.clear': 'Clear filters',
+      'hist.export': 'Export this range (.md)',
+      'hist.dateHint': 'Dates filter by UTC archive day: file names and folders are all UTC. Haikou is UTC+8, so the local date can be one day later (UTC 16:30 is already 00:30 the next day).',
+      'hist.more': 'Load more',
+      'hist.unknownDate': 'Date unknown',
+      'hist.itemTitle': '{date} · local {local}',
+      'hist.draftBadge': 'Draft segments',
+      'hist.itemMeta': '{total} segments · {dur}',
+      'hist.itemMetaHit': '{total} segments · {hit} matched · {dur}',
+      'hist.noPerson': 'No person yet',
+      'hist.openExcerpt': 'Open the matched excerpts ›',
+      'hist.openPlain': 'Open transcript and review ›',
+      'hist.excerptWho': 'Segment {i} · speaker {spk} (cluster ID, identity unknown)',
+      'hist.openDetail': 'Open full transcript and review',
+      'hist.collapse': 'Hide excerpts ˄',
+      'hist.summary': '{total} sessions matched · showing {shown}{skipped}',
+      'hist.skipped': ' · skipped {n} damaged',
+      'hist.empty': 'No archived session matched. Try another keyword or a wider date range.',
+      'hist.back': '← Back to list',
+      'hist.detailMeta': 'Session {id} · {dur} · {segs} segments · app {ver} · consent: recording {rec} / cloud AI {ai}',
+      'hist.yes': 'yes',
+      'hist.no': 'no',
+      'hist.asrNote': 'Below is the raw ASR transcript, kept word for word with no AI rewriting. Speakers are cluster IDs only.',
+      'hist.segMeta': '{clock} · speaker {spk} · track {track} · {provider}',
+      'hist.aiTitle': 'AI suggestion (generated separately, never overwrites the transcript)',
+      'hist.copy': 'Copy transcript',
+      'hist.copied': 'Transcript copied',
+      'hist.copyEmpty': 'Nothing to copy',
+      'hist.download': 'Download (.md)',
+      'hist.backToApp': 'Back to app',
+      'hist.reviewTitle': 'Post-session review (transcript → candidates → your confirmation → local profile)',
+      'hist.reviewUnavailable': 'This page is served straight by the archive service. The review needs the private UI (/v12/history); reading transcripts still works here.',
+      'hist.reviewHint': 'The local review uses deterministic rules only — no network, no cost. Cloud AI needs your consent for this session and stays within the ¥1 allowance.',
+      'hist.reviewLocal': 'Generate local review (no AI)',
+      'hist.reviewConsent': 'Allow sending this transcript to cloud AI (DeepSeek)',
+      'hist.reviewAi': 'Generate review with cloud AI',
+      'hist.reviewIdle': 'No review generated yet',
+      'hist.reviewAiBusy': 'Calling the cloud model… (this costs money)',
+      'hist.reviewLocalBusy': 'Generating the local review…',
+      'hist.reviewAiDone': 'Generated with {p} · candidates still need your check',
+      'hist.reviewLocalDone': 'Generated by local rules · no AI was called',
+      'hist.errOrigin': 'The private service rejected this page origin (403) — open it from /v12/history',
+      'hist.errConsent': 'Cloud AI consent was not ticked, so nothing was sent (403)',
+      'hist.err402': 'The cloud AI allowance is used up (402) — switch to the local review',
+      'hist.err401': 'Archive token is not valid (401) — please reconnect',
+      'hist.err404': 'This session is not in the archive (404)',
+      'hist.errGen': 'Generation failed: {msg}',
+      'hist.reviewFallback': 'Session review',
+      'hist.engineAi': 'Cloud AI · {p}',
+      'hist.engineLocal': 'Local rules · no AI',
+      'hist.reviewMeta': '{segs} segments · speakers {spk} · {note}',
+      'hist.talked': 'What you talked about',
+      'hist.howTemplate': 'Template line (not AI)',
+      'hist.howAi': 'AI-suggested reply',
+      'hist.followUps': 'Follow-up questions',
+      'hist.templateSuffix': ' (template)',
+      'hist.warnings': 'Worth your attention',
+      'hist.candTitle': 'Candidate facts ({n} · all drafts pending confirmation)',
+      'hist.candEmpty': 'No fact candidates could be extracted from this session; you can add them by hand in “About me”.',
+      'hist.candLabel': 'Candidate {i} · confidence {c}',
+      'hist.saveSelf': 'Save to “About me”',
+      'hist.savePerson': 'Save to a person',
+      'hist.saveSkip': 'Do not save',
+      'hist.pickPerson': 'Choose a person…',
+      'hist.noPeople': 'No person profile yet — you can create one',
+      'hist.newPerson': '＋ New person profile…',
+      'hist.personName': 'Person name',
+      'hist.personSlug': 'Folder ID (letters/digits, e.g. anna)',
+      'hist.sectionPrefix': 'Section: {name}',
+      'hist.sec.preference': 'Confirmed preferences',
+      'hist.sec.interest': 'Interests',
+      'hist.sec.work': 'Work / study',
+      'hist.sec.hainan': 'Life in Hainan',
+      'hist.sec.common': 'Things in common',
+      'hist.sec.plan': 'Their upcoming plans',
+      'hist.sec.topics': 'Topics to pick up again',
+      'hist.sec.basic': 'Basics',
+      'hist.sec.avoid': 'Better not to ask again',
+      'hist.candSource': 'Segment {seg} · {clock} · {spk} (cluster ID, identity unknown) · source: “{quote}”',
+      'hist.pickAll': 'Select all → “About me”',
+      'hist.saveAll': 'Confirm and save to local profile',
+      'hist.saveIdle': 'Nothing is written unless you tick at least one candidate',
+      'hist.saveHint': 'Saving to “About me” writes to your local profile; saving to a person also appends to the matching section of People/<slug>/00-profile.md. It only appends — paragraphs you wrote by hand are never changed, and saving twice will not add a duplicate. If the person is missing, choose “New person profile” and give it an English folder ID first.',
+      'hist.picked': '{n} selected — still need to press “Confirm and save”',
+      'hist.errNeedPerson': 'A person candidate needs a real person from the profiles, or “New person profile”, or switch it to “Do not save”',
+      'hist.errNeedName': 'A new person needs a name',
+      'hist.errSlug': 'The folder ID may only use letters, digits, underscore or hyphen (e.g. anna)',
+      'hist.nothingPicked': 'No candidate was selected, so nothing was written',
+      'hist.writing': 'Writing to the local profile…',
+      'hist.saveUnchanged': 'Nothing new ({reasons}) · profile unchanged',
+      'hist.addedStories': 'About me +{n}',
+      'hist.addedNotes': 'Person notes +{n}',
+      'hist.addedPeople': 'Person profiles +{n} ({list})',
+      'hist.createdPeople': 'New people {list}',
+      'hist.saved': 'Saved: {parts} · updated {time}',
+      'hist.none': 'none',
+      'hist.deduped': ' · {n} duplicates skipped',
+      'hist.notWritten': ' · not written: {list}',
+      'hist.errSave401': 'Archive token is not valid (401) — reconnect before saving',
+      'hist.errSave404': 'This session is not in the archive, so nothing can be written (404)',
+      'hist.errSave429': 'Saving too often — try again in a moment (429)',
+      'hist.errSave409': 'That person profile is being written by another request — try again (409)',
+      'hist.errSave': 'Save failed: {msg}',
+      'hist.loadingDetail': 'Reading the transcript…',
+      'hist.errDetail404': 'This session could not be found (404)',
+      'hist.errDetail401': 'Token is not valid (401) — paste it again',
+      'hist.errReadFail': 'Read failed: {msg}',
+      'hist.loading': 'Loading…',
+      'hist.loadingMore': 'Loading more…',
+      'hist.errToken401': 'Token is not valid (401) — paste it again',
+      'hist.errBadQuery': 'Invalid filter: {msg}',
+      'hist.errRead': 'Read failed: {msg}',
+      'hist.needToken': 'Paste the token first',
+      'hist.notReady': 'Service is not ready',
+      'hist.connectFail': 'Cannot reach the archive service: {msg}',
+      'hist.connected': 'Connected · the token lasts for this session only (closing the page clears it)',
+      'hist.tokenBad': 'That token does not work — paste it again',
+      'hist.badSessionId': 'The session ID in the link is not valid',
+      'hist.tokenCleared': 'Token cleared (this session can no longer read the archive)',
+      'hist.exporting': 'Exporting…',
+      'hist.exported': 'Exported ({kb} KB)',
+      'hist.exportEmpty': 'No session to export in that range',
+      'hist.exportFail': 'Export failed: {msg}',
+      'hist.exportName': 'SocialMate-export-{range}.md',
+      'hist.downloadName': 'SocialMate-{id}.md',
+      'hist.restored': 'Reconnected with this session’s token (closing the page clears it)',
+      'hist.restoreExpired': 'This session’s token has expired — paste it again',
+      'hist.peopleFail': 'Could not load people profiles (HTTP {status})',
+      'hist.err401': 'Token is not valid (401)',
+    },
+  };
+
+  // 与主页面同一套：LANG 只由 applyLang 决定，缺 key 时回退到 zh，再回退到 key 本身。
+  let LANG = 'zh';
+  function t(k, vars) {
+    const d = I18N[LANG] || {};
+    let s = d[k] !== undefined ? d[k] : (I18N.zh[k] !== undefined ? I18N.zh[k] : k);
+    if (vars) for (const p of Object.keys(vars)) s = s.split('{' + p + '}').join(String(vars[p]));
+    return s;
+  }
+
+  function readLangPref() {
+    try { return (JSON.parse(localStorage.getItem(LANG_KEY) || '{}') || {}).lang || 'zh'; } catch { return 'zh'; }
+  }
+  function writeLangPref(pref) {
+    try {
+      const s = JSON.parse(localStorage.getItem(LANG_KEY) || '{}') || {};
+      s.lang = pref;
+      localStorage.setItem(LANG_KEY, JSON.stringify(s));
+    } catch {}
+  }
 
   const url = (p) => PREFIX + p;
 
@@ -136,9 +482,19 @@ button{min-height:40px}
     const p = (n) => String(n).padStart(2, "0");
     return `${d.getUTCFullYear()}-${p(d.getUTCMonth() + 1)}-${p(d.getUTCDate())} ${p(d.getUTCHours())}:${p(d.getUTCMinutes())} UTC`;
   };
-  const setStatus = (el, text, kind) => {
-    el.textContent = text;
-    el.className = "status" + (kind ? " " + kind : "");
+
+  // 状态文案按 key 存起来，切语言时整页重绘仍能保持当前状态与颜色。
+  const STATUS = {authStatus: {key: 'hist.notConnected', kind: "", vars: null}};
+  function paintStatus(id) {
+    const node = $(id);
+    if (!node) return;
+    const st = STATUS[id];
+    node.textContent = st && st.key ? t(st.key, st.vars) : "";
+    node.className = "status" + (st && st.kind ? " " + st.kind : "");
+  }
+  const setStatus = (id, key, kind, vars) => {
+    STATUS[id] = {key: key || null, kind: kind || "", vars: vars || null};
+    paintStatus(id);
   };
 
   const fmtLocal = (iso) => {
@@ -150,7 +506,7 @@ button{min-height:40px}
   async function api(path) {
     const res = await fetch(url(path), {headers: {"x-archive-token": token}, cache: "no-store"});
     if (res.status === 401) {
-      const err = new Error("令牌无效（401）");
+      const err = new Error(t('hist.err401'));
       err.status = 401;
       throw err;
     }
@@ -178,19 +534,24 @@ button{min-height:40px}
     el.className = "item";
     el.tabIndex = 0;
 
-    const t = document.createElement("div");
-    t.className = "t";
-    t.textContent = `${it.date || "日期未知"} · 本地 ${fmtLocal(it.startedAt)}`;
+    const ttl = document.createElement("div");
+    ttl.className = "t";
+    ttl.textContent = t('hist.itemTitle', {
+      date: it.date || t('hist.unknownDate'),
+      local: fmtLocal(it.startedAt),
+    });
     if (it.hasFinal === false) {
       const b = document.createElement("span");
       b.className = "badge ai";
-      b.textContent = "含未定稿段";
-      t.appendChild(b);
+      b.textContent = t('hist.draftBadge');
+      ttl.appendChild(b);
     }
 
     const m = document.createElement("div");
     m.className = "m";
-    m.textContent = `${it.segments.total} 段${it.segments.matched ? ` · 命中 ${it.segments.matched} 段` : ""} · 时长 ${fmtDur(it.durationMs)}`;
+    m.textContent = it.segments.matched
+      ? t('hist.itemMetaHit', {total: it.segments.total, hit: it.segments.matched, dur: fmtDur(it.durationMs)})
+      : t('hist.itemMeta', {total: it.segments.total, dur: fmtDur(it.durationMs)});
 
     const meta = document.createElement("div");
     meta.className = "meta-line";
@@ -206,14 +567,14 @@ button{min-height:40px}
       chip.className = "peep";
       chip.style.background = "transparent";
       chip.style.color = "var(--muted)";
-      chip.textContent = "未归属人物";
+      chip.textContent = t('hist.noPerson');
       meta.appendChild(chip);
     }
 
     const hint = document.createElement("div");
     hint.className = "open-hint";
     const hasExcerpt = it.segments.excerpts && it.segments.excerpts.length;
-    hint.textContent = hasExcerpt ? "点开看命中原文摘要 ›" : "点开看原文与复盘 ›";
+    hint.textContent = hasExcerpt ? t('hist.openExcerpt') : t('hist.openPlain');
 
     const box = document.createElement("div");
     box.className = "hidden";
@@ -222,25 +583,25 @@ button{min-height:40px}
       row.className = "excerpt";
       const who = document.createElement("span");
       who.className = "who";
-      who.textContent = `第 ${ex.index + 1} 段 · 说话人 ${ex.speakerId}（聚类编号，身份未知）`;
+      who.textContent = t('hist.excerptWho', {i: ex.index + 1, spk: ex.speakerId});
       const txt = document.createElement("div");
       txt.textContent = ex.text;
       row.append(who, txt);
       box.appendChild(row);
     });
     const openBtn = document.createElement("button");
-    openBtn.textContent = "打开完整原文与复盘";
+    openBtn.textContent = t('hist.openDetail');
     openBtn.addEventListener("click", (e) => { e.stopPropagation(); openDetail(it.sessionId); });
     const rowbtns = document.createElement("div");
     rowbtns.className = "rowbtns";
     rowbtns.appendChild(openBtn);
     box.appendChild(rowbtns);
 
-    el.append(t, m, meta, hint, box);
+    el.append(ttl, m, meta, hint, box);
     const toggle = () => {
       box.classList.toggle("hidden");
       const open = !box.classList.contains("hidden");
-      hint.textContent = open ? "收起摘要 ˄" : (hasExcerpt ? "点开看命中原文摘要 ›" : "点开看原文与复盘 ›");
+      hint.textContent = open ? t('hist.collapse') : (hasExcerpt ? t('hist.openExcerpt') : t('hist.openPlain'));
     };
     el.addEventListener("click", (e) => { if (e.target.closest("button")) return; toggle(); });
     el.addEventListener("keydown", (e) => { if (e.key === "Enter") toggle(); });
@@ -248,19 +609,23 @@ button{min-height:40px}
   }
 
   function renderList(data) {
+    LAST.list = data;
     const host = $("list");
     host.innerHTML = "";
     nextCursor = data.nextCursor || null;
     const summary = document.createElement("p");
     summary.className = "summary";
-    const skipped = data.skipped ? ` · 跳过损坏 ${data.skipped}` : "";
     const total = typeof data.matched === "number" ? data.matched : items.length;
-    summary.textContent = `命中 ${total} 个会话 · 已显示 ${items.length} 条${skipped}`;
+    summary.textContent = t('hist.summary', {
+      total,
+      shown: items.length,
+      skipped: data.skipped ? t('hist.skipped', {n: data.skipped}) : "",
+    });
     host.appendChild(summary);
     if (!items.length) {
       const empty = document.createElement("div");
       empty.className = "empty";
-      empty.textContent = "没有匹配的归档会话。换个关键词或放宽日期范围试试。";
+      empty.textContent = t('hist.empty');
       host.appendChild(empty);
       $("more").classList.add("hidden");
       return;
@@ -270,33 +635,75 @@ button{min-height:40px}
   }
 
   async function openDetail(sessionId) {
-    setStatus($("listStatus"), "读取会话原文…");
+    setStatus("listStatus", 'hist.loadingDetail');
     try {
       const data = await api(`api/archive/session/${encodeURIComponent(sessionId)}`);
       renderDetail(data);
       $("more").classList.add("hidden");
-      setStatus($("listStatus"), "");
+      setStatus("listStatus", null);
       window.scrollTo({top: 0, behavior: "smooth"});
     } catch (e) {
-      setStatus($("listStatus"), e.status === 404 ? "找不到这一轮会话（404）"
-        : e.status === 401 ? "令牌无效（401），请重新粘贴令牌"
-        : "读取失败：" + e.message, "err");
+      setStatus("listStatus", e.status === 404 ? 'hist.errDetail404'
+        : e.status === 401 ? 'hist.errDetail401'
+        : 'hist.errReadFail', "err", e.status === 404 || e.status === 401 ? null : {msg: e.message});
     }
   }
 
+  // 详情原文按纯文本导出，不改动后端导出接口。
+  function sessionMarkdown(s) {
+    const lines = [];
+    lines.push(`# ${fmtTime(s.startedAt)}`);
+    lines.push("");
+    lines.push(t('hist.detailMeta', {
+      id: s.sessionId,
+      dur: fmtDur(Date.parse(s.endedAt) - Date.parse(s.startedAt)),
+      segs: s.segments.length,
+      ver: s.appVersion,
+      rec: s.consent.recording ? t('hist.yes') : t('hist.no'),
+      ai: s.consent.cloudAi ? t('hist.yes') : t('hist.no'),
+    }));
+    lines.push("");
+    lines.push(t('hist.asrNote'));
+    lines.push("");
+    s.segments.forEach((seg) => {
+      const p = (n) => String(n).padStart(2, "0");
+      const mm = Math.floor(seg.startMs / 60000);
+      const ss = Math.floor((seg.startMs % 60000) / 1000);
+      lines.push(t('hist.segMeta', {
+        clock: `${p(mm)}:${p(ss)}`,
+        spk: seg.speakerId,
+        track: seg.track,
+        provider: seg.provider,
+      }) + (seg.mock ? " · MOCK" : ""));
+      lines.push(seg.textOriginal);
+      lines.push("");
+    });
+    if (s.ai?.text) {
+      lines.push("---");
+      lines.push(`## ${t('hist.aiTitle')}`);
+      lines.push("");
+      lines.push(s.ai.text);
+      lines.push("");
+    }
+    return lines.join("\n");
+  }
+
   function renderDetail(data) {
+    LAST.detail = data;
     const s = data.session;
     const host = $("detail");
     host.classList.remove("hidden");
     host.innerHTML = "";
+    setStatus("detailStatus", null);
     const card = document.createElement("div");
     card.className = "card";
     const back = document.createElement("a");
     back.className = "back";
     back.href = "#";
-    back.textContent = "← 返回列表";
+    back.textContent = t('hist.back');
     back.addEventListener("click", (e) => {
       e.preventDefault();
+      LAST.detail = null;
       host.classList.add("hidden");
       host.innerHTML = "";
       $("list").classList.remove("hidden");
@@ -312,14 +719,70 @@ button{min-height:40px}
     meta.className = "m";
     meta.style.fontSize = "12px";
     meta.style.color = "var(--muted)";
-    meta.textContent = `会话 ${s.sessionId} · 时长 ${fmtDur(Date.parse(s.endedAt) - Date.parse(s.startedAt))} · ${s.segments.length} 段 · 应用 ${s.appVersion} · 授权 录音${s.consent.recording ? "是" : "否"}/云端AI${s.consent.cloudAi ? "是" : "否"}`;
+    meta.textContent = t('hist.detailMeta', {
+      id: s.sessionId,
+      dur: fmtDur(Date.parse(s.endedAt) - Date.parse(s.startedAt)),
+      segs: s.segments.length,
+      ver: s.appVersion,
+      rec: s.consent.recording ? t('hist.yes') : t('hist.no'),
+      ai: s.consent.cloudAi ? t('hist.yes') : t('hist.no'),
+    });
 
     const note = document.createElement("p");
     note.className = "summary";
     note.style.marginTop = "8px";
-    note.textContent = "以下为 ASR 原始转写，逐字保留，未经 AI 改写。说话人仅为聚类编号。";
+    note.textContent = t('hist.asrNote');
 
-    card.append(back, h, meta, note);
+    // 复制 / 下载 / 回到 App：都只用已读到的原文，不新增任何接口调用。
+    const actions = document.createElement("div");
+    actions.className = "row";
+    actions.style.marginTop = "10px";
+    const copyBtn = document.createElement("button");
+    copyBtn.className = "primary";
+    copyBtn.textContent = t('hist.copy');
+    const dlBtn = document.createElement("button");
+    dlBtn.textContent = t('hist.download');
+    const backApp = document.createElement("a");
+    backApp.className = "applink";
+    backApp.href = "/";
+    backApp.textContent = t('hist.backToApp');
+    const actionStatus = document.createElement("div");
+    actionStatus.className = "status";
+    actionStatus.id = "detailStatus";
+    actions.append(copyBtn, dlBtn, backApp);
+
+    copyBtn.addEventListener("click", async () => {
+      const plain = sessionMarkdown(s);
+      if (!plain.trim()) return setStatus("detailStatus", 'hist.copyEmpty', "err");
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          await navigator.clipboard.writeText(plain);
+        } else {
+          const ta = document.createElement("textarea");
+          ta.value = plain;
+          ta.style.position = "fixed";
+          ta.style.opacity = "0";
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand("copy");
+          ta.remove();
+        }
+        setStatus("detailStatus", 'hist.copied', "ok");
+      } catch {
+        setStatus("detailStatus", 'hist.copyEmpty', "err");
+      }
+    });
+    dlBtn.addEventListener("click", () => {
+      const blob = new Blob([sessionMarkdown(s)], {type: "text/markdown;charset=utf-8"});
+      const href = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = href;
+      a.download = t('hist.downloadName', {id: s.sessionId});
+      a.click();
+      setTimeout(() => URL.revokeObjectURL(href), 4000);
+    });
+
+    card.append(back, h, meta, note, actions, actionStatus);
 
     s.segments.forEach((seg) => {
       const box = document.createElement("div");
@@ -329,7 +792,12 @@ button{min-height:40px}
       const p = (n) => String(n).padStart(2, "0");
       const mm = Math.floor(seg.startMs / 60000);
       const ss = Math.floor((seg.startMs % 60000) / 1000);
-      m.textContent = `${p(mm)}:${p(ss)} · 说话人 ${seg.speakerId} · 轨道 ${seg.track} · ${seg.provider}${seg.mock ? " · MOCK" : ""}`;
+      m.textContent = t('hist.segMeta', {
+        clock: `${p(mm)}:${p(ss)}`,
+        spk: seg.speakerId,
+        track: seg.track,
+        provider: seg.provider,
+      }) + (seg.mock ? " · MOCK" : "");
       const tx = document.createElement("div");
       tx.className = "txt";
       tx.textContent = seg.textOriginal;
@@ -341,7 +809,7 @@ button{min-height:40px}
       const h2 = document.createElement("div");
       h2.className = "t";
       h2.style.marginTop = "14px";
-      h2.textContent = "AI 建议（独立生成，不覆盖原文）";
+      h2.textContent = t('hist.aiTitle');
       const pre = document.createElement("pre");
       pre.className = "ai";
       pre.textContent = s.ai.text;
@@ -349,7 +817,8 @@ button{min-height:40px}
     }
 
     host.appendChild(card);
-    host.appendChild(buildReviewCard(s));
+    const reviewCard = buildReviewCard(s);
+    host.appendChild(reviewCard);
     $("list").classList.add("hidden");
   }
 
@@ -387,60 +856,71 @@ button{min-height:40px}
   async function loadPeople() {
     if (peopleCache) return peopleCache;
     const res = await fetch(url("api/people"), {headers: {"x-archive-token": token}, cache: "no-store"});
-    if (!res.ok) throw new Error("读取人物主档失败（HTTP " + res.status + "）");
+    if (!res.ok) throw new Error(t('hist.peopleFail', {status: res.status}));
     const data = await res.json();
     peopleCache = Array.isArray(data.people) ? data.people : [];
     return peopleCache;
   }
 
   const SECTIONS = [
-    ["preference", "已确认偏好"],
-    ["interest", "兴趣"],
-    ["work", "工作 / 学习"],
-    ["hainan", "海南生活"],
-    ["common", "共同点"],
-    ["plan", "对方近期计划"],
-    ["topics", "后续可以继续的话题"],
-    ["basic", "基本情况"],
-    ["avoid", "不宜重复询问"],
+    ["preference", "hist.sec.preference"],
+    ["interest", "hist.sec.interest"],
+    ["work", "hist.sec.work"],
+    ["hainan", "hist.sec.hainan"],
+    ["common", "hist.sec.common"],
+    ["plan", "hist.sec.plan"],
+    ["topics", "hist.sec.topics"],
+    ["basic", "hist.sec.basic"],
+    ["avoid", "hist.sec.avoid"],
   ];
+
+  // 已生成的复盘按 session 缓存：切语言重建卡片时不必重新生成（云端复盘会花钱）。
+  const REVIEW_BY_SESSION = Object.create(null);
 
   function buildReviewCard(session) {
     const card = el("div", "review");
-    card.appendChild(el("h3", "", "会后复盘（本轮原文 → 候选 → 你确认 → 本机档案）"));
+    const title = el("h3", "", t('hist.reviewTitle'));
+    card.appendChild(title);
     if (!REVIEW_AVAILABLE) {
-      card.appendChild(el("p", "hint",
-        "当前页面由归档服务直接提供，复盘需要经由私有 UI（/v12/history）使用；原文查看不受影响。"));
+      card.appendChild(el("p", "hint", t('hist.reviewUnavailable')));
       return card;
     }
-    card.appendChild(el("p", "hint",
-      "本地复盘只用确定性规则，不联网、不计费；云端 AI 需你当轮勾选同意，且只在 1 元授权额度内调用。"));
+    const hint = el("p", "hint", t('hist.reviewHint'));
+    card.appendChild(hint);
 
     const row = el("div", "row");
-    const localBtn = el("button", "primary", "生成本地复盘（不调用 AI）");
+    const localBtn = el("button", "primary", t('hist.reviewLocal'));
     const consentWrap = el("label", "");
     consentWrap.style.cssText = "display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted)";
     const consent = document.createElement("input");
     consent.type = "checkbox";
     consent.id = "reviewAiConsent";
-    consentWrap.append(consent, document.createTextNode("允许把本轮原文发送给云端 AI（DeepSeek）"));
-    const aiBtn = el("button", "", "用云端 AI 生成复盘");
+    const consentText = document.createTextNode(t('hist.reviewConsent'));
+    consentWrap.append(consent, consentText);
+    const aiBtn = el("button", "", t('hist.reviewAi'));
     row.append(localBtn, aiBtn);
-    const status = el("div", "status", "尚未生成复盘");
+    const status = el("div", "status", t('hist.reviewIdle'));
     const body = el("div", "");
     card.append(row, consentWrap, status, body);
 
     let review = null;
+    let statusKey = 'hist.reviewIdle';
+    let statusVars = null;
+    let statusKind = "";
 
-    function setStatus(text, kind) {
-      status.textContent = text;
-      status.className = "status" + (kind ? " " + kind : "");
+    function setRevStatus(key, kind, vars) {
+      statusKey = key;
+      statusVars = vars || null;
+      statusKind = kind || "";
+      status.textContent = t(statusKey, statusVars);
+      status.className = "status" + (statusKind ? " " + statusKind : "");
+      REVIEW_BY_SESSION[session.sessionId] = {review, statusKey, statusVars, statusKind};
     }
 
     async function generate(mode) {
       localBtn.disabled = true;
       aiBtn.disabled = true;
-      setStatus(mode === "ai" ? "正在调用云端模型…（会产生费用）" : "正在生成本地复盘…");
+      setRevStatus(mode === "ai" ? 'hist.reviewAiBusy' : 'hist.reviewLocalBusy');
       body.innerHTML = "";
       try {
         const data = await postJson("api/review", {
@@ -450,19 +930,17 @@ button{min-height:40px}
         review = data.review;
         let people = [];
         try { people = await loadPeople(); } catch (e) { people = []; }
-        renderReview(body, review, session, setStatus, people);
-        const used = review.aiUsed
-          ? `已用云端模型 ${review.aiProvider} 生成 · 候选仍需你核对`
-          : "本地规则生成 · 未调用任何 AI";
-        setStatus(used, "ok");
+        renderReview(body, review, session, setRevStatus, people);
+        setRevStatus(review.aiUsed ? 'hist.reviewAiDone' : 'hist.reviewLocalDone', "ok",
+          review.aiUsed ? {p: review.aiProvider} : null);
       } catch (e) {
         const code = e.payload && e.payload.code;
-        setStatus(code === "ORIGIN_REJECTED" ? "页面来源未被私有服务接受（403），请从 /v12/history 打开本页"
-          : code === "CONSENT_REQUIRED" ? "未勾选云端 AI 同意，本次没有任何外部请求（403）"
-          : e.status === 402 ? "云端 AI 授权额度已用尽（402），可改用本地复盘"
-          : e.status === 401 ? "归档令牌无效（401），请重新连接"
-          : e.status === 404 ? "归档里找不到这一轮会话（404）"
-          : "生成失败：" + e.message, "err");
+        if (code === "ORIGIN_REJECTED") setRevStatus('hist.errOrigin', "err");
+        else if (code === "CONSENT_REQUIRED") setRevStatus('hist.errConsent', "err");
+        else if (e.status === 402) setRevStatus('hist.err402', "err");
+        else if (e.status === 401) setRevStatus('hist.err401', "err");
+        else if (e.status === 404) setRevStatus('hist.err404', "err");
+        else setRevStatus('hist.errGen', "err", {msg: e.message});
       } finally {
         localBtn.disabled = false;
         aiBtn.disabled = false;
@@ -471,46 +949,88 @@ button{min-height:40px}
 
     localBtn.addEventListener("click", () => generate("local"));
     aiBtn.addEventListener("click", () => generate("ai"));
+
+    // 已生成过复盘时按缓存重建（切语言重建整张详情卡时用），不重新请求，勾选与编辑内容保留。
+    const saved = REVIEW_BY_SESSION[session.sessionId];
+    if (saved) {
+      if (saved.review) {
+        review = saved.review;
+        renderReview(body, review, session, setRevStatus, peopleCache || []);
+      }
+      statusKey = saved.statusKey;
+      statusVars = saved.statusVars;
+      statusKind = saved.statusKind;
+      status.textContent = t(statusKey, statusVars);
+      status.className = "status" + (statusKind ? " " + statusKind : "");
+    }
     return card;
   }
 
+  function reviewRowState(host) {
+    return [...host.querySelectorAll(".cand")].map((box) => ({
+      checked: box.querySelector('[data-role="pick"]').checked,
+      target: box.querySelector('[data-role="target"]').value,
+      person: box.querySelector('[data-role="person"]').value,
+      section: box.querySelector('[data-role="section"]').value,
+      name: box.querySelector('[data-role="personName"]').value,
+      slug: box.querySelector('[data-role="personSlug"]').value,
+      text: box.querySelector('[data-role="text"]').value,
+    }));
+  }
+
+  // 切语言会重建整张详情卡，勾选与手工编辑的候选先存回缓存，重建后再回填。
+  function stashReviewRows() {
+    const id = LAST.detail && LAST.detail.session && LAST.detail.session.sessionId;
+    if (!id || !REVIEW_BY_SESSION[id]) return;
+    const box = $("detail").querySelectorAll(".cand");
+    if (box.length) REVIEW_BY_SESSION[id].rows = reviewRowState($("detail"));
+  }
+
   function renderReview(host, review, session, setStatus, people = []) {
+    // 重绘前先记住勾选与编辑内容，避免切语言时把用户改过的候选冲掉。
+    const cached = (REVIEW_BY_SESSION[session.sessionId] || {}).rows;
+    let snapshot = reviewRowState(host);
+    if (!snapshot.length && Array.isArray(cached)) snapshot = cached;
+
     host.innerHTML = "";
-    const head = el("div", "t", review.summary.headline || "本轮复盘");
+    const head = el("div", "t", review.summary.headline || t('hist.reviewFallback'));
     head.style.fontSize = "14px";
     const engine = el("span", "engine" + (review.aiUsed ? " ai" : ""),
-      review.aiUsed ? `云端 AI · ${review.aiProvider}` : "本地规则 · 无 AI");
+      review.aiUsed ? t('hist.engineAi', {p: review.aiProvider}) : t('hist.engineLocal'));
     head.appendChild(engine);
-    const meta = el("div", "src",
-      `${review.summary.segments} 段 · 说话人 ${(review.summary.speakers || []).join("/") || "—"} · ${review.note}`);
+    const speakers = (review.summary.speakers || []).join("/") || "—";
+    const meta = el("div", "src", t('hist.reviewMeta', {
+      segs: review.summary.segments, spk: speakers, note: review.note,
+    }));
     host.append(head, meta);
 
     const talked = review.summary.talkedAbout || review.summary.topicsLabel || [];
     if (talked.length) {
       const ul = el("ul", "list-mini");
       talked.forEach((t) => ul.appendChild(el("li", "", t)));
-      host.append(el("div", "t", "聊了什么"), ul);
+      host.append(el("div", "t", t('hist.talked')), ul);
     }
     if (review.howToReply && review.howToReply.text) {
-      const p = el("div", "src", (review.howToReply.template ? "模板句（非 AI）" : "AI 建议接话") + "：" + review.howToReply.text);
+      const p = el("div", "src",
+        t(review.howToReply.template ? 'hist.howTemplate' : 'hist.howAi') + "：" + review.howToReply.text);
       host.append(p);
     }
     if (Array.isArray(review.followUps) && review.followUps.length) {
       const ul = el("ul", "list-mini");
-      review.followUps.forEach((q) => ul.appendChild(el("li", "", q.text + (q.template ? "（模板）" : ""))));
-      host.append(el("div", "t", "下次追问"), ul);
+      review.followUps.forEach((q) => ul.appendChild(el("li", "", q.text + (q.template ? t('hist.templateSuffix') : ""))));
+      host.append(el("div", "t", t('hist.followUps')), ul);
     }
     if (Array.isArray(review.warnings) && review.warnings.length) {
       const ul = el("ul", "list-mini");
       review.warnings.forEach((w) => ul.appendChild(el("li", "", w)));
-      host.append(el("div", "t", "需要你注意"), ul);
+      host.append(el("div", "t", t('hist.warnings')), ul);
     }
 
-    const candTitle = el("div", "t", `候选事实（${(review.items || []).length} 条 · 全部为待确认草稿）`);
+    const candTitle = el("div", "t", t('hist.candTitle', {n: (review.items || []).length}));
     candTitle.style.marginTop = "10px";
     host.appendChild(candTitle);
     if (!review.items || !review.items.length) {
-      host.appendChild(el("div", "empty", "本轮没有可自动提取的事实候选；可以在「关于我」里手工记录。"));
+      host.appendChild(el("div", "empty", t('hist.candEmpty')));
       return;
     }
 
@@ -521,13 +1041,13 @@ button{min-height:40px}
       const check = document.createElement("input");
       check.type = "checkbox";
       check.dataset.role = "pick";
-      const label = el("span", "src", `候选 ${index + 1} · 置信 ${item.confidence}`);
+      const label = el("span", "src", t('hist.candLabel', {i: index + 1, c: item.confidence}));
       const target = document.createElement("select");
-      [["self", "保存到「关于我」"], ["person", "保存到人物"], ["skip", "不保存"]]
-        .forEach(([value, text]) => {
+      [["self", 'hist.saveSelf'], ["person", 'hist.savePerson'], ["skip", 'hist.saveSkip']]
+        .forEach(([value, key]) => {
           const opt = document.createElement("option");
           opt.value = value;
-          opt.textContent = text;
+          opt.textContent = t(key);
           target.appendChild(opt);
         });
       target.dataset.role = "target";
@@ -537,7 +1057,7 @@ button{min-height:40px}
       personSelect.classList.add("hidden");
       const placeholder = document.createElement("option");
       placeholder.value = "";
-      placeholder.textContent = people.length ? "选择人物…" : "没有人物主档，可新建";
+      placeholder.textContent = people.length ? t('hist.pickPerson') : t('hist.noPeople');
       personSelect.appendChild(placeholder);
       people.forEach((p) => {
         const opt = document.createElement("option");
@@ -547,26 +1067,26 @@ button{min-height:40px}
       });
       const newOption = document.createElement("option");
       newOption.value = "__new__";
-      newOption.textContent = "＋ 新建人物主档…";
+      newOption.textContent = t('hist.newPerson');
       personSelect.appendChild(newOption);
       // 新建人物需要姓名 + 目录标识；标记只允许字母数字，避免中文路径与目录穿越。
       const newName = document.createElement("input");
       newName.className = "name";
-      newName.placeholder = "人物姓名";
+      newName.placeholder = t('hist.personName');
       newName.dataset.role = "personName";
       newName.classList.add("hidden");
       const newSlug = document.createElement("input");
       newSlug.className = "name";
-      newSlug.placeholder = "目录标识（英文/数字，如 anna）";
+      newSlug.placeholder = t('hist.personSlug');
       newSlug.dataset.role = "personSlug";
       newSlug.classList.add("hidden");
       const sectionSelect = document.createElement("select");
       sectionSelect.dataset.role = "section";
       sectionSelect.classList.add("hidden");
-      SECTIONS.forEach(([value, text]) => {
+      SECTIONS.forEach(([value, key]) => {
         const opt = document.createElement("option");
         opt.value = value;
-        opt.textContent = "写入章节：" + text;
+        opt.textContent = t('hist.sectionPrefix', {name: t(key)});
         sectionSelect.appendChild(opt);
       });
       headRow.append(check, label, target, personSelect, sectionSelect, newName, newSlug);
@@ -574,8 +1094,12 @@ button{min-height:40px}
       const text = document.createElement("textarea");
       text.value = item.text;
       text.dataset.role = "text";
-      const src = el("div", "src",
-        `段 ${item.source.segmentIndex + 1} · ${item.source.clock} · ${item.source.speakerId}（聚类编号，身份未知）· 原文：「${item.source.quote}」`);
+      const src = el("div", "src", t('hist.candSource', {
+        seg: item.source.segmentIndex + 1,
+        clock: item.source.clock,
+        spk: item.source.speakerId,
+        quote: item.source.quote,
+      }));
       box.append(headRow, text, src);
       host.appendChild(box);
       const row = {item, check, target, personSelect, sectionSelect, newName, newSlug, text};
@@ -598,24 +1122,38 @@ button{min-height:40px}
       newName.addEventListener("input", () => { if (newName.value.trim()) check.checked = true; });
     });
 
+    // 回填上一轮的勾选 / 编辑内容（数量一致时按位置对应）。
+    if (snapshot.length === rows.length) {
+      rows.forEach((r, i) => {
+        const s = snapshot[i];
+        if (!s) return;
+        r.check.checked = s.checked;
+        r.target.value = s.target;
+        r.personSelect.value = s.person;
+        r.sectionSelect.value = s.section;
+        r.newName.value = s.name;
+        r.newSlug.value = s.slug;
+        r.text.value = s.text;
+        r.target.dispatchEvent(new Event("change"));
+      });
+    }
+
     const tools = el("div", "row");
     tools.style.marginTop = "10px";
-    const pickAll = el("button", "", "全选保存到「关于我」");
-    const save = el("button", "primary", "确认保存到本机档案");
+    const pickAll = el("button", "", t('hist.pickAll'));
+    const save = el("button", "primary", t('hist.saveAll'));
     tools.append(pickAll, save);
     host.appendChild(tools);
-    const saveStatus = el("div", "status", "未勾选任何候选时不会写入任何文件");
+    const saveStatus = el("div", "status", t('hist.saveIdle'));
     host.appendChild(saveStatus);
-    host.appendChild(el("p", "hint",
-      "保存到「关于我」写入本机档案；保存到人物会同时追加到正式人物主档 People/<slug>/00-profile.md 的对应章节，"
-      + "只追加、不改人工写的段落，重复保存不会新增第二条。没有对应人物时可选「新建人物主档」，先起英文目录标识再建。"));
+    host.appendChild(el("p", "hint", t('hist.saveHint')));
 
     pickAll.addEventListener("click", () => {
       rows.forEach((r) => {
         if (r.target.value === "skip") r.target.value = "self";
         r.check.checked = true;
       });
-      saveStatus.textContent = `已勾选 ${rows.length} 条，仍需点「确认保存」`;
+      saveStatus.textContent = t('hist.picked', {n: rows.length});
       saveStatus.className = "status";
     });
 
@@ -625,7 +1163,7 @@ button{min-height:40px}
         if (!r.check.checked || r.target.value === "skip") continue;
         const isNew = r.personSelect.value === "__new__";
         if (r.target.value === "person" && !r.personSelect.value) {
-          saveStatus.textContent = "人物候选必须选择具体人物（来自正式人物主档）或点「新建人物主档」，也可改成不保存";
+          saveStatus.textContent = t('hist.errNeedPerson');
           saveStatus.className = "status err";
           return;
         }
@@ -633,12 +1171,12 @@ button{min-height:40px}
           const name = r.newName.value.trim();
           const slug = r.newSlug.value.trim();
           if (!name) {
-            saveStatus.textContent = "新建人物需要填写姓名";
+            saveStatus.textContent = t('hist.errNeedName');
             saveStatus.className = "status err";
             return;
           }
           if (!/^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$/.test(slug)) {
-            saveStatus.textContent = "新建人物的目录标识只能用英文字母/数字/下划线/连字符（如 anna）";
+            saveStatus.textContent = t('hist.errSlug');
             saveStatus.className = "status err";
             return;
           }
@@ -656,39 +1194,49 @@ button{min-height:40px}
         });
       }
       if (!items.length) {
-        saveStatus.textContent = "没有勾选任何候选，未写入任何文件";
+        saveStatus.textContent = t('hist.nothingPicked');
         saveStatus.className = "status";
         return;
       }
       save.disabled = true;
-      saveStatus.textContent = "正在写入本机档案…";
+      saveStatus.textContent = t('hist.writing');
       saveStatus.className = "status";
       try {
         const result = await postJson("api/review/apply", {confirm: true, sessionId: session.sessionId, items});
         if (result.unchanged) {
-          saveStatus.textContent = `没有新增内容（${(result.skipped || []).map((x) => x.reason).join("/")}）· 档案未改动`;
+          saveStatus.textContent = t('hist.saveUnchanged', {
+            reasons: (result.skipped || []).map((x) => x.reason).join("/"),
+          });
         } else {
           const parts = [];
-          if (result.added.stories) parts.push(`关于我 +${result.added.stories}`);
-          if (result.added.notes) parts.push(`人物备注 +${result.added.notes}`);
+          if (result.added.stories) parts.push(t('hist.addedStories', {n: result.added.stories}));
+          if (result.added.notes) parts.push(t('hist.addedNotes', {n: result.added.notes}));
           const peopleAdded = (result.people && result.people.added) || [];
-          if (peopleAdded.length) parts.push(`人物主档 +${peopleAdded.length}（${peopleAdded.map((p) => p.slug + ":" + p.section).join("、")}）`);
+          if (peopleAdded.length) parts.push(t('hist.addedPeople', {
+            n: peopleAdded.length,
+            list: peopleAdded.map((p) => p.slug + ":" + p.section).join(LANG === 'en' ? ", " : "、"),
+          }));
           const peopleCreated = (result.people && result.people.created) || [];
-          if (peopleCreated.length) parts.push(`新建人物 ${peopleCreated.join("、")}`);
+          if (peopleCreated.length) parts.push(t('hist.createdPeople', {
+            list: peopleCreated.join(LANG === 'en' ? ", " : "、"),
+          }));
           const dup = (result.skipped || []).filter((x) => x.reason === "DUPLICATE").length;
-          saveStatus.textContent = `已保存：${parts.join(" · ") || "无"}${dup ? ` · 已去重 ${dup} 条` : ""} · 更新时间 ${result.updatedAt}`;
+          saveStatus.textContent = t('hist.saved', {
+            parts: parts.join(" · ") || t('hist.none'),
+            time: result.updatedAt,
+          }) + (dup ? t('hist.deduped', {n: dup}) : "");
         }
         const notWritten = (result.skipped || []).filter((x) => x.reason !== "DUPLICATE");
         if (notWritten.length) {
-          saveStatus.textContent += " · 未写入：" + notWritten.map((x) => x.reason).join("/");
+          saveStatus.textContent += t('hist.notWritten', {list: notWritten.map((x) => x.reason).join("/")});
         }
         saveStatus.className = "status ok";
       } catch (e) {
-        saveStatus.textContent = e.status === 401 ? "归档令牌无效（401），请重新连接后再保存"
-          : e.status === 404 ? "归档里找不到这一轮会话，不能写入档案（404）"
-          : e.status === 429 ? "保存过于频繁，请稍后再试（429）"
-          : e.status === 409 ? "该人物档案正在被另一个写入占用，请稍后再试（409）"
-          : "保存失败：" + e.message;
+        saveStatus.textContent = e.status === 401 ? t('hist.errSave401')
+          : e.status === 404 ? t('hist.errSave404')
+          : e.status === 429 ? t('hist.errSave429')
+          : e.status === 409 ? t('hist.errSave409')
+          : t('hist.errSave', {msg: e.message});
         saveStatus.className = "status err";
       } finally {
         save.disabled = false;
@@ -718,7 +1266,7 @@ button{min-height:40px}
 
   // reset=true 重新搜索；reset=false 用 cursor 追加下一页。
   async function search(reset = true) {
-    setStatus($("listStatus"), reset ? "读取中…" : "加载更多…");
+    setStatus("listStatus", reset ? 'hist.loading' : 'hist.loadingMore');
     try {
       const params = new URLSearchParams();
       const q = $("q").value.trim();
@@ -731,36 +1279,102 @@ button{min-height:40px}
       const data = await api("api/archive/sessions?" + params.toString());
       items = reset ? (data.items || []).slice() : items.concat(data.items || []);
       renderList(data);
-      setStatus($("listStatus"), "");
+      setStatus("listStatus", null);
+      LAST.detail = null;
       $("detail").classList.add("hidden");
       $("list").classList.remove("hidden");
       return true;
     } catch (e) {
-      setStatus($("listStatus"), e.status === 401 ? "令牌无效（401），请重新粘贴令牌"
-        : e.status === 400 ? "查询条件不合法：" + e.message
-        : "读取失败：" + (e.message || "测试版暂不可用"), "err");
+      setStatus("listStatus", e.status === 401 ? 'hist.errToken401'
+        : e.status === 400 ? 'hist.errBadQuery'
+        : 'hist.errRead', "err", e.status === 400 ? {msg: e.message} : {msg: e.message || ""});
       return false;
     }
   }
 
+  // ── 语言切换 ────────────────────────────────────────────────────────────
+  // 只改本页 DOM；写回 alw-preview-v1.lang，主页面与归档页读的是同一个字段。
+  let LAST = {list: null, detail: null};
+
+  function applyStaticText() {
+    $("hTitle").textContent = t('hist.title');
+    $("hSub").textContent = t('hist.sub');
+    $("langbar").setAttribute("aria-label", t('hist.langLabel'));
+    $("langSys").textContent = t('hist.langSystem');
+    $("tokenLabel").textContent = t('hist.tokenLabel');
+    $("token").placeholder = t('hist.tokenPlaceholder');
+    $("connect").textContent = t('hist.connect');
+    $("forget").textContent = t('hist.forget');
+    $("tokenHint").textContent = t('hist.tokenHint');
+    $("qLabel").textContent = t('hist.qLabel');
+    $("q").placeholder = t('hist.qPlaceholder');
+    $("personLabel").textContent = t('hist.personLabel');
+    $("personAll").textContent = t('hist.allPeople');
+    $("limitLabel").textContent = t('hist.limitLabel');
+    document.querySelectorAll("#limit option").forEach((o) => {
+      o.textContent = t('hist.limitN', {n: o.dataset.n});
+    });
+    $("fromLabel").textContent = t('hist.fromLabel');
+    $("toLabel").textContent = t('hist.toLabel');
+    $("search").textContent = t('hist.search');
+    $("today").textContent = t('hist.today');
+    $("clear").textContent = t('hist.clear');
+    $("export").textContent = t('hist.export');
+    $("dateHint").textContent = t('hist.dateHint');
+    $("moreBtn").textContent = t('hist.more');
+  }
+
+  function syncLangButtons(pref) {
+    document.querySelectorAll("#langbar button").forEach((b) => {
+      const on = b.dataset.lang === pref;
+      b.setAttribute("aria-pressed", on ? "true" : "false");
+    });
+  }
+
+  function applyLang(pref) {
+    const p = pref || readLangPref();
+    const sys = (navigator.language || 'zh').toLowerCase().startsWith('zh') ? 'zh' : 'en';
+    LANG = p === 'system' ? sys : (p === 'en' ? 'en' : 'zh');
+    document.documentElement.lang = LANG === 'en' ? 'en' : 'zh-CN';
+    document.title = t('hist.docTitle');
+    applyStaticText();
+    syncLangButtons(p);
+    Object.keys(STATUS).forEach(paintStatus);
+    stashReviewRows();
+    if (LAST.list) renderList(LAST.list);
+    if (LAST.detail) renderDetail(LAST.detail);
+  }
+
+  document.querySelectorAll("#langbar button").forEach((b) => {
+    b.addEventListener("click", () => {
+      const p = b.dataset.lang;
+      writeLangPref(p);
+      applyLang(p);
+    });
+  });
+  // 主页面在另一个标签页改语言时，这里同步跟上。
+  window.addEventListener("storage", (e) => {
+    if (e.key === LANG_KEY) applyLang();
+  });
+
   $("connect").addEventListener("click", async () => {
     const v = $("token").value.trim() || token;
-    if (!v) return setStatus($("authStatus"), "请先填入令牌", "err");
+    if (!v) return setStatus("authStatus", 'hist.needToken', "err");
     token = v;
     try {
       const health = await fetch(url("api/archive/health"), {cache: "no-store"}).then((r) => r.json());
-      if (!health?.ok) throw new Error("服务未就绪");
+      if (!health?.ok) throw new Error(t('hist.notReady'));
     } catch (e) {
-      return setStatus($("authStatus"), "无法连接归档服务：" + e.message, "err");
+      return setStatus("authStatus", 'hist.connectFail', "err", {msg: e.message});
     }
     if (await search(true)) {
       try { sessionStorage.setItem(KEY, token); } catch {}
-      setStatus($("authStatus"), "已连接 · 令牌只在本次会话有效（关闭页面即失效）", "ok");
+      setStatus("authStatus", 'hist.connected', "ok");
       $("token").value = "";
       loadPeopleOptions();
       maybeDeepLink();
     } else {
-      setStatus($("authStatus"), "令牌无法使用，请重新粘贴", "err");
+      setStatus("authStatus", 'hist.tokenBad', "err");
     }
   });
 
@@ -769,7 +1383,7 @@ button{min-height:40px}
     const wanted = new URLSearchParams(location.search).get("session");
     if (!wanted) return;
     if (!/^[A-Za-z0-9_-]{8,64}$/.test(wanted)) {
-      setStatus($("listStatus"), "链接里的会话 ID 不合法", "err");
+      setStatus("listStatus", 'hist.badSessionId', "err");
       return;
     }
     openDetail(wanted);
@@ -780,13 +1394,15 @@ button{min-height:40px}
     token = "";
     items = [];
     nextCursor = null;
+    LAST.list = null;
+    LAST.detail = null;
     try { sessionStorage.removeItem(KEY); } catch {}
     $("token").value = "";
     $("list").innerHTML = "";
     $("more").classList.add("hidden");
     $("detail").classList.add("hidden");
-    setStatus($("authStatus"), "已清空令牌（本次会话失效）");
-    setStatus($("listStatus"), "");
+    setStatus("authStatus", 'hist.tokenCleared');
+    setStatus("listStatus", null);
   });
 
   $("search").addEventListener("click", () => search(true));
@@ -809,39 +1425,41 @@ button{min-height:40px}
   });
 
   $("export").addEventListener("click", async () => {
-    setStatus($("listStatus"), "导出中…");
+    setStatus("listStatus", 'hist.exporting');
     try {
       const res = await fetch(url("api/archive/export") + rangeQuery(), {
         headers: {"x-archive-token": token}, cache: "no-store",
       });
-      if (res.status === 401) throw new Error("令牌无效（401）");
+      if (res.status === 401) throw new Error(t('hist.err401'));
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const text = await res.text();
-      if (!text.trim()) throw new Error("该范围没有可导出的会话");
+      if (!text.trim()) throw new Error(t('hist.exportEmpty'));
       const blob = new Blob([text], {type: "text/markdown;charset=utf-8"});
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       const r = rangeQuery().replace("?", "").replace(/&/g, "_") || "all";
       a.href = url;
-      a.download = `SocialMate-导出-${r}.md`;
+      a.download = t('hist.exportName', {range: r});
       a.click();
       setTimeout(() => URL.revokeObjectURL(url), 4000);
-      setStatus($("listStatus"), `已导出（${(text.length / 1024).toFixed(1)} KB）`, "ok");
+      setStatus("listStatus", 'hist.exported', "ok", {kb: (text.length / 1024).toFixed(1)});
     } catch (e) {
-      setStatus($("listStatus"), "导出失败：" + e.message, "err");
+      setStatus("listStatus", 'hist.exportFail', "err", {msg: e.message});
     }
   });
 
   // 旧版本曾把令牌长期存在 localStorage：这里只做一次清理，不再写入。
   try { localStorage.removeItem(KEY); } catch {}
+
+  applyLang();
+
   // 只在本次会话里恢复：sessionStorage 关闭标签页即清空。
   let saved = "";
   try { saved = sessionStorage.getItem(KEY) || ""; } catch { saved = ""; }
   if (saved) {
     token = saved;
     search(true).then((ok) => {
-      setStatus($("authStatus"), ok ? "已用本次会话的令牌连接（关闭页面即失效）" : "本次会话的令牌已失效，请重新粘贴",
-        ok ? "ok" : "err");
+      setStatus("authStatus", ok ? 'hist.restored' : 'hist.restoreExpired', ok ? "ok" : "err");
       if (ok) { loadPeopleOptions(); maybeDeepLink(); }
     });
   }

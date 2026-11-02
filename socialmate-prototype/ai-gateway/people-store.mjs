@@ -350,10 +350,10 @@ async function withLock(lockPath, fn) {
 /**
  * 追加事实到 People/<slug>/00-profile.md。
  * facts: [{slug, section, text, sessionId, segmentIndex, confirmedAt, editedFrom}]
+ * root 仅供演示命名空间（Demo/People）复用同一条写入链路，默认仍是真实主档。
  * 返回 {added:[{slug,section}], skipped:[{reason}], files:[...]}
  */
-export async function appendPeopleFacts(facts) {
-  const root = peopleRoot();
+export async function appendPeopleFacts(facts, {root = peopleRoot()} = {}) {
   const list = Array.isArray(facts) ? facts : [];
   const added = [];
   const skipped = [];
