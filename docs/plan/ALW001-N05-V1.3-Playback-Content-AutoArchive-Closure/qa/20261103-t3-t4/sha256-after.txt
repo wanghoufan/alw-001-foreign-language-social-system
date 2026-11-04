@@ -1,0 +1,13 @@
+== 2026-11-03T22:29:54+0800 收尾快照（改后）
+a26ca09ec8658db7ab5f6cc0c94ad7cb1057418b9b337afd72aa739e157d537b  SocialMate-Data/PrivatePlaces/pv-hongcheng-lake-park/records/rec-20261103072022-16b79c.json
+ad717e71485aa113cefcdd6b66a9636ffef2e007102b9ff13215644bae0f1ef5  SocialMate-Data/PrivatePlaces/pv-hongcheng-lake-park/place.json
+2d0078ce9756d8c0166e44a9cce894994c6292a00add079b8c5ed6fa42266520  SocialMate-Data/LearningArchive/index.json
+acbeef5c051b0079208e8cdbdee9bec30a443174f56bf6635fa445456003a8d4  socialmate-prototype/ai-gateway/place-notes.mjs
+-- mtime
+SocialMate-Data/PrivatePlaces/pv-hongcheng-lake-park/records/rec-20261103072022-16b79c.json 1793695461 2026-11-03T16:44:21
+-- runs 数量（真实索引，未被我新增）
+       2
+-- git 状态（place-notes 仍未跟踪）
+?? socialmate-prototype/ai-gateway/place-notes.mjs
+-- node --check
+PLACE_NOTES_SYNTAX_OK

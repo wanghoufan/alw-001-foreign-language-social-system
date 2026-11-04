@@ -26,7 +26,9 @@
 - 页面：`MainActivity` 首页 SocialMate 入口，BOYA 检测折叠在高级工具；`AsrActivity` 先录音同意、再启动 ASR，并在同 Activity 内嵌私有 WebView。
 - 采集：AudioRecord 48000/44100/16000，优先 stereo，音源优先 `UNPROCESSED` → `VOICE_RECOGNITION` → `MIC`；`setPreferredDevice` 指向 USB。
 - 录音文件：`getExternalFilesDir(Music)/dualmic/<timestamp>_<A|B>/`，含 `original/left/right.wav` + `diagnostics.json`。
-- 当前版本：0.5.2（versionCode 12），Debug 签名；双麦页削波 >1% 时显示警告。
+- 当前版本：**0.8.15（versionCode 50）**，Debug 签名（`DEBUGGABLE`，不可对外分发）；APK `android-poc/app/build/outputs/apk/debug/app-debug.apk`，SHA-256 `21f6857695bbc5fa27a08add27b48d8d0cc133b1819644aecd6df4486a00aca9`。
+- 朗读（N05）：`TtsPlaybackController` 统一调度；provider 默认 `system`（本机 TTS，`system_fallback` 默认开），可选 `fake`（预置占位音）/`remote`（Mac 服务）；`remote` 下服务商 `fake`/`aws-polly-fake`/`aws-polly`。`aws-polly` 未配置直接 `TTS_PROVIDER_NOT_CONFIGURED`，同意为**本次运行一次**。
+- 新建想法：服务端 `MAX_RAW_INPUT=20000` 字符；`segmentRawInput` 每段句数可由客户端 `maxSentencesPerBlock` 指定（服务端允许 1–8，默认 4），单段 ≤600 字；前端选择存 `localStorage.sm_seg_gran`。
 - 网络策略（0.5.2）：`usesCleartextTraffic=false` + `res/xml/network_security_config.xml`，明文只放行 `127.0.0.1`/`localhost`/`::1`；非回环明文在 WebView 报 `ERR_CLEARTEXT_NOT_PERMITTED`。未覆写 `onReceivedSslError`，坏证书走系统默认拒绝。
 - `AsrActivity` 录音后同 Activity 显示私有 WebView `/v12?live=1`；debug 构建启用 `WebContentsDebuggingEnabled`，用于 Mac CDP 验收。
 
@@ -115,3 +117,92 @@
 - **海南配图**：`GET /v12/img/<city_folder>/<id3>/01.webp`，白名单正则 + 根目录前缀校验；缺图走渐变占位。地点卡语言状态 `SAV.placeLang`（默认）+ `SAV.placeLangMap[id]`（单卡覆盖）。
 - **演示命名空间**：`SocialMate-Data/Demo/{People,Conversations,Backups,state.json}`，`demo-store.mjs` 每次读写前 `assertIsolated()`；演示会话落 `~/Documents/SocialMate/Demo/Conversations/`，真实归档目录不受影响。
 - **构建**：`python3 socialmate-v1.2/build-v12.py` 生成 `index.html`（读 `source/places-115.json`，产出 apps 51 / steps 204 / places 115 / stories 5）。
+
+## V1.3（2026-11-02）
+
+- **原文溯源**：`demo-store.mjs` 只存 `REPLAY_REFS`（sessionId/segmentIndex），`textOriginal` 从 fixture 唯一源读取；候选事实三字段 `candidateFact`/`sourceExactText`/`evidenceId`。
+- **设备配对与令牌**：`pairing.mjs` 一次性码 → 设备密钥 → ≤24h HMAC 短期令牌（`v1.*`）；Android 侧 `DevicePairing`/`SecureStore`（Keystore AES-GCM）；无配对 fail closed；`BuildConfig.ARCHIVE_TOKEN` 已删。
+- **写闸**：`demo-write-guard.mjs` 一次性写票（TTL 120s）+ 同源校验，仅写演示命名空间。
+- **实时链路**：`live-facts.mjs` 内存候选（只落无原文元数据索引），final 先入候选再经 SSE 推 `pendingId`；确认/撤回串行化。
+
+## V1.3 T5（2026-11-02 18:15–18:35）
+
+- **当前版本**：Android `0.8.1` / `versionCode 36`；APK SHA-256 `9971836f0d1cd34afceaf3063f3d8d3cba652faf1f7d3e753dc0d0f03e042296`（176434 B）。
+- **可重复构建**：`JAVA_HOME=/opt/homebrew/opt/openjdk@17`、`ANDROID_SDK_ROOT=~/Library/Android/sdk`、`~/.gradle/alw001-bootstrap/gradle-8.9`，`clean :app:assembleDebug` 两次 → APK 与 `classes.dex` 字节一致（AGP 产物已去时间戳）。
+- **签名**：v2 scheme，`CN=Android Debug`，证书 SHA-256 `8e82a7975008e8ec87ff0f2ecadf495b5263effa34aaec9ab6f135ebea911cf3`；`install -r` 保留数据（`firstInstallTime` 不变）。
+- **写授权票语义**：服务端 `demo-write-guard.mjs` 的票**单次有效**（120s TTL + nonce 去重）。客户端必须每次写重新取票；切不可缓存复用（会把第二次写打成 403）。
+- **演示专属问题**：`buildDemoPrep()` 先按 `origin==="conversation"` 优先、再按 `source.date` 倒序，问句模板用 `textEn || text` 匹配；否则种入的「来自XX / 职业」会占满两条专属问题。
+- **真机归档地址**：本机模式 `http://127.0.0.1:8781/api/archive/session`（仅回环，经 adb reverse）；外出模式 `https://mac-mini.tail4e4317.ts.net/alw/api/archive/session`（经 Tailscale Serve）。
+- **App 内证据位置**：`files/archive/state.json`（状态机快照）、`files/archive/outbox|exported`（含 `.ack.json`）、`files/offline/snapshot.json`（离线只读缓存）。
+- **T5 证据目录**：`docs/plan/ALW001-N04-V1.3-Real-Use-Closure/qa/20261102-t5/`（INDEX.md 有逐文件说明）。
+
+## N05 V1.1（2026-11-02）
+
+- **版本**：Android `0.8.2` / `versionCode 37`，S4 安装包 SHA-256 前缀 `a3d0085e…`；`install -r` 保留数据。git HEAD 仍 `fc2379c`，工作树未提交。
+- **构建环境**：Node 22.22.2 / JDK 17 / Android SDK 35 / Gradle 8.9，四端口（8790/8791/8781/8782）4/4 可用；APK 预构建 `clean` exit 0。
+- **后端新增模块**（`socialmate-prototype/ai-gateway/`）：`manual-facts.mjs`（补记）、`place-notes.mjs`（地点活档案）、`study-blocks.mjs`（分段听读）、`practice-reports.mjs`（GPT Prompt + 复盘回贴）；`server.mjs` +319 行挂载，`verify-n05-backend.mjs` 22/22 exit 0（AI 用假 fetch 探针，真实 DeepSeek 调用 0 次）。
+- **原生 TTS**：`TtsController.java` + `TtsSelfTestActivity.java`；`AndroidManifest.xml` 增加 `<queries>` 声明 `TTS_SERVICE` 与 `RecognitionService`（否则 Android 11+ `getVoices()` 为空）；中文 zh-Hans 与英文 en 分属不同 voice。
+- **前端**：`socialmate-v1.2/source/V1.1-baseline.html` 接入补记 / 地点活档案 / 分段听读 / GPT Prompt 与复盘回贴，`index.html` 由 `build-v12.py` 生成；`verify-n05-ui.mjs` 仅 ① 补记 PASS。
+- **不变量**：`source/places-115.json`（`0412673d…`）、`public-share.*`、`sw.js` 全程未变；真实 `SocialMate-Data/People` 41 文件（`78482d07…`）未动。
+- **证据**：`docs/plan/ALW001-N05-Living-Memories-Practice-V1.1/qa/20261102-s0|s1s3|s4|s5ui`。
+
+## N05 V1.2（2026-11-03）
+
+- **版本**：Android `0.8.12` / `versionCode 47`；APK SHA-256 `edbec3b9190357c9ac05aad0c6fd14d0318b53883188313e0c960fceba7749f7`（447455 B）。git HEAD 仍 `fc2379c`，工作树未提交。
+- **学习资料归档**：`SocialMate-Data/LearningArchive/`（index.json/index.jsonl、processed、quarantine、runs、inbox）；服务端 `/v12/api/learning-archive/{status,scan,ingest,materials}`；worker `learning-archive-worker.mjs`，`service-all.sh` 以 `LEARNING_ARCHIVE_INTERVAL=300` 受控轮询；默认全部 `local_only/awaiting_consent`。
+- **私有地点**（`socialmate-prototype/ai-gateway/private-places.mjs`）：命名空间 `pv-<slug>`，落盘 `SocialMate-Data/PrivatePlaces/<id>/place.json`；新建需 `confirm:true`，同 id 幂等；**不写入** `places-115.json`（该文件 SHA 全程 `0412673d…`），前端仅在原生桥存在时按 id 合并进列表。
+- **私有路由**：`place-notes.mjs` / `server.mjs` 对 `pv-*` 放行并复用同一套鉴权与 400/404 语义；`assertPlaceId()` 仍限 1–115（公开地点），私有走独立模块，不放松公开校验。
+- **AI 分段**（`ai-segment.mjs`）：模型**只返回句子分组**，服务端 `raw.slice(span)` 确定性切块；兼容 `[start,end]` / `{start,end}` / 0 或 1 基；降级原因 `AI_NOT_CONSENTED` / `AI_HTTP_ERROR` / `AI_BAD_GROUPS`。AI 必须由用户显式勾选，费用走 DeepSeek 账本（1 元闸）。
+- **分段契约**：`MAX_RAW_INPUT=20000`（超限 413 `RAW_INPUT_TOO_LARGE`）、`MAX_BLOCK_CHARS=600`、每块句数 1–8（UI 档位 2/3/4/6）；`validateProvidedBlocks` 要求 `raw.slice(span)===sourceText`、`cnSentences.join('')===sourceText`。
+- **红城湖实测记录**：`placeId=pv-hongcheng-lake-park`、`recordId=rec-20261103072022-16b79c`、**19 段 / 英 A/B 38 条 / rawChars 1148**；原文 `docs/plan/ALW001-N05-Living-Memories-Practice-V1.1/content/20261103-红城湖公园-实测文稿.md`（517 行）。
+- **TTS 桌面态**：provider 顺序 `fake → system-fallback → remote → aws-polly`；`aws-polly` 未配置 `configured=false`（501），`aws-polly-fake` 供验收；同意为会话级 `consentSessionGranted`。
+- **证据**：`docs/plan/ALW001-N05-V1.2-Hongcheng-Closure/qa/20261103-t0/`（`00-build.txt`、`01-places-sha.txt`、`02-device-0810.png`、`04-hongcheng-19blocks.png`、`README-T2T3.md`、`README-T4T5.md`）。
+
+## N05 V1.3（2026-11-03）
+
+- **学习页播放布局**：第一行「听本段 / 循环 ×N」、第二行「听词组」、第三行「听中文 / 听英文 A/B」；整段与词组共走一条混合队列。
+- **轮次与时长**（真机 `0.8.13`/48）：15 项/轮；3 轮 45 项 164 秒、20 轮 300 项 1115.6 秒，0 失败 0 跳过。
+- **词组结构**：19 段 102 条 `phrasePairs`（可播 99 / 待确认 100 / 不可播 3）；rev3 只清两处，原文 hash 不变。
+
+## N05 V1.4（2026-11-04）
+
+- **版本**：Android `0.8.14` / `versionCode 49`；APK SHA-256 前缀 `caf5930f…`；git HEAD `fc2379c`，工作树未提交。
+- **前台朗读服务**（`TtsPlaybackService.java`）：`foregroundServiceType=mediaPlayback` + `FOREGROUND_SERVICE_MEDIA_PLAYBACK`、`PARTIAL_WAKE_LOCK`、AudioFocus、`ACTION_AUDIO_BECOMING_NOISY`；通知只写「正在朗读 / 第 x/y 轮 · 第 i/N 项」，队列完成即 `stopForeground` + `stopSelf`。
+- **队列执行器**（`TtsQueueRunner.java`）：间隙/轮次/重试/看门狗原生化；每项事件写入 `files/tts-queue-timeline.jsonl`（logcat 在 Doze 下会丢事件，取证以该文件为准）；`lastOutcome=finished|stopped|failed` 供 `queue_state` 回灌。
+- **桥接契约**：`startQueue` / `queueControl` / `queueState`；网页只下发播放计划、不再自推队列。朗读按钮属性是 `data-tts-lang`（`data-lang` 已属界面语言开关，勿复用）。
+- **Mac 归档守护**（项目外文件）：`~/Library/LaunchAgents/com.alw.learning-archive-watch.plist`，`RunAtLoad`+`KeepAlive`+`ThrottleInterval 30`，常驻 `learning-archive-worker.mjs --watch --interval 1800`（2026-11-04 由 300 调松），日志 `.local/learning-archive/watch.{out,err}.log`；健康 `--health --json` 的 `state/lastScan/intervalSeconds/runningPid`。
+- **索引语义**：总数 85 ＝ 真实 84 ＋ QA fixture 1（`test:true` / `sourceTag:"qa_fixture"`），`--status` 报 `realTotal=84 / testFixtures=1`；构成 conversation 3 / thought 43 / practice_review 38 / self_test 1（fixture） / course 0，全部 `awaiting_consent`。
+## N05 V1.4 T3 · Tailscale 外出（2026-11-04）
+
+- **版本**：Android `0.8.15` / `versionCode 50`；APK SHA-256 `21f6857695bbc5fa27a08add27b48d8d0cc133b1819644aecd6df4486a00aca9`；HEAD `fc2379c`，工作树未提交。
+- **手机 Tailscale 已登录**：Note 12T Pro `100.94.116.99`、Note 12 Pro `100.91.121.33`；Serve 三端口仍为 443 `/alw`→8781、8443→8791、10000→8790。
+- **断 WiFi 实测**：Note 12T Pro Wi-Fi 关、`Transports: CELLULAR|VPN`、VPN 底层 `MOBILE[NR]`、`ping mac-mini` 0% 丢包；`https://…:8443/v12?live=1` 真实加载，`/api/asr/live` SSE `ready`，页面显示「字幕已接入」；经 Tailnet 无线 ADB 安装 APK 成功。
+- **修复（BLOCKER）**：页面 `connectLiveASR()` / `requestRealAI()` 原先只认 `http://127.0.0.1:8791`，外出 https 下字幕与 AI 永不连接；改为复用 `HTTP_UI` 协议判断（不绑 host）。`AsrActivity.injectAccessToken` 由「仅首次写入」改为无条件覆盖，重配对后不会再拿旧令牌 401。
+- **未验**：蜂窝下原生录音未重新开麦（已有 Wi-Fi Tailscale `activeSessions=1` 与蜂窝页面/SSE 双证）；归档写入因设备未配对返回 401，需先配对；ASR 端点无握手鉴权、`AsrClient` 无重连（见 `qa/20261104-t3/code-audit.md`）。
+
+## N05 V1.5 · 聊天页 UX（2026-11-04）
+
+- **版本**：Android `0.8.29` / vc64；APK SHA-256 `cb07a89e…`。
+- **布局**：单栏；顶部对象/录音/连接/停止；字幕最近 3 句、固定 156px，历史 `details` 44vh；建议四方向；资料横条四类。
+- **建议数据**：`suggestionsNow()` 返回 `respond/ask/share/switch` 四组，每组 2–3 条；AI 结果只做第一条，模板补足候选，不再 `slice(0,1)`。
+- **阅读冻结**：`S.suggFreeze` 由建议区 pointerdown/wheel 置位；新 final 只更新字幕并显示 `#suggNewBadge`，点击才重建。
+- **诊断**：聊天首页不显示端口/模型/配对；设置内「高级诊断」显示连接方式、P066 流式、端口与账本归属。
+- **证据**：`docs/plan/ALW001-N05-V1.5-Chat-UX/QA-REPORT.md`、`qa-v15-120.png`。
+
+## P066 流式 ASR / V1.5 聊天页（2026-11-04）
+
+- **ALW 上游**：`ASR_UPSTREAM=p066`，`P066_ASR_URL=ws://127.0.0.1:8078/api/asr/stream`；令牌只放 `x-asr-token`，不入 URL/日志。
+- **P066 修复**：`translate()` 以 `sentence_type=1` 判 final；`end` 等待 2500ms；签名补 `speaker_diarization`。单段 final 1、多段 final 2；流式 401/403 PASS。
+- **计费**：P066 3 元/月；ALW 本地腾讯账本在 p066 模式停扣。已用 0.057567，剩余 2.942433。
+- **V1.5**：`suggestionsNow()` 四组（respond/ask/share/switch），每组 2–3 条；`S.suggFreeze` 冻结建议；字幕最近 3 句 + 44vh 历史；设置内高级诊断。
+- **证据**：`docs/plan/ALW001-N05-V1.5-Chat-UX/QA-REPORT.md`、`qa/20261104-p066/REPORT.md`。
+## N05 V1.5.1 真实交流收口（2026-11-04）
+
+- **版本**：Android `0.8.30` / `versionCode 65`；APK SHA-256 `794e68a8…`；HEAD `fc2379c`，工作树未提交。
+- **ASR 握手鉴权**：`server.js` 在 upgrade 阶段校验 `x-asr-token`（兼容 Bearer）、Origin（loopback/RFC1918/`*.ts.net`，且 host 与请求 Host 一致）、每 IP 20 次/60s 与并发 8；拒绝发生在 `handleUpgrade` 之前，P066 上游不建立。`/health` 暴露 `authRequired/authMode`。组合服务由 `live-server.mjs` 注入 `pairing.verifyToken`；standalone 真实模式默认 fail-closed，开发可显式 `ASR_WS_AUTH=off`。
+- **归档 401**：`SessionArchive` 新增 `TokenRefresher`；仅 401 刷新一次+重试一次，403 fail-closed；`state.json` 记录 201/待传数。
+- **原生重连**：`AsrClient` 20s ping/pong；`AsrActivity` 每 track 单飞重连（1s/2s/4s×3），失败停录；页面 `smNativeLinkState` 只显示“连接中断 · 重连中 / 已恢复”。真机实测：服务进程被杀→看门狗拉起→客户端自动重连、字幕继续；阻断 8790/8791 时 3s 显示重连中、13s 停录为“已结束 · 可复盘”。原生面板直接开录会在页面补建本轮会话。
+- **页面密度**：新增 `v151-realuse` 样式（`<style id="v151-realuse">`）：候选事实一行计数、建议区 `23vh` 独立滚动、结束/放弃 sticky；392×791 下建议 `top 433`、资料面板 `top 685`、整页高 1277。
+- **接话质量**：`SM_COACH_PLANS` 10 话题（weather/arrival/running/coffee/hainan/software/travel/weekend/music/other），`suggestionsNow()` 跨方向去重、switch 随话题；素材 `docs/plan/ALW001-N05-V1.5.1-Chat-RealUse-Closure/qa/t3-quality/`。
+- **TTS 调试入口**：release 清单 `exported=false`，debug 单独放开；`remote_base` 白名单校验在 Activity 与 Controller 双处。
+- **证据**：`docs/plan/ALW001-N05-V1.5.1-Chat-RealUse-Closure/qa/QA-REPORT.md`。

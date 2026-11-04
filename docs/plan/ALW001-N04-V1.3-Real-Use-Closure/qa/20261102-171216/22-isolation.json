@@ -1,0 +1,11 @@
+{
+  "realArchivePath": "/Users/zzymima0000/Documents/SocialMate/Conversations",
+  "realArchiveFilesBefore": 4,
+  "realArchiveHashBefore": "bf706a39e0dd020206ada4be179101f86f0cc02036db9a22a210a3b90246a176",
+  "realArchiveFilesAfter": 4,
+  "realArchiveHashAfter": "bf706a39e0dd020206ada4be179101f86f0cc02036db9a22a210a3b90246a176",
+  "demoPath": "/Users/zzymima0000/Documents/SocialMate/Demo",
+  "demoFilesBefore": 18,
+  "demoFilesAfter": 18,
+  "note": "T3 全程使用隔离目录 SM_CONVERSATION_DIR；真实 Conversations 与演示母版未被测试写入"
+}

@@ -1,0 +1,37 @@
+ALW-001 N05 V1.1 S0 — SHA-256 baseline
+generated: 2026-11-02 21:58 (Mac local)
+
+# repo
+git_HEAD: fc2379cdc9909b26e0dc2a200791ae81ec046d55
+git_branch: main
+dirty_files: 43
+
+# source data (read-only)
+0412673d14737e85c9554c1cb9b4990bafb4d6b71082f330ced518c128a836e9  socialmate-v1.2/source/places-115.json
+
+# private People archive (read-only, 41 files, aggregate over sorted path+hash)
+78482d07840f5f3b41e8b1c857b592e03fcaf3c57713d970b405efc4953534d3  SocialMate-Data/People (aggregate)
+ee241688bdb0c69384c3b6f5ec498921d91c2d8fbcc946db4b09012fa6e2cdef  SocialMate-Data/Demo (aggregate)
+
+# public PWA source: origin/gh-pages (deployed source of truth)
+d5c3bc5c4e46e22474056df1092270daa8665f95cd2db04acc3e99afd8cc8a1a  gh-pages:index.html
+230ca8c2a9bfbabc0946ff2ca55cfa717a3b4f17dad58109cf50b23c4983636a  gh-pages:styles.css
+5c4a51d4aef6661437b963ff21af093f1d94d6cbb40fa40e02fb480575abe100  gh-pages:public-places.js
+7a0831fc51f4f2089cabc88e7890620105876f5d661bc5eca2c1a3acec1dfb7e  gh-pages:sw.js
+f8fc22d011662ff862e2db5f7cc01204b065ec2bcc34367c4bad5906a720896c  gh-pages:manifest.webmanifest
+905c63baa0acba7e8da6bc8df0287ac106f307a3d1893b03b8b357363b0e5395  gh-pages:public-share.js
+61e289d88ba888cbc380baf9224435e784ee49159da1cd3eab0c0afd0a697b63  gh-pages:icon.svg
+
+# live deployment verification (HTTP 200)
+d5c3bc5c4e46e22474056df1092270daa8665f95cd2db04acc3e99afd8cc8a1a  https://wanghoufan.github.io/alw-001-foreign-language-social-system/index.html
+
+# local public/ preview dir (NOT the gh-pages deploy source)
+ba6537ccbfad688fa4671f53cb913be14427ac3ce28047046d39e0e48a86134e  public/index.html
+5cf4044e94a647e937fd1fd6e7aad853bd97330766ddfbfc24817769e0736fd1  public/styles.css
+
+# build artifacts
+9971836f0d1cd34afceaf3063f3d8d3cba652faf1f7d3e753dc0d0f03e042296  android-poc/app/build/outputs/apk/debug/app-debug.apk
+d725d707bfabd4dfdc958c624003b3c80accc03f7037b5122c4b1d0ef15cecab  ~/.gradle/alw001-bootstrap/gradle-8.9-bin.zip (matches official)
+
+# APK signing certificate
+8e82a7975008e8ec87ff0f2ecadf495b5263effa34aaec9ab6f135ebea911cf3  APK signer cert SHA-256 (CN=Android Debug)

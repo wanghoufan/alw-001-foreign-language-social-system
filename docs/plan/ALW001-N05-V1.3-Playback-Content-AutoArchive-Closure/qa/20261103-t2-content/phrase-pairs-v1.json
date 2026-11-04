@@ -1,0 +1,966 @@
+{
+  "schema": "alw001.phrase-pairs.v1",
+  "recordId": "rec-20261103072022-16b79c",
+  "revisionBasis": 2,
+  "generatedAt": "2026-11-03T14:19:44.337Z",
+  "method": "offline_manual_review+source_zh_alignment（原串 EN+中文机械拆分；纯英文条目中文仅取本段 sourceText/cnSentences 原话片段；无原文依据标 ai_suggested 且不可播）",
+  "cloudCall": "none",
+  "blocks": {
+    "blk-hc-1": [
+      {
+        "id": "blk-hc-1-p1",
+        "zh": "湖边散步",
+        "en": "take a walk / stroll along",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「晚上在红城湖湖边散散步」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      },
+      {
+        "id": "blk-hc-1-p2",
+        "zh": "湖边",
+        "en": "along the edge of the lake / by the lake",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「红城湖湖边」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      },
+      {
+        "id": "blk-hc-1-p3",
+        "zh": "晚上散步",
+        "en": "evening stroll",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「晚上在红城湖湖边散散步」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      },
+      {
+        "id": "blk-hc-1-p4",
+        "zh": "非常愉悦",
+        "en": "delightful / genuinely pleasant",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「还是非常愉悦的」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      },
+      {
+        "id": "blk-hc-1-p5",
+        "zh": "微风",
+        "en": "a nice breeze",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「有微风」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      },
+      {
+        "id": "blk-hc-1-p6",
+        "zh": "很凉爽",
+        "en": "nice and cool / lovely and cool",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「很凉爽」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      }
+    ],
+    "blk-hc-2": [
+      {
+        "id": "blk-hc-2-p1",
+        "zh": "椰子水",
+        "en": "coconut water",
+        "source": "parsed_from_original",
+        "evidence": "原串「coconut water 椰子水」直接拆分；本段原「表达梳理」在逐字版归档中为用户缺失后补写，整条仍需用户确认",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      },
+      {
+        "id": "blk-hc-2-p2",
+        "zh": "坐着聊天",
+        "en": "sit around chatting",
+        "source": "parsed_from_original",
+        "evidence": "原串「sit around chatting 坐着聊天」直接拆分；本段原「表达梳理」在逐字版归档中为用户缺失后补写，整条仍需用户确认",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      },
+      {
+        "id": "blk-hc-2-p3",
+        "zh": "闲聊",
+        "en": "shooting the breeze",
+        "source": "parsed_from_original",
+        "evidence": "原串「shooting the breeze 闲聊」直接拆分；本段原「表达梳理」在逐字版归档中为用户缺失后补写，整条仍需用户确认",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      }
+    ],
+    "blk-hc-3": [
+      {
+        "id": "blk-hc-3-p1",
+        "zh": "驱蚊花露水",
+        "en": "mosquito repellent",
+        "source": "parsed_from_original",
+        "evidence": "原串「mosquito repellent 驱蚊花露水」直接拆分；本段原「表达梳理」在逐字版归档中为用户缺失后补写，整条仍需用户确认",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      },
+      {
+        "id": "blk-hc-3-p2",
+        "zh": "止痒膏",
+        "en": "anti-itch cream",
+        "source": "parsed_from_original",
+        "evidence": "原串「anti-itch cream 止痒膏」直接拆分；本段原「表达梳理」在逐字版归档中为用户缺失后补写，整条仍需用户确认",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      },
+      {
+        "id": "blk-hc-3-p3",
+        "zh": "穿长裤",
+        "en": "wear long pants",
+        "source": "parsed_from_original",
+        "evidence": "原串「wear long pants 穿长裤」直接拆分；本段原「表达梳理」在逐字版归档中为用户缺失后补写，整条仍需用户确认",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      }
+    ],
+    "blk-hc-4": [
+      {
+        "id": "blk-hc-4-p1",
+        "zh": "不同风格",
+        "en": "different styles",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「她们有不同风格」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      },
+      {
+        "id": "blk-hc-4-p2",
+        "zh": "特别嗨",
+        "en": "high-energy / hype",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「有些特别嗨」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      },
+      {
+        "id": "blk-hc-4-p3",
+        "zh": "老歌",
+        "en": "old songs / oldies",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「放的是老歌」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      },
+      {
+        "id": "blk-hc-4-p4",
+        "zh": "DJ 版本",
+        "en": "DJ versions / DJ remixes",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「但是 DJ 版本」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      },
+      {
+        "id": "blk-hc-4-p5",
+        "zh": "很有共鸣",
+        "en": "feel a real connection / really feel it",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「你会觉得很有共鸣」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      },
+      {
+        "id": "blk-hc-4-p6",
+        "zh": "知道吗？",
+        "en": "you know? / you know what I mean?",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「知道吗？」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      },
+      {
+        "id": "blk-hc-4-p7",
+        "zh": "很带劲",
+        "en": "pumping / driving beat",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「但又很带劲」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      },
+      {
+        "id": "blk-hc-4-p8",
+        "zh": "跳起来很过瘾",
+        "en": "a blast to dance to / so satisfying",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「跳起来很过瘾」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      }
+    ],
+    "blk-hc-5": [
+      {
+        "id": "blk-hc-5-p1",
+        "zh": "零基础",
+        "en": "for complete beginners / zero-experience friendly",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「有一些是零基础的」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      },
+      {
+        "id": "blk-hc-5-p2",
+        "zh": "不管你以前有没有跳过",
+        "en": "it doesn't matter whether...",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「不管你以前有没有跳过」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      },
+      {
+        "id": "blk-hc-5-p3",
+        "zh": "过去参与",
+        "en": "just walk over and join in",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「只要过去，都可以参与进来」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      },
+      {
+        "id": "blk-hc-5-p4",
+        "zh": "跟上",
+        "en": "keep up / follow along",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「都能跟上」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      },
+      {
+        "id": "blk-hc-5-p5",
+        "zh": "达到运动的效果",
+        "en": "get a good workout out of it / get your exercise in",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「能达到运动的效果」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      },
+      {
+        "id": "blk-hc-5-p6",
+        "zh": "很开心、很愉悦",
+        "en": "a great time / fun and enjoyable",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「又很开心、很愉悦」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      }
+    ],
+    "blk-hc-6": [
+      {
+        "id": "blk-hc-6-p1",
+        "zh": "需要一些基础",
+        "en": "require some basics / call for some foundation",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「有一些是需要一些基础的」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      },
+      {
+        "id": "blk-hc-6-p2",
+        "zh": "有一些难度",
+        "en": "a bit of a learning curve / more challenging",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「有一些难度」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      },
+      {
+        "id": "blk-hc-6-p3",
+        "zh": "跟她们练一段时间",
+        "en": "practice with them for a while",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「可能要跟她们练一段时间才能跟得上」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      },
+      {
+        "id": "blk-hc-6-p4",
+        "zh": "跟得上",
+        "en": "keep up / follow along",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「才能跟得上」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      },
+      {
+        "id": "blk-hc-6-p5",
+        "zh": "没有门槛",
+        "en": "no barrier to entry / no-threshold",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「体验一下没有门槛的那种」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      },
+      {
+        "id": "blk-hc-6-p6",
+        "zh": "很好的体验",
+        "en": "well worth it / a great experience",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「也是一个很好的体验」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      }
+    ],
+    "blk-hc-7": [
+      {
+        "id": "blk-hc-7-p1",
+        "zh": "跟着她们跳",
+        "en": "dance along with them / join them",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「我跟着她们跳过好几次」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      },
+      {
+        "id": "blk-hc-7-p2",
+        "zh": "好几次",
+        "en": "quite a few times / a bunch of times",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「我跟着她们跳过好几次」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      },
+      {
+        "id": "blk-hc-7-p3",
+        "zh": "没有什么烦恼",
+        "en": "no worries / no stress",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「没有什么烦恼」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      },
+      {
+        "id": "blk-hc-7-p4",
+        "zh": "跟着跳就对了",
+        "en": "just follow along, that's it",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「跟着跳就对了」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      },
+      {
+        "id": "blk-hc-7-p5",
+        "zh": "又简单又不会累",
+        "en": "simple and not tiring / easy and not exhausting",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「又简单又不会累」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      },
+      {
+        "id": "blk-hc-7-p6",
+        "zh": "很有趣",
+        "en": "a good time / genuinely fun",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「你会觉得很有趣」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      },
+      {
+        "id": "blk-hc-7-p7",
+        "zh": "不烦躁",
+        "en": "not the least bit annoying / not irritating at all",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「不烦躁」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      }
+    ],
+    "blk-hc-8": [
+      {
+        "id": "blk-hc-8-p1",
+        "zh": "除了",
+        "en": "apart from / besides",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「除了阿姨阿妈」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      },
+      {
+        "id": "blk-hc-8-p2",
+        "zh": "阿姨阿妈",
+        "en": "the aunties / older ladies",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「除了阿姨阿妈」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      },
+      {
+        "id": "blk-hc-8-p3",
+        "zh": "小情侣",
+        "en": "couples",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「还有小情侣在那里卿卿我我」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      },
+      {
+        "id": "blk-hc-8-p4",
+        "zh": "卿卿我我",
+        "en": "get all lovey-dovey / be all sweet and cuddly",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「小情侣在那里卿卿我我」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      },
+      {
+        "id": "blk-hc-8-p5",
+        "zh": "没法避免",
+        "en": "that's just unavoidable / can't avoid that",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「这没法避免」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      }
+    ],
+    "blk-hc-9": [
+      {
+        "id": "blk-hc-9-p1",
+        "zh": "体育锻炼的设施",
+        "en": "fitness equipment / workout gear",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「还有一些体育锻炼的设施」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      },
+      {
+        "id": "blk-hc-9-p2",
+        "zh": "引体向上",
+        "en": "pull-ups",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「可以做引体向上」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      },
+      {
+        "id": "blk-hc-9-p3",
+        "zh": "双杠臂屈伸",
+        "en": "dips on the parallel bars",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「双杠臂屈伸」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      },
+      {
+        "id": "blk-hc-9-p4",
+        "zh": "按摩背部",
+        "en": "massage your back",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「可以按摩背部」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      },
+      {
+        "id": "blk-hc-9-p5",
+        "zh": "拉伸",
+        "en": "stretch",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「也可以拉伸」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      },
+      {
+        "id": "blk-hc-9-p6",
+        "zh": "设施还是挺齐全的",
+        "en": "well-equipped / pretty complete set of facilities",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「设施还是挺齐全的」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      }
+    ],
+    "blk-hc-10": [
+      {
+        "id": "blk-hc-10-p1",
+        "zh": "一些歌手",
+        "en": "some singers",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「还有一些歌手在那儿直播唱歌」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      },
+      {
+        "id": "blk-hc-10-p2",
+        "zh": "在那儿…",
+        "en": "go there and...",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「还有一些歌手在那儿直播唱歌」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      },
+      {
+        "id": "blk-hc-10-p3",
+        "zh": "直播唱歌",
+        "en": "livestream one's singing / do live-streamed performances",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「还有一些歌手在那儿直播唱歌」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      }
+    ],
+    "blk-hc-11": [
+      {
+        "id": "blk-hc-11-p1",
+        "zh": "提供按摩服务",
+        "en": "offer massage services",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「很多人提供按摩服务」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      },
+      {
+        "id": "blk-hc-11-p2",
+        "zh": "10 块钱按摩 10 分钟",
+        "en": "10 yuan for a 10-minute massage",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「比如 10 块钱按摩 10 分钟」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      },
+      {
+        "id": "blk-hc-11-p3",
+        "zh": "肩颈",
+        "en": "shoulders and neck",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「按肩颈、腰背什么的」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      },
+      {
+        "id": "blk-hc-11-p4",
+        "zh": "腰背",
+        "en": "lower back",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「按肩颈、腰背什么的」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      },
+      {
+        "id": "blk-hc-11-p5",
+        "zh": "上年纪的人",
+        "en": "older folks / older people",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「因为上年纪的人比较多嘛」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      },
+      {
+        "id": "blk-hc-11-p6",
+        "zh": "嘛（语气词）",
+        "en": "after all",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话句末语气词「嘛」；英文 after all 对应句末语气，单独朗读无语义，且与上一条「上年纪的人」重复，建议不单独成对（保留在 phrases 原串即可）",
+        "reviewStatus": "needs_review",
+        "playable": false
+      }
+    ],
+    "blk-hc-12": [
+      {
+        "id": "blk-hc-12-p1",
+        "zh": "快走",
+        "en": "power-walk / brisk-walk",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「我喜欢在这湖边的跑道上快走」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      },
+      {
+        "id": "blk-hc-12-p2",
+        "zh": "湖边跑道",
+        "en": "lakeside track",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「这湖边的跑道上」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      },
+      {
+        "id": "blk-hc-12-p3",
+        "zh": "跟 AI 练英语口语",
+        "en": "practice my spoken English with AI",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「可以跟 AI 练一下英语口语」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      },
+      {
+        "id": "blk-hc-12-p4",
+        "zh": "简单记录一些自己的想法",
+        "en": "jot down some quick thoughts / record a few thoughts",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「或者简单记录一些自己的想法」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      },
+      {
+        "id": "blk-hc-12-p5",
+        "zh": "一举多用",
+        "en": "killing two birds with one stone / multitasking",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「一举多用」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      }
+    ],
+    "blk-hc-13": [
+      {
+        "id": "blk-hc-13-p1",
+        "zh": "公厕",
+        "en": "public restroom / public toilet",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「这边有 3 个公厕」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      },
+      {
+        "id": "blk-hc-13-p2",
+        "zh": "在三个角上",
+        "en": "at each of the three corners",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「在三个角上」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      },
+      {
+        "id": "blk-hc-13-p3",
+        "zh": "每个边都有一个",
+        "en": "one for each side",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「也就是每个边基本上都有一个」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      },
+      {
+        "id": "blk-hc-13-p4",
+        "zh": "每走一段距离",
+        "en": "every so often / every stretch you walk",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「所以每走一段距离就会有一个公厕」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      },
+      {
+        "id": "blk-hc-13-p5",
+        "zh": "就会有一个",
+        "en": "come across one",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「所以每走一段距离就会有一个公厕」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      },
+      {
+        "id": "blk-hc-13-p6",
+        "zh": "非常方便",
+        "en": "really convenient / super convenient",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「非常方便」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      },
+      {
+        "id": "blk-hc-13-p7",
+        "zh": "等边三角形的布置",
+        "en": "laid out roughly in an equilateral triangle",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「整体基本上是一个等边三角形的布置」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      }
+    ],
+    "blk-hc-14": [
+      {
+        "id": "blk-hc-14-p1",
+        "zh": "给小孩玩的区域",
+        "en": "a kids' zone / an area for kids",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「这边还有一个给小孩玩的区域」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      },
+      {
+        "id": "blk-hc-14-p2",
+        "zh": "滑梯",
+        "en": "slide",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「有滑梯」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      },
+      {
+        "id": "blk-hc-14-p3",
+        "zh": "攀岩",
+        "en": "climbing wall / climbing area",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「还有可以攀岩的小沙坡」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      },
+      {
+        "id": "blk-hc-14-p4",
+        "zh": "小沙坡",
+        "en": "sandy slope / small hill",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「还有可以攀岩的小沙坡」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      },
+      {
+        "id": "blk-hc-14-p5",
+        "zh": "玩沙子",
+        "en": "play in the sand / play with the sand",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「也可以在那里玩沙子」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      }
+    ],
+    "blk-hc-15": [
+      {
+        "id": "blk-hc-15-p1",
+        "zh": "卖道具的",
+        "en": "stalls / vendors",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「周边有很多卖道具的」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      },
+      {
+        "id": "blk-hc-15-p2",
+        "zh": "周边有很多",
+        "en": "plenty of... around",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「周边有很多卖道具的」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      },
+      {
+        "id": "blk-hc-15-p3",
+        "zh": "铲子",
+        "en": "shovels",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「比如铲子」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      },
+      {
+        "id": "blk-hc-15-p4",
+        "zh": "桶",
+        "en": "buckets",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「小玩具、桶」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      },
+      {
+        "id": "blk-hc-15-p5",
+        "zh": "涂鸦画",
+        "en": "coloring sets / doodle kits / paint sets",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「还有给小孩玩的涂鸦画」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      },
+      {
+        "id": "blk-hc-15-p6",
+        "zh": "给小孩玩的",
+        "en": "kids' gear / stuff for the kids",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「还有给小孩玩的涂鸦画」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      }
+    ],
+    "blk-hc-16": [
+      {
+        "id": "blk-hc-16-p1",
+        "zh": "产生了一小圈商业",
+        "en": "a little mini-economy has sprung up",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「产生了一小圈商业服务和商业产品的售卖」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      },
+      {
+        "id": "blk-hc-16-p2",
+        "zh": "一小圈商业",
+        "en": "a commercial ring / a ring of...",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「产生了一小圈商业服务和商业产品的售卖」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      },
+      {
+        "id": "blk-hc-16-p3",
+        "zh": "围绕小孩",
+        "en": "catering to them / aimed at them",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「就围绕小孩」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      },
+      {
+        "id": "blk-hc-16-p4",
+        "zh": "商业服务和商业产品",
+        "en": "services and products",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「商业服务和商业产品的售卖」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      }
+    ],
+    "blk-hc-17": [
+      {
+        "id": "blk-hc-17-p1",
+        "zh": "所以我很喜欢这个地方",
+        "en": "That's why I really like this place.",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「所以我很喜欢这个地方」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      },
+      {
+        "id": "blk-hc-17-p2",
+        "zh": "周六周天",
+        "en": "on a Saturday or Sunday / on the weekend",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「如果你周六周天感觉很孤单」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      },
+      {
+        "id": "blk-hc-17-p3",
+        "zh": "感觉很孤单",
+        "en": "feeling lonely / on your own",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「如果你周六周天感觉很孤单」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      },
+      {
+        "id": "blk-hc-17-p4",
+        "zh": "心情有点不好",
+        "en": "feeling a bit down / a little blue",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「或者心情有点不好」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      },
+      {
+        "id": "blk-hc-17-p5",
+        "zh": "过来走一走",
+        "en": "come take a walk / take a stroll",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「那就过来走一走」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      },
+      {
+        "id": "blk-hc-17-p6",
+        "zh": "生命的活力",
+        "en": "the vitality of life / life's energy",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「你会感受到生命的活力」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      },
+      {
+        "id": "blk-hc-17-p7",
+        "zh": "生活的希望",
+        "en": "a sense of hope / hope again",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「和生活的希望」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      }
+    ],
+    "blk-hc-18": [
+      {
+        "id": "blk-hc-18-p1",
+        "zh": "野餐",
+        "en": "picnic",
+        "source": "parsed_from_original",
+        "evidence": "原串「picnic 野餐」直接拆分；本段原「表达梳理」在逐字版归档中为用户缺失后补写，整条仍需用户确认",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      },
+      {
+        "id": "blk-hc-18-p2",
+        "zh": "傍晚",
+        "en": "at dusk",
+        "source": "parsed_from_original",
+        "evidence": "原串「at dusk 傍晚」直接拆分；本段原「表达梳理」在逐字版归档中为用户缺失后补写，整条仍需用户确认",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      },
+      {
+        "id": "blk-hc-18-p3",
+        "zh": "铺毯子",
+        "en": "lay out a blanket",
+        "source": "parsed_from_original",
+        "evidence": "原串「lay out a blanket 铺毯子」可机械拆分，但本段中文（下午/傍晚/晚上野餐/露营）无「铺毯子」，该表达实际属第 19 段「铺一个野餐毯」；建议从本段移出，不在本段播放",
+        "reviewStatus": "needs_review",
+        "playable": false
+      }
+    ],
+    "blk-hc-19": [
+      {
+        "id": "blk-hc-19-p1",
+        "zh": "铺野餐毯",
+        "en": "lay out / spread out a picnic blanket",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「铺一个野餐毯」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      },
+      {
+        "id": "blk-hc-19-p2",
+        "zh": "带一些吃的、喝的",
+        "en": "bring some food and drinks / snacks and drinks",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「带一些吃的、喝的」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      },
+      {
+        "id": "blk-hc-19-p3",
+        "zh": "在这儿放松待着",
+        "en": "chill / hang out",
+        "source": "ai_suggested",
+        "evidence": "AI建议中文（本段原话无对应动词，仅「也很惬意」间接支持）；未经用户确认不得进入可播队列",
+        "reviewStatus": "pending_user_confirm",
+        "playable": false
+      },
+      {
+        "id": "blk-hc-19-p4",
+        "zh": "跟朋友聊聊天",
+        "en": "chat with friends",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「在这边跟朋友聊聊天」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      },
+      {
+        "id": "blk-hc-19-p5",
+        "zh": "听听歌",
+        "en": "listen to music",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「听听歌」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      },
+      {
+        "id": "blk-hc-19-p6",
+        "zh": "很惬意",
+        "en": "really relaxing / laid-back",
+        "source": "derived_from_source_zh",
+        "evidence": "中文出处：本段原话「也很惬意」",
+        "reviewStatus": "pending_user_confirm",
+        "playable": true
+      }
+    ]
+  }
+}

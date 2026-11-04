@@ -1,0 +1,5 @@
+    codePath=/data/app/~~7ShFEjGDzTceEjrVWJQL5Q==/app.socialmate.dualmic-GymKx-Vz5bXzs_6TsfwB5w==
+    versionCode=38 minSdk=26 targetSdk=35
+    versionName=0.8.3
+    firstInstallTime=2026-10-31 18:25:27
+    lastUpdateTime=2026-11-03 09:00:18

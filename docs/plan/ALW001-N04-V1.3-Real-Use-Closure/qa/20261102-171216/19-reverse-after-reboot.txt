@@ -1,0 +1,5 @@
+UsbFfs tcp:8799 tcp:8799
+UsbFfs tcp:8781 tcp:8781
+UsbFfs tcp:8791 tcp:8791
+UsbFfs tcp:8790 tcp:8790
+

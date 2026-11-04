@@ -65,11 +65,21 @@ const port = server.address().port;
 const base = `http://127.0.0.1:${port}`;
 const TOKEN = "verify-token-0000000000000000";
 
+// 写操作 = 同源 + 一次性写授权票（N04 V1.3 T1-4）。跨源负例也带有效票，证明被拒是 Origin 而非票。
+async function writeTicket() {
+  const res = await fetch(base + "/v12/api/demo/write-ticket", {cache: "no-store"});
+  const parsed = await res.json().catch(() => null);
+  if (!parsed?.ticket) throw new Error("写授权票获取失败");
+  return parsed.ticket;
+}
 async function request(method, pathname, body, options = {}) {
   const headers = {Accept: "application/json"};
   if (options.token !== null) headers["x-archive-token"] = options.token || TOKEN;
   if (body !== undefined) headers["Content-Type"] = "application/json";
-  if (options.origin) headers.Origin = options.origin;
+  if (method === "POST" && options.origin !== "none") {
+    headers.Origin = options.origin || base;
+    if (options.noTicket !== true) headers["x-sm-write"] = await writeTicket();
+  }
   const res = await fetch(base + pathname, {
     method, headers, body: body === undefined ? undefined : JSON.stringify(body),
   });

@@ -1,0 +1,6 @@
+# 8790 ASR 桥会话日志（脱敏：session id 已替换）
+# source: socialmate-v1.2/.local/qa/live-v040-20261102-162343.log
+[asr-bridge] open session=<id> track=mix rate=48000 channels=2 mode=tencent engine=16k_zh_en_speaker_2.0
+[asr-bridge] close session=<id> status=ended inputBytes=21504000 events=46
+[asr-bridge] open session=<id> track=mix rate=48000 channels=2 mode=tencent engine=16k_zh_en_speaker_2.0
+[asr-bridge] close session=<id> status=ended inputBytes=3540480 events=8

@@ -1,0 +1,29 @@
+{
+  "contentHash": "179c6b6a5bcd67de721e218068d4185895af4d782b501fe4421bd2e6054868be",
+  "session": {
+    "schemaVersion": 1,
+    "sessionId": "sess_20261102T092602_48c27b",
+    "startedAt": "2026-11-02T09:26:02.199Z",
+    "endedAt": "2026-11-02T09:26:25.401Z",
+    "appVersion": "0.8.0",
+    "consent": {
+      "recording": true,
+      "retention": true,
+      "cloudAi": false
+    },
+    "revision": 1,
+    "segments": [
+      {
+        "eventId": "c8ee0925-72d9-4546-9d80-242dedc477e4",
+        "startMs": 5460,
+        "endMs": 6510,
+        "receivedAt": "2026-11-02T09:26:09.807Z",
+        "speakerId": "spk_0",
+        "track": "mix",
+        "provider": "tencent",
+        "mock": false,
+        "textOriginal": "Two at seven tonight."
+      }
+    ]
+  }
+}

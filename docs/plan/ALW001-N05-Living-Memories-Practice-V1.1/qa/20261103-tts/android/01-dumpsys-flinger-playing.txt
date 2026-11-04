@@ -1,0 +1,11 @@
+ 31284  10319  app.socialmate.dualmic
+Global session refs:
+  session  cnt     pid    uid  name
+        9    1    2005   1001  android.uid.phone
+     1601    2   31284  10319  app.socialmate.dualmic
+Hardware status: 0
+Standby Time mSec: 3000
+
+Output thread 0xb4000075877113c0, name AudioOut_D, tid 1150, type 0 (MIXER):
+  I/O handle: 13
+  Standby: no

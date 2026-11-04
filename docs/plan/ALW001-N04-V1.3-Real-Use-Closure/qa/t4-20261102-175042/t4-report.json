@@ -1,0 +1,472 @@
+{
+  "task": "SM-ALW001-20261102-N04-V13/T4",
+  "startedAt": "2026-11-02T10:11:27.695Z",
+  "finishedAt": "2026-11-02T10:12:32.539Z",
+  "durationMs": 64844,
+  "root": "/Users/zzymima0000/Developer/coding/1.Active/alw-001-外语社交系统",
+  "qa": "/Users/zzymima0000/Developer/coding/1.Active/alw-001-外语社交系统/docs/plan/ALW001-N04-V1.3-Real-Use-Closure/qa/t4-20261102-175042",
+  "device": {
+    "serial": "REDACTED-SERIAL",
+    "model": "21091116AC",
+    "android": "11",
+    "sdk": "30",
+    "versionName": "0.8.1",
+    "versionCode": "36",
+    "apkSha256": "9971836f0d1cd34afceaf3063f3d8d3cba652faf1f7d3e753dc0d0f03e042296"
+  },
+  "git": {
+    "head": "fc2379c",
+    "dirtyFiles": 32
+  },
+  "host": "mac-mini.tail4e4317.ts.net",
+  "checks": [
+    {
+      "group": "preflight",
+      "id": "device-report",
+      "status": "PASS",
+      "ok": true,
+      "detail": {
+        "model": "21091116AC",
+        "android": "11",
+        "versionName": "0.8.1",
+        "versionCode": "36",
+        "apkSha256": "9971836f0d1cd34a",
+        "gitHead": "fc2379c",
+        "gitDirty": 32
+      }
+    },
+    {
+      "group": "stack",
+      "id": "health-4-ports",
+      "status": "PASS",
+      "ok": true,
+      "detail": {
+        "exit": 0,
+        "ports": [
+          "8790:OK",
+          "8791:OK",
+          "8781:OK",
+          "8782:OK"
+        ]
+      }
+    },
+    {
+      "group": "stack",
+      "id": "launch-agent-loaded",
+      "status": "PASS",
+      "ok": true,
+      "detail": {
+        "exit": 0,
+        "label": "com.alw.socialmate-stack"
+      }
+    },
+    {
+      "group": "stack",
+      "id": "launch-agent-plist",
+      "status": "PASS",
+      "ok": true,
+      "detail": {
+        "plist": "/Users/zzymima0000/Library/LaunchAgents/com.alw.socialmate-stack.plist"
+      }
+    },
+    {
+      "group": "gui",
+      "id": "recovery-app-present",
+      "status": "PASS",
+      "ok": true,
+      "detail": {
+        "app": "release/t4/SocialMate 服务恢复.app",
+        "usesLaunchctl": true,
+        "mentionsNode": false
+      }
+    },
+    {
+      "group": "gui",
+      "id": "manual-doubleclick-evidence",
+      "status": "PASS",
+      "ok": true,
+      "detail": {
+        "shot": "50-gui-recovery-dialog.png",
+        "note": "人工双击后对话框截图（已自动恢复）"
+      }
+    },
+    {
+      "group": "sec",
+      "id": "archive-post-requires-token",
+      "status": "PASS",
+      "ok": true,
+      "detail": {
+        "status": "401",
+        "origin": "https://evil.example"
+      }
+    },
+    {
+      "group": "sec",
+      "id": "no-wildcard-cors",
+      "status": "PASS",
+      "ok": true,
+      "detail": {
+        "allowOriginHeaders": []
+      }
+    },
+    {
+      "group": "sec",
+      "id": "tokens-not-in-logs",
+      "status": "PASS",
+      "ok": true,
+      "detail": {
+        "filesWithToken": [],
+        "tokenConfigured": true
+      }
+    },
+    {
+      "group": "tls",
+      "id": "openssl-chain-443",
+      "status": "PASS",
+      "ok": true,
+      "detail": {
+        "verifyLine": "0 (ok)"
+      }
+    },
+    {
+      "group": "tls",
+      "id": "openssl-chain-8443",
+      "status": "PASS",
+      "ok": true,
+      "detail": {
+        "verifyLine": "0 (ok)"
+      }
+    },
+    {
+      "group": "tls",
+      "id": "openssl-chain-10000",
+      "status": "PASS",
+      "ok": true,
+      "detail": {
+        "verifyLine": "0 (ok)"
+      }
+    },
+    {
+      "group": "tls",
+      "id": "tailnet-https-endpoints",
+      "status": "PASS",
+      "ok": true,
+      "detail": [
+        {
+          "name": "8790-asr",
+          "url": "https://mac-mini.tail4e4317.ts.net:10000/health",
+          "code": "200",
+          "exit": 0
+        },
+        {
+          "name": "8791-ui",
+          "url": "https://mac-mini.tail4e4317.ts.net:8443/api/ai/health",
+          "code": "200",
+          "exit": 0
+        },
+        {
+          "name": "8791-page",
+          "url": "https://mac-mini.tail4e4317.ts.net:8443/v12",
+          "code": "200",
+          "exit": 0
+        },
+        {
+          "name": "8781-archive",
+          "url": "https://mac-mini.tail4e4317.ts.net/alw/health",
+          "code": "200",
+          "exit": 0
+        }
+      ]
+    },
+    {
+      "group": "tls",
+      "id": "no-insecure-flags",
+      "status": "PASS",
+      "ok": true,
+      "detail": {
+        "hits": []
+      }
+    },
+    {
+      "group": "crash",
+      "id": "victim-is-project-owned",
+      "status": "PASS",
+      "ok": true,
+      "detail": {
+        "port": 8782,
+        "pid": "98902",
+        "owned": true,
+        "cmdTail": "-外语社交系统/socialmate-prototype/ai-gateway/archive-receiver.mjs"
+      }
+    },
+    {
+      "group": "crash",
+      "id": "watchdog-restarted",
+      "status": "PASS",
+      "ok": true,
+      "detail": {
+        "oldPid": "98902",
+        "newPid": "863",
+        "waitedMs": 372
+      }
+    },
+    {
+      "group": "crash",
+      "id": "log-records-heal",
+      "status": "PASS",
+      "ok": true,
+      "detail": {
+        "logTail": [
+          "2026-11-02T18:10:43+0800 HEAL: 完成，4/4 恢复健康（本次重新拉起 4 个端口）",
+          "2026-11-02T18:11:29+0800 HEAL: 端口 8782 不健康，调用该端口的既有启动脚本恢复",
+          ""
+        ]
+      }
+    },
+    {
+      "group": "reboot",
+      "id": "agent-unloaded-services-down",
+      "status": "PASS",
+      "ok": true,
+      "detail": {
+        "ports": [
+          "8790:false",
+          "8791:false",
+          "8781:false",
+          "8782:false"
+        ]
+      }
+    },
+    {
+      "group": "reboot",
+      "id": "bootstrap-recovers",
+      "status": "PASS",
+      "ok": true,
+      "detail": {
+        "bootstrapExit": 0,
+        "waitedMs": 1719,
+        "ports": [
+          "8790:true",
+          "8791:true",
+          "8781:true",
+          "8782:true"
+        ]
+      }
+    },
+    {
+      "group": "stack",
+      "id": "phone-online-baseline",
+      "status": "PASS",
+      "ok": true,
+      "detail": {
+        "domLoaded": true,
+        "threePeopleInDom": true,
+        "snapshotPersonas": 3,
+        "snapshotSessions": 9,
+        "snapshotSavedAt": "2026-11-02 18:11:37",
+        "shot": "3d7e8c5a83a8fbd96a77a47be7bbeebc2afabdc3ba6e8bf01f87387a11ce738c"
+      }
+    },
+    {
+      "group": "stack",
+      "id": "data-hash-baseline",
+      "status": "PASS",
+      "ok": true,
+      "detail": {
+        "demoHash": "eb504de7b65faa60a8b1524626aaafb8266d722db9bd81f8878c30f9f184375e"
+      }
+    },
+    {
+      "group": "write",
+      "id": "services-down-for-write-test",
+      "status": "PASS",
+      "ok": true,
+      "detail": {
+        "ports": [
+          "false",
+          "false",
+          "false",
+          "false"
+        ]
+      }
+    },
+    {
+      "group": "write",
+      "id": "no-false-success",
+      "status": "PASS",
+      "ok": true,
+      "detail": {
+        "shot": "3d04cfb3148a90f53616cec49ab855f322576650d36ec582f77c02255e0f36c3",
+        "modalShot": "75b35138ed6e7b3d9ec01bbdacc155736615dba93500790d90b9966fc5449de0",
+        "domAvailable": true
+      }
+    },
+    {
+      "group": "write",
+      "id": "failure-message-visible",
+      "status": "PASS",
+      "ok": true,
+      "detail": {
+        "domExcerpt": "清空失败：Failed to fetch",
+        "note": null
+      }
+    },
+    {
+      "group": "offline",
+      "id": "no-adb-reverse",
+      "status": "PASS",
+      "ok": true,
+      "detail": {
+        "reverseList": ""
+      }
+    },
+    {
+      "group": "offline",
+      "id": "readonly-cache-shown",
+      "status": "PASS",
+      "ok": true,
+      "detail": {
+        "shot": "3e2cbbc1839f77ff7940f43c96a3cf746ed2702311daad1d65cfa0bf657ee4c1",
+        "hasOfflineBanner": true,
+        "has3People": true,
+        "noWhiteScreen": true
+      }
+    },
+    {
+      "group": "recover",
+      "id": "back-online",
+      "status": "PASS",
+      "ok": true,
+      "detail": {
+        "waitedMs": 1725,
+        "retryFound": true,
+        "domOnline": true,
+        "domHead": [
+          "Apps",
+          "☾",
+          "⚙"
+        ]
+      }
+    },
+    {
+      "group": "recover",
+      "id": "demo-not-cleared-by-failed-write",
+      "status": "PASS",
+      "ok": true,
+      "detail": {
+        "hashBefore": "eb504de7b65faa60a8b1524626aaafb8266d722db9bd81f8878c30f9f184375e",
+        "hashAfter": "eb504de7b65faa60a8b1524626aaafb8266d722db9bd81f8878c30f9f184375e",
+        "cleared": false,
+        "shot": "f56717ca4761a9e6784570bd9d21efc0cb0fa05917f148c309207992d65dd2cb"
+      }
+    },
+    {
+      "group": "recover",
+      "id": "demo-counts-intact",
+      "status": "PASS",
+      "ok": true,
+      "detail": {
+        "server": {
+          "personas": 3,
+          "sessions": 9,
+          "segments": 54
+        },
+        "phoneSnapshot": {
+          "personas": 3,
+          "sessions": 9,
+          "savedAt": "2026-11-02 18:12:18"
+        },
+        "shot": "d67bb57602f3c64d6beea0b512cb1af7be6da10d204badfb72656f1d29e581e9"
+      }
+    },
+    {
+      "group": "nousb",
+      "id": "mac-side-tailnet-entry-verified",
+      "status": "PASS",
+      "ok": true,
+      "detail": {
+        "endpoints": [
+          "8790-asr=200",
+          "8791-ui=200",
+          "8791-page=200",
+          "8781-archive=200"
+        ]
+      }
+    },
+    {
+      "group": "nousb",
+      "id": "phone-tailnet-session",
+      "status": "NOT_RUN",
+      "ok": false,
+      "detail": {
+        "tailscaleInstalled": true,
+        "phoneTailnetInterface": false,
+        "peers": [
+          {
+            "host": "Redmi Note 12T Pro",
+            "os": "android",
+            "online": false,
+            "ips": [
+              "100.94.116.99",
+              "fd7a:115c:a1e0::1036:7464"
+            ]
+          },
+          {
+            "host": "cmcc4",
+            "os": "android",
+            "online": false,
+            "ips": [
+              "100.66.102.99",
+              "fd7a:115c:a1e0::f536:6664"
+            ]
+          },
+          {
+            "host": "3236741198的Redmi Note 12 Pro",
+            "os": "android",
+            "online": true,
+            "ips": [
+              "100.91.121.33",
+              "fd7a:115c:a1e0::7d36:7923"
+            ]
+          }
+        ],
+        "reason": "手机 Tailscale 未登录/未授权到本 tailnet：无 tailscale0 接口，ping 100.125.100.15 100% 丢包；需要用户本人在手机上登录并授权设备"
+      }
+    }
+  ],
+  "summary": {
+    "total": 31,
+    "pass": 30,
+    "fail": 0,
+    "notRun": 1,
+    "verdict": "PARTIAL"
+  },
+  "artifacts": [
+    "00-device.json",
+    "10-baseline-online.png",
+    "10-health-before.json",
+    "11-baseline-ui.txt",
+    "12-baseline-snapshot.json",
+    "13-baseline-dom.txt",
+    "20-hashes-before.txt",
+    "21-clear-modal-offline.png",
+    "22-clear-failed-toast.png",
+    "23-clear-failed-ui.txt",
+    "24-clear-failed-logcat.txt",
+    "25-clear-failed-dom.txt",
+    "30-offline-readonly.png",
+    "30-stack-log-after-crash.txt",
+    "31-offline-ui.txt",
+    "40-recovered-online.png",
+    "41-hashes-after.txt",
+    "41-recovered-people.png",
+    "42-recovered-ui.txt",
+    "43-recovered-status.json",
+    "44-recovered-dom.txt",
+    "50-gui-recovery-dialog.png",
+    "50-tailscale-peers.json",
+    "install.log",
+    "t4-console.log",
+    "t4-run.log"
+  ]
+}

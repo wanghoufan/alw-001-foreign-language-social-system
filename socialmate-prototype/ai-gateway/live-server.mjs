@@ -9,6 +9,8 @@
  *      --env-file-if-exists=socialmate-prototype/ai-gateway/.env \
  *      socialmate-prototype/ai-gateway/live-server.mjs
  */
+import {verifyToken} from "./pairing.mjs";
+
 // Fail closed: .env files are loaded by Node before this module executes.
 // Never allow private speech/AI requests with certificate validation disabled.
 if (process.env.NODE_TLS_REJECT_UNAUTHORIZED === "0") {
@@ -18,6 +20,7 @@ if (process.env.NODE_TLS_REJECT_UNAUTHORIZED === "0") {
 
 // Load application modules only after the TLS preflight passes.
 const {liveAsrHub} = await import("./live-asr-hub.mjs");
+const liveFacts = await import("./live-facts.mjs");
 const {createAsrBridgeServer} = await import("../../android-poc/asr-bridge/src/server.js");
 
 let bridge=null;
@@ -29,7 +32,19 @@ const MAX_RESTARTS=5;
 let AI_PORT="8791";
 
 function bridgeOptions(){
-  return {onEvent:e=>liveAsrHub.publish(e)};
+  return {
+    // 握手鉴权：本机设备短期令牌（配对存储可读时才签发），只用于 ASR WebSocket。
+    // 配对存储异常只会让个别握手被拒，不会阻止组合服务启动。
+    authVerify: async (token) => await verifyToken(token),
+    onEvent: (event) => {
+      // T2：真实 final 先进入会话候选队列（内存），再把 pendingId 带给 UI，
+      // 让「候选卡」由事件驱动出现，而不是靠 demo/final 回放或前端伪造。
+      const ingested = liveFacts.ingest(event);
+      liveAsrHub.publish(ingested?.item
+        ? {...event, pendingId: ingested.item.id, pendingCount: ingested.pendingCount}
+        : event);
+    },
+  };
 }
 
 async function startAsr(){

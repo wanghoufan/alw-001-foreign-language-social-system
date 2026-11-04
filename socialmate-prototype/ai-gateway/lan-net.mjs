@@ -1,0 +1,70 @@
+/**
+ * 局域网来源判定：只允许回环与 RFC1918 / 链路本地地址进入私有服务。
+ * 即使服务监听 0.0.0.0，公网来源也会被拒绝。
+ */
+
+import os from "node:os";
+
+export function normalizeIp(addr) {
+  return String(addr || "").replace(/^::ffff:/i, "").split("%")[0];
+}
+
+export function isLoopbackIp(addr) {
+  const ip = normalizeIp(addr);
+  return ip === "127.0.0.1" || ip === "::1";
+}
+
+export function isPrivateIp(addr) {
+  const ip = normalizeIp(addr);
+  if (isLoopbackIp(ip)) return true;
+  const parts = ip.split(".").map(Number);
+  if (parts.length !== 4 || parts.some((n) => !Number.isInteger(n) || n < 0 || n > 255)) return false;
+  const [a, b] = parts;
+  if (a === 10) return true;
+  if (a === 172 && b >= 16 && b <= 31) return true;
+  if (a === 192 && b === 168) return true;
+  if (a === 169 && b === 254) return true;
+  return false;
+}
+
+export function lanIpv4List() {
+  const result = [];
+  for (const [name, addresses] of Object.entries(os.networkInterfaces())) {
+    for (const item of addresses || []) {
+      if (item.family !== "IPv4" && item.family !== 4) continue;
+      if (item.internal) continue;
+      if (!isPrivateIp(item.address)) continue;
+      result.push({name, address: item.address, netmask: item.netmask});
+    }
+  }
+  // 真实私有网段优先，链路本地（169.254）放最后；同分时优先 en1/wlan 类无线接口。
+  const score = (item) => {
+    const [a, b] = item.address.split(".").map(Number);
+    let value = 0;
+    if (a === 192 && b === 168) value = 30;
+    else if (a === 10) value = 20;
+    else if (a === 172) value = 10;
+    if (/^(en|wl|wlan)/i.test(item.name)) value += 3;
+    return value;
+  };
+  return result.sort((x, y) => score(y) - score(x));
+}
+
+function ipToInt(ip) {
+  return normalizeIp(ip)
+    .split(".")
+    .reduce((acc, part) => (acc << 8) + Number(part), 0) >>> 0;
+}
+
+export function sameSubnet(a, b, netmask) {
+  const mask = ipToInt(netmask || "255.255.255.0");
+  return (ipToInt(a) & mask) === (ipToInt(b) & mask);
+}
+
+/** 优先选与请求方同一网段的本地地址，避免多网卡时回错地址。 */
+export function pickLanIp(peerAddress) {
+  const list = lanIpv4List();
+  if (!list.length) return null;
+  const same = list.find((item) => sameSubnet(item.address, peerAddress, item.netmask));
+  return (same || list[0]).address;
+}

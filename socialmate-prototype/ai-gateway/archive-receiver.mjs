@@ -9,11 +9,13 @@ import path from "node:path";
 import {fileURLToPath} from "node:url";
 import {saveSession} from "./conversation-archive.mjs";
 import {exportSessions, getSession, listSessions, searchSessions} from "./archive-history.mjs";
+import {verifyToken} from "./pairing.mjs";
+import {isPrivateIp} from "./lan-net.mjs";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const HISTORY_HTML = path.join(HERE, "archive-history.html");
 
-const HOST = "127.0.0.1";
+const HOST = String(process.env.SM_ARCHIVE_HOST || "").trim() || "127.0.0.1";
 const PORT = Number(process.env.SM_ARCHIVE_PORT || 8781);
 const TOKEN = String(process.env.SM_ARCHIVE_TOKEN || "");
 const MAX_BODY = 512 * 1024;
@@ -32,9 +34,21 @@ function json(res, code, obj) {
   res.end(JSON.stringify(obj));
 }
 
-function tokenOK(header) {
-  const given = String(header || "");
-  if (given.length !== TOKEN.length) return false;
+/**
+ * 令牌校验：接受两种凭证。
+ * - `v1.<deviceId>.<iat>.<exp>.<mac>`：配对设备换来的短期令牌（≤24h，可撤销）；
+ * - 旧的长期静态令牌：只为本机既有脚本/桌面流程保留，不再写进任何 APK。
+ * 短期令牌优先判定，避免两条路径混用。
+ */
+async function tokenOK(header) {
+  const given = String(header || "").trim();
+  if (!given) return false;
+  if (given.startsWith("v1.")) {
+    const check = await verifyToken(given).catch(() => null);
+    if (check && check.ok) return true;
+    return false;
+  }
+  if (!TOKEN || given.length !== TOKEN.length) return false;
   return crypto.timingSafeEqual(Buffer.from(given), Buffer.from(TOKEN));
 }
 
@@ -60,6 +74,9 @@ async function readBody(req) {
 }
 
 const server = http.createServer(async (req, res) => {
+  if (!isPrivateIp(req.socket.remoteAddress)) {
+    return json(res, 403, {ok: false, code: "LAN_ONLY", error: "仅允许本机或局域网访问"});
+  }
   const url = new URL(req.url || "/", `http://${HOST}:${PORT}`);
   if (url.pathname.endsWith("/health") && req.method === "GET") {
     return json(res, 200, {ok: true, service: "socialmate-archive", auth: "required"});
@@ -80,7 +97,7 @@ const server = http.createServer(async (req, res) => {
     }
   }
   if (url.pathname.endsWith("/api/archive/list") && req.method === "GET") {
-    if (!tokenOK(req.headers["x-archive-token"])) {
+    if (!(await tokenOK(req.headers["x-archive-token"]))) {
       return json(res, 401, {ok: false, code: "UNAUTHORIZED"});
     }
     try {
@@ -96,7 +113,7 @@ const server = http.createServer(async (req, res) => {
     }
   }
   if (url.pathname.endsWith("/api/archive/sessions") && req.method === "GET") {
-    if (!tokenOK(req.headers["x-archive-token"])) {
+    if (!(await tokenOK(req.headers["x-archive-token"]))) {
       return json(res, 401, {ok: false, code: "UNAUTHORIZED"});
     }
     try {
@@ -120,7 +137,7 @@ const server = http.createServer(async (req, res) => {
     }
   }
   if (url.pathname.includes("/api/archive/session/") && req.method === "GET") {
-    if (!tokenOK(req.headers["x-archive-token"])) {
+    if (!(await tokenOK(req.headers["x-archive-token"]))) {
       return json(res, 401, {ok: false, code: "UNAUTHORIZED"});
     }
     const sessionId = decodeURIComponent(url.pathname.split("/api/archive/session/")[1] || "");
@@ -134,7 +151,7 @@ const server = http.createServer(async (req, res) => {
     }
   }
   if (url.pathname.endsWith("/api/archive/export") && req.method === "GET") {
-    if (!tokenOK(req.headers["x-archive-token"])) {
+    if (!(await tokenOK(req.headers["x-archive-token"]))) {
       return json(res, 401, {ok: false, code: "UNAUTHORIZED"});
     }
     try {
@@ -155,7 +172,7 @@ const server = http.createServer(async (req, res) => {
     }
   }
   if (url.pathname.endsWith("/api/archive/session") && req.method === "POST") {
-    if (!tokenOK(req.headers["x-archive-token"])) {
+    if (!(await tokenOK(req.headers["x-archive-token"]))) {
       return json(res, 401, {ok: false, code: "UNAUTHORIZED"});
     }
     try {

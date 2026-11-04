@@ -1,0 +1,29 @@
+# apksigner verify --print-certs (只输出证书指纹，不涉及私钥)
+The operation couldn’t be completed. Unable to locate a Java Runtime.
+Please visit http://www.java.com for information on installing Java.
+# dex/resource 内部哈希
+     2076  01-01-1981 01:01   resources.arsc
+---------                     -------
+   358392                     11 files
+classes.dex  47fe276c47faf7f922f5aa32fed33bdc5294ba516c9761f4ebc8830e32636936
+resources.arsc  ee926b623cdf05d5ae379002f8b38c3c9ad793b7d3177420ee049ed411d443f5
+AndroidManifest.xml  445284c0283aa2fcff067836ddf13ba0f47666325748534ed13d1f5e9a54b16c
+# apksigner verify --print-certs (2026-11-02T18:17:20+08:00)
+Verifies
+Verified using v1 scheme (JAR signing): false
+Verified using v2 scheme (APK Signature Scheme v2): true
+Verified using v3 scheme (APK Signature Scheme v3): false
+Verified using v3.1 scheme (APK Signature Scheme v3.1): false
+Verified using v3.2 scheme (APK Signature Scheme v3.2): false
+Verified using v4 scheme (APK Signature Scheme v4): false
+Verified for SourceStamp: false
+Number of signers: 1
+V2 Signer: certificate DN: C=US, O=Android, CN=Android Debug
+V2 Signer: certificate SHA-256 digest: 8e82a7975008e8ec87ff0f2ecadf495b5263effa34aaec9ab6f135ebea911cf3
+V2 Signer: certificate SHA-1 digest: 9bc6a06a64c791c5dd6b8ddd3d0e76de071991cb
+V2 Signer: certificate MD5 digest: f5e884b28ce69247c242edd7adc80e76
+V2 Signer: key algorithm: RSA
+V2 Signer: key size (bits): 2048
+V2 Signer: public key SHA-256 digest: 395b772e0f73a8e9f2d3e77ebb47fb0379cacf530561c20ebc3c15d6fbbcf2f1
+V2 Signer: public key SHA-1 digest: dd71a8f6672a86e0ec06374548abd6b27e73b89b
+V2 Signer: public key MD5 digest: 4b93171535174f099c7bf2589f64f6ff

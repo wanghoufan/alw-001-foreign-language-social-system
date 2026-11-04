@@ -1,0 +1,236 @@
+{
+  "demo-oliver-uk": {
+    "factCount": 6,
+    "prep": {
+      "personalized": [
+        {
+          "en": "Last time you mentioned: \"Next month I want to try A10 kilometer race in Haikou\" — how is that going?",
+          "zh": "上次你提到：“Next month I want to try A10 kilometer race in Haikou”——后来怎么样了？",
+          "source": "confirmed-fact",
+          "factId": "14e3fa9b02c6d068",
+          "factText": "Next month I want to try A10 kilometer race in Haikou"
+        },
+        {
+          "en": "Last time you mentioned: \"来自英国·伦敦\" — how is that going?",
+          "zh": "上次你提到：“来自英国·伦敦”——后来怎么样了？",
+          "source": "confirmed-fact",
+          "factId": "a0f0e4b55b7144ca",
+          "factText": "来自英国·伦敦"
+        }
+      ],
+      "generic": {
+        "en": "What has been the highlight of your week so far?",
+        "zh": "这周到目前为止，你最开心的事是什么？",
+        "source": "template"
+      },
+      "empty": false,
+      "note": "由已确认事实本地生成；待确认候选不参与。"
+    },
+    "facts": [
+      {
+        "id": "a0f0e4b55b7144ca",
+        "text": "来自英国·伦敦",
+        "source": {
+          "sessionId": "manual",
+          "segmentIndex": 0,
+          "date": "2026-11-02T08:13:00.000Z"
+        }
+      },
+      {
+        "id": "8092582e37ee688e",
+        "text": "职业：未注明（演示）",
+        "source": {
+          "sessionId": "manual",
+          "segmentIndex": 0,
+          "date": "2026-11-02T08:13:00.000Z"
+        }
+      },
+      {
+        "id": "22174126ff43e7c7",
+        "text": "沟通风格：简短、直接、具体、少闲聊",
+        "source": {
+          "sessionId": "manual",
+          "segmentIndex": 0,
+          "date": "2026-11-02T08:13:00.000Z"
+        }
+      },
+      {
+        "id": "054cb00a238a89bf",
+        "text": "奥利弗每周有三个早晨做力量训练。",
+        "source": {
+          "sessionId": "sess_n04_demo_oliver_uk_1",
+          "segmentIndex": 1,
+          "date": "2026-11-02T08:13:00.000Z"
+        }
+      },
+      {
+        "id": "c6f07cc8650c54eb",
+        "text": "奥利弗正在练习，目标是完成第一个标准引体向上。",
+        "source": {
+          "sessionId": "sess_n04_demo_oliver_uk_1",
+          "segmentIndex": 3,
+          "date": "2026-11-02T08:13:00.000Z"
+        }
+      },
+      {
+        "id": "14e3fa9b02c6d068",
+        "text": "Next month I want to try A10 kilometer race in Haikou",
+        "source": {
+          "sessionId": "c9ed95e8-937b-458a-90e6-48ec8a72d8f8",
+          "segmentIndex": 2,
+          "date": "2026-11-02T08:27:00.000Z"
+        }
+      }
+    ]
+  },
+  "demo-maya-us": {
+    "factCount": 5,
+    "prep": {
+      "personalized": [
+        {
+          "en": "Last time you mentioned: \"来自美国·奥斯汀\" — how is that going?",
+          "zh": "上次你提到：“来自美国·奥斯汀”——后来怎么样了？",
+          "source": "confirmed-fact",
+          "factId": "49eed3b565c304a2",
+          "factText": "来自美国·奥斯汀"
+        },
+        {
+          "en": "Last time you mentioned: \"职业：未注明（演示）\" — how is that going?",
+          "zh": "上次你提到：“职业：未注明（演示）”——后来怎么样了？",
+          "source": "confirmed-fact",
+          "factId": "8092582e37ee688e",
+          "factText": "职业：未注明（演示）"
+        }
+      ],
+      "generic": {
+        "en": "What has been the highlight of your week so far?",
+        "zh": "这周到目前为止，你最开心的事是什么？",
+        "source": "template"
+      },
+      "empty": false,
+      "note": "由已确认事实本地生成；待确认候选不参与。"
+    },
+    "facts": [
+      {
+        "id": "49eed3b565c304a2",
+        "text": "来自美国·奥斯汀",
+        "source": {
+          "sessionId": "manual",
+          "segmentIndex": 0,
+          "date": "2026-11-02T08:13:00.000Z"
+        }
+      },
+      {
+        "id": "8092582e37ee688e",
+        "text": "职业：未注明（演示）",
+        "source": {
+          "sessionId": "manual",
+          "segmentIndex": 0,
+          "date": "2026-11-02T08:13:00.000Z"
+        }
+      },
+      {
+        "id": "af8942f6eb6e66dd",
+        "text": "沟通风格：轻松、积极、开放式、有趣的追问",
+        "source": {
+          "sessionId": "manual",
+          "segmentIndex": 0,
+          "date": "2026-11-02T08:13:00.000Z"
+        }
+      },
+      {
+        "id": "46e0bb353e6670f1",
+        "text": "玛雅为本地小型乐队设计海报。",
+        "source": {
+          "sessionId": "sess_n04_demo_maya_us_1",
+          "segmentIndex": 1,
+          "date": "2026-11-02T08:13:00.000Z"
+        }
+      },
+      {
+        "id": "87d61213a7cd004c",
+        "text": "玛雅喜欢小型现场音乐演出。",
+        "source": {
+          "sessionId": "sess_n04_demo_maya_us_1",
+          "segmentIndex": 3,
+          "date": "2026-11-02T08:13:00.000Z"
+        }
+      }
+    ]
+  },
+  "demo-jieun-kr": {
+    "factCount": 5,
+    "prep": {
+      "personalized": [
+        {
+          "en": "Last time you mentioned: \"来自韩国·首尔\" — how is that going?",
+          "zh": "上次你提到：“来自韩国·首尔”——后来怎么样了？",
+          "source": "confirmed-fact",
+          "factId": "9199288be8480db3",
+          "factText": "来自韩国·首尔"
+        },
+        {
+          "en": "Last time you mentioned: \"职业：未注明（演示）\" — how is that going?",
+          "zh": "上次你提到：“职业：未注明（演示）”——后来怎么样了？",
+          "source": "confirmed-fact",
+          "factId": "8092582e37ee688e",
+          "factText": "职业：未注明（演示）"
+        }
+      ],
+      "generic": {
+        "en": "Is there anything you would like to try for the first time this month?",
+        "zh": "这个月你想第一次尝试什么？",
+        "source": "template"
+      },
+      "empty": false,
+      "note": "由已确认事实本地生成；待确认候选不参与。"
+    },
+    "facts": [
+      {
+        "id": "9199288be8480db3",
+        "text": "来自韩国·首尔",
+        "source": {
+          "sessionId": "manual",
+          "segmentIndex": 0,
+          "date": "2026-11-02T08:13:00.000Z"
+        }
+      },
+      {
+        "id": "8092582e37ee688e",
+        "text": "职业：未注明（演示）",
+        "source": {
+          "sessionId": "manual",
+          "segmentIndex": 0,
+          "date": "2026-11-02T08:13:00.000Z"
+        }
+      },
+      {
+        "id": "a76b2189e7618953",
+        "text": "沟通风格：温和、留停顿、一次只问一件事",
+        "source": {
+          "sessionId": "manual",
+          "segmentIndex": 0,
+          "date": "2026-11-02T08:13:00.000Z"
+        }
+      },
+      {
+        "id": "7d81a9036b97c264",
+        "text": "智恩喜欢拍摄老街。",
+        "source": {
+          "sessionId": "sess_n04_demo_jieun_kr_1",
+          "segmentIndex": 1,
+          "date": "2026-11-02T08:13:00.000Z"
+        }
+      },
+      {
+        "id": "06161ac8f3e89a51",
+        "text": "比起拥挤的酒吧，智恩更喜欢安静的咖啡店。",
+        "source": {
+          "sessionId": "sess_n04_demo_jieun_kr_1",
+          "segmentIndex": 3,
+          "date": "2026-11-02T08:13:00.000Z"
+        }
+      }
+    ]
+  }
+}

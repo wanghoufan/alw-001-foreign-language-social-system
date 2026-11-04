@@ -1,0 +1,23 @@
+=== timestamp === 2026-11-04 10:39:26 +0800
+=== wifi_on ===
+0
+=== mobile_data ===
+1
+=== wlan0 state ===
+wlan0 no link
+=== VPN/Cellular network agent ===
+  NetworkAgentInfo{network{303}  handle{1304780787725}  ni{MOBILE[NR] CONNECTED extra: ims} created=2026-11-04T01:49:02.825Z Score(Policies : EVER_EVALUATED&IS_UNMETERED&EVER_VALIDATED&IS_VALIDATED ; KeepConnected : 0)  created 3263977288 firstValidated 3263977517 lastValidated 3263977517    nc{[ Transports: CELLULAR Capabilities: IMS&NOT_METERED&TRUSTED&NOT_VPN&VALIDATED&NOT_ROAMING&FOREGROUND&NOT_CONGESTED&NOT_SUSPENDED&NOT_VCN_MANAGED&MMTEL LinkUpBandwidth>=12777Kbps LinkDnBandwidth>=12777Kbps Specifier: <TelephonyNetworkSpecifier [mSubId = 6]> SubscriptionIds: {6} UnderlyingNetworks: Null]}  factorySerialNumber=5}
+  NetworkAgentInfo{network{305}  handle{1313370722317}  ni{MOBILE[NR] CONNECTED extra: ctnet} created=2026-11-04T01:49:09.949Z Score(Policies : EVER_EVALUATED&EVER_VALIDATED&IS_VALIDATED ; KeepConnected : 0)  created 3263984726 firstValidated 3263988056 lastValidated 3263988056    nc{[ Transports: CELLULAR Capabilities: SUPL&XCAP&INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VPN&VALIDATED&NOT_ROAMING&FOREGROUND&NOT_CONGESTED&NOT_SUSPENDED&NOT_VCN_MANAGED LinkUpBandwidth>=12777Kbps LinkDnBandwidth>=12777Kbps Specifier: <TelephonyNetworkSpecifier [mSubId = 6]> SubscriptionIds: {6} UnderlyingNetworks: Null]}  factorySerialNumber=5}
+  NetworkAgentInfo{network{307}  handle{1321960656909}  ni{VPN CONNECTED extra: } created=2026-11-04T02:25:49.310Z Score(Policies : EVER_EVALUATED&IS_VPN&EVER_VALIDATED&IS_VALIDATED ; KeepConnected : 0)  created 3266183392 firstValidated 3266183535 lastValidated 3266183535 underlying{[305]}    nc{[ Transports: CELLULAR|VPN Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&VALIDATED&NOT_ROAMING&FOREGROUND&NOT_CONGESTED&NOT_SUSPENDED&NOT_VCN_MANAGED LinkUpBandwidth>=12777Kbps LinkDnBandwidth>=12777Kbps TransportInfo: <VpnTransportInfo{type=1, sessionId=null, bypassable=false longLivedTcpConnectionsExpensive=false}> Uids: <{99900000-99999999, 0-99999}> OwnerUid: 10330 AdminUids: [10330] UnderlyingNetworks: [305]]}  factorySerialNumber=3}
+=== VPN transport detail ===
+=== tun1 ===
+156: tun1: <POINTOPOINT,UP,LOWER_UP> mtu 1280 qdisc pfifo_fast state UNKNOWN group default qlen 500
+    link/none 
+    inet 100.91.121.33/32 scope global tun1
+       valid_lft forever preferred_lft forever
+    inet6 fd7a:115c:a1e0::7d36:7923/128 scope global 
+       valid_lft forever preferred_lft forever
+    inet6 fe80::c719:7b12:a519:89ee/64 scope link stable-privacy 
+       valid_lft forever preferred_lft forever
+=== default route ===
+10.0.0.0/8 dev ccmni2 proto kernel scope link src 10.152.127.153 

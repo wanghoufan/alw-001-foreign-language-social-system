@@ -1,0 +1,29 @@
+[
+  {
+    "host": "Redmi Note 12T Pro",
+    "os": "android",
+    "online": false,
+    "ips": [
+      "100.94.116.99",
+      "fd7a:115c:a1e0::1036:7464"
+    ]
+  },
+  {
+    "host": "cmcc4",
+    "os": "android",
+    "online": false,
+    "ips": [
+      "100.66.102.99",
+      "fd7a:115c:a1e0::f536:6664"
+    ]
+  },
+  {
+    "host": "3236741198的Redmi Note 12 Pro",
+    "os": "android",
+    "online": true,
+    "ips": [
+      "100.91.121.33",
+      "fd7a:115c:a1e0::7d36:7923"
+    ]
+  }
+]

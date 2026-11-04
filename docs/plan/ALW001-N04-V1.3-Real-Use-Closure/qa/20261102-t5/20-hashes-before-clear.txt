@@ -1,0 +1,6 @@
+# real data hashes BEFORE demo clear @ 2026-11-02T18:22:43+08:00
+People         78482d07840f5f3b41e8b1c857b592e03fcaf3c57713d970b405efc4953534d3  -
+Conversations  MISSING
+Demo           56e221baa951d5fb4e61d8aca25dbf47369db0c82866b7246f2a3c92456093e5  -
+--- demo status ---
+{"ok":true,"demo":true,"synthetic":true,"isolatedRoot":"SocialMate-Data/Demo","realRoot":"SocialMate-Data/People","seeded":true,"cleared":false,"clearedAt":null,"seededAt":"2026-11-02T09:56:24.515Z","fixtureVersion":"N04-DEMO-1.0","fixtureSha256":"5513b086aff7066ee08995f4aae857ed8a4848aaac51249bf9309dc9a1288263","personas":3,"sessions":9,"segments":54,"pending":3,"inbox":0,"updatedAt":null,"seed":{"seeded":true,"reason":"already"},"demoRoot":"SocialMate-Data/Demo"}

@@ -1,0 +1,13 @@
+{"check":"bridge_exposed","ok":true,"detail":"object"}
+{"check":"bridge_methods","ok":true,"detail":[]}
+{"check":"tts_ready","ok":true,"detail":{"ok":true,"code":"OK","state":"ready","initCode":0,"engine":"com.xiaomi.mibrain.speech","engineLabel":"系统语音引擎","defaultEngine":"com.xiaomi.mibrain.speech","rate":1,"loop":2,"playing":false,"index":-1,"total":0,"zhVoice":"zh [zh-Hans]","enVoice":"en [en]","zhAvailable":true,"enAvailable":true,"voices":4,"engines":[{"name":"com.xiaomi.mibrain.speech","label":"系统语音引擎"}]}}
+{"check":"voices_zh_en_distinct","ok":true,"detail":{"zhVoice":"zh [zh-Hans]","enVoice":"en [en]","engine":"com.xiaomi.mibrain.speech"}}
+{"check":"missing_lang_code","ok":true,"detail":{"code":"TTS_LANG_UNAVAILABLE","missingLanguage":"ja-JP","message":"缺少 ja-JP 语音包。请到系统设置安装语音包，或更换 TTS 引擎。"}}
+{"check":"bad_rate_rejected","ok":true,"detail":{"ok":false,"code":"TTS_BAD_RATE","message":"只支持 0.75 / 0.9 / 1.0 倍速","lang":null,"missingLanguage":null}}
+{"check":"rate_090","ok":true,"detail":{"ok":true,"code":"OK","rate":0.8999999761581421}}
+{"check":"listened_persist","ok":true,"detail":{"listened":{"ok":true,"code":"OK","key":"cdp:s4","listened":true},"readBack":{"ok":true,"code":"OK","key":"cdp:s4","listened":true}}}
+{"check":"zh_speak_accepted","ok":true,"detail":{"ok":true,"code":"OK","lang":"zh","voice":"zh [zh-Hans]","locale":"zh-CN","rate":0.8999999761581421,"loop":2,"sentences":1,"label":"单项朗读"}}
+{"check":"en_speak_accepted","ok":true,"detail":{"ok":true,"code":"OK","lang":"en","voice":"en [en]","locale":"en-US","rate":0.8999999761581421,"loop":2,"sentences":1,"label":"单项朗读"}}
+{"check":"stop_ok","ok":true,"detail":{"ok":true,"code":"OK","state":"stopped"}}
+{"check":"queue_state_callback","ok":true,"detail":{"speak":{"ok":true,"code":"OK","lang":"zh","voice":"zh [zh-Hans]","locale":"zh-CN","rate":0.8999999761581421,"loop":1,"sentences":1,"label":"单项朗读"},"states":["queue","started","sentence_done","finished"]}}
+{"check":"SUMMARY","ok":true,"failures":0,"target":"ws://127.0.0.1:9222/devtools/page/84AE0AFACB4B43BDB574AECCDDE8F162","engine":"com.xiaomi.mibrain.speech","engineLabel":"系统语音引擎","zhVoice":"zh [zh-Hans]","enVoice":"en [en]"}

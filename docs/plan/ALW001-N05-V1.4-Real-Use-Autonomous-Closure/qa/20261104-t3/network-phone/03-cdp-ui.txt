@@ -1,0 +1,49 @@
+HANDSHAKE: HTTP/1.1 101 WebSocket Protocol Handshake
+NAV -> 8443/v12
+readyState: loading
+href: https://mac-mini.tail4e4317.ts.net:8443/v12
+title: SocialMate · 外语社交助手
+--- innerText(0,1500) ---
+软件
+☾
+⚙
+⌕
+APP / PWA 优先
+手机 / 特殊场景
+电脑 / 其他
+APP / PWA 优先
+找到 26 款
+P002
+手机 APP / PWA
+人生物种测试 · Personality Quiz
+
+I made this fun personality quiz to help people understand themselves a little better. You answer some simple questions, and it gives you insights into your personality and preferences. It’s also a fun way to compare results with friends and learn more about each other.
+
+4 步中英对照
+查看中英对照 →
+P005
+手机 APP / PWA
+亲缘图谱 · Family Tree
+
+I built a family tree app that helps you keep track of your relatives. In Chinese families, there are so many different names for relatives, and it can get really confusing. My app figures out how people are related and what you should call them. You can also add family photos and explore your whole family tree.
+
+4 步中英对照
+查看中英对照 →
+P011
+手机 APP / PWA
+我的地点 · My Places
+
+I made this app to keep track of places I’ve visited. Whenever I find a nice café, a beautiful spot, or somewhere interesting, I can save photos and write a few notes about it. Later, I can easily find those places again or share my favorites with friends. It’s basically my personal travel and lifestyle journal.
+
+4 步中英对照
+查看中英对照 →
+P016
+手机 APP / PWA
+懒得打字 · Speak Instead of Typing
+
+I built this app because I wanted an easier way to chat with international friends. Instead of typing in English, I can just speak Chinese, and the app turns what I say into natural English and puts it directly into my chat. It also works for other languages, reviews, and journal entries. It makes communicating in a
+--- hasSocialMate: False
+--- cardCount: 53
+NAV -> back to /alw/health
+restore href: https://mac-mini.tail4e4317.ts.net/alw/health
+restore text: {"ok":true,"service":"socialmate-archive","auth":"required"}

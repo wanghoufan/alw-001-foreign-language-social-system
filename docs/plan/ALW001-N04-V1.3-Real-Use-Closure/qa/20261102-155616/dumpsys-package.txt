@@ -1,0 +1,183 @@
+Activity Resolver Table:
+  Non-Data Actions:
+      android.intent.action.MAIN:
+        bad7556 app.socialmate.dualmic/.MainActivity filter 91f59d7
+          Action: "android.intent.action.MAIN"
+          Category: "android.intent.category.LAUNCHER"
+
+Key Set Manager:
+  [app.socialmate.dualmic]
+      Signing KeySets: 118
+
+Packages:
+  Package [app.socialmate.dualmic] (e67bf60):
+    userId=10319
+    pkg=Package{57a5dae app.socialmate.dualmic}
+    codePath=/data/app/~~y8QaH9k4ldiCGBol-VXVTw==/app.socialmate.dualmic-PdwbDpt6cwbc-8jMz_864w==
+    resourcePath=/data/app/~~y8QaH9k4ldiCGBol-VXVTw==/app.socialmate.dualmic-PdwbDpt6cwbc-8jMz_864w==
+    legacyNativeLibraryDir=/data/app/~~y8QaH9k4ldiCGBol-VXVTw==/app.socialmate.dualmic-PdwbDpt6cwbc-8jMz_864w==/lib
+    primaryCpuAbi=null
+    secondaryCpuAbi=null
+    versionCode=33 minSdk=26 targetSdk=35
+    versionName=0.7.8
+    splits=[base]
+    apkSigningVersion=2
+    applicationInfo=ApplicationInfo{57a5dae app.socialmate.dualmic}
+    flags=[ DEBUGGABLE HAS_CODE ALLOW_CLEAR_USER_DATA ]
+    privateFlags=[ PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE_VIA_SDK_VERSION ALLOW_AUDIO_PLAYBACK_CAPTURE PRIVATE_FLAG_ALLOW_NATIVE_HEAP_POINTER_TAGGING ]
+    forceQueryable=false
+    queriesPackages=[]
+    dataDir=/data/user/0/app.socialmate.dualmic
+    supportsScreens=[small, medium, large, xlarge, resizeable, anyDensity]
+    timeStamp=2026-11-02 16:05:10
+    firstInstallTime=2026-10-31 18:25:27
+    lastUpdateTime=2026-11-02 16:05:10
+    signatures=PackageSignatures{adc8009 version:2, signatures:[1ad9f884], past signatures:[]}
+    installPermissionsFixed=true
+    pkgFlags=[ DEBUGGABLE HAS_CODE ALLOW_CLEAR_USER_DATA ]
+    requested permissions:
+      android.permission.RECORD_AUDIO
+      android.permission.INTERNET
+      android.permission.ACCESS_NETWORK_STATE
+    install permissions:
+      android.permission.INTERNET: granted=true
+      android.permission.ACCESS_NETWORK_STATE: granted=true
+    User 0: ceDataInode=383201 installed=true hidden=false suspended=false distractionFlags=0 stopped=false notLaunched=false enabled=0 instant=false virtual=false
+      gids=[3003]
+      runtime permissions:
+        android.permission.RECORD_AUDIO: granted=true, flags=[ USER_SENSITIVE_WHEN_GRANTED|USER_SENSITIVE_WHEN_DENIED]
+
+Queries:
+  system apps queryable: false
+  queries via package name:
+  queries via intent:
+    com.miui.video:
+      app.socialmate.dualmic
+    com.xiaomi.gamecenter.sdk.service:
+      app.socialmate.dualmic
+    com.miui.packageinstaller:
+      app.socialmate.dualmic
+    com.android.contacts:
+      app.socialmate.dualmic
+    com.android.browser:
+      app.socialmate.dualmic
+    com.miui.nextpay:
+      app.socialmate.dualmic
+    com.miui.hybrid:
+      app.socialmate.dualmic
+    com.xiaomi.market:
+      app.socialmate.dualmic
+    com.miui.tsmclient:
+      app.socialmate.dualmic
+    com.xiaomi.xmsf:
+      app.socialmate.dualmic
+    com.miui.systemAdSolution:
+      app.socialmate.dualmic
+    com.xiaomi.account:
+      app.socialmate.dualmic
+    com.xunmeng.pinduoduo:
+      app.socialmate.dualmic
+    com.ximalaya.ting.android:
+      app.socialmate.dualmic
+    com.autonavi.minimap:
+      app.socialmate.dualmic
+    com.miui.newhome:
+      app.socialmate.dualmic
+    com.duokan.reader:
+      app.socialmate.dualmic
+    com.taobao.litetao:
+      app.socialmate.dualmic
+    com.duokan.phone.remotecontroller:
+      app.socialmate.dualmic
+    com.android.email:
+      app.socialmate.dualmic
+    com.UCMobile:
+      app.socialmate.dualmic
+    com.zhihu.android:
+      app.socialmate.dualmic
+    com.xiaomi.shop:
+      app.socialmate.dualmic
+    com.sina.weibo:
+      app.socialmate.dualmic
+    com.xiaomi.gamecenter:
+      app.socialmate.dualmic
+    com.taobao.taobao:
+      app.socialmate.dualmic
+    com.miui.virtualsim:
+      app.socialmate.dualmic
+    com.xiaomi.smarthome:
+      app.socialmate.dualmic
+    com.baidu.input_mi:
+      app.socialmate.dualmic
+    uni.UNIB5F0C16:
+      app.socialmate.dualmic
+    com.tencent.mm:
+      app.socialmate.dualmic
+    ai.shandianshuo.android:
+      app.socialmate.dualmic
+    com.xingin.xhs:
+      app.socialmate.dualmic
+    com.tantan.x:
+      app.socialmate.dualmic
+    com.bd.bdant:
+      app.socialmate.dualmic
+    com.microsoft.office.outlook:
+      app.socialmate.dualmic
+    com.okinc.okex.gp:
+      app.socialmate.dualmic
+    com.baidu.netdisk:
+      app.socialmate.dualmic
+    com.baidu.BaiduMap:
+      app.socialmate.dualmic
+    com.qudonwl.camera.Bearfilllight:
+      app.socialmate.dualmic
+    cn.ticktick.task:
+      app.socialmate.dualmic
+    com.binance.dev:
+      app.socialmate.dualmic
+    com.netease.cloudmusic:
+      app.socialmate.dualmic
+    com.coolapps.livedays:
+      app.socialmate.dualmic
+    com.taobao.idlefish:
+      app.socialmate.dualmic
+    com.ct.client:
+      app.socialmate.dualmic
+  queryable via interaction:
+    User 0:
+      [com.mi.AutoTest,com.miui.qr,com.android.systemui,com.mediatek.atci.service,com.miui.screenrecorder,com.miui.notification,com.modemdebug,com.miui.thirdappassistant,com.xiaomi.drivemode,com.xiaomi.joyose,android,com.android.providers.settings,com.miui.screenshot,org.ifaa.aidl.manager,com.mediatek.location.lppe.main,com.android.inputdevices,com.xiaomi.aiasst.vision,com.miui.securitycore,com.miui.maintenancemode,com.android.localtransport,com.android.location.fused,com.mediatek,com.xiaomi.otrpbroker,com.miui.catcherpatch,com.wingtech.sartest,com.xiaomi.mi_connect_service,com.qti.slaservice,com.goodix.fingerprint,com.miui.wmsvc,miui.systemui.plugin,com.miui.daemon,com.miui.face,com.android.keychain,com.factory.mmigroup,com.android.networkstack.tethering.inprocess,com.android.server.telecom,com.xiaomi.location.fused,com.xiaomi.aiasst.service,com.miui.contentcatcher,com.android.provision,com.miui.securitycenter,com.wingtech.secretcode,com.android.networkstack.inprocess,com.miui.freeform,com.android.dynsystem,com.xiaomi.misettings,com.miui.bugreport,com.miui.cleanmaster,com.tencent.soter.soterserver,com.miui.powerkeeper,com.mediatek.omacp,com.xiaomi.powerchecker,com.android.settings,com.android.wallpaperbackup,com.miui.audiomonitor,com.wapi.wapicertmanager]:
+        app.socialmate.dualmic
+      com.tencent.wetype:
+        app.socialmate.dualmic
+      app.socialmate.dualmic:
+        com.google.android.webview
+
+Package Changes:
+  Sequence number=17
+  User 0:
+    seq=0, package=com.android.traceur
+    seq=16, package=app.socialmate.dualmic
+
+
+Dexopt state:
+  [app.socialmate.dualmic]
+    path: /data/app/~~y8QaH9k4ldiCGBol-VXVTw==/app.socialmate.dualmic-PdwbDpt6cwbc-8jMz_864w==/base.apk
+      arm64: [status=run-from-apk] [reason=unknown]
+      odex file size: null
+
+
+Compiler stats:
+  [app.socialmate.dualmic]
+     base.apk - 269
+
+APEX session state:
+
+Active APEX packages:
+
+
+Inactive APEX packages:
+
+
+Factory APEX packages:
+
+

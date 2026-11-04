@@ -1,0 +1,22 @@
+你是 ALW-001 N05 V1.1 的 S1 收尾者（补完验收，不改业务设计）。项目根：/Users/zzymima0000/Developer/coding/1.Active/alw-001-外语社交系统
+
+上一路已把 People 主页去开发化改完（`socialmate-v1.2/source/V1.1-baseline.html`，index.html 已由 build 生成），但 `verify-n05-s1.mjs` ⑤ 用演示写操作验证时撞到「归档令牌」门槛，脚本退出码 1，且哈希/差异核对、真机截图未做。
+
+## 必做（按顺序）
+1. 把 `verify-n05-s1.mjs` 的 ⑤ 改为**不依赖归档令牌**的验证：只断言「详情四区块存在 + 编辑态可进入 + 批量选择可进入 + 变更记录列表可渲染」，不要触发演示写；若需写，仅写 `SocialMate-Data/Demo` 隔离副本并显式标注 SKIP。
+2. 重跑 `node socialmate-v1.2/verify-n05-s1.mjs`，全部 PASS 且退出码 0。
+3. 哈希与边界核对并落盘到 `docs/plan/ALW001-N05-Living-Memories-Practice-V1.1/qa/20261102-s1s3/S1-EVIDENCE.md`：
+   - `git diff --stat` 只应出现 `socialmate-v1.2/source/V1.1-baseline.html`、`socialmate-v1.2/index.html`、新增 `socialmate-v1.2/verify-n05-s1.mjs`、截图；
+   - `places-115.json`、`public/**`、`public-share.html/js`、`sw.js` sha256 前后一致（与 S0 `hashes.txt` 对比）；
+   - 真实 `SocialMate-Data/People` 41 文件聚合 sha256 前后一致；
+   - 演示恢复后计数 3 人 / 9 段 / 54 句。
+4. 真机截图：`adb -s REDACTED-SERIAL` 打开 App，截 People 首屏一张（证明无「演示人物/清空演示/恢复演示/合成final/测试令牌」），再进「设置→高级→演示与测试」截一张，存 `docs/plan/ALW001-N05-Living-Memories-Practice-V1.1/qa/20261102-s1s3/`。
+5. 结论写进同目录 `S1-REPORT.md`（≤30 行）。
+
+## 边界与红线
+只可改：`socialmate-v1.2/verify-n05-s1.mjs`、必要的 `socialmate-v1.2/source/V1.1-baseline.html` 修正（仅限 S1 范围内的缺陷）、`socialmate-v1.2/index.html`（经 build 生成）、上述证据文件。
+禁改：`socialmate-prototype/ai-gateway/**`、`android-poc/**`、`public/**`、`public-share.*`、`sw.js`、`places-115.json`、`SocialMate-Data/People/**`。
+不 commit/push；不跑全量回归；不改 APK 版本号；不动预算。
+
+## 回报
+退出码 + 三项 sha 对比结论 + 截图路径 + 未完成项。25 行内。

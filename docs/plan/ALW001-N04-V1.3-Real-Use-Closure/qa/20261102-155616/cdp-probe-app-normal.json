@@ -1,0 +1,65 @@
+{
+  "serial": "REDACTED-SERIAL",
+  "at": "2026-11-02T08:08:25.431Z",
+  "steps": [
+    {
+      "name": "01-current-url",
+      "value": "http://127.0.0.1:8791/v12"
+    },
+    {
+      "name": "02-private-page-bridge",
+      "value": "{\"hasBridge\":true,\"saveText\":\"function\",\"openRecordingPanel\":\"function\"}"
+    },
+    {
+      "name": "03-private-page-bridge-json",
+      "value": "{\"hasBridge\":true}"
+    },
+    {
+      "name": "04-cross-origin-frame-state",
+      "value": "{\"src\":\"http://127.0.0.1:18793/evil.html\",\"hasContentWindow\":true,\"frameReadable\":false,\"blockedBy\":\"same-origin-policy\",\"frameBridgeReadable\":false}"
+    },
+    {
+      "name": "04a-execution-contexts",
+      "value": [
+        {
+          "origin": "http://127.0.0.1:8791",
+          "frameId": "99A5C61B"
+        },
+        {
+          "origin": "://",
+          "frameId": "7B201507"
+        }
+      ]
+    },
+    {
+      "name": "04b-frame-tree",
+      "value": [
+        {
+          "id": "99A5C61B83D0E774F123689EBE94B4C4",
+          "url": "http://127.0.0.1:8791/v12",
+          "securityOrigin": "http://127.0.0.1:8791"
+        },
+        {
+          "id": "7B20150766EE21F4DC3ADEFA17B1A3B6",
+          "url": "chrome-error://chromewebdata/",
+          "securityOrigin": "://"
+        }
+      ]
+    },
+    {
+      "name": "05-after-external-nav-attempt",
+      "value": "{\"href\":\"http://127.0.0.1:8791/v12\",\"before\":\"http://127.0.0.1:8791/v12\"}"
+    },
+    {
+      "name": "06-bridge-after-steps",
+      "value": "{\"hasBridge\":true}"
+    }
+  ],
+  "targets": [
+    {
+      "type": "page",
+      "url": "http://127.0.0.1:8791/v12",
+      "title": "SocialMate · 外语社交助手"
+    }
+  ]
+}

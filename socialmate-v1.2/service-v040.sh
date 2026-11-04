@@ -141,9 +141,24 @@ start_service() {
     unset NODE_TLS_REJECT_UNAUTHORIZED
   fi
   echo "Starting combined ASR+AI service; log: $log"
+  # 家庭 WiFi 模式：默认同时监听局域网，便于手机不插 USB 直连；来源仍限 RFC1918/回环。
+  export SOCIALMATE_HOST="${SOCIALMATE_HOST:-0.0.0.0}"
+  export HOST="$SOCIALMATE_HOST"
+  # ASR 上游：有 P066 令牌就走 P066 流式中继；没有令牌保持腾讯直连，不静默降级。
+  if [ -f "$ROOT/.local/p066-asr.env" ]; then
+    set -a
+    # shellcheck disable=SC1090
+    . "$ROOT/.local/p066-asr.env"
+    set +a
+    export ASR_UPSTREAM="${ASR_UPSTREAM:-p066}"
+  fi
+  # 单次录音硬上限，避免一次长会话把总额度跑穿；仍受总预算约束。
+  export ASR_BUDGET_CNY="${ASR_BUDGET_CNY:-2}"
+  export ASR_MAX_SESSION_SECONDS="${ASR_MAX_SESSION_SECONDS:-300}"
   nohup "$NODE_BIN" \
     --env-file-if-exists=android-poc/asr-bridge/.env \
     --env-file-if-exists=socialmate-prototype/ai-gateway/.env \
+    --env-file-if-exists=.local/aws-polly.env \
     socialmate-prototype/ai-gateway/live-server.mjs \
     </dev/null >"$log" 2>&1 &
   echo $! >"$PID_FILE"

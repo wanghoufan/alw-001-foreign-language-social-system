@@ -27,8 +27,18 @@ import {
   engineForTrack,
   resolveCredentials,
 } from './tencent-asr-client.js';
+import {P066RealtimeSession, resolveP066Config} from './p066-asr-client.js';
 import { getContentService } from './content/service.js';
-import { asrBudgetStatus, canStartAsr, recordAsrUsage } from './asr-budget.js';
+
+function isPrivateIp(addr) {
+  const ip = String(addr || '').replace(/^::ffff:/i, '').split('%')[0];
+  if (ip === '127.0.0.1' || ip === '::1') return true;
+  const parts = ip.split('.').map(Number);
+  if (parts.length !== 4 || parts.some((n) => !Number.isInteger(n) || n < 0 || n > 255)) return false;
+  const [a, b] = parts;
+  return a === 10 || (a === 172 && b >= 16 && b <= 31) || (a === 192 && b === 168) || (a === 169 && b === 254);
+}
+import { RESERVE_CNY, asrBudgetStatus, canStartAsr, recordAsrUsage } from './asr-budget.js';
 
 const OUTPUT_RATE = 16_000;
 const VALID_INPUT_RATES = new Set([16_000, 44_100, 48_000]);
@@ -44,6 +54,11 @@ export function resolveMode({ env = process.env, forceMock = false } = {}) {
   if (forceMock || isForceMock(env)) {
     return { mode: 'mock', credentials: null, reason: 'forced' };
   }
+  const upstream = String(env.ASR_UPSTREAM || 'tencent').trim().toLowerCase();
+  if (upstream === 'p066') {
+    const p066 = resolveP066Config(env); // 缺令牌直接抛错，绝不静默降级
+    return { mode: 'p066', credentials: null, p066, reason: 'p066-upstream' };
+  }
   const result = resolveCredentials(env);
   if (!result.configured) {
     return { mode: 'mock', credentials: null, reason: 'no-credentials' };
@@ -57,6 +72,135 @@ function makeLogger(logger) {
     warn: typeof logger?.warn === 'function' ? logger.warn.bind(logger) : () => {},
     error: typeof logger?.error === 'function' ? logger.error.bind(logger) : () => {},
   };
+}
+
+const AUTH_OFF_VALUES = new Set(['off', 'disabled', 'none', '0', 'false']);
+const AUTH_REQUIRED_VALUES = new Set(['required', 'on', '1', 'true']);
+
+/**
+ * 握手鉴权策略：真实上游默认必须鉴权；mock 默认不强制，便于本地零费用测试。
+ * ASR_WS_AUTH=off 只作为开发逃生口，真实上游使用时会打警告。
+ */
+export function resolveAuthPolicy({ mode, env = process.env, logger } = {}) {
+  const log = logger || { warn() {} };
+  const raw = String(env.ASR_WS_AUTH ?? '').trim().toLowerCase();
+  if (AUTH_OFF_VALUES.has(raw)) {
+    if (mode !== 'mock') {
+      log.warn(
+        '[asr-auth] WARNING: ASR_WS_AUTH=off with real upstream; WebSocket handshakes are unauthenticated (development only).',
+      );
+    }
+    return { mode: 'off', authRequired: false, reason: 'ASR_WS_AUTH=off' };
+  }
+  if (AUTH_REQUIRED_VALUES.has(raw)) {
+    return { mode: 'required', authRequired: true, reason: 'ASR_WS_AUTH=required' };
+  }
+  if (raw) {
+    log.warn(`[asr-auth] unknown ASR_WS_AUTH="${raw}"; treating as required (fail closed).`);
+    return { mode: 'required', authRequired: true, reason: 'unknown-env-fail-closed' };
+  }
+  if (mode === 'mock') {
+    return { mode: 'optional', authRequired: false, reason: 'mock-default' };
+  }
+  return { mode: 'required', authRequired: true, reason: 'real-default' };
+}
+
+function normalizeHostname(value) {
+  return String(value || '')
+    .trim()
+    .toLowerCase()
+    .replace(/^\[/, '')
+    .replace(/\]$/, '');
+}
+
+function isLoopbackOrPrivateHost(hostname) {
+  const host = normalizeHostname(hostname);
+  if (!host) return false;
+  if (host === 'localhost' || host === '::1') return true;
+  if (host.endsWith('.ts.net') && host.length > '.ts.net'.length) return true;
+  return isPrivateIp(host);
+}
+
+function hostnameFromHostHeader(value) {
+  const raw = String(value || '').trim();
+  if (!raw) return '';
+  try {
+    return normalizeHostname(new URL(`http://${raw}`).hostname);
+  } catch {
+    return '';
+  }
+}
+
+/**
+ * Origin 不是身份凭证，只用于来源收敛：无 Origin（原生客户端）放行到令牌校验；
+ * 有 Origin 必须是本机/私网/Tailnet，且与请求 Host 同 host（端口可不同）。
+ */
+export function checkUpgradeOrigin(headers = {}) {
+  const rawOrigin = headers.origin;
+  if (rawOrigin === undefined || rawOrigin === null || String(rawOrigin).trim() === '') {
+    return { ok: true };
+  }
+  let origin;
+  try {
+    origin = new URL(String(rawOrigin).trim());
+  } catch {
+    return { ok: false, code: 'ORIGIN_INVALID' };
+  }
+  if (origin.protocol !== 'http:' && origin.protocol !== 'https:') {
+    return { ok: false, code: 'ORIGIN_NOT_ALLOWED' };
+  }
+  const originHost = normalizeHostname(origin.hostname);
+  if (!isLoopbackOrPrivateHost(originHost)) {
+    return { ok: false, code: 'ORIGIN_NOT_ALLOWED' };
+  }
+  const requestHost = hostnameFromHostHeader(headers.host);
+  if (!requestHost || originHost !== requestHost) {
+    return { ok: false, code: 'ORIGIN_HOST_MISMATCH' };
+  }
+  return { ok: true, originHost };
+}
+
+function headerValue(headers, name) {
+  const raw = headers?.[name];
+  return String(Array.isArray(raw) ? raw[0] : raw ?? '').trim();
+}
+
+/** 主来源 x-asr-token；兼容 authorization: Bearer。绝不回显或记录原文。 */
+function extractHandshakeToken(headers = {}) {
+  const direct = headerValue(headers, 'x-asr-token');
+  if (direct) return direct;
+  const auth = headerValue(headers, 'authorization');
+  const match = /^Bearer\s+(\S+)$/i.exec(auth);
+  return match ? match[1] : '';
+}
+
+function sanitizeAuthCode(value) {
+  const code = String(value ?? '').trim().toUpperCase();
+  return /^[A-Z0-9_]{1,48}$/.test(code) ? code : 'TOKEN_INVALID';
+}
+
+function maskIp(value) {
+  const ip = String(value || '').replace(/^::ffff:/i, '').split('%')[0];
+  if (!ip) return 'unknown';
+  if (ip === '127.0.0.1' || ip === '::1') return ip;
+  if (!ip.includes(':')) {
+    const parts = ip.split('.');
+    if (parts.length === 4) return `${parts[0]}.${parts[1]}.${parts[2]}.x`;
+    return 'unknown';
+  }
+  return `${ip.split(':').slice(0, 3).join(':')}:***`;
+}
+
+function verifyHandshakeToken(verify, token, timeoutMs = 5000) {
+  let timer;
+  const timeout = new Promise((resolve) => {
+    timer = setTimeout(() => resolve({ ok: false, code: 'AUTH_VERIFY_TIMEOUT' }), timeoutMs);
+    timer.unref?.();
+  });
+  const call = Promise.resolve()
+    .then(() => verify(token))
+    .catch(() => ({ ok: false, code: 'AUTH_VERIFY_FAILED' }));
+  return Promise.race([call, timeout]).finally(() => clearTimeout(timer));
 }
 
 function sendJson(ws, event) {
@@ -137,6 +281,22 @@ export async function createAsrBridgeServer(options = {}) {
   const contentService = options.contentService || null;
   const host = options.host ?? (String(env.HOST ?? '').trim() || '127.0.0.1');
   const requestedPort = options.port ?? Number(String(env.PORT ?? '').trim() || 8790);
+  const authVerify = typeof options.authVerify === 'function' ? options.authVerify : null;
+  const authPolicy = resolveAuthPolicy({ mode: modeInfo.mode, env, logger });
+  const authLimits = {
+    windowMs:
+      Number(options.authLimits?.windowMs) > 0 ? Number(options.authLimits.windowMs) : 60_000,
+    maxUpgradeAttempts: Number.isInteger(options.authLimits?.maxUpgradeAttempts)
+      ? options.authLimits.maxUpgradeAttempts
+      : 20,
+    maxInvalidTokens: Number.isInteger(options.authLimits?.maxInvalidTokens)
+      ? options.authLimits.maxInvalidTokens
+      : 5,
+    maxConcurrentSessions: Number.isInteger(options.authLimits?.maxConcurrentSessions)
+      ? options.authLimits.maxConcurrentSessions
+      : 8,
+  };
+  const now = typeof options.now === 'function' ? options.now : Date.now;
 
   if (!Number.isInteger(requestedPort) || requestedPort < 0 || requestedPort > 65535) {
     throw new RangeError(`PORT 必须是 0..65535 的整数，收到 ${requestedPort}`);
@@ -149,6 +309,12 @@ export async function createAsrBridgeServer(options = {}) {
     );
   } else {
     logger.info('[asr-bridge] Tencent ASR mode：密钥只在本进程内存中使用，不写入日志。');
+  }
+
+  if (authPolicy.mode === 'required' && !authVerify) {
+    logger.error(
+      '[asr-auth] authVerify is not configured; all WebSocket handshakes will be rejected (fail-closed).',
+    );
   }
 
   const clients = new Set();
@@ -172,6 +338,10 @@ export async function createAsrBridgeServer(options = {}) {
   };
 
   const httpServer = http.createServer((req, res) => {
+    if (!isPrivateIp(req.socket.remoteAddress)) {
+      httpJson(res, 403, { ok: false, error: 'lan only' });
+      return;
+    }
     let url;
     try {
       url = new URL(req.url, `http://${req.headers.host || 'localhost'}`);
@@ -189,6 +359,8 @@ export async function createAsrBridgeServer(options = {}) {
         uptimeMs: Date.now() - startedAt,
         version: BRIDGE_VERSION,
         outputSampleRate: OUTPUT_RATE,
+        authRequired: authPolicy.authRequired,
+        authMode: authPolicy.mode,
         budget: asrBudgetStatus({ env }),
       });
       return;
@@ -256,25 +428,159 @@ export async function createAsrBridgeServer(options = {}) {
 
   const wss = new WebSocketServer({ noServer: true });
 
-  httpServer.on('upgrade', (req, socket, head) => {
-    socket.on('error', () => {});
+  const rateBuckets = new Map();
+
+  function bucketFor(ip) {
+    const t = now();
+    let entry = rateBuckets.get(ip);
+    if (!entry) {
+      entry = { attempts: [], invalid: [] };
+      rateBuckets.set(ip, entry);
+    }
+    entry.attempts = entry.attempts.filter((at) => t - at < authLimits.windowMs);
+    entry.invalid = entry.invalid.filter((at) => t - at < authLimits.windowMs);
+    if (rateBuckets.size > 256) {
+      for (const [key, value] of rateBuckets) {
+        if (!value.attempts.length && !value.invalid.length) rateBuckets.delete(key);
+      }
+    }
+    return entry;
+  }
+
+  function rejectUpgrade(socket, status, code) {
+    const text =
+      { 400: 'Bad Request', 401: 'Unauthorized', 403: 'Forbidden', 404: 'Not Found', 429: 'Too Many Requests' }[
+        status
+      ] || 'Rejected';
+    const body = `${code}\n`;
+    const lines = [
+      `HTTP/1.1 ${status} ${text}`,
+      'connection: close',
+      'content-type: text/plain; charset=utf-8',
+      `content-length: ${Buffer.byteLength(body)}`,
+      'cache-control: no-store',
+    ];
+    if (code && (status === 401 || status === 403 || status === 429)) {
+      lines.push(`x-asr-auth-error: ${code}`);
+    }
+    socket.write(`${lines.join('\r\n')}\r\n\r\n${body}`);
+    socket.end();
+    setTimeout(() => {
+      try {
+        socket.destroy();
+      } catch {
+        // 已断开
+      }
+    }, 500).unref?.();
+  }
+
+  function auditDenied(code, ip, deviceId) {
+    const hint = deviceId ? ` device=${String(deviceId).slice(0, 8)}` : '';
+    logger.warn(`[asr-auth] denied code=${code} ip=${maskIp(ip)}${hint}`);
+  }
+
+  async function handleUpgrade(req, socket, head) {
+    const remoteIp = String(req.socket.remoteAddress || '');
+    if (!isPrivateIp(remoteIp)) {
+      rejectUpgrade(socket, 403, 'PRIVATE_NETWORK_ONLY');
+      return;
+    }
+
+    const bucket = bucketFor(remoteIp);
+    bucket.attempts.push(now());
+    if (bucket.attempts.length > authLimits.maxUpgradeAttempts) {
+      auditDenied('UPGRADE_RATE_LIMITED', remoteIp);
+      rejectUpgrade(socket, 429, 'UPGRADE_RATE_LIMITED');
+      return;
+    }
+
     let url;
     try {
       url = new URL(req.url, `http://${req.headers.host || 'localhost'}`);
     } catch {
-      socket.write('HTTP/1.1 400 Bad Request\r\n\r\n');
-      socket.destroy();
+      rejectUpgrade(socket, 400, 'BAD_REQUEST');
       return;
     }
 
     if (url.pathname !== '/asr') {
-      socket.write('HTTP/1.1 404 Not Found\r\n\r\n');
-      socket.destroy();
+      rejectUpgrade(socket, 404, 'NOT_FOUND');
+      return;
+    }
+
+    const originCheck = checkUpgradeOrigin(req.headers);
+    if (!originCheck.ok) {
+      auditDenied(originCheck.code, remoteIp);
+      rejectUpgrade(socket, 403, originCheck.code);
+      return;
+    }
+
+    if (authPolicy.mode !== 'off') {
+      if (authPolicy.authRequired && !authVerify) {
+        auditDenied('AUTH_NOT_CONFIGURED', remoteIp);
+        rejectUpgrade(socket, 401, 'AUTH_NOT_CONFIGURED');
+        return;
+      }
+      const token = extractHandshakeToken(req.headers);
+      if (!token) {
+        if (authPolicy.authRequired) {
+          auditDenied('AUTH_TOKEN_REQUIRED', remoteIp);
+          rejectUpgrade(socket, 401, 'AUTH_TOKEN_REQUIRED');
+          return;
+        }
+      } else if (!authVerify) {
+        logger.warn('[asr-auth] token supplied but authVerify is not configured; ignored in optional mode.');
+      } else {
+        if (bucket.invalid.length >= authLimits.maxInvalidTokens) {
+          auditDenied('TOO_MANY_INVALID_TOKENS', remoteIp);
+          rejectUpgrade(socket, 429, 'TOO_MANY_INVALID_TOKENS');
+          return;
+        }
+        const result = await verifyHandshakeToken(authVerify, token);
+        if (socket.destroyed) return;
+        if (!result || result.ok !== true) {
+          const code = sanitizeAuthCode(result?.code);
+          bucket.invalid.push(now());
+          auditDenied(code, remoteIp, result?.deviceId);
+          if (bucket.invalid.length > authLimits.maxInvalidTokens) {
+            rejectUpgrade(socket, 429, 'TOO_MANY_INVALID_TOKENS');
+            return;
+          }
+          rejectUpgrade(socket, 401, code);
+          return;
+        }
+      }
+    }
+
+    if (clients.size >= authLimits.maxConcurrentSessions) {
+      wss.handleUpgrade(req, socket, head, (ws) => {
+        sendJson(
+          ws,
+          makeErrorEvent({
+            track: 'mix',
+            message: '并发会话已达上限，请稍后重试',
+            mock: modeInfo.mode === 'mock',
+            code: 'SESSION_LIMIT',
+          }),
+        );
+        ws.close(1013, 'session-limit');
+      });
       return;
     }
 
     wss.handleUpgrade(req, socket, head, (ws) => {
       handleClient(ws, url);
+    });
+  }
+
+  httpServer.on('upgrade', (req, socket, head) => {
+    socket.on('error', () => {});
+    handleUpgrade(req, socket, head).catch((error) => {
+      logger.warn(`[asr-auth] upgrade failed: ${error.message}`);
+      try {
+        socket.destroy();
+      } catch {
+        // 已断开
+      }
     });
   });
 
@@ -319,7 +625,8 @@ export async function createAsrBridgeServer(options = {}) {
     }
 
     const mock = modeInfo.mode === 'mock';
-    if (!mock && !canStartAsr({env})) {
+    const p066 = modeInfo.mode === 'p066';
+    if (!mock && !p066 && !canStartAsr({env})) {
       const budget = asrBudgetStatus({env});
       sendJson(
         ws,
@@ -350,6 +657,9 @@ export async function createAsrBridgeServer(options = {}) {
       mock,
       engine,
       inputBytes: 0,
+      unbudgetedBytes: 0,
+      budgetTimer: null,
+      maxTimer: null,
       outputSamples: 0,
       eventCount: 0,
       ended: false,
@@ -405,7 +715,7 @@ export async function createAsrBridgeServer(options = {}) {
       mock ? 'ready' : 'connecting',
       mock
         ? '[mock] 未配置腾讯云密钥，使用本地能量模拟器；输出不是真实 ASR'
-        : '正在连接腾讯云实时 ASR',
+        : (p066 ? '正在连接 P066 流式 ASR' : '正在连接腾讯云实时 ASR'),
       {
         upstream: mock ? 'mock' : 'connecting',
         note: mock ? 'mock:true 表示本地模拟，不是腾讯云识别结果' : '真实云端连接尚未验证',
@@ -463,10 +773,13 @@ export async function createAsrBridgeServer(options = {}) {
       if (client.finalized) return;
       client.finalized = true;
       client.ended = true;
+      if (client.budgetTimer) clearInterval(client.budgetTimer);
+      if (client.maxTimer) clearTimeout(client.maxTimer);
       let asrBudget = null;
-      if (!mock && !client.budgetRecorded) {
+      if (!mock && !p066 && !client.budgetRecorded) {
         client.budgetRecorded = true;
-        const seconds = client.inputBytes / (rate * channels * 2);
+        const seconds = client.unbudgetedBytes / (rate * channels * 2);
+        client.unbudgetedBytes = 0;
         try {
           asrBudget = recordAsrUsage(seconds, { env });
         } catch (error) {
@@ -536,6 +849,53 @@ export async function createAsrBridgeServer(options = {}) {
       }
     }
 
+    if (!mock) {
+      const maxSeconds = Math.max(0, Number(env.ASR_MAX_SESSION_SECONDS || 300));
+      if (maxSeconds > 0) {
+        client.maxTimer = setTimeout(() => {
+          if (client.ended) return;
+          sendEvent(
+            makeErrorEvent({
+              track,
+              message: `已到单次录音上限 ${maxSeconds} 秒，自动结束`,
+              mock: false,
+              code: 'ASR_SESSION_LIMIT',
+              provider: 'tencent',
+            }),
+          );
+          endSession();
+        }, maxSeconds * 1000);
+        client.maxTimer.unref?.();
+      }
+      client.budgetTimer = setInterval(() => {
+        if (client.ended || p066) return;
+        const bytes = client.unbudgetedBytes;
+        if (bytes <= 0) return;
+        client.unbudgetedBytes = 0;
+        const seconds = bytes / (rate * channels * 2);
+        let status = null;
+        try {
+          status = recordAsrUsage(seconds, { env });
+        } catch (error) {
+          logger.warn(`[asr-bridge] ASR budget ledger write failed: ${error.message}`);
+          return;
+        }
+        if (status && status.remainingCny <= RESERVE_CNY) {
+          sendEvent(
+            makeErrorEvent({
+              track,
+              message: `腾讯云 ASR 预算已用尽（上限 ${status.limitCny} 元），自动结束本轮`,
+              mock: false,
+              code: 'ASR_BUDGET_EXHAUSTED',
+              provider: 'tencent',
+            }),
+          );
+          endSession();
+        }
+      }, 5000);
+      client.budgetTimer.unref?.();
+    }
+
     if (mock) {
       client.mockSession = new MockAsrSession({
         track,
@@ -543,22 +903,33 @@ export async function createAsrBridgeServer(options = {}) {
         onEvent: sendEvent,
       });
     } else {
-      client.asrSession = new TencentRealtimeSession({
-        ...modeInfo.credentials,
-        track,
-        engineModelType: engine,
-        sessionId,
-      });
+      if (p066) {
+        client.asrSession = new P066RealtimeSession({
+          url: modeInfo.p066.url,
+          token: modeInfo.p066.token,
+          track,
+          engineModelType: engine,
+          sessionId,
+        });
+      } else {
+        client.asrSession = new TencentRealtimeSession({
+          ...modeInfo.credentials,
+          track,
+          engineModelType: engine,
+          sessionId,
+        });
+      }
 
       client.asrSession.on('ready', (info) => {
         asrReady = true;
         logger.info(
-          `[asr-bridge] upstream ready session=${sessionId} voiceId=${info.voiceId} engine=${info.engine}`,
+          `[asr-bridge] upstream ready session=${sessionId} voiceId=${info.voiceId || '-'} engine=${info.engine}`,
         );
-        sendSession('ready', '腾讯云实时 ASR 已连接', {
+        sendSession('ready', p066 ? 'P066 流式 ASR 已连接' : '腾讯云实时 ASR 已连接', {
           upstream: 'connected',
           voiceId: info.voiceId,
-          note: '真实云端连接；仍需用真实密钥与音频复验',
+          provider: p066 ? 'p066' : 'tencent',
+          note: p066 ? '经 P066 网关统一记账' : '真实云端连接；仍需用真实密钥与音频复验',
         });
         flushAsrQueue();
       });
@@ -584,10 +955,10 @@ export async function createAsrBridgeServer(options = {}) {
           sendEvent(
             makeErrorEvent({
               track,
-              message: `腾讯云 ASR 连接失败：${error.message}`,
+              message: `${p066 ? 'P066 流式 ASR' : '腾讯云 ASR'} 连接失败：${error.message}`,
               mock: false,
               code: error.code || 'ASR_CONNECT_FAILED',
-              provider: 'tencent',
+              provider: p066 ? 'p066' : 'tencent',
             }),
           );
         }
@@ -601,6 +972,7 @@ export async function createAsrBridgeServer(options = {}) {
       if (isBinary) {
         const buffer = Buffer.isBuffer(data) ? data : Buffer.from(data);
         client.inputBytes += buffer.length;
+        client.unbudgetedBytes += buffer.length;
         pending = Buffer.concat([pending, buffer]);
 
         const frameBytes = 2 * channels;
@@ -750,6 +1122,8 @@ export async function createAsrBridgeServer(options = {}) {
     wss,
     close,
     url: `ws://${host}:${port}/asr`,
+    authMode: authPolicy.mode,
+    authRequired: authPolicy.authRequired,
     activeSessions: () => clients.size,
     budget: () => asrBudgetStatus({ env }),
   };

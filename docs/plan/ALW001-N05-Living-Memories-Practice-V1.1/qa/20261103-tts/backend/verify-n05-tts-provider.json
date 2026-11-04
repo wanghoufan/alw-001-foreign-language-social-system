@@ -1,0 +1,88 @@
+{
+  "ok": true,
+  "task": "ALW001-N05-TTS-PROVIDER-ADAPTER-backend",
+  "startedAt": "2026-11-03T00:43:41.578Z",
+  "finishedAt": "2026-11-03T00:43:41.641Z",
+  "port": 52850,
+  "providers": {
+    "realCloudCalls": 0,
+    "configuredKeys": 0,
+    "note": "全程 0 次外部请求，未配置任何厂商 Key"
+  },
+  "total": 14,
+  "passed": 14,
+  "failed": 0,
+  "checks": [
+    {
+      "name": "① 无令牌 → 401 TOKEN_REQUIRED，跨源 → 403 ORIGIN_REJECTED",
+      "pass": true,
+      "detail": "noToken=401/TOKEN_REQUIRED cross=403/ORIGIN_REJECTED"
+    },
+    {
+      "name": "② providers 仅 fake/system-fallback enabled；三个厂商 enabled:false 且需同意/计费",
+      "pass": true,
+      "detail": "enabled=fake,system-fallback cloud=3 fallbackOnly=true"
+    },
+    {
+      "name": "②-b voices 按 locale 过滤（en-GB 只出英式声线，含本地预置）",
+      "pass": true,
+      "detail": "count=5"
+    },
+    {
+      "name": "④ estimate 只报价：不落盘、不建缓存、不计入合成",
+      "pass": true,
+      "detail": "status=200 filesBefore=0 filesAfter=0"
+    },
+    {
+      "name": "③-a fake 合成成功，文本原样回显且 audioSha256 等于本地预置文件",
+      "pass": true,
+      "detail": "status=200 shaMatch=true textIntact=true"
+    },
+    {
+      "name": "③-b 同段重复请求 cacheHit:true 且合成计数不增、音频文件不新增",
+      "pass": true,
+      "detail": "cacheHit=true totalSyntheses=1 audioFiles=1"
+    },
+    {
+      "name": "⑤ 计费请求 → 402 TTS_BUDGET_ZERO，账本字节与金额零变动",
+      "pass": true,
+      "detail": "status=402 code=TTS_BUDGET_ZERO ledgerByteIdentical=true spent=0"
+    },
+    {
+      "name": "⑥ 第三方 TTS 未显式同意 → 403 CONSENT_REQUIRED（回显将发送的摘录/提供商/费用）",
+      "pass": true,
+      "detail": "status=403 code=CONSENT_REQUIRED excerpt=true"
+    },
+    {
+      "name": "⑦ 篡改音频 → 400 AUDIO_SHA_MISMATCH；还原后完整读取 200、Range 206、越界 416",
+      "pass": true,
+      "detail": "tampered=400/AUDIO_SHA_MISMATCH full=200 range=206 badRange=416"
+    },
+    {
+      "name": "⑧ 文本含他人姓名 → 403 PRIVACY_PERSON_NAME；带人物档案字段 → 403 PRIVACY_PROFILE_FIELD",
+      "pass": true,
+      "detail": "name=403/PRIVACY_PERSON_NAME field=403/PRIVACY_PROFILE_FIELD"
+    },
+    {
+      "name": "附 skeleton 适配器无 Key 直调 → 501 PROVIDER_NOT_CONFIGURED（HTTP 层被 402 先行拦截）",
+      "pass": true,
+      "detail": "adapter=501/PROVIDER_NOT_CONFIGURED http=402/TTS_BUDGET_ZERO"
+    },
+    {
+      "name": "附 system-fallback 返回 pending 且不落盘（服务端不合成）",
+      "pass": true,
+      "detail": "status=pending warnings=FALLBACK_ONLY+CLIENT_SIDE_SYNTHESIS+REQUIRES_USER_CHOICE"
+    },
+    {
+      "name": "⑨ 全部响应无 Key/无 Mac 绝对路径；骨架适配器源码无网络出口；本进程无厂商 Key",
+      "pass": true,
+      "detail": "responses=16 leaked=none noNetwork=true keys=0"
+    },
+    {
+      "name": "真实 People 目录 sha 前后一致（未触碰真实档案）",
+      "pass": true,
+      "detail": "files=53 digest=53efe364edd26a1d"
+    }
+  ],
+  "workspace": "/Users/zzymima0000/Developer/coding/1.Active/alw-001-外语社交系统/socialmate-prototype/ai-gateway/.local/verify-n05-tts/2026-11-03T00-43-41-578Z"
+}

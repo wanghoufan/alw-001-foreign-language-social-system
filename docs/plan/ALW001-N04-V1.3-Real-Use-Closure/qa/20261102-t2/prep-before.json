@@ -1,0 +1,86 @@
+{
+  "demo-oliver-uk": {
+    "factCount": 5,
+    "prep": {
+      "personalized": [
+        {
+          "en": "Last time you mentioned: \"来自英国·伦敦\" — how is that going?",
+          "zh": "上次你提到：“来自英国·伦敦”——后来怎么样了？",
+          "source": "confirmed-fact",
+          "factId": "a0f0e4b55b7144ca",
+          "factText": "来自英国·伦敦"
+        },
+        {
+          "en": "Last time you mentioned: \"职业：未注明（演示）\" — how is that going?",
+          "zh": "上次你提到：“职业：未注明（演示）”——后来怎么样了？",
+          "source": "confirmed-fact",
+          "factId": "8092582e37ee688e",
+          "factText": "职业：未注明（演示）"
+        }
+      ],
+      "generic": {
+        "en": "What has been the highlight of your week so far?",
+        "zh": "这周到目前为止，你最开心的事是什么？",
+        "source": "template"
+      },
+      "empty": false,
+      "note": "由已确认事实本地生成；待确认候选不参与。"
+    }
+  },
+  "demo-maya-us": {
+    "factCount": 5,
+    "prep": {
+      "personalized": [
+        {
+          "en": "Last time you mentioned: \"来自美国·奥斯汀\" — how is that going?",
+          "zh": "上次你提到：“来自美国·奥斯汀”——后来怎么样了？",
+          "source": "confirmed-fact",
+          "factId": "49eed3b565c304a2",
+          "factText": "来自美国·奥斯汀"
+        },
+        {
+          "en": "Last time you mentioned: \"职业：未注明（演示）\" — how is that going?",
+          "zh": "上次你提到：“职业：未注明（演示）”——后来怎么样了？",
+          "source": "confirmed-fact",
+          "factId": "8092582e37ee688e",
+          "factText": "职业：未注明（演示）"
+        }
+      ],
+      "generic": {
+        "en": "What has been the highlight of your week so far?",
+        "zh": "这周到目前为止，你最开心的事是什么？",
+        "source": "template"
+      },
+      "empty": false,
+      "note": "由已确认事实本地生成；待确认候选不参与。"
+    }
+  },
+  "demo-jieun-kr": {
+    "factCount": 5,
+    "prep": {
+      "personalized": [
+        {
+          "en": "Last time you mentioned: \"来自韩国·首尔\" — how is that going?",
+          "zh": "上次你提到：“来自韩国·首尔”——后来怎么样了？",
+          "source": "confirmed-fact",
+          "factId": "9199288be8480db3",
+          "factText": "来自韩国·首尔"
+        },
+        {
+          "en": "Last time you mentioned: \"职业：未注明（演示）\" — how is that going?",
+          "zh": "上次你提到：“职业：未注明（演示）”——后来怎么样了？",
+          "source": "confirmed-fact",
+          "factId": "8092582e37ee688e",
+          "factText": "职业：未注明（演示）"
+        }
+      ],
+      "generic": {
+        "en": "Is there anything you would like to try for the first time this month?",
+        "zh": "这个月你想第一次尝试什么？",
+        "source": "template"
+      },
+      "empty": false,
+      "note": "由已确认事实本地生成；待确认候选不参与。"
+    }
+  }
+}

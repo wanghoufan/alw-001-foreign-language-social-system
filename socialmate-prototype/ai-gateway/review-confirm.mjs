@@ -60,7 +60,7 @@ export async function confirmReview(input, session, options = {}) {
   for (const [slug, name] of pendingCreate) knownPeople[slug] = {name, pendingCreate: true};
 
   const plan = await planProfileCandidates({...input, sessionId: session?.sessionId || input?.sessionId},
-    {validSegmentIndexes, knownPeople});
+    {validSegmentIndexes, knownPeople, speakerMap: input?.speakerMap});
 
   const created = [];
   let peopleResult = {added: [], skipped: [], files: []};

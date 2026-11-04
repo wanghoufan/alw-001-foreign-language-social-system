@@ -1,0 +1,1 @@
+{"ok":true,"combined":true,"asr":{"mode":"tencent","mock":false,"port":8790,"url":"ws://127.0.0.1:8790/asr","activeSessions":0,"budget":{"limitCny":1,"priceCnyPerHour":1,"spentCny":0.165422,"remainingCny":0.834578,"seconds":595.521,"calls":20,"reserveCny":0.01,"updatedAt":"2026-11-02T08:31:46.049Z"}},"service":"ALW001 combined ASR + AI gateway"}

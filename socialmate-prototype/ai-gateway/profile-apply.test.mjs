@@ -183,3 +183,34 @@ test("历史遗留 0644 的 current.md 会被收紧到 0600，且正文不变", 
   assert.ok(result.changed.some((c) => c.file === "current.md" && c.from === "644" && c.to === "600"));
   assert.equal(await fs.readFile(md, "utf8"), before, "收紧权限不得改动正文");
 });
+
+test("会话级 speakerMap 一次映射整段会话，不再逐句选人", async (t) => {
+  await tempRoot(t);
+  const items = [
+    {speakerId: "spk_0", text: "I'm thinking about joining a weekend cooking class next month.", segmentIndex: 0},
+    {speakerId: "spk_1", text: "I have a boat for diving.", segmentIndex: 1},
+  ];
+  const result = await applyProfileCandidates({
+    confirm: true, sessionId: SESSION_ID, items,
+  }, {...OPTS, speakerMap: {spk_0: "anna", spk_1: "self"}});
+  assert.equal(result.added.notes, 1);
+  assert.equal(result.added.stories, 1);
+  const profile = await readProfile();
+  assert.equal(profile.people[0].peopleSlug, "anna");
+  assert.equal(profile.stories[0].cn, items[1].text);
+});
+
+test("未指定分节时按内容自动归类，且兼容中文分节名", async (t) => {
+  await tempRoot(t);
+  const result = await applyProfileCandidates({
+    confirm: true, sessionId: SESSION_ID,
+    items: [
+      {kind: "person", peopleSlug: "anna", text: "I'm studying cost management for cross-border e-commerce.", segmentIndex: 0},
+      {kind: "person", peopleSlug: "anna", section: "海南生活", text: "I want to walk around Hongcheng Lake Park.", segmentIndex: 1},
+    ],
+  }, OPTS);
+  const profile = await readProfile();
+  const sources = profile.sources.filter((s) => s.peopleSlug === "anna");
+  assert.equal(sources[0].section, "work");
+  assert.equal(sources[1].section, "hainan");
+});

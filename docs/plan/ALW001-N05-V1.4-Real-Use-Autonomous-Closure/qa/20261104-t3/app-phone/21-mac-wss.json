@@ -1,0 +1,33 @@
+{
+  "url": "wss://<tailnet-host>/asr?track=A&rate=16000&channels=1",
+  "events": [
+    {
+      "t": "open",
+      "ms": 23
+    },
+    {
+      "t": "message",
+      "ms": 24,
+      "type": "session",
+      "mock": false
+    },
+    {
+      "t": "message",
+      "ms": 426,
+      "type": "session",
+      "mock": false
+    },
+    {
+      "t": "message",
+      "ms": 1347,
+      "type": "session",
+      "mock": false
+    },
+    {
+      "t": "close",
+      "code": 1000,
+      "reason": "session-ended",
+      "totalMs": 1371
+    }
+  ]
+}

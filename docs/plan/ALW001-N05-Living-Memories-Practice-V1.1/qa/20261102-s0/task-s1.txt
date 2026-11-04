@@ -1,0 +1,25 @@
+你是 ALW-001 N05 V1.1 的 S1 执行者（People 主页去开发化，只改前端）。项目根：/Users/zzymima0000/Developer/coding/1.Active/alw-001-外语社交系统
+
+必读：`docs/plan/ALW001-N05-Living-Memories-Practice-V1.1/SDD-REVIEW-V1.1.md`（第三节 People 首页、第五节 S1）、`docs/plan/ALW001-N05-Living-Memories-Practice-V1.1/qa/20261102-s0/S0-REPORT.md`、`docs/handoff/HANDOFF.md`。
+
+## 写入边界（严格）
+可改：`socialmate-v1.2/source/V1.1-baseline.html`、`socialmate-v1.2/build-v12.py`（仅用于重新生成 `socialmate-v1.2/index.html`）、`socialmate-v1.2/index.html`（仅由 build 生成）。
+禁改：`socialmate-prototype/ai-gateway/**`（另一路正在改后端）、`android-poc/**`、`public/**`、`socialmate-prototype/public-share.*`、`sw.js`、`places-115.json`、`SocialMate-Data/**`。
+
+## 任务（S1）
+1. **People 主页去开发化**：首屏只留「我的人物」+ 搜索 + 新建联系人 + 真实联系人列表（低密度，显示最近记忆摘要）；删除/移出「演示人物、清空演示、恢复演示、合成 final、测试令牌、QA 统计、mock 回放」等全部开发控件。
+2. 上述控件迁至「右上角设置 → 高级 → 演示与测试」，可从设置进入并操作 3 人 9 段演示的恢复/清空；**默认演示模式关闭**，正式 People 不混入三名演示人物；演示环境有醒目「演示」标识，与原母版数据分离，清空只清演示副本。
+3. People 详情结构对齐 SDD：基础信息 / 兴趣与习惯 / 记忆时间线 / 下次聊天；**保留**既有五组资料、编辑、批量、撤回能力，不重做不删功能。
+4. 视觉与可用性：主字 ≥15–16sp、点按目标 ≥44dp；浅色默认，另提供深色/跟随系统且跨重启保持（若现有代码已有主题机制则复用，不新造）。
+5. 先读源码确认 People 页面现有渲染与演示数据来源，再改；改完用 `python3 socialmate-v1.2/build-v12.py` 重新生成 index.html。
+
+## 验收（真跑，贴退出码）
+- 新增 `verify-n05-s1.mjs`（Node + CDP 或服务端渲染断言，视现有测试方式）：①People 首屏 HTML/DOM 不含「演示人物/清空演示/恢复演示/合成final/测试令牌」等字样；②设置→高级→演示与测试入口存在且可触发恢复/清空；③演示默认关闭时真实 People 列表不含三名演示人物；④三名演示可恢复（3 人/9 段/54 句计数回读）；⑤详情四区块与编辑/批量/撤回可用。
+- `git diff --stat` 只出现允许文件；`places-115.json` 与 `public/**`/`public-share.*`/`sw.js` sha256 前后一致。
+- 手机装载最新 build（serial `REDACTED-SERIAL`，当前 0.8.1/36）：仅需启动 App 截 People 首屏一张证明无开发控件（不改 APK 版本号）。
+
+## 红线
+不跑全量回归；不 commit/push；不动真实 People 档案（前后 sha 一致）；不改预算；不新增 Tab。
+
+## 回报
+改动文件与 diff 摘要 + 每条验收命令与退出码 + verify-n05-s1 结论 + 截图路径 + 未完成项。40 行内。

@@ -1,0 +1,90 @@
+[
+  {
+    "recordId": "rec-20261103072022-16b79c",
+    "blockId": "blk-hc-1",
+    "revision": 2,
+    "providerId": "aws-polly-fake",
+    "segmentType": "phrase",
+    "locale": "en-US",
+    "voiceProfileId": "Ruth",
+    "textSha256": "cba94d780f20610729c59ba81907597fc92343c163cd1a38ae8c05e4d8ba838a",
+    "createdAt": "2026-11-03T09:55:16.580Z"
+  },
+  {
+    "recordId": "rec-20261103072022-16b79c",
+    "blockId": "blk-hc-1",
+    "revision": 2,
+    "providerId": "aws-polly-fake",
+    "segmentType": "enB",
+    "locale": "en-GB",
+    "voiceProfileId": "Brian",
+    "textSha256": "b3c10022c298706641baa054ca9032ad1eaae53b0a8ea574b0176d91392f9703",
+    "createdAt": "2026-11-03T09:55:14.306Z"
+  },
+  {
+    "recordId": "rec-20261103072022-16b79c",
+    "blockId": "blk-hc-1",
+    "revision": 2,
+    "providerId": "aws-polly-fake",
+    "segmentType": "enA",
+    "locale": "en-US",
+    "voiceProfileId": "Ruth",
+    "textSha256": "b3c10022c298706641baa054ca9032ad1eaae53b0a8ea574b0176d91392f9703",
+    "createdAt": "2026-11-03T09:52:54.753Z"
+  },
+  {
+    "recordId": "rec-20261103072022-16b79c",
+    "blockId": "blk-hc-1",
+    "revision": 2,
+    "providerId": "aws-polly-fake",
+    "segmentType": "enA",
+    "locale": "en-US",
+    "voiceProfileId": "Ruth",
+    "textSha256": "c1e4109b3e8078cc421d232af67b107fae021b6c065a671d991e602d5d446db5",
+    "createdAt": "2026-11-03T09:52:52.084Z"
+  },
+  {
+    "recordId": "rec-20261103072022-16b79c",
+    "blockId": "blk-hc-1",
+    "revision": 2,
+    "providerId": "aws-polly-fake",
+    "segmentType": "cn",
+    "locale": "zh-CN",
+    "voiceProfileId": "Zhiyu",
+    "textSha256": "b3452b5a6860a3b65797a80f89ff312bfa95d8131f71c47677bcf4b35df93887",
+    "createdAt": "2026-11-03T09:51:52.324Z"
+  },
+  {
+    "recordId": "selftest",
+    "blockId": "enA",
+    "revision": 1,
+    "providerId": "aws-polly-fake",
+    "segmentType": "enA",
+    "locale": "en-US",
+    "voiceProfileId": "Ruth",
+    "textSha256": "86e1de74820a9b252ba33b2eed445b0cd02c445b5f4b8007205aff1762d7301a",
+    "createdAt": "2026-11-03T09:40:28.193Z"
+  },
+  {
+    "recordId": "selftest",
+    "blockId": "selftest-cn",
+    "revision": 1,
+    "providerId": "aws-polly-fake",
+    "segmentType": "cn",
+    "locale": "zh-CN",
+    "voiceProfileId": "Zhiyu",
+    "textSha256": "e4861b8c2f2773b592aa87841e0d883e1815d3445315276c99d89fc29106527a",
+    "createdAt": "2026-11-03T04:47:51.411Z"
+  },
+  {
+    "recordId": "selftest",
+    "blockId": "enA",
+    "revision": 1,
+    "providerId": "aws-polly-fake",
+    "segmentType": "enA",
+    "locale": "en-US",
+    "voiceProfileId": "Ruth",
+    "textSha256": "6669fe92cf86cf943bfb82bed8e23579ee0f425ba4113b519051b6b9024af31d",
+    "createdAt": "2026-11-03T03:16:22.543Z"
+  }
+]

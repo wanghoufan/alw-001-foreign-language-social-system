@@ -1,0 +1,28 @@
+你是 ALW-001 N05 的「Android TTS 播放控制与可切换适配」执行者。项目根：/Users/zzymima0000/Developer/coding/1.Active/alw-001-外语社交系统
+
+必读：`docs/plan/ALW001-N05-Living-Memories-Practice-V1.1/TTS-PROVIDER-ADAPTER-DECISION-V1.0.md`（产品决策：自然度神经 TTS 为主，系统 TTS 仅 FALLBACK_ONLY）、`qa/20261102-s4/S4-RESULT.md`（现状：0.8.2/37，`TtsController.java` + `TtsSelfTestActivity.java` 已存在，中英分 voice）。
+
+## 写入边界
+可改/新建：`android-poc/**`（Java / Manifest / res / build.gradle / tools 脚本）。
+禁改：`socialmate-prototype/ai-gateway/**`（后端另一路正在加 `/v12/api/tts/*`）、`socialmate-v1.2/source/V1.1-baseline.html` 与 `index.html`、`public/**`、`public-share.*`、`sw.js`、`places-115.json`、`SocialMate-Data/**`。
+
+## 任务
+1. **保留并抽象**：现有 `TtsController` 不要删、不要重写为另一套；把它改造为 `TtsPlaybackController`（对外统一 `speak(SpeakRequest)/stop()/setRate()/setLoop()/state`），内部按 `providerId` 分派到：
+   - `RemoteTtsAdapter`：调 8791 `POST /v12/api/tts/synthesize` 取 `audioId` → `GET /v12/api/tts/audio/:audioId` 下载到私有缓存 → `MediaPlayer`/`ExoPlayer` 选中播放；支持 Range 与本地缓存命中，**同一段重复循环不得重复请求合成**；请求带现有配对短期令牌与同源头。
+   - `AndroidSystemTtsAdapter`：包装现有系统 `TextToSpeech`，标记 `FALLBACK_ONLY`，**只能由用户手动开启「临时系统声音」**，不得在远端失败时静默自动切换。
+   - `FakeTtsAdapter`：读 App 内预置音频（`res/raw` 或 assets），用于无网络验收。
+2. **SpeakRequest 字段**与计划一致：`requestId,recordId,blockId,revision,segmentType(cn|enA|enB|phrase),text,locale,accent,providerId,voiceProfileId,rate,style`；`text` 不得被改写。
+3. **播放行为**：循环 N 次只重放已缓存音频；切段/离页/onStop 停播并释放；0.75/0.9/1.0 倍速对本地音频用保留音高的变速（`PlaybackParams.setSpeed`+`setPitch(1.0)`）；远端不可用且用户未开系统声音 → 给可读错误与「重试/试听/切换」选项，不假成功。
+4. **UI 入口**（仅 Android 侧自测页或桥接口，不改网页）：设置里「朗读声音」显示当前 provider、可切 `remote/fake/system(临时)`；显示「系统声音仅供临时备用」提示。
+5. 版本升 **0.8.3 / versionCode 38**；`install -r` 保留数据；`dumpsys` 回读。
+
+## 验收（真跑，贴退出码；允许后端尚未就绪时用 `fake` 与 8791 已存在路由，缺路由记 NOT_RUN 不写 PASS）
+- `gradle assembleDebug` 退出码 0；APK SHA256 / 签名 / version。
+- 真机 `REDACTED-SERIAL`：①`fake` 播放成功（本地音频，有 AudioTrack 证据）；②循环 5 次只请求合成 1 次（用 adb logcat 断言合成请求计数或用后端计数接口回读）；③切段停播、停止生效；④倍速 0.75/1.0 音高不变（PlaybackParams 证据 + 时长差）；⑤远端不可达时错误可读、不自动切系统声音；⑥用户手动开「临时系统声音」后能播；⑦系统 TTS 路径仍标记 FALLBACK_ONLY。
+- 证据落 `docs/plan/ALW001-N05-Living-Memories-Practice-V1.1/qa/20261103-tts/android/`（截图、logcat 片段、APK 元数据、dumpsys）。
+
+## 红线
+不 commit/push；不卸载 App、不动真实数据；不配置厂商 Key、不发真实云 TTS 请求（默认 provider 必须是 `fake`）；不跑全量回归；不改 1 元预算。
+
+## 回报
+改动文件 + 构建/安装命令与退出码 + APK 元数据 + 真机逐项 PASS/PARTIAL/NOT_RUN + 证据路径 + 未完成项。30 行内。

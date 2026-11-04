@@ -32,6 +32,13 @@ final class AudioInputs {
         return fallback;
     }
 
+    static AudioDeviceInfo builtinMic(AudioManager am) {
+        for (AudioDeviceInfo d : am.getDevices(AudioManager.GET_DEVICES_INPUTS)) {
+            if (d.getType() == AudioDeviceInfo.TYPE_BUILTIN_MIC) return d;
+        }
+        return null;
+    }
+
     static String describe(AudioDeviceInfo d) {
         if (d == null) return "(无)";
         String type;
@@ -54,12 +61,37 @@ final class AudioInputs {
         }
     }
 
+    /** 开录前先读 ~200ms，全零说明接收器/发射器没声音，继续尝试下一组配置。 */
+    private static boolean hasSignal(AudioRecord rec) {
+        short[] buffer = new short[2048];
+        int frames = 0;
+        int nonZero = 0;
+        try {
+            rec.startRecording();
+            for (int i = 0; i < 4; i++) {
+                int got = rec.read(buffer, 0, buffer.length);
+                if (got <= 0) continue;
+                frames += got;
+                for (int j = 0; j < got; j++) {
+                    if (buffer[j] != 0) { nonZero++; break; }
+                }
+            }
+        } catch (Exception ignored) {
+        } finally {
+            try { rec.stop(); } catch (Exception ignored) {}
+        }
+        return frames > 0 && nonZero > 0;
+    }
+
     /** Tries sources, rates and stereo before mono. Caller must release() the returned record. */
     static AudioRecord open(AudioDeviceInfo preferred) throws Exception {
         String errors = "";
         for (int source : SOURCES) {
             for (int sampleRate : SAMPLE_RATES) {
-                for (int channels : new int[]{2, 1}) {
+                // 内置麦克风通常只有单声道；强行立体声会打开成功但全是静音。
+                // USB 双麦仍优先立体声，保留左右声道分离。
+                int[] channelOrder = preferred == null ? new int[]{1, 2} : new int[]{2, 1};
+                for (int channels : channelOrder) {
                     int mask = channels == 2 ? AudioFormat.CHANNEL_IN_STEREO : AudioFormat.CHANNEL_IN_MONO;
                     int min = AudioRecord.getMinBufferSize(sampleRate, mask, AudioFormat.ENCODING_PCM_16BIT);
                     if (min <= 0) {
@@ -79,6 +111,7 @@ final class AudioInputs {
                             throw new Exception("not initialized");
                         if (preferred != null && !rec.setPreferredDevice(preferred))
                             throw new Exception("cannot set preferred USB device");
+                        if (!hasSignal(rec)) throw new Exception("all-zero input (mic muted/off)");
                         return rec;
                     } catch (Exception e) {
                         errors += sourceName(source) + "/" + sampleRate + "/" + channels + ": "

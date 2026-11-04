@@ -1,0 +1,1 @@
+11-03 15:01:00.035 23065 23065 E SocialMateTts: error code=TTS_PROVIDER_NOT_CONFIGURED retryable=false message=Amazon Polly 尚未配置（无凭据）：不会发送文本、不会产生费用。请先切回本机语音，或补齐 AWS 凭据。 segment=cn provider=remote

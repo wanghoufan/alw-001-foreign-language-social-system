@@ -40,6 +40,33 @@ export const SECTIONS = {
 };
 const DEFAULT_SECTION = "preference";
 
+/** 允许传 section 的英文 key 或中文标题，两者等价。 */
+export function sectionKeyFor(value) {
+  const raw = String(value || "").trim();
+  if (!raw) return null;
+  if (Object.prototype.hasOwnProperty.call(SECTIONS, raw)) return raw;
+  for (const [key, title] of Object.entries(SECTIONS)) {
+    if (title === raw) return key;
+  }
+  return null;
+}
+
+/** 没有用户指定分节时的确定性关键词归类（本地规则，不联网）。 */
+export function classifySection(text) {
+  const value = String(text || "").toLowerCase();
+  const rules = [
+    ["work", /(cost|certificat|exam|study|work|job|shopee|tiktok|gmv|roi|sku|运营|成本|证书|考试|工作|上班|项目|学习|课程)/],
+    ["hainan", /(haidian|guoxing|hongcheng|haikou|hainan|海甸|国兴|红城湖|海口|海南|骑楼|万绿园)/],
+    ["plan", /(next month|tomorrow|saturday|sunday|plan|trip|travel|下个月|明天|周六|周日|计划|出差|旅行|请假)/],
+    ["interest", /(dive|diving|gym|fitness|coffee|run|running|hobby|潜水|健身|咖啡|跑步|爱好|喜欢)/],
+    ["common", /(we both|both of us|一起|都住|都喜欢|共同)/],
+  ];
+  for (const [key, rule] of rules) {
+    if (rule.test(value)) return key;
+  }
+  return DEFAULT_SECTION;
+}
+
 export function peopleRoot() {
   return process.env.SM_PEOPLE_DIR || DEFAULT_ROOT;
 }
@@ -372,7 +399,7 @@ export async function appendPeopleFacts(facts, {root = peopleRoot()} = {}) {
       skipped.push({reason: "EMPTY_TEXT", slug});
       continue;
     }
-    const sectionKey = Object.prototype.hasOwnProperty.call(SECTIONS, fact?.section) ? fact.section : DEFAULT_SECTION;
+    const sectionKey = sectionKeyFor(fact?.section) || DEFAULT_SECTION;
     const sectionTitle = SECTIONS[sectionKey];
     const file = path.join(root, slug, "00-profile.md");
     let original;

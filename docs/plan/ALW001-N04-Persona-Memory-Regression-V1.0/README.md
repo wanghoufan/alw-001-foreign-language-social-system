@@ -127,9 +127,9 @@ $ find SocialMate-Data/Demo/Conversations -name '*.json'| wc -l  → 9
 $ find SocialMate-Data/Demo/People -name 00-profile.md   → demo-oliver-uk / demo-maya-us / demo-jieun-kr
 ```
 
-### 验证 5：真机（WGBMXWDIAIFMPFCQ，`21091116AC`）
+### 验证 5：真机（REDACTED-SERIAL，`21091116AC`）
 
-APK：`versionCode=26 versionName=0.7.1`，SHA256 `a126dccae57e4c1b45803cffeca589e81d74cbe8a2f4390d2f26109c0afaa3e5`，`adb -s WGBMXWDIAIFMPFCQ install -r` 成功。
+APK：`versionCode=26 versionName=0.7.1`，SHA256 `a126dccae57e4c1b45803cffeca589e81d74cbe8a2f4390d2f26109c0afaa3e5`，`adb -s REDACTED-SERIAL install -r` 成功。
 
 | 截图 | 内容 |
 | --- | --- |
@@ -225,9 +225,9 @@ $ node docs/plan/ALW001-N04-Persona-Memory-Regression-V1.0/verify-pending-facts.
 
 第二次运行（`/tmp/n04-t2-verify-run2.json`）同样 `PASS 32 / failures 0`，before/after 文本与哈希完全一致 → 脚本可重复跑。
 
-### 验证 2：真机（WGBMXWDIAIFMPFCQ，`21091116AC`，Android 11）
+### 验证 2：真机（REDACTED-SERIAL，`21091116AC`，Android 11）
 
-APK：`versionCode=27 versionName=0.7.2`，SHA256 `465d9f22a39b12bc8032eb677150039c8824dd0b9c8a6c88a956ca851f162f89`；`adb -s WGBMXWDIAIFMPFCQ install -r` → `Success`，`firstInstallTime` 仍为 `2026-10-31 18:25:27`（保留用户数据）。
+APK：`versionCode=27 versionName=0.7.2`，SHA256 `465d9f22a39b12bc8032eb677150039c8824dd0b9c8a6c88a956ca851f162f89`；`adb -s REDACTED-SERIAL install -r` → `Success`，`firstInstallTime` 仍为 `2026-10-31 18:25:27`（保留用户数据）。
 
 | 截图 | 内容 |
 | --- | --- |
@@ -385,10 +385,10 @@ clearRestore: {clearedToZero:true, restoredToBaseline:true, demoQueueCleared:tru
         真实 People 41 文件 fe662283…0af4793；真实归档 4 文件 90d8a151… 均不变
 ```
 
-### 验证 5：真机（WGBMXWDIAIFMPFCQ，`21091116AC`，Android 11）
+### 验证 5：真机（REDACTED-SERIAL，`21091116AC`，Android 11）
 
 APK：`versionCode=28 versionName=0.7.3`，SHA256 `cd4cddcc123e9e39d20f6ca348ca3c014df7b8411ab7321e58dcab5c02e6147f`；
-`adb -s WGBMXWDIAIFMPFCQ install -r` → `Success`，`firstInstallTime` 仍为 `2026-10-31 18:25:27`（保留用户数据）。
+`adb -s REDACTED-SERIAL install -r` → `Success`，`firstInstallTime` 仍为 `2026-10-31 18:25:27`（保留用户数据）。
 截图（已复制到 `qa/20261102/shots/`，均取自本机 `adb exec-out screencap`）：
 
 | 截图 | 内容 |
@@ -481,7 +481,7 @@ Ji-eun  → What are you practising in English these days?
 
 - `verify-persona-profile.mjs`：39 项全 PASS（分组条数、单条编辑、删除、批量删 2 条、改分组、变更记录动作与条数、
   新增/修改/删除/改分组撤回、老数据归其他、令牌 401、跨源 403、真实 People sha256 不变）。
-- 真机 `WGBMXWDIAIFMPFCQ`（21091116AC / Android 11），版本 0.7.4 / vc29，
+- 真机 `REDACTED-SERIAL`（21091116AC / Android 11），版本 0.7.4 / vc29，
   APK sha256 `32df58fbe6b1513a3a10dafe22bdc1cc167791edc6d03c5270e06ac3adfca265`。
 - 14 张真机截图：`qa/20261102/shots/persona-*.png`；设备与截图清单：`qa/20261102/persona-profile-device.json`；
   脚本输出：`qa/20261102/persona-profile-verify.txt`。

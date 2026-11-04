@@ -20,7 +20,10 @@ export function createLiveAsrHub({maxListeners=2,heartbeatMs=20000}={}){
       status:String(event.status||"").slice(0,32),
       index:Number.isInteger(event.index)?event.index:null,
       startMs:Number.isFinite(event.startMs)?Math.max(0,event.startMs):0,
-      endMs:Number.isFinite(event.endMs)?Math.max(0,event.endMs):0
+      endMs:Number.isFinite(event.endMs)?Math.max(0,event.endMs):0,
+      // T2：只透传候选标识与数量，不透传逐字以外的任何服务端状态。
+      pendingId:event.pendingId?String(event.pendingId).slice(0,64):null,
+      pendingCount:Number.isInteger(event.pendingCount)?event.pendingCount:null
     };
   }
   function publish(event){

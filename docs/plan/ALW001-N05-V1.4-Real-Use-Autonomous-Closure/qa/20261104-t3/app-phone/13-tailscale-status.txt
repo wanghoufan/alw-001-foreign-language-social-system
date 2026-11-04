@@ -1,0 +1,4 @@
+100.125.100.15  mac-mini                     wanghoufan13@  macOS    -                                              
+100.91.121.33   3236741198redmi-note-12-pro  wanghoufan13@  android  -                                              
+100.66.102.99   cmcc4                        wanghoufan13@  android  offline, last seen 63d ago                     
+100.94.116.99   redmi-note-12t-pro           wanghoufan13@  android  active; relay "sfo", tx 749398544 rx 25685920  

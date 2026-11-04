@@ -1,0 +1,6 @@
+{"at":"2026-11-02T08:00:26.702Z","port":18792,"where":"top-1s","href":"http://127.0.0.1:18792/v12","hasBridge":false,"saveTextType":"undefined"}
+{"at":"2026-11-02T08:00:28.207Z","port":18792,"where":"top-iframe-state","present":true,"src":"http://127.0.0.1:18793/evil.html","contentWindowReadable":"cross-origin-blocked","href":"http://127.0.0.1:18792/v12","hasBridge":false,"saveTextType":"undefined"}
+{"at":"2026-11-02T08:00:28.701Z","port":18792,"where":"top-3s","href":"http://127.0.0.1:18792/v12","hasBridge":false,"saveTextType":"undefined"}
+{"at":"2026-11-02T08:00:29.903Z","port":18793,"where":"evil-load","origin":"http://127.0.0.1:18793","inFrame":false,"hasBridge":false,"saveTextType":"undefined","parentBridge":"absent","called":false,"returned":null,"threw":null}
+{"at":"2026-11-02T08:00:32.240Z","port":18792,"where":"top-6s-after-nav-attempt","href":"http://127.0.0.1:18792/v12","hasBridge":false,"saveTextType":"undefined"}
+{"at":"2026-11-02T08:00:33.909Z","port":18793,"where":"evil-4s","origin":"http://127.0.0.1:18793","inFrame":false,"hasBridge":false,"saveTextType":"undefined","parentBridge":"absent","called":false,"returned":null,"threw":null}

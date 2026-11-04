@@ -1,0 +1,2 @@
+local_8781_after_kill=000
+tailnet_8781_after_kill=502

@@ -1,0 +1,7 @@
+=== retry ui dump (04) ===
+UI hierchary dumped to: /sdcard/ui04b.xml
+=== browser pid & sockets ===
+31474
+=== window focus ===
+  mCurrentFocus=Window{f7cb9d4 u0 com.android.browser/com.android.browser.BrowserActivity}
+  mFocusedApp=ActivityRecord{ef2b565 u0 com.android.browser/.BrowserActivity t4175}

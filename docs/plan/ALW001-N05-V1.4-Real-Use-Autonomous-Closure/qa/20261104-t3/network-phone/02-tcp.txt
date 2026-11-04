@@ -1,0 +1,25 @@
+=== timestamp === 2026-11-04 10:39:35 +0800
+=== nc usage ===
+nc: Unknown option 'h' (see "nc --help")
+=== TCP 100.125.100.15:8443 (nc -w 5) ===
+rc=0
+=== TCP 100.125.100.15:10000 (nc -w 5) ===
+rc=0
+=== TCP 100.125.100.15:443 (nc -w 5) ===
+rc=0
+=== NEGATIVE CONTROL: closed port 59999 ===
+nc: connect: Connection refused
+rc=1
+=== NEGATIVE CONTROL: unroutable 100.125.100.15 port 1 ===
+nc: connect: Connection refused
+rc=1
+=== HTTP probe via nc: 8443 /v12 head ===
+HTTP/1.0 400 Bad Request
+
+Client sent an HTTP request to an HTTPS server.
+pipe_rc=0
+=== HTTP probe via nc: 443 /alw/health ===
+HTTP/1.0 400 Bad Request
+
+Client sent an HTTP request to an HTTPS server.
+pipe_rc=0

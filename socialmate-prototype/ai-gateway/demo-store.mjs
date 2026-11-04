@@ -23,7 +23,11 @@ import {parsePersonProfile} from "./person-detail.mjs";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = path.resolve(HERE, "..", "..");
-const DEFAULT_DEMO_ROOT = path.join(REPO_ROOT, "SocialMate-Data", "Demo");
+// 测试隔离用：只允许显式设置 SM_DEMO_ROOT 时把演示命名空间挪到临时目录，
+// 生产默认仍是仓库内 SocialMate-Data/Demo。真实 People 路径不受此变量影响。
+const DEFAULT_DEMO_ROOT = String(process.env.SM_DEMO_ROOT || "").trim()
+  ? path.resolve(String(process.env.SM_DEMO_ROOT).trim())
+  : path.join(REPO_ROOT, "SocialMate-Data", "Demo");
 const FIXTURE = path.join(REPO_ROOT, "docs", "plan",
   "ALW001-N04-Persona-Memory-Regression-V1.0", "fixtures", "demo-personas.json");
 const STATE = "state.json";
@@ -206,6 +210,14 @@ async function readJson(file) {
   }
 }
 
+/**
+ * 证据 ID：`<sessionId>#<segmentIndex>`。
+ * 任何一条 final 都必须能指回母版里真实存在的段；不能只凭一句自由文本。
+ */
+export function evidenceIdOf(sessionId, segmentIndex) {
+  return `${String(sessionId || "")}#${Number(segmentIndex)}`;
+}
+
 /** 待确认候选的稳定 ID：同一来源 + 同一文本永远得到同一 ID，重复注入不会变成两条。 */
 function pendingId(item) {
   return "pnd_" + crypto.createHash("sha1")
@@ -372,6 +384,57 @@ export async function readFixture() {
   return fixtureCache;
 }
 
+/**
+ * 母版唯一源索引：sessionId → {slug, segments: Map<index, textOriginal>}。
+ * 所有「final 原文」都必须经这里取，禁止在代码里另抄一份句子——
+ * 抄一份就必然出现「摘要当逐字原文」的错配（这正是 T1 要修的缺陷）。
+ */
+async function fixtureIndex() {
+  const {data, sha256} = await readFixture();
+  const map = new Map();
+  for (const persona of data.personas || []) {
+    for (const session of persona.sessions || []) {
+      const segments = new Map();
+      for (const [position, segment] of (session.segments || []).entries()) {
+        const index = Number.isFinite(Number(segment?.index)) ? Number(segment.index) : position;
+        segments.set(index, String(segment?.textOriginal ?? ""));
+      }
+      map.set(session.sessionId, {
+        slug: persona.slug, sessionId: session.sessionId, segments, fixtureSha256: sha256,
+      });
+    }
+  }
+  return {map, sha256};
+}
+
+/**
+ * 按 sessionId + segmentIndex 从母版逐字取原文（唯一源）。
+ * 段不存在、会话不存在一律 4xx 拒绝，绝不回退成「大概意思」的改写句。
+ */
+export async function readExactFromFixture(sessionId, segmentIndex) {
+  const id = String(sessionId || "").trim();
+  const index = Number(segmentIndex);
+  if (!id) throw fail(400, "SOURCE_SESSION_REQUIRED", "缺少 sessionId，无法证明原文来源");
+  if (!Number.isInteger(index) || index < 0) {
+    throw fail(400, "SOURCE_SEGMENT_INVALID", "segmentIndex 必须是非负整数");
+  }
+  const {map, sha256} = await fixtureIndex();
+  const session = map.get(id);
+  if (!session) throw fail(404, "SOURCE_SESSION_UNKNOWN", "母版里没有这个 sessionId，拒绝作为文章来源");
+  if (!session.segments.has(index)) {
+    throw fail(400, "SOURCE_SEGMENT_OUT_OF_RANGE",
+      `段号越界：${id} 只有 ${session.segments.size} 段，不存在第 ${index} 段`);
+  }
+  return {
+    slug: session.slug,
+    sessionId: id,
+    segmentIndex: index,
+    textOriginal: session.segments.get(index),
+    evidenceId: evidenceIdOf(id, index),
+    fixtureSha256: sha256,
+  };
+}
+
 /** 只读当前演示副本状态；不触发种入。 */
 export async function demoStatus() {
   const root = demoRoot();
@@ -453,6 +516,22 @@ function frontMatter(persona, sessions) {
     ...Object.values(SECTIONS).filter((title) => title !== "基本情况").flatMap((title) => [`# ${title}`, ""]),
     "",
   ].join("\n");
+}
+
+/** 从已解析的母版数据里同步取某段原文（用于种入时补 sourceExactText）。 */
+function exactSegmentText(fixtureData, sessionId, segmentIndex) {
+  const index = Number(segmentIndex);
+  for (const persona of fixtureData?.personas || []) {
+    for (const session of persona.sessions || []) {
+      if (session.sessionId !== sessionId) continue;
+      for (const [position, segment] of (session.segments || []).entries()) {
+        const at = Number.isFinite(Number(segment?.index)) ? Number(segment.index) : position;
+        if (at === index) return String(segment?.textOriginal ?? "");
+      }
+      return "";
+    }
+  }
+  return "";
 }
 
 /**
@@ -598,6 +677,14 @@ async function buildInto(target, {fixture}) {
       sessions,
       pending: normalizePending([{
         ...persona.pendingCandidate,
+        // 母版里的 pendingCandidate.text 是场景作者写的摘要，这里补上该段的逐字原文，
+        // 让「摘要 / 原文 / 证据 ID」三条信息在候选里同时可核。
+        sourceExactText: exactSegmentText(fixture.data, persona.pendingCandidate?.source?.sessionId,
+          persona.pendingCandidate?.source?.segmentIndex),
+        candidateFact: String(persona.pendingCandidate?.text || ""),
+        evidenceId: persona.pendingCandidate?.source?.sessionId
+          ? evidenceIdOf(persona.pendingCandidate.source.sessionId, persona.pendingCandidate.source.segmentIndex)
+          : null,
         source: persona.pendingCandidate?.source || null,
         demonstration: true,
         confirmed: false,
@@ -827,6 +914,11 @@ export async function readPersona(slug) {
     pending: (entry?.pending || []).map((item) => ({
       id: item.id,
       text: item.text,
+      // 摘要与原文分字段：text/sourceExactText 是母版逐字原文，candidateFact 是候选摘要。
+      candidateFact: item.candidateFact || "",
+      sourceExactText: item.sourceExactText || "",
+      evidenceId: item.evidenceId
+        || (item.source?.sessionId ? evidenceIdOf(item.source.sessionId, item.source.segmentIndex) : null),
       section: item.section || null,
       source: item.source || null,
       receivedAt: item.receivedAt || null,
@@ -884,7 +976,7 @@ const MONTH_ZH = {
 function questionForFact(text) {
   const source = String(text || "");
   const month = MONTHS.find((m) => new RegExp(`\\b${m}\\b`, "i").test(source)) || "";
-  if (/10\s*-?\s*k\b|10[- ]kilometre|kilometre race/i.test(source)) {
+  if (/10\s*-?\s*k\b|10[- ]kilometre|kilometre race|10\s*公里|公里比赛/i.test(source)) {
     return {
       en: `How is your 10K training${month ? ` for ${month}` : ""} going?`,
       zh: `你${month ? ` ${MONTH_ZH[month]}` : ""} 的 10 公里训练进展怎么样？`,
@@ -940,16 +1032,22 @@ const DEMO_GENERIC = [
 export function buildDemoPrep(confirmed, slug = "") {
   const facts = (Array.isArray(confirmed) ? confirmed : [])
     .filter((fact) => fact && fact.id && String(fact.text || "").trim());
-  // 排序：确认时间新的在前；同一时间按档案里的追加顺序（越靠后越新）。
+  // 排序：对话里确认的事实优先（有 sessionId/segmentIndex 来源），其次才轮到
+  // 手动补录的基本情况/职业这类字段；同类里确认时间新的在前，同一时间戳按档案顺序。
+  // 否则种入的「来自XX」「职业：未注明」会占满两条专属问题，问不出任何有用内容。
+  const fromConversation = (fact) => (fact?.origin === "conversation" ? 1 : 0);
   const ordered = facts
     .map((fact, index) => ({fact, index}))
-    .sort((a, b) => String(b.fact.source?.date || "").localeCompare(String(a.fact.source?.date || ""))
-      || b.index - a.index)
+    .sort((a, b) => fromConversation(b.fact) - fromConversation(a.fact)
+      || String(b.fact.source?.date || "").localeCompare(String(a.fact.source?.date || ""))
+      || a.index - b.index)
     .map((item) => item.fact);
   const personalized = [];
   const seen = new Set();
   for (const fact of ordered) {
-    const question = questionForFact(fact.text);
+    // 英文原文优先用于匹配问句模板：中文事实常常是英文原文的本地化版本，
+    // 只用中文会退回「上次你提到…」的通用模板，问不出内容。
+    const question = questionForFact(fact.textEn || fact.text);
     if (seen.has(question.en)) continue;
     seen.add(question.en);
     personalized.push({
@@ -971,27 +1069,53 @@ export function buildDemoPrep(confirmed, slug = "") {
 }
 
 /**
- * 演示用合成 final 回放：每次点一下，回放下一句未被用过的合成原文。
- * 文本来自 fixture 里同一段会话的可核对原句，来源 segmentIndex 真实存在。
+ * 演示用合成 final 回放：每次点一下，回放下一句未被用过的原文。
+ *
+ * 这里只保存**引用**（sessionId + segmentIndex + 分组），不保存句子本身：
+ * 正文一律由 readExactFromFixture 从母版 `textOriginal` 逐字读出，
+ * 因此不可能再出现「把摘要当成逐字 final」的错配（N04 V1.3 T1-1）。
+ * `candidateFact` 是给人看的候选摘要，与原文分字段存放，不参与逐字比对。
  */
-const REPLAY_FINALS = {
+const REPLAY_REFS = {
   "demo-oliver-uk": [{
-    text: "Oliver keeps his runs easy on the days after heavy lifting.",
-    section: "plan", sessionId: "sess_n04_demo_oliver_uk_3", segmentIndex: 1,
+    sessionId: "sess_n04_demo_oliver_uk_3", segmentIndex: 1, section: "plan",
+    candidateFact: "重训后的日子只做轻松跑。",
   }],
   "demo-maya-us": [{
-    text: "Maya wants to try casual local food in Haikou before any live music.",
-    section: "plan", sessionId: "sess_n04_demo_maya_us_3", segmentIndex: 5,
+    sessionId: "sess_n04_demo_maya_us_3", segmentIndex: 5, section: "plan",
+    candidateFact: "来海口先吃本地小吃，再去看现场音乐。",
   }],
   "demo-jieun-kr": [{
-    text: "Ji-eun noticed the shadows on the walls in her morning-light photo.",
-    section: "interest", sessionId: "sess_n04_demo_jieun_kr_3", segmentIndex: 3,
+    sessionId: "sess_n04_demo_jieun_kr_3", segmentIndex: 3, section: "interest",
+    candidateFact: "晨光照片里最先吸引她的是墙上的影子。",
   }],
 };
+
+/** 供 QA/前端展示：回放点位只有引用，没有可被改写的正文。 */
+export async function replayRefs() {
+  const out = {};
+  for (const [slug, refs] of Object.entries(REPLAY_REFS)) {
+    out[slug] = [];
+    for (const ref of refs) {
+      const exact = await readExactFromFixture(ref.sessionId, ref.segmentIndex);
+      out[slug].push({
+        sessionId: ref.sessionId, segmentIndex: ref.segmentIndex, section: ref.section,
+        candidateFact: ref.candidateFact, textOriginal: exact.textOriginal,
+        evidenceId: exact.evidenceId, fixtureSha256: exact.fixtureSha256,
+      });
+    }
+  }
+  return out;
+}
 
 /**
  * 注入一条演示 final（合成事件回放或显式文本）。
  * slug 为空时进入「未归属」队列，等用户选目标人物后才允许确认。
+ *
+ * 硬校验（全部在写入待确认队列之前）：
+ * - sessionId 必须真实存在于母版，段号必须存在（伪造段号 → 400/404，0 写入）；
+ * - 归属人物必须就是母版里这段会话的主人（错归属 → 400，0 写入）；
+ * - 显式文本必须与母版 `textOriginal` 逐字相同（改写/摘要冒充 → 400，0 写入）。
  */
 export async function injectDemoFinal({slug, text, sessionId, segmentIndex, section, confirm} = {}) {
   if (confirm !== true) throw fail(400, "CONFIRM_REQUIRED", "注入演示 final 需要显式确认（confirm:true）");
@@ -1005,21 +1129,47 @@ export async function injectDemoFinal({slug, text, sessionId, segmentIndex, sect
 
   let item;
   if (String(text || "").trim()) {
-    const clean = String(text).replace(/[\u0000-\u001f]/g, " ").replace(/\s+/g, " ").trim().slice(0, 300);
-    if (clean.length < 2) throw fail(400, "EMPTY_TEXT", "final 文本太短");
+    // 显式文本：仍然必须能对上母版某一段，且归属正确。
+    const exact = await readExactFromFixture(sessionId, segmentIndex);
+    const clean = String(text).replace(/[\u0000-\u001f]/g, " ").replace(/\s+/g, " ").trim();
+    if (clean !== exact.textOriginal) {
+      throw fail(400, "SOURCE_TEXT_MISMATCH",
+        "提交的文本与母版该段 textOriginal 不一致：原文不可改写，候选摘要请放在 candidateFact");
+    }
+    if (target && exact.slug !== target) {
+      throw fail(400, "SOURCE_OWNERSHIP_MISMATCH",
+        "该段不属于这个演示人物，拒绝按错误归属写入候选");
+    }
     item = {
-      text: clean,
+      text: exact.textOriginal,
       section: section || "preference",
-      source: {sessionId: sessionId || `demo-final-${Date.now()}`, segmentIndex: Number.isFinite(Number(segmentIndex)) ? Number(segmentIndex) : null},
+      candidateFact: "",
+      sourceExactText: exact.textOriginal,
+      evidenceId: exact.evidenceId,
+      source: {sessionId: exact.sessionId, segmentIndex: exact.segmentIndex},
     };
   } else {
-    const replay = (REPLAY_FINALS[target] || []).find((candidate) => {
-      const id = pendingId({text: candidate.text, source: {sessionId: candidate.sessionId, segmentIndex: candidate.segmentIndex}});
+    const refs = REPLAY_REFS[target] || [];
+    let replay = null;
+    for (const ref of refs) {
+      const exact = await readExactFromFixture(ref.sessionId, ref.segmentIndex);
+      if (exact.slug !== target) {
+        throw fail(500, "DEMO_REPLAY_REF_BROKEN",
+          `回放引用与母版归属不一致（${ref.sessionId} 属于 ${exact.slug}），拒绝注入`);
+      }
+      const id = pendingId({text: exact.textOriginal, source: {sessionId: exact.sessionId, segmentIndex: exact.segmentIndex}});
       const alreadyPending = (entry?.pending || []).some((p) => p.id === id);
-      return !alreadyPending;
-    });
+      if (!alreadyPending) { replay = {ref, exact}; break; }
+    }
     if (!replay) return {ok: true, added: false, duplicate: true, reason: "NO_REPLAY_LEFT", status: await demoStatus()};
-    item = {text: replay.text, section: replay.section, source: {sessionId: replay.sessionId, segmentIndex: replay.segmentIndex}};
+    item = {
+      text: replay.exact.textOriginal,
+      section: replay.ref.section,
+      candidateFact: replay.ref.candidateFact,
+      sourceExactText: replay.exact.textOriginal,
+      evidenceId: replay.exact.evidenceId,
+      source: {sessionId: replay.exact.sessionId, segmentIndex: replay.exact.segmentIndex},
+    };
   }
   item = {...item, confirmed: false, demonstration: true, receivedAt: new Date().toISOString()};
   item.id = pendingId(item);
@@ -1090,6 +1240,17 @@ export async function confirmDemoPending(slug, pendingIdValue, {confirm, attribu
   if (!item) throw fail(404, "PENDING_NOT_FOUND", "该待确认事实不存在（可能已处理）");
   if (!entry) throw fail(400, "ATTRIBUTION_REQUIRED", "说话人身份未确定：请先选择这条事实属于哪位演示人物");
 
+  // 写档案前再核一次来源：只信母版，不信客户端提交的段号/归属/原文。
+  const exact = await readExactFromFixture(item.source?.sessionId, item.source?.segmentIndex);
+  if (exact.slug !== entry.slug) {
+    throw fail(403, "SOURCE_OWNERSHIP_MISMATCH",
+      `这条候选来自 ${exact.slug} 的会话，不能写进 ${entry.slug} 的档案（0 写入）`);
+  }
+  if (item.sourceExactText && String(item.sourceExactText) !== exact.textOriginal) {
+    throw fail(409, "SOURCE_TEXT_TAMPERED",
+      "候选里的 sourceExactText 与母版该段不一致，拒绝写入（0 写入）");
+  }
+
   const confirmedAt = new Date().toISOString();
   const translated = DEMO_FACT_TEXT[item.text] || {};
   const textZh = translated.zh || item.text;
@@ -1137,6 +1298,9 @@ export async function confirmDemoPending(slug, pendingIdValue, {confirm, attribu
   return {
     ok: true, demo: true, synthetic: true, duplicate,
     confirmed: {text: item.text, section: item.section, source: item.source, confirmedAt,
+      evidenceId: evidenceIdOf(item.source?.sessionId, item.source?.segmentIndex),
+      sourceExactText: exact.textOriginal,
+      candidateFact: item.candidateFact || "",
       factId: written.added[0]?.key || null},
     pending: person.pending,
     prep: person.prep,
@@ -1150,7 +1314,11 @@ export async function listInbox() {
   const root = assertIsolated();
   const state = await readState(root);
   return (state?.inbox || []).map((item) => ({
-    id: item.id, text: item.text, section: item.section || null, source: item.source || null,
+    id: item.id, text: item.text, candidateFact: item.candidateFact || "",
+    sourceExactText: item.sourceExactText || "",
+    evidenceId: item.evidenceId
+      || (item.source?.sessionId ? evidenceIdOf(item.source.sessionId, item.source.segmentIndex) : null),
+    section: item.section || null, source: item.source || null,
     receivedAt: item.receivedAt || null, demonstration: true, attributed: false,
   }));
 }
@@ -1520,6 +1688,55 @@ export async function moveDemoFactsGroup(slug, factIds, group, {confirm} = {}) {
     ok: true, batchId, movedCount: moved.length, group: target, entries,
     person: await readPersona(ctx.slug), realPeopleUntouched: true,
   };
+}
+
+/**
+ * T2：把「用户已确认的实时会话事实」写进演示人物档案。
+ *
+ * 与手动新增的区别：必须带 sessionId + segmentIndex，来源行会写进主档，
+ * 因此可以用同一套 sm-src 标记做幂等（重复确认只会被 DUPLICATE 拦下，不双写）。
+ * 只写用户确认的那句 factText；逐字 final 不进档案、不进日志（隐私闸）。
+ */
+export async function addDemoConversationFact({
+  slug, text, section = "other", group = "other", sessionId, segmentIndex,
+  sourceLabel = "实时会话", confirm,
+} = {}) {
+  if (confirm !== true) throw fail(400, "CONFIRM_REQUIRED", "写入人物事实需要用户显式确认（confirm:true）");
+  assertIsolated();
+  const safe = assertSlug(slug);
+  const clean = cleanFactText(text);
+  if (clean.length < 2) throw fail(400, "EMPTY_FACT_TEXT", "确认的事实内容太短");
+  if (!String(sessionId || "").trim()) throw fail(400, "SESSION_ID_REQUIRED", "实时事实必须保留 sessionId");
+  if (!Number.isFinite(Number(segmentIndex))) throw fail(400, "SEGMENT_INDEX_REQUIRED", "实时事实必须保留 segmentIndex");
+  const target = GROUP_IDS.has(String(group)) ? String(group) : DEFAULT_GROUP;
+  const sectionKey = Object.prototype.hasOwnProperty.call(SECTIONS, section) ? section : "other";
+  const at = new Date().toISOString();
+
+  const written = await appendPeopleFacts([{
+    slug: safe, section: sectionKey, text: clean,
+    sessionId, segmentIndex, confirmedAt: at,
+  }], {root: demoPeopleRoot()});
+  const duplicate = written.skipped.some((item) => item.reason === "DUPLICATE");
+  if (!written.added.length && !duplicate) {
+    throw fail(500, "DEMO_FACT_WRITE_FAILED", `写入演示档案失败：${JSON.stringify(written.skipped)}`);
+  }
+  const factId = written.added[0]?.key || sourceKey(sessionId, segmentIndex, clean);
+
+  if (!duplicate) {
+    const meta = await readFactsMeta(safe, demoPeopleRoot());
+    meta.facts[factId] = {
+      group: target, textZh: clean,
+      textEn: hasChinese(clean) ? "" : clean,
+      origin: "conversation", createdAt: at, updatedAt: at,
+    };
+    await writeFactsMeta(safe, meta, demoPeopleRoot());
+    await appendChangelog([changelogEntry({
+      slug: safe, action: "add", source: sourceLabel,
+      summary: `新增：${shortText(clean)}`, factId,
+      after: {textZh: clean, textEn: hasChinese(clean) ? "" : clean, group: target},
+    })], demoRoot());
+  }
+  return {factId, duplicate, added: !duplicate, confirmedAt: at, textZh: clean, group: target};
 }
 
 /** 新增一条手动事实（中文为主；英文可在之后单独编辑）。 */

@@ -1,0 +1,14 @@
+{
+  "device": {
+    "serial": "REDACTED-SERIAL",
+    "model": "21091116AC",
+    "android": "11",
+    "sdk": "30",
+    "versionName": "0.8.1",
+    "versionCode": "36",
+    "apkSha256": "9971836f0d1cd34afceaf3063f3d8d3cba652faf1f7d3e753dc0d0f03e042296"
+  },
+  "gitHead": "fc2379c",
+  "gitDirty": 32,
+  "at": "2026-11-02T10:11:28.101Z"
+}

@@ -3,7 +3,7 @@
   "mode": "real-run",
   "synthetic": true,
   "device": {
-    "serial": "WGBMXWDIAIFMPFCQ",
+    "serial": "REDACTED-SERIAL",
     "model": "21091116AC",
     "android": "11",
     "versionName": "0.7.3",

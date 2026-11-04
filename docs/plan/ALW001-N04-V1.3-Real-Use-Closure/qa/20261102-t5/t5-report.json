@@ -1,0 +1,360 @@
+{
+  "summary": {
+    "total": 32,
+    "pass": 28,
+    "fail": 0,
+    "notRun": 4,
+    "verdict": "PARTIAL"
+  },
+  "checks": [
+    {
+      "group": "preflight",
+      "id": "device-version",
+      "status": "PASS",
+      "detail": {
+        "versionName": "0.8.1",
+        "versionCode": "36",
+        "expected": "0.8.1/36"
+      }
+    },
+    {
+      "group": "preflight",
+      "id": "apk-sha-matches-record",
+      "status": "PASS",
+      "detail": {
+        "apkSha256": "9971836f0d1cd34afceaf3063f3d8d3cba652faf1f7d3e753dc0d0f03e042296",
+        "recorded": "9971836f0d1cd34afceaf3063f3d8d3cba652faf1f7d3e753dc0d0f03e042296"
+      }
+    },
+    {
+      "group": "preflight",
+      "id": "install-r-preserved-data",
+      "status": "PASS",
+      "detail": {
+        "firstInstallBefore": "2026-10-31 18:25:27",
+        "firstInstallAfter": "2026-10-31 18:25:27",
+        "lastUpdateBefore": "2026-11-02 17:50:41",
+        "lastUpdateAfter": "2026-11-02 18:17:35"
+      }
+    },
+    {
+      "group": "preflight",
+      "id": "git-snapshot-recorded",
+      "status": "PASS",
+      "detail": {
+        "headAtBuild": "fc2379cdc990",
+        "headNow": "fc2379cdc990",
+        "dirtyAtBuild": "33"
+      }
+    },
+    {
+      "group": "preflight",
+      "id": "reproducible-build",
+      "status": "PASS",
+      "detail": {
+        "note": "clean 构建两次，APK 与 classes.dex 字节一致"
+      }
+    },
+    {
+      "group": "preflight",
+      "id": "signing-certificate",
+      "status": "PASS",
+      "detail": {
+        "certSha256": "8e82a7975008e8ec87ff0f2ecadf495b5263effa34aaec9ab6f135ebea911cf3"
+      }
+    },
+    {
+      "group": "demo",
+      "id": "demo-3-9-54",
+      "status": "PASS",
+      "detail": {
+        "personas": 3,
+        "sessions": 9,
+        "segments": 54,
+        "pending": 3
+      }
+    },
+    {
+      "group": "demo",
+      "id": "demo-personas-listed",
+      "status": "PASS",
+      "detail": {
+        "names": [
+          "Oliver Reed",
+          "Maya Torres",
+          "Ji-eun Park"
+        ]
+      }
+    },
+    {
+      "group": "demo",
+      "id": "prep-2-personal-1-generic",
+      "status": "PASS",
+      "detail": [
+        {
+          "slug": "demo-oliver-uk",
+          "personal": 2,
+          "generic": true,
+          "questions": [
+            "Last time you mentioned: \"Wants to try surfing in Hainan.\" — how is that going?",
+            "Have you found a routine that works for your gym mornings?"
+          ]
+        },
+        {
+          "slug": "demo-maya-us",
+          "personal": 2,
+          "generic": true,
+          "questions": [
+            "Have you made any new posters for local bands?",
+            "What's the best small gig you've seen recently?"
+          ]
+        },
+        {
+          "slug": "demo-jieun-kr",
+          "personal": 2,
+          "generic": true,
+          "questions": [
+            "What have you been photographing lately?",
+            "Which café have you enjoyed most recently?"
+          ]
+        }
+      ]
+    },
+    {
+      "group": "demo",
+      "id": "persona-facts-not-shared",
+      "status": "PASS",
+      "detail": [
+        {
+          "slug": "demo-oliver-uk",
+          "conversationFacts": [
+            "奥利弗每周有三个早晨做力量训练。",
+            "奥利弗正在练习，目标是完成第一个标准引体向上。",
+            "Wants to try surfing in Hainan."
+          ]
+        },
+        {
+          "slug": "demo-maya-us",
+          "conversationFacts": [
+            "玛雅为本地小型乐队设计海报。",
+            "玛雅喜欢小型现场音乐演出。"
+          ]
+        },
+        {
+          "slug": "demo-jieun-kr",
+          "conversationFacts": [
+            "智恩喜欢拍摄老街。",
+            "比起拥挤的酒吧，智恩更喜欢安静的咖啡店。"
+          ]
+        }
+      ]
+    },
+    {
+      "group": "demo",
+      "id": "real-people-untouched",
+      "status": "PASS",
+      "detail": {
+        "peopleSha256Before": "78482d07840f5f3b41e8b1c857b592e03fcaf3c57713d970b405efc4953534d3",
+        "peopleSha256After": "78482d07840f5f3b41e8b1c857b592e03fcaf3c57713d970b405efc4953534d3"
+      }
+    },
+    {
+      "group": "session",
+      "id": "outbox-drained-2xx",
+      "status": "PASS",
+      "detail": {
+        "pending": 0,
+        "lastSyncedAt": "2026-11-02 18:28",
+        "ackHttpStatus": 201,
+        "ackSessionId": "sess_20261102T102615_e52f2f",
+        "tokenSource": "device-pairing",
+        "retryExhausted": false
+      }
+    },
+    {
+      "group": "session",
+      "id": "exported-and-ack",
+      "status": "PASS",
+      "detail": {
+        "files": [
+          "sess_20261102T102615_e52f2f.ack.json",
+          "sess_20261102T102615_e52f2f.json"
+        ]
+      }
+    },
+    {
+      "group": "session",
+      "id": "mac-md-json-present",
+      "status": "PASS",
+      "detail": {
+        "files": [
+          "../../../../Documents/SocialMate/Conversations/2026/11/SocialMate-2026-11-02-102615-sess_20261102T102615_e52f2f.json",
+          "../../../../Documents/SocialMate/Conversations/2026/11/SocialMate-2026-11-02-102615-sess_20261102T102615_e52f2f.md"
+        ]
+      }
+    },
+    {
+      "group": "session",
+      "id": "mac-verbatim-final",
+      "status": "PASS",
+      "detail": {
+        "textOriginal": "Should try surfing in my arm.",
+        "mock": false,
+        "provider": "tencent",
+        "startMs": 640,
+        "endMs": 2090
+      }
+    },
+    {
+      "group": "session",
+      "id": "mac-md-contains-original",
+      "status": "PASS",
+      "detail": {
+        "mdSha256": "df46d547640f59fd8bba0d228d1b0c4f2b4c4d922f9c3a6ee20f34ce749d978d"
+      }
+    },
+    {
+      "group": "session",
+      "id": "saf-export-readable",
+      "status": "PASS",
+      "detail": {
+        "bytes": 319,
+        "path": "/sdcard/Download/SocialMate-sess_20261102T102615_e52f2f.md"
+      }
+    },
+    {
+      "group": "session",
+      "id": "asr-mock-false-budget",
+      "status": "PASS",
+      "detail": {
+        "limitCny": 1,
+        "spentDeltaCny": 0.012022,
+        "calls": "22→23",
+        "remainingCny": 0.789751
+      }
+    },
+    {
+      "group": "offline",
+      "id": "offline-evidence-present",
+      "status": "PASS",
+      "detail": {
+        "shot": "50-offline-readonly.png",
+        "snapshotBytes": 9355,
+        "note": "断 adb reverse 后强制重启 App，出现原生「离线只读模式」面板（3 人 / 9 段 / 54 句 + 本地原文列表）"
+      }
+    },
+    {
+      "group": "offline",
+      "id": "offline-no-write-success",
+      "status": "PASS",
+      "detail": {
+        "note": "离线面板明确写「清空/恢复/上传都不会执行，也不会显示成功」"
+      }
+    },
+    {
+      "group": "sec",
+      "id": "no-write-ticket-403",
+      "status": "PASS",
+      "detail": {
+        "status": 403,
+        "code": "WRITE_TICKET_REQUIRED"
+      }
+    },
+    {
+      "group": "sec",
+      "id": "cross-origin-403",
+      "status": "PASS",
+      "detail": {
+        "status": 403,
+        "code": "ORIGIN_REJECTED"
+      }
+    },
+    {
+      "group": "sec",
+      "id": "forged-segment-4xx",
+      "status": "PASS",
+      "detail": {
+        "status": 400,
+        "code": "SOURCE_SEGMENT_OUT_OF_RANGE"
+      }
+    },
+    {
+      "group": "sec",
+      "id": "unpaired-write-401",
+      "status": "PASS",
+      "detail": {
+        "status": 401,
+        "code": "UNAUTHORIZED"
+      }
+    },
+    {
+      "group": "sec",
+      "id": "archive-token-not-in-apk",
+      "status": "PASS",
+      "detail": {
+        "tokenLength": 48,
+        "found": false
+      }
+    },
+    {
+      "group": "docs",
+      "id": "docs-mention-0.8.1",
+      "status": "PASS",
+      "detail": {
+        "CHANGELOG": true,
+        "HANDOFF": true,
+        "STATUS": true
+      }
+    },
+    {
+      "group": "docs",
+      "id": "handoff-size-limit",
+      "status": "PASS",
+      "detail": {
+        "bytes": 4714,
+        "lines": 45
+      }
+    },
+    {
+      "group": "docs",
+      "id": "no-stale-current-version",
+      "status": "PASS",
+      "detail": {
+        "hits": []
+      }
+    },
+    {
+      "group": "notrun",
+      "id": "phone-tailscale-authorized",
+      "status": "NOT_RUN",
+      "detail": {
+        "reason": "手机 Tailscale 仍未登录到本 tailnet（T4 已确认），需用户本人在手机上授权"
+      }
+    },
+    {
+      "group": "notrun",
+      "id": "physical-usb-unplug",
+      "status": "NOT_RUN",
+      "detail": {
+        "reason": "数据线仍在供电/ADB；已用 adb reverse --remove-all 断唯一数据通道做等价验证"
+      }
+    },
+    {
+      "group": "notrun",
+      "id": "third-party-markdown-viewer",
+      "status": "NOT_RUN",
+      "detail": {
+        "reason": "系统无默认 Markdown 查看器，可用查看器需接受第三方隐私政策，未代为同意"
+      }
+    },
+    {
+      "group": "notrun",
+      "id": "real-human-double-voice",
+      "status": "NOT_RUN",
+      "detail": {
+        "reason": "本轮音频为 macOS say 合成（SYNTHETIC），真人双人/BOYA 需真人知情同意"
+      }
+    }
+  ],
+  "at": "2026-11-02T10:35:29.910Z"
+}

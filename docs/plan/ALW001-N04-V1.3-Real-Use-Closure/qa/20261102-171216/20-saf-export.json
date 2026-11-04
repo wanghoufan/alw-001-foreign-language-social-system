@@ -1,0 +1,14 @@
+{
+  "found": true,
+  "path": "/sdcard/Download/SocialMate-sess_20261102T092052_bc60b9.md",
+  "bytes": 514,
+  "sha256": "7216126a6df7c12ed6a5240b42af60f440f21e7071ea682f86d86f15dab73dd1",
+  "exportedVia": "ACTION_CREATE_DOCUMENT (SAF) → DocumentsUI Downloads",
+  "visibleInSystemFileManager": true,
+  "fileManagerScreenshot": "20-saf-filemanager.png",
+  "systemResolverListed": true,
+  "resolverScreenshot": "20-saf-resolver.png",
+  "contentShown": false,
+  "openedBy": "resolver-only",
+  "note": "系统文件管理器中可见并可被系统解析；但该 ROM 无默认 Markdown/纯文本查看器，UC/TXT 阅读器需接受第三方隐私政策，未代替用户同意，故“打开后看到内容”记 NOT_RUN"
+}

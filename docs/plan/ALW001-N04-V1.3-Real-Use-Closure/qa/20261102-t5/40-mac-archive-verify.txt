@@ -1,0 +1,53 @@
+# Mac archive files @ 2026-11-02T18:28:53+08:00
+-rw-------@ 1 zzymima0000  staff  770 Nov  2 18:28 /Users/zzymima0000/Documents/SocialMate/Conversations/2026/11/SocialMate-2026-11-02-102615-sess_20261102T102615_e52f2f.json
+-rw-------@ 1 zzymima0000  staff  531 Nov  2 18:28 /Users/zzymima0000/Documents/SocialMate/Conversations/2026/11/SocialMate-2026-11-02-102615-sess_20261102T102615_e52f2f.md
+--- sha256 ---
+df46d547640f59fd8bba0d228d1b0c4f2b4c4d922f9c3a6ee20f34ce749d978d  /Users/zzymima0000/Documents/SocialMate/Conversations/2026/11/SocialMate-2026-11-02-102615-sess_20261102T102615_e52f2f.md
+75c0776ea98d02f381d0a5fc359a106edf24ba62c7680e76fcd7819c37cba0ed  /Users/zzymima0000/Documents/SocialMate/Conversations/2026/11/SocialMate-2026-11-02-102615-sess_20261102T102615_e52f2f.json
+--- md ---
+# SocialMate 会话记录
+
+- 会话 ID：sess_20261102T102615_e52f2f
+- 开始（UTC）：2026-11-02T10:26:15.508Z
+- 结束（UTC）：2026-11-02T10:27:00.654Z
+- 应用版本：0.8.1
+- 授权：录音=是 / 留存并导出=是 / 云端 AI=否
+- 记录版本：1
+
+> 以下为 ASR 原始转写，保留识别错误与原语言，未经 AI 改写。
+> 说话人仅为聚类编号，不代表真实身份。
+
+## 原始转写
+
+- [00:00.640–00:02.090 · 说话人 spk_0 · 轨道 mix · tencent · real]
+  Should try surfing in my arm.
+--- json ---
+{
+  "contentHash": "b67450230c00136c69422a6d3b16446e4f9b68e57091fe1bd5fc6534a31956d1",
+  "session": {
+    "schemaVersion": 1,
+    "sessionId": "sess_20261102T102615_e52f2f",
+    "startedAt": "2026-11-02T10:26:15.508Z",
+    "endedAt": "2026-11-02T10:27:00.654Z",
+    "appVersion": "0.8.1",
+    "consent": {
+      "recording": true,
+      "retention": true,
+      "cloudAi": false
+    },
+    "revision": 1,
+    "segments": [
+      {
+        "eventId": "2a082049-1edd-49ef-9f4b-805b011eeac3",
+        "startMs": 640,
+        "endMs": 2090,
+        "receivedAt": "2026-11-02T10:26:18.607Z",
+        "speakerId": "spk_0",
+        "track": "mix",
+        "provider": "tencent",
+        "mock": false,
+        "textOriginal": "Should try surfing in my arm."
+      }
+    ]
+  }
+}

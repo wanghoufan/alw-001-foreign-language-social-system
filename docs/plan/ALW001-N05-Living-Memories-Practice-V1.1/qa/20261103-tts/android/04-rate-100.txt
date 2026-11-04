@@ -1,0 +1,124 @@
+11-03 09:02:42.235 D/AudioTrack(  970): pause(226): 0xf42c7800, prior state:STATE_STOPPED
+11-03 09:02:42.236 D/AudioTrack(  970): stop(226): 0xf42c7800, prior state:STATE_FLUSHED
+11-03 09:02:42.237 D/AudioTrack(  970): setVolume(226): 0xf42c7800, left = 1.000000, right = 1.000000
+11-03 09:02:42.239 D/AudioTrack(  970): setVolume(226): 0xf42c7800, left = 1.000000, right = 1.000000
+11-03 09:02:42.240 D/AudioTrack(  970): start(226): 0xf42c7800, prior state:STATE_FLUSHED
+11-03 09:02:42.270 E/AudioFlinger_Threads(  714): open /proc/970/cmdline error
+11-03 09:02:42.270 I/AudioFlinger_Threads(  714): setAppName(), name=[], active=[1]
+11-03 09:02:42.272 I/SocialMateTts(31284): PlaybackParams loop 3/5 speed=0.9 pitch=1.0 rate=0.9
+11-03 09:02:42.273 I/SocialMateTts(31284): play start loop=3/5 rate=0.9 speed=0.9 pitch=1.0 provider=fake
+11-03 09:02:42.281 D/AudioFlinger_Threads(  714): 0xb4000075877113c0:threadLoop_write write data to hw, mixerStatus 2, muted count 28
+11-03 09:02:42.296 I/SocialMateTts(31284): selftest event playing loop=3/5
+11-03 09:02:42.300 D/AudioTrack(  970): getTimestamp_l(226): device stall time corrected using current time 55668210817779
+11-03 09:02:42.302 I/SocialMateTts(31284): PlaybackParams live change speed=1.0 pitch=1.0 rate=1.0
+11-03 09:02:42.302 I/SocialMateTts(31284): rate set 1.0
+11-03 09:02:42.318 I/SocialMateTts(31284): selftest event rate loop=0/0
+11-03 09:02:42.335 I/SocialMateTts(31284): selftest event loop loop=0/0
+11-03 09:02:42.336 I/SocialMateTts(31284): provider set fake
+11-03 09:02:42.348 I/SocialMateTts(31284): selftest event provider loop=0/0
+11-03 09:02:42.350 D/AudioTrack(  970): pause(226): 0xf42c7800, prior state:STATE_ACTIVE
+11-03 09:02:42.350 E/AudioFlinger_Threads(  714): open /proc/970/cmdline error
+11-03 09:02:42.350 I/AudioFlinger_Threads(  714): setAppName(), name=[], active=[0]
+11-03 09:02:42.367 D/AudioTrack(  970): stop(226): 0xf42c7800, prior state:STATE_FLUSHED
+11-03 09:02:42.367 D/AudioTrack(  970): setVolume(226): 0xf42c7800, left = 1.000000, right = 1.000000
+11-03 09:02:42.367 D/AudioTrack(  970): start(226): 0xf42c7800, prior state:STATE_FLUSHED
+11-03 09:02:42.367 E/AudioFlinger_Threads(  714): open /proc/970/cmdline error
+11-03 09:02:42.367 I/AudioFlinger_Threads(  714): setAppName(), name=[], active=[1]
+11-03 09:02:42.377 D/AudioTrack(  970): ~AudioTrack(226): 0xf42c7800
+11-03 09:02:42.377 D/AudioTrack(  970): ~AudioTrack(sessionID=1633)
+11-03 09:02:42.377 I/SocialMateTts(31284): player released
+11-03 09:02:42.377 D/AudioTrack(  970): stop(226): 0xf42c7800, prior state:STATE_ACTIVE
+11-03 09:02:42.377 D/AudioTrack(  970): stop(226): called with 0 frames delivered
+11-03 09:02:42.378 E/AudioFlinger_Threads(  714): open /proc/970/cmdline error
+11-03 09:02:42.378 I/AudioFlinger_Threads(  714): setAppName(), name=[], active=[0]
+11-03 09:02:42.378 D/AudioTrack(  970): stop(226): 0xf42c7800 stop done
+11-03 09:02:42.378 I/SocialMateTts(31284): speak request id=req-adb-1793667762348 segment=enA provider=fake locale=en-US rate=1.0 loop=3 chars=19 textSha=0df7e51c2bd4
+11-03 09:02:42.387 D/AudioFlinger_Threads(  714): 0xb4000075877113c0:threadLoop_write write muted data to hw, mixerStatus 0 start, mId 13, mBytesWritten 2416640
+11-03 09:02:42.398 I/SocialMateTts(31284): selftest event preparing loop=0/0
+11-03 09:02:42.399 I/SocialMateTts(31284): fake prepare segment=enA file=tts_preset_en.wav cacheHit=true prepares=13
+11-03 09:02:42.417 I/SocialMateTts(31284): selftest adb speak segment=enA loop=3 rate=1.0 provider=fake → {"ok":true,"code":"OK","state":"preparing","providerId":"fake","segmentType":"enA","locale":"en-US","rate":1,"loop":3,"textSha256":"0df7e51c2bd4fea0e8986b217e55e39507cc0e61a573da8ec39ae984aed90a9e"}
+11-03 09:02:42.423 I/SocialMateTts(31284): selftest adapter fake prepare segment=enA cacheHit=true prepares=13
+11-03 09:02:42.431 I/SocialMateTts(31284): selftest provider → fake · 远端 http://127.0.0.1:8791 / serverProvider fake | 系统声音仅供临时备用：正式朗读走远端神经 TTS；远端失败不会自动切系统声音。
+11-03 09:02:42.441 I/SocialMateTts(31284): prepare ok provider=fake file=tts_preset_en.wav bytes=40044 cacheHit=true source=local-preset audioId=fake-tts_preset_en.wav warning=FAKE_PRESET_AUDIO
+11-03 09:02:42.452 I/SocialMateTts(31284): selftest event prepared loop=0/3
+11-03 09:02:42.488 I/SocialMateTts(31284): media prepared fileMs=1250 loopTotal=3
+11-03 09:02:42.492 I/SocialMateTts(31284): PlaybackParams loop 1/3 speed=1.0 pitch=1.0 rate=1.0
+11-03 09:02:42.493 I/SocialMateTts(31284): play start loop=1/3 rate=1.0 speed=1.0 pitch=1.0 provider=fake
+11-03 09:02:42.501 I/SocialMateTts(31284): selftest event playing loop=1/3
+11-03 09:02:42.520 D/AudioTrack(  970): INSP: type=audio,case=1,set=0xf42c7b80,stream_type=3,sample_rate=16000,format=0x1,channel_mask=0x1,frame_count=8184,flags=0x0,notification_frames=0,session_id=1641,transfer_type=0,uid=10319,pid=31284
+11-03 09:02:42.520 D/AudioTrack(  970): INSP: type=audio,case=1,attributes=1,content_type=1,usage=1,source=-1,flags=0x800
+11-03 09:02:42.520 D/AudioTrack(  970): set(sessionID=1641)
+11-03 09:02:42.520 D/AudioTrack(  970): set(): Building AudioTrack with attributes: usage = 1, content = 1, flags = 0x800, tags = []
+11-03 09:02:42.525 D/AudioFlinger_Threads(  714): Client defaulted notificationFrames to 2728 for frameCount 8184
+11-03 09:02:42.532 D/AudioTrack(  970): createTrack_l(227): 0xf42c7b80, mCblk = 0xeccc4000, mLatency = 532, mAfLatency = 21, frameCount = 8184, mSampleRate = 16000, mFlags = 0, mReqFrameCount = 8184, mNotificationFramesAct = 2728
+11-03 09:02:42.534 D/AudioTrack(  970): setVolume(227): 0xf42c7b80, left = 1.000000, right = 1.000000
+11-03 09:02:42.535 D/AudioTrack(  970): setVolume(227): 0xf42c7b80, left = 1.000000, right = 1.000000
+11-03 09:02:42.535 D/AudioTrack(  970): start(227): 0xf42c7b80, prior state:STATE_STOPPED
+11-03 09:02:42.578 E/AudioFlinger_Threads(  714): open /proc/970/cmdline error
+11-03 09:02:42.578 I/AudioFlinger_Threads(  714): setAppName(), name=[], active=[1]
+11-03 09:02:42.580 D/AudioTrack(  970): getTimestamp_l(227): device stall time corrected using current time 55668490207317
+11-03 09:02:42.603 D/AudioFlinger_Threads(  714): 0xb4000075877113c0:threadLoop_write write data to hw, mixerStatus 2, muted count 9
+11-03 09:02:42.642 D/AudioFlinger_Threads(  714): mixer(0xb4000075877113c0) throttle end: throttle time(1)
+11-03 09:02:43.348 D/AudioTrack(  970): stop(227): 0xf42c7b80, prior state:STATE_ACTIVE
+11-03 09:02:43.348 D/AudioTrack(  970): stop(227): called with 20000 frames delivered
+11-03 09:02:43.348 E/AudioFlinger_Threads(  714): open /proc/970/cmdline error
+11-03 09:02:43.348 I/AudioFlinger_Threads(  714): setAppName(), name=[], active=[0]
+11-03 09:02:43.350 D/AudioTrack(  970): stop(227): 0xf42c7b80 stop done
+11-03 09:02:43.839 D/AudioFlinger_Threads(  714): 0xb4000075877113c0:threadLoop_write write muted data to hw, mixerStatus 0 start, mId 13, mBytesWritten 2973696
+11-03 09:02:43.914 D/AudioTrack(  970): pause(227): 0xf42c7b80, prior state:STATE_STOPPED
+11-03 09:02:43.915 I/SocialMateTts(31284): play complete loop=1/3 wallMs=1422 fileMs=1250 rate=1.0
+11-03 09:02:43.930 I/SocialMateTts(31284): selftest state → {"ok":true,"code":"OK","providerId":"fake","providerLabel":"本地预置音频","fallbackOnly":false,"systemFallbackEnabled":false,"remoteServerProvider":"fake","phase":"playing","playing":true,"rate":1,"loop":3,"loopIndex":1,"loopTotal":3,"lastWallMs":1422,"lastFileMs":1250,"synthRequests":0,"fakePrepares":13,"audioId":"fake-tts_preset_en.wav","source":"local-preset","cacheHit":true,"voiceId":"fake-preset","modelVersion":"fake-preset-v1","warning":"FAKE_PRESET_AUDIO","cacheKey":"3e6d1fdcb203","segmentType":"enA","locale":"en-US","requestId":"req-adb-1793667762348","textSha256":"0df7e51c2bd4fea0e8986b217e55e39507cc0e61a573da8ec39ae984aed90a9e"}
+11-03 09:02:43.941 I/SocialMateTts(31284): selftest event loop_done loop=1/3
+11-03 09:02:43.941 I/SocialMateTts(31284): replay loop=2/3 (cached file, no synth)
+11-03 09:02:44.393 D/AudioTrack(  970): pause(227): 0xf42c7b80, prior state:STATE_STOPPED
+11-03 09:02:44.394 D/AudioTrack(  970): stop(227): 0xf42c7b80, prior state:STATE_FLUSHED
+11-03 09:02:44.396 D/AudioTrack(  970): setVolume(227): 0xf42c7b80, left = 1.000000, right = 1.000000
+11-03 09:02:44.399 D/AudioTrack(  970): setVolume(227): 0xf42c7b80, left = 1.000000, right = 1.000000
+11-03 09:02:44.400 D/AudioTrack(  970): start(227): 0xf42c7b80, prior state:STATE_FLUSHED
+11-03 09:02:44.441 E/AudioFlinger_Threads(  714): open /proc/970/cmdline error
+11-03 09:02:44.441 I/AudioFlinger_Threads(  714): setAppName(), name=[], active=[1]
+11-03 09:02:44.444 I/SocialMateTts(31284): PlaybackParams loop 2/3 speed=1.0 pitch=1.0 rate=1.0
+11-03 09:02:44.445 I/SocialMateTts(31284): play start loop=2/3 rate=1.0 speed=1.0 pitch=1.0 provider=fake
+11-03 09:02:44.457 D/AudioFlinger_Threads(  714): 0xb4000075877113c0:threadLoop_write write data to hw, mixerStatus 2, muted count 29
+11-03 09:02:44.485 I/SocialMateTts(31284): selftest event playing loop=2/3
+11-03 09:02:45.225 D/AudioTrack(  970): stop(227): 0xf42c7b80, prior state:STATE_ACTIVE
+11-03 09:02:45.225 D/AudioTrack(  970): stop(227): called with 20000 frames delivered
+11-03 09:02:45.225 E/AudioFlinger_Threads(  714): open /proc/970/cmdline error
+11-03 09:02:45.226 I/AudioFlinger_Threads(  714): setAppName(), name=[], active=[0]
+11-03 09:02:45.227 D/AudioTrack(  970): stop(227): 0xf42c7b80 stop done
+11-03 09:02:45.716 D/AudioFlinger_Threads(  714): 0xb4000075877113c0:threadLoop_write write muted data to hw, mixerStatus 0 start, mId 13, mBytesWritten 3694592
+11-03 09:02:45.792 D/AudioTrack(  970): pause(227): 0xf42c7b80, prior state:STATE_STOPPED
+11-03 09:02:45.792 I/SocialMateTts(31284): play complete loop=2/3 wallMs=1348 fileMs=1250 rate=1.0
+11-03 09:02:45.854 I/SocialMateTts(31284): selftest state → {"ok":true,"code":"OK","providerId":"fake","providerLabel":"本地预置音频","fallbackOnly":false,"systemFallbackEnabled":false,"remoteServerProvider":"fake","phase":"playing","playing":true,"rate":1,"loop":3,"loopIndex":2,"loopTotal":3,"lastWallMs":1348,"lastFileMs":1250,"synthRequests":0,"fakePrepares":13,"audioId":"fake-tts_preset_en.wav","source":"local-preset","cacheHit":true,"voiceId":"fake-preset","modelVersion":"fake-preset-v1","warning":"FAKE_PRESET_AUDIO","cacheKey":"3e6d1fdcb203","segmentType":"enA","locale":"en-US","requestId":"req-adb-1793667762348","textSha256":"0df7e51c2bd4fea0e8986b217e55e39507cc0e61a573da8ec39ae984aed90a9e"}
+11-03 09:02:45.899 I/SocialMateTts(31284): selftest event loop_done loop=2/3
+11-03 09:02:45.899 I/SocialMateTts(31284): replay loop=3/3 (cached file, no synth)
+11-03 09:02:46.352 D/AudioTrack(  970): pause(227): 0xf42c7b80, prior state:STATE_STOPPED
+11-03 09:02:46.353 D/AudioTrack(  970): stop(227): 0xf42c7b80, prior state:STATE_FLUSHED
+11-03 09:02:46.354 D/AudioTrack(  970): setVolume(227): 0xf42c7b80, left = 1.000000, right = 1.000000
+11-03 09:02:46.357 D/AudioTrack(  970): setVolume(227): 0xf42c7b80, left = 1.000000, right = 1.000000
+11-03 09:02:46.358 D/AudioTrack(  970): start(227): 0xf42c7b80, prior state:STATE_FLUSHED
+11-03 09:02:46.403 E/AudioFlinger_Threads(  714): open /proc/970/cmdline error
+11-03 09:02:46.403 I/AudioFlinger_Threads(  714): setAppName(), name=[], active=[1]
+11-03 09:02:46.406 I/SocialMateTts(31284): PlaybackParams loop 3/3 speed=1.0 pitch=1.0 rate=1.0
+11-03 09:02:46.407 I/SocialMateTts(31284): play start loop=3/3 rate=1.0 speed=1.0 pitch=1.0 provider=fake
+11-03 09:02:46.420 D/AudioFlinger_Threads(  714): 0xb4000075877113c0:threadLoop_write write data to hw, mixerStatus 2, muted count 33
+11-03 09:02:46.451 I/SocialMateTts(31284): selftest event playing loop=3/3
+11-03 09:02:47.187 D/AudioTrack(  970): stop(227): 0xf42c7b80, prior state:STATE_ACTIVE
+11-03 09:02:47.187 D/AudioTrack(  970): stop(227): called with 20000 frames delivered
+11-03 09:02:47.188 E/AudioFlinger_Threads(  714): open /proc/970/cmdline error
+11-03 09:02:47.188 I/AudioFlinger_Threads(  714): setAppName(), name=[], active=[0]
+11-03 09:02:47.190 D/AudioTrack(  970): stop(227): 0xf42c7b80 stop done
+11-03 09:02:47.678 D/AudioFlinger_Threads(  714): 0xb4000075877113c0:threadLoop_write write muted data to hw, mixerStatus 0 start, mId 13, mBytesWritten 4448256
+11-03 09:02:47.754 D/AudioTrack(  970): pause(227): 0xf42c7b80, prior state:STATE_STOPPED
+11-03 09:02:47.755 I/SocialMateTts(31284): play complete loop=3/3 wallMs=1348 fileMs=1250 rate=1.0
+11-03 09:02:47.816 I/SocialMateTts(31284): selftest state → {"ok":true,"code":"OK","providerId":"fake","providerLabel":"本地预置音频","fallbackOnly":false,"systemFallbackEnabled":false,"remoteServerProvider":"fake","phase":"playing","playing":true,"rate":1,"loop":3,"loopIndex":3,"loopTotal":3,"lastWallMs":1348,"lastFileMs":1250,"synthRequests":0,"fakePrepares":13,"audioId":"fake-tts_preset_en.wav","source":"local-preset","cacheHit":true,"voiceId":"fake-preset","modelVersion":"fake-preset-v1","warning":"FAKE_PRESET_AUDIO","cacheKey":"3e6d1fdcb203","segmentType":"enA","locale":"en-US","requestId":"req-adb-1793667762348","textSha256":"0df7e51c2bd4fea0e8986b217e55e39507cc0e61a573da8ec39ae984aed90a9e"}
+11-03 09:02:47.855 I/SocialMateTts(31284): selftest event loop_done loop=3/3
+11-03 09:02:47.855 I/SocialMateTts(31284): loop finished total=3 synthRequests=0 fakePrepares=13
+11-03 09:02:47.895 I/SocialMateTts(31284): selftest state → {"ok":true,"code":"OK","providerId":"fake","providerLabel":"本地预置音频","fallbackOnly":false,"systemFallbackEnabled":false,"remoteServerProvider":"fake","phase":"finished","playing":false,"rate":1,"loop":3,"loopIndex":3,"loopTotal":3,"lastWallMs":1348,"lastFileMs":1250,"synthRequests":0,"fakePrepares":13,"audioId":"fake-tts_preset_en.wav","source":"local-preset","cacheHit":true,"voiceId":"fake-preset","modelVersion":"fake-preset-v1","warning":"FAKE_PRESET_AUDIO","cacheKey":"3e6d1fdcb203","segmentType":"enA","locale":"en-US","requestId":"req-adb-1793667762348","textSha256":"0df7e51c2bd4fea0e8986b217e55e39507cc0e61a573da8ec39ae984aed90a9e"}
+11-03 09:02:47.920 I/SocialMateTts(31284): selftest event finished loop=0/3
+11-03 09:02:47.922 D/AudioTrack(  970): pause(227): 0xf42c7b80, prior state:STATE_STOPPED
+11-03 09:02:47.922 D/AudioTrack(  970): stop(227): 0xf42c7b80, prior state:STATE_FLUSHED
+11-03 09:02:47.929 D/AudioTrack(  970): ~AudioTrack(227): 0xf42c7b80
+11-03 09:02:47.929 D/AudioTrack(  970): ~AudioTrack(sessionID=1641)
+11-03 09:02:47.930 I/SocialMateTts(31284): player released
+11-03 09:02:47.930 D/AudioTrack(  970): stop(227): 0xf42c7b80, prior state:STATE_FLUSHED

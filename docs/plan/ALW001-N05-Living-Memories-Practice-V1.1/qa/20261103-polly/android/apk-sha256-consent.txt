@@ -1,0 +1,1 @@
+66318df341129d45a6aa6f3f6ca4cbf159ef3d774c08c27578b06b5f84e92c22  android-poc/app/build/outputs/apk/debug/app-debug.apk

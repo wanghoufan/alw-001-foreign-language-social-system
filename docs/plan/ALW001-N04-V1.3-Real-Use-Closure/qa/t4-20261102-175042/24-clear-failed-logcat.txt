@@ -1,0 +1,21 @@
+--------- beginning of system
+11-02 18:01:26.582  1335  3268 I ActivityManager: Force stopping app.socialmate.dualmic appid=10319 user=0: from process:18025
+11-02 18:01:26.584  1335  3268 D AutoStartManagerService: prepare force stop p:15397 s: 19
+11-02 18:01:26.585  1335  3268 I ActivityManager: Killing 15397:app.socialmate.dualmic/u0a319 (adj 0): stop app.socialmate.dualmic due to from process:18025
+11-02 18:01:26.586  1335  3268 W Niel-PreloadController: notify...pkgName=app.socialmate.dualmic, userId=0, processName=app.socialmate.dualmic, pid=15397, reason=stop app.socialmate.dualmic due to from process:18025
+11-02 18:01:26.598  1335  3268 I Process : PerfMonitor : current process sending signal quiet. PID: 15397 SIG: 9
+11-02 18:01:26.599  1335  1369 I Process : PerfMonitor : current process killing process group. PID: 15397
+11-02 18:01:26.604  1335  3268 W ActivityTaskManager: Force removing ActivityRecord{4665d28 u0 app.socialmate.dualmic/.AsrActivity t996 f}}: app died, no saved state
+11-02 18:01:26.605  1335  3268 W WindowManager: Changing focus fromWindow{9d171e8 mode=0 rootTaskId=996 u0 app.socialmate.dualmic/app.socialmate.dualmic.AsrActivity} to null displayId=0 Callers=com.android.server.wm.RootWindowContainer.updateFocusedWindowLocked:477 com.android.server.wm.WindowManagerService.updateFocusedWindowLocked:6174 com.android.server.wm.ActivityRecord.commitVisibility:4817 com.android.server.wm.ActivityRecord.onRemovedFromDisplay:3617 
+11-02 18:01:26.606  1335  3268 D WindowManager: Input focus has changed to null
+11-02 18:01:26.621  1335  3268 V ActivityTaskManager: onConfigurationChanged overrideWindowingMode = 0 isMiuiMagicModeChanged = false prevWindowingMode = 1 isEnterFreeformMode = false isOutFreeformMode = + falsealreadySetFreeformBounds: false
+11-02 18:01:26.622  1335  3268 I chatty  : uid=1000(system) Binder:1335_10 identical 4 lines
+11-02 18:01:26.622  1335  3268 V ActivityTaskManager: onConfigurationChanged overrideWindowingMode = 0 isMiuiMagicModeChanged = false prevWindowingMode = 1 isEnterFreeformMode = false isOutFreeformMode = + falsealreadySetFreeformBounds: false
+11-02 18:01:26.622  1335  3268 V ActivityTaskManager: onConfigurationChanged overrideWindowingMode = 3 isMiuiMagicModeChanged = false prevWindowingMode = 3 isEnterFreeformMode = false isOutFreeformMode = + falsealreadySetFreeformBounds: false
+11-02 18:01:26.622  1335  3268 V ActivityTaskManager: onConfigurationChanged overrideWindowingMode = 4 isMiuiMagicModeChanged = false prevWindowingMode = 4 isEnterFreeformMode = false isOutFreeformMode = + falsealreadySetFreeformBounds: false
+11-02 18:01:26.623  1335  1582 D MiuiFreeFormGestureController: displayConfigurationChange
+11-02 18:01:26.623  1335  3268 I MiuiMultiWindowSplitUI: mUiMode = 16  current ui mode = 16
+11-02 18:01:26.623  1335  3268 I MiuiMultiWindowSplitUI: orientation has not changed, mDisplayWidth: 1080, current height: 2400
+11-02 18:01:26.624  1335  3268 I ActivityTaskManager: Config changes=200 {1.0 ?mcc?mnc [zh_CN] ldltr sw392dp w392dp h790dp 440dpi nrml long port night finger -keyb/v/h -nav/h winConfig={ mBounds=Rect(0, 0 - 1080, 2400) mAppBounds=Rect(0, 96 - 1080, 2270) mWindowingMode=fullscreen mDisplayWindowingMode=fullscreen mActivityType=undefined mAlwaysOnTop=undefined mRotation=ROTATION_0} s.20 themeChanged=0 themeChangedFlags=0 extraData = Bundle[{}]}
+11-02 18:01:26.646  1335  3704 V ActivityManager: Death received in com.android.server.am.ActivityManagerService$AppDeathRecipient@b0dc546 for thread android.os.BinderProxy@11c8307
+11-02 18:01:26.653  1335  3268 I WindowManager: Override config changes=200 {1.0 ?mcc?mnc [zh_CN] ldltr sw392dp w392dp h790dp 440dpi nrml long port night finger -keyb/v/h -nav/h winConfig={ mBounds=Rect(0, 0 - 1080, 2400) mAppBounds=Rect(0, 96 - 1080, 2270) mWindowingMode=fullscreen mDisplayWindowingMode=fullscreen mActivityType=undefined mAlwaysOnTop=undefined mRotation=ROTATION_0} s.20 themeChanged=0 themeChangedFlags=0 extraData = Bundle[{

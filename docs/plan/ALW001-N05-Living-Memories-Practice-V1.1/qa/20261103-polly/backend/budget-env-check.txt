@@ -1,0 +1,7 @@
+# 预算 env 放行路径（独立进程，2026-11-03）
+SM_POLLY_BUDGET_CNY=1:
+limit=1
+SM_POLLY_BUDGET_CNY=abc:
+limit=0
+recordProviderBilling(0.01):
+{"limitCny":1,"spentCny":0.01,"entries":1}

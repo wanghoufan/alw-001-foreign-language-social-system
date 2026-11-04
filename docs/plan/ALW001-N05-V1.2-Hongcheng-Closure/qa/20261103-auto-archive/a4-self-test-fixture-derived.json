@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "materialId": "lm-fa760f1f00826c3d",
+  "sourceType": "self_test",
+  "derivation": "rules",
+  "derivationStatus": "normalized",
+  "cloudDerivation": "awaiting_consent",
+  "original": {
+    "pathRef": "archive_inbox:self_test/20261103/c81046f4-qa-fixture.md",
+    "sha256": "c81046f45f895d44fad7018db4d0c9561c291da05df1938ecf65e3f05866a12a",
+    "bytes": 236
+  },
+  "sessionCount": 1,
+  "sessions": [
+    {
+      "sessionId": "s1",
+      "learnedAt": "",
+      "sourceZh": "测试。",
+      "reference": "Test.",
+      "firstAttempt": "Test.",
+      "comparison": "Test.",
+      "learningPoint": "- test phrase",
+      "keyPhrases": [
+        "test phrase"
+      ],
+      "pronunciation": "not_evaluated_no_audio"
+    }
+  ],
+  "weakPhrases": [
+    "test phrase"
+  ],
+  "pronunciation": "not_evaluated_no_audio",
+  "note": "自测导出没有完整音频，因此不评价发音；仅分析表达与学习重点。"
+}

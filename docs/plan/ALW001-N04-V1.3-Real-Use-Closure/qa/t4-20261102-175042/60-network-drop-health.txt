@@ -1,0 +1,6 @@
+ALW-001 服务健康检查 2026-11-02 18:14:15
+  8790     OK     tencent-asr pid=2491
+  8791     OK     private-ui+ai pid=2491
+  8781     OK     archive pid=2531
+  8782     OK     demo-archive pid=2631
+RESULT: HEALTHY（4/4）

@@ -1,0 +1,45 @@
+{
+  "serial": "REDACTED-SERIAL",
+  "at": "2026-11-02T08:02:57.497Z",
+  "steps": [
+    {
+      "name": "01-current-url",
+      "value": "http://127.0.0.1:18793/evil.html"
+    },
+    {
+      "name": "02-private-page-bridge",
+      "value": "{\"hasBridge\":false,\"saveText\":\"undefined\",\"openRecordingPanel\":\"undefined\"}"
+    },
+    {
+      "name": "03-private-page-bridge-json",
+      "value": "{\"hasBridge\":false}"
+    },
+    {
+      "name": "04-cross-origin-frame-state",
+      "value": "{\"src\":\"http://127.0.0.1:18793/evil.html\",\"hasContentWindow\":true,\"frameHref\":\"about:blank\",\"frameReadable\":true,\"frameBridge\":\"undefined\",\"frameBridgeReadable\":true}"
+    },
+    {
+      "name": "04b-frame-tree",
+      "value": [
+        {
+          "id": "C2DBCC46E914FAC4A132D03882A1E816",
+          "url": "http://127.0.0.1:18793/evil.html",
+          "securityOrigin": "http://127.0.0.1:18793"
+        },
+        {
+          "id": "58F3DE0A0C04F6472EE4FD7A965123B6",
+          "url": ":",
+          "securityOrigin": "://"
+        }
+      ]
+    },
+    {
+      "name": "05-after-external-nav-attempt",
+      "value": "{\"href\":\"http://127.0.0.1:18793/evil.html\",\"before\":null}"
+    },
+    {
+      "name": "06-bridge-after-steps",
+      "value": "{\"hasBridge\":false}"
+    }
+  ]
+}

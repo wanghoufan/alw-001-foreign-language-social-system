@@ -1,0 +1,207 @@
+{
+  "fixtureVersion": "T3-20261104",
+  "note": "10 组固定话题输入。profileConfirmed 统一为 null：SocialMate-Data/Profile/current.json 的 stories 为空，people 里的 Mia 事实属于对方，不能当作‘我’的已确认资料。messages 模拟对方最近 2-3 句，保持口语与中英混合（t01/t05/t08/t10 为混句）；t01/t02/t04 含轻度 ASR 拼写漂移。",
+  "person": {
+    "name": "Mia Chen（陈美玲）",
+    "slug": "Mia-Chen"
+  },
+  "selfConfirmed": {
+    "stories": [],
+    "note": "profile.stories 为空；不得生成第一人称经历断言"
+  },
+  "cases": [
+    {
+      "id": "t01",
+      "topic": "天气",
+      "key": "weather",
+      "prevTopic": "other",
+      "person": "Mia",
+      "profileConfirmed": null,
+      "messages": [
+        "今天 humid 得不行，在 Haikou 也算夸张了。",
+        "I can't tell if it's going to rain later.",
+        "The wether app keeps changing its mind."
+      ],
+      "focus": [
+        "weather",
+        "humid",
+        "rain",
+        "umbrella"
+      ],
+      "anomaly": true,
+      "anomalyNote": "wether → weather（ASR 拼写漂移）"
+    },
+    {
+      "id": "t02",
+      "topic": "海口初到",
+      "key": "arrival",
+      "prevTopic": "weather",
+      "person": "Mia",
+      "profileConfirmed": null,
+      "messages": [
+        "I just arived in Haikou last night.",
+        "I don't really know anyone here yet."
+      ],
+      "focus": [
+        "arrived",
+        "new",
+        "haikou",
+        "settle"
+      ],
+      "anomaly": true,
+      "anomalyNote": "arived → arrived（ASR 拼写漂移）"
+    },
+    {
+      "id": "t03",
+      "topic": "跑步健身",
+      "key": "running",
+      "prevTopic": "arrival",
+      "person": "Mia",
+      "profileConfirmed": null,
+      "messages": [
+        "I try to go jogging three times a week.",
+        "I usually run along the water in the morning."
+      ],
+      "focus": [
+        "run",
+        "jog",
+        "morning",
+        "waterfront"
+      ],
+      "anomaly": false
+    },
+    {
+      "id": "t04",
+      "topic": "咖啡",
+      "key": "coffee",
+      "prevTopic": "running",
+      "person": "Mia",
+      "profileConfirmed": null,
+      "messages": [
+        "I really like cofee, especially a latte.",
+        "There's a small cafe near my place I want to try."
+      ],
+      "focus": [
+        "coffee",
+        "latte",
+        "cafe"
+      ],
+      "anomaly": true,
+      "anomalyNote": "cofee → coffee（ASR 拼写漂移）"
+    },
+    {
+      "id": "t05",
+      "topic": "海南景点",
+      "key": "hainan",
+      "prevTopic": "coffee",
+      "person": "Mia",
+      "profileConfirmed": null,
+      "messages": [
+        "这周想去看看 Qilou Old Street。",
+        "Is Haikou Bay nice at sunset?"
+      ],
+      "focus": [
+        "haikou",
+        "qilou",
+        "sunset",
+        "bay"
+      ],
+      "anomaly": false
+    },
+    {
+      "id": "t06",
+      "topic": "工作或软件",
+      "key": "software",
+      "prevTopic": "hainan",
+      "person": "Mia",
+      "profileConfirmed": null,
+      "messages": [
+        "Right now I'm breaking down the cost structure of each SKU.",
+        "I have a deadline on Friday, so it's a busy week."
+      ],
+      "focus": [
+        "work",
+        "project",
+        "deadline",
+        "sku"
+      ],
+      "anomaly": false
+    },
+    {
+      "id": "t07",
+      "topic": "旅行",
+      "key": "travel",
+      "prevTopic": "software",
+      "person": "Mia",
+      "profileConfirmed": null,
+      "messages": [
+        "I'm thinking about a short trip next month.",
+        "Maybe somewhere near Hainan, but not too far."
+      ],
+      "focus": [
+        "trip",
+        "travel",
+        "route",
+        "plan"
+      ],
+      "anomaly": false
+    },
+    {
+      "id": "t08",
+      "topic": "周末安排",
+      "key": "weekend",
+      "prevTopic": "travel",
+      "person": "Mia",
+      "profileConfirmed": null,
+      "messages": [
+        "周六下午想去 Hong Chen lake park 走走。",
+        "会不会很多人？"
+      ],
+      "focus": [
+        "weekend",
+        "saturday",
+        "afternoon",
+        "park"
+      ],
+      "anomaly": false
+    },
+    {
+      "id": "t09",
+      "topic": "音乐生活",
+      "key": "music",
+      "prevTopic": "weekend",
+      "person": "Mia",
+      "profileConfirmed": null,
+      "messages": [
+        "I've had the same song on repeat all week.",
+        "Do you go to any live shows in Haikou?"
+      ],
+      "focus": [
+        "music",
+        "song",
+        "live",
+        "show"
+      ],
+      "anomaly": false
+    },
+    {
+      "id": "t10",
+      "topic": "陌生话题转场",
+      "key": "other",
+      "prevTopic": "music",
+      "person": "Mia",
+      "profileConfirmed": null,
+      "messages": [
+        "我最近在学 pottery，比看起来难。",
+        "It's harder than it looks."
+      ],
+      "focus": [
+        "pottery",
+        "learn",
+        "try"
+      ],
+      "anomaly": false,
+      "anomalyNote": "未知话题必须落到 other，不能误判为具体话题"
+    }
+  ]
+}

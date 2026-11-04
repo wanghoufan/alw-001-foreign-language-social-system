@@ -1,0 +1,15 @@
+{
+  "observedAt": "2026-11-02T16:33:00+08:00",
+  "method": "第二段真实录音（合成语音 2.0s）产生 1 条候选 → 停止 → WebView reload → pagehide sendBeacon /v12/api/live/clear",
+  "pendingBeforeLeave": 1,
+  "pendingAfterLeave": 0,
+  "confirmedFactsPreserved": true,
+  "profileHashesRestored": true,
+  "commands": [
+    "curl -s http://127.0.0.1:8791/v12/api/live/pending | jq .count   # 1",
+    "node tools/t2/cdp-eval.mjs --expr \"window.SocialMateAndroid.reloadPage()\"",
+    "curl -s http://127.0.0.1:8791/v12/api/live/pending | jq .count   # 0",
+    "shasum -a 256 SocialMate-Data/Demo/People/*/00-profile.md"
+  ],
+  "note": "逐字候选只在内存；离开页面后为 0，已确认事实与人物档案不受影响。"
+}

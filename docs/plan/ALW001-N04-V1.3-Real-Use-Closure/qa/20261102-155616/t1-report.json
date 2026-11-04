@@ -1,0 +1,512 @@
+{
+  "result": "PASS",
+  "task": "SM-ALW001-20261102-N04-V13/T1",
+  "base": "http://127.0.0.1:8791",
+  "startedAt": "2026-11-02T08:10:45.070Z",
+  "finishedAt": "2026-11-02T08:11:48.111Z",
+  "fixture": {
+    "path": "docs/plan/ALW001-N04-Persona-Memory-Regression-V1.0/fixtures/demo-personas.json",
+    "sha256": "5513b086aff7066ee08995f4aae857ed8a4848aaac51249bf9309dc9a1288263",
+    "version": "N04-DEMO-1.0"
+  },
+  "device": {
+    "serial": null
+  },
+  "exactness": [
+    {
+      "slug": "demo-oliver-uk",
+      "sessionId": "sess_n04_demo_oliver_uk_3",
+      "segmentIndex": 1,
+      "textOriginal": "I keep the runs easy after heavy lifting days.",
+      "candidateFact": "重训后的日子只做轻松跑。",
+      "evidenceId": "sess_n04_demo_oliver_uk_3#1",
+      "charEqual": true
+    },
+    {
+      "slug": "demo-maya-us",
+      "sessionId": "sess_n04_demo_maya_us_3",
+      "segmentIndex": 5,
+      "textOriginal": "Maybe food first, then some live music.",
+      "candidateFact": "来海口先吃本地小吃，再去看现场音乐。",
+      "evidenceId": "sess_n04_demo_maya_us_3#5",
+      "charEqual": true
+    },
+    {
+      "slug": "demo-jieun-kr",
+      "sessionId": "sess_n04_demo_jieun_kr_3",
+      "segmentIndex": 3,
+      "textOriginal": "The shadows on the walls.",
+      "candidateFact": "晨光照片里最先吸引她的是墙上的影子。",
+      "evidenceId": "sess_n04_demo_jieun_kr_3#3",
+      "charEqual": true
+    }
+  ],
+  "staleParaphrases": [
+    {
+      "slug": "demo-oliver-uk",
+      "status": 400,
+      "code": "SOURCE_TEXT_MISMATCH"
+    },
+    {
+      "slug": "demo-maya-us",
+      "status": 400,
+      "code": "SOURCE_TEXT_MISMATCH"
+    },
+    {
+      "slug": "demo-jieun-kr",
+      "status": 400,
+      "code": "SOURCE_TEXT_MISMATCH"
+    }
+  ],
+  "totals": {
+    "checks": 49,
+    "passed": 49,
+    "failed": 0
+  },
+  "failures": [],
+  "checks": [
+    {
+      "id": "health-200",
+      "pass": true,
+      "detail": 200
+    },
+    {
+      "id": "baseline-restore",
+      "pass": true,
+      "detail": {
+        "status": 200,
+        "s": {
+          "ok": true,
+          "demo": true,
+          "isolatedRoot": "SocialMate-Data/Demo",
+          "realRoot": "SocialMate-Data/People",
+          "seeded": true,
+          "cleared": false,
+          "clearedAt": null,
+          "seededAt": "2026-11-02T08:10:45.134Z",
+          "fixtureVersion": "N04-DEMO-1.0",
+          "fixtureSha256": "5513b086aff7066ee08995f4aae857ed8a4848aaac51249bf9309dc9a1288263",
+          "personas": 3,
+          "sessions": 9,
+          "segments": 54,
+          "pending": 3,
+          "inbox": 0,
+          "updatedAt": null
+        }
+      }
+    },
+    {
+      "id": "A1-exact-demo-oliver-uk",
+      "pass": true,
+      "detail": {
+        "status": 200,
+        "code": null,
+        "evidenceId": "sess_n04_demo_oliver_uk_3#1",
+        "exactCharEqual": true,
+        "firstDiffAt": -1,
+        "fixtureChars": 46,
+        "serverChars": 46,
+        "candidateFactSeparate": true,
+        "fixtureSha256": "5513b086aff7066ee08995f4aae857ed8a4848aaac51249bf9309dc9a1288263"
+      }
+    },
+    {
+      "id": "A1-exact-demo-maya-us",
+      "pass": true,
+      "detail": {
+        "status": 200,
+        "code": null,
+        "evidenceId": "sess_n04_demo_maya_us_3#5",
+        "exactCharEqual": true,
+        "firstDiffAt": -1,
+        "fixtureChars": 39,
+        "serverChars": 39,
+        "candidateFactSeparate": true,
+        "fixtureSha256": "5513b086aff7066ee08995f4aae857ed8a4848aaac51249bf9309dc9a1288263"
+      }
+    },
+    {
+      "id": "A1-exact-demo-jieun-kr",
+      "pass": true,
+      "detail": {
+        "status": 200,
+        "code": null,
+        "evidenceId": "sess_n04_demo_jieun_kr_3#3",
+        "exactCharEqual": true,
+        "firstDiffAt": -1,
+        "fixtureChars": 25,
+        "serverChars": 25,
+        "candidateFactSeparate": true,
+        "fixtureSha256": "5513b086aff7066ee08995f4aae857ed8a4848aaac51249bf9309dc9a1288263"
+      }
+    },
+    {
+      "id": "A1-exact-3of3",
+      "pass": true,
+      "detail": [
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "id": "A1-stale-paraphrase-rejected-demo-oliver-uk",
+      "pass": true,
+      "detail": {
+        "status": 400,
+        "code": "SOURCE_TEXT_MISMATCH"
+      }
+    },
+    {
+      "id": "A1-stale-paraphrase-rejected-demo-maya-us",
+      "pass": true,
+      "detail": {
+        "status": 400,
+        "code": "SOURCE_TEXT_MISMATCH"
+      }
+    },
+    {
+      "id": "A1-stale-paraphrase-rejected-demo-jieun-kr",
+      "pass": true,
+      "detail": {
+        "status": 400,
+        "code": "SOURCE_TEXT_MISMATCH"
+      }
+    },
+    {
+      "id": "A2-out-of-range-segment",
+      "pass": true,
+      "detail": {
+        "status": 400,
+        "code": "SOURCE_SEGMENT_OUT_OF_RANGE"
+      }
+    },
+    {
+      "id": "A2-unknown-session",
+      "pass": true,
+      "detail": {
+        "status": 404,
+        "code": "SOURCE_SESSION_UNKNOWN"
+      }
+    },
+    {
+      "id": "A2-wrong-owner-inject",
+      "pass": true,
+      "detail": {
+        "status": 400,
+        "code": "SOURCE_OWNERSHIP_MISMATCH"
+      }
+    },
+    {
+      "id": "A2-inbox-unattributed",
+      "pass": true,
+      "detail": {
+        "status": 200,
+        "attributedTo": null
+      }
+    },
+    {
+      "id": "A2-wrong-owner-confirm",
+      "pass": true,
+      "detail": {
+        "status": 403,
+        "code": "SOURCE_OWNERSHIP_MISMATCH"
+      }
+    },
+    {
+      "id": "A2-duplicate-final-idempotent",
+      "pass": true,
+      "detail": {
+        "status": 200,
+        "added": false,
+        "reason": "ALREADY_PENDING"
+      }
+    },
+    {
+      "id": "A2-no-forged-write-into-profile",
+      "pass": true,
+      "detail": {
+        "profileLen": 919
+      }
+    },
+    {
+      "id": "A2-demo-people-unchanged",
+      "pass": true,
+      "detail": {
+        "before": "d05c971341e7b4a545ec7b5d03ea9cd9a9dbaf9e6b49962bbb8c0caba141cf40",
+        "after": "d05c971341e7b4a545ec7b5d03ea9cd9a9dbaf9e6b49962bbb8c0caba141cf40"
+      }
+    },
+    {
+      "id": "A2-real-people-unchanged",
+      "pass": true,
+      "detail": {
+        "before": "2bfc108aa7e27b0732eb7ea915dc3083e8e807751325c1110332195f5fccb256",
+        "after": "2bfc108aa7e27b0732eb7ea915dc3083e8e807751325c1110332195f5fccb256"
+      }
+    },
+    {
+      "id": "B-write-without-ticket-403",
+      "pass": true,
+      "detail": {
+        "status": 403,
+        "code": "WRITE_TICKET_REQUIRED"
+      }
+    },
+    {
+      "id": "B-write-tampered-ticket-403",
+      "pass": true,
+      "detail": {
+        "status": 403,
+        "code": "WRITE_TICKET_INVALID"
+      }
+    },
+    {
+      "id": "B-write-ticket-single-use",
+      "pass": true,
+      "detail": {
+        "firstUse": 200,
+        "replay": 403,
+        "code": "WRITE_TICKET_REPLAYED"
+      }
+    },
+    {
+      "id": "B-write-cross-origin-403",
+      "pass": true,
+      "detail": {
+        "status": 403,
+        "code": "ORIGIN_REJECTED"
+      }
+    },
+    {
+      "id": "B-write-without-origin-403",
+      "pass": true,
+      "detail": {
+        "status": 403,
+        "code": "ORIGIN_REQUIRED"
+      }
+    },
+    {
+      "id": "B-confirm-alone-not-enough",
+      "pass": true,
+      "detail": {
+        "status": 403,
+        "code": "WRITE_TICKET_REQUIRED"
+      }
+    },
+    {
+      "id": "B-read-demo-token-free",
+      "pass": true,
+      "detail": {
+        "status": 200,
+        "people": 3
+      }
+    },
+    {
+      "id": "C-pair-code-issued",
+      "pass": true,
+      "detail": {
+        "status": 200,
+        "digits": 6
+      }
+    },
+    {
+      "id": "C-pair-wrong-code-rejected",
+      "pass": true,
+      "detail": {
+        "status": 403,
+        "code": "PAIRING_CODE_INVALID"
+      }
+    },
+    {
+      "id": "C-pair-claim-ok",
+      "pass": true,
+      "detail": {
+        "status": 200,
+        "deviceId": "dev_c576be7d…"
+      }
+    },
+    {
+      "id": "C-token-ttl-le-24h",
+      "pass": true,
+      "detail": {
+        "format": "v1",
+        "ttlHours": 24
+      }
+    },
+    {
+      "id": "C-token-refresh-ok",
+      "pass": true,
+      "detail": {
+        "status": 200
+      }
+    },
+    {
+      "id": "C-token-refresh-replay-rejected",
+      "pass": true,
+      "detail": {
+        "status": 409,
+        "code": "PAIRING_REPLAY"
+      }
+    },
+    {
+      "id": "C-token-refresh-bad-proof-rejected",
+      "pass": true,
+      "detail": {
+        "status": 401,
+        "code": "PAIRING_PROOF_INVALID"
+      }
+    },
+    {
+      "id": "C-token-stale-proof-rejected",
+      "pass": true,
+      "detail": {
+        "status": 401,
+        "code": "PAIRING_PROOF_STALE"
+      }
+    },
+    {
+      "id": "C-revoke-ok",
+      "pass": true,
+      "detail": {
+        "status": 200
+      }
+    },
+    {
+      "id": "C-revoked-device-token-rejected",
+      "pass": true,
+      "detail": {
+        "status": 401,
+        "code": "DEVICE_REVOKED"
+      }
+    },
+    {
+      "id": "C-revoke-visible-in-status",
+      "pass": true,
+      "detail": {
+        "status": 200,
+        "devices": 2
+      }
+    },
+    {
+      "id": "C-status-hides-secrets",
+      "pass": true,
+      "detail": {
+        "leaked": false
+      }
+    },
+    {
+      "id": "D-gradle-no-archive-token-field",
+      "pass": true,
+      "detail": {
+        "hasField": true
+      }
+    },
+    {
+      "id": "D-java-no-buildconfig-token",
+      "pass": true,
+      "detail": {
+        "files": []
+      }
+    },
+    {
+      "id": "D-legacy-token-available-for-scan",
+      "pass": true,
+      "detail": {
+        "length": 48
+      }
+    },
+    {
+      "id": "D-apk-strings-no-legacy-token",
+      "pass": true,
+      "detail": {
+        "apk": "app-debug.apk",
+        "found": false
+      }
+    },
+    {
+      "id": "B2-private-origin-bridge-usable",
+      "pass": true,
+      "detail": {
+        "url": "http://127.0.0.1:8791/v12",
+        "hasBridge": true,
+        "saveText": "function",
+        "openRecordingPanel": "function"
+      }
+    },
+    {
+      "id": "B2-cross-origin-frame-no-context",
+      "pass": true,
+      "detail": {
+        "contexts": [
+          "http://127.0.0.1:8791",
+          "://"
+        ]
+      }
+    },
+    {
+      "id": "B2-cross-origin-frame-unreadable",
+      "pass": true,
+      "detail": {
+        "src": "http://127.0.0.1:18793/evil.html",
+        "hasContentWindow": true,
+        "frameReadable": false,
+        "blockedBy": "same-origin-policy",
+        "frameBridgeReadable": false
+      }
+    },
+    {
+      "id": "B2-frame-tree-no-evil-origin",
+      "pass": true,
+      "detail": {
+        "frames": [
+          "http://127.0.0.1:8791/v12",
+          "chrome-error://chromewebdata/"
+        ]
+      }
+    },
+    {
+      "id": "B2-external-navigation-cancelled",
+      "pass": true,
+      "detail": {
+        "before": "http://127.0.0.1:8791/v12",
+        "after": "http://127.0.0.1:8791/v12"
+      }
+    },
+    {
+      "id": "B2-bridge-useless-after-load-error",
+      "pass": true,
+      "detail": {
+        "url": "chrome-error://chromewebdata/",
+        "hasBridge": true,
+        "saveText": "undefined",
+        "openRecordingPanel": "undefined"
+      }
+    },
+    {
+      "id": "cleanup-restore",
+      "pass": true,
+      "detail": {
+        "status": 200
+      }
+    },
+    {
+      "id": "cleanup-real-people-unchanged",
+      "pass": true,
+      "detail": {
+        "before": "2bfc108aa7e27b0732eb7ea915dc3083e8e807751325c1110332195f5fccb256",
+        "after": "2bfc108aa7e27b0732eb7ea915dc3083e8e807751325c1110332195f5fccb256"
+      }
+    }
+  ],
+  "realPeople": {
+    "sha256Before": "2bfc108aa7e27b0732eb7ea915dc3083e8e807751325c1110332195f5fccb256",
+    "sha256After": "2bfc108aa7e27b0732eb7ea915dc3083e8e807751325c1110332195f5fccb256",
+    "unchanged": true
+  },
+  "notes": [
+    "读演示免令牌，写操作必须同源 + 一次性 CSRF 票；票由 /v12/api/demo/write-ticket 现取。",
+    "短期令牌以 v1.<deviceId>.<iat>.<exp>.<mac> 自校验，撤销后立即失效；未配对时客户端 fail closed。",
+    "对照脚本只做 T1，不代替 T2–T5 的真实 ASR / 归档 / 无 USB 验收。"
+  ]
+}

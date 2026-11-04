@@ -1,0 +1,37 @@
+{
+  "schema": "alw001.n05v13.migration.v1",
+  "at": "2026-11-03T14:38:17.209Z",
+  "mode": "dry-run",
+  "recordId": "rec-20261103072022-16b79c",
+  "fromRevision": 2,
+  "rawInput": {
+    "beforeLen": 989,
+    "afterLen": 984,
+    "beforeSha256": "6851d3c619d3ce3ba809bb5cb55d8b56f0845e012c43563afd027e31d54e6652",
+    "afterSha256": "2bc195a28d7e9da2bfb527fd65b958c27314c59549793c79cbfef324b96fd1d0",
+    "producedBySourceSpanRecompute": true
+  },
+  "cleaned": {
+    "blk-hc-2": {
+      "before": "除了跑步的、散步的人，还有坐在旁边喝椰子水、聊天的人。坐在小凳上喝个椰子水，聊聊天，也很棒，很舒适。就是想要那种……",
+      "after": "除了跑步的、散步的人，还有坐在旁边喝椰子水、聊天的人。坐在小凳上喝个椰子水，聊聊天，也很棒，很舒适。就是要……",
+      "sha256Before": "737c67e20c4314b014ef771a29eed41825f9609b2794b485b9871b3e12124081",
+      "sha256After": "1e5fb3f52e37d90893e1afed9ff6b49fe6c654456dfb8cd04f279d6665e6f48f",
+      "note": "末句原话未完：已回退为逐字说法「就是要……」，不替用户补全"
+    },
+    "blk-hc-4": {
+      "before": "比较有意思的是，沿着这一整圈湖边的跑道，有很多组跳广场舞的阿姨，基本上整圈都有，在不同的角落。\n\n她们有不同风格，有些特别嗨。放的是老歌，但是 DJ 版本，所以你会觉得很有共鸣，知道吗？但又很带劲，跳起来很过瘾。",
+      "after": "比较有意思的是，沿着这一整圈湖边的跑道，有很多组跳广场舞的阿姨，基本上整圈都有，在不同的角落。她们有不同风格，有些特别嗨。放的是老歌，但是 DJ 版本，所以你会觉得很有共鸣，知道吗？但又很带劲，跳起来很过瘾。",
+      "sha256Before": "5c4d60d43d30cf8cc56727ee561c33c7362977e944a5572f280ec38c355bd12f",
+      "sha256After": "488c8078e2737974fee5a149314a9e2ad7130e02085bac19fe8c6c6f9fa8156c",
+      "note": "仅删除 cnSentences[1] 开头残留空行"
+    }
+  },
+  "phrasePairs": {
+    "blocks": 19,
+    "total": 102,
+    "playable": 99
+  },
+  "untouched": 0,
+  "problems": []
+}

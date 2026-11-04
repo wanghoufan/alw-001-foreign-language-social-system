@@ -1,0 +1,30 @@
+你是 ALW-001 N05 的「TTS 提供商适配层」后端执行者。项目根：/Users/zzymima0000/Developer/coding/1.Active/alw-001-外语社交系统
+
+必读：`docs/plan/ALW001-N05-Living-Memories-Practice-V1.1/TTS-PROVIDER-ADAPTER-DECISION-V1.0.md`（全文，这是产品决策，系统 TTS 只能作 FALLBACK_ONLY）、`qa/20261102-s4/S4-RESULT.md`、`qa/20261102-s0/env-matrix.md`。
+
+## 写入边界
+可改/新建：`socialmate-prototype/ai-gateway/server.mjs`、同目录新建 `tts-providers.mjs`/`tts-cache.mjs`/`tts-adapter-fake.mjs`/`tts-adapter-skeleton.mjs`、新建 `verify-n05-tts-provider.mjs`。
+禁改：`android-poc/**`（另一路在做 Android 适配）、`socialmate-v1.2/source/V1.1-baseline.html` 与 `index.html`（前端另一路）、`public/**`、`public-share.*`、`sw.js`、`places-115.json`、`SocialMate-Data/People/**`。
+
+## 任务（按计划第二、四节）
+1. **内部协议**：实现 SpeakRequest / SpeakResult 字段校验（`requestId,recordId,blockId,revision,segmentType(cn|enA|enB|phrase),text,locale(zh-CN|en-US|en-GB),accent,providerId,voiceProfileId,rate,style`）；响应含 `audioId,mimeType,durationMs,providerId,voiceId,modelVersion,cacheHit,textSha256,audioSha256,status,warnings`；**绝不返回厂商 Key 或 Mac 绝对路径**；`text` 不可被服务端改写。
+2. **路由**（与 8791 现有鉴权契约一致：配对短令牌 + 同源 + 写票）：
+   - `GET /v12/api/tts/providers`（只读能力清单，含 `enabled/requiresConsent/billingEnabled`）
+   - `GET /v12/api/tts/voices`（按 locale 列可用 voiceProfile）
+   - `POST /v12/api/tts/synthesize`（`estimate` 模式只返报价不合成；真实合成需 `explicitConsent:true`）
+   - `GET /v12/api/tts/audio/:audioId`（校验 `audioSha256`、`Content-Length`、`Content-Type`，支持 Range 以利循环重放）
+3. **缓存**：键 = `sha256(text)+recordId/blockId/revision+locale+providerId+modelVersion+voiceProfileId+rate+style`；同段重复请求必须 `cacheHit:true` 且**不产生新合成**；缓存目录在私有区（`SocialMate-Data/TtsCache/`），可清理，不与学习记录混存。
+4. **适配层**：`providerId` 抽象为 adapter 注册表；实现 `fake`（默认，读本地预置音频文件，无需 Key）与 `system-fallback`（标记 FALLBACK_ONLY，不在服务端合成）；再写 `azure|elevenlabs|google` 三个 **skeleton**（接口齐全但 `enabled:false`、无 Key 时 501 `PROVIDER_NOT_CONFIGURED`，不得联网）。
+5. **预算与隐私闸**：TTS 独立账本 `SocialMate-Data/TtsCache/ledger.json`，默认 `limitCny:0`，任何计费请求 fail closed 返回 402 `TTS_BUDGET_ZERO`；第三方传输默认 OFF，首次需 `explicitConsent` 并回显「将发送的文本摘录/提供商/预计费用」；不得把好友真实信息送第三方（对含 People 档案字段的请求直接拒绝）。
+6. 不新增数据库、不新增公网端口、不改 PWA。
+
+## 验收（真跑，贴退出码）
+`verify-n05-tts-provider.mjs`：
+① 无令牌/跨源 401/403；② `providers` 只列出 `fake`/`system-fallback` 为 enabled，云三家 `enabled:false`；③ `fake` 合成一次 → `audioSha256` 与预置文件一致；同段再请求 → `cacheHit:true` 且合成计数不变；④ `estimate` 不落盘不计数；⑤ 计费请求（skeleton）→ 402 `TTS_BUDGET_ZERO`，账本 0 变动；⑥ 未 `explicitConsent` 的第三方请求被拒；⑦ `GET audio/:audioId` 篡改 sha 时 400；Range 请求 206；⑧ 文本含他人姓名（模拟 People 字段）→ 拒绝；⑨ 服务端日志与响应无 Key、无绝对路径。
+附 `curl` 回执写入 `docs/plan/ALW001-N05-Living-Memories-Practice-V1.1/qa/20261103-tts/backend/`。
+
+## 红线
+不 commit/push；不跑全量回归；**不申请任何新付费、不配置真实厂商 Key、不发起任何真实云 TTS 请求**；不动真实档案；不改 1 元 ASR/DeepSeek 预算。
+
+## 回报
+路由清单（路径/入参/状态码）+ 改动文件 + 每条验收命令与退出码 + verify JSON 结论 + 证据路径 + 未完成项。30 行内。

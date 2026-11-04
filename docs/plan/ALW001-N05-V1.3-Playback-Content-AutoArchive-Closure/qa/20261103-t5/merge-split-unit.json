@@ -1,0 +1,57 @@
+{
+  "schema": "alw001.n05v13.merge-split.v1",
+  "at": "2026-11-03T16:35:04.129Z",
+  "recordId": "rec-20261103072022-16b79c",
+  "revision": 3,
+  "wroteNothing": true,
+  "total": 9,
+  "passed": 9,
+  "failed": 0,
+  "results": [
+    {
+      "name": "M1 原始数据 19 段 / 句子守恒基线",
+      "ok": true,
+      "detail": "blocks=19 sentences=34"
+    },
+    {
+      "name": "M2 合并第 1+2 段后段数 19→18",
+      "ok": true,
+      "detail": "blocks=18"
+    },
+    {
+      "name": "M3 合并后句子总数不变",
+      "ok": true,
+      "detail": "before=34 after=34"
+    },
+    {
+      "name": "M4 合并后 sourceSpan 连续",
+      "ok": true,
+      "detail": "逐段 start>=上一段 end"
+    },
+    {
+      "name": "M5 合并后逐字复原（每段 sourceText 与原文区间一致）",
+      "ok": true,
+      "detail": "全部一致"
+    },
+    {
+      "name": "M6 合并结果可再拆回 2 段（19 段恢复）",
+      "ok": true,
+      "detail": "blocks=19"
+    },
+    {
+      "name": "M7 拆回后句子总数仍守恒",
+      "ok": true,
+      "detail": "before=34 after=34"
+    },
+    {
+      "name": "M8 拆回后两段文本拼起来等于合并段的 sourceText（段间原有分隔字符保留在合并段内）",
+      "ok": true,
+      "detail": "merged=\"晚上在红城湖湖边散散步，还是非常愉悦的。有微风，很凉爽。\n\n…\" split=\"晚上在红城湖湖边散散步，还是非常愉悦的。有微风，很凉爽。\n\n…\""
+    },
+    {
+      "name": "M9 拆分产生新 blockId，不与旧段冲突",
+      "ok": true,
+      "detail": "newId=blk-1-hiv25kbt"
+    }
+  ]
+}

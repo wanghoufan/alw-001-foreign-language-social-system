@@ -1,0 +1,16 @@
+date=2026-11-03T02:58:31Z
+node=v24.19.0
+npm=11.17.0
+sdk=@aws-sdk/client-polly@3.1161.0
+SM_POLLY_REGION=<unset>
+AWS_REGION=<unset>
+aws_access_key_id_env=unset
+aws_secret_access_key_env=unset
+aws_profile_env=unset
+SM_POLLY_DESCRIBE=<unset>
+aws_credentials_file=absent
+real_cloud_calls=0
+https_calls=0
+fetch_calls=0
+polly_probe={"providerId":"aws-polly","configured":{"configured":false,"region":"ap-northeast-1","voicesVerified":false,"reason":"CREDENTIALS_NOT_FOUND"},"budgetLimitCny":0,"describeEnabled":false}
+sample_note=以上仅为存在性布尔值，未读取/未打印任何凭据内容

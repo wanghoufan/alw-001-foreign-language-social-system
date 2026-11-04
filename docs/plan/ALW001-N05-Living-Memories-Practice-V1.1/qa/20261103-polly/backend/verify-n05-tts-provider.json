@@ -1,0 +1,186 @@
+{
+  "ok": true,
+  "task": "ALW001-N05-TTS-PROVIDER-ADAPTER-backend",
+  "startedAt": "2026-11-03T03:38:44.512Z",
+  "finishedAt": "2026-11-03T03:38:44.594Z",
+  "port": 55823,
+  "providers": {
+    "realCloudCalls": 0,
+    "httpsCalls": 0,
+    "fetchCalls": 0,
+    "configuredKeys": 0,
+    "polly": {
+      "providerId": "aws-polly",
+      "configured": {
+        "configured": false,
+        "region": "ap-northeast-1",
+        "voicesVerified": false,
+        "reason": "CREDENTIALS_NOT_FOUND"
+      },
+      "budgetLimitCny": 0,
+      "describeEnabled": false
+    },
+    "note": "全程 0 次真实云请求；AWS 凭据只做存在性探测，未读取/未打印任何 Key"
+  },
+  "total": 31,
+  "passed": 31,
+  "failed": 0,
+  "checks": [
+    {
+      "name": "① 无令牌 → 401 TOKEN_REQUIRED，跨源 → 403 ORIGIN_REJECTED",
+      "pass": true,
+      "detail": "noToken=401/TOKEN_REQUIRED cross=403/ORIGIN_REJECTED"
+    },
+    {
+      "name": "② providers：本地 fake/aws-polly-fake/system-fallback enabled；真实云全部 configured:false 且需同意/计费",
+      "pass": true,
+      "detail": "enabled=aws-polly,aws-polly-fake,fake,system-fallback cloud=4 configured=false,false,false,false fallbackOnly=true"
+    },
+    {
+      "name": "②-b voices 按 locale 过滤（en-GB 只出英式声线，含本地预置）",
+      "pass": true,
+      "detail": "count=9"
+    },
+    {
+      "name": "④ estimate 只报价：不落盘、不建缓存、不计入合成",
+      "pass": true,
+      "detail": "status=200 filesBefore=0 filesAfter=0"
+    },
+    {
+      "name": "③-a fake 合成成功，文本原样回显且 audioSha256 等于本地预置文件",
+      "pass": true,
+      "detail": "status=200 shaMatch=true textIntact=true"
+    },
+    {
+      "name": "③-b 同段重复请求 cacheHit:true 且合成计数不增、音频文件不新增",
+      "pass": true,
+      "detail": "cacheHit=true totalSyntheses=1 audioFiles=1"
+    },
+    {
+      "name": "⑤ 计费请求 → 402 TTS_BUDGET_ZERO，账本字节与金额零变动",
+      "pass": true,
+      "detail": "status=402 code=TTS_BUDGET_ZERO ledgerByteIdentical=true spent=0"
+    },
+    {
+      "name": "⑥ 第三方 TTS 未显式同意 → 403 CONSENT_REQUIRED（回显将发送的摘录/提供商/费用）",
+      "pass": true,
+      "detail": "status=403 code=CONSENT_REQUIRED excerpt=true"
+    },
+    {
+      "name": "⑦ 篡改音频 → 400 AUDIO_SHA_MISMATCH；还原后完整读取 200、Range 206、越界 416",
+      "pass": true,
+      "detail": "tampered=400/AUDIO_SHA_MISMATCH full=200 range=206 badRange=416"
+    },
+    {
+      "name": "⑧ 文本含他人姓名 → 403 PRIVACY_PERSON_NAME；带人物档案字段 → 403 PRIVACY_PROFILE_FIELD",
+      "pass": true,
+      "detail": "name=403/PRIVACY_PERSON_NAME field=403/PRIVACY_PROFILE_FIELD"
+    },
+    {
+      "name": "附 skeleton 适配器无 Key 直调 → 501 PROVIDER_NOT_CONFIGURED（HTTP 层被 402 先行拦截）",
+      "pass": true,
+      "detail": "adapter=501/PROVIDER_NOT_CONFIGURED http=402/TTS_BUDGET_ZERO"
+    },
+    {
+      "name": "附 system-fallback 返回 pending 且不落盘（服务端不合成）",
+      "pass": true,
+      "detail": "status=pending warnings=FALLBACK_ONLY+CLIENT_SIDE_SYNTHESIS+REQUIRES_USER_CHOICE"
+    },
+    {
+      "name": "P1 providers 暴露 aws-polly(configured=false + region) 与 aws-polly-fake(enabled)",
+      "pass": true,
+      "detail": "polly={\"configured\":false,\"reason\":\"CREDENTIALS_NOT_FOUND\",\"region\":\"ap-northeast-1\"} fakeEnabled=true"
+    },
+    {
+      "name": "P2 aws-polly 5 个声线 voiceId/locale/engine 与契约逐字一致",
+      "pass": true,
+      "detail": "voices=Zhiyu/zh-CN/neural,Ruth/en-US/generative,Joanna/en-US/generative,Amy/en-GB/generative,Brian/en-GB/generative"
+    },
+    {
+      "name": "P3 默认语言路由 cn→Zhiyu / enA→Ruth / enB→Amy / phrase→Ruth",
+      "pass": true,
+      "detail": "cn=Zhiyu enA=Ruth enB=Amy phrase=Ruth"
+    },
+    {
+      "name": "P4 voiceProfileId 覆盖校验：Joanna/Brian 通过，跨 locale 的 Amy → 400 UNKNOWN_VOICE",
+      "pass": true,
+      "detail": "joanna=Joanna brian=Brian mismatch=UNKNOWN_VOICE"
+    },
+    {
+      "name": "P5 aws-polly-fake 合成 4 类 locale 成功（cn/enA/enB/phrase 声线与 locale 正确、音频互不相同）",
+      "pass": true,
+      "detail": "runs=cn:200/Zhiyu,enA:200/Ruth,enB:200/Amy,phrase:200/Ruth"
+    },
+    {
+      "name": "P6 同段重复：cacheHit:true、合成计数不增、audioId 不变",
+      "pass": true,
+      "detail": "hit=true total=5（4 类 locale 后）"
+    },
+    {
+      "name": "P7 Polly 的 rate 不影响音频：1.5× 复用同一缓存（rateAffectsAudio:false，键排除 rate）",
+      "pass": true,
+      "detail": "hit=true audioSame=true"
+    },
+    {
+      "name": "P8 换声线（Joanna/Brian）产生新 audioId 且各合成一次",
+      "pass": true,
+      "detail": "joanna=tts-a4db6202cbcf387c89581fcbec3f731e brian=tts-b970d649fc38a7b6b7c49c504f1a516e total=7"
+    },
+    {
+      "name": "P9 同意闸先于配置闸：aws-polly 未 explicitConsent → 403 CONSENT_REQUIRED（回显摘录/区域/引擎/未配置）",
+      "pass": true,
+      "detail": "status=403 code=CONSENT_REQUIRED region=ap-northeast-1 engine=generative"
+    },
+    {
+      "name": "P9-b aws-polly estimate 返回 region/engine/configured/字符/估价/摘录，且不落盘不建账本",
+      "pass": true,
+      "detail": "status=200 region=ap-northeast-1 engine=generative configured=false chars=17 cost=0.00255"
+    },
+    {
+      "name": "P10 aws-polly 未配置 → 501 PROVIDER_NOT_CONFIGURED（附 region/reason，无凭据、0 真实调用）",
+      "pass": true,
+      "detail": "status=501 code=PROVIDER_NOT_CONFIGURED region=ap-northeast-1 reason=CREDENTIALS_NOT_FOUND"
+    },
+    {
+      "name": "P11 style 非空 → 400 SSML_NOT_ENABLED（真实云与本地替身一致，本轮只发纯文本）",
+      "pass": true,
+      "detail": "cloud=400/SSML_NOT_ENABLED fake=400/SSML_NOT_ENABLED"
+    },
+    {
+      "name": "P12 providers 返回 aws-polly 独立账本 limit=0/spent=0，且 501/403 之后账本文件仍未创建",
+      "pass": true,
+      "detail": "budget={\"providerId\":\"aws-polly\",\"currency\":\"CNY\",\"limitCny\":0,\"spentCny\":0,\"entries\":0,\"exists\":false,\"file\":\"TtsCache/ledger/aws-polly.json\"} fileExists=false"
+    },
+    {
+      "name": "P13 记账 API 硬闸：0 元上限下记账直接 402 且不创建账本文件",
+      "pass": true,
+      "detail": "error=402/TTS_BUDGET_ZERO fileExists=false"
+    },
+    {
+      "name": "P14 缓存扩展名由 mimeType 决定：audio/mpeg→.mp3，readEntry/readAudio/stats 同时兼容 .wav/.mp3",
+      "pass": true,
+      "detail": "wav=7 totalAudio=8 audioId=tts-d7b5d31cf953823165cd82bef52467df"
+    },
+    {
+      "name": "P15 Polly 缓存音频读取仍校验 sha：篡改 → 400 AUDIO_SHA_MISMATCH，还原 → 200",
+      "pass": true,
+      "detail": "tampered=400/AUDIO_SHA_MISMATCH restored=200"
+    },
+    {
+      "name": "P16 0 次真实 AWS 调用：https/fetch 出网探针为 0、Polly 运行时计数为 0、DescribeVoices 未开启",
+      "pass": true,
+      "detail": "https=0 fetch=0 synth=0 describe=0"
+    },
+    {
+      "name": "⑨ 全部响应无 Key/无 Mac 绝对路径；骨架适配器源码无网络出口；本进程无厂商 Key",
+      "pass": true,
+      "detail": "responses=32 leaked=none noNetwork=true keys=0"
+    },
+    {
+      "name": "真实 People 目录 sha 前后一致（未触碰真实档案）",
+      "pass": true,
+      "detail": "files=53 digest=53efe364edd26a1d"
+    }
+  ],
+  "workspace": "/Users/zzymima0000/Developer/coding/1.Active/alw-001-外语社交系统/socialmate-prototype/ai-gateway/.local/verify-n05-tts/2026-11-03T03-38-44-512Z"
+}

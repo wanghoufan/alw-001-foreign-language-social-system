@@ -1,0 +1,54 @@
+ALW-001 N05 V1.1 S0 — APK metadata
+generated: 2026-11-02 21:58 (Mac local)
+
+apk_path: android-poc/app/build/outputs/apk/debug/app-debug.apk
+apk_size_bytes: 176434
+apk_mtime: 2026-11-02 21:57
+apk_sha256: 9971836f0d1cd34afceaf3063f3d8d3cba652faf1f7d3e753dc0d0f03e042296
+baseline_sha256_before_build: 9971836f0d1cd34afceaf3063f3d8d3cba652faf1f7d3e753dc0d0f03e042296
+reproducible: yes (clean rebuild byte-identical)
+
+package: app.socialmate.dualmic
+versionName: 0.8.1
+versionCode: 36
+minSdk: 26
+targetSdk: 35
+compileSdk: 35
+abi: (no native libs)
+uses_permission:
+  - android.permission.RECORD_AUDIO
+  - android.permission.INTERNET
+  - android.permission.ACCESS_NETWORK_STATE
+
+signer_certificate_DN: C=US, O=Android, CN=Android Debug
+signer_SHA256: 8e82a7975008e8ec87ff0f2ecadf495b5263effa34aaec9ab6f135ebea911cf3
+signer_SHA1: 9bc6a06a64c791c5dd6b8ddd3d0e76de071991cb
+signer_MD5: f5e884b28ce69247c242edd7adc80e76
+signature_scheme: v2 (PackageSignatures version:2, signatures:[1ad9f884])
+
+build:
+  script: bash android-poc/build-apk.sh
+  first_attempt_exit: 16 (curl HTTP2 framing layer while downloading official Gradle)
+  second_attempt_exit: 0 (gradle 8.9 from Tencent mirror, sha256 verified)
+  clean_build_exit: 0 (34 actionable tasks executed, 16s)
+  gradle: 8.9
+  jvm: 17.0.20.1
+
+install:
+  command: adb -s REDACTED-SERIAL install -r <apk>
+  exit: 0
+  result: Success (streamed install)
+  data_preserved: yes (firstInstallTime unchanged)
+
+installed_readback (dumpsys package app.socialmate.dualmic):
+  versionName: 0.8.1
+  versionCode: 36
+  minSdk: 26
+  targetSdk: 35
+  firstInstallTime: 2026-10-31 18:25:27
+  lastUpdateTime: 2026-11-02 21:57:27
+  signatures: PackageSignatures{bbfa7dd version:2, signatures:[1ad9f884]}
+  granted_permissions:
+    - android.permission.INTERNET: granted=true
+    - android.permission.ACCESS_NETWORK_STATE: granted=true
+    - android.permission.RECORD_AUDIO: granted=true

@@ -1,0 +1,22 @@
+N05 V1.5.1 T2 断线恢复证据（2026-11-04 23:00–23:05，Note 12 Pro）
+
+A. 服务进程被停后由看门狗重新拉起（来源：socialmate-v1.2/.local/qa/stack.log）
+2026-11-04T22:58:35+0800 HEAL: 端口 8790 不健康，调用该端口的既有启动脚本恢复
+2026-11-04T22:58:37+0800 HEAL: 端口 8791 不健康，调用该端口的既有启动脚本恢复
+2026-11-04T22:58:39+0800 HEAL: 完成，4/4 恢复健康（本次重新拉起 2 个端口）
+
+B. 客户端自动重连成功（录音中停服务 → 新进程）
+- 新进程 pid=80287，/health activeSessions=1（旧进程已死，这条会话必然来自客户端重连）
+- 页面 S.asrState=ready、rec=true，页头“正在听”
+- 重连后继续说话，消息数 2 → 5；最后一句 “The weather is really nice.” 上屏
+- 归档：savedSegments=9、pending=0、HTTP 201
+
+C. 重连失败路径（外部进程占 8790/8791，25s）
+- 3s：{"at":"3s","rec":true,"state":"error","link":"reconnecting",
+  "interim":"连接中断 · 正在重连（3/3）…","h":"连接中断 · 重连中"}
+- 13s：{"at":"13s","rec":false,"state":"off","link":"","interim":"","h":"已结束 · 可复盘"}
+- savedSegments=0（没有伪造 final）
+
+D. 收尾
+- 真实归档端已恢复：{"ok":true,"service":"socialmate-archive","auth":"required"}
+- npm test 54 pass；test-core.sh PASS 12 core assertions

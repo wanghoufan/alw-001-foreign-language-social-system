@@ -1,0 +1,4 @@
+  AudioPlaybackConfiguration piid:15 type:android.media.SoundPool u/pid:1000/1335 state:idle attr:AudioAttributes: usage=USAGE_ASSISTANCE_SONIFICATION content=CONTENT_TYPE_SONIFICATION flags=0x800 tags= bundle=null
+  AudioPlaybackConfiguration piid:23 type:android.media.SoundPool u/pid:1000/1675 state:idle attr:AudioAttributes: usage=USAGE_ASSISTANCE_SONIFICATION content=CONTENT_TYPE_SONIFICATION flags=0x800 tags= bundle=null
+  AudioPlaybackConfiguration piid:31 type:android.media.SoundPool u/pid:10094/2017 state:idle attr:AudioAttributes: usage=USAGE_ASSISTANCE_SONIFICATION content=CONTENT_TYPE_SONIFICATION flags=0x800 tags= bundle=null
+  AudioPlaybackConfiguration piid:1615 type:android.media.MediaPlayer u/pid:10319/31284 state:started attr:AudioAttributes: usage=USAGE_MEDIA content=CONTENT_TYPE_SPEECH flags=0x800 tags= bundle=null

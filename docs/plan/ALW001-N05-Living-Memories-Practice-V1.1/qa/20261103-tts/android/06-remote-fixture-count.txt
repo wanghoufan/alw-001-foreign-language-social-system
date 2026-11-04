@@ -1,0 +1,13 @@
+# 临时夹具服务（127.0.0.1:8799，仅 fake provider，TtsCache 在 /tmp）
+synth_before=3 synth_after=4 delta=1
+
+[fixture] listening on http://127.0.0.1:8799 ttsCache=/tmp/alw001-n05-android/TtsCache
+[fixture] GET /v12/api/tts/providers -> 401 2ms
+[fixture] GET /v12/api/tts/providers -> 401 0ms
+[fixture] POST /v12/api/tts/synthesize -> 400 5ms
+[fixture] POST /v12/api/tts/synthesize -> 200 20ms
+[fixture] GET /v12/api/tts/audio/tts-35b0ba9d128a9e3bd07088629ddbc172 -> 200 2ms
+[fixture] POST /v12/api/tts/synthesize -> 200 10ms
+[fixture] GET /v12/api/tts/audio/tts-355c8f8573656a4e240a3a3e7bbaba1a -> 200 2ms
+[fixture] POST /v12/api/tts/synthesize -> 200 10ms
+[fixture] GET /v12/api/tts/audio/tts-dd699f301b90d7542487dbb5a4743c9b -> 200 1ms

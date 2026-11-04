@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8' standalone='yes' ?>
+<map>
+    <string name="remote_provider">aws-polly-fake</string>
+    <boolean name="listened_cdp:s4" value="true" />
+    <float name="rate" value="0.9" />
+    <string name="provider">remote</string>
+    <int name="loop" value="5" />
+    <string name="remote_base">http://127.0.0.1:8791</string>
+    <boolean name="system_fallback" value="false" />
+    <boolean name="listened_selftest:常用表达" value="true" />
+    <string name="remote_voice_en-GB">Brian</string>
+    <boolean name="listened_selftest:英文 B" value="false" />
+    <boolean name="listened_selftest:英文 A" value="true" />
+    <string name="remote_voice_en-US">Ruth</string>
+</map>

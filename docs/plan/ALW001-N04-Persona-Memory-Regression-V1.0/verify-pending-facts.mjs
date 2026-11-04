@@ -34,12 +34,21 @@ async function get(p) {
   const res = await fetch(base + p);
   return {status: res.status, body: await res.json().catch(() => null)};
 }
+// 写操作 = 同源 + 一次性写授权票（N04 V1.3 T1-4）。票每次现取，不缓存、不复用。
+async function writeTicket() {
+  const res = await fetch(base + "/v12/api/demo/write-ticket", {cache: "no-store"});
+  const parsed = await res.json().catch(() => null);
+  if (!parsed?.ticket) throw new Error("写授权票获取失败");
+  return parsed.ticket;
+}
 async function post(p, body) {
   // 服务端写限流是全局安全栏（12 次/分钟、最小间隔 400ms）。脚本按服务端给的
   // retryAfterMs 等待后重试，不绕过、不放宽任何限流参数。
   for (let attempt = 0; attempt < 4; attempt += 1) {
     const res = await fetch(base + p, {
-      method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify(body),
+      method: "POST",
+      headers: {"Content-Type": "application/json", Origin: base, "x-sm-write": await writeTicket()},
+      body: JSON.stringify(body),
     });
     const parsed = await res.json().catch(() => null);
     if (res.status !== 429) return {status: res.status, body: parsed};
@@ -75,14 +84,32 @@ const beforePerson = before.body?.person;
 const beforeFacts = (beforePerson?.confirmed || []).length;
 const beforePending = (beforePerson?.pending || []).length;
 const beforePrep = (beforePerson?.prep?.personalized || []).map((q) => q.en);
-ok("baseline-facts-2", beforeFacts === 2, beforeFacts);
+// 种入基线 = 3 条人设字段（地区/职业/沟通风格）+ 2 条母版对话事实 = 5。
+// 这条断言原来写 2，早于「人设字段也入档」的改动，属过时期望值，按当前种入契约校正。
+ok("baseline-facts-5", beforeFacts === 5, beforeFacts);
 ok("baseline-pending-1", beforePending === 1, beforePending);
 ok("baseline-prep-2", beforePrep.length === 2, beforePrep);
 
 // A. 注入一条演示 final：只进待确认。
 const INJECT_SESSION = "sess_n04_demo_oliver_uk_3";
 const INJECT_SEGMENT = 1;
-const INJECT_TEXT = "Oliver keeps his runs easy on the days after heavy lifting.";
+// 注入文本必须是母版该段的逐字原文（T1-1）：不再允许用摘要/改写句冒充 final。
+const fixturePath = path.join(repo, "docs", "plan",
+  "ALW001-N04-Persona-Memory-Regression-V1.0", "fixtures", "demo-personas.json");
+const fixture = JSON.parse(fs.readFileSync(fixturePath, "utf8"));
+function exactText(sessionId, segmentIndex) {
+  for (const persona of fixture.personas) {
+    for (const session of persona.sessions) {
+      if (session.sessionId !== sessionId) continue;
+      const segment = session.segments.find((s, i) =>
+        (Number.isFinite(Number(s.index)) ? Number(s.index) : i) === segmentIndex);
+      if (segment) return String(segment.textOriginal);
+    }
+  }
+  return "";
+}
+const INJECT_TEXT = exactText(INJECT_SESSION, INJECT_SEGMENT);
+if (!INJECT_TEXT) throw new Error("母版里找不到注入用原文段");
 const injected = await post("/v12/api/demo/final", {
   confirm: true, slug, text: INJECT_TEXT,
   sessionId: INJECT_SESSION, segmentIndex: INJECT_SEGMENT, section: "plan",
@@ -130,8 +157,11 @@ ok("B-pending-minus-1", afterPending === beforePending, {before: beforePending, 
 ok("B-prep-changed", JSON.stringify(afterPrep) !== JSON.stringify(beforePrep),
   {before: beforePrep, after: afterPrep});
 ok("B-prep-first-is-new-fact", /10K/.test(afterPrep[0] || ""), afterPrep);
-ok("B-profile-written", String(fs.readFileSync(
-  path.join(demoDir, "People", slug, "00-profile.md"), "utf8")).includes(seeded?.text || "@@"));
+// 写入落地的强证据：档案里出现这次确认返回的 factId 标记（比"包含某句文本"更不容易误判）。
+const writtenFactId = confirmed.body?.confirmed?.factId || "";
+ok("B-profile-written", Boolean(writtenFactId) && String(fs.readFileSync(
+  path.join(demoDir, "People", slug, "00-profile.md"), "utf8")).includes("sm-src:" + writtenFactId),
+  {factId: writtenFactId});
 ok("B-confirm-returns-prep-inline", Array.isArray(confirmed.body?.prep?.personalized) &&
   confirmed.body.prep.personalized.length === 2);
 
@@ -157,8 +187,12 @@ ok("C-ignored-text-not-written", !String(fs.readFileSync(
   path.join(demoDir, "People", slug, "00-profile.md"), "utf8")).includes(INJECT_TEXT));
 
 // 未归属 final：没有选择人物时拒绝写入（说话人身份不许猜）。
+// 未归属：用母版里真实存在、但没指定人物的段（伪造 sessionId 现在会被 404 拒绝）。
+const INBOX_SESSION = "sess_n04_demo_maya_us_1";
+const INBOX_SEGMENT = 1;
 const inbox = await post("/v12/api/demo/final", {
-  confirm: true, text: "Someone mentions a weekend market.", sessionId: "demo-unattributed-1", segmentIndex: 0,
+  confirm: true, text: exactText(INBOX_SESSION, INBOX_SEGMENT),
+  sessionId: INBOX_SESSION, segmentIndex: INBOX_SEGMENT,
 });
 ok("C-inbox-unattributed", inbox.body?.added === true && !inbox.body?.attributedTo, inbox.body?.attributedTo);
 const unattributedConfirm = await post(

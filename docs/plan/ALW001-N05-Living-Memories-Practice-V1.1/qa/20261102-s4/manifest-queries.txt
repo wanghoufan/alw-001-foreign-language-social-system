@@ -1,0 +1,4 @@
+      E: queries (line=11)
+                A: http://schemas.android.com/apk/res/android:name(0x01010003)="android.intent.action.TTS_SERVICE" (Raw: "android.intent.action.TTS_SERVICE")
+                A: http://schemas.android.com/apk/res/android:name(0x01010003)="android.speech.RecognitionService" (Raw: "android.speech.RecognitionService")
+            A: http://schemas.android.com/apk/res/android:name(0x01010003)="app.socialmate.dualmic.TtsSelfTestActivity" (Raw: "app.socialmate.dualmic.TtsSelfTestActivity")

@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='utf-8' standalone='yes' ?>
+<map>
+    <boolean name="listened_cdp:s4" value="true" />
+    <float name="rate" value="0.75" />
+    <string name="provider">fake</string>
+    <int name="loop" value="1" />
+    <string name="remote_base"></string>
+    <boolean name="system_fallback" value="false" />
+    <boolean name="listened_selftest:常用表达" value="true" />
+    <boolean name="listened_selftest:英文 B" value="false" />
+    <boolean name="listened_selftest:英文 A" value="true" />
+</map>

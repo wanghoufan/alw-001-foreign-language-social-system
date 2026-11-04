@@ -1,0 +1,232 @@
+Apps
+☾
+⚙
+⌕
+Apps & PWAs first
+Phone & special cases
+Desktop & others
+Apps & PWAs first
+26 apps found
+P002
+Phone app / PWA
+人生物种测试 · Personality Quiz
+
+I made this fun personality quiz to help people understand themselves a little better. You answer some simple questions, and it gives you insights into your personality and preferences. It’s also a fun way to compare results with friends and learn more about each other.
+
+4 steps · bilingual
+View bilingual guide →
+P005
+Phone app / PWA
+亲缘图谱 · Family Tree
+
+I built a family tree app that helps you keep track of your relatives. In Chinese families, there are so many different names for relatives, and it can get really confusing. My app figures out how people are related and what you should call them. You can also add family photos and explore your whole family tree.
+
+4 steps · bilingual
+View bilingual guide →
+P011
+Phone app / PWA
+我的地点 · My Places
+
+I made this app to keep track of places I’ve visited. Whenever I find a nice café, a beautiful spot, or somewhere interesting, I can save photos and write a few notes about it. Later, I can easily find those places again or share my favorites with friends. It’s basically my personal travel and lifestyle journal.
+
+4 steps · bilingual
+View bilingual guide →
+P016
+Phone app / PWA
+懒得打字 · Speak Instead of Typing
+
+I built this app because I wanted an easier way to chat with international friends. Instead of typing in English, I can just speak Chinese, and the app turns what I say into natural English and puts it directly into my chat. It also works for other languages, reviews, and journal entries. It makes communicating in another language a lot easier.
+
+4 steps · bilingual
+View bilingual guide →
+P019
+Phone app / PWA
+拍照点助手 · Photo Spot Finder
+
+This is a project I’ve been working on for people who love photography. The idea is to help you discover interesting photo spots and organize your shooting locations and reference photos. That way, when you go out to take pictures, you already have some good places in mind.
+
+4 steps · bilingual
+View bilingual guide →
+P020
+Phone app / PWA
+拉伸换边计时器 · Stretch Timer
+
+I built this because I do a lot of stretching, and I got tired of constantly checking the time. You just set how long you want to stretch each side, and the app automatically tells you when to switch. It also has different sounds and background music, so you can focus on stretching instead of watching the clock.
+
+4 steps · bilingual
+View bilingual guide →
+P025
+Phone app / PWA
+拉伸训练 · Stretch Routine
+
+I started this app to make daily stretching easier. The idea is to organize stretching exercises into simple routines, so you can just open the app and follow along instead of searching for different videos every time. It’s all about making stretching a regular habit.
+
+4 steps · bilingual
+View bilingual guide →
+P026
+Phone app / PWA
+夜间补光灯 · Screen Fill Light
+
+This is a little tool that turns your phone screen into a fill light. It’s useful when you’re taking selfies, recording videos, or making video calls in low light. The idea is to have a quick, simple lighting option without carrying extra equipment.
+
+4 steps · bilingual
+View bilingual guide →
+P027 / P062
+Phone app / PWA
+蛋白质计算器 · Protein Calculator
+
+I made this protein calculator because I work out and wanted an easy way to track my protein intake. You enter your weight and fitness goal, and it estimates how much protein you need each day. You can also add foods like eggs, chicken, or milk to see how much protein you’re getting and how much more you might need.
+
+4 steps · bilingual
+View bilingual guide →
+P028
+Phone app / PWA
+聚会之夜 · Party Night
+
+I started this project to make hanging out with friends more fun. You know those moments when everyone gets together but nobody knows what to do? The idea is to have some easy party activities right on your phone, so it’s easier to break the ice and get everyone involved.
+
+4 steps · bilingual
+View bilingual guide →
+P039
+Phone app / PWA
+酒吧游戏 · Bar Games
+
+I made this for nights out with friends, especially when you’re meeting new people. Sometimes conversations can get a little awkward, so the idea is to use simple party games to break the ice and help everyone relax and have fun together.
+
+4 steps · bilingual
+View bilingual guide →
+P040
+Phone app / PWA
+才艺展示厅 · Talent Showcase
+
+I built this project as a place where people can showcase their talents and creative work. For example, if you’re into dancing, singing, or making videos, you can organize your work in one place instead of having it scattered across different apps. It’s a simple way to show people what you love doing.
+
+4 steps · bilingual
+View bilingual guide →
+P043
+Phone app / PWA
+成片集 · Photo Delivery App
+
+I built this app for photographers, especially people doing portrait shoots or event photography. After a shoot, the photographer can organize the photos and let clients choose their favorites on their own phones. Clients can pick a photo package, and the photographer can deliver the original images afterward. It makes the whole process, from taking photos to delivering them, much easier.
+
+4 steps · bilingual
+View bilingual guide →
+P045
+Phone app / PWA
+盆底肌训练 · Pelvic Floor Trainer
+
+I developed a pelvic floor training app for men. A lot of people find Kegel exercises difficult to follow because they have to count and time everything themselves. My app guides you through the exercises with voice instructions, so you don’t have to keep looking at the screen. It also has different training levels and progress tracking.
+
+4 steps · bilingual
+View bilingual guide →
+P046
+Phone app / PWA
+麻将小白助手 · Mahjong Beginner’s Guide
+
+I built this app to help complete beginners learn Mahjong, especially the version played in Hainan. Mahjong can be pretty confusing when you’re new to it, with all the rules and different tile combinations. My app explains the basics using real tile pictures and simple examples, so you can learn how to play without getting overwhelmed.
+
+4 steps · bilingual
+View bilingual guide →
+P047
+Phone app / PWA
+慢食刻 · BiteTempo
+
+I made this app to help people slow down when they eat. A lot of us eat too quickly without even noticing, so I created a simple, quiet meal timer. You can take your time, enjoy your food, and record how you felt afterward. The app also helps you track your eating habits over time.
+
+4 steps · bilingual
+View bilingual guide →
+P049
+Phone app / PWA
+海口去哪玩 · Haikou What’s On
+
+I built this app for Haikou, the city where I live in China. It’s basically a local event guide that helps you discover things to do, like live music, markets, language exchanges, sports meetups, and social events. Instead of checking a bunch of different apps, you can see what’s happening today or this weekend in one place. It’s especially useful for meeting new people and exploring the city.
+
+4 steps · bilingual
+View bilingual guide →
+P051
+Phone app / PWA
+妹妹的听书小屋 · My Sister’s Audiobook Library
+
+I built this app for my younger sister. We already had a large collection of educational audio courses stored on a computer, but they weren’t very convenient to listen to. So I turned them into a private audiobook library she can access on her phone. She can browse by subject and difficulty level, adjust the playback speed, set a sleep timer, and download lessons to listen offline.
+
+4 steps · bilingual
+View bilingual guide →
+P052
+Phone app / PWA
+真心话大冒险 · Truth or Dare
+
+I made a party game app with over 1,500 questions and challenges. It includes Truth or Dare, Never Have I Ever, and Most Likely To. You can choose different levels depending on how comfortable everyone is with each other. It’s great for house parties, game nights, or just getting to know new friends.
+
+4 steps · bilingual
+View bilingual guide →
+P053
+Phone app / PWA
+眨眼守护 · BlinkGuard
+
+I built this app because I spend a lot of time in front of a computer and sometimes forget to blink enough. You just place an old Android phone next to your monitor, and it uses the front camera to detect your blinking. If you haven’t blinked for a while, it reminds you. It also tracks your screen time and blinking patterns, and everything runs locally on the phone.
+
+4 steps · bilingual
+View bilingual guide →
+P055
+Phone app / PWA
+姿势守护 · PostureGuard
+
+I built this app to help people improve their posture while working at a desk. You place an Android phone beside you, and its camera checks whether you’re leaning forward, slouching, or looking down too much. If your posture gets worse or you’ve been sitting for too long, it gives you a gentle reminder. It also tracks your sitting habits over time.
+
+4 steps · bilingual
+View bilingual guide →
+P056
+Phone app / PWA
+筋形 LAB · Muscle Shape Lab
+
+I’m building this AI fitness app to help people see which muscle groups might need more attention. You take a few photos from different angles, and the app analyzes your overall muscle appearance and suggests exercises for areas you might want to improve. You can also compare photos over time to see how your physique is changing.
+
+4 steps · bilingual
+View bilingual guide →
+P057
+Phone app / PWA
+舞蹈大师 · Dance Master
+
+I built this app because I enjoy learning dance routines, especially K-pop and trending TikTok-style dances. Learning from regular videos can be frustrating because you’re constantly pausing and rewinding. My app lets you break a dance down into eight-count sections, slow it down, mirror the video, and loop specific parts. You can practice each section until you get it right, then put the whole routine together.
+
+4 steps · bilingual
+View bilingual guide →
+P059
+Phone app / PWA
+双屏协同提词器 · Dual-Screen Teleprompter
+
+I built this teleprompter app for filming videos and interviews with a small team. One person can control the script on their phone, while the person on camera reads it from another screen. A third phone is used just for filming. The two screens stay in sync, and you can even make quick script changes during a shoot. It makes filming much smoother.
+
+4 steps · bilingual
+View bilingual guide →
+P063
+Phone app / PWA
+静蹲计时器 · Wall Sit Timer
+
+I made this little timer specifically for wall sit exercises. It’s a simple leg-strengthening exercise where you hold a sitting position against a wall. The idea is to make timing your workouts easier without having to use a regular stopwatch every time.
+
+4 steps · bilingual
+View bilingual guide →
+P064
+Phone app / PWA
+肌肉守护者 · Muscle Guardian
+
+I built this app for older family members because maintaining leg strength becomes really important as we age. It’s designed to be super simple. You choose a training duration, follow the voice instructions, and do some basic squat exercises. It also records your progress, so you can see how you’re improving over time.
+
+4 steps · bilingual
+View bilingual guide →
+
+From the V1.4 master copy; real phone screens still need a check, item by item.
+
+▦
+Apps
+⌖
+Hainan
+◉
+Chat
+♙
+About me
+♧
+People
+BILINGUAL REFERENCE
+×

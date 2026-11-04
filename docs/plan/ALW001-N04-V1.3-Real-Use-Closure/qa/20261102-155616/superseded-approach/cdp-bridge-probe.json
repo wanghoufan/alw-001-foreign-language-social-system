@@ -1,0 +1,30 @@
+{
+  "serial": "REDACTED-SERIAL",
+  "at": "2026-11-02T08:01:57.326Z",
+  "steps": [
+    {
+      "name": "01-current-url",
+      "value": "chrome-error://chromewebdata/"
+    },
+    {
+      "name": "02-private-page-bridge",
+      "value": "{\"hasBridge\":true,\"saveText\":\"function\",\"openRecordingPanel\":\"function\"}"
+    },
+    {
+      "name": "03-private-page-bridge-json",
+      "value": "{\"hasBridge\":true}"
+    },
+    {
+      "name": "04-cross-origin-frame-state",
+      "value": "{\"src\":\"http://127.0.0.1:18793/evil.html\",\"hasContentWindow\":true,\"frameReadable\":false,\"blockedBy\":\"same-origin-policy\",\"frameBridgeReadable\":false}"
+    },
+    {
+      "name": "05-after-external-nav-attempt",
+      "value": "{\"href\":\"chrome-error://chromewebdata/\",\"before\":\"chrome-error://chromewebdata/\"}"
+    },
+    {
+      "name": "06-bridge-after-steps",
+      "value": "{\"hasBridge\":true}"
+    }
+  ]
+}

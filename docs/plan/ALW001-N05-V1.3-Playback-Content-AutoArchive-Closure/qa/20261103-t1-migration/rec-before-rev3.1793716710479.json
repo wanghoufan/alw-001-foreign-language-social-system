@@ -1,0 +1,586 @@
+{
+  "schema": 1,
+  "placeId": null,
+  "recordId": "rec-20261103072022-16b79c",
+  "rawInput": "晚上在红城湖湖边散散步，还是非常愉悦的。有微风，很凉爽。\n\n除了跑步的、散步的人，还有坐在旁边喝椰子水、聊天的人。坐在小凳上喝个椰子水，聊聊天，也很棒，很舒适。就是想要那种……\n\n不过要提醒一句，做好防蚊，因为晚上可能会有蚊子。带一些驱蚊花露水喷一喷，或者穿长裤，或者带上止痒膏，也很有帮助，以防万一。\n\n比较有意思的是，沿着这一整圈湖边的跑道，有很多组跳广场舞的阿姨，基本上整圈都有，在不同的角落。\n\n她们有不同风格，有些特别嗨。放的是老歌，但是 DJ 版本，所以你会觉得很有共鸣，知道吗？但又很带劲，跳起来很过瘾。\n\n有一些是零基础的。不管你以前有没有跳过，只要过去，都可以参与进来，都能跟上，能达到运动的效果，而且又很开心、很愉悦。\n\n但有一些是需要一些基础的，有一些难度，可能要跟她们练一段时间才能跟得上。所以，体验一下没有门槛的那种，也是一个很好的体验。\n\n我跟着她们跳过好几次，很开心，没有什么烦恼，跟着跳就对了，又简单又不会累。跳半个小时，你会觉得很有趣，不烦躁。\n\n当然，除了阿姨阿妈，还有小情侣在那里卿卿我我，这没法避免。\n\n还有一些体育锻炼的设施，比如可以做引体向上、双杠臂屈伸，可以按摩背部，也可以拉伸，设施还是挺齐全的。\n\n还有一些歌手在那儿直播唱歌。\n\n这边也有很多人提供按摩服务，比如 10 块钱按摩 10 分钟，按肩颈、腰背什么的。因为上年纪的人比较多嘛。\n\n我喜欢在这湖边的跑道上快走。因为快走，可以一边听歌，也可以跟 AI 练一下英语口语，或者简单记录一些自己的想法，一举多用。\n\n这边有 3 个公厕，在三个角上，也就是每个边基本上都有一个，所以每走一段距离就会有一个公厕，非常方便。整体基本上是一个等边三角形的布置。\n\n这边还有一个给小孩玩的区域，有滑梯，还有可以攀岩的小沙坡，也可以在那里玩沙子。\n\n当然，周边有很多卖道具的，比如铲子、小玩具、桶，还有给小孩玩的涂鸦画。\n\n就围绕小孩，产生了一小圈商业服务和商业产品的售卖。\n\n所以我很喜欢这个地方。如果你周六周天感觉很孤单，特别是晚上的时候，一个人觉得有点孤单，或者心情有点不好，那就过来走一走，你会感受到生命的活力和生活的希望。\n\n你也可以在下午、傍晚或者晚上来这边野餐。或者说，在这边露营——其实也算不上露营。\n\n铺一个野餐毯，带一些吃的、喝的，在这边跟朋友聊聊天、听听歌，也很惬意。",
+  "rawSha256": "6851d3c619d3ce3ba809bb5cb55d8b56f0845e012c43563afd027e31d54e6652",
+  "revision": 2,
+  "source": "manual_text",
+  "blocks": [
+    {
+      "blockId": "blk-hc-1",
+      "order": 0,
+      "sourceSpan": {
+        "start": 0,
+        "end": 28
+      },
+      "sourceText": "晚上在红城湖湖边散散步，还是非常愉悦的。有微风，很凉爽。",
+      "cnSentences": [
+        "晚上在红城湖湖边散散步，还是非常愉悦的。",
+        "有微风，很凉爽。"
+      ],
+      "enVariants": [
+        "Taking a walk along the edge of Hongcheng Lake — an evening stroll here is really delightful. There's a nice breeze, nice and cool.",
+        "Walking by Hongcheng Lake in the evening is genuinely pleasant. The breeze is lovely and cool."
+      ],
+      "phrases": [
+        "take a walk / stroll along",
+        "along the edge of the lake / by the lake",
+        "evening stroll",
+        "delightful / genuinely pleasant",
+        "a nice breeze",
+        "nice and cool / lovely and cool"
+      ],
+      "contentRevision": 2,
+      "originalChanged": true,
+      "needsTranslation": false,
+      "index": 0
+    },
+    {
+      "blockId": "blk-hc-2",
+      "order": 1,
+      "sourceSpan": {
+        "start": 30,
+        "end": 88
+      },
+      "sourceText": "除了跑步的、散步的人，还有坐在旁边喝椰子水、聊天的人。坐在小凳上喝个椰子水，聊聊天，也很棒，很舒适。就是想要那种……",
+      "cnSentences": [
+        "除了跑步的、散步的人，还有坐在旁边喝椰子水、聊天的人。",
+        "坐在小凳上喝个椰子水，聊聊天，也很棒，很舒适。",
+        "就是想要那种……"
+      ],
+      "enVariants": [
+        "Besides the runners and walkers, there are people sitting nearby drinking coconut water and chatting — just kicking back on a little stool with a coconut water, shooting the breeze. That's great too, really comfortable. It's just that…",
+        "Apart from the joggers and strollers, you've got people sitting around sipping coconut water and chatting. Just sitting on a little stool with a coconut water, chatting away — that's great too, really comfortable. It's just that…"
+      ],
+      "phrases": [
+        "coconut water 椰子水",
+        "sit around chatting 坐着聊天",
+        "shooting the breeze 闲聊"
+      ],
+      "contentRevision": 2,
+      "originalChanged": true,
+      "needsTranslation": false,
+      "index": 1
+    },
+    {
+      "blockId": "blk-hc-3",
+      "order": 2,
+      "sourceSpan": {
+        "start": 90,
+        "end": 151
+      },
+      "sourceText": "不过要提醒一句，做好防蚊，因为晚上可能会有蚊子。带一些驱蚊花露水喷一喷，或者穿长裤，或者带上止痒膏，也很有帮助，以防万一。",
+      "cnSentences": [
+        "不过要提醒一句，做好防蚊，因为晚上可能会有蚊子。",
+        "带一些驱蚊花露水喷一喷，或者穿长裤，或者带上止痒膏，也很有帮助，以防万一。"
+      ],
+      "enVariants": [
+        "That said, a word of warning — make sure you protect yourself from mosquitoes, since there can be some out at night. Bring some mosquito repellent spray, give yourself a spritz, or wear long pants — or bring some anti-itch ointment. It helps a lot, just in case.",
+        "One heads-up though: do guard against mosquitoes, because there may be some around at night. Bring some mosquito repellent and spray yourself, or wear long pants, or carry some anti-itch cream — just in case."
+      ],
+      "phrases": [
+        "mosquito repellent 驱蚊花露水",
+        "anti-itch cream 止痒膏",
+        "wear long pants 穿长裤"
+      ],
+      "contentRevision": 2,
+      "originalChanged": true,
+      "needsTranslation": false,
+      "index": 2
+    },
+    {
+      "blockId": "blk-hc-4",
+      "order": 3,
+      "sourceSpan": {
+        "start": 153,
+        "end": 259
+      },
+      "sourceText": "比较有意思的是，沿着这一整圈湖边的跑道，有很多组跳广场舞的阿姨，基本上整圈都有，在不同的角落。\n\n她们有不同风格，有些特别嗨。放的是老歌，但是 DJ 版本，所以你会觉得很有共鸣，知道吗？但又很带劲，跳起来很过瘾。",
+      "cnSentences": [
+        "比较有意思的是，沿着这一整圈湖边的跑道，有很多组跳广场舞的阿姨，基本上整圈都有，在不同的角落。",
+        "\n\n她们有不同风格，有些特别嗨。",
+        "放的是老歌，但是 DJ 版本，所以你会觉得很有共鸣，知道吗？",
+        "但又很带劲，跳起来很过瘾。"
+      ],
+      "enVariants": [
+        "What's even more interesting is that all along the running track that loops around the lake, there are a bunch of different groups of aunties doing square dancing — basically around the whole lake, in different corners. They've got different styles; some are really high-energy. They play old songs, but DJ versions, so you feel a real connection, you know? And it's really pumping, so it's a blast to dance to.",
+        "Along the track that circles the lake, there are lots of different groups of aunties doing square dance — in pretty much every corner. They've got different styles — some are really high-energy. They play old songs, but in DJ versions, so you feel a real connection to them, you know? But at the same time it's really pumping, so it's a blast to dance to."
+      ],
+      "phrases": [
+        "different styles",
+        "high-energy / hype",
+        "old songs / oldies",
+        "DJ versions / DJ remixes",
+        "feel a real connection / really feel it",
+        "you know? / you know what I mean?",
+        "pumping / driving beat",
+        "a blast to dance to / so satisfying"
+      ],
+      "contentRevision": 2,
+      "originalChanged": true,
+      "needsTranslation": false,
+      "index": 3
+    },
+    {
+      "blockId": "blk-hc-5",
+      "order": 4,
+      "sourceSpan": {
+        "start": 261,
+        "end": 319
+      },
+      "sourceText": "有一些是零基础的。不管你以前有没有跳过，只要过去，都可以参与进来，都能跟上，能达到运动的效果，而且又很开心、很愉悦。",
+      "cnSentences": [
+        "有一些是零基础的。",
+        "不管你以前有没有跳过，只要过去，都可以参与进来，都能跟上，能达到运动的效果，而且又很开心、很愉悦。"
+      ],
+      "enVariants": [
+        "Some of them are for complete beginners — it doesn't matter whether you've ever danced before. You just walk over and join in, and you can keep up. You get a good workout out of it, and it's just fun and enjoyable.",
+        "Some are zero-experience friendly — no matter if you've never danced before, you can just go over and join in and follow along. You get your exercise in, and it's a great time too."
+      ],
+      "phrases": [
+        "for complete beginners / zero-experience friendly",
+        "it doesn't matter whether...",
+        "just walk over and join in",
+        "keep up / follow along",
+        "get a good workout out of it / get your exercise in",
+        "a great time / fun and enjoyable"
+      ],
+      "contentRevision": 2,
+      "originalChanged": true,
+      "needsTranslation": false,
+      "index": 4
+    },
+    {
+      "blockId": "blk-hc-6",
+      "order": 5,
+      "sourceSpan": {
+        "start": 321,
+        "end": 382
+      },
+      "sourceText": "但有一些是需要一些基础的，有一些难度，可能要跟她们练一段时间才能跟得上。所以，体验一下没有门槛的那种，也是一个很好的体验。",
+      "cnSentences": [
+        "但有一些是需要一些基础的，有一些难度，可能要跟她们练一段时间才能跟得上。",
+        "所以，体验一下没有门槛的那种，也是一个很好的体验。"
+      ],
+      "enVariants": [
+        "But some of them do require some basics — there's a bit of a learning curve, and you might need to practice with them for a while before you can keep up. So trying out the ones with no barrier to entry is a great experience too.",
+        "That said, some do call for some foundation — they're a bit more challenging, and you may have to practice with them for a while before you can follow along. So giving the no-threshold ones a try is well worth it."
+      ],
+      "phrases": [
+        "require some basics / call for some foundation",
+        "a bit of a learning curve / more challenging",
+        "practice with them for a while",
+        "keep up / follow along",
+        "no barrier to entry / no-threshold",
+        "well worth it / a great experience"
+      ],
+      "contentRevision": 2,
+      "originalChanged": true,
+      "needsTranslation": false,
+      "index": 5
+    },
+    {
+      "blockId": "blk-hc-7",
+      "order": 6,
+      "sourceSpan": {
+        "start": 384,
+        "end": 439
+      },
+      "sourceText": "我跟着她们跳过好几次，很开心，没有什么烦恼，跟着跳就对了，又简单又不会累。跳半个小时，你会觉得很有趣，不烦躁。",
+      "cnSentences": [
+        "我跟着她们跳过好几次，很开心，没有什么烦恼，跟着跳就对了，又简单又不会累。",
+        "跳半个小时，你会觉得很有趣，不烦躁。"
+      ],
+      "enVariants": [
+        "I've danced along with them quite a few times — it's just really fun, no worries at all. You just follow along and that's it — simple and not tiring. Dance for half an hour and it feels like a lot of fun, not the least bit annoying.",
+        "I've joined them a bunch of times. It's just a good time — no stress, just follow the moves, that's all. Easy and not exhausting. Half an hour of it and you'll find it's genuinely fun, not irritating at all."
+      ],
+      "phrases": [
+        "dance along with them / join them",
+        "quite a few times / a bunch of times",
+        "no worries / no stress",
+        "just follow along, that's it",
+        "simple and not tiring / easy and not exhausting",
+        "a good time / genuinely fun",
+        "not the least bit annoying / not irritating at all"
+      ],
+      "contentRevision": 2,
+      "originalChanged": true,
+      "needsTranslation": false,
+      "index": 6
+    },
+    {
+      "blockId": "blk-hc-8",
+      "order": 7,
+      "sourceSpan": {
+        "start": 441,
+        "end": 470
+      },
+      "sourceText": "当然，除了阿姨阿妈，还有小情侣在那里卿卿我我，这没法避免。",
+      "cnSentences": [
+        "当然，除了阿姨阿妈，还有小情侣在那里卿卿我我，这没法避免。"
+      ],
+      "enVariants": [
+        "Of course, apart from the aunties, you've also got couples getting all lovey-dovey over there — that's just unavoidable.",
+        "Sure — besides the aunties and older ladies, there are couples being all sweet and cuddly with each other. Can't avoid that."
+      ],
+      "phrases": [
+        "apart from / besides",
+        "the aunties / older ladies",
+        "couples",
+        "get all lovey-dovey / be all sweet and cuddly",
+        "that's just unavoidable / can't avoid that"
+      ],
+      "contentRevision": 2,
+      "originalChanged": true,
+      "needsTranslation": false,
+      "index": 7
+    },
+    {
+      "blockId": "blk-hc-9",
+      "order": 8,
+      "sourceSpan": {
+        "start": 472,
+        "end": 522
+      },
+      "sourceText": "还有一些体育锻炼的设施，比如可以做引体向上、双杠臂屈伸，可以按摩背部，也可以拉伸，设施还是挺齐全的。",
+      "cnSentences": [
+        "还有一些体育锻炼的设施，比如可以做引体向上、双杠臂屈伸，可以按摩背部，也可以拉伸，设施还是挺齐全的。"
+      ],
+      "enVariants": [
+        "There's also some fitness equipment there — you can do pull-ups, dips on the parallel bars, massage your back, or stretch. The facilities are pretty well-equipped.",
+        "And there's some workout gear too — stuff like pull-up bars, parallel bars for dips, things to massage your back, and you can stretch as well. Pretty complete set of facilities."
+      ],
+      "phrases": [
+        "fitness equipment / workout gear",
+        "pull-ups",
+        "dips on the parallel bars",
+        "massage your back",
+        "stretch",
+        "well-equipped / pretty complete set of facilities"
+      ],
+      "contentRevision": 2,
+      "originalChanged": true,
+      "needsTranslation": false,
+      "index": 8
+    },
+    {
+      "blockId": "blk-hc-10",
+      "order": 9,
+      "sourceSpan": {
+        "start": 524,
+        "end": 538
+      },
+      "sourceText": "还有一些歌手在那儿直播唱歌。",
+      "cnSentences": [
+        "还有一些歌手在那儿直播唱歌。"
+      ],
+      "enVariants": [
+        "And there are some singers who go there and livestream their singing.",
+        "There are also some singers doing live-streamed performances there."
+      ],
+      "phrases": [
+        "some singers",
+        "go there and...",
+        "livestream one's singing / do live-streamed performances"
+      ],
+      "contentRevision": 2,
+      "originalChanged": true,
+      "needsTranslation": false,
+      "index": 9
+    },
+    {
+      "blockId": "blk-hc-11",
+      "order": 10,
+      "sourceSpan": {
+        "start": 540,
+        "end": 593
+      },
+      "sourceText": "这边也有很多人提供按摩服务，比如 10 块钱按摩 10 分钟，按肩颈、腰背什么的。因为上年纪的人比较多嘛。",
+      "cnSentences": [
+        "这边也有很多人提供按摩服务，比如 10 块钱按摩 10 分钟，按肩颈、腰背什么的。",
+        "因为上年纪的人比较多嘛。"
+      ],
+      "enVariants": [
+        "There are also a lot of people here offering massage services — like 10 yuan for a 10-minute massage, working on your shoulders, neck, lower back, whatever. There are quite a few older folks around here, after all.",
+        "A lot of people here also offer massages — say, 10 yuan for 10 minutes, on your shoulders and neck, your back, that kind of thing. There are more older people around here, after all."
+      ],
+      "phrases": [
+        "offer massage services",
+        "10 yuan for a 10-minute massage",
+        "shoulders and neck",
+        "lower back",
+        "older folks / older people",
+        "after all"
+      ],
+      "contentRevision": 2,
+      "originalChanged": true,
+      "needsTranslation": false,
+      "index": 10
+    },
+    {
+      "blockId": "blk-hc-12",
+      "order": 11,
+      "sourceSpan": {
+        "start": 595,
+        "end": 656
+      },
+      "sourceText": "我喜欢在这湖边的跑道上快走。因为快走，可以一边听歌，也可以跟 AI 练一下英语口语，或者简单记录一些自己的想法，一举多用。",
+      "cnSentences": [
+        "我喜欢在这湖边的跑道上快走。",
+        "因为快走，可以一边听歌，也可以跟 AI 练一下英语口语，或者简单记录一些自己的想法，一举多用。"
+      ],
+      "enVariants": [
+        "I like to power-walk on the lakeside track — walking fast while listening to music, or practicing my spoken English with AI, or just jotting down some quick thoughts. Killing two birds with one stone, you know.",
+        "I like to brisk-walk along the lake track. It's fast walking, and I'll listen to music, practice my English speaking with AI, or just record a few thoughts — multitasking, basically."
+      ],
+      "phrases": [
+        "power-walk / brisk-walk",
+        "lakeside track",
+        "practice my spoken English with AI",
+        "jot down some quick thoughts / record a few thoughts",
+        "killing two birds with one stone / multitasking"
+      ],
+      "contentRevision": 2,
+      "originalChanged": true,
+      "needsTranslation": false,
+      "index": 11
+    },
+    {
+      "blockId": "blk-hc-13",
+      "order": 12,
+      "sourceSpan": {
+        "start": 658,
+        "end": 726
+      },
+      "sourceText": "这边有 3 个公厕，在三个角上，也就是每个边基本上都有一个，所以每走一段距离就会有一个公厕，非常方便。整体基本上是一个等边三角形的布置。",
+      "cnSentences": [
+        "这边有 3 个公厕，在三个角上，也就是每个边基本上都有一个，所以每走一段距离就会有一个公厕，非常方便。",
+        "整体基本上是一个等边三角形的布置。"
+      ],
+      "enVariants": [
+        "There are three public restrooms here, one at each of the three corners — basically one for each side, so every so often as you walk, you'll come across one. Really convenient. They're laid out roughly in an equilateral triangle.",
+        "There are three public toilets here, at the three corners — meaning there's pretty much one on each side, so every stretch you walk, you'll hit one. Super convenient. The layout is basically an equilateral triangle."
+      ],
+      "phrases": [
+        "public restroom / public toilet",
+        "at each of the three corners",
+        "one for each side",
+        "every so often / every stretch you walk",
+        "come across one",
+        "really convenient / super convenient",
+        "laid out roughly in an equilateral triangle"
+      ],
+      "contentRevision": 2,
+      "originalChanged": true,
+      "needsTranslation": false,
+      "index": 12
+    },
+    {
+      "blockId": "blk-hc-14",
+      "order": 13,
+      "sourceSpan": {
+        "start": 728,
+        "end": 767
+      },
+      "sourceText": "这边还有一个给小孩玩的区域，有滑梯，还有可以攀岩的小沙坡，也可以在那里玩沙子。",
+      "cnSentences": [
+        "这边还有一个给小孩玩的区域，有滑梯，还有可以攀岩的小沙坡，也可以在那里玩沙子。"
+      ],
+      "enVariants": [
+        "There's also an area for kids — with a slide, a little climbing wall for them, and a small sandy slope/hill where they can play in the sand.",
+        "There's also a kids' zone — things like a slide, a small climbing area for kids, and a little sandy slope where they can play with the sand."
+      ],
+      "phrases": [
+        "a kids' zone / an area for kids",
+        "slide",
+        "climbing wall / climbing area",
+        "sandy slope / small hill",
+        "play in the sand / play with the sand"
+      ],
+      "contentRevision": 2,
+      "originalChanged": true,
+      "needsTranslation": false,
+      "index": 13
+    },
+    {
+      "blockId": "blk-hc-15",
+      "order": 14,
+      "sourceSpan": {
+        "start": 769,
+        "end": 804
+      },
+      "sourceText": "当然，周边有很多卖道具的，比如铲子、小玩具、桶，还有给小孩玩的涂鸦画。",
+      "cnSentences": [
+        "当然，周边有很多卖道具的，比如铲子、小玩具、桶，还有给小孩玩的涂鸦画。"
+      ],
+      "enVariants": [
+        "Of course, there are plenty of stalls around selling stuff for the kids — shovels, little toys, buckets, and coloring/paint sets for them to play with.",
+        "Naturally, there are lots of vendors nearby selling kids' gear — things like shovels, small toys, buckets, and doodle/painting kits for children."
+      ],
+      "phrases": [
+        "stalls / vendors",
+        "plenty of... around",
+        "shovels",
+        "buckets",
+        "coloring sets / doodle kits / paint sets",
+        "kids' gear / stuff for the kids"
+      ],
+      "contentRevision": 2,
+      "originalChanged": true,
+      "needsTranslation": false,
+      "index": 14
+    },
+    {
+      "blockId": "blk-hc-16",
+      "order": 15,
+      "sourceSpan": {
+        "start": 806,
+        "end": 831
+      },
+      "sourceText": "就围绕小孩，产生了一小圈商业服务和商业产品的售卖。",
+      "cnSentences": [
+        "就围绕小孩，产生了一小圈商业服务和商业产品的售卖。"
+      ],
+      "enVariants": [
+        "So around the kids, a little mini-economy has sprung up — a ring of services and products all catering to them.",
+        "So there's this whole little commercial ring built around the kids — services and products all aimed at them."
+      ],
+      "phrases": [
+        "a little mini-economy has sprung up",
+        "a commercial ring / a ring of...",
+        "catering to them / aimed at them",
+        "services and products"
+      ],
+      "contentRevision": 2,
+      "originalChanged": true,
+      "needsTranslation": false,
+      "index": 15
+    },
+    {
+      "blockId": "blk-hc-17",
+      "order": 16,
+      "sourceSpan": {
+        "start": 833,
+        "end": 910
+      },
+      "sourceText": "所以我很喜欢这个地方。如果你周六周天感觉很孤单，特别是晚上的时候，一个人觉得有点孤单，或者心情有点不好，那就过来走一走，你会感受到生命的活力和生活的希望。",
+      "cnSentences": [
+        "所以我很喜欢这个地方。",
+        "如果你周六周天感觉很孤单，特别是晚上的时候，一个人觉得有点孤单，或者心情有点不好，那就过来走一走，你会感受到生命的活力和生活的希望。"
+      ],
+      "enVariants": [
+        "That's why I really like this place. If you're feeling lonely on a Saturday or Sunday — especially at night, when you're on your own and feeling a bit down — just come take a walk here. You'll feel the vitality of life and a sense of hope.",
+        "So I really love this place. If you ever feel lonely on the weekend — especially at night, alone and a little blue — come take a stroll here. You'll feel life's energy and hope again."
+      ],
+      "phrases": [
+        "That's why I really like this place.",
+        "on a Saturday or Sunday / on the weekend",
+        "feeling lonely / on your own",
+        "feeling a bit down / a little blue",
+        "come take a walk / take a stroll",
+        "the vitality of life / life's energy",
+        "a sense of hope / hope again"
+      ],
+      "contentRevision": 2,
+      "originalChanged": true,
+      "needsTranslation": false,
+      "index": 16
+    },
+    {
+      "blockId": "blk-hc-18",
+      "order": 17,
+      "sourceSpan": {
+        "start": 912,
+        "end": 952
+      },
+      "sourceText": "你也可以在下午、傍晚或者晚上来这边野餐。或者说，在这边露营——其实也算不上露营。",
+      "cnSentences": [
+        "你也可以在下午、傍晚或者晚上来这边野餐。",
+        "或者说，在这边露营——其实也算不上露营。"
+      ],
+      "enVariants": [
+        "But you can also come here in the afternoon, at dusk, or in the evening for a picnic — or to camp out here, though \"camping\" might be a stretch.",
+        "You can also come in the afternoon, at dusk, or in the evening for a picnic — or to camp out, though it doesn't really count as camping."
+      ],
+      "phrases": [
+        "picnic 野餐",
+        "at dusk 傍晚",
+        "lay out a blanket 铺毯子"
+      ],
+      "contentRevision": 2,
+      "originalChanged": true,
+      "needsTranslation": false,
+      "index": 17
+    },
+    {
+      "blockId": "blk-hc-19",
+      "order": 18,
+      "sourceSpan": {
+        "start": 954,
+        "end": 989
+      },
+      "sourceText": "铺一个野餐毯，带一些吃的、喝的，在这边跟朋友聊聊天、听听歌，也很惬意。",
+      "cnSentences": [
+        "铺一个野餐毯，带一些吃的、喝的，在这边跟朋友聊聊天、听听歌，也很惬意。"
+      ],
+      "enVariants": [
+        "You just lay out a picnic blanket, bring some food and drinks, and chill here with friends — chatting, listening to music. Really relaxing.",
+        "You spread out a picnic blanket, bring along some snacks and drinks, and hang out with friends here — chatting and listening to music. It's really laid-back."
+      ],
+      "phrases": [
+        "lay out / spread out a picnic blanket",
+        "bring some food and drinks / snacks and drinks",
+        "chill / hang out",
+        "chat with friends",
+        "listen to music",
+        "really relaxing / laid-back"
+      ],
+      "contentRevision": 2,
+      "originalChanged": true,
+      "needsTranslation": false,
+      "index": 18
+    }
+  ],
+  "createdAt": "2026-11-03T07:20:22.770Z",
+  "updatedAt": "2026-11-03T16:44:21+08:00",
+  "changeHistory": [
+    {
+      "revision": 1,
+      "action": "create",
+      "at": "2026-11-03T07:20:22.770Z",
+      "rawSha256": "d0c666b9923f8cb725ba2017b3d3c79d45838d75c0e217bf426e5fce791cc3a7",
+      "previousRevision": null,
+      "previousRawSha256": null,
+      "blockCount": 19,
+      "stats": {
+        "sentenceCount": 24,
+        "expectedSentences": 24,
+        "lostSentences": 0,
+        "duplicatedSentences": 0,
+        "blockCount": 19,
+        "reassembled": true
+      }
+    },
+    {
+      "at": "2026-11-03T16:44:21+08:00",
+      "kind": "original-cleaned",
+      "note": "原文替换为整理版（去填充词/补标点/合叠词/修错字），逐字版已归档",
+      "fromRevision": 2,
+      "toRevision": 2
+    }
+  ],
+  "unassigned": false,
+  "segmentation": {
+    "by": "manual-clean",
+    "stats": {
+      "blockCount": 19,
+      "sentenceCount": 34,
+      "reassembled": true
+    },
+    "warnings": [
+      "整理版替换逐字版；逐字版见 docs/archive/ 与 records-archive/"
+    ]
+  }
+}

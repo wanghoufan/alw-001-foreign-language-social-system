@@ -1,0 +1,11 @@
+11-03 09:03:01.136 I/SocialMateTts(31284): selftest event loop loop=0/0
+11-03 09:03:01.137 I/SocialMateTts(31284): provider set remote
+11-03 09:03:01.152 I/SocialMateTts(31284): selftest event provider loop=0/0
+11-03 09:03:01.153 I/SocialMateTts(31284): speak request id=req-adb-1793667781152 segment=enA provider=remote locale=en-US rate=0.75 loop=1 chars=17 textSha=6374cd2929c0
+11-03 09:03:01.165 I/SocialMateTts(31284): selftest event preparing loop=0/0
+11-03 09:03:01.180 I/SocialMateTts(31284): selftest adb speak segment=enA loop=1 rate=0.0 provider=remote → {"ok":true,"code":"OK","state":"preparing","providerId":"remote","segmentType":"enA","locale":"en-US","rate":0.75,"loop":1,"textSha256":"6374cd2929c0ec38563a3e5bc752b5f4b06519f4876489958b49c92313db6dc2"}
+11-03 09:03:01.197 I/SocialMateTts(31284): selftest provider → remote · 远端 http://127.0.0.1:8798 / serverProvider fake | 系统声音仅供临时备用：正式朗读走远端神经 TTS；远端失败不会自动切系统声音。
+11-03 09:03:01.250 I/SocialMateTts(31284): pairing pairing: token refresh ConnectException
+11-03 09:03:01.273 I/SocialMateTts(31284): selftest adapter pairing pairing: token refresh ConnectException
+11-03 09:03:01.291 E/SocialMateTts(31284): error code=TTS_REMOTE_UNREACHABLE retryable=true message=已配对，但连不上远端服务（无法刷新短期令牌）。检查 USB 反向代理/服务是否在运行；没有自动切到系统声音。 segment=enA provider=remote
+11-03 09:03:01.306 I/SocialMateTts(31284): selftest event error loop=0/0

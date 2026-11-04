@@ -1,0 +1,51 @@
+11-03 09:03:31.628 I/SocialMateTts(31284): selftest event loop loop=0/0
+11-03 09:03:31.628 I/SocialMateTts(31284): provider set system
+11-03 09:03:31.642 I/SocialMateTts(31284): selftest event provider loop=0/0
+11-03 09:03:31.644 I/SocialMateTts(31284): speak request id=req-adb-1793667811643 segment=enA provider=system locale=en-US rate=0.75 loop=1 chars=35 textSha=ae8b84ba0c43
+11-03 09:03:31.684 I/SocialMateTts(31284): selftest event queue loop=0/0
+11-03 09:03:31.684 I/SocialMateTts(31284): system speak lang=en voice=en [en] rate=0.75 loop=1 sentences=1 chars=35 fallbackOnly=FALLBACK_ONLY
+11-03 09:03:31.696 I/SocialMateTts(31284): selftest event system_dispatch loop=0/0
+11-03 09:03:31.707 I/SocialMateTts(31284): selftest adb speak segment=enA loop=1 rate=0.0 provider=system → {"ok":true,"code":"OK","lang":"en","voice":"en [en]","locale":"en-US","rate":0.75,"loop":1,"sentences":1,"label":"enA","providerId":"system","fallbackOnly":true}
+11-03 09:03:31.718 I/SocialMateTts(31284): selftest provider → system · 远端 http://127.0.0.1:8799 / serverProvider fake | 系统声音仅供临时备用：正式朗读走远端神经 TTS；远端失败不会自动切系统声音。
+11-03 09:03:31.753 I/SocialMateTts(31284): system utterance index=0/1 lang=en voice=en [en] loop=1/1 text=We could stroll down Longxing Road.
+11-03 09:03:31.759 I/SocialMateTts(31284): selftest event started loop=1/1
+11-03 09:03:31.762 D/AudioTrack(30440): INSP: type=audio,case=1,set=0xb4000075f27b9d00,stream_type=-1,sample_rate=16000,format=0x1,channel_mask=0x1,frame_count=4096,flags=0x0,notification_frames=0,session_id=0,transfer_type=3,uid=-1,pid=-1
+11-03 09:03:31.762 D/AudioTrack(30440): INSP: type=audio,case=1,attributes=1,content_type=1,usage=1,source=0,flags=0x800
+11-03 09:03:31.762 D/AudioTrack(30440): set(sessionID=0)
+11-03 09:03:31.762 D/AudioTrack(30440): set(): Building AudioTrack with attributes: usage = 1, content = 1, flags = 0x800, tags = []
+11-03 09:03:31.762 D/AudioTrack(30440): set(): 0xb4000075f27b9d00, Create AudioTrackThread, tid = 31971
+11-03 09:03:31.767 D/AudioFlinger_Threads(  714): Client defaulted notificationFrames to 1365 for frameCount 4096
+11-03 09:03:31.773 D/AudioTrack(30440): createTrack_l(230): 0xb4000075f27b9d00, mCblk = 0x75f5200000, mLatency = 298, mAfLatency = 42, frameCount = 4096, mSampleRate = 16000, mFlags = 0, mReqFrameCount = 4096, mNotificationFramesAct = 1365
+11-03 09:03:31.776 D/AudioTrack(30440): setVolume(230): 0xb4000075f27b9d00, left = 1.000000, right = 1.000000
+11-03 09:03:32.561 D/AudioTrack(30440): INSP: type=audio,case=1,set=0xb400007677ebf900,stream_type=-1,sample_rate=16000,format=0x1,channel_mask=0x1,frame_count=690,flags=0x0,notification_frames=0,session_id=0,transfer_type=3,uid=-1,pid=-1
+11-03 09:03:32.561 D/AudioTrack(30440): INSP: type=audio,case=1,attributes=1,content_type=2,usage=1,source=0,flags=0x800
+11-03 09:03:32.561 D/AudioTrack(30440): set(sessionID=0)
+11-03 09:03:32.561 D/AudioTrack(30440): set(): Building AudioTrack with attributes: usage = 1, content = 2, flags = 0x800, tags = []
+11-03 09:03:32.561 D/AudioTrack(30440): set(): 0xb400007677ebf900, Create AudioTrackThread, tid = 31974
+11-03 09:03:32.564 D/AudioFlinger_Threads(  714): Client defaulted notificationFrames to 230 for frameCount 690
+11-03 09:03:32.573 D/AudioTrack(30440): createTrack_l(231): 0xb400007677ebf900, mCblk = 0x75f52020e0, mLatency = 85, mAfLatency = 42, frameCount = 690, mSampleRate = 16000, mFlags = 0, mReqFrameCount = 690, mNotificationFramesAct = 230
+11-03 09:03:32.576 W/AudioTrack(30440): Use of stream types is deprecated for operations other than volume control
+11-03 09:03:32.576 W/AudioTrack(30440): See the documentation of AudioTrack() for what to use instead with android.media.AudioAttributes to qualify your playback use case
+11-03 09:03:32.577 D/AudioTrack(30440): start(230): 0xb4000075f27b9d00, prior state:STATE_STOPPED
+11-03 09:03:32.605 E/AudioFlinger_Threads(  714): open /proc/30440/cmdline error
+11-03 09:03:32.605 I/AudioFlinger_Threads(  714): setAppName(), name=[], active=[1]
+11-03 09:03:32.669 D/AudioTrack(30440): stop(231): 0xb400007677ebf900, prior state:STATE_STOPPED
+11-03 09:03:32.670 D/AudioTrack(30440): ~AudioTrack(231): 0xb400007677ebf900
+11-03 09:03:32.670 D/AudioTrack(30440): ~AudioTrack(sessionID=1673)
+11-03 09:03:32.672 D/AudioTrack(30440): stop(231): 0xb400007677ebf900, prior state:STATE_STOPPED
+11-03 09:03:32.674 D/MiSpeechSDK:StramingPlayer(30440): releaseAudioTrack
+11-03 09:03:32.684 D/AudioFlinger_Threads(  714): 0xb4000075877113c0:threadLoop_write write data to hw, mixerStatus 2, muted count 141
+11-03 09:03:32.733 D/AudioFlinger_Threads(  714): mixer(0xb4000075877113c0) throttle end: throttle time(11)
+11-03 09:03:34.433 D/AudioTrack(30440): stop(230): 0xb4000075f27b9d00, prior state:STATE_ACTIVE
+11-03 09:03:34.433 D/AudioTrack(30440): stop(230): called with 28224 frames delivered
+11-03 09:03:34.434 E/AudioFlinger_Threads(  714): open /proc/30440/cmdline error
+11-03 09:03:34.434 I/AudioFlinger_Threads(  714): setAppName(), name=[], active=[0]
+11-03 09:03:34.436 D/AudioTrack(30440): stop(230): 0xb4000075f27b9d00 stop done
+11-03 09:03:34.436 D/AudioTrack(30440): ~AudioTrack(230): 0xb4000075f27b9d00
+11-03 09:03:34.436 D/AudioTrack(30440): ~AudioTrack(sessionID=1665)
+11-03 09:03:34.437 D/AudioFlinger_Threads(  714): 0xb4000075877113c0:threadLoop_write write muted data to hw, mixerStatus 0 start, mId 13, mBytesWritten 688128
+11-03 09:03:34.438 D/AudioTrack(30440): stop(230): 0xb4000075f27b9d00, prior state:STATE_STOPPED
+11-03 09:03:34.453 I/SocialMateTts(31284): selftest event sentence_done loop=1/1
+11-03 09:03:34.916 I/SocialMateTts(31284): selftest state → {"ok":true,"code":"OK","providerId":"system","providerLabel":"系统声音（临时备用）","fallbackOnly":true,"systemFallbackEnabled":true,"remoteServerProvider":"fake","phase":"finished","playing":false,"rate":0.75,"loop":1,"loopIndex":1,"loopTotal":1,"lastWallMs":0,"lastFileMs":0,"synthRequests":1,"fakePrepares":14,"segmentType":"enA","locale":"en-US","requestId":"req-adb-1793667811643","textSha256":"ae8b84ba0c439512525cc80ea49da230f4452cd0368b9f734152eb279f6e9fc1"}
+11-03 09:03:34.926 I/SocialMateTts(31284): selftest event finished loop=0/0
+11-03 09:03:34.926 I/SocialMateTts(31284): system queue finished total=1

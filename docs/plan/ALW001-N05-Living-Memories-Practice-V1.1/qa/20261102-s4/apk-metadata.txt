@@ -1,0 +1,11 @@
+APK=android-poc/app/build/outputs/apk/debug/app-debug.apk
+SIZE=207151
+a3d0085e32686f19d04a4fd434c5f905d3f514e8fdf6c77c3c6018ebea4d562b  android-poc/app/build/outputs/apk/debug/app-debug.apk
+Signer #1 certificate DN: C=US, O=Android, CN=Android Debug
+Signer #1 certificate SHA-256 digest: 8e82a7975008e8ec87ff0f2ecadf495b5263effa34aaec9ab6f135ebea911cf3
+Signer #1 certificate SHA-1 digest: 9bc6a06a64c791c5dd6b8ddd3d0e76de071991cb
+Signer #1 certificate MD5 digest: f5e884b28ce69247c242edd7adc80e76
+package: name='app.socialmate.dualmic' versionCode='37' versionName='0.8.2' platformBuildVersionName='15' platformBuildVersionCode='35' compileSdkVersion='35' compileSdkVersionCodename='15'
+minSdkVersion:'26'
+targetSdkVersion:'35'
+uses-permission: name='android.permission.RECORD_AUDIO'

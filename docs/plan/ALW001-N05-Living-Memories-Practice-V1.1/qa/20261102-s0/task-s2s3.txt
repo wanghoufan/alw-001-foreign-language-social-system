@@ -1,0 +1,36 @@
+你是 ALW-001 N05 V1.1 的 S2+S3 后端执行者（数据合同、私有存储、接口与校验脚本）。项目根：/Users/zzymima0000/Developer/coding/1.Active/alw-001-外语社交系统
+
+必读：`docs/plan/ALW001-N05-Living-Memories-Practice-V1.1/SDD-REVIEW-V1.1.md` 第四节数据合同与安全、第五节 S2/S3、`qa/20261102-s0/S0-REPORT.md`。
+
+## 写入边界（严格）
+可改/新建：`socialmate-prototype/ai-gateway/server.mjs`、同目录新建模块（`manual-facts.mjs`/`place-notes.mjs`/`study-blocks.mjs`/`practice-reports.mjs`）、新建 `verify-n05-backend.mjs`。
+禁改：`socialmate-v1.2/source/V1.1-baseline.html`、`socialmate-v1.2/index.html`、`build-v12.py`（另一路正在改前端）、`android-poc/**`、`public/**`、`public-share.*`、`sw.js`、`places-115.json`（只读）、`SocialMate-Data/People/**` 仅允许经接口写。
+
+## S2 人物补记（MEM01）
+1. `POST /v12/api/people/:slug/facts/draft`：入参原文（支持 10 段/40 句级）、来源 `manual_text|manual_voice`、批次 ID。返回逐字原文 + AI 候选（对象/属性/原句/建议五组归类/置信度），**仅在用户点击「AI 整理」时请求一次 DeepSeek**；超时或额度不足返回 `AI_UNAVAILABLE` 并给手工切句退化，禁止用规则伪装 AI 理解。
+2. `POST .../facts/confirm`：draft ID + 幂等键 + `confirm:true`；只写 `People/<slug>/00-profile.md`；原子写 + 备份 + 可撤回；记录 `source=manual_text|manual_voice`、确认人、时间、`source_excerpt`、批次 ID；**不得伪造 sessionId/segmentIndex**。
+3. 冲突（如英国/美国矛盾、不同日期计划）→ 返回 conflict 候选，用户选「追加/更正/取消」；未确认 0 写入；草稿仅本机可删。
+4. 确认后触发已确认事实重算定制话题（复用现有 prep 逻辑）。
+
+## S3 私有地点活档案（LOC01 + 分段）
+1. 存储：`SocialMate-Data/PlaceNotes/<placeId>/records/<recordId>.json`，字段 `placeId,recordId,rawInput,rawSha256,revision,blocks[],createdAt,changeHistory[]`；服务端路径只能由合法 placeId 派生，不接受客户端路径。
+2. `POST /v12/api/places/:id/records`：保留原文、来源 `external_ai_paste|manual_text|manual_voice`、时间、版本；写前做 rawSha256；原子写 + compare-and-swap（revision 冲突返 409 并保稿）。
+3. `GET /v12/api/places/:id`：只读原介绍（来自 places-115.json，`id=1` 为龙兴路）+ 私有记录倒序（含版本历史、学习段、练习进度）。
+4. 地点匹配：先本地按名称/别名/地址/编号，不明确且用户同意才调 DeepSeek 返 top3（`placeId/confidence/reason`），人工确认才绑定；非 115 地点存「未归属」草稿，不新增公开地点。
+5. 分段：`blocks[]` 含 `blockId,order,sourceSpan,cnSentences[],enVariants[]`(≥1，最多 2 种自然说法),`phrases[],reviews[],contentRevision`；`sourceSpan` 必须能按字符区间回查 `rawInput` 逐字原文；分段建议 3–5 句/段但句数守恒，不丢句不重复；改写既有英文需置 `originalChanged:true` 并在响应提示。
+
+## S5 复盘接口（PRACT01）
+`POST /v12/api/places/:id/records/:rid/blocks/:bid/practice`：保存 `recordId,blockId,contentRevision,rawReport,weakPhrases,practiceTime,status`；同段两次=两条独立记录，旧记录不覆盖不串档；提供弱项聚合只读接口。
+
+## 通用安全
+写接口沿用现有栈：配对短令牌 + 同源 Origin + 一次性写票 + 限流 + 容量限制 + `confirm:true`；令牌不进日志；源文 XSS 转义；AI 调用记现有账本，1 元闸不动，单次上限 0.05 元。
+
+## 验收（真跑，贴退出码）
+`verify-n05-backend.mjs`：①3 条事实（1 重复/1 新增/1 矛盾）未确认 0 写入、确认原子、撤回还原；②错误人物 0 写入（他人 sha 不变）；③2 条地点记录写入后 `places-115.json`、`public-share.*`、`sw.js` sha 不变；④10 段/40 句粘贴 → 分段后句数守恒且每个 `sourceSpan` 切片等于对应原句；⑤同段两份复盘并存、旧记录字节不变；⑥无票/跨源/未授权分别 401/403；⑦revision 冲突返 409 且原稿不丢。
+真实 People 目录 sha 前后一致。不跑全量回归。
+
+## 红线
+不 commit/push；不动真实档案；不改预算；不打印密钥。
+
+## 回报
+接口清单（路径/入参/状态码）+ 改动文件 + 每条验收命令与退出码 + verify-n05-backend JSON 结论 + 示例数据路径 + 未完成项。40 行内。

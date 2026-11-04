@@ -1,0 +1,13 @@
+{
+  "serial": "REDACTED-SERIAL",
+  "model": "21091116AC",
+  "android": "11",
+  "sdk": "30",
+  "versionName": "0.8.1",
+  "versionCode": "36",
+  "apk_sha256": "9971836f0d1cd34afceaf3063f3d8d3cba652faf1f7d3e753dc0d0f03e042296",
+  "git_head": "fc2379cdc9909b26e0dc2a200791ae81ec046d55",
+  "dirty_count": 39,
+  "tz": "Asia/Shanghai",
+  "captured_at": "2026-11-02T18:35:41.857818+08:00"
+}

@@ -1,0 +1,14 @@
+01-no-token.txt -> curl exit 0
+02-cross-origin.txt -> curl exit 0
+03-providers.json -> curl exit 0
+04-voices-en-gb.json -> curl exit 0
+05-estimate.json -> curl exit 0
+06-synthesize-first.json -> curl exit 0
+07-synthesize-again-cachehit.json -> curl exit 0
+08-skeleton-billing-402.json -> curl exit 0
+09-consent-required-403.json -> curl exit 0
+audio-full -> curl exit 0
+audio-range -> curl exit 0
+audio-range-invalid -> curl exit 0
+11-tampered-audio-400.json -> curl exit 0
+12-privacy-person-name-403.json -> curl exit 0

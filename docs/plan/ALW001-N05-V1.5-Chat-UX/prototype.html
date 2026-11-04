@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>ALW-001 聊天页 V1.5 原型</title>
+<style>
+:root{--paper:#f6f1e7;--panel:#fffdf8;--ink:#1f2d27;--muted:#66736c;--line:#d9d2c3;--pine:#1e5a4a;--amber:#a35d18;--chip:#eef4f1;--shadow:0 10px 26px rgba(31,45,39,.08)}
+[data-theme=dark]{--paper:#121917;--panel:#18211e;--ink:#e8efe9;--muted:#a4b3aa;--line:#33443c;--pine:#7fd0b6;--amber:#e0a15a;--chip:#22312b;--shadow:0 10px 26px rgba(0,0,0,.35)}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{background:var(--paper);color:var(--ink);font:19px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif;padding-bottom:calc(86px + env(safe-area-inset-bottom))}
+button,select{font:inherit;color:inherit}
+.app{max-width:520px;margin:0 auto;padding:10px 12px 0}
+.top{position:sticky;top:0;z-index:9;background:var(--paper);padding:8px 0 10px;border-bottom:1px solid var(--line)}
+.toprow{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.person{font-size:23px;font-weight:700;flex:1;min-width:120px}
+.pill{background:var(--chip);border:1px solid var(--line);border-radius:999px;padding:4px 10px;font-size:15px;color:var(--muted);white-space:nowrap}
+.rec{background:var(--pine);color:#fff;border:0;border-radius:14px;min-height:48px;padding:10px 18px;font-weight:700}
+.rec.stop{background:#9d2f2f;color:#fff}
+.sub{display:flex;gap:8px;align-items:center;margin-top:8px;flex-wrap:wrap}
+.link{border:0;background:none;color:var(--pine);padding:8px 4px;font-size:16px;min-height:40px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:12px 14px;margin-top:10px;box-shadow:var(--shadow)}
+.card h2{margin:0 0 8px;font-size:19px}
+.interim{min-height:24px;color:var(--muted);font-size:16px}
+.subs{height:156px;overflow:auto;display:flex;flex-direction:column;gap:8px;padding:2px 1px;scroll-behavior:smooth}
+.bubble{background:var(--chip);border-radius:12px;padding:8px 11px;font-size:18px;flex:0 0 auto}
+.bubble.mine{background:#e7f2ed;margin-left:28px}
+[data-theme=dark] .bubble.mine{background:#20352d}
+.bubble small{display:block;color:var(--muted);font-size:14px;margin-top:2px}
+.history{display:none;height:44vh;overflow:auto;margin-top:8px;border-top:1px dashed var(--line);padding-top:8px}
+.history.open{display:block}
+.badge{display:none;background:var(--amber);color:#fff;border:0;border-radius:999px;padding:6px 12px;font-size:14px;margin-top:8px}
+.badge.show{display:inline-block}
+.groups{display:grid;gap:12px;margin-top:10px}
+.group h3{margin:2px 0 8px;font-size:19px;display:flex;align-items:center;gap:8px}
+.group h3 span{font-size:15px;color:var(--muted);font-weight:400}
+.sugg{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:10px 12px;margin-bottom:8px}
+.sugg p{margin:0;font-size:20px;line-height:1.45}
+.sugg details{margin-top:5px}
+.sugg summary{color:var(--muted);font-size:15px;cursor:pointer}
+.sugg .zh{margin:4px 0 0;color:var(--muted);font-size:16px}
+.acts{display:flex;gap:4px;margin-top:6px}
+.icon{border:1px solid var(--line);background:var(--paper);border-radius:10px;min-width:44px;min-height:38px;font-size:17px}
+.refs{display:flex;gap:10px;overflow-x:auto;padding:2px 1px 4px;margin-top:8px;scroll-snap-type:x mandatory}
+.ref{min-width:200px;max-width:230px;scroll-snap-align:start;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:10px 12px}
+.ref b{display:block;font-size:17px;margin:4px 0}
+.ref p{margin:0;color:var(--muted);font-size:15px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.ref .tag{font-size:13px;color:var(--pine);background:var(--chip);border-radius:999px;padding:2px 8px}
+.foot{position:fixed;left:0;right:0;bottom:0;background:var(--paper);border-top:1px solid var(--line);padding:10px 12px calc(10px + env(safe-area-inset-bottom));display:flex;gap:10px;justify-content:center;z-index:10}
+.foot button{flex:1;max-width:240px;min-height:48px;border-radius:14px;border:1px solid var(--line);background:var(--panel);font-weight:700}
+.foot .primary{background:var(--pine);color:#fff;border-color:var(--pine)}
+.muted{color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="app" id="app" data-theme="light">
+  <header class="top">
+    <div class="toprow">
+      <div class="person">陈美玲 <span class="pill" id="conn">家庭 WiFi</span></div>
+      <button class="rec" id="rec" onclick="toggleRec()">开始录音</button>
+    </div>
+    <div class="sub">
+      <span class="pill" id="state">未开始</span>
+      <button class="link" onclick="swap()">对调说话人</button>
+      <button class="link" onclick="toggleTheme()">深色/浅色</button>
+    </div>
+  </header>
+
+  <section class="card">
+    <h2>对话原文 <span class="pill">最近 3 句</span></h2>
+    <div class="interim" id="interim">正在听…</div>
+    <div class="subs" id="subs"></div>
+    <button class="link" onclick="toggleHistory()" id="histBtn">展开历史（12 句）</button>
+    <div class="history" id="history"></div>
+    <button class="badge" id="newBadge" onclick="applyNew()">有 3 条新建议 · 点击更新</button>
+  </section>
+
+  <section class="card" id="suggBox" onpointerdown="freeze()" onwheel="freeze()">
+    <h2>接话建议 <span class="pill">英文为主 · 中文可展开</span></h2>
+    <div class="groups" id="groups"></div>
+  </section>
+
+  <section class="card">
+    <h2>关联资料</h2>
+    <div class="refs" id="refs"></div>
+  </section>
+
+  <div class="foot">
+    <button class="primary" onclick="alert('原型：进入复盘')">结束并人工确认</button>
+    <button onclick="alert('原型：放弃本轮')">放弃本轮</button>
+  </div>
+</div>
+<script>
+const all=[
+  ['Mia','I want to walk around Hongcheng Lake Park on Saturday afternoon.'],
+  ['我','Sure, what time works for you?'],
+  ['Mia','Three o’clock at the east gate. I’d like to keep the budget under 200 yuan.'],
+  ['我','That works. Do you want coffee afterwards?'],
+  ['Mia','Maybe. I’m still comparing moving costs; Haidian Island is about 3,200 a month.'],
+  ['我','Is that far from your office?'],
+  ['Mia','A bit. I live near Guoxing Avenue now, and the rent is 2,600.'],
+  ['我','So you’re still deciding?'],
+  ['Mia','Yes. I’ll decide after I finish the cost sheet.'],
+  ['我','Let’s not talk about work on Saturday.'],
+  ['Mia','Agreed. I’ll bring my stabilizer and shoot some clips at dusk.'],
+  ['我','Perfect. See you at three.']
+];
+const groups=[
+  ['自然接话','先接住对方',[
+    ['That sounds great! Hongcheng Lake Park is lovely at dusk.','听起来不错！红城湖傍晚很好看。'],
+    ['I like that plan. A walk by the lake sounds relaxing.','我喜欢这个安排，湖边走走很放松。'],
+    ['Nice. I’ve been meaning to visit that side of Haikou.','不错，我一直想去海口那一带走走。']]],
+  ['继续追问','把话接下去',[
+    ['Do you prefer walking by the lake or by the sea?','你更喜欢湖边还是海边散步？'],
+    ['What time do you usually go there?','你一般几点过去？'],
+    ['Is the east gate easy to find?','东门好找吗？']]],
+  ['分享自己','拉近距离',[
+    ['I usually run near Evergreen Park on weekends.','我周末常在万绿园附近跑步。'],
+    ['I also like filming short clips with my phone.','我也喜欢用手机拍点短片。'],
+    ['I’m trying to keep my weekend budget under 200 yuan too.','我也想把周末预算控制在两百以内。']]],
+  ['转换话题','自然换题',[
+    ['By the way, have you tried any good coffee nearby?','对了，附近有不错的咖啡吗？'],
+    ['Speaking of Haikou, have you been to Qilou Old Street?','说到海口，你去过骑楼老街吗？'],
+    ['Do you have any plans for the December holiday?','你十二月假期有安排吗？']]]
+];
+let frozen=false,newCount=0,recording=false,theme='light';
+const $=s=>document.querySelector(s);
+function render(){
+  $('#app').dataset.theme=theme;
+  const last=all.slice(-3).reverse();
+  $('#subs').innerHTML=last.map(([w,t])=>`<div class="bubble ${w==='我'?'mine':''}">${t}<small>${w==='我'?'我':'陈美玲'} · 实时字幕</small></div>`).join('');
+  $('#history').innerHTML=all.slice().reverse().map(([w,t])=>`<div class="bubble ${w==='我'?'mine':''}">${t}<small>${w==='我'?'我':'陈美玲'}</small></div>`).join('');
+  $('#groups').innerHTML=groups.map(([name,hint,items])=>`<div class="group"><h3>${name}<span>${hint}</span></h3>${items.map(([en,zh])=>`<article class="sugg"><p lang="en">${en}</p><details><summary>中文解释</summary><p class="zh">${zh}</p></details><div class="acts"><button class="icon" title="朗读">🔊</button><button class="icon" title="复制">⧉</button><button class="icon" title="收藏">☆</button></div></article>`).join('')}</div>`).join('');
+  $('#refs').innerHTML=[['海南地点','红城湖公园','湖边跑道、傍晚散步和短视频素材。'],['关于我','健身和锻炼','我周末常在万绿园附近跑步。'],['人物','陈美玲','跨境电商运营，习惯先看数字再谈感受。'],['软件作品','SocialMate','本地优先的双人对话助手。']].map(([tag,title,desc])=>`<div class="ref"><span class="tag">${tag}</span><b>${title}</b><p>${desc}</p></div>`).join('');
+}
+function toggleRec(){recording=!recording;$('#rec').textContent=recording?'停止录音':'开始录音';$('#rec').classList.toggle('stop',recording);$('#state').textContent=recording?'正在听':'已结束 · 可复盘';if(!recording)simulateNew();}
+function toggleHistory(){$('#history').classList.toggle('open');$('#histBtn').textContent=$('#history').classList.contains('open')?'收起历史':'展开历史（12 句）';}
+function freeze(){if(!recording)return;frozen=true;}
+function simulateNew(){newCount=3;if(frozen){$('#newBadge').textContent=`有 ${newCount} 条新建议 · 点击更新`;$('#newBadge').classList.add('show');}else{applyNew();}}
+function applyNew(){frozen=false;newCount=0;$('#newBadge').classList.remove('show');render();}
+function swap(){alert('原型：整段会话对调说话人');}
+function toggleTheme(){theme=theme==='light'?'dark':'light';render();}
+render();
+</script>
+</body>
+</html>

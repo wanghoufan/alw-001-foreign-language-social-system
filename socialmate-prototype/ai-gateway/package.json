@@ -1,0 +1,14 @@
+{
+  "name": "alw001-ai-gateway",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "ALW-001 本机 AI 网关（ASR / LLM / TTS）。Amazon Polly SDK 仅在 tts-adapter-polly.mjs 中懒加载，本轮不发起真实 AWS 调用。",
+  "scripts": {
+    "start": "node server.mjs",
+    "verify:tts": "node verify-n05-tts-provider.mjs"
+  },
+  "dependencies": {
+    "@aws-sdk/client-polly": "^3.1161.0"
+  }
+}

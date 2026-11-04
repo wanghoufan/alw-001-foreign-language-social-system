@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Debug-only：家庭 WiFi 私有入口走 http/ws 明文，仅允许本机与 RFC1918。
+  Release 仍由 main 清单的 usesCleartextTraffic=false 约束。
+  T1-10：main 清单把 TtsSelfTestActivity 设为 exported=false，这里只在 debug 变体
+  放开 adb 听测入口（tools:replace 覆盖合并结果），不放松其它组件。
+-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <application
+        android:usesCleartextTraffic="true"
+        tools:replace="android:usesCleartextTraffic">
+        <activity
+            android:name=".TtsSelfTestActivity"
+            android:exported="true"
+            tools:replace="android:exported" />
+    </application>
+</manifest>

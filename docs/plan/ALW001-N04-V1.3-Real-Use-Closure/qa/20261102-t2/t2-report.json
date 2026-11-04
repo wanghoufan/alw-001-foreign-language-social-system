@@ -1,0 +1,680 @@
+{
+  "task": "ALW-001 N04 V1.3 T2",
+  "result": "PASS",
+  "startedAt": "2026-11-02T08:35:02.987Z",
+  "finishedAt": "2026-11-02T08:35:04.581Z",
+  "durationMs": 1587,
+  "base": "http://127.0.0.1:8791",
+  "device": "REDACTED-SERIAL",
+  "isolatedDemoRoot": "/var/folders/mp/mnxk3h8x4wq5ztr7__vlplp40000gn/T/alw001-t2-Msv0AV",
+  "e2e": {
+    "ran": true,
+    "timeline": "docs/plan/ALW001-N04-V1.3-Real-Use-Closure/qa/20261102-t2/session-timeline.jsonl"
+  },
+  "totals": {
+    "checks": 43,
+    "passed": 43,
+    "failed": 0,
+    "notRun": 0
+  },
+  "groups": {
+    "contract": [
+      {
+        "group": "contract",
+        "id": "seed-three-personas",
+        "ok": true,
+        "detail": {
+          "slugs": [
+            "demo-oliver-uk",
+            "demo-maya-us",
+            "demo-jieun-kr"
+          ]
+        }
+      },
+      {
+        "group": "contract",
+        "id": "prep-baseline",
+        "ok": true,
+        "detail": {
+          "personalized": 2,
+          "generic": true
+        }
+      },
+      {
+        "group": "contract",
+        "id": "real-final-ingested",
+        "ok": true,
+        "detail": {}
+      },
+      {
+        "group": "contract",
+        "id": "fields-separated",
+        "ok": true,
+        "detail": {
+          "sessionId": "8f14e45f-ceea-4b7a-9a59-2d0e6f1c3b77",
+          "segmentIndex": 0,
+          "candidateFact": "Preparing for my first ten kilometre race in December"
+        }
+      },
+      {
+        "group": "contract",
+        "id": "speaker-forced-unknown",
+        "ok": true,
+        "detail": {
+          "speaker": "unknown",
+          "speakerRaw": "spk_0"
+        }
+      },
+      {
+        "group": "contract",
+        "id": "mock-final-rejected",
+        "ok": true,
+        "detail": {
+          "reason": "MOCK_FINAL_REJECTED",
+          "pending": 1
+        }
+      },
+      {
+        "group": "contract",
+        "id": "duplicate-final-not-new-card",
+        "ok": true,
+        "detail": {
+          "reason": "DUPLICATE_FINAL"
+        }
+      },
+      {
+        "group": "contract",
+        "id": "interim-no-candidate",
+        "ok": true,
+        "detail": {
+          "reason": "NOT_FINAL"
+        }
+      },
+      {
+        "group": "contract",
+        "id": "spk-not-auto-attributed",
+        "ok": true,
+        "detail": {
+          "error": {
+            "ok": false,
+            "status": 400,
+            "code": "ATTRIBUTION_REQUIRED"
+          },
+          "factCount": 5
+        }
+      },
+      {
+        "group": "contract",
+        "id": "confirm-flag-required",
+        "ok": true,
+        "detail": {
+          "ok": false,
+          "status": 400,
+          "code": "CONFIRM_REQUIRED"
+        }
+      },
+      {
+        "group": "contract",
+        "id": "rapid-double-submit-single-write",
+        "ok": true,
+        "detail": {
+          "factCount": 6,
+          "before": 5,
+          "results": [
+            "fulfilled",
+            "fulfilled"
+          ]
+        }
+      },
+      {
+        "group": "contract",
+        "id": "prep-recomputed-with-new-fact",
+        "ok": true,
+        "detail": {
+          "factId": "c69322ec4fef1703",
+          "first": {
+            "en": "How is your 10K training for December going?",
+            "zh": "你 12 月 的 10 公里训练进展怎么样？",
+            "source": "confirmed-fact",
+            "factId": "c69322ec4fef1703",
+            "factText": "Preparing for my first ten kilometre race in December"
+          },
+          "personalized": 2,
+          "generic": "What has been the highlight of your week so far?"
+        }
+      },
+      {
+        "group": "contract",
+        "id": "duplicate-confirm-idempotent",
+        "ok": true,
+        "detail": {
+          "duplicate": true,
+          "factCount": 6
+        }
+      },
+      {
+        "group": "contract",
+        "id": "other-people-untouched",
+        "ok": true,
+        "detail": {
+          "hashB": "7038e2d2c22d2087e8eb9f1e6e72600051818388c774bbbf20b905facaa42538",
+          "hashB2": "7038e2d2c22d2087e8eb9f1e6e72600051818388c774bbbf20b905facaa42538",
+          "hashC": "215955d4149ad18a3eaf69eb84313713ebae245615b011158de5052d7d9c1aff",
+          "hashC2": "215955d4149ad18a3eaf69eb84313713ebae245615b011158de5052d7d9c1aff",
+          "bCount": 5,
+          "cCount": 5
+        }
+      },
+      {
+        "group": "contract",
+        "id": "withdraw-wrong-slug-rejected",
+        "ok": true,
+        "detail": {
+          "ok": false,
+          "status": 403,
+          "code": "FACT_OWNERSHIP_MISMATCH"
+        }
+      },
+      {
+        "group": "contract",
+        "id": "no-verbatim-on-disk",
+        "ok": true,
+        "detail": {
+          "hits": []
+        }
+      },
+      {
+        "group": "contract",
+        "id": "index-metadata-only",
+        "ok": true,
+        "detail": {
+          "items": [
+            {
+              "factId": "c69322ec4fef1703",
+              "slug": "demo-oliver-uk",
+              "sessionId": "8f14e45f-ceea-4b7a-9a59-2d0e6f1c3b77",
+              "segmentIndex": 0,
+              "confirmedAt": "2026-11-02T08:35:03.095Z"
+            }
+          ]
+        }
+      },
+      {
+        "group": "contract",
+        "id": "status-declares-memory-only",
+        "ok": true,
+        "detail": {
+          "pending": 0,
+          "sessions": [
+            {
+              "sessionId": "8f14e45f-ceea-4b7a-9a59-2d0e6f1c3b77",
+              "track": "mix",
+              "pending": 0,
+              "createdAt": "2026-11-02T08:35:03.089Z",
+              "lastAt": "2026-11-02T08:35:03.090Z"
+            }
+          ],
+          "confirmed": 1,
+          "ttlMs": 1800000,
+          "maxPending": 40,
+          "persistedTranscripts": false,
+          "diskFormat": "metadata-only (factId/slug/sessionId/segmentIndex/confirmedAt)",
+          "counters": {
+            "ingested": 1,
+            "rejectedMock": 1,
+            "rejectedEmpty": 0,
+            "duplicated": 1,
+            "confirmed": 1,
+            "withdrawn": 0
+          }
+        }
+      },
+      {
+        "group": "contract",
+        "id": "withdraw-removes-fact-and-question",
+        "ok": true,
+        "detail": {
+          "factCount": 5,
+          "before": 5,
+          "personalized": [
+            {
+              "factId": "a0f0e4b55b7144ca",
+              "en": "Last time you mentioned: \"来自英国·伦敦\" — how is that going?"
+            },
+            {
+              "factId": "8092582e37ee688e",
+              "en": "Last time you mentioned: \"职业：未注明（演示）\" — how is that going?"
+            }
+          ]
+        }
+      },
+      {
+        "group": "contract",
+        "id": "withdraw-repeat-idempotent",
+        "ok": true,
+        "detail": {
+          "ok": true,
+          "alreadyAbsent": true
+        }
+      },
+      {
+        "group": "contract",
+        "id": "clear-memory-on-leave",
+        "ok": true,
+        "detail": {
+          "ok": true,
+          "cleared": 0,
+          "scope": "session",
+          "sessionId": "8f14e45f-ceea-4b7a-9a59-2d0e6f1c3b77"
+        }
+      },
+      {
+        "group": "contract",
+        "id": "real-people-untouched-by-contract",
+        "ok": true,
+        "detail": {
+          "isolatedRoot": "/var/folders/mp/mnxk3h8x4wq5ztr7__vlplp40000gn/T/alw001-t2-Msv0AV"
+        }
+      }
+    ],
+    "http": [
+      {
+        "group": "http",
+        "id": "live-status",
+        "ok": true,
+        "detail": {
+          "status": 200,
+          "body": {
+            "pending": 0,
+            "persistedTranscripts": false,
+            "counters": {
+              "ingested": 0,
+              "rejectedMock": 0,
+              "rejectedEmpty": 0,
+              "duplicated": 0,
+              "confirmed": 0,
+              "withdrawn": 0
+            }
+          }
+        }
+      },
+      {
+        "group": "http",
+        "id": "pending-targets-and-privacy",
+        "ok": true,
+        "detail": {
+          "status": 200,
+          "targets": [
+            "demo-oliver-uk",
+            "demo-maya-us",
+            "demo-jieun-kr"
+          ],
+          "privacy": {
+            "transcriptInMemoryOnly": true,
+            "requiresAttribution": true,
+            "speakerUnknown": true,
+            "realPeopleUntouched": true
+          }
+        }
+      },
+      {
+        "group": "http",
+        "id": "confirm-requires-write-ticket",
+        "ok": true,
+        "detail": {
+          "status": 403,
+          "code": "WRITE_TICKET_REQUIRED"
+        }
+      },
+      {
+        "group": "http",
+        "id": "write-ticket-issued",
+        "ok": true,
+        "detail": {
+          "status": 200
+        }
+      },
+      {
+        "group": "http",
+        "id": "cross-origin-write-rejected",
+        "ok": true,
+        "detail": {
+          "status": 403,
+          "code": "ORIGIN_REJECTED"
+        }
+      },
+      {
+        "group": "http",
+        "id": "http-confirm-flag-required",
+        "ok": true,
+        "detail": {
+          "status": 400,
+          "code": "CONFIRM_REQUIRED"
+        }
+      },
+      {
+        "group": "http",
+        "id": "unknown-pending-404",
+        "ok": true,
+        "detail": {
+          "status": 404,
+          "code": "LIVE_PENDING_NOT_FOUND"
+        }
+      },
+      {
+        "group": "http",
+        "id": "clear-endpoint-no-state-write",
+        "ok": true,
+        "detail": {
+          "status": 200,
+          "body": {
+            "ok": true,
+            "cleared": 0,
+            "scope": "all"
+          }
+        }
+      }
+    ],
+    "e2e": [
+      {
+        "group": "e2e",
+        "id": "timeline-parsed",
+        "ok": true,
+        "detail": {
+          "lines": 26
+        }
+      },
+      {
+        "group": "e2e",
+        "id": "asr-open-with-real-mode",
+        "ok": true,
+        "detail": {
+          "kind": "asr_open",
+          "at": "2026-11-02T08:32:41.403Z",
+          "mock": false,
+          "provider": "tencent",
+          "healthyMode": "tencent",
+          "healthyMock": false,
+          "sessionId": "c9ed95e8-937b-458a-90e6-48ec8a72d8f8"
+        }
+      },
+      {
+        "group": "e2e",
+        "id": "real-final-not-mock",
+        "ok": true,
+        "detail": [
+          {
+            "mock": false,
+            "provider": "tencent",
+            "chars": 106,
+            "sessionId": "c9ed95e8-937b-458a-90e6-48ec8a72d8f8"
+          },
+          {
+            "mock": false,
+            "provider": "tencent",
+            "chars": 52,
+            "sessionId": "c9ed95e8-937b-458a-90e6-48ec8a72d8f8"
+          },
+          {
+            "mock": false,
+            "provider": "tencent",
+            "chars": 54,
+            "sessionId": "c9ed95e8-937b-458a-90e6-48ec8a72d8f8"
+          },
+          {
+            "mock": false,
+            "provider": "tencent",
+            "chars": 41,
+            "sessionId": "c9ed95e8-937b-458a-90e6-48ec8a72d8f8"
+          },
+          {
+            "mock": false,
+            "provider": "tencent",
+            "chars": 5,
+            "sessionId": "c9ed95e8-937b-458a-90e6-48ec8a72d8f8"
+          },
+          {
+            "mock": false,
+            "provider": "tencent",
+            "chars": 7,
+            "sessionId": "c9ed95e8-937b-458a-90e6-48ec8a72d8f8"
+          }
+        ]
+      },
+      {
+        "group": "e2e",
+        "id": "pending-created-from-final",
+        "ok": true,
+        "detail": [
+          {
+            "pendingId": "liv_ff363f7b231abfc7",
+            "speaker": "unknown",
+            "source": "live-asr"
+          },
+          {
+            "pendingId": "liv_e1ab14aaa0954de5",
+            "speaker": "unknown",
+            "source": "live-asr"
+          },
+          {
+            "pendingId": "liv_f3ecf53fb2654162",
+            "speaker": "unknown",
+            "source": "live-asr"
+          },
+          {
+            "pendingId": "liv_8958651744f8f8ed",
+            "speaker": "unknown",
+            "source": "live-asr"
+          },
+          {
+            "pendingId": "liv_52dfa11ed8a82ec0",
+            "speaker": "unknown",
+            "source": "live-asr"
+          },
+          {
+            "pendingId": "liv_7d00c9bf80e505dd",
+            "speaker": "unknown",
+            "source": "live-asr"
+          }
+        ]
+      },
+      {
+        "group": "e2e",
+        "id": "confirm-requires-explicit-person",
+        "ok": true,
+        "detail": {
+          "request": {
+            "kind": "confirm_request",
+            "at": "2026-11-02T08:32:41.405Z",
+            "slug": "demo-oliver-uk",
+            "confirm": true,
+            "speaker": "unknown",
+            "attribution": "user-selected"
+          },
+          "result": {
+            "ok": true,
+            "slug": "demo-oliver-uk",
+            "factCount": 6,
+            "factId": "14e3fa9b02c6d068",
+            "duplicate": false
+          }
+        }
+      },
+      {
+        "group": "e2e",
+        "id": "prep-changed-after-confirm",
+        "ok": true,
+        "detail": {
+          "before": [
+            {
+              "factId": "a0f0e4b55b7144ca",
+              "en": "Last time you mentioned: \"来自英国·伦敦\" — how is that going?",
+              "zh": "上次你提到：“来自英国·伦敦”——后来怎么样了？"
+            },
+            {
+              "factId": "8092582e37ee688e",
+              "en": "Last time you mentioned: \"职业：未注明（演示）\" — how is that going?",
+              "zh": "上次你提到：“职业：未注明（演示）”——后来怎么样了？"
+            }
+          ],
+          "after": [
+            {
+              "factId": "14e3fa9b02c6d068",
+              "en": "Last time you mentioned: \"Next month I want to try A10 kilometer race in Haikou\" — how is that going?",
+              "zh": "上次你提到：“Next month I want to try A10 kilometer race in Haikou”——后来怎么样了？"
+            },
+            {
+              "factId": "a0f0e4b55b7144ca",
+              "en": "Last time you mentioned: \"来自英国·伦敦\" — how is that going?",
+              "zh": "上次你提到：“来自英国·伦敦”——后来怎么样了？"
+            }
+          ]
+        }
+      },
+      {
+        "group": "e2e",
+        "id": "persisted-after-restart",
+        "ok": true,
+        "detail": {
+          "factCount": 6,
+          "questions": [
+            {
+              "factId": "14e3fa9b02c6d068",
+              "en": "Last time you mentioned: \"Next month I want to try A10 kilometer race in Haikou\" — how is that going?",
+              "zh": "上次你提到：“Next month I want to try A10 kilometer race in Haikou”——后来怎么样了？"
+            },
+            {
+              "factId": "a0f0e4b55b7144ca",
+              "en": "Last time you mentioned: \"来自英国·伦敦\" — how is that going?",
+              "zh": "上次你提到：“来自英国·伦敦”——后来怎么样了？"
+            }
+          ]
+        }
+      },
+      {
+        "group": "e2e",
+        "id": "withdraw-drops-question",
+        "ok": true,
+        "detail": {
+          "withdraw": {
+            "kind": "withdraw_result",
+            "at": "2026-11-02T08:32:41.405Z",
+            "ok": true,
+            "factId": "14e3fa9b02c6d068",
+            "slug": "demo-oliver-uk",
+            "alreadyAbsent": false,
+            "evidence": [
+              "10-restart-withdraw-entry.png",
+              "11-withdrawn.png"
+            ]
+          },
+          "afterWithdraw": {
+            "kind": "prep_after_withdraw",
+            "at": "2026-11-02T08:32:41.405Z",
+            "slug": "demo-oliver-uk",
+            "factCount": 5,
+            "questions": [
+              {
+                "factId": "a0f0e4b55b7144ca",
+                "en": "Last time you mentioned: \"来自英国·伦敦\" — how is that going?",
+                "zh": "上次你提到：“来自英国·伦敦”——后来怎么样了？"
+              },
+              {
+                "factId": "8092582e37ee688e",
+                "en": "Last time you mentioned: \"职业：未注明（演示）\" — how is that going?",
+                "zh": "上次你提到：“职业：未注明（演示）”——后来怎么样了？"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "group": "e2e",
+        "id": "other-two-people-hash-unchanged",
+        "ok": true,
+        "detail": {
+          "kind": "other_people_untouched",
+          "at": "2026-11-02T08:32:41.406Z",
+          "people": [
+            {
+              "slug": "demo-maya-us",
+              "before": "1bd2864ca4b49d3b3bed751cf8d97a9a67fd651945fbb9cea566fd99c93a899c",
+              "after": "1bd2864ca4b49d3b3bed751cf8d97a9a67fd651945fbb9cea566fd99c93a899c",
+              "hasFact": false
+            },
+            {
+              "slug": "demo-jieun-kr",
+              "before": "840f9b98436c1292128bf32e03864368e812b36fb54b418187fbbb58e02087aa",
+              "after": "840f9b98436c1292128bf32e03864368e812b36fb54b418187fbbb58e02087aa",
+              "hasFact": false
+            }
+          ],
+          "confirmedIn": "demo-oliver-uk"
+        }
+      },
+      {
+        "group": "e2e",
+        "id": "budget-delta-within-cap",
+        "ok": true,
+        "detail": {
+          "kind": "asr_budget",
+          "at": "2026-11-02T08:32:41.406Z",
+          "before": {
+            "spentCny": 0.129189,
+            "seconds": 465.081,
+            "calls": 18
+          },
+          "after": {
+            "spentCny": 0.165422,
+            "seconds": 595.521,
+            "calls": 20
+          },
+          "deltaCny": 0.036233,
+          "deltaSeconds": 130.44,
+          "calls": 2,
+          "capCny": 0.05,
+          "limitCny": 1,
+          "retryAsrCalls": 0,
+          "note": "确认/撤回/重复确认都不调用付费接口；重复确认只走本地档案与幂等检查"
+        }
+      },
+      {
+        "group": "e2e",
+        "id": "no-double-billing-on-retry",
+        "ok": true,
+        "detail": {
+          "retryAsrCalls": 0,
+          "calls": 2
+        }
+      },
+      {
+        "group": "e2e",
+        "id": "leave-clears-memory-keeps-facts",
+        "ok": true,
+        "detail": {
+          "kind": "leave_cleanup",
+          "at": "2026-11-02T08:32:41.406Z",
+          "pendingBeforeLeave": 1,
+          "pendingAfterLeave": 0,
+          "confirmedFactsPreserved": true,
+          "method": "第二段真实录音（合成语音 2.0s）产生 1 条候选 → 停止 → WebView reload → pagehide sendBeacon /v12/api/live/clear",
+          "observedAt": "2026-11-02T16:33:00+08:00"
+        }
+      },
+      {
+        "group": "e2e",
+        "id": "device-version",
+        "ok": true,
+        "detail": {
+          "kind": "device_version",
+          "at": "2026-11-02T08:32:41.402Z",
+          "serial": "REDACTED-SERIAL",
+          "versionName": "0.7.9",
+          "versionCode": 34,
+          "source": "adb shell dumpsys package app.socialmate.dualmic",
+          "evidence": "device-version.txt"
+        }
+      }
+    ]
+  }
+}

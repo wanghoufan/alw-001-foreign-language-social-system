@@ -1,0 +1,7 @@
+11-03 09:03:26.217 I/SocialMateTts(31284): selftest event loop loop=0/0
+11-03 09:03:26.218 I/SocialMateTts(31284): provider set system
+11-03 09:03:26.234 I/SocialMateTts(31284): selftest event provider loop=0/0
+11-03 09:03:26.235 E/SocialMateTts(31284): error code=TTS_SYSTEM_FALLBACK_NOT_ENABLED retryable=false message=系统声音只作临时备用（FALLBACK_ONLY）。请在设置里手动打开「临时系统声音」再试。 segment=enA provider=system
+11-03 09:03:26.251 I/SocialMateTts(31284): selftest event error loop=0/0
+11-03 09:03:26.268 I/SocialMateTts(31284): selftest adb speak segment=enA loop=1 rate=0.0 provider=system → {"type":"state","state":"error","ok":false,"code":"TTS_SYSTEM_FALLBACK_NOT_ENABLED","message":"系统声音只作临时备用（FALLBACK_ONLY）。请在设置里手动打开「临时系统声音」再试。","retryable":false,"providerId":"system","actions":["retry","preview","switch_provider"]}
+11-03 09:03:26.285 I/SocialMateTts(31284): selftest provider → system · 远端 http://127.0.0.1:8799 / serverProvider fake | 系统声音仅供临时备用：正式朗读走远端神经 TTS；远端失败不会自动切系统声音。

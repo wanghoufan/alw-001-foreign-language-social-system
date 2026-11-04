@@ -398,7 +398,7 @@ V0.4.0 APK 实际输出路径：`android-poc/app/build/outputs/apk/debug/app-deb
 
 ### 2026-11-01 Note 12T Pro 无 USB 私有链路（Tailscale）
 
-- 设备核对：**UKCESWB67PUO7LPB = Redmi Note 12T Pro（23054RA19C / Android 15）**，Tailscale `100.94.116.99`；此前误用 indq5xfi6hovay4d（Redmi Note 12 Pro），已更正。
+- 设备核对：**REDACTED-SERIAL = Redmi Note 12T Pro（23054RA19C / Android 15）**，Tailscale `100.94.116.99`；此前误用 indq5xfi6hovay4d（Redmi Note 12 Pro），已更正。
 - 安装：APK 0.5.1（versionCode 11）安装成功；SHA-256 `304e01664e2d44e730c708ea485d888c9cf692d2e0ef8470ea5df12fa90f6757`。
 - 配置：`asr_url=wss://mac-mini.tail4e4317.ts.net:10000/asr`、`ui_url=https://mac-mini.tail4e4317.ts.net:8443`、归档 `/alw/api/archive/session`；**`adb reverse --list` 为空**。
 - 实测：
@@ -560,7 +560,7 @@ V0.4.0 APK 实际输出路径：`android-poc/app/build/outputs/apk/debug/app-deb
 
 ### 2026-11-01 N03（SDD V1.1）· Note 11 5G 真机 + 全量回归
 
-- 设备：Redmi Note 11 5G（21091116AC / Android 11），serial `adb-WGBMXWDIAIFMPFCQ-1AcFJM._adb-tls-connect._tcp`；**全程只用这一台**，未碰 indq5xfi6hovay4d。
+- 设备：Redmi Note 11 5G（21091116AC / Android 11），serial `adb-REDACTED-SERIAL._adb-tls-connect._tcp`；**全程只用这一台**，未碰 indq5xfi6hovay4d。
 - Stage0：`adb-preflight-preview.sh` 预构建 0.5.4（14）`b5dda555…`，`install -r` Success（保留数据），截图 `n03-sdd-v11-preview-20261101-211046.png`。
 - 最终 APK：**0.6.0（15）** · `972eed42d9fe1722e9f47d63f0bd69a073878747560eb2392e3dae42d24861b1` · 206679 B；`aapt2 dump badging` 见 `application-icon-160:'res/mipmap-anydpi-v26/ic_launcher.xml'`，`dumpsys package` 见 versionCode=15 / versionName=0.6.0，`firstInstallTime` 仍为 2026-10-31。
 - 链路：`adb reverse tcp:8790/8791/8781`，App 用默认 `http://127.0.0.1:8791/v12`；服务重启后 `/api/asr/status` `combined:true`，预算账本未重置（ASR 0.129189、DeepSeek 0.213634 / 各 1 元）。

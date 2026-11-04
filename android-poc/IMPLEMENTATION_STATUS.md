@@ -131,3 +131,93 @@
   - `node socialmate-v1.2/test-live-asr.mjs` → **9/10**；失败项为「点 CTA 后立即订阅字幕流」，与延迟订阅契约冲突（harness 未调 `smNativeRecordingStarted`）。
   - `node --test socialmate-v1.2/test-android-wiring.mjs` → **4/7**；失败 3 条为 0.6.0 旧字符串断言（`我已告知并获得同行者同意录音`、`SocialMate · 实时对话`、`stylePrimary(startButton)`）。
 - 待办：上述 3 + 1 条断言需在 `*.mjs` 侧随新界面更新（本轮按约定未改测试/代码）；更新后再补 0.6.6 构建、`install -r` 与真机点击证据。
+
+## N04 V1.3（2026-11-02）· **0.8.1（versionCode 36）— 当前安装与验收版本**
+
+> 上面 0.3.2 / 0.6.0 / 0.6.6 段落为历史里程碑，**不是当前版本**；以本段与 `app/build.gradle` 为准。
+
+### 构建与安装（T5 实做）
+- 源码基线：git HEAD `fc2379c` + 33 个未提交改动（工作树快照，未 reset / clean / push）。
+- 工具链：JDK 17（`/opt/homebrew/opt/openjdk@17`）+ Android SDK 35 + Gradle 8.9（`~/.gradle/alw001-bootstrap`）。
+- 命令：`gradle --no-daemon --console plain clean :app:assembleDebug`（日志 `qa/20261102-t5/build.log`、`build-2.log`）。
+- APK：`versionName 0.8.1` / `versionCode 36`，176434 bytes，SHA-256 `9971836f0d1cd34afceaf3063f3d8d3cba652faf1f7d3e753dc0d0f03e042296`。
+- **可重复构建**：clean 构建两次，APK 与 `classes.dex` 均字节一致（`qa/20261102-t5/reproducibility.txt`）。
+- 签名：APK Signature Scheme v2，证书 `CN=Android Debug`，证书 SHA-256 `8e82a797…911cf3`（不暴露私钥）。
+- 安装：`adb -s REDACTED-SERIAL install -r` → `Success`，`firstInstallTime` 保持 `2026-10-31 18:25:27`（数据保留），签名冲突时不做自动卸载。
+
+### 权限（`dumpsys package` 回读）
+- 请求：`RECORD_AUDIO`、`INTERNET`、`ACCESS_NETWORK_STATE`。
+- 已授予：`RECORD_AUDIO: granted=true`（运行时）、`INTERNET`、`ACCESS_NETWORK_STATE`。
+
+### 真机端到端（T5，Android 11 / Redmi Note 11 5G）
+1. 打开即 3 演示人物 / 9 段会话 / 54 句 / 待确认 3 条（`02-people-tab.png`）。
+2. 分组编辑（中/英各一次）、批量移动到其他分组、撤回 —— 单次点击即成功（`04`–`07`）。
+3. 三人各 2 条专属 + 1 条通用，专属问题来自对话事实（`14`–`16`）。
+4. 清空演示 → 0/0/0（`11`），重开仍为空（`12`），恢复 → 3/9/54（`13`）；真实 `People` 哈希未变。
+5. 合成音频（SYNTHETIC）经真实腾讯 ASR `mock:false` 出 1 条 final（`32`、`33`），预算 +¥0.012022（上限 1 元不变）。
+6. 选 Oliver 确认 → 事实 5→6、专属问题即时重算（`34`、`35`）。
+7. 停止 → 手机 outbox（`files/archive/outbox/sess_20261102T102615_e52f2f.json`）→ 重启后自动补传 HTTP 201 → Mac `.md/.json` 逐字一致（`40`）。
+8. 历史页显示逐字原文（`42`），SAF 导出到 `/sdcard/Download/SocialMate-sess_20261102T102615_e52f2f.md`（`43`、`44`）。
+9. 断 `adb reverse` → 原生「离线只读模式」面板，3 人 / 9 段 / 54 句 + 本地原文，不白屏（`50`）；恢复通道一键回在线（`51`）。
+
+### 本轮修复
+- `socialmate-v1.2/index.html`：写票一次性 —— 发出后作废客户端缓存，避免第二次写被 403。
+- `socialmate-prototype/ai-gateway/demo-store.mjs`：`buildDemoPrep()` 对话来源优先 + 英文原文匹配问句模板。
+
+### 仍未验证
+- 手机 Tailscale 授权（T4/T5 NOT_RUN，需用户本人）；物理拔 USB（等价验证）；第三方 Markdown 查看器；真人双人 / BOYA；Android 12+ 启动画面实拍。
+
+## N05 Polly（2026-11-03）· **0.8.9（versionCode 44）— 当前安装版本**
+
+> 上面 0.8.1 段落为历史里程碑；以本段与 `app/build.gradle` 为准。
+
+- 构建：JDK 17 + Gradle 8.9，`:app:clean :app:assembleDebug` 全部 task executed；APK 307840 B，SHA-256 `66318df341129d45a6aa6f3f6ca4cbf159ef3d774c08c27578b06b5f84e92c22`。
+- 安装：Note 11 5G（`REDACTED-SERIAL`）`install -r` → Success；`dumpsys package` 回读 `versionCode=42 / versionName=0.8.7`。
+- 0.8.7：默认朗读源改为本机系统语音（`system_fallback` 默认开）；真机中英文均完整读出。
+- 0.8.8/0.8.9：冷启动点朗读挂起 4 s 内自动播放（不再报 `TTS_INITIALIZING`）；原生事件推送加 `onState` 守卫；真实路径（海南→地点→记录→听读）实测通过。
+- 0.8.6：修复设置页朗读 `blockId` 用中文标签导致远端 400（改 `selftest-<segmentType>`）；UI 路径实测 `remote+aws-polly-fake` 合成 1 次、`aws-polly` 同意后 501 且合成 0。
+- 真机（`aws-polly-fake`）：cn / enA / enB / phrase 四类 locale 播放；Zhiyu / Joanna / Ruth / Amy / Brian 五声线均命中；循环 5 次、停止、切段、重复段客户端缓存命中均通过。
+- 真实 Polly 同意 UI：estimate → 原生弹窗（服务商/区域/引擎/字符/估价/摘录）→ 同意/取消；同意后 501 `PROVIDER_NOT_CONFIGURED`、取消不发，合成请求均 0；证据 `qa/20261103-polly/android/20`–`24`。
+- 负例：跨 locale 声线 → 400 `UNKNOWN_VOICE`；系统 TTS 未手动开启 → `TTS_SYSTEM_FALLBACK_NOT_ENABLED`（不自动降级）；真实 `aws-polly` 未授权 → 403 `CONSENT_REQUIRED`，0 次 AWS 请求。
+- 证据：`docs/plan/ALW001-N05-Living-Memories-Practice-V1.1/qa/20261103-polly/android/`（README/截图/UI dump/audio_flinger/logcat/providers）；后端 `qa/20261103-polly/backend/` 31/31。
+- 仍未验证：真实 AWS 合成 / DescribeVoices / 音质试听（需用户授权与预算）；全量回归未跑；未 commit/push。
+
+## N05 V1.3 混合播放队列（2026-11-03）· **0.8.13（versionCode 48）— 当前安装版本**
+
+- 构建：JDK 17（Homebrew 17.0.20.1）+ Gradle 8.9 + SDK `~/Library/Android/sdk`（补 `local.properties`）；`:app:assembleDebug` `BUILD SUCCESSFUL`。
+- APK：313224 B，SHA-256 `738ff4c74c70bc6987a0041d3f55db26fab35ac416f57756d759e49d4c66f63b`；Note 11（`REDACTED-SERIAL`）`install -r` → Success，`dumpsys` 回读 `versionCode=48 / versionName=0.8.13`，`firstInstallTime` 未变（未清数据）。
+- 原生新增：`TtsPlaybackController.pause()/resume()` + `PHASE_PAUSED`（暂停期间不推进循环重放）；`JsLogBridge`（`window.SocialMateLog.log` 写 logcat）；`onTtsState` 改为派发 `window.SocialMateTtsHost.onState`（旧通道兜底）。
+- 真机实测：一轮 15 项按 `zh→enA→enB→(词组中文→1000ms→英文)×6` 完成；3 轮 45 项、20 轮 300 项按序无跳过；单语互斥、停止释放队列、失败重试均验证。
+- 朗读来源：`aws-polly-fake`（本地预置 WAV，不外传）与 `system`（小米语音引擎，冷启动 6–8s）两条路径都跑通；真实 AWS Polly 音质 NOT_RUN。
+- 证据：`docs/plan/ALW001-N05-V1.3-Playback-Content-AutoArchive-Closure/qa/20261103-t5/REPORT.md`。
+- 仍未验证：真实 Polly 合成/音质；合并/拆分未在生产记录落版本（只做等价守恒校验）；有线耳机、第二台设备、Tailscale 全链 NOT_RUN。
+
+## N05 V1.4 后台连续朗读（2026-11-04）· **0.8.14（versionCode 49）**
+
+- 构建：JDK 17（Homebrew 17）+ Gradle 8.9 + SDK `~/Library/Android/sdk`；`:app:assembleDebug` `BUILD SUCCESSFUL`。
+- APK：`app/build/outputs/apk/debug/app-debug.apk`，SHA-256 `caf5930fcad61edabcec05085eda87e7792e3e766191060f282d737a02187978`；Note 11（`REDACTED-SERIAL`）`install -r` → Success，`dumpsys` 回读 `versionCode=49 / versionName=0.8.14`，未清数据。
+- 原生新增：`TtsPlaybackService`（前台服务 `mediaPlayback` + 通知栏暂停/继续/停止 + AudioFocus + `ACTION_AUDIO_BECOMING_NOISY` + `PARTIAL_WAKE_LOCK` + `MediaSession`）、`TtsQueueRunner`（队列/间隙/轮次/重试/看门狗 + `files/tts-queue-timeline.jsonl` 时间线）。
+- 桥接变更：`TtsBridge.startQueue(planJson)`、`queueControl(action)`、`queueState()`；`stop()` 连带取消后台队列；控制器改为进程内单例（`TtsPlaybackService.controller()`），Activity 不再自建引擎。
+- 生命周期：`onStop` 仅在**无活动队列**时 `ttsController.onStop()`；`onDestroy` 同理不 `shutdown`；`onResume` 把 `queue_state` 回灌页面。
+- 真机实测（锁屏）：循环 ×3，`mWakefulness=Asleep` 全程 **45/45 项、3 轮、227.9s、0 重试**；`dumpsys activity services` 显示 `TtsPlaybackService isForeground=true foregroundId=4711`；结束自动退前台并使 ServiceRecord/通知记录归零。
+- 真机实测（控制）：暂停→通知「朗读已暂停」；继续→恢复推进；停止→立即释放；Home→队列继续并在重开后显示正确轮次/项。
+- 修掉的两个缺陷：①朗读按钮 `data-lang` 撞名导致弹「显示与阅读设置」并写坏界面语言；②原生队列按 `kind` 映射 `segment=phrase` 致中文词组用 en-US 声线。
+- 仍未验证：来电/耳机拔出（BG04，保护广播无法 adb 触发）、第二台 Android 14 设备安装、脱 USB 私网。
+- 证据：`docs/plan/ALW001-N05-V1.4-Real-Use-Autonomous-Closure/qa/20261104-t5/REPORT.md` + `bg01-timeline.jsonl`。
+## T3 Tailscale 外出 / 断 WiFi（2026-11-04）· **0.8.15（versionCode 50）— 当前安装版本**
+
+- APK：`app/build/outputs/apk/debug/app-debug.apk`，SHA-256 `21f6857695bbc5fa27a08add27b48d8d0cc133b1819644aecd6df4486a00aca9`；`release/SocialMate-0.8.15-vc50-debug.apk` 同哈希。
+- 真机（Redmi Note 12T Pro / Android 15 / Tailscale `100.94.116.99`）：关闭 Wi-Fi 后 VPN 底层为 `MOBILE[NR]`（`Transports: CELLULAR|VPN`），`ping mac-mini.tail4e4317.ts.net` 2/2、0% 丢包；经 Tailnet 无线 ADB `install -r` → Success，回读 `versionCode=50 / versionName=0.8.15`。
+- 页面：`https://mac-mini.tail4e4317.ts.net:8443/v12?live=1` 真实加载 26 张卡片；修复后 SSE `asrState=ready`、`asrStream=true`，显示「字幕已接入」。修复前同一地址 `asrState=off`、无 SSE 请求。
+- 修复：①前端 `connectLiveASR()` / `requestRealAI()` 只认 `127.0.0.1:8791`，改为 `HTTP_UI` 协议判断；②`injectAccessToken` 改为覆盖写入，防重新配对后旧令牌 401。
+- 未验：蜂窝下原生录音未重新开麦；归档写入因设备未配对返回 401（通路已到达 8781）；AI 真实请求未发。
+- 证据：`docs/plan/ALW001-N05-V1.4-Real-Use-Autonomous-Closure/qa/20261104-t3/REPORT.md`、`code-audit.md`、`network-phone/REPORT.md`。
+## N05 V1.5.1 真实交流收口（2026-11-04）· **0.8.30（versionCode 65）— 当前安装版本**
+
+- APK：`app/build/outputs/apk/debug/app-debug.apk`，SHA-256 `794e68a8117fea87149c0b5acd3ff40b2a47c87fcbe0683385f755c3c96972a3`；`adb install -r` 保留数据。
+- 真机（Note 12 Pro / 22101316C / Android 14 / 家庭 Wi-Fi）：`0.8.30` 启动即取配对短期令牌；录音握手通过 `x-asr-token` 鉴权，`activeSessions=1`；系统 TTS 回环音频（SYNTHETIC）产生 10 条 final。
+- 归档：`pending=0`、`HTTP 201`、`lastSyncedAt=22:43`，Mac `Conversations/2026/11/` 落地 1556B md；outbox 为空。
+- 安全：无令牌/伪造/撤销/错误 Origin 分别 401/401/401/403，均在建立 P066 上游前拒绝；桥单测 `npm test` 54 pass（含新增 12 条 ws-auth）。
+- 版本变更：0.8.29/64 → **0.8.30/65**。
+- 证据：`docs/plan/ALW001-N05-V1.5.1-Chat-RealUse-Closure/qa/QA-REPORT.md`、`qa/t1-security/`、`qa/t2-recovery/`、`qa/t3-quality/`。
+- 未验：真人 30 分钟连续交流、Wi-Fi↔蜂窝切换运行期、来电/耳机、P066 402/300s/撤销、Polly。

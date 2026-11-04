@@ -10,12 +10,13 @@
 
 ## 二、每次“转发”只做最小步骤
 1. 读取 CURRENT_TASK.md 的 status/task_id/project_root/target_project/instruction_file/send_text/route；检查任务指向文件存在、send_text 与目标文件对应。只有 status=READY 才继续。查 docs/relay/receipts/<task_id>.md；若已 GUI_SENT/ACKED 或目标聊天已有相同任务，不重复发送。
-2. **优先查看当前已打开的目标开发者窗口**，通过工作区名称/实际根目录验证和 target_project 相同（如 alw-001-外语社交系统）。只有项目不匹配才浏览其它开发工具窗口。不要因为 CodeArts、WorkBuddy、OpenCode 的名字、其他项目的运行/待审批而错误路由；不要要求用户选智能体。
-3. 只判断目标项目会话是否 RUNNING、WAITING_APPROVAL、IDLE/COMPLETED。RUNNING→PENDING_BUSY；确有阻塞审批→BLOCKED_USER_INPUT；不停止任务、不代审批。无法确定工作区或多项目冲突且只读核查后不能消歧→BLOCKED_PROJECT_UNVERIFIED，绝不误发。
-4. IDLE/COMPLETED：按 task_relation CONTINUATION 优先原项目原会话、INDEPENDENT 新会话、TEST_ONLY 测试会话。**此步骤只选聊天框，不制定开发计划**。
-5. 如果输入框已有本转发员之前预填、未发出的当前 task_id **长提示词**（必须属于当前 task_id、从未发送且输入框无其他用户内容），须经 GUI 确认它确实属于当前同一任务、没有其它用户内容、从未发送、当前没有正在运行的工具，才通过 Computer Use 全选该草稿并替换为**唯一 send_text 单行**；不要在长草稿后追加文字。若不能确认安全，保留草稿，写 DRAFT_UNSAFE，不乱删用户内容。
-6. 用 Computer Use 在输入框**一次性输入或粘贴 send_text**，随即点击真实发送按钮/提交（非Stop），确认消息在聊天历史中成为**已发送**气泡。除了必要的控件反馈，不要等待模型执行完整开发，也不要在发送之前研究项目或读大量文件。
-7. 有GUI真实发出证据才写 receipt `GUI_SEND: SENT`、app、工作区、route、窗口/会话和证据；同 task_id 的 CURRENT_TASK 改 SENT，需先重读避免覆盖新任务。未发出保持 READY，回执注明原因；开发者是否执行完成不是转发员的任务。没有证据不能自报成功。
+2. **只检查当前已运行且已打开的开发工具窗口**，优先当前选中的项目工作区和最近实际开发会话；按工作区/项目标识与 000 登记表的 `folder` 匹配 ALW-001，不固定软件名称。禁止自动启动、重新打开或恢复已退出的软件；不得为证明唯一性而打开其他软件，不关闭窗口、不切换工作区、不打断开发。
+3. 历史工作区、历史会话、置顶/收藏记录、旧回执和工具列表只说明过去使用过，不代表当前开发者，也不构成并发冲突。同一项目工作区同一时刻只有一个实际承接者，不同智能体可以随时交换项目；只有当前运行窗口中 ALW-001 的实际执行会话才计入当前候选。若界面显示完整 canonical 路径则核对；界面不显示时，用当前项目标识、最近会话内容和执行状态共同确认，不机械要求完整绝对路径。
+4. 只判断当前 ALW-001 会话是否 RUNNING、WAITING_APPROVAL、IDLE/COMPLETED。RUNNING→PENDING_BUSY；确有阻塞审批→BLOCKED_USER_INPUT；不停止任务、不代审批。其他项目正在运行不构成本项目忙碌。仅凭当前已运行窗口仍无法确认唯一接收者时，保留 READY 并记 `BLOCKED_PROJECT_UNVERIFIED`，绝不误发。
+5. IDLE/COMPLETED：按 task_relation CONTINUATION 优先原项目原会话、INDEPENDENT 新会话、TEST_ONLY 测试会话。**此步骤只选聊天框，不制定开发计划**。
+6. 如果输入框已有本转发员之前预填、未发出的当前 task_id **长提示词**（必须属于当前 task_id、从未发送且输入框无其他用户内容），须经 GUI 确认它确实属于当前同一任务、没有其它用户内容、从未发送、当前没有正在运行的工具，才通过 Computer Use 全选该草稿并替换为**唯一 send_text 单行**；不要在长草稿后追加文字。若不能确认安全，保留草稿，写 DRAFT_UNSAFE，不乱删用户内容。
+7. 用 Computer Use 在输入框**一次性输入或粘贴 send_text**，随即点击真实发送按钮/提交（非Stop），确认消息在聊天历史中成为**已发送**气泡。除了必要的控件反馈，不要等待模型执行完整开发，也不要在发送之前研究项目或读大量文件。
+8. 有GUI真实发出证据才写 receipt `GUI_SEND: SENT`、app、工作区、route、窗口/会话和证据；同 task_id 的 CURRENT_TASK 改 SENT，需先重读避免覆盖新任务。未发出保持 READY，回执注明原因；开发者是否执行完成不是转发员的任务。没有证据不能自报成功。
 
 ## 三、响应约束
 - 转发成功回答“已发送 <当前 task_id> → <开发工具/目标项目>”即可。

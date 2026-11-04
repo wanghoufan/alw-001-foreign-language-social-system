@@ -1,0 +1,107 @@
+{
+  "schema": "alw001.n05v13.queue-unit.v1",
+  "at": "2026-11-03T16:35:04.089Z",
+  "blockId": "blk-hc-2",
+  "recordRevision": 3,
+  "playablePairs": 3,
+  "total": 19,
+  "passed": 19,
+  "failed": 0,
+  "results": [
+    {
+      "name": "T1-U1 一轮顺序为中→英A→英B→词组对",
+      "ok": true,
+      "detail": "kinds=zh,enA,enB,phrase-zh,phrase-en,phrase-zh,phrase-en,phrase-zh,phrase-en playablePairs=3"
+    },
+    {
+      "name": "T1-U2 词组中文→英文间隔恒为 1000ms",
+      "ok": true,
+      "detail": "gaps=1000,1000,1000"
+    },
+    {
+      "name": "T1-U3 词组先中文后英文（不会英文当先）",
+      "ok": true,
+      "detail": "zh=椰子水 en=coconut water"
+    },
+    {
+      "name": "T1-U4 英文声道里不含中文占位",
+      "ok": true,
+      "detail": "bad=0"
+    },
+    {
+      "name": "T1-U5 单播 zh 只有 1 项且语种正确",
+      "ok": true,
+      "detail": "items=1 lang=zh"
+    },
+    {
+      "name": "T1-U5 单播 enA 只有 1 项且语种正确",
+      "ok": true,
+      "detail": "items=1 lang=en"
+    },
+    {
+      "name": "T1-U5 单播 enB 只有 1 项且语种正确",
+      "ok": true,
+      "detail": "items=1 lang=en"
+    },
+    {
+      "name": "T1-U6 听词组不包含整段中文/英A/英B",
+      "ok": true,
+      "detail": "kinds=phrase-zh,phrase-en,phrase-zh,phrase-en,phrase-zh,phrase-en"
+    },
+    {
+      "name": "T1-U7 实跑一轮元素数正确",
+      "ok": true,
+      "detail": "speak=9 want=9"
+    },
+    {
+      "name": "T1-U8 第一个词组中间隔 ≥1000ms（实测）",
+      "ok": true,
+      "detail": "measured=1013ms（含中文朗读完成时间，静音段由调度器保证 1000ms）"
+    },
+    {
+      "name": "T1-U9 全部走原生单次调用（loop 恒为 1，循环由队列负责）",
+      "ok": true,
+      "detail": "loops=1"
+    },
+    {
+      "name": "T1-U10 缓存键带 recordId/blockId/revision",
+      "ok": true,
+      "detail": "rid=rec-20261103072022-16b79c bid=blk-hc-2 rev=3"
+    },
+    {
+      "name": "T1-U11 循环 3 轮共 3×完整队列",
+      "ok": true,
+      "detail": "speak=27 want=27"
+    },
+    {
+      "name": "T1-U12 每一轮顺序完全一致（不是只循环中文）",
+      "ok": true,
+      "detail": "r1=zh,en,en,zh,en,zh,en,zh,en…"
+    },
+    {
+      "name": "T1-U13 结束后状态为 finished 且给出完成反馈",
+      "ok": true,
+      "detail": "state=finished detail=听本段 · 3 轮 × 9 项已完成"
+    },
+    {
+      "name": "T1-U14 停止后不再有新的朗读请求",
+      "ok": true,
+      "detail": "before=1 after=1"
+    },
+    {
+      "name": "T1-U15 停止后队列已释放",
+      "ok": true,
+      "detail": "queue=null"
+    },
+    {
+      "name": "T1-U16 原生报错时不静默成功，状态进 failed",
+      "ok": true,
+      "detail": "state=failed detail=TTS_LANG_UNAVAILABLE · 第 1 项 中文 note=朗读失败：TTS_LANG_UNAVAILABLE · 缺英文语音包；本次不计完成，点「重试本段」重播。"
+    },
+    {
+      "name": "T1-U17 只有英文的旧 phrases 不进可播队列",
+      "ok": true,
+      "detail": "items=0 missing=1"
+    }
+  ]
+}

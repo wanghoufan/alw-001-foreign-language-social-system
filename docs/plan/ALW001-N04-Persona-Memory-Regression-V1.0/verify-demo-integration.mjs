@@ -19,12 +19,21 @@ async function get(p) {
   const res = await fetch(base + p);
   return {status: res.status, body: await res.json().catch(() => null)};
 }
+// 写操作 = 同源 + 一次性写授权票（N04 V1.3 T1-4）。票每次现取，不缓存、不复用。
+async function writeTicket() {
+  const res = await fetch(base + "/v12/api/demo/write-ticket", {cache: "no-store"});
+  const parsed = await res.json().catch(() => null);
+  if (!parsed?.ticket) throw new Error("写授权票获取失败");
+  return parsed.ticket;
+}
 async function post(p, body) {
   // 服务端写限流是全局的（12 次/分钟、最小间隔 400ms）。这里按服务端返回的
   // retryAfterMs 等待后重试，不绕过、不放宽限流参数。
   for (let attempt = 0; attempt < 4; attempt += 1) {
     const res = await fetch(base + p, {
-      method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify(body),
+      method: "POST",
+      headers: {"Content-Type": "application/json", Origin: base, "x-sm-write": await writeTicket()},
+      body: JSON.stringify(body),
     });
     const parsed = await res.json().catch(() => null);
     if (res.status !== 429) return {status: res.status, body: parsed};

@@ -1,34 +1,33 @@
-# Mac mini Desktop GPT relay inbox · ALW-001 N04 V1.3 real-use delivery
+# ALW-001 N05 S4｜Amazon Polly provider selection, continuation after V1.1
 
 status: READY
-task_id: SM-ALW001-20261102-N04-V13
+task_id: SM-ALW001-20261103-POLLY-ADOPT
 user_approved: true
-approved_at: 2026-11-02T14:22:00+08:00
-priority: 20
-approval: USER_APPROVED_PLAN_1_20261102
+approval: USER_SELECTED_AMAZON_POLLY_20261103
+approved_at: 2026-11-03T09:29:00+08:00
+priority: 25
 target_project: ALW-001
 target_project_folder: alw-001-外语社交系统
 project_root: /Users/zzymima0000/Developer/coding/1.Active/alw-001-外语社交系统
+project_reader_id: 001
 target_app_mode: AUTO_BY_WORKSPACE
 task_relation: CONTINUATION
 conversation_route: SAME_CONVERSATION_PREFERRED
-instruction_file: /Users/zzymima0000/Developer/coding/1.Active/alw-001-外语社交系统/docs/plan/ALW001-N04-V1.3-Real-Use-Closure/README.md
-plan_file: /Users/zzymima0000/Developer/coding/1.Active/alw-001-外语社交系统/docs/plan/ALW001-N04-V1.3-Real-Use-Closure/PLAN.md
-preflight_file: /Users/zzymima0000/Developer/coding/1.Active/alw-001-外语社交系统/docs/plan/ALW001-N04-V1.3-Real-Use-Closure/PREFLIGHT.md
-acceptance_file: /Users/zzymima0000/Developer/coding/1.Active/alw-001-外语社交系统/docs/plan/ALW001-N04-V1.3-Real-Use-Closure/ACCEPTANCE.md
+instruction_file: /Users/zzymima0000/Developer/coding/1.Active/alw-001-外语社交系统/docs/plan/ALW001-N05-Living-Memories-Practice-V1.1/TTS-AMAZON-POLLY-APPROVED-SELECTION-V1.0.md
+prior_sent_task: SM-ALW001-20261102-N05-V11-ADOPT
 routing_rules: /Users/zzymima0000/Developer/coding/1.Active/alw-001-外语社交系统/docs/relay/DESKTOP_GPT_START_HERE.md
-prior_sent_task: SM-ALW001-20261102-N04-PERSONAS
+canonical_governance_project: 000-alw-个人偏好-电脑治理仓库-skill管理
+canonical_registry_file: 转发管家/项目登记.json
+scope: AMAZON_POLLY_PROVIDER_ADOPTION_ONLY_NO_SCOPE_EXPANSION
 human_gate: FINAL_ONCE
-scope: T1_SOURCE_AND_SECURITY_T2_REAL_ASR_MEMORY_T3_ANDROID_OUTBOX_ARCHIVE_T4_NO_USB_TAILSCALE_AUTORECOVERY_T5_APK_REAL_DEVICE_QA
+no_public_pwa_changes: true
 
-send_text: 读取并执行：docs/plan/ALW001-N04-V1.3-Real-Use-Closure/README.md
+send_text: 读取并执行：docs/plan/ALW001-N05-Living-Memories-Practice-V1.1/TTS-AMAZON-POLLY-APPROVED-SELECTION-V1.0.md
 
-## Dispatch safety
-- User explicitly approved Plan 1; source project and plan documents were freshly re-read.
-- Previous task N04-PERSONAS already has real GUI_SENT receipt and remains historically SENT; do NOT resend it.
-- Before GUI dispatch re-read this pointer, check the same task_id is still READY and no same-ID GUI_SENT or ACKED receipt exists.
-- Follow 000 official project registry and 转发管家 rules; choose only one READY across registered projects according to priority/approved_at/task_id, never hard-code developer app mapping.
-- Route to the unique current ALW-001 workspace owner when idle. If BUSY or approval pending, do not interrupt or skip to another queued task; retain READY.
-- Desktop uses Computer Use to send only send_text one line. Do not paste this pointer or the plan body into chat.
-- After actual GUI Send click and a visible posted message bubble, write verifiable GUI_SENT receipt then update this pointer SENT; readiness and file write do not prove GUI_SENT.
-- Main developer must preserve existing public-share dirty files, 3-person demo and N04 evidence; first verify all S0 preflight, then continuous T1-T5 and final Human Gate.
+## Safety and execution scope
+- This is a distinct explicitly approved supplier-selection update. The previous N05-V11-ADOPT task already has a GUI_SENT receipt and remains SENT; do not resend it or reproduce completed S0-S4.
+- Desktop relay must first re-read official 000 project registry and rules and this current pointer, validate READY and absence of this task id's GUI_SENT receipt, and identify the actual current ALW-001 developer window.
+- Send **only** the send_text one line through Computer Use GUI when the unique target is IDLE. If BUSY or approval pending, retain READY and do not interrupt; never open any closed developer app.
+- Amazon Polly is the first-choice provider; preserve multi-provider adapter architecture, previous TTS cache/audio player, existing native system voice as explicitly opted-in fallback. No Google/Azure as primary and no new paid account without user consent.
+- Keep new TTS budget zero and no private content transmitted to AWS until user explicitly authorizes both; continue independently on fake adapter, tests, safety and phone ADB preview.
+- Only after real posted message bubble may relay record GUI_SENT and set this task SENT; never infer GUI send from file write.

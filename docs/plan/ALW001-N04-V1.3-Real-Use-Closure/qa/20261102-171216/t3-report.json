@@ -1,0 +1,417 @@
+{
+  "task": "ALW-001 N04 V1.3 T3",
+  "result": "PARTIAL",
+  "executedAt": "2026-11-02T09:43:06.868Z",
+  "durationMs": 72,
+  "device": {
+    "serial": "REDACTED-SERIAL",
+    "model": "21091116AC"
+  },
+  "qa": "/Users/zzymima0000/Developer/coding/1.Active/alw-001-外语社交系统/docs/plan/ALW001-N04-V1.3-Real-Use-Closure/qa/20261102-171216",
+  "totals": {
+    "checks": 39,
+    "passed": 38,
+    "failed": 1,
+    "notRun": 1
+  },
+  "groups": {
+    "privacy": [
+      {
+        "group": "privacy",
+        "id": "retention-off-no-write",
+        "ok": true,
+        "detail": {
+          "retention": false,
+          "savedSegments": 0,
+          "pending": 0
+        }
+      },
+      {
+        "group": "privacy",
+        "id": "retention-off-no-current-json",
+        "ok": true,
+        "detail": {
+          "ls": "ls: files/archive/current.json: No such file or directory"
+        }
+      }
+    ],
+    "statemachine": [
+      {
+        "group": "statemachine",
+        "id": "current-json-has-verbatim-finals",
+        "ok": true,
+        "detail": {
+          "sessionId": "sess_20261102T092052_bc60b9",
+          "segments": 3
+        }
+      },
+      {
+        "group": "statemachine",
+        "id": "crash-recovered-to-outbox",
+        "ok": true,
+        "detail": {
+          "recoveredSessions": 1,
+          "pending": 1
+        }
+      },
+      {
+        "group": "statemachine",
+        "id": "ack-only-after-2xx",
+        "ok": true,
+        "detail": {
+          "httpStatus": 201,
+          "hash": "22fd512f4f3572b1"
+        }
+      },
+      {
+        "group": "statemachine",
+        "id": "exported-marker-after-success",
+        "ok": true,
+        "detail": {
+          "first": 201,
+          "replay": 200,
+          "sameHash": true
+        }
+      }
+    ],
+    "offline": [
+      {
+        "group": "offline",
+        "id": "service-refused-keeps-outbox",
+        "ok": true,
+        "detail": {
+          "pending": 1,
+          "retryAttempt": 2,
+          "code": "OFFLINE"
+        }
+      },
+      {
+        "group": "offline",
+        "id": "outbox-file-intact-after-refusal",
+        "ok": true,
+        "detail": {
+          "listing": "-rw------- 1 u0_a319 u0_a319 1053 2026-11-02 17:41 sess_20261102T092052_bc60b9.json"
+        }
+      },
+      {
+        "group": "offline",
+        "id": "recovered-and-synced",
+        "ok": true,
+        "detail": {
+          "pending": 0,
+          "http": 200,
+          "lastSyncedAt": "2026-11-02 17:42"
+        }
+      }
+    ],
+    "idempotent": [
+      {
+        "group": "idempotent",
+        "id": "replay-keeps-mac-bytes",
+        "ok": true,
+        "detail": {
+          "files": 2,
+          "unchanged": true
+        }
+      },
+      {
+        "group": "idempotent",
+        "id": "server-marked-duplicate",
+        "ok": true,
+        "detail": {
+          "lines": 1
+        }
+      }
+    ],
+    "backoff": [
+      {
+        "group": "backoff",
+        "id": "six-attempts-then-exhausted",
+        "ok": true,
+        "detail": {
+          "retryAttempt": 6,
+          "retryMax": 6,
+          "exhausted": true
+        }
+      },
+      {
+        "group": "backoff",
+        "id": "delays-are-bounded-schedule",
+        "ok": true,
+        "detail": [
+          3000,
+          10000,
+          30000,
+          60000,
+          60000,
+          60000
+        ]
+      },
+      {
+        "group": "backoff",
+        "id": "nothing-lost-when-exhausted",
+        "ok": true,
+        "detail": {
+          "pending": 1
+        }
+      },
+      {
+        "group": "backoff",
+        "id": "manual-retry-recovers",
+        "ok": true,
+        "detail": {
+          "pending": 0,
+          "exhausted": false,
+          "http": 201
+        }
+      }
+    ],
+    "matrix": [
+      {
+        "group": "matrix",
+        "id": "http-401-auth",
+        "ok": true,
+        "detail": {
+          "pending": 1,
+          "retryAttempt": 0,
+          "retryExhausted": false,
+          "lastUploadFailed": false,
+          "lastErrorCode": "AUTH",
+          "lastHttpStatus": 401,
+          "lastError": "HTTP 401 {\"ok\":false,\"status\":\"fault\",\"code\":\"FAULT_401\"}"
+        }
+      },
+      {
+        "group": "matrix",
+        "id": "http-403-auth",
+        "ok": true,
+        "detail": {
+          "pending": 1,
+          "retryAttempt": 0,
+          "retryExhausted": false,
+          "lastUploadFailed": false,
+          "lastErrorCode": "AUTH",
+          "lastHttpStatus": 403,
+          "lastError": "HTTP 403 {\"ok\":false,\"status\":\"fault\",\"code\":\"FAULT_403\"}"
+        }
+      },
+      {
+        "group": "matrix",
+        "id": "http-413-too_large",
+        "ok": true,
+        "detail": {
+          "pending": 1,
+          "retryAttempt": 0,
+          "retryExhausted": false,
+          "lastUploadFailed": false,
+          "lastErrorCode": "TOO_LARGE",
+          "lastHttpStatus": 413,
+          "lastError": "HTTP 413 {\"ok\":false,\"status\":\"fault\",\"code\":\"FAULT_413\"}"
+        }
+      },
+      {
+        "group": "matrix",
+        "id": "http-429-throttled",
+        "ok": true,
+        "detail": {
+          "pending": 1,
+          "retryAttempt": 2,
+          "retryExhausted": false,
+          "lastUploadFailed": true,
+          "lastErrorCode": "THROTTLED",
+          "lastHttpStatus": 429,
+          "lastError": "HTTP 429 {\"ok\":false,\"status\":\"fault\",\"code\":\"FAULT_429\"}"
+        }
+      },
+      {
+        "group": "matrix",
+        "id": "http-500-server",
+        "ok": true,
+        "detail": {
+          "pending": 1,
+          "retryAttempt": 2,
+          "retryExhausted": false,
+          "lastUploadFailed": true,
+          "lastErrorCode": "SERVER",
+          "lastHttpStatus": 500,
+          "lastError": "HTTP 500 {\"ok\":false,\"status\":\"fault\",\"code\":\"FAULT_500\"}"
+        }
+      },
+      {
+        "group": "matrix",
+        "id": "local-oversize-no-request",
+        "ok": true,
+        "detail": {
+          "code": "TOO_LARGE",
+          "pending": 1,
+          "error": "payload 600521 bytes > 524288"
+        }
+      },
+      {
+        "group": "matrix",
+        "id": "oversize-never-sent-over-wire",
+        "ok": true,
+        "detail": {
+          "oversizePosts": 0
+        }
+      },
+      {
+        "group": "matrix",
+        "id": "service-restart-auto-retry",
+        "ok": true,
+        "detail": {
+          "pending": 0,
+          "http": 201
+        }
+      }
+    ],
+    "mac": [
+      {
+        "group": "mac",
+        "id": "md-and-json-created",
+        "ok": true,
+        "detail": {
+          "md": "SocialMate-2026-11-02-092052-sess_20261102T092052_bc60b9.md",
+          "json": "SocialMate-2026-11-02-092052-sess_20261102T092052_bc60b9.json",
+          "sessionId": "sess_20261102T092052_bc60b9"
+        }
+      },
+      {
+        "group": "mac",
+        "id": "segments-verbatim-count-timestamps",
+        "ok": true,
+        "detail": {
+          "count": 3,
+          "sameText": true,
+          "sameTime": true
+        }
+      },
+      {
+        "group": "mac",
+        "id": "markdown-contains-verbatim",
+        "ok": true,
+        "detail": null
+      },
+      {
+        "group": "mac",
+        "id": "session-id-and-version-consistent",
+        "ok": true,
+        "detail": {
+          "sessionId": "sess_20261102T092052_bc60b9",
+          "appVersion": "0.8.0"
+        }
+      }
+    ],
+    "saf": [
+      {
+        "group": "saf",
+        "id": "exported-to-user-dir",
+        "ok": true,
+        "detail": {
+          "path": "/sdcard/Download/SocialMate-sess_20261102T092052_bc60b9.md",
+          "bytes": 514,
+          "deviceBytes": "514"
+        }
+      },
+      {
+        "group": "saf",
+        "id": "visible-in-system-file-manager",
+        "ok": true,
+        "detail": {
+          "screenshot": "20-saf-filemanager.png",
+          "resolver": "20-saf-resolver.png"
+        }
+      },
+      {
+        "group": "saf",
+        "id": "system-can-resolve-opener",
+        "ok": true,
+        "detail": {
+          "screenshot": "20-saf-resolver.png"
+        }
+      },
+      {
+        "group": "saf",
+        "id": "content-shown-when-opened",
+        "ok": false,
+        "detail": {
+          "reason": "NOT_RUN 该 ROM 无默认 Markdown/纯文本查看器；可用查看器需接受第三方隐私政策，未代替用户同意",
+          "openedBy": "resolver-only"
+        }
+      }
+    ],
+    "ui": [
+      {
+        "group": "ui",
+        "id": "phone-shows-synced",
+        "ok": true,
+        "detail": {
+          "text": "\"原文留存：本机无待补传会话&#10;同步状态：已同步 Mac · 2026-11-02 17:42\" TextView (540,1651)"
+        }
+      },
+      {
+        "group": "ui",
+        "id": "phone-shows-pending-before-sync",
+        "ok": true,
+        "detail": {
+          "text": "\"原文留存：手机上有待补传的会话&#10;同步状态：自动重试 6 次已用完（服务端 500）· 待上传 1 条 · 原文仍在手机，联网或点「立即补传」可继续\" "
+        }
+      }
+    ],
+    "device": [
+      {
+        "group": "device",
+        "id": "installed-version-0.8.0-35",
+        "ok": true,
+        "detail": {
+          "versionName": "0.8.0",
+          "versionCode": "35"
+        }
+      },
+      {
+        "group": "device",
+        "id": "apk-sha-matches-build",
+        "ok": true,
+        "detail": {
+          "apkSha": "b1c4770499bd82128abbb6f5b020c21d7dbeec03d422ac8de6207120bc5ce039",
+          "diskSha": "b1c4770499bd82128abbb6f5b020c21d7dbeec03d422ac8de6207120bc5ce039"
+        }
+      },
+      {
+        "group": "device",
+        "id": "install-r-kept-data",
+        "ok": true,
+        "detail": {
+          "firstInstallTime": "2026-10-31 18:25:27"
+        }
+      },
+      {
+        "group": "device",
+        "id": "no-buildconfig-archive-token",
+        "ok": true,
+        "detail": {
+          "count": "0"
+        }
+      }
+    ],
+    "isolation": [
+      {
+        "group": "isolation",
+        "id": "real-archive-untouched",
+        "ok": true,
+        "detail": {
+          "files": 4,
+          "hash": "bf706a39e0dd0202"
+        }
+      },
+      {
+        "group": "isolation",
+        "id": "demo-masters-untouched",
+        "ok": true,
+        "detail": {
+          "demoFiles": 18
+        }
+      }
+    ]
+  }
+}

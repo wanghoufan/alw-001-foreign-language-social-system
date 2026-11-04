@@ -1,0 +1,103 @@
+captured: 2026-11-02 22:30:01 +0800
+HEAD: fc2379cdc9909b26e0dc2a200791ae81ec046d55
+branch: main
+dirty_count: 56
+
+## git status --porcelain
+ M CHANGELOG.md
+ M agent.md
+ M android-poc/IMPLEMENTATION_STATUS.md
+ M android-poc/app/build.gradle
+ M android-poc/app/src/main/AndroidManifest.xml
+ M android-poc/app/src/main/java/app/socialmate/dualmic/AsrActivity.java
+ M android-poc/app/src/main/java/app/socialmate/dualmic/SessionArchive.java
+ M docs/architecture-facts.md
+ M docs/archive/handoff-flow-20261031.md
+ M docs/handoff/HANDOFF.md
+ M docs/plan/ALW001-N04-Persona-Memory-Regression-V1.0/verify-demo-integration.mjs
+ M docs/plan/ALW001-N04-Persona-Memory-Regression-V1.0/verify-pending-facts.mjs
+ M docs/plan/ALW001-N04-Persona-Memory-Regression-V1.0/verify-persona-profile.mjs
+ M docs/plan/ALW001-N04-V1.3-Real-Use-Closure/README.md
+ M docs/relay/CURRENT_TASK.md
+ M docs/relay/DESKTOP_GPT_START_HERE.md
+ M docs/risks.md
+ M socialmate-prototype/ai-gateway/archive-history.html
+ M socialmate-prototype/ai-gateway/archive-receiver.mjs
+ M socialmate-prototype/ai-gateway/demo-store.mjs
+ M socialmate-prototype/ai-gateway/live-asr-hub.mjs
+ M socialmate-prototype/ai-gateway/live-server.mjs
+ M socialmate-prototype/ai-gateway/server.mjs
+ M socialmate-v1.2/index.html
+ M socialmate-v1.2/source/V1.1-baseline.html
+?? android-poc/app/src/main/java/app/socialmate/dualmic/DevicePairing.java
+?? android-poc/app/src/main/java/app/socialmate/dualmic/SecureStore.java
+?? android-poc/app/src/main/java/app/socialmate/dualmic/TtsController.java
+?? android-poc/app/src/main/java/app/socialmate/dualmic/TtsSelfTestActivity.java
+?? docs/plan/ALW001-N04-V1.3-Real-Use-Closure/QA-LEDGER.md
+?? docs/plan/ALW001-N04-V1.3-Real-Use-Closure/T4-REPORT.md
+?? docs/plan/ALW001-N04-V1.3-Real-Use-Closure/qa/
+?? docs/plan/ALW001-N04-V1.3-Real-Use-Closure/tools/
+?? docs/plan/ALW001-N04-V1.3-Real-Use-Closure/verify-t1.mjs
+?? docs/plan/ALW001-N04-V1.3-Real-Use-Closure/verify-t2.mjs
+?? docs/plan/ALW001-N04-V1.3-Real-Use-Closure/verify-t3.mjs
+?? docs/plan/ALW001-N04-V1.3-Real-Use-Closure/verify-t4.mjs
+?? docs/plan/ALW001-N04-V1.3-Real-Use-Closure/verify-t5.mjs
+?? docs/plan/ALW001-N05-Living-Memories-Practice-V1.0/
+?? docs/plan/ALW001-N05-Living-Memories-Practice-V1.1/
+?? docs/relay/receipts/SM-ALW001-20261102-N04-V13.md
+?? docs/relay/receipts/SM-ALW001-20261102-N05-LIVING.md
+?? docs/relay/receipts/SM-ALW001-20261102-N05-V11-ADOPT.md
+?? socialmate-prototype/ai-gateway/demo-write-guard.mjs
+?? socialmate-prototype/ai-gateway/live-facts.mjs
+?? socialmate-prototype/ai-gateway/manual-facts.mjs
+?? socialmate-prototype/ai-gateway/pairing.mjs
+?? socialmate-prototype/ai-gateway/place-notes.mjs
+?? socialmate-prototype/ai-gateway/practice-reports.mjs
+?? socialmate-prototype/ai-gateway/study-blocks.mjs
+?? socialmate-prototype/ai-gateway/verify-n05-backend.mjs
+?? socialmate-v1.2/screenshots/n05-s1-detail.png
+?? socialmate-v1.2/screenshots/n05-s1-people-first.png
+?? socialmate-v1.2/screenshots/n05-s1-settings-demo.png
+?? socialmate-v1.2/service-all.sh
+?? socialmate-v1.2/verify-n05-s1.mjs
+
+## git diff --stat (all)
+ CHANGELOG.md                                       |  13 +
+ agent.md                                           |  11 +
+ android-poc/IMPLEMENTATION_STATUS.md               |  35 +
+ android-poc/app/build.gradle                       |  12 +-
+ android-poc/app/src/main/AndroidManifest.xml       |  13 +
+ .../java/app/socialmate/dualmic/AsrActivity.java   | 714 +++++++++++++++++++--
+ .../app/socialmate/dualmic/SessionArchive.java     | 408 ++++++++++--
+ docs/architecture-facts.md                         |  18 +
+ docs/archive/handoff-flow-20261031.md              |   9 +
+ docs/handoff/HANDOFF.md                            |  94 +--
+ .../verify-demo-integration.mjs                    |  11 +-
+ .../verify-pending-facts.mjs                       |  46 +-
+ .../verify-persona-profile.mjs                     |  12 +-
+ .../ALW001-N04-V1.3-Real-Use-Closure/README.md     |   5 +-
+ docs/relay/CURRENT_TASK.md                         |  48 +-
+ docs/relay/DESKTOP_GPT_START_HERE.md               |  13 +-
+ docs/risks.md                                      |  14 +
+ .../ai-gateway/archive-history.html                |  14 +-
+ .../ai-gateway/archive-receiver.mjs                |  29 +-
+ socialmate-prototype/ai-gateway/demo-store.mjs     | 267 +++++++-
+ socialmate-prototype/ai-gateway/live-asr-hub.mjs   |   5 +-
+ socialmate-prototype/ai-gateway/live-server.mjs    |  12 +-
+ socialmate-prototype/ai-gateway/server.mjs         | 322 +++++++++-
+ socialmate-v1.2/index.html                         | 446 +++++++++++--
+ socialmate-v1.2/source/V1.1-baseline.html          | 448 +++++++++++--
+ 25 files changed, 2652 insertions(+), 367 deletions(-)
+
+## git diff --stat (S1 白名单)
+ socialmate-v1.2/index.html                | 446 ++++++++++++++++++++++++-----
+ socialmate-v1.2/source/V1.1-baseline.html | 448 +++++++++++++++++++++++++-----
+ 2 files changed, 765 insertions(+), 129 deletions(-)
+
+## git status --porcelain (S1 白名单)
+ M socialmate-v1.2/index.html
+ M socialmate-v1.2/source/V1.1-baseline.html
+?? socialmate-v1.2/screenshots/n05-s1-detail.png
+?? socialmate-v1.2/screenshots/n05-s1-people-first.png
+?? socialmate-v1.2/screenshots/n05-s1-settings-demo.png
+?? socialmate-v1.2/verify-n05-s1.mjs

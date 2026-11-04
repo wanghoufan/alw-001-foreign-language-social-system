@@ -1,0 +1,55 @@
+built_at=2026-11-02T18:16:50+08:00
+tz=Asia/Shanghai
+git_head=fc2379cdc9909b26e0dc2a200791ae81ec046d55
+git_head_short=fc2379c
+git_branch=main
+dirty_count=33
+--- dirty files ---
+ M android-poc/app/build.gradle
+ M android-poc/app/src/main/java/app/socialmate/dualmic/AsrActivity.java
+ M android-poc/app/src/main/java/app/socialmate/dualmic/SessionArchive.java
+ M docs/architecture-facts.md
+ M docs/archive/handoff-flow-20261031.md
+ M docs/handoff/HANDOFF.md
+ M docs/plan/ALW001-N04-Persona-Memory-Regression-V1.0/verify-demo-integration.mjs
+ M docs/plan/ALW001-N04-Persona-Memory-Regression-V1.0/verify-pending-facts.mjs
+ M docs/plan/ALW001-N04-Persona-Memory-Regression-V1.0/verify-persona-profile.mjs
+ M docs/relay/CURRENT_TASK.md
+ M docs/relay/DESKTOP_GPT_START_HERE.md
+ M docs/risks.md
+ M socialmate-prototype/ai-gateway/archive-history.html
+ M socialmate-prototype/ai-gateway/archive-receiver.mjs
+ M socialmate-prototype/ai-gateway/demo-store.mjs
+ M socialmate-prototype/ai-gateway/live-asr-hub.mjs
+ M socialmate-prototype/ai-gateway/live-server.mjs
+ M socialmate-prototype/ai-gateway/server.mjs
+ M socialmate-v1.2/index.html
+?? android-poc/app/src/main/java/app/socialmate/dualmic/DevicePairing.java
+?? android-poc/app/src/main/java/app/socialmate/dualmic/SecureStore.java
+?? docs/plan/ALW001-N04-V1.3-Real-Use-Closure/T4-REPORT.md
+?? docs/plan/ALW001-N04-V1.3-Real-Use-Closure/qa/
+?? docs/plan/ALW001-N04-V1.3-Real-Use-Closure/tools/
+?? docs/plan/ALW001-N04-V1.3-Real-Use-Closure/verify-t1.mjs
+?? docs/plan/ALW001-N04-V1.3-Real-Use-Closure/verify-t2.mjs
+?? docs/plan/ALW001-N04-V1.3-Real-Use-Closure/verify-t3.mjs
+?? docs/plan/ALW001-N04-V1.3-Real-Use-Closure/verify-t4.mjs
+?? docs/relay/receipts/SM-ALW001-20261102-N04-V13.md
+?? socialmate-prototype/ai-gateway/demo-write-guard.mjs
+?? socialmate-prototype/ai-gateway/live-facts.mjs
+?? socialmate-prototype/ai-gateway/pairing.mjs
+?? socialmate-v1.2/service-all.sh
+--- java ---
+openjdk version "17.0.20.1" 2026-08-18
+OpenJDK Runtime Environment Homebrew (build 17.0.20.1+0)
+OpenJDK 64-Bit Server VM Homebrew (build 17.0.20.1+0, mixed mode, sharing)
+--- gradle ---
+The operation couldn’t be completed. Unable to locate a Java Runtime.
+Please visit http://www.java.com for information on installing Java.
+
+--- sdk ---
+ANDROID_SDK_ROOT=/Users/zzymima0000/Library/Android/sdk
+android-34
+android-35
+android-36
+--- source snapshot hash ---
+aa64788e226b635bb342cefb95d6e4ac4dbbb4f6bf44cbe24b9dd48763bcd410  -

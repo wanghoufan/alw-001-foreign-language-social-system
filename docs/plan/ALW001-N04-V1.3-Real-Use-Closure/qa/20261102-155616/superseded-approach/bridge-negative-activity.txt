@@ -1,0 +1,5 @@
+  ACTIVITY com.miui.home/.launcher.Launcher 1c31ba3 pid=6010
+      mResumed=false mStopped=true mFinished=false
+      mCreated=true mResumed=false mStopped=true    Active Fragments:    AppListSearchFragment{5d9999f} (6189426a-e1a5-4921-9463-28cef7d568d2) id=0x7f0a01af}
+  ACTIVITY app.socialmate.dualmic/.AsrActivity 571964e pid=19689
+      mResumed=false mStopped=true mFinished=false

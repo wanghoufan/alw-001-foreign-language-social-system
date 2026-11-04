@@ -43,6 +43,7 @@ case "${1:-status}" in
     fi
     unset NODE_TLS_REJECT_UNAUTHORIZED || true
     SM_ARCHIVE_TOKEN="$(cat "$TOKEN_FILE")" SM_ARCHIVE_PORT="$PORT" \
+      SM_ARCHIVE_HOST="${SM_ARCHIVE_HOST:-0.0.0.0}" \
       nohup "$NODE_BIN" "$ROOT/socialmate-prototype/ai-gateway/archive-receiver.mjs" \
       >"$LOG_DIR/archive-$(date +%Y%m%d-%H%M%S).log" 2>&1 &
     echo $! > "$PID_FILE"

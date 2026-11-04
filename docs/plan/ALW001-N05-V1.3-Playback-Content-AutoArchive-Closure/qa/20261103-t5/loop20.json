@@ -1,0 +1,4139 @@
+{
+  "mode": "full",
+  "items": 15,
+  "rounds": 20,
+  "state": "finished",
+  "at": 25043,
+  "log": [
+    {
+      "t": 673723,
+      "ev": "native_finished",
+      "idx": 10,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 673726,
+      "ev": "item_done",
+      "idx": 10,
+      "kind": "phrase-en",
+      "elapsedMs": 3021
+    },
+    {
+      "t": 673728,
+      "ev": "gap",
+      "ms": 240,
+      "before": "phrase-zh"
+    },
+    {
+      "t": 673974,
+      "ev": "item_start",
+      "idx": 11,
+      "kind": "phrase-zh",
+      "lang": "zh",
+      "label": "词组 5/6 中文",
+      "chars": 2,
+      "round": 12,
+      "message": "微风"
+    },
+    {
+      "t": 675297,
+      "ev": "native_finished",
+      "idx": 11,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 675302,
+      "ev": "item_done",
+      "idx": 11,
+      "kind": "phrase-zh",
+      "elapsedMs": 1331
+    },
+    {
+      "t": 675306,
+      "ev": "gap",
+      "ms": 1000,
+      "before": "phrase-en"
+    },
+    {
+      "t": 676314,
+      "ev": "item_start",
+      "idx": 12,
+      "kind": "phrase-en",
+      "lang": "en",
+      "label": "词组 5/6 英文",
+      "chars": 13,
+      "round": 12,
+      "message": "a nice breeze"
+    },
+    {
+      "t": 678374,
+      "ev": "native_finished",
+      "idx": 12,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 678379,
+      "ev": "item_done",
+      "idx": 12,
+      "kind": "phrase-en",
+      "elapsedMs": 2068
+    },
+    {
+      "t": 678383,
+      "ev": "gap",
+      "ms": 240,
+      "before": "phrase-zh"
+    },
+    {
+      "t": 678631,
+      "ev": "item_start",
+      "idx": 13,
+      "kind": "phrase-zh",
+      "lang": "zh",
+      "label": "词组 6/6 中文",
+      "chars": 3,
+      "round": 12,
+      "message": "很凉爽"
+    },
+    {
+      "t": 680285,
+      "ev": "native_finished",
+      "idx": 13,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 680289,
+      "ev": "item_done",
+      "idx": 13,
+      "kind": "phrase-zh",
+      "elapsedMs": 1661
+    },
+    {
+      "t": 680293,
+      "ev": "gap",
+      "ms": 1000,
+      "before": "phrase-en"
+    },
+    {
+      "t": 681300,
+      "ev": "item_start",
+      "idx": 14,
+      "kind": "phrase-en",
+      "lang": "en",
+      "label": "词组 6/6 英文",
+      "chars": 31,
+      "round": 12,
+      "message": "nice and cool / lovely and cool"
+    },
+    {
+      "t": 683995,
+      "ev": "native_finished",
+      "idx": 14,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 684000,
+      "ev": "item_done",
+      "idx": 14,
+      "kind": "phrase-en",
+      "elapsedMs": 2702
+    },
+    {
+      "t": 684004,
+      "ev": "round_done",
+      "round": 12,
+      "total": 20,
+      "items": 15
+    },
+    {
+      "t": 684331,
+      "ev": "item_start",
+      "idx": 0,
+      "kind": "zh",
+      "lang": "zh",
+      "label": "中文",
+      "chars": 28,
+      "round": 13,
+      "message": "晚上在红城湖湖边散散步，还是非常愉悦的。有微风，很凉爽。"
+    },
+    {
+      "t": 690893,
+      "ev": "native_finished",
+      "idx": 0,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 690898,
+      "ev": "item_done",
+      "idx": 0,
+      "kind": "zh",
+      "elapsedMs": 6570
+    },
+    {
+      "t": 690902,
+      "ev": "gap",
+      "ms": 320,
+      "before": "enA"
+    },
+    {
+      "t": 691231,
+      "ev": "item_start",
+      "idx": 1,
+      "kind": "enA",
+      "lang": "en",
+      "label": "英文 A",
+      "chars": 131,
+      "round": 13,
+      "message": "Taking a walk along the edge of Hongcheng Lake — an evening stroll here is really delightful. There's a nice breeze, nice and cool."
+    },
+    {
+      "t": 699229,
+      "ev": "native_finished",
+      "idx": 1,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 699234,
+      "ev": "item_done",
+      "idx": 1,
+      "kind": "enA",
+      "elapsedMs": 8004
+    },
+    {
+      "t": 699238,
+      "ev": "gap",
+      "ms": 320,
+      "before": "enB"
+    },
+    {
+      "t": 699565,
+      "ev": "item_start",
+      "idx": 2,
+      "kind": "enB",
+      "lang": "en",
+      "label": "英文 B",
+      "chars": 94,
+      "round": 13,
+      "message": "Walking by Hongcheng Lake in the evening is genuinely pleasant. The breeze is lovely and cool."
+    },
+    {
+      "t": 705368,
+      "ev": "native_finished",
+      "idx": 2,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 705373,
+      "ev": "item_done",
+      "idx": 2,
+      "kind": "enB",
+      "elapsedMs": 5810
+    },
+    {
+      "t": 705377,
+      "ev": "gap",
+      "ms": 320,
+      "before": "phrase-zh"
+    },
+    {
+      "t": 705705,
+      "ev": "item_start",
+      "idx": 3,
+      "kind": "phrase-zh",
+      "lang": "zh",
+      "label": "词组 1/6 中文",
+      "chars": 4,
+      "round": 13,
+      "message": "湖边散步"
+    },
+    {
+      "t": 707593,
+      "ev": "native_finished",
+      "idx": 3,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 707598,
+      "ev": "item_done",
+      "idx": 3,
+      "kind": "phrase-zh",
+      "elapsedMs": 1895
+    },
+    {
+      "t": 707601,
+      "ev": "gap",
+      "ms": 1000,
+      "before": "phrase-en"
+    },
+    {
+      "t": 708608,
+      "ev": "item_start",
+      "idx": 4,
+      "kind": "phrase-en",
+      "lang": "en",
+      "label": "词组 1/6 英文",
+      "chars": 26,
+      "round": 13,
+      "message": "take a walk / stroll along"
+    },
+    {
+      "t": 711165,
+      "ev": "native_finished",
+      "idx": 4,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 711170,
+      "ev": "item_done",
+      "idx": 4,
+      "kind": "phrase-en",
+      "elapsedMs": 2563
+    },
+    {
+      "t": 711174,
+      "ev": "gap",
+      "ms": 240,
+      "before": "phrase-zh"
+    },
+    {
+      "t": 711422,
+      "ev": "item_start",
+      "idx": 5,
+      "kind": "phrase-zh",
+      "lang": "zh",
+      "label": "词组 2/6 中文",
+      "chars": 2,
+      "round": 13,
+      "message": "湖边"
+    },
+    {
+      "t": 712847,
+      "ev": "native_finished",
+      "idx": 5,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 712852,
+      "ev": "item_done",
+      "idx": 5,
+      "kind": "phrase-zh",
+      "elapsedMs": 1432
+    },
+    {
+      "t": 712857,
+      "ev": "gap",
+      "ms": 1000,
+      "before": "phrase-en"
+    },
+    {
+      "t": 713864,
+      "ev": "item_start",
+      "idx": 6,
+      "kind": "phrase-en",
+      "lang": "en",
+      "label": "词组 2/6 英文",
+      "chars": 40,
+      "round": 13,
+      "message": "along the edge of the lake / by the lake"
+    },
+    {
+      "t": 717011,
+      "ev": "native_finished",
+      "idx": 6,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 717016,
+      "ev": "item_done",
+      "idx": 6,
+      "kind": "phrase-en",
+      "elapsedMs": 3155
+    },
+    {
+      "t": 717020,
+      "ev": "gap",
+      "ms": 240,
+      "before": "phrase-zh"
+    },
+    {
+      "t": 717267,
+      "ev": "item_start",
+      "idx": 7,
+      "kind": "phrase-zh",
+      "lang": "zh",
+      "label": "词组 3/6 中文",
+      "chars": 4,
+      "round": 13,
+      "message": "晚上散步"
+    },
+    {
+      "t": 719054,
+      "ev": "native_finished",
+      "idx": 7,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 719059,
+      "ev": "item_done",
+      "idx": 7,
+      "kind": "phrase-zh",
+      "elapsedMs": 1794
+    },
+    {
+      "t": 719064,
+      "ev": "gap",
+      "ms": 1000,
+      "before": "phrase-en"
+    },
+    {
+      "t": 720071,
+      "ev": "item_start",
+      "idx": 8,
+      "kind": "phrase-en",
+      "lang": "en",
+      "label": "词组 3/6 英文",
+      "chars": 14,
+      "round": 13,
+      "message": "evening stroll"
+    },
+    {
+      "t": 721872,
+      "ev": "native_finished",
+      "idx": 8,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 721876,
+      "ev": "item_done",
+      "idx": 8,
+      "kind": "phrase-en",
+      "elapsedMs": 1808
+    },
+    {
+      "t": 721881,
+      "ev": "gap",
+      "ms": 240,
+      "before": "phrase-zh"
+    },
+    {
+      "t": 722128,
+      "ev": "item_start",
+      "idx": 9,
+      "kind": "phrase-zh",
+      "lang": "zh",
+      "label": "词组 4/6 中文",
+      "chars": 4,
+      "round": 13,
+      "message": "非常愉悦"
+    },
+    {
+      "t": 723891,
+      "ev": "native_finished",
+      "idx": 9,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 723896,
+      "ev": "item_done",
+      "idx": 9,
+      "kind": "phrase-zh",
+      "elapsedMs": 1770
+    },
+    {
+      "t": 723900,
+      "ev": "gap",
+      "ms": 1000,
+      "before": "phrase-en"
+    },
+    {
+      "t": 724908,
+      "ev": "item_start",
+      "idx": 10,
+      "kind": "phrase-en",
+      "lang": "en",
+      "label": "词组 4/6 英文",
+      "chars": 31,
+      "round": 13,
+      "message": "delightful / genuinely pleasant"
+    },
+    {
+      "t": 727929,
+      "ev": "native_finished",
+      "idx": 10,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 727934,
+      "ev": "item_done",
+      "idx": 10,
+      "kind": "phrase-en",
+      "elapsedMs": 3029
+    },
+    {
+      "t": 727938,
+      "ev": "gap",
+      "ms": 240,
+      "before": "phrase-zh"
+    },
+    {
+      "t": 728185,
+      "ev": "item_start",
+      "idx": 11,
+      "kind": "phrase-zh",
+      "lang": "zh",
+      "label": "词组 5/6 中文",
+      "chars": 2,
+      "round": 13,
+      "message": "微风"
+    },
+    {
+      "t": 730208,
+      "ev": "native_finished",
+      "idx": 11,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 730213,
+      "ev": "item_done",
+      "idx": 11,
+      "kind": "phrase-zh",
+      "elapsedMs": 2030
+    },
+    {
+      "t": 730217,
+      "ev": "gap",
+      "ms": 1000,
+      "before": "phrase-en"
+    },
+    {
+      "t": 731225,
+      "ev": "item_start",
+      "idx": 12,
+      "kind": "phrase-en",
+      "lang": "en",
+      "label": "词组 5/6 英文",
+      "chars": 13,
+      "round": 13,
+      "message": "a nice breeze"
+    },
+    {
+      "t": 733984,
+      "ev": "native_finished",
+      "idx": 12,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 733988,
+      "ev": "item_done",
+      "idx": 12,
+      "kind": "phrase-en",
+      "elapsedMs": 2765
+    },
+    {
+      "t": 733992,
+      "ev": "gap",
+      "ms": 240,
+      "before": "phrase-zh"
+    },
+    {
+      "t": 734240,
+      "ev": "item_start",
+      "idx": 13,
+      "kind": "phrase-zh",
+      "lang": "zh",
+      "label": "词组 6/6 中文",
+      "chars": 3,
+      "round": 13,
+      "message": "很凉爽"
+    },
+    {
+      "t": 736228,
+      "ev": "native_finished",
+      "idx": 13,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 736233,
+      "ev": "item_done",
+      "idx": 13,
+      "kind": "phrase-zh",
+      "elapsedMs": 1996
+    },
+    {
+      "t": 736237,
+      "ev": "gap",
+      "ms": 1000,
+      "before": "phrase-en"
+    },
+    {
+      "t": 737245,
+      "ev": "item_start",
+      "idx": 14,
+      "kind": "phrase-en",
+      "lang": "en",
+      "label": "词组 6/6 英文",
+      "chars": 31,
+      "round": 13,
+      "message": "nice and cool / lovely and cool"
+    },
+    {
+      "t": 740440,
+      "ev": "native_finished",
+      "idx": 14,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 740445,
+      "ev": "item_done",
+      "idx": 14,
+      "kind": "phrase-en",
+      "elapsedMs": 3202
+    },
+    {
+      "t": 740449,
+      "ev": "round_done",
+      "round": 13,
+      "total": 20,
+      "items": 15
+    },
+    {
+      "t": 740777,
+      "ev": "item_start",
+      "idx": 0,
+      "kind": "zh",
+      "lang": "zh",
+      "label": "中文",
+      "chars": 28,
+      "round": 14,
+      "message": "晚上在红城湖湖边散散步，还是非常愉悦的。有微风，很凉爽。"
+    },
+    {
+      "t": 747359,
+      "ev": "native_finished",
+      "idx": 0,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 747364,
+      "ev": "item_done",
+      "idx": 0,
+      "kind": "zh",
+      "elapsedMs": 6589
+    },
+    {
+      "t": 747368,
+      "ev": "gap",
+      "ms": 320,
+      "before": "enA"
+    },
+    {
+      "t": 747696,
+      "ev": "item_start",
+      "idx": 1,
+      "kind": "enA",
+      "lang": "en",
+      "label": "英文 A",
+      "chars": 131,
+      "round": 14,
+      "message": "Taking a walk along the edge of Hongcheng Lake — an evening stroll here is really delightful. There's a nice breeze, nice and cool."
+    },
+    {
+      "t": 755848,
+      "ev": "native_finished",
+      "idx": 1,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 755853,
+      "ev": "item_done",
+      "idx": 1,
+      "kind": "enA",
+      "elapsedMs": 8160
+    },
+    {
+      "t": 755857,
+      "ev": "gap",
+      "ms": 320,
+      "before": "enB"
+    },
+    {
+      "t": 756184,
+      "ev": "item_start",
+      "idx": 2,
+      "kind": "enB",
+      "lang": "en",
+      "label": "英文 B",
+      "chars": 94,
+      "round": 14,
+      "message": "Walking by Hongcheng Lake in the evening is genuinely pleasant. The breeze is lovely and cool."
+    },
+    {
+      "t": 762330,
+      "ev": "native_finished",
+      "idx": 2,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 762335,
+      "ev": "item_done",
+      "idx": 2,
+      "kind": "enB",
+      "elapsedMs": 6154
+    },
+    {
+      "t": 762339,
+      "ev": "gap",
+      "ms": 320,
+      "before": "phrase-zh"
+    },
+    {
+      "t": 762667,
+      "ev": "item_start",
+      "idx": 3,
+      "kind": "phrase-zh",
+      "lang": "zh",
+      "label": "词组 1/6 中文",
+      "chars": 4,
+      "round": 14,
+      "message": "湖边散步"
+    },
+    {
+      "t": 765109,
+      "ev": "native_finished",
+      "idx": 3,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 765113,
+      "ev": "item_done",
+      "idx": 3,
+      "kind": "phrase-zh",
+      "elapsedMs": 2449
+    },
+    {
+      "t": 765118,
+      "ev": "gap",
+      "ms": 1000,
+      "before": "phrase-en"
+    },
+    {
+      "t": 766125,
+      "ev": "item_start",
+      "idx": 4,
+      "kind": "phrase-en",
+      "lang": "en",
+      "label": "词组 1/6 英文",
+      "chars": 26,
+      "round": 14,
+      "message": "take a walk / stroll along"
+    },
+    {
+      "t": 769405,
+      "ev": "native_finished",
+      "idx": 4,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 769410,
+      "ev": "item_done",
+      "idx": 4,
+      "kind": "phrase-en",
+      "elapsedMs": 3288
+    },
+    {
+      "t": 769415,
+      "ev": "gap",
+      "ms": 240,
+      "before": "phrase-zh"
+    },
+    {
+      "t": 769662,
+      "ev": "item_start",
+      "idx": 5,
+      "kind": "phrase-zh",
+      "lang": "zh",
+      "label": "词组 2/6 中文",
+      "chars": 2,
+      "round": 14,
+      "message": "湖边"
+    },
+    {
+      "t": 771904,
+      "ev": "native_finished",
+      "idx": 5,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 771908,
+      "ev": "item_done",
+      "idx": 5,
+      "kind": "phrase-zh",
+      "elapsedMs": 2249
+    },
+    {
+      "t": 771913,
+      "ev": "gap",
+      "ms": 1000,
+      "before": "phrase-en"
+    },
+    {
+      "t": 772921,
+      "ev": "item_start",
+      "idx": 6,
+      "kind": "phrase-en",
+      "lang": "en",
+      "label": "词组 2/6 英文",
+      "chars": 40,
+      "round": 14,
+      "message": "along the edge of the lake / by the lake"
+    },
+    {
+      "t": 776573,
+      "ev": "native_finished",
+      "idx": 6,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 776578,
+      "ev": "item_done",
+      "idx": 6,
+      "kind": "phrase-en",
+      "elapsedMs": 3660
+    },
+    {
+      "t": 776583,
+      "ev": "gap",
+      "ms": 240,
+      "before": "phrase-zh"
+    },
+    {
+      "t": 776830,
+      "ev": "item_start",
+      "idx": 7,
+      "kind": "phrase-zh",
+      "lang": "zh",
+      "label": "词组 3/6 中文",
+      "chars": 4,
+      "round": 14,
+      "message": "晚上散步"
+    },
+    {
+      "t": 778913,
+      "ev": "native_finished",
+      "idx": 7,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 778918,
+      "ev": "item_done",
+      "idx": 7,
+      "kind": "phrase-zh",
+      "elapsedMs": 2089
+    },
+    {
+      "t": 778922,
+      "ev": "gap",
+      "ms": 1000,
+      "before": "phrase-en"
+    },
+    {
+      "t": 779929,
+      "ev": "item_start",
+      "idx": 8,
+      "kind": "phrase-en",
+      "lang": "en",
+      "label": "词组 3/6 英文",
+      "chars": 14,
+      "round": 14,
+      "message": "evening stroll"
+    },
+    {
+      "t": 781899,
+      "ev": "native_finished",
+      "idx": 8,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 781904,
+      "ev": "item_done",
+      "idx": 8,
+      "kind": "phrase-en",
+      "elapsedMs": 1977
+    },
+    {
+      "t": 781909,
+      "ev": "gap",
+      "ms": 240,
+      "before": "phrase-zh"
+    },
+    {
+      "t": 782157,
+      "ev": "item_start",
+      "idx": 9,
+      "kind": "phrase-zh",
+      "lang": "zh",
+      "label": "词组 4/6 中文",
+      "chars": 4,
+      "round": 14,
+      "message": "非常愉悦"
+    },
+    {
+      "t": 783965,
+      "ev": "native_finished",
+      "idx": 9,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 783969,
+      "ev": "item_done",
+      "idx": 9,
+      "kind": "phrase-zh",
+      "elapsedMs": 1815
+    },
+    {
+      "t": 783973,
+      "ev": "gap",
+      "ms": 1000,
+      "before": "phrase-en"
+    },
+    {
+      "t": 784980,
+      "ev": "item_start",
+      "idx": 10,
+      "kind": "phrase-en",
+      "lang": "en",
+      "label": "词组 4/6 英文",
+      "chars": 31,
+      "round": 14,
+      "message": "delightful / genuinely pleasant"
+    },
+    {
+      "t": 787976,
+      "ev": "native_finished",
+      "idx": 10,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 787981,
+      "ev": "item_done",
+      "idx": 10,
+      "kind": "phrase-en",
+      "elapsedMs": 3003
+    },
+    {
+      "t": 787985,
+      "ev": "gap",
+      "ms": 240,
+      "before": "phrase-zh"
+    },
+    {
+      "t": 788232,
+      "ev": "item_start",
+      "idx": 11,
+      "kind": "phrase-zh",
+      "lang": "zh",
+      "label": "词组 5/6 中文",
+      "chars": 2,
+      "round": 14,
+      "message": "微风"
+    },
+    {
+      "t": 789901,
+      "ev": "native_finished",
+      "idx": 11,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 789906,
+      "ev": "item_done",
+      "idx": 11,
+      "kind": "phrase-zh",
+      "elapsedMs": 1676
+    },
+    {
+      "t": 789910,
+      "ev": "gap",
+      "ms": 1000,
+      "before": "phrase-en"
+    },
+    {
+      "t": 790917,
+      "ev": "item_start",
+      "idx": 12,
+      "kind": "phrase-en",
+      "lang": "en",
+      "label": "词组 5/6 英文",
+      "chars": 13,
+      "round": 14,
+      "message": "a nice breeze"
+    },
+    {
+      "t": 795110,
+      "ev": "native_finished",
+      "idx": 12,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 795114,
+      "ev": "item_done",
+      "idx": 12,
+      "kind": "phrase-en",
+      "elapsedMs": 4199
+    },
+    {
+      "t": 795118,
+      "ev": "gap",
+      "ms": 240,
+      "before": "phrase-zh"
+    },
+    {
+      "t": 795365,
+      "ev": "item_start",
+      "idx": 13,
+      "kind": "phrase-zh",
+      "lang": "zh",
+      "label": "词组 6/6 中文",
+      "chars": 3,
+      "round": 14,
+      "message": "很凉爽"
+    },
+    {
+      "t": 797526,
+      "ev": "native_finished",
+      "idx": 13,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 797531,
+      "ev": "item_done",
+      "idx": 13,
+      "kind": "phrase-zh",
+      "elapsedMs": 2168
+    },
+    {
+      "t": 797535,
+      "ev": "gap",
+      "ms": 1000,
+      "before": "phrase-en"
+    },
+    {
+      "t": 798546,
+      "ev": "item_start",
+      "idx": 14,
+      "kind": "phrase-en",
+      "lang": "en",
+      "label": "词组 6/6 英文",
+      "chars": 31,
+      "round": 14,
+      "message": "nice and cool / lovely and cool"
+    },
+    {
+      "t": 801213,
+      "ev": "native_finished",
+      "idx": 14,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 801218,
+      "ev": "item_done",
+      "idx": 14,
+      "kind": "phrase-en",
+      "elapsedMs": 2676
+    },
+    {
+      "t": 801222,
+      "ev": "round_done",
+      "round": 14,
+      "total": 20,
+      "items": 15
+    },
+    {
+      "t": 801551,
+      "ev": "item_start",
+      "idx": 0,
+      "kind": "zh",
+      "lang": "zh",
+      "label": "中文",
+      "chars": 28,
+      "round": 15,
+      "message": "晚上在红城湖湖边散散步，还是非常愉悦的。有微风，很凉爽。"
+    },
+    {
+      "t": 808129,
+      "ev": "native_finished",
+      "idx": 0,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 808134,
+      "ev": "item_done",
+      "idx": 0,
+      "kind": "zh",
+      "elapsedMs": 6585
+    },
+    {
+      "t": 808138,
+      "ev": "gap",
+      "ms": 320,
+      "before": "enA"
+    },
+    {
+      "t": 808465,
+      "ev": "item_start",
+      "idx": 1,
+      "kind": "enA",
+      "lang": "en",
+      "label": "英文 A",
+      "chars": 131,
+      "round": 15,
+      "message": "Taking a walk along the edge of Hongcheng Lake — an evening stroll here is really delightful. There's a nice breeze, nice and cool."
+    },
+    {
+      "t": 816616,
+      "ev": "native_finished",
+      "idx": 1,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 816621,
+      "ev": "item_done",
+      "idx": 1,
+      "kind": "enA",
+      "elapsedMs": 8158
+    },
+    {
+      "t": 816625,
+      "ev": "gap",
+      "ms": 320,
+      "before": "enB"
+    },
+    {
+      "t": 816951,
+      "ev": "item_start",
+      "idx": 2,
+      "kind": "enB",
+      "lang": "en",
+      "label": "英文 B",
+      "chars": 94,
+      "round": 15,
+      "message": "Walking by Hongcheng Lake in the evening is genuinely pleasant. The breeze is lovely and cool."
+    },
+    {
+      "t": 823212,
+      "ev": "native_finished",
+      "idx": 2,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 823217,
+      "ev": "item_done",
+      "idx": 2,
+      "kind": "enB",
+      "elapsedMs": 6267
+    },
+    {
+      "t": 823220,
+      "ev": "gap",
+      "ms": 320,
+      "before": "phrase-zh"
+    },
+    {
+      "t": 823548,
+      "ev": "item_start",
+      "idx": 3,
+      "kind": "phrase-zh",
+      "lang": "zh",
+      "label": "词组 1/6 中文",
+      "chars": 4,
+      "round": 15,
+      "message": "湖边散步"
+    },
+    {
+      "t": 825347,
+      "ev": "native_finished",
+      "idx": 3,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 825351,
+      "ev": "item_done",
+      "idx": 3,
+      "kind": "phrase-zh",
+      "elapsedMs": 1806
+    },
+    {
+      "t": 825355,
+      "ev": "gap",
+      "ms": 1000,
+      "before": "phrase-en"
+    },
+    {
+      "t": 826363,
+      "ev": "item_start",
+      "idx": 4,
+      "kind": "phrase-en",
+      "lang": "en",
+      "label": "词组 1/6 英文",
+      "chars": 26,
+      "round": 15,
+      "message": "take a walk / stroll along"
+    },
+    {
+      "t": 829045,
+      "ev": "native_finished",
+      "idx": 4,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 829049,
+      "ev": "item_done",
+      "idx": 4,
+      "kind": "phrase-en",
+      "elapsedMs": 2689
+    },
+    {
+      "t": 829053,
+      "ev": "gap",
+      "ms": 240,
+      "before": "phrase-zh"
+    },
+    {
+      "t": 829301,
+      "ev": "item_start",
+      "idx": 5,
+      "kind": "phrase-zh",
+      "lang": "zh",
+      "label": "词组 2/6 中文",
+      "chars": 2,
+      "round": 15,
+      "message": "湖边"
+    },
+    {
+      "t": 830702,
+      "ev": "native_finished",
+      "idx": 5,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 830707,
+      "ev": "item_done",
+      "idx": 5,
+      "kind": "phrase-zh",
+      "elapsedMs": 1408
+    },
+    {
+      "t": 830711,
+      "ev": "gap",
+      "ms": 1000,
+      "before": "phrase-en"
+    },
+    {
+      "t": 831718,
+      "ev": "item_start",
+      "idx": 6,
+      "kind": "phrase-en",
+      "lang": "en",
+      "label": "词组 2/6 英文",
+      "chars": 40,
+      "round": 15,
+      "message": "along the edge of the lake / by the lake"
+    },
+    {
+      "t": 834847,
+      "ev": "native_finished",
+      "idx": 6,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 834852,
+      "ev": "item_done",
+      "idx": 6,
+      "kind": "phrase-en",
+      "elapsedMs": 3136
+    },
+    {
+      "t": 834856,
+      "ev": "gap",
+      "ms": 240,
+      "before": "phrase-zh"
+    },
+    {
+      "t": 835104,
+      "ev": "item_start",
+      "idx": 7,
+      "kind": "phrase-zh",
+      "lang": "zh",
+      "label": "词组 3/6 中文",
+      "chars": 4,
+      "round": 15,
+      "message": "晚上散步"
+    },
+    {
+      "t": 836894,
+      "ev": "native_finished",
+      "idx": 7,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 836898,
+      "ev": "item_done",
+      "idx": 7,
+      "kind": "phrase-zh",
+      "elapsedMs": 1797
+    },
+    {
+      "t": 836903,
+      "ev": "gap",
+      "ms": 1000,
+      "before": "phrase-en"
+    },
+    {
+      "t": 837909,
+      "ev": "item_start",
+      "idx": 8,
+      "kind": "phrase-en",
+      "lang": "en",
+      "label": "词组 3/6 英文",
+      "chars": 14,
+      "round": 15,
+      "message": "evening stroll"
+    },
+    {
+      "t": 839683,
+      "ev": "native_finished",
+      "idx": 8,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 839688,
+      "ev": "item_done",
+      "idx": 8,
+      "kind": "phrase-en",
+      "elapsedMs": 1781
+    },
+    {
+      "t": 839692,
+      "ev": "gap",
+      "ms": 240,
+      "before": "phrase-zh"
+    },
+    {
+      "t": 839939,
+      "ev": "item_start",
+      "idx": 9,
+      "kind": "phrase-zh",
+      "lang": "zh",
+      "label": "词组 4/6 中文",
+      "chars": 4,
+      "round": 15,
+      "message": "非常愉悦"
+    },
+    {
+      "t": 841752,
+      "ev": "native_finished",
+      "idx": 9,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 841757,
+      "ev": "item_done",
+      "idx": 9,
+      "kind": "phrase-zh",
+      "elapsedMs": 1820
+    },
+    {
+      "t": 841762,
+      "ev": "gap",
+      "ms": 1000,
+      "before": "phrase-en"
+    },
+    {
+      "t": 842770,
+      "ev": "item_start",
+      "idx": 10,
+      "kind": "phrase-en",
+      "lang": "en",
+      "label": "词组 4/6 英文",
+      "chars": 31,
+      "round": 15,
+      "message": "delightful / genuinely pleasant"
+    },
+    {
+      "t": 845699,
+      "ev": "native_finished",
+      "idx": 10,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 845704,
+      "ev": "item_done",
+      "idx": 10,
+      "kind": "phrase-en",
+      "elapsedMs": 2937
+    },
+    {
+      "t": 845708,
+      "ev": "gap",
+      "ms": 240,
+      "before": "phrase-zh"
+    },
+    {
+      "t": 845956,
+      "ev": "item_start",
+      "idx": 11,
+      "kind": "phrase-zh",
+      "lang": "zh",
+      "label": "词组 5/6 中文",
+      "chars": 2,
+      "round": 15,
+      "message": "微风"
+    },
+    {
+      "t": 847370,
+      "ev": "native_finished",
+      "idx": 11,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 847374,
+      "ev": "item_done",
+      "idx": 11,
+      "kind": "phrase-zh",
+      "elapsedMs": 1421
+    },
+    {
+      "t": 847378,
+      "ev": "gap",
+      "ms": 1000,
+      "before": "phrase-en"
+    },
+    {
+      "t": 848386,
+      "ev": "item_start",
+      "idx": 12,
+      "kind": "phrase-en",
+      "lang": "en",
+      "label": "词组 5/6 英文",
+      "chars": 13,
+      "round": 15,
+      "message": "a nice breeze"
+    },
+    {
+      "t": 850528,
+      "ev": "native_finished",
+      "idx": 12,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 850533,
+      "ev": "item_done",
+      "idx": 12,
+      "kind": "phrase-en",
+      "elapsedMs": 2149
+    },
+    {
+      "t": 850537,
+      "ev": "gap",
+      "ms": 240,
+      "before": "phrase-zh"
+    },
+    {
+      "t": 850785,
+      "ev": "item_start",
+      "idx": 13,
+      "kind": "phrase-zh",
+      "lang": "zh",
+      "label": "词组 6/6 中文",
+      "chars": 3,
+      "round": 15,
+      "message": "很凉爽"
+    },
+    {
+      "t": 852378,
+      "ev": "native_finished",
+      "idx": 13,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 852382,
+      "ev": "item_done",
+      "idx": 13,
+      "kind": "phrase-zh",
+      "elapsedMs": 1601
+    },
+    {
+      "t": 852387,
+      "ev": "gap",
+      "ms": 1000,
+      "before": "phrase-en"
+    },
+    {
+      "t": 853394,
+      "ev": "item_start",
+      "idx": 14,
+      "kind": "phrase-en",
+      "lang": "en",
+      "label": "词组 6/6 英文",
+      "chars": 31,
+      "round": 15,
+      "message": "nice and cool / lovely and cool"
+    },
+    {
+      "t": 855996,
+      "ev": "native_finished",
+      "idx": 14,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 856000,
+      "ev": "item_done",
+      "idx": 14,
+      "kind": "phrase-en",
+      "elapsedMs": 2609
+    },
+    {
+      "t": 856005,
+      "ev": "round_done",
+      "round": 15,
+      "total": 20,
+      "items": 15
+    },
+    {
+      "t": 856332,
+      "ev": "item_start",
+      "idx": 0,
+      "kind": "zh",
+      "lang": "zh",
+      "label": "中文",
+      "chars": 28,
+      "round": 16,
+      "message": "晚上在红城湖湖边散散步，还是非常愉悦的。有微风，很凉爽。"
+    },
+    {
+      "t": 862908,
+      "ev": "native_finished",
+      "idx": 0,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 862913,
+      "ev": "item_done",
+      "idx": 0,
+      "kind": "zh",
+      "elapsedMs": 6584
+    },
+    {
+      "t": 862917,
+      "ev": "gap",
+      "ms": 320,
+      "before": "enA"
+    },
+    {
+      "t": 863244,
+      "ev": "item_start",
+      "idx": 1,
+      "kind": "enA",
+      "lang": "en",
+      "label": "英文 A",
+      "chars": 131,
+      "round": 16,
+      "message": "Taking a walk along the edge of Hongcheng Lake — an evening stroll here is really delightful. There's a nice breeze, nice and cool."
+    },
+    {
+      "t": 871110,
+      "ev": "native_finished",
+      "idx": 1,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 871115,
+      "ev": "item_done",
+      "idx": 1,
+      "kind": "enA",
+      "elapsedMs": 7874
+    },
+    {
+      "t": 871120,
+      "ev": "gap",
+      "ms": 320,
+      "before": "enB"
+    },
+    {
+      "t": 871448,
+      "ev": "item_start",
+      "idx": 2,
+      "kind": "enB",
+      "lang": "en",
+      "label": "英文 B",
+      "chars": 94,
+      "round": 16,
+      "message": "Walking by Hongcheng Lake in the evening is genuinely pleasant. The breeze is lovely and cool."
+    },
+    {
+      "t": 877262,
+      "ev": "native_finished",
+      "idx": 2,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 877267,
+      "ev": "item_done",
+      "idx": 2,
+      "kind": "enB",
+      "elapsedMs": 5821
+    },
+    {
+      "t": 877271,
+      "ev": "gap",
+      "ms": 320,
+      "before": "phrase-zh"
+    },
+    {
+      "t": 877599,
+      "ev": "item_start",
+      "idx": 3,
+      "kind": "phrase-zh",
+      "lang": "zh",
+      "label": "词组 1/6 中文",
+      "chars": 4,
+      "round": 16,
+      "message": "湖边散步"
+    },
+    {
+      "t": 879425,
+      "ev": "native_finished",
+      "idx": 3,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 879430,
+      "ev": "item_done",
+      "idx": 3,
+      "kind": "phrase-zh",
+      "elapsedMs": 1834
+    },
+    {
+      "t": 879434,
+      "ev": "gap",
+      "ms": 1000,
+      "before": "phrase-en"
+    },
+    {
+      "t": 880442,
+      "ev": "item_start",
+      "idx": 4,
+      "kind": "phrase-en",
+      "lang": "en",
+      "label": "词组 1/6 英文",
+      "chars": 26,
+      "round": 16,
+      "message": "take a walk / stroll along"
+    },
+    {
+      "t": 882975,
+      "ev": "native_finished",
+      "idx": 4,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 882980,
+      "ev": "item_done",
+      "idx": 4,
+      "kind": "phrase-en",
+      "elapsedMs": 2540
+    },
+    {
+      "t": 882984,
+      "ev": "gap",
+      "ms": 240,
+      "before": "phrase-zh"
+    },
+    {
+      "t": 883232,
+      "ev": "item_start",
+      "idx": 5,
+      "kind": "phrase-zh",
+      "lang": "zh",
+      "label": "词组 2/6 中文",
+      "chars": 2,
+      "round": 16,
+      "message": "湖边"
+    },
+    {
+      "t": 884757,
+      "ev": "native_finished",
+      "idx": 5,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 884762,
+      "ev": "item_done",
+      "idx": 5,
+      "kind": "phrase-zh",
+      "elapsedMs": 1532
+    },
+    {
+      "t": 884766,
+      "ev": "gap",
+      "ms": 1000,
+      "before": "phrase-en"
+    },
+    {
+      "t": 885773,
+      "ev": "item_start",
+      "idx": 6,
+      "kind": "phrase-en",
+      "lang": "en",
+      "label": "词组 2/6 英文",
+      "chars": 40,
+      "round": 16,
+      "message": "along the edge of the lake / by the lake"
+    },
+    {
+      "t": 888949,
+      "ev": "native_finished",
+      "idx": 6,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 888954,
+      "ev": "item_done",
+      "idx": 6,
+      "kind": "phrase-en",
+      "elapsedMs": 3184
+    },
+    {
+      "t": 888959,
+      "ev": "gap",
+      "ms": 240,
+      "before": "phrase-zh"
+    },
+    {
+      "t": 889207,
+      "ev": "item_start",
+      "idx": 7,
+      "kind": "phrase-zh",
+      "lang": "zh",
+      "label": "词组 3/6 中文",
+      "chars": 4,
+      "round": 16,
+      "message": "晚上散步"
+    },
+    {
+      "t": 891009,
+      "ev": "native_finished",
+      "idx": 7,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 891014,
+      "ev": "item_done",
+      "idx": 7,
+      "kind": "phrase-zh",
+      "elapsedMs": 1810
+    },
+    {
+      "t": 891018,
+      "ev": "gap",
+      "ms": 1000,
+      "before": "phrase-en"
+    },
+    {
+      "t": 892026,
+      "ev": "item_start",
+      "idx": 8,
+      "kind": "phrase-en",
+      "lang": "en",
+      "label": "词组 3/6 英文",
+      "chars": 14,
+      "round": 16,
+      "message": "evening stroll"
+    },
+    {
+      "t": 893829,
+      "ev": "native_finished",
+      "idx": 8,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 893834,
+      "ev": "item_done",
+      "idx": 8,
+      "kind": "phrase-en",
+      "elapsedMs": 1810
+    },
+    {
+      "t": 893838,
+      "ev": "gap",
+      "ms": 240,
+      "before": "phrase-zh"
+    },
+    {
+      "t": 894086,
+      "ev": "item_start",
+      "idx": 9,
+      "kind": "phrase-zh",
+      "lang": "zh",
+      "label": "词组 4/6 中文",
+      "chars": 4,
+      "round": 16,
+      "message": "非常愉悦"
+    },
+    {
+      "t": 895916,
+      "ev": "native_finished",
+      "idx": 9,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 895921,
+      "ev": "item_done",
+      "idx": 9,
+      "kind": "phrase-zh",
+      "elapsedMs": 1837
+    },
+    {
+      "t": 895925,
+      "ev": "gap",
+      "ms": 1000,
+      "before": "phrase-en"
+    },
+    {
+      "t": 896933,
+      "ev": "item_start",
+      "idx": 10,
+      "kind": "phrase-en",
+      "lang": "en",
+      "label": "词组 4/6 英文",
+      "chars": 31,
+      "round": 16,
+      "message": "delightful / genuinely pleasant"
+    },
+    {
+      "t": 900122,
+      "ev": "native_finished",
+      "idx": 10,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 900127,
+      "ev": "item_done",
+      "idx": 10,
+      "kind": "phrase-en",
+      "elapsedMs": 3197
+    },
+    {
+      "t": 900131,
+      "ev": "gap",
+      "ms": 240,
+      "before": "phrase-zh"
+    },
+    {
+      "t": 900378,
+      "ev": "item_start",
+      "idx": 11,
+      "kind": "phrase-zh",
+      "lang": "zh",
+      "label": "词组 5/6 中文",
+      "chars": 2,
+      "round": 16,
+      "message": "微风"
+    },
+    {
+      "t": 901871,
+      "ev": "native_finished",
+      "idx": 11,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 901875,
+      "ev": "item_done",
+      "idx": 11,
+      "kind": "phrase-zh",
+      "elapsedMs": 1499
+    },
+    {
+      "t": 901879,
+      "ev": "gap",
+      "ms": 1000,
+      "before": "phrase-en"
+    },
+    {
+      "t": 902886,
+      "ev": "item_start",
+      "idx": 12,
+      "kind": "phrase-en",
+      "lang": "en",
+      "label": "词组 5/6 英文",
+      "chars": 13,
+      "round": 16,
+      "message": "a nice breeze"
+    },
+    {
+      "t": 904775,
+      "ev": "native_finished",
+      "idx": 12,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 904778,
+      "ev": "item_done",
+      "idx": 12,
+      "kind": "phrase-en",
+      "elapsedMs": 1894
+    },
+    {
+      "t": 904781,
+      "ev": "gap",
+      "ms": 240,
+      "before": "phrase-zh"
+    },
+    {
+      "t": 905025,
+      "ev": "item_start",
+      "idx": 13,
+      "kind": "phrase-zh",
+      "lang": "zh",
+      "label": "词组 6/6 中文",
+      "chars": 3,
+      "round": 16,
+      "message": "很凉爽"
+    },
+    {
+      "t": 906690,
+      "ev": "native_finished",
+      "idx": 13,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 906695,
+      "ev": "item_done",
+      "idx": 13,
+      "kind": "phrase-zh",
+      "elapsedMs": 1671
+    },
+    {
+      "t": 906699,
+      "ev": "gap",
+      "ms": 1000,
+      "before": "phrase-en"
+    },
+    {
+      "t": 907707,
+      "ev": "item_start",
+      "idx": 14,
+      "kind": "phrase-en",
+      "lang": "en",
+      "label": "词组 6/6 英文",
+      "chars": 31,
+      "round": 16,
+      "message": "nice and cool / lovely and cool"
+    },
+    {
+      "t": 910373,
+      "ev": "native_finished",
+      "idx": 14,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 910379,
+      "ev": "item_done",
+      "idx": 14,
+      "kind": "phrase-en",
+      "elapsedMs": 2674
+    },
+    {
+      "t": 910383,
+      "ev": "round_done",
+      "round": 16,
+      "total": 20,
+      "items": 15
+    },
+    {
+      "t": 910711,
+      "ev": "item_start",
+      "idx": 0,
+      "kind": "zh",
+      "lang": "zh",
+      "label": "中文",
+      "chars": 28,
+      "round": 17,
+      "message": "晚上在红城湖湖边散散步，还是非常愉悦的。有微风，很凉爽。"
+    },
+    {
+      "t": 917286,
+      "ev": "native_finished",
+      "idx": 0,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 917290,
+      "ev": "item_done",
+      "idx": 0,
+      "kind": "zh",
+      "elapsedMs": 6582
+    },
+    {
+      "t": 917294,
+      "ev": "gap",
+      "ms": 320,
+      "before": "enA"
+    },
+    {
+      "t": 917622,
+      "ev": "item_start",
+      "idx": 1,
+      "kind": "enA",
+      "lang": "en",
+      "label": "英文 A",
+      "chars": 131,
+      "round": 17,
+      "message": "Taking a walk along the edge of Hongcheng Lake — an evening stroll here is really delightful. There's a nice breeze, nice and cool."
+    },
+    {
+      "t": 925537,
+      "ev": "native_finished",
+      "idx": 1,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 925542,
+      "ev": "item_done",
+      "idx": 1,
+      "kind": "enA",
+      "elapsedMs": 7922
+    },
+    {
+      "t": 925546,
+      "ev": "gap",
+      "ms": 320,
+      "before": "enB"
+    },
+    {
+      "t": 925872,
+      "ev": "item_start",
+      "idx": 2,
+      "kind": "enB",
+      "lang": "en",
+      "label": "英文 B",
+      "chars": 94,
+      "round": 17,
+      "message": "Walking by Hongcheng Lake in the evening is genuinely pleasant. The breeze is lovely and cool."
+    },
+    {
+      "t": 931602,
+      "ev": "native_finished",
+      "idx": 2,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 931607,
+      "ev": "item_done",
+      "idx": 2,
+      "kind": "enB",
+      "elapsedMs": 5736
+    },
+    {
+      "t": 931611,
+      "ev": "gap",
+      "ms": 320,
+      "before": "phrase-zh"
+    },
+    {
+      "t": 931939,
+      "ev": "item_start",
+      "idx": 3,
+      "kind": "phrase-zh",
+      "lang": "zh",
+      "label": "词组 1/6 中文",
+      "chars": 4,
+      "round": 17,
+      "message": "湖边散步"
+    },
+    {
+      "t": 933868,
+      "ev": "native_finished",
+      "idx": 3,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 933873,
+      "ev": "item_done",
+      "idx": 3,
+      "kind": "phrase-zh",
+      "elapsedMs": 1937
+    },
+    {
+      "t": 933876,
+      "ev": "gap",
+      "ms": 1000,
+      "before": "phrase-en"
+    },
+    {
+      "t": 934884,
+      "ev": "item_start",
+      "idx": 4,
+      "kind": "phrase-en",
+      "lang": "en",
+      "label": "词组 1/6 英文",
+      "chars": 26,
+      "round": 17,
+      "message": "take a walk / stroll along"
+    },
+    {
+      "t": 938931,
+      "ev": "native_finished",
+      "idx": 4,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 938935,
+      "ev": "item_done",
+      "idx": 4,
+      "kind": "phrase-en",
+      "elapsedMs": 4054
+    },
+    {
+      "t": 938940,
+      "ev": "gap",
+      "ms": 240,
+      "before": "phrase-zh"
+    },
+    {
+      "t": 939187,
+      "ev": "item_start",
+      "idx": 5,
+      "kind": "phrase-zh",
+      "lang": "zh",
+      "label": "词组 2/6 中文",
+      "chars": 2,
+      "round": 17,
+      "message": "湖边"
+    },
+    {
+      "t": 941400,
+      "ev": "native_finished",
+      "idx": 5,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 941405,
+      "ev": "item_done",
+      "idx": 5,
+      "kind": "phrase-zh",
+      "elapsedMs": 2220
+    },
+    {
+      "t": 941408,
+      "ev": "gap",
+      "ms": 1000,
+      "before": "phrase-en"
+    },
+    {
+      "t": 942417,
+      "ev": "item_start",
+      "idx": 6,
+      "kind": "phrase-en",
+      "lang": "en",
+      "label": "词组 2/6 英文",
+      "chars": 40,
+      "round": 17,
+      "message": "along the edge of the lake / by the lake"
+    },
+    {
+      "t": 945956,
+      "ev": "native_finished",
+      "idx": 6,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 945961,
+      "ev": "item_done",
+      "idx": 6,
+      "kind": "phrase-en",
+      "elapsedMs": 3547
+    },
+    {
+      "t": 945965,
+      "ev": "gap",
+      "ms": 240,
+      "before": "phrase-zh"
+    },
+    {
+      "t": 946212,
+      "ev": "item_start",
+      "idx": 7,
+      "kind": "phrase-zh",
+      "lang": "zh",
+      "label": "词组 3/6 中文",
+      "chars": 4,
+      "round": 17,
+      "message": "晚上散步"
+    },
+    {
+      "t": 948745,
+      "ev": "native_finished",
+      "idx": 7,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 948750,
+      "ev": "item_done",
+      "idx": 7,
+      "kind": "phrase-zh",
+      "elapsedMs": 2540
+    },
+    {
+      "t": 948754,
+      "ev": "gap",
+      "ms": 1000,
+      "before": "phrase-en"
+    },
+    {
+      "t": 949761,
+      "ev": "item_start",
+      "idx": 8,
+      "kind": "phrase-en",
+      "lang": "en",
+      "label": "词组 3/6 英文",
+      "chars": 14,
+      "round": 17,
+      "message": "evening stroll"
+    },
+    {
+      "t": 951789,
+      "ev": "native_finished",
+      "idx": 8,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 951793,
+      "ev": "item_done",
+      "idx": 8,
+      "kind": "phrase-en",
+      "elapsedMs": 2035
+    },
+    {
+      "t": 951797,
+      "ev": "gap",
+      "ms": 240,
+      "before": "phrase-zh"
+    },
+    {
+      "t": 952045,
+      "ev": "item_start",
+      "idx": 9,
+      "kind": "phrase-zh",
+      "lang": "zh",
+      "label": "词组 4/6 中文",
+      "chars": 4,
+      "round": 17,
+      "message": "非常愉悦"
+    },
+    {
+      "t": 953925,
+      "ev": "native_finished",
+      "idx": 9,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 953929,
+      "ev": "item_done",
+      "idx": 9,
+      "kind": "phrase-zh",
+      "elapsedMs": 1886
+    },
+    {
+      "t": 953933,
+      "ev": "gap",
+      "ms": 1000,
+      "before": "phrase-en"
+    },
+    {
+      "t": 954940,
+      "ev": "item_start",
+      "idx": 10,
+      "kind": "phrase-en",
+      "lang": "en",
+      "label": "词组 4/6 英文",
+      "chars": 31,
+      "round": 17,
+      "message": "delightful / genuinely pleasant"
+    },
+    {
+      "t": 958789,
+      "ev": "native_finished",
+      "idx": 10,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 958793,
+      "ev": "item_done",
+      "idx": 10,
+      "kind": "phrase-en",
+      "elapsedMs": 3855
+    },
+    {
+      "t": 958797,
+      "ev": "gap",
+      "ms": 240,
+      "before": "phrase-zh"
+    },
+    {
+      "t": 959045,
+      "ev": "item_start",
+      "idx": 11,
+      "kind": "phrase-zh",
+      "lang": "zh",
+      "label": "词组 5/6 中文",
+      "chars": 2,
+      "round": 17,
+      "message": "微风"
+    },
+    {
+      "t": 961259,
+      "ev": "native_finished",
+      "idx": 11,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 961264,
+      "ev": "item_done",
+      "idx": 11,
+      "kind": "phrase-zh",
+      "elapsedMs": 2222
+    },
+    {
+      "t": 961268,
+      "ev": "gap",
+      "ms": 1000,
+      "before": "phrase-en"
+    },
+    {
+      "t": 962275,
+      "ev": "item_start",
+      "idx": 12,
+      "kind": "phrase-en",
+      "lang": "en",
+      "label": "词组 5/6 英文",
+      "chars": 13,
+      "round": 17,
+      "message": "a nice breeze"
+    },
+    {
+      "t": 964925,
+      "ev": "native_finished",
+      "idx": 12,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 964930,
+      "ev": "item_done",
+      "idx": 12,
+      "kind": "phrase-en",
+      "elapsedMs": 2657
+    },
+    {
+      "t": 964934,
+      "ev": "gap",
+      "ms": 240,
+      "before": "phrase-zh"
+    },
+    {
+      "t": 965181,
+      "ev": "item_start",
+      "idx": 13,
+      "kind": "phrase-zh",
+      "lang": "zh",
+      "label": "词组 6/6 中文",
+      "chars": 3,
+      "round": 17,
+      "message": "很凉爽"
+    },
+    {
+      "t": 967198,
+      "ev": "native_finished",
+      "idx": 13,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 967203,
+      "ev": "item_done",
+      "idx": 13,
+      "kind": "phrase-zh",
+      "elapsedMs": 2024
+    },
+    {
+      "t": 967207,
+      "ev": "gap",
+      "ms": 1000,
+      "before": "phrase-en"
+    },
+    {
+      "t": 968214,
+      "ev": "item_start",
+      "idx": 14,
+      "kind": "phrase-en",
+      "lang": "en",
+      "label": "词组 6/6 英文",
+      "chars": 31,
+      "round": 17,
+      "message": "nice and cool / lovely and cool"
+    },
+    {
+      "t": 971248,
+      "ev": "native_finished",
+      "idx": 14,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 971255,
+      "ev": "item_done",
+      "idx": 14,
+      "kind": "phrase-en",
+      "elapsedMs": 3044
+    },
+    {
+      "t": 971259,
+      "ev": "round_done",
+      "round": 17,
+      "total": 20,
+      "items": 15
+    },
+    {
+      "t": 971587,
+      "ev": "item_start",
+      "idx": 0,
+      "kind": "zh",
+      "lang": "zh",
+      "label": "中文",
+      "chars": 28,
+      "round": 18,
+      "message": "晚上在红城湖湖边散散步，还是非常愉悦的。有微风，很凉爽。"
+    },
+    {
+      "t": 978245,
+      "ev": "native_finished",
+      "idx": 0,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 978250,
+      "ev": "item_done",
+      "idx": 0,
+      "kind": "zh",
+      "elapsedMs": 6666
+    },
+    {
+      "t": 978254,
+      "ev": "gap",
+      "ms": 320,
+      "before": "enA"
+    },
+    {
+      "t": 978581,
+      "ev": "item_start",
+      "idx": 1,
+      "kind": "enA",
+      "lang": "en",
+      "label": "英文 A",
+      "chars": 131,
+      "round": 18,
+      "message": "Taking a walk along the edge of Hongcheng Lake — an evening stroll here is really delightful. There's a nice breeze, nice and cool."
+    },
+    {
+      "t": 986446,
+      "ev": "native_finished",
+      "idx": 1,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 986451,
+      "ev": "item_done",
+      "idx": 1,
+      "kind": "enA",
+      "elapsedMs": 7873
+    },
+    {
+      "t": 986455,
+      "ev": "gap",
+      "ms": 320,
+      "before": "enB"
+    },
+    {
+      "t": 986782,
+      "ev": "item_start",
+      "idx": 2,
+      "kind": "enB",
+      "lang": "en",
+      "label": "英文 B",
+      "chars": 94,
+      "round": 18,
+      "message": "Walking by Hongcheng Lake in the evening is genuinely pleasant. The breeze is lovely and cool."
+    },
+    {
+      "t": 996674,
+      "ev": "native_finished",
+      "idx": 2,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 996678,
+      "ev": "item_done",
+      "idx": 2,
+      "kind": "enB",
+      "elapsedMs": 9899
+    },
+    {
+      "t": 996681,
+      "ev": "gap",
+      "ms": 320,
+      "before": "phrase-zh"
+    },
+    {
+      "t": 997009,
+      "ev": "item_start",
+      "idx": 3,
+      "kind": "phrase-zh",
+      "lang": "zh",
+      "label": "词组 1/6 中文",
+      "chars": 4,
+      "round": 18,
+      "message": "湖边散步"
+    },
+    {
+      "t": 998786,
+      "ev": "native_finished",
+      "idx": 3,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 998791,
+      "ev": "item_done",
+      "idx": 3,
+      "kind": "phrase-zh",
+      "elapsedMs": 1784
+    },
+    {
+      "t": 998795,
+      "ev": "gap",
+      "ms": 1000,
+      "before": "phrase-en"
+    },
+    {
+      "t": 999802,
+      "ev": "item_start",
+      "idx": 4,
+      "kind": "phrase-en",
+      "lang": "en",
+      "label": "词组 1/6 英文",
+      "chars": 26,
+      "round": 18,
+      "message": "take a walk / stroll along"
+    },
+    {
+      "t": 1002361,
+      "ev": "native_finished",
+      "idx": 4,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 1002365,
+      "ev": "item_done",
+      "idx": 4,
+      "kind": "phrase-en",
+      "elapsedMs": 2565
+    },
+    {
+      "t": 1002370,
+      "ev": "gap",
+      "ms": 240,
+      "before": "phrase-zh"
+    },
+    {
+      "t": 1002617,
+      "ev": "item_start",
+      "idx": 5,
+      "kind": "phrase-zh",
+      "lang": "zh",
+      "label": "词组 2/6 中文",
+      "chars": 2,
+      "round": 18,
+      "message": "湖边"
+    },
+    {
+      "t": 1004439,
+      "ev": "native_finished",
+      "idx": 5,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 1004444,
+      "ev": "item_done",
+      "idx": 5,
+      "kind": "phrase-zh",
+      "elapsedMs": 1830
+    },
+    {
+      "t": 1004449,
+      "ev": "gap",
+      "ms": 1000,
+      "before": "phrase-en"
+    },
+    {
+      "t": 1005457,
+      "ev": "item_start",
+      "idx": 6,
+      "kind": "phrase-en",
+      "lang": "en",
+      "label": "词组 2/6 英文",
+      "chars": 40,
+      "round": 18,
+      "message": "along the edge of the lake / by the lake"
+    },
+    {
+      "t": 1008493,
+      "ev": "native_finished",
+      "idx": 6,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 1008497,
+      "ev": "item_done",
+      "idx": 6,
+      "kind": "phrase-en",
+      "elapsedMs": 3043
+    },
+    {
+      "t": 1008501,
+      "ev": "gap",
+      "ms": 240,
+      "before": "phrase-zh"
+    },
+    {
+      "t": 1008749,
+      "ev": "item_start",
+      "idx": 7,
+      "kind": "phrase-zh",
+      "lang": "zh",
+      "label": "词组 3/6 中文",
+      "chars": 4,
+      "round": 18,
+      "message": "晚上散步"
+    },
+    {
+      "t": 1010486,
+      "ev": "native_finished",
+      "idx": 7,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 1010490,
+      "ev": "item_done",
+      "idx": 7,
+      "kind": "phrase-zh",
+      "elapsedMs": 1744
+    },
+    {
+      "t": 1010494,
+      "ev": "gap",
+      "ms": 1000,
+      "before": "phrase-en"
+    },
+    {
+      "t": 1011501,
+      "ev": "item_start",
+      "idx": 8,
+      "kind": "phrase-en",
+      "lang": "en",
+      "label": "词组 3/6 英文",
+      "chars": 14,
+      "round": 18,
+      "message": "evening stroll"
+    },
+    {
+      "t": 1013339,
+      "ev": "native_finished",
+      "idx": 8,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 1013344,
+      "ev": "item_done",
+      "idx": 8,
+      "kind": "phrase-en",
+      "elapsedMs": 1845
+    },
+    {
+      "t": 1013347,
+      "ev": "gap",
+      "ms": 240,
+      "before": "phrase-zh"
+    },
+    {
+      "t": 1013595,
+      "ev": "item_start",
+      "idx": 9,
+      "kind": "phrase-zh",
+      "lang": "zh",
+      "label": "词组 4/6 中文",
+      "chars": 4,
+      "round": 18,
+      "message": "非常愉悦"
+    },
+    {
+      "t": 1015405,
+      "ev": "native_finished",
+      "idx": 9,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 1015410,
+      "ev": "item_done",
+      "idx": 9,
+      "kind": "phrase-zh",
+      "elapsedMs": 1817
+    },
+    {
+      "t": 1015414,
+      "ev": "gap",
+      "ms": 1000,
+      "before": "phrase-en"
+    },
+    {
+      "t": 1016421,
+      "ev": "item_start",
+      "idx": 10,
+      "kind": "phrase-en",
+      "lang": "en",
+      "label": "词组 4/6 英文",
+      "chars": 31,
+      "round": 18,
+      "message": "delightful / genuinely pleasant"
+    },
+    {
+      "t": 1019316,
+      "ev": "native_finished",
+      "idx": 10,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 1019321,
+      "ev": "item_done",
+      "idx": 10,
+      "kind": "phrase-en",
+      "elapsedMs": 2902
+    },
+    {
+      "t": 1019325,
+      "ev": "gap",
+      "ms": 240,
+      "before": "phrase-zh"
+    },
+    {
+      "t": 1019573,
+      "ev": "item_start",
+      "idx": 11,
+      "kind": "phrase-zh",
+      "lang": "zh",
+      "label": "词组 5/6 中文",
+      "chars": 2,
+      "round": 18,
+      "message": "微风"
+    },
+    {
+      "t": 1021014,
+      "ev": "native_finished",
+      "idx": 11,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 1021019,
+      "ev": "item_done",
+      "idx": 11,
+      "kind": "phrase-zh",
+      "elapsedMs": 1449
+    },
+    {
+      "t": 1021023,
+      "ev": "gap",
+      "ms": 1000,
+      "before": "phrase-en"
+    },
+    {
+      "t": 1022031,
+      "ev": "item_start",
+      "idx": 12,
+      "kind": "phrase-en",
+      "lang": "en",
+      "label": "词组 5/6 英文",
+      "chars": 13,
+      "round": 18,
+      "message": "a nice breeze"
+    },
+    {
+      "t": 1024031,
+      "ev": "native_finished",
+      "idx": 12,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 1024036,
+      "ev": "item_done",
+      "idx": 12,
+      "kind": "phrase-en",
+      "elapsedMs": 2007
+    },
+    {
+      "t": 1024042,
+      "ev": "gap",
+      "ms": 240,
+      "before": "phrase-zh"
+    },
+    {
+      "t": 1024289,
+      "ev": "item_start",
+      "idx": 13,
+      "kind": "phrase-zh",
+      "lang": "zh",
+      "label": "词组 6/6 中文",
+      "chars": 3,
+      "round": 18,
+      "message": "很凉爽"
+    },
+    {
+      "t": 1025996,
+      "ev": "native_finished",
+      "idx": 13,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 1026001,
+      "ev": "item_done",
+      "idx": 13,
+      "kind": "phrase-zh",
+      "elapsedMs": 1714
+    },
+    {
+      "t": 1026005,
+      "ev": "gap",
+      "ms": 1000,
+      "before": "phrase-en"
+    },
+    {
+      "t": 1027012,
+      "ev": "item_start",
+      "idx": 14,
+      "kind": "phrase-en",
+      "lang": "en",
+      "label": "词组 6/6 英文",
+      "chars": 31,
+      "round": 18,
+      "message": "nice and cool / lovely and cool"
+    },
+    {
+      "t": 1029611,
+      "ev": "native_finished",
+      "idx": 14,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 1029616,
+      "ev": "item_done",
+      "idx": 14,
+      "kind": "phrase-en",
+      "elapsedMs": 2607
+    },
+    {
+      "t": 1029620,
+      "ev": "round_done",
+      "round": 18,
+      "total": 20,
+      "items": 15
+    },
+    {
+      "t": 1029947,
+      "ev": "item_start",
+      "idx": 0,
+      "kind": "zh",
+      "lang": "zh",
+      "label": "中文",
+      "chars": 28,
+      "round": 19,
+      "message": "晚上在红城湖湖边散散步，还是非常愉悦的。有微风，很凉爽。"
+    },
+    {
+      "t": 1036507,
+      "ev": "native_finished",
+      "idx": 0,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 1036512,
+      "ev": "item_done",
+      "idx": 0,
+      "kind": "zh",
+      "elapsedMs": 6568
+    },
+    {
+      "t": 1036517,
+      "ev": "gap",
+      "ms": 320,
+      "before": "enA"
+    },
+    {
+      "t": 1036844,
+      "ev": "item_start",
+      "idx": 1,
+      "kind": "enA",
+      "lang": "en",
+      "label": "英文 A",
+      "chars": 131,
+      "round": 19,
+      "message": "Taking a walk along the edge of Hongcheng Lake — an evening stroll here is really delightful. There's a nice breeze, nice and cool."
+    },
+    {
+      "t": 1044747,
+      "ev": "native_finished",
+      "idx": 1,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 1044752,
+      "ev": "item_done",
+      "idx": 1,
+      "kind": "enA",
+      "elapsedMs": 7911
+    },
+    {
+      "t": 1044756,
+      "ev": "gap",
+      "ms": 320,
+      "before": "enB"
+    },
+    {
+      "t": 1045083,
+      "ev": "item_start",
+      "idx": 2,
+      "kind": "enB",
+      "lang": "en",
+      "label": "英文 B",
+      "chars": 94,
+      "round": 19,
+      "message": "Walking by Hongcheng Lake in the evening is genuinely pleasant. The breeze is lovely and cool."
+    },
+    {
+      "t": 1050876,
+      "ev": "native_finished",
+      "idx": 2,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 1050881,
+      "ev": "item_done",
+      "idx": 2,
+      "kind": "enB",
+      "elapsedMs": 5801
+    },
+    {
+      "t": 1050885,
+      "ev": "gap",
+      "ms": 320,
+      "before": "phrase-zh"
+    },
+    {
+      "t": 1051213,
+      "ev": "item_start",
+      "idx": 3,
+      "kind": "phrase-zh",
+      "lang": "zh",
+      "label": "词组 1/6 中文",
+      "chars": 4,
+      "round": 19,
+      "message": "湖边散步"
+    },
+    {
+      "t": 1053322,
+      "ev": "native_finished",
+      "idx": 3,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 1053327,
+      "ev": "item_done",
+      "idx": 3,
+      "kind": "phrase-zh",
+      "elapsedMs": 2117
+    },
+    {
+      "t": 1053331,
+      "ev": "gap",
+      "ms": 1000,
+      "before": "phrase-en"
+    },
+    {
+      "t": 1054338,
+      "ev": "item_start",
+      "idx": 4,
+      "kind": "phrase-en",
+      "lang": "en",
+      "label": "词组 1/6 英文",
+      "chars": 26,
+      "round": 19,
+      "message": "take a walk / stroll along"
+    },
+    {
+      "t": 1057378,
+      "ev": "native_finished",
+      "idx": 4,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 1057383,
+      "ev": "item_done",
+      "idx": 4,
+      "kind": "phrase-en",
+      "elapsedMs": 3048
+    },
+    {
+      "t": 1057388,
+      "ev": "gap",
+      "ms": 240,
+      "before": "phrase-zh"
+    },
+    {
+      "t": 1057635,
+      "ev": "item_start",
+      "idx": 5,
+      "kind": "phrase-zh",
+      "lang": "zh",
+      "label": "词组 2/6 中文",
+      "chars": 2,
+      "round": 19,
+      "message": "湖边"
+    },
+    {
+      "t": 1059096,
+      "ev": "native_finished",
+      "idx": 5,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 1059100,
+      "ev": "item_done",
+      "idx": 5,
+      "kind": "phrase-zh",
+      "elapsedMs": 1468
+    },
+    {
+      "t": 1059104,
+      "ev": "gap",
+      "ms": 1000,
+      "before": "phrase-en"
+    },
+    {
+      "t": 1060111,
+      "ev": "item_start",
+      "idx": 6,
+      "kind": "phrase-en",
+      "lang": "en",
+      "label": "词组 2/6 英文",
+      "chars": 40,
+      "round": 19,
+      "message": "along the edge of the lake / by the lake"
+    },
+    {
+      "t": 1063311,
+      "ev": "native_finished",
+      "idx": 6,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 1063316,
+      "ev": "item_done",
+      "idx": 6,
+      "kind": "phrase-en",
+      "elapsedMs": 3208
+    },
+    {
+      "t": 1063321,
+      "ev": "gap",
+      "ms": 240,
+      "before": "phrase-zh"
+    },
+    {
+      "t": 1063568,
+      "ev": "item_start",
+      "idx": 7,
+      "kind": "phrase-zh",
+      "lang": "zh",
+      "label": "词组 3/6 中文",
+      "chars": 4,
+      "round": 19,
+      "message": "晚上散步"
+    },
+    {
+      "t": 1065309,
+      "ev": "native_finished",
+      "idx": 7,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 1065315,
+      "ev": "item_done",
+      "idx": 7,
+      "kind": "phrase-zh",
+      "elapsedMs": 1750
+    },
+    {
+      "t": 1065320,
+      "ev": "gap",
+      "ms": 1000,
+      "before": "phrase-en"
+    },
+    {
+      "t": 1066328,
+      "ev": "item_start",
+      "idx": 8,
+      "kind": "phrase-en",
+      "lang": "en",
+      "label": "词组 3/6 英文",
+      "chars": 14,
+      "round": 19,
+      "message": "evening stroll"
+    },
+    {
+      "t": 1068126,
+      "ev": "native_finished",
+      "idx": 8,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 1068131,
+      "ev": "item_done",
+      "idx": 8,
+      "kind": "phrase-en",
+      "elapsedMs": 1806
+    },
+    {
+      "t": 1068136,
+      "ev": "gap",
+      "ms": 240,
+      "before": "phrase-zh"
+    },
+    {
+      "t": 1068383,
+      "ev": "item_start",
+      "idx": 9,
+      "kind": "phrase-zh",
+      "lang": "zh",
+      "label": "词组 4/6 中文",
+      "chars": 4,
+      "round": 19,
+      "message": "非常愉悦"
+    },
+    {
+      "t": 1070302,
+      "ev": "native_finished",
+      "idx": 9,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 1070307,
+      "ev": "item_done",
+      "idx": 9,
+      "kind": "phrase-zh",
+      "elapsedMs": 1926
+    },
+    {
+      "t": 1070311,
+      "ev": "gap",
+      "ms": 1000,
+      "before": "phrase-en"
+    },
+    {
+      "t": 1071319,
+      "ev": "item_start",
+      "idx": 10,
+      "kind": "phrase-en",
+      "lang": "en",
+      "label": "词组 4/6 英文",
+      "chars": 31,
+      "round": 19,
+      "message": "delightful / genuinely pleasant"
+    },
+    {
+      "t": 1074290,
+      "ev": "native_finished",
+      "idx": 10,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 1074295,
+      "ev": "item_done",
+      "idx": 10,
+      "kind": "phrase-en",
+      "elapsedMs": 2979
+    },
+    {
+      "t": 1074299,
+      "ev": "gap",
+      "ms": 240,
+      "before": "phrase-zh"
+    },
+    {
+      "t": 1074547,
+      "ev": "item_start",
+      "idx": 11,
+      "kind": "phrase-zh",
+      "lang": "zh",
+      "label": "词组 5/6 中文",
+      "chars": 2,
+      "round": 19,
+      "message": "微风"
+    },
+    {
+      "t": 1076019,
+      "ev": "native_finished",
+      "idx": 11,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 1076024,
+      "ev": "item_done",
+      "idx": 11,
+      "kind": "phrase-zh",
+      "elapsedMs": 1480
+    },
+    {
+      "t": 1076029,
+      "ev": "gap",
+      "ms": 1000,
+      "before": "phrase-en"
+    },
+    {
+      "t": 1077036,
+      "ev": "item_start",
+      "idx": 12,
+      "kind": "phrase-en",
+      "lang": "en",
+      "label": "词组 5/6 英文",
+      "chars": 13,
+      "round": 19,
+      "message": "a nice breeze"
+    },
+    {
+      "t": 1078883,
+      "ev": "native_finished",
+      "idx": 12,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 1078888,
+      "ev": "item_done",
+      "idx": 12,
+      "kind": "phrase-en",
+      "elapsedMs": 1854
+    },
+    {
+      "t": 1078892,
+      "ev": "gap",
+      "ms": 240,
+      "before": "phrase-zh"
+    },
+    {
+      "t": 1079139,
+      "ev": "item_start",
+      "idx": 13,
+      "kind": "phrase-zh",
+      "lang": "zh",
+      "label": "词组 6/6 中文",
+      "chars": 3,
+      "round": 19,
+      "message": "很凉爽"
+    },
+    {
+      "t": 1080773,
+      "ev": "native_finished",
+      "idx": 13,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 1080778,
+      "ev": "item_done",
+      "idx": 13,
+      "kind": "phrase-zh",
+      "elapsedMs": 1641
+    },
+    {
+      "t": 1080782,
+      "ev": "gap",
+      "ms": 1000,
+      "before": "phrase-en"
+    },
+    {
+      "t": 1081790,
+      "ev": "item_start",
+      "idx": 14,
+      "kind": "phrase-en",
+      "lang": "en",
+      "label": "词组 6/6 英文",
+      "chars": 31,
+      "round": 19,
+      "message": "nice and cool / lovely and cool"
+    },
+    {
+      "t": 1084438,
+      "ev": "native_finished",
+      "idx": 14,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 1084443,
+      "ev": "item_done",
+      "idx": 14,
+      "kind": "phrase-en",
+      "elapsedMs": 2656
+    },
+    {
+      "t": 1084448,
+      "ev": "round_done",
+      "round": 19,
+      "total": 20,
+      "items": 15
+    },
+    {
+      "t": 1084775,
+      "ev": "item_start",
+      "idx": 0,
+      "kind": "zh",
+      "lang": "zh",
+      "label": "中文",
+      "chars": 28,
+      "round": 20,
+      "message": "晚上在红城湖湖边散散步，还是非常愉悦的。有微风，很凉爽。"
+    },
+    {
+      "t": 1091285,
+      "ev": "native_finished",
+      "idx": 0,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 1091289,
+      "ev": "item_done",
+      "idx": 0,
+      "kind": "zh",
+      "elapsedMs": 6517
+    },
+    {
+      "t": 1091294,
+      "ev": "gap",
+      "ms": 320,
+      "before": "enA"
+    },
+    {
+      "t": 1091621,
+      "ev": "item_start",
+      "idx": 1,
+      "kind": "enA",
+      "lang": "en",
+      "label": "英文 A",
+      "chars": 131,
+      "round": 20,
+      "message": "Taking a walk along the edge of Hongcheng Lake — an evening stroll here is really delightful. There's a nice breeze, nice and cool."
+    },
+    {
+      "t": 1099574,
+      "ev": "native_finished",
+      "idx": 1,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 1099579,
+      "ev": "item_done",
+      "idx": 1,
+      "kind": "enA",
+      "elapsedMs": 7960
+    },
+    {
+      "t": 1099583,
+      "ev": "gap",
+      "ms": 320,
+      "before": "enB"
+    },
+    {
+      "t": 1099910,
+      "ev": "item_start",
+      "idx": 2,
+      "kind": "enB",
+      "lang": "en",
+      "label": "英文 B",
+      "chars": 94,
+      "round": 20,
+      "message": "Walking by Hongcheng Lake in the evening is genuinely pleasant. The breeze is lovely and cool."
+    },
+    {
+      "t": 1105661,
+      "ev": "native_finished",
+      "idx": 2,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 1105666,
+      "ev": "item_done",
+      "idx": 2,
+      "kind": "enB",
+      "elapsedMs": 5758
+    },
+    {
+      "t": 1105671,
+      "ev": "gap",
+      "ms": 320,
+      "before": "phrase-zh"
+    },
+    {
+      "t": 1105998,
+      "ev": "item_start",
+      "idx": 3,
+      "kind": "phrase-zh",
+      "lang": "zh",
+      "label": "词组 1/6 中文",
+      "chars": 4,
+      "round": 20,
+      "message": "湖边散步"
+    },
+    {
+      "t": 1107759,
+      "ev": "native_finished",
+      "idx": 3,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 1107763,
+      "ev": "item_done",
+      "idx": 3,
+      "kind": "phrase-zh",
+      "elapsedMs": 1768
+    },
+    {
+      "t": 1107767,
+      "ev": "gap",
+      "ms": 1000,
+      "before": "phrase-en"
+    },
+    {
+      "t": 1108775,
+      "ev": "item_start",
+      "idx": 4,
+      "kind": "phrase-en",
+      "lang": "en",
+      "label": "词组 1/6 英文",
+      "chars": 26,
+      "round": 20,
+      "message": "take a walk / stroll along"
+    },
+    {
+      "t": 1111373,
+      "ev": "native_finished",
+      "idx": 4,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 1111378,
+      "ev": "item_done",
+      "idx": 4,
+      "kind": "phrase-en",
+      "elapsedMs": 2606
+    },
+    {
+      "t": 1111383,
+      "ev": "gap",
+      "ms": 240,
+      "before": "phrase-zh"
+    },
+    {
+      "t": 1111630,
+      "ev": "item_start",
+      "idx": 5,
+      "kind": "phrase-zh",
+      "lang": "zh",
+      "label": "词组 2/6 中文",
+      "chars": 2,
+      "round": 20,
+      "message": "湖边"
+    },
+    {
+      "t": 1113134,
+      "ev": "native_finished",
+      "idx": 5,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 1113138,
+      "ev": "item_done",
+      "idx": 5,
+      "kind": "phrase-zh",
+      "elapsedMs": 1511
+    },
+    {
+      "t": 1113142,
+      "ev": "gap",
+      "ms": 1000,
+      "before": "phrase-en"
+    },
+    {
+      "t": 1114149,
+      "ev": "item_start",
+      "idx": 6,
+      "kind": "phrase-en",
+      "lang": "en",
+      "label": "词组 2/6 英文",
+      "chars": 40,
+      "round": 20,
+      "message": "along the edge of the lake / by the lake"
+    },
+    {
+      "t": 1117324,
+      "ev": "native_finished",
+      "idx": 6,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 1117329,
+      "ev": "item_done",
+      "idx": 6,
+      "kind": "phrase-en",
+      "elapsedMs": 3182
+    },
+    {
+      "t": 1117333,
+      "ev": "gap",
+      "ms": 240,
+      "before": "phrase-zh"
+    },
+    {
+      "t": 1117579,
+      "ev": "item_start",
+      "idx": 7,
+      "kind": "phrase-zh",
+      "lang": "zh",
+      "label": "词组 3/6 中文",
+      "chars": 4,
+      "round": 20,
+      "message": "晚上散步"
+    },
+    {
+      "t": 1119561,
+      "ev": "native_finished",
+      "idx": 7,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 1119565,
+      "ev": "item_done",
+      "idx": 7,
+      "kind": "phrase-zh",
+      "elapsedMs": 1988
+    },
+    {
+      "t": 1119569,
+      "ev": "gap",
+      "ms": 1000,
+      "before": "phrase-en"
+    },
+    {
+      "t": 1120576,
+      "ev": "item_start",
+      "idx": 8,
+      "kind": "phrase-en",
+      "lang": "en",
+      "label": "词组 3/6 英文",
+      "chars": 14,
+      "round": 20,
+      "message": "evening stroll"
+    },
+    {
+      "t": 1122579,
+      "ev": "native_finished",
+      "idx": 8,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 1122584,
+      "ev": "item_done",
+      "idx": 8,
+      "kind": "phrase-en",
+      "elapsedMs": 2009
+    },
+    {
+      "t": 1122588,
+      "ev": "gap",
+      "ms": 240,
+      "before": "phrase-zh"
+    },
+    {
+      "t": 1122835,
+      "ev": "item_start",
+      "idx": 9,
+      "kind": "phrase-zh",
+      "lang": "zh",
+      "label": "词组 4/6 中文",
+      "chars": 4,
+      "round": 20,
+      "message": "非常愉悦"
+    },
+    {
+      "t": 1124889,
+      "ev": "native_finished",
+      "idx": 9,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 1124894,
+      "ev": "item_done",
+      "idx": 9,
+      "kind": "phrase-zh",
+      "elapsedMs": 2062
+    },
+    {
+      "t": 1124899,
+      "ev": "gap",
+      "ms": 1000,
+      "before": "phrase-en"
+    },
+    {
+      "t": 1125906,
+      "ev": "item_start",
+      "idx": 10,
+      "kind": "phrase-en",
+      "lang": "en",
+      "label": "词组 4/6 英文",
+      "chars": 31,
+      "round": 20,
+      "message": "delightful / genuinely pleasant"
+    },
+    {
+      "t": 1129569,
+      "ev": "native_finished",
+      "idx": 10,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 1129574,
+      "ev": "item_done",
+      "idx": 10,
+      "kind": "phrase-en",
+      "elapsedMs": 3670
+    },
+    {
+      "t": 1129578,
+      "ev": "gap",
+      "ms": 240,
+      "before": "phrase-zh"
+    },
+    {
+      "t": 1129825,
+      "ev": "item_start",
+      "idx": 11,
+      "kind": "phrase-zh",
+      "lang": "zh",
+      "label": "词组 5/6 中文",
+      "chars": 2,
+      "round": 20,
+      "message": "微风"
+    },
+    {
+      "t": 1131398,
+      "ev": "native_finished",
+      "idx": 11,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 1131402,
+      "ev": "item_done",
+      "idx": 11,
+      "kind": "phrase-zh",
+      "elapsedMs": 1579
+    },
+    {
+      "t": 1131406,
+      "ev": "gap",
+      "ms": 1000,
+      "before": "phrase-en"
+    },
+    {
+      "t": 1132412,
+      "ev": "item_start",
+      "idx": 12,
+      "kind": "phrase-en",
+      "lang": "en",
+      "label": "词组 5/6 英文",
+      "chars": 13,
+      "round": 20,
+      "message": "a nice breeze"
+    },
+    {
+      "t": 1134482,
+      "ev": "native_finished",
+      "idx": 12,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 1134487,
+      "ev": "item_done",
+      "idx": 12,
+      "kind": "phrase-en",
+      "elapsedMs": 2077
+    },
+    {
+      "t": 1134491,
+      "ev": "gap",
+      "ms": 240,
+      "before": "phrase-zh"
+    },
+    {
+      "t": 1134739,
+      "ev": "item_start",
+      "idx": 13,
+      "kind": "phrase-zh",
+      "lang": "zh",
+      "label": "词组 6/6 中文",
+      "chars": 3,
+      "round": 20,
+      "message": "很凉爽"
+    },
+    {
+      "t": 1136749,
+      "ev": "native_finished",
+      "idx": 13,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 1136754,
+      "ev": "item_done",
+      "idx": 13,
+      "kind": "phrase-zh",
+      "elapsedMs": 2018
+    },
+    {
+      "t": 1136758,
+      "ev": "gap",
+      "ms": 1000,
+      "before": "phrase-en"
+    },
+    {
+      "t": 1137766,
+      "ev": "item_start",
+      "idx": 14,
+      "kind": "phrase-en",
+      "lang": "en",
+      "label": "词组 6/6 英文",
+      "chars": 31,
+      "round": 20,
+      "message": "nice and cool / lovely and cool"
+    },
+    {
+      "t": 1140653,
+      "ev": "native_finished",
+      "idx": 14,
+      "wallMs": 0,
+      "fileMs": 0,
+      "cacheHit": false,
+      "providerId": "system"
+    },
+    {
+      "t": 1140658,
+      "ev": "item_done",
+      "idx": 14,
+      "kind": "phrase-en",
+      "elapsedMs": 2895
+    },
+    {
+      "t": 1140662,
+      "ev": "round_done",
+      "round": 20,
+      "total": 20,
+      "items": 15
+    },
+    {
+      "t": 1140667,
+      "ev": "queue_finished",
+      "rounds": 20,
+      "items": 15,
+      "durationMs": 1115624
+    }
+  ]
+}

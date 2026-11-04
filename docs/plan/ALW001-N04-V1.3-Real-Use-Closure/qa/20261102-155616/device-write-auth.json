@@ -1,0 +1,1 @@
+{"withTicket":{"status":404,"code":"PENDING_NOT_FOUND"},"withoutTicket":{"status":403,"code":"WRITE_TICKET_REQUIRED"}}

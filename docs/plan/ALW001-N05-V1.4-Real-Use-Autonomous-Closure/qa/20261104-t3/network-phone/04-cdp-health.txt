@@ -1,0 +1,9 @@
+HANDSHAKE: HTTP/1.1 101 WebSocket Protocol Handshake
+--- document.readyState ---
+complete
+--- document.title ---
+
+--- location.href ---
+https://mac-mini.tail4e4317.ts.net/alw/health
+--- document.body.innerText.substring(0,1200) ---
+{"ok":true,"service":"socialmate-archive","auth":"required"}

@@ -21,6 +21,7 @@ import android.media.AudioManager;
 import android.media.AudioRecord;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Looper;
 import android.os.SystemClock;
 import android.view.View;
 import android.view.WindowInsets;
@@ -54,9 +55,24 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
     private static final int REQUEST_SAVE_TEXT = 202;
     private static final String DEFAULT_URL = "ws://127.0.0.1:8790/asr";
     private static final String PRIVATE_UI_URL = "http://127.0.0.1:8791/v12";
+    private static final String LOCAL_ARCHIVE_URL = "http://127.0.0.1:8781/api/archive/session";
+    /* T4 外出模式：Tailscale 私有入口（tailnet only，不是公网域名；无 HTTP 明文）。 */
+    private static final String TRAVEL_ASR_URL = "wss://mac-mini.tail4e4317.ts.net:10000/asr";
+    private static final String TRAVEL_UI_URL = "https://mac-mini.tail4e4317.ts.net:8443/v12";
+    private static final String TRAVEL_ARCHIVE_URL = "https://mac-mini.tail4e4317.ts.net/alw/api/archive/session";
+    /** T4 只读降级的本地快照（成功加载在线界面时刷新；离线时读它渲染）。 */
+    private static final String OFFLINE_DIR = "offline";
+    private static final String OFFLINE_SNAPSHOT = "snapshot.json";
     private static final String BRIDGE_NAME = "SocialMateAndroid";
+    /** S4：原生 TextToSpeech 桥。与导出桥同步挂载/撤销，只对私有 origin 生效。 */
+    private static final String TTS_BRIDGE_NAME = "SocialMateTts";
+    /** N05 V1.3：网页 → logcat 的播放队列时间线通道（只允许私有页面）。 */
+    private static final String JS_LOG_BRIDGE_NAME = "SocialMateLog";
 
     private final List<AsrClient> clients = Collections.synchronizedList(new ArrayList<>());
+    /** 每个 track 同一时刻只允许一个重连线程，避免断线抖动时建立多条重复会话。 */
+    private final java.util.Set<String> reconnecting = java.util.Collections.synchronizedSet(new java.util.HashSet<>());
+    private volatile String asrLink = "";
     private final StringBuilder finals = new StringBuilder();
     private volatile boolean running;
     private volatile AudioRecord recorder;
@@ -95,18 +111,32 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
     private int eventCount;
     private volatile String lastFinal = "";
     private SessionArchive archive;
+    private DevicePairing pairing;
     private CheckBox retentionConsent;
     private TextView archiveStatusView;
     private TextView retentionHint;
     private TextView webHint;
-    private EditText archiveUrlInput, archiveTokenInput, uiUrlInput;
+    private EditText archiveUrlInput, uiUrlInput, pairCodeInput;
+    private TextView pairingStatus;
     private SharedPreferences config;
     private ConnectivityManager.NetworkCallback networkCallback;
     /** 待保存的导出文本（SAF 回调时才真正写盘）。 */
     private String pendingSaveName, pendingSaveText;
     private boolean bridgeAttached;
+    private boolean ttsBridgeAttached;
+    private boolean jsLogBridgeAttached;
+    /** S4 原生 TTS 控制器（中英分 voice、句级队列、本地进度）。 */
+    private TtsPlaybackController ttsController;
+    private boolean tokenWarming;
+    /** 本次导航是否已经发生过主框架加载错误：一旦失败，本页绝不挂桥。 */
+    private volatile boolean pageLoadFailed;
     /** 主线维护的「当前可信页面地址」；JavaBridge 线程只读它，不直接调用 WebView。 */
     private volatile String trustedPageUrl;
+    /** T4 只读降级面板：服务不可达时替代白屏，永远只读。 */
+    private ScrollView offlinePanel;
+    private TextView offlineBody;
+    private TextView modeHint;
+    private String offlineReason = "";
 
     private static final String[] TRACK_LABELS = {
             "混音 → 说话人分离 (mix)",
@@ -123,15 +153,65 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
         }
         config = getSharedPreferences("socialmate-config", MODE_PRIVATE);
     uiEn = config.getBoolean("ui_en", false);
+        pairing = new DevicePairing(this);
         archive = new SessionArchive(this);
         archive.setListener(this::setArchiveStatus);
-        buildUi();
-        refreshDeviceInfo();
-        registerNetworkRecovery();
-        // 打开 App 直接是五 Tab 主界面；原生录音面板只在用户从「⋮」进入时出现。
-        showSocialMatePanel();
-        // 冷启动/重启后 outbox 里的待传文件会自动补传（幂等键是 sessionId，重复上传不会重复归档）。
-        archive.flushAsync(this::setArchiveStatus);
+        // 上传令牌不再是编译期常量：没有配对就取不到令牌，flushAsync 直接 fail closed。
+        archive.setTokenProvider(this::currentAccessToken);
+        // 401（短期令牌过期）只刷新一次再重试一次；403 撤销不刷新。
+        archive.setTokenRefresher(() -> {
+            DevicePairing target = pairing;
+            return target == null ? "" : target.refreshToken(privateUiBase(), line -> { });
+        });
+        // S4：原生 TTS 必须在主线程创建；页面加载前先 init，用户点朗读时已就绪。
+        // V1.4：控制器改为进程内单例（TtsPlaybackService 持有），本页只是使用者——
+        // 否则后台队列与页面各有一台引擎，熄屏后会互相打断。
+        ttsController = TtsPlaybackService.controller(this);
+        ttsController.ensureReady();
+        showConnectingUi();
+        // 只在后台做一次短发现：家里 WiFi 直连优先，找不到再回退 Tailscale。
+        new Thread(() -> {
+            EndpointResolver.LanEndpoint lan = EndpointResolver.discoverLan(900);
+            runOnUiThread(() -> {
+                applyAutoEndpoint(lan);
+                buildUi();
+                refreshDeviceInfo();
+                registerNetworkRecovery();
+                // 打开 App 直接是五 Tab 主界面；原生录音面板只在用户从「⋮」进入时出现。
+                showSocialMatePanel();
+                // 冷启动/重启后 outbox 里的待传文件会自动补传（幂等键是 sessionId，重复上传不会重复归档）。
+                archive.flushAsync(this::setArchiveStatus);
+            });
+        }, "sm-lan-discovery").start();
+    }
+
+    /** 发现完成前只显示一句中文状态，不暴露任何服务地址或调试控件。 */
+    private void showConnectingUi() {
+        FrameLayout root = new FrameLayout(this);
+        root.setBackgroundColor(0xFFF5F7F8);
+        TextView label = new TextView(this);
+        label.setText("正在连接 Mac…");
+        label.setTextSize(19);
+        label.setTextColor(0xFF12232E);
+        label.setGravity(android.view.Gravity.CENTER);
+        root.addView(label, new FrameLayout.LayoutParams(-1, -1));
+        setContentView(root);
+    }
+
+    private void applyAutoEndpoint(EndpointResolver.LanEndpoint lan) {
+        if (lan != null) {
+            applyEndpointValues(lan.asr, lan.base + "/v12", lan.archive);
+        } else if (EndpointResolver.tailscaleUp()) {
+            applyEndpointValues(TRAVEL_ASR_URL, TRAVEL_UI_URL, TRAVEL_ARCHIVE_URL);
+        }
+    }
+
+    private void applyEndpointValues(String asr, String ui, String archiveUrl) {
+        if (urlInput != null) urlInput.setText(asr);
+        if (uiUrlInput != null) uiUrlInput.setText(ui);
+        if (archiveUrlInput != null) archiveUrlInput.setText(archiveUrl);
+        if (archive != null) archive.setArchiveUrl(archiveUrl);
+        config.edit().putString("asr_url", asr).putString("ui_url", ui).apply();
     }
 
     /** 网络恢复即补传；本 Activity 生命周期内注册，onDestroy 注销，不做常驻轮询。 */
@@ -143,6 +223,11 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
                 @Override public void onAvailable(Network network) {
                     SessionArchive target = archive;
                     if (target != null) target.onNetworkAvailable();
+                    // 网络恢复：只重载真的加载失败过的页面；ASR 半开连接由 AsrClient 探测后重连。
+                    if (pageLoadFailed && socialMateWebView != null) {
+                        pageLoadFailed = false;
+                        runOnUiThread(() -> socialMateWebView.loadUrl(privateUiUrl()));
+                    }
                 }
             };
             manager.registerDefaultNetworkCallback(networkCallback);
@@ -182,6 +267,13 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
     }
 
     private int dp(int v) { return (int) (getResources().getDisplayMetrics().density * v + 0.5f); }
+
+    private void toast(String text) {
+        try {
+            android.widget.Toast.makeText(this, text, android.widget.Toast.LENGTH_SHORT).show();
+        } catch (Exception ignored) {
+        }
+    }
 
     private TextView text(LinearLayout root, String value, int sp) {
         TextView t = new TextView(this);
@@ -357,24 +449,15 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
         LinearLayout chips = new LinearLayout(this);
         chips.setOrientation(LinearLayout.HORIZONTAL);
         chips.setPadding(0, dp(2), 0, dp(10));
-        chip(chips, "需双方同意", "Consent first", 0xFFE9F5F1, 0xFF0C7766);
-        chip(chips, "原文默认不留存", "Not saved by default", 0xFFEEF2F6, 0xFF33546B);
+        chip(chips, "本轮原文留存", "Kept this round", 0xFFE9F5F1, 0xFF0C7766);
         chip(chips, "云端 AI 默认不发", "Cloud off by default", 0xFFF5F1EA, 0xFF7A5A2E);
         body.addView(chips, new LinearLayout.LayoutParams(-1, -2));
-
-        recordingConsent = new CheckBox(this);
-        recordingConsent.setText(L("对方已知情并同意录音", "The other person knows and agrees"));reg(recordingConsent,"对方已知情并同意录音","The other person knows and agrees");
-        recordingConsent.setTextSize(15);
-        recordingConsent.setTextColor(0xFF12232E);
-        recordingConsent.setPadding(0, dp(4), 0, dp(2));
-        body.addView(recordingConsent, new LinearLayout.LayoutParams(-1, -2));
-        hintRow(body, "音频只发送到你自己配置的语音识别服务，不经过第三方。", "Audio goes only to the speech service you configured, never to a third party.");
 
         retentionConsent = new CheckBox(this);
         retentionConsent.setText(L("本轮保存原文，停止后自动同步到我的 Mac","Keep this transcript and sync to my Mac"));reg(retentionConsent,"本轮保存原文，停止后自动同步到我的 Mac","Keep this transcript and sync to my Mac");
         retentionConsent.setTextSize(15);
         retentionConsent.setTextColor(0xFF12232E);
-        retentionConsent.setChecked(false);
+        retentionConsent.setChecked(true);
         retentionConsent.setPadding(0, dp(8), 0, dp(2));
         body.addView(retentionConsent, new LinearLayout.LayoutParams(-1, -2));
         retentionHint = new TextView(this);
@@ -438,6 +521,27 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
             advancedToggle.setText(show ? "高级设置  ⌄" : "高级设置  ›");
         });
 
+        /* T4：外出（Tailscale 私有 HTTPS）/ 本机（adb reverse）一键切换。
+           用户不需要终端、不需要手抄地址：点一下就把三个地址一起改掉并持久化。 */
+        LinearLayout modeRow = new LinearLayout(this);
+        modeRow.setOrientation(LinearLayout.HORIZONTAL);
+        Button travelMode = new Button(this);
+        travelMode.setAllCaps(false);
+        travelMode.setText("外出模式");
+        travelMode.setTextSize(14);
+        travelMode.setTextColor(0xFF0C7766);
+        travelMode.setOnClickListener(v -> applyEndpointPreset(true));
+        Button localMode = new Button(this);
+        localMode.setAllCaps(false);
+        localMode.setText("本机 USB");
+        localMode.setTextSize(14);
+        localMode.setTextColor(0xFF1C293A);
+        localMode.setOnClickListener(v -> applyEndpointPreset(false));
+        modeRow.addView(travelMode, new LinearLayout.LayoutParams(0, dp(48), 1f));
+        modeRow.addView(localMode, new LinearLayout.LayoutParams(0, dp(48), 1f));
+        advancedTools.addView(modeRow, new LinearLayout.LayoutParams(-1, -2));
+        modeHint = text(advancedTools, endpointModeHint(), 12);
+
         text(advancedTools, "语音识别服务地址", 13);
         urlInput = new EditText(this);
         urlInput.setText(config.getString("asr_url", DEFAULT_URL));
@@ -477,19 +581,56 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
         archiveUrlInput.setTextColor(0xFF12232E);
         archiveUrlInput.setSingleLine(true);
         advancedTools.addView(archiveUrlInput, new LinearLayout.LayoutParams(-1, dp(48)));
-        archiveTokenInput = new EditText(this);
-        archiveTokenInput.setText(archive.token());
-        archiveTokenInput.setHint("访问令牌");
-        archiveTokenInput.setTextSize(13);
-        archiveTokenInput.setTextColor(0xFF12232E);
-        archiveTokenInput.setSingleLine(true);
-        archiveTokenInput.setInputType(android.text.InputType.TYPE_CLASS_TEXT
-                | android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD);
-        advancedTools.addView(archiveTokenInput, new LinearLayout.LayoutParams(-1, dp(48)));
-        Button retryExport = button(advancedTools, "立即重试同步", v -> {
+        pairingStatus = text(advancedTools, "", 12);
+        pairCodeInput = new EditText(this);
+        pairCodeInput.setHint("6 位配对码（Mac 上生成）");
+        pairCodeInput.setTextSize(15);
+        pairCodeInput.setTextColor(0xFF12232E);
+        pairCodeInput.setSingleLine(true);
+        pairCodeInput.setInputType(android.text.InputType.TYPE_CLASS_NUMBER);
+        advancedTools.addView(pairCodeInput, new LinearLayout.LayoutParams(-1, dp(48)));
+        /* 设备配对（T1-3）：APK 不含长期令牌；首次在本机生成一次性配对码，输入一次即可。
+           之后每次上传/注入都用设备 secret 换 ≤24h 的短期令牌，撤销后立即失效。
+           T3：手填长期令牌的入口已移除，令牌只来自配对，未配对时上传 fail closed。 */
+        Button pairButton = button(advancedTools, "配对这台手机", v -> {
+            if (pairing == null) return;
+            String code = pairCodeInput == null ? "" : pairCodeInput.getText().toString();
             if (archiveUrlInput != null) archive.setArchiveUrl(archiveUrlInput.getText().toString());
-            if (archiveTokenInput != null) archive.setToken(archiveTokenInput.getText().toString());
-            archive.flushAsync(this::setArchiveStatus);
+            // 配对是网络请求，绝不能放在主线程（曾因此抛 NetworkOnMainThreadException）。
+            if (pairingStatus != null) pairingStatus.setText("配对中…");
+            new Thread(() -> {
+                // 配对接口挂在私有 UI 服务（8791）上，不能用归档地址（8781）当基址。
+                String error = pairing.pair(uiBaseForPairing(), code);
+                runOnUiThread(() -> {
+                    if (!error.isEmpty()) {
+                        // 配对失败必须当场在面板里可见（只写网页提示会被面板遮住）。
+                        android.util.Log.w("SocialMatePairing", "pair failed: " + error);
+                        if (pairingStatus != null) pairingStatus.setText("配对失败：" + error);
+                        setExportStatus("配对失败：" + error);
+                        return;
+                    }
+                    android.util.Log.i("SocialMatePairing", "paired device=" + pairing.deviceId());
+                    if (pairCodeInput != null) pairCodeInput.setText("");
+                    refreshPairingStatus();
+                    warmTokenAsync();
+                    archive.flushAsync(this::setArchiveStatus);
+                });
+            }, "pairing-claim").start();
+        });
+        pairButton.setTextSize(14);
+        Button unpairButton = button(advancedTools, "清除本机配对", v -> {
+            if (pairing == null) return;
+            pairing.unpair();
+            refreshPairingStatus();
+            setExportStatus("已清除本机配对（服务端撤销请在本机执行 pair/revoke）");
+        });
+        unpairButton.setTextSize(14);
+        refreshPairingStatus();
+        Button retryExport = button(advancedTools, "立即补传", v -> {
+            if (archiveUrlInput != null) archive.setArchiveUrl(archiveUrlInput.getText().toString());
+            // 重启退避预算（6 次已用完时这是恢复入口），原文始终留在 outbox。
+            archive.retryNow();
+            setArchiveStatus(archive.describe());
         });
         retryExport.setTextSize(14);
         deviceInfo = text(advancedTools, "输入设备待读取", 12);
@@ -593,13 +734,23 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
             settings.setDomStorageEnabled(true);
             settings.setAllowFileAccess(false);
             settings.setAllowContentAccess(false);
+            settings.setAllowFileAccessFromFileURLs(false);
+            settings.setAllowUniversalAccessFromFileURLs(false);
+            settings.setJavaScriptCanOpenWindowsAutomatically(false);
+            settings.setSupportMultipleWindows(false);
             settings.setMixedContentMode(WebSettings.MIXED_CONTENT_NEVER_ALLOW);
-            // 只在私有 origin 可用的导出桥；其他 origin 既不注入也直接返回 false。
+            // 只有一个 WebViewClient：URL 白名单、桥的挂载/撤销、令牌注入都在这里，
+            // 避免第二次 setWebViewClient 把安全回调整个覆盖掉（N04 V1.3 T1-2 缺陷根因）。
             socialMateWebView.setWebViewClient(new WebViewClient() {
                 @Override public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
                     Uri uri = request.getUrl();
                     if (isPrivatePanelUrl(uri)) return false;
-                    // Maps/share links open in the device's normal browser; not an untrusted WebView.
+                    // 子框架（iframe）一律不许离开私有 origin：直接取消，不交给系统浏览器，
+                    // 也不让它在 WebView 里加载——非私有 frame 拿不到桥，也拿不到 DOM。
+                    if (!request.isForMainFrame()) {
+                        return true;
+                    }
+                    // 主框架的外部链接交给系统浏览器，WebView 自身不进入不可信页面。
                     if ("https".equalsIgnoreCase(uri.getScheme()) || "http".equalsIgnoreCase(uri.getScheme())) {
                         try { startActivity(new Intent(Intent.ACTION_VIEW, uri)); }
                         catch (Exception ignored) { }
@@ -607,15 +758,73 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
                     return true;
                 }
 
+                /**
+                 * 子资源也按 origin 过滤：跨源 iframe/脚本/图片在这里就被挡掉，
+                 * 因此「恶意 iframe 调到桥」在加载阶段即不可能发生（而不是靠事后判断）。
+                 */
+                @Override public android.webkit.WebResourceResponse shouldInterceptRequest(
+                        WebView view, WebResourceRequest request) {
+                    Uri uri = request.getUrl();
+                    if (uri == null) return null;
+                    String scheme = uri.getScheme() == null ? "" : uri.getScheme().toLowerCase(Locale.US);
+                    if (!("http".equals(scheme) || "https".equals(scheme))) return null;
+                    if (isPrivatePanelUrl(uri)) return null;
+                    // 其余 http(s) 子资源一律空响应：跨源 iframe/脚本连加载机会都没有。
+                    // 同主机不同端口也算跨源（origin = scheme+host+port），不放行。
+                    return new android.webkit.WebResourceResponse("text/plain", "utf-8",
+                            new java.io.ByteArrayInputStream(new byte[0]));
+                }
+
+                @Override public void onPageStarted(WebView view, String url, android.graphics.Bitmap favicon) {
+                    super.onPageStarted(view, url, favicon);
+                    pageLoadFailed = false;
+                    // 页面一开始离开私有 origin 就先收桥：不等到 onPageFinished。
+                    if (!isPrivatePanelUrl(url == null ? null : Uri.parse(url))) {
+                        trustedPageUrl = null;
+                        attachSaveBridge(false);
+                    }
+                }
+
                 @Override public void onPageFinished(WebView view, String url) {
                     super.onPageFinished(view, url);
                     Uri parsed = url == null ? null : Uri.parse(url);
-                    if (isPrivatePanelUrl(parsed)) {
-                        trustedPageUrl = url;
-                        attachSaveBridge(true);
-                    } else {
+                    android.util.Log.i("SocialMateBridge", "onPageFinished url=" + url
+                            + " private=" + isPrivatePanelUrl(parsed) + " failed=" + pageLoadFailed);
+                    if (!isPrivatePanelUrl(parsed) || pageLoadFailed) {
+                        // 加载失败时 WebView 仍会用「请求的 URL」回调 onPageFinished，
+                        // 但内容其实是错误页；此时必须不挂桥（fail closed）。
                         trustedPageUrl = null;
                         attachSaveBridge(false);
+                        return;
+                    }
+                    trustedPageUrl = url;
+                    attachSaveBridge(true);
+                    injectAccessToken(view, url);
+                    hideOfflinePanel();
+                    refreshOfflineSnapshotAsync(url);
+                }
+
+                /** 主框架加载失败（DNS/TLS/连接被拒）：立刻撤桥，避免停留在半加载的不可信状态。 */
+                @Override public void onReceivedError(WebView view, WebResourceRequest request,
+                                                      android.webkit.WebResourceError error) {
+                    super.onReceivedError(view, request, error);
+                    if (request != null && !request.isForMainFrame()) return;
+                    pageLoadFailed = true;
+                    trustedPageUrl = null;
+                    attachSaveBridge(false);
+                    setExportStatus("界面加载失败：已关闭原生桥，请检查私有服务是否在线");
+                    showOfflinePanel("主界面加载失败（服务或网络不可达）");
+                }
+
+                @Override public void onReceivedHttpError(WebView view, WebResourceRequest request,
+                                                         android.webkit.WebResourceResponse response) {
+                    super.onReceivedHttpError(view, request, response);
+                    if (request == null || !request.isForMainFrame()) return;
+                    if (response != null && response.getStatusCode() >= 400) {
+                        pageLoadFailed = true;
+                        trustedPageUrl = null;
+                        attachSaveBridge(false);
+                        showOfflinePanel("私有界面返回 HTTP " + response.getStatusCode());
                     }
                 }
             });
@@ -625,20 +834,45 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
                     handleWebDownload(url, contentDisposition);
                 }
             });
+            // 不注册 WebChromeClient：没有 onShowFileChooser，网页无法触发系统文件选择器；
+            // 导出统一走 DownloadListener + SAF（ACTION_CREATE_DOCUMENT，用户显式选位置）。
+            // 首次加载的目标恒为私有 origin，因此在 loadUrl 之前挂桥：
+            // WebView 的 Java 桥只在文档创建时注入，事后再 add 对已存在文档无效（实测）。
+            // 一旦离开私有 origin 或加载失败，onPageStarted/onReceivedError 会立刻撤桥。
             attachSaveBridge(true);
             webPanel.addView(socialMateWebView, new LinearLayout.LayoutParams(-1, 0, 1f));
-            screenRoot.addView(webPanel, new FrameLayout.LayoutParams(-1, -1));
-            socialMateWebView.setWebViewClient(new android.webkit.WebViewClient() {
-                @Override public void onPageFinished(android.webkit.WebView view, String url) {
-                    String tk = BuildConfig.ARCHIVE_TOKEN;
-                    if (tk != null && !tk.isEmpty()) {
-                        String js = "(function(){try{if(!sessionStorage.getItem('sm-archive-token')){"
-                                + "sessionStorage.setItem('sm-archive-token','" + tk.replace("'", "\\'") + "');"
-                                + "if(window.__smAfterToken)window.__smAfterToken();}}catch(e){}})()";
-                        view.evaluateJavascript(js, null);
-                    }
-                }
+
+            /* T4 只读降级：服务不可达时用这个原生面板替代 WebView 的错误页（不白屏、不伪报成功）。 */
+            offlinePanel = new ScrollView(this);
+            offlinePanel.setBackgroundColor(0xFFF5F7F8);
+            LinearLayout offlineBox = new LinearLayout(this);
+            offlineBox.setOrientation(LinearLayout.VERTICAL);
+            offlineBox.setPadding(dp(20), dp(16), dp(20), dp(20));
+            offlineBody = new TextView(this);
+            offlineBody.setTextSize(14);
+            offlineBody.setTextColor(0xFF1C293A);
+            offlineBox.addView(offlineBody, new LinearLayout.LayoutParams(-1, -2));
+            Button retryConnect = new Button(this);
+            retryConnect.setAllCaps(false);
+            retryConnect.setText("重试连接");
+            retryConnect.setTextSize(15);
+            retryConnect.setTextColor(0xFFFFFFFF);
+            retryConnect.setBackground(surface(0xFF0C7766, 0, 22));
+            retryConnect.setOnClickListener(v -> {
+                if (socialMateWebView == null) return;
+                offlineReason = "";
+                pageLoadFailed = false;
+                hideOfflinePanel();
+                socialMateWebView.loadUrl(privateUiUrl());
             });
+            LinearLayout.LayoutParams retryLp = new LinearLayout.LayoutParams(-1, dp(48));
+            retryLp.topMargin = dp(12);
+            offlineBox.addView(retryConnect, retryLp);
+            offlinePanel.addView(offlineBox, new LinearLayout.LayoutParams(-1, -2));
+            offlinePanel.setVisibility(View.GONE);
+            webPanel.addView(offlinePanel, new LinearLayout.LayoutParams(-1, 0, 1f));
+
+            screenRoot.addView(webPanel, new FrameLayout.LayoutParams(-1, -1));
             socialMateWebView.loadUrl(privateUiUrl());
         }
         webPanel.setVisibility(View.VISIBLE);
@@ -667,6 +901,181 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
         return privateUiBase() + "/v12" + (running ? "?live=1" : "");
     }
 
+    /* ------------------------------------------------------------------ T4 */
+
+    /** 当前是否处于「外出（Tailscale）」入口；只按地址判断，不看网络类型。 */
+    private boolean isTravelMode() {
+        return privateUiBase().startsWith("https://");
+    }
+
+    private String endpointModeHint() {
+        return isTravelMode()
+                ? "当前：外出模式 · 走 Tailscale 私有 HTTPS（不需要 USB，不经过公网）"
+                : "当前：本机模式 · 需要 USB + adb reverse（仅开发用）";
+    }
+
+    /**
+     * 一键切换三种地址（ASR/UI/归档）并持久化，然后重载界面。
+     * 用户不需要终端：这是「拔掉 USB 之后」唯一要做的图形界面动作。
+     */
+    private void applyEndpointPreset(boolean travel) {
+        String asr = travel ? TRAVEL_ASR_URL : DEFAULT_URL;
+        String ui = travel ? TRAVEL_UI_URL : PRIVATE_UI_URL;
+        String archiveUrl = travel ? TRAVEL_ARCHIVE_URL : LOCAL_ARCHIVE_URL;
+        applyEndpointValues(asr, ui, archiveUrl);
+        pageLoadFailed = false;
+        offlineReason = "";
+        if (modeHint != null) modeHint.setText(endpointModeHint());
+        hideOfflinePanel();
+        if (socialMateWebView != null) socialMateWebView.loadUrl(privateUiUrl());
+        setExportStatus(travel
+                ? "已切到外出模式：Tailscale 私有 HTTPS（请确认手机 Tailscale 已授权并开启）"
+                : "已切回本机模式：需要 USB 连接与 adb reverse");
+    }
+
+    private void showOfflinePanel(String reason) {
+        if (offlinePanel == null) return;
+        offlineReason = reason == null ? "" : reason;
+        // 加载失败时 WebView 停在错误页：隐藏它，改成只读面板，绝不留白屏。
+        if (socialMateWebView != null) socialMateWebView.setVisibility(View.GONE);
+        offlinePanel.setVisibility(View.VISIBLE);
+        renderOfflinePanel();
+    }
+
+    private void renderOfflinePanel() {
+        if (offlineBody == null) return;
+        offlineBody.setText(buildOfflineText());
+    }
+
+    private void hideOfflinePanel() {
+        if (offlinePanel == null) return;
+        offlinePanel.setVisibility(View.GONE);
+        if (socialMateWebView != null) socialMateWebView.setVisibility(View.VISIBLE);
+    }
+
+    private java.io.File snapshotFile() {
+        java.io.File dir = new java.io.File(getFilesDir(), OFFLINE_DIR);
+        if (!dir.exists()) dir.mkdirs();
+        return new java.io.File(dir, OFFLINE_SNAPSHOT);
+    }
+
+    /** 在线加载成功后刷新本地快照：只存「演示 + 计数」，不存逐字原文、不存令牌。 */
+    private void refreshOfflineSnapshotAsync(String pageUrl) {
+        if (pageUrl == null) return;
+        final String base = privateUiBase();
+        if (base.isEmpty()) return;
+        new Thread(() -> {
+            try {
+                String people = httpGetText(base + "/v12/api/demo/people", 6000);
+                String live = httpGetText(base + "/v12/api/live/status", 4000);
+                if (people == null || people.isEmpty()) return;
+                JSONObject snap = new JSONObject();
+                snap.put("savedAt", new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss", java.util.Locale.US)
+                        .format(new java.util.Date()));
+                snap.put("uiBase", base);
+                snap.put("demo", new JSONObject(people));
+                snap.put("live", live == null ? new JSONObject() : new JSONObject(live));
+                java.io.File tmp = new java.io.File(snapshotFile().getParentFile(), OFFLINE_SNAPSHOT + ".tmp");
+                try (java.io.FileOutputStream out = new java.io.FileOutputStream(tmp)) {
+                    out.write(snap.toString().getBytes(java.nio.charset.StandardCharsets.UTF_8));
+                }
+                //noinspection ResultOfMethodCallIgnored
+                tmp.renameTo(snapshotFile());
+            } catch (Exception ignored) {
+                // 快照只是离线兜底，失败不影响在线使用，也不改任何状态。
+            }
+        }, "offline-snapshot").start();
+    }
+
+    private static String httpGetText(String url, int timeoutMs) {
+        java.net.HttpURLConnection conn = null;
+        try {
+            conn = (java.net.HttpURLConnection) new java.net.URL(url).openConnection();
+            conn.setRequestMethod("GET");
+            conn.setConnectTimeout(timeoutMs);
+            conn.setReadTimeout(timeoutMs);
+            conn.setInstanceFollowRedirects(false);
+            if (conn.getResponseCode() != 200) return null;
+            java.io.InputStream in = conn.getInputStream();
+            java.io.ByteArrayOutputStream buf = new java.io.ByteArrayOutputStream();
+            byte[] chunk = new byte[8192];
+            int n;
+            while ((n = in.read(chunk)) > 0) {
+                buf.write(chunk, 0, n);
+                if (buf.size() > 512 * 1024) break;
+            }
+            in.close();
+            return new String(buf.toByteArray(), java.nio.charset.StandardCharsets.UTF_8);
+        } catch (Exception e) {
+            return null;
+        } finally {
+            if (conn != null) conn.disconnect();
+        }
+    }
+
+    /** 离线只读文本：本机缓存 + 本机历史；明确写出「写操作不可用、不显示成功」。 */
+    private String buildOfflineText() {
+        StringBuilder b = new StringBuilder();
+        b.append("离线只读模式\n");
+        b.append(offlineReason.isEmpty() ? "Mac 私有服务暂不可用。" : "Mac 私有服务暂不可用：" + offlineReason).append("\n");
+        b.append(isTravelMode() ? "连接方式：外出模式（Tailscale 私有 HTTPS）\n"
+                : "连接方式：本机模式（USB / adb reverse）\n");
+        b.append("下面显示的是手机上一次成功加载时留下的本地缓存，不是新拉取的数据。\n\n");
+
+        JSONObject snap = null;
+        try {
+            snap = new JSONObject(new String(java.nio.file.Files.readAllBytes(snapshotFile().toPath()),
+                    java.nio.charset.StandardCharsets.UTF_8));
+        } catch (Exception ignored) { }
+
+        if (snap == null) {
+            b.append("本地暂无缓存：这台手机还没有成功加载过在线界面。\n\n");
+        } else {
+            b.append("上次同步：").append(snap.optString("savedAt", "未知")).append("\n");
+            JSONObject demo = snap.optJSONObject("demo");
+            JSONObject status = demo == null ? null : demo.optJSONObject("status");
+            JSONArray people = demo == null ? null : demo.optJSONArray("people");
+            if (status != null) {
+                b.append("演示数据：").append(status.optInt("personas")).append(" 位人物 · ")
+                        .append(status.optInt("sessions")).append(" 段会话 · ")
+                        .append(status.optInt("segments")).append(" 句原文 · 待确认 ")
+                        .append(status.optInt("pending")).append(" 条")
+                        .append(status.optBoolean("cleared") ? "（已清空，待恢复）" : "").append("\n");
+            }
+            if (people != null) {
+                b.append("\n");
+                for (int i = 0; i < people.length(); i++) {
+                    JSONObject p = people.optJSONObject(i);
+                    if (p == null) continue;
+                    b.append("· ").append(p.optString("name")).append("（").append(p.optString("region")).append("）")
+                            .append("  ").append(p.optInt("sessionCount")).append(" 段会话 · 已确认 ")
+                            .append(p.optInt("confirmedCount")).append(" 条 · 待确认 ")
+                            .append(p.optInt("pendingCount")).append(" 条\n");
+                }
+            }
+            JSONObject archive = demo == null ? null : demo.optJSONObject("archive");
+            if (archive != null) {
+                b.append("\nMac 演示归档：已送达 ").append(archive.optInt("delivered"))
+                        .append("/").append(archive.optInt("total"))
+                        .append(archive.optInt("pending") > 0 ? "（待传 " + archive.optInt("pending") + " 套）" : "（全部送达）")
+                        .append("\n");
+            }
+            JSONObject live = snap.optJSONObject("live");
+            if (live != null) {
+                b.append("实时候选：待确认 ").append(live.optInt("pending")).append(" 条（逐字原文只在在线会话内存中）\n");
+            }
+        }
+
+        b.append("\n本地原文（手机 outbox / exported）\n");
+        b.append(archive == null ? "未知" : archive.localHistorySummary(6)).append("\n");
+
+        b.append("\n离线期间的限制\n");
+        b.append("· 清空 / 恢复演示数据、上传原文都不会执行，也不会显示成功；\n");
+        b.append("· 缓存里没有任何真人新增内容，恢复连接后也不会把演示数据混进真实人物资料；\n");
+        b.append("· 恢复连接后点「重试连接」即回到在线界面，数据以 Mac 为准重新读取。\n");
+        return b.toString();
+    }
+
     /**
      * 停止录音后的入口：打开本机归档里这一轮的原文与复盘页。
      * 复用同一个 WebView，不新增底部一级 Tab；原文尚未上传时先重试上传再放行。
@@ -678,8 +1087,9 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
             return;
         }
         if (!archive.isExported(id)) {
-            status.setText("本轮原文还没上传到 Mac，正在重试上传…");
-            archive.flushAsync(text -> {
+            status.setText("本轮原文还在手机 outbox，未同步 Mac；正在重试补传…");
+            // 重置退避预算；失败时 describe() 会给出具体原因。
+            archive.retryNow(text -> {
                 setArchiveStatus(text);
                 runOnUiThread(this::updateReviewEntry);
             });
@@ -716,16 +1126,96 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
         }
     }
 
+    /**
+     * 只把「设备配对换来的短期令牌」注入私有 origin 的页面会话。
+     * - 非私有 origin 不注入（调用方已在 onPageFinished 里做过一次判断，这里再判一次）；
+     * - 没有配对/令牌过期 → 什么都不注入，页面按「未授权」显示，不静默降级；
+     * - 令牌只进 sessionStorage，不写 localStorage、不进 URL、不进日志。
+     */
+    private void injectAccessToken(WebView view, String url) {
+        if (view == null) return;
+        if (!isPrivatePanelUrl(url == null ? null : Uri.parse(url))) return;
+        String token = pairing == null ? "" : pairing.cachedToken();
+        if (token.isEmpty()) {
+            warmTokenAsync();
+            return;
+        }
+        String js = "(function(){try{sessionStorage.setItem('sm-archive-token','"
+                + token.replace("'", "\\'") + "');"
+                + "if(window.__smAfterToken)window.__smAfterToken();}catch(e){}})()";
+        view.evaluateJavascript(js, null);
+    }
+
+    /**
+     * 短期令牌刷新：只在后台线程做网络请求。
+     * 未配对或刷新失败保持空令牌，上传就会 fail closed，而不是拿旧长期令牌硬闯。
+     */
+    private void warmTokenAsync() {
+        DevicePairing target = pairing;
+        if (target == null || !target.isPaired()) return;
+        if (tokenWarming) return;
+        tokenWarming = true;
+        new Thread(() -> {
+            String token = target.refreshToken(privateUiBase(), line -> { });
+            tokenWarming = false;
+            if (token.isEmpty()) return;
+            runOnUiThread(() -> {
+                if (socialMateWebView != null) injectAccessToken(socialMateWebView, trustedPageUrl);
+                // 冷启动时 outbox 可能因为「还没拿到令牌」被跳过；令牌到手后立刻补传一次。
+                if (archive != null) archive.flushAsync(this::setArchiveStatus);
+            });
+        }, "pairing-token").start();
+    }
+
+    /**
+     * SessionArchive 的令牌来源。主线程调用时只给缓存（不阻塞 UI），
+     * 后台线程（上传线程/停止后的补传线程）才允许现取。
+     */
+    private String currentAccessToken() {
+        DevicePairing target = pairing;
+        if (target == null || !target.isPaired()) return "";
+        String cached = target.cachedToken();
+        if (!cached.isEmpty()) return cached;
+        if (Looper.myLooper() == Looper.getMainLooper()) {
+            warmTokenAsync();
+            return "";
+        }
+        return target.refreshToken(privateUiBase(), line -> { });
+    }
+
     /** 注入导出桥；非私有 origin 一律撤掉（fail closed）。 */
     private void attachSaveBridge(boolean allow) {
         if (socialMateWebView == null) return;
         if (allow) {
-            if (bridgeAttached) return;
-            socialMateWebView.addJavascriptInterface(new SaveTextBridge(), BRIDGE_NAME);
-            bridgeAttached = true;
-        } else if (bridgeAttached) {
-            socialMateWebView.removeJavascriptInterface(BRIDGE_NAME);
-            bridgeAttached = false;
+            if (!bridgeAttached) {
+                socialMateWebView.addJavascriptInterface(new SaveTextBridge(), BRIDGE_NAME);
+                bridgeAttached = true;
+                android.util.Log.i("SocialMateBridge", "attached to " + trustedPageUrl);
+            }
+            if (!ttsBridgeAttached) {
+                socialMateWebView.addJavascriptInterface(new TtsBridge(), TTS_BRIDGE_NAME);
+                ttsBridgeAttached = true;
+                android.util.Log.i("SocialMateTts", "bridge attached to " + trustedPageUrl);
+            }
+            if (!jsLogBridgeAttached) {
+                socialMateWebView.addJavascriptInterface(new JsLogBridge(), JS_LOG_BRIDGE_NAME);
+                jsLogBridgeAttached = true;
+            }
+        } else {
+            if (bridgeAttached) {
+                socialMateWebView.removeJavascriptInterface(BRIDGE_NAME);
+                bridgeAttached = false;
+                android.util.Log.i("SocialMateBridge", "detached");
+            }
+            if (ttsBridgeAttached) {
+                socialMateWebView.removeJavascriptInterface(TTS_BRIDGE_NAME);
+                ttsBridgeAttached = false;
+                android.util.Log.i("SocialMateTts", "bridge detached");
+            }
+            if (jsLogBridgeAttached) {
+                socialMateWebView.removeJavascriptInterface(JS_LOG_BRIDGE_NAME);
+                jsLogBridgeAttached = false;
+            }
         }
     }
 
@@ -746,6 +1236,71 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
             if (page == null || !isPrivatePanelUrl(Uri.parse(page))) return false;
             runOnUiThread(AsrActivity.this::showRecordingSheet);
             return true;
+        }
+
+        /** 网页「结束并人工确认」：直接打开本机归档的复盘页。 */
+        @JavascriptInterface
+        public boolean openReviewPage() {
+            String page = trustedPageUrl;
+            if (page == null || !isPrivatePanelUrl(Uri.parse(page))) return false;
+            runOnUiThread(AsrActivity.this::openReview);
+            return true;
+        }
+
+        /**
+         * 前端复制 GPT Voice Prompt 后回读校验：只返回是否与期望文本完全一致，
+         * 不把剪贴板内容交给网页，避免误带其它 App 的隐私内容。
+         */
+        @JavascriptInterface
+        public String clipboardMatches(String expected) {
+            String page = trustedPageUrl;
+            if (page == null || !isPrivatePanelUrl(Uri.parse(page))) {
+                return "{\"ok\":false,\"match\":false,\"reason\":\"UNTRUSTED_PAGE\"}";
+            }
+            try {
+                android.content.ClipboardManager cm =
+                        (android.content.ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+                android.content.ClipData clip = cm == null ? null : cm.getPrimaryClip();
+                if (clip == null || clip.getItemCount() == 0) {
+                    return "{\"ok\":false,\"match\":false,\"reason\":\"EMPTY\"}";
+                }
+                CharSequence text = clip.getItemAt(0).coerceToText(AsrActivity.this);
+                boolean match = text != null && text.toString().equals(expected == null ? "" : expected);
+                return "{\"ok\":true,\"match\":" + match + "}";
+            } catch (Exception e) {
+                android.util.Log.w("SocialMateClip", "readback failed: " + e.getMessage());
+                return "{\"ok\":false,\"match\":false,\"reason\":\"ERROR\"}";
+            }
+        }
+
+        /**
+         * WebView 里 execCommand('copy') 常被拒；由原生写入剪贴板并立刻回读比对。
+         * 只接收这段 Prompt 文本，不读取其它剪贴板内容。
+         */
+        @JavascriptInterface
+        public String copyToClipboard(String text) {
+            String page = trustedPageUrl;
+            String value = text == null ? "" : text;
+            if (page == null || !isPrivatePanelUrl(Uri.parse(page))) {
+                return "{\"ok\":false,\"match\":false,\"reason\":\"UNTRUSTED_PAGE\"}";
+            }
+            if (value.isEmpty() || value.length() > 20000) {
+                return "{\"ok\":false,\"match\":false,\"reason\":\"BAD_INPUT\"}";
+            }
+            try {
+                android.content.ClipboardManager cm =
+                        (android.content.ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+                if (cm == null) return "{\"ok\":false,\"match\":false,\"reason\":\"NO_SERVICE\"}";
+                cm.setPrimaryClip(android.content.ClipData.newPlainText("SocialMate Prompt", value));
+                android.content.ClipData back = cm.getPrimaryClip();
+                CharSequence got = back == null || back.getItemCount() == 0
+                        ? null : back.getItemAt(0).coerceToText(AsrActivity.this);
+                boolean match = got != null && got.toString().equals(value);
+                return "{\"ok\":true,\"match\":" + match + "}";
+            } catch (Exception e) {
+                android.util.Log.w("SocialMateClip", "copy failed: " + e.getMessage());
+                return "{\"ok\":false,\"match\":false,\"reason\":\"ERROR\"}";
+            }
         }
 
         /** 网页设置里的「刷新界面」。 */
@@ -792,13 +1347,56 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
         }
 
         @JavascriptInterface
+        public boolean isRecording() {
+            return running;
+        }
+
+        /** 内部配对桥：仅供本机取证/自动化使用，不暴露到页面 UI。 */
+        @JavascriptInterface
+        public String pairDevice(String code) {
+            try {
+                String error = pairing.pair(uiBaseForPairing(), code);
+                if (error == null || error.isEmpty()) {
+                    runOnUiThread(AsrActivity.this::warmTokenAsync);
+                    return "ok";
+                }
+                return error;
+            } catch (Exception e) {
+                return "err:" + e.getClass().getSimpleName();
+            }
+        }
+
+        /** 连接方式：家庭 WiFi / Tailscale / 本机 USB。只给状态条用，不暴露地址。 */
+        @JavascriptInterface
+        public String connectionMode() {
+            String asr = config.getString("asr_url", "");
+            if (asr.startsWith("wss://")) return "tailscale";
+            if (asr.contains("127.0.0.1") || asr.contains("localhost")) return "usb";
+            if (asr.startsWith("ws://")) return "lan";
+            return "unknown";
+        }
+
+        @JavascriptInterface
         public boolean requestRecording() {
+            runOnUiThread(() -> {
+                String current = socialMateWebView == null ? null : socialMateWebView.getUrl();
+                if (current == null || !isPrivatePanelUrl(Uri.parse(current))) {
+                    toast(L("当前页面不可录音，请回到聊天页重试", "This page cannot record; return to Chat and retry."));
+                    return;
+                }
+                trustedPageUrl = current;
+                if (status != null) status.setText(L("正在打开麦克风…", "Starting microphone…"));
+                startStreaming(true);
+            });
+            return true;
+        }
+
+        /** 网页「停止接收」→ 真正停止原生录音（否则界面显示已停、麦克风还在录）。 */
+        @JavascriptInterface
+        public boolean stopRecording() {
             String page = trustedPageUrl;
             if (page == null || !isPrivatePanelUrl(Uri.parse(page))) return false;
-            runOnUiThread(() -> {
-                if (status != null) status.setText(L("先确认同意，再点下方「开始录音」。", "Tick the consent box, then tap Record below."));
-                showRecordingSheet();
-            });
+            runOnUiThread(() -> stopStreaming("网页停止"));
             return true;
         }
 
@@ -814,6 +1412,236 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
             runOnUiThread(() -> requestSaveText(name, body));
             return true;
         }
+    }
+
+    /* ------------------------------------------------------------ S4 TTS */
+
+    /**
+     * 前端 window.SocialMateTts.*。所有方法返回 JSON 字符串（前端 JSON.parse），
+     * 错误统一带 ok=false/code/message，绝不静默无声。
+     */
+    private final class TtsBridge {
+        @JavascriptInterface
+        public String speakText(String text, String lang) {
+            return ttsJson(() -> ttsController.speakText(text, lang));
+        }
+
+        @JavascriptInterface
+        public String speakTextWithLoop(String text, String lang, int loop) {
+            return ttsJson(() -> ttsController.speakTextWithLoop(text, lang, loop));
+        }
+
+        /** N05：带真实 recordId/blockId/revision 的朗读入口（缓存键与业务来源绑定）。 */
+        @JavascriptInterface
+        public String speakTextWithIds(String text, String lang, int loop,
+                                       String recordId, String blockId, int revision) {
+            return ttsJson(() -> ttsController.speakTextWithIds(text, lang, loop,
+                    recordId, blockId, revision));
+        }
+
+        @JavascriptInterface
+        public String stop() {
+            // V1.4：页面「停止」必须同时取消后台队列，否则熄屏队列会继续读下去。
+            if (trustedPage()) {
+                try {
+                    TtsPlaybackService.control(AsrActivity.this, "stop");
+                } catch (Exception ignored) {
+                }
+            }
+            return ttsJson(() -> ttsController.stop());
+        }
+
+        /**
+         * V1.4 后台队列入口：网页一次性下发整条播放计划，
+         * 之后由前台服务驱动，熄屏/Home 都不再依赖本页存活。
+         */
+        @JavascriptInterface
+        public String startQueue(String planJson, String origin) {
+            if (!trustedPage()) return ttsErrorJson("TTS_UNTRUSTED_PAGE", "仅允许私有页面调用原生朗读");
+            JSONObject result = TtsPlaybackService.startQueue(AsrActivity.this, planJson, origin);
+            return result == null ? ttsErrorJson("TTS_INTERNAL_ERROR", "空结果") : result.toString();
+        }
+
+        @JavascriptInterface
+        public String queueControl(String action) {
+            if (!trustedPage()) return ttsErrorJson("TTS_UNTRUSTED_PAGE", "仅允许私有页面调用原生朗读");
+            JSONObject result = TtsPlaybackService.control(AsrActivity.this, action);
+            return result == null ? ttsErrorJson("TTS_INTERNAL_ERROR", "空结果") : result.toString();
+        }
+
+        @JavascriptInterface
+        public String queueState() {
+            if (!trustedPage()) return ttsErrorJson("TTS_UNTRUSTED_PAGE", "仅允许私有页面调用原生朗读");
+            JSONObject result = TtsPlaybackService.queueState();
+            return result == null ? ttsErrorJson("TTS_INTERNAL_ERROR", "空结果") : result.toString();
+        }
+
+        /** N05 V1.3：暂停当前读音（保留播放位置）。 */
+        @JavascriptInterface
+        public String pause() {
+            return ttsJson(() -> ttsController.pause());
+        }
+
+        /** N05 V1.3：从暂停位置继续。 */
+        @JavascriptInterface
+        public String resume() {
+            return ttsJson(() -> ttsController.resume());
+        }
+
+        @JavascriptInterface
+        public String setRate(double rate) {
+            return ttsJson(() -> ttsController.setRate(rate));
+        }
+
+        @JavascriptInterface
+        public String setLoop(int count) {
+            return ttsJson(() -> ttsController.setLoop(count));
+        }
+
+        @JavascriptInterface
+        public String setPlaylist(String json) {
+            return ttsJson(() -> ttsController.setPlaylist(json));
+        }
+
+        @JavascriptInterface
+        public String nextSegment() {
+            return ttsJson(() -> ttsController.nextSegment());
+        }
+
+        @JavascriptInterface
+        public String previousSegment() {
+            return ttsJson(() -> ttsController.previousSegment());
+        }
+
+        @JavascriptInterface
+        public String status() {
+            return ttsJson(() -> ttsController.status());
+        }
+
+        @JavascriptInterface
+        public String voices() {
+            return ttsJson(() -> ttsController.voices());
+        }
+
+        @JavascriptInterface
+        public String diagnose(String lang) {
+            return ttsJson(() -> ttsController.diagnose(lang));
+        }
+
+        @JavascriptInterface
+        public String setVoice(String lang, String voiceName) {
+            return ttsJson(() -> ttsController.setVoice(lang, voiceName));
+        }
+
+        @JavascriptInterface
+        public String setListened(String key, boolean listened) {
+            return ttsJson(() -> ttsController.setListened(key, listened));
+        }
+
+        @JavascriptInterface
+        public String isListened(String key) {
+            return ttsJson(() -> ttsController.isListened(key));
+        }
+
+        @JavascriptInterface
+        public String prefs() {
+            return ttsJson(() -> ttsController.prefsSnapshot());
+        }
+
+        @JavascriptInterface
+        public boolean openSelfTest() {
+            if (!trustedPage()) return false;
+            runOnUiThread(() -> startActivity(new Intent(AsrActivity.this, TtsSelfTestActivity.class)));
+            return true;
+        }
+    }
+
+    /**
+     * N05 V1.3：网页把播放队列时间线写进 logcat，作为真机验收的真实证据。
+     * 只允许私有页面调用；不落盘、不外传，只在本地日志里。
+     */
+    private final class JsLogBridge {
+        @JavascriptInterface
+        public void log(String tag, String message) {
+            if (!trustedPage()) return;
+            String safeTag = tag == null || tag.isEmpty() ? "JS" : tag.replaceAll("[^A-Za-z0-9_.-]", "");
+            String body = message == null ? "" : message;
+            if (body.length() > 4000) body = body.substring(0, 4000) + "…";
+            android.util.Log.i("SocialMateJs", "[" + safeTag + "] " + body);
+        }
+    }
+
+    private boolean trustedPage() {
+        String page = trustedPageUrl;
+        return page != null && isPrivatePanelUrl(Uri.parse(page));
+    }
+
+    private String ttsJson(java.util.concurrent.Callable<JSONObject> call) {
+        if (!trustedPage()) return ttsErrorJson("TTS_UNTRUSTED_PAGE", "仅允许私有页面调用原生朗读");
+        TtsPlaybackController controller = ttsController;
+        if (controller == null) return ttsErrorJson("TTS_NOT_INITIALIZED", "原生 TTS 尚未创建");
+        try {
+            JSONObject result = call.call();
+            return result == null ? ttsErrorJson("TTS_INTERNAL_ERROR", "空结果") : result.toString();
+        } catch (Exception e) {
+            String message = e.getMessage() == null ? e.getClass().getSimpleName() : e.getMessage();
+            android.util.Log.e("SocialMateTts", "bridge error: " + message);
+            return ttsErrorJson("TTS_INTERNAL_ERROR", message);
+        }
+    }
+
+    private static String ttsErrorJson(String code, String message) {
+        JSONObject out = new JSONObject();
+        try {
+            out.put("ok", false).put("code", code).put("message", message);
+        } catch (Exception ignored) { }
+        return out.toString();
+    }
+
+    /** 队列/错误状态回传网页；语音包缺失时原生提示条同步可见（不只依赖网页）。 */
+    private void onTtsState(JSONObject event) {
+        if (event == null) return;
+        String state = event.optString("state");
+        if ("consent_required".equals(state)) {
+            // 真实云 Polly：先在原生侧弹「发给谁/发什么/多少钱」，确认后才发文本。
+            TtsConsentDialog.show(this, ttsController, event);
+        }
+        String code = event.optString("code");
+        if ("error".equals(state)) {
+            String message = event.optString("message");
+            if ("TTS_LANG_UNAVAILABLE".equals(code)) {
+                showNativeNotice("语音不可用：" + message
+                        + "（设置 → 系统语音 → 安装语音包，或更换 TTS 引擎）");
+            } else if ("TTS_ENGINE_MISSING".equals(code) || "TTS_INIT_FAILED".equals(code)) {
+                showNativeNotice("系统朗读不可用：" + message + "（可更换 TTS 引擎）");
+            }
+        }
+        if (socialMateWebView == null) return;
+        final String payload = event.toString();
+        runOnUiThread(() -> {
+            if (socialMateWebView == null) return;
+            /* N05 V1.3：网页把 window.SocialMateTtsHost 定义成普通对象，
+               挂到注入对象上的属性不一定生效，所以优先走这个确定可达的全局。 */
+            String js = "(function(){"
+                    + "var m=" + JSONObject.quote(payload) + ";"
+                    + "try{if(window.SocialMateTtsHost&&typeof window.SocialMateTtsHost.onState==='function')"
+                    + "{window.SocialMateTtsHost.onState(m);return;}}catch(e){}"
+                    + "try{if(window.SocialMateTts&&typeof window.SocialMateTts.onState==='function')"
+                    + "{window.SocialMateTts.onState(m);}}catch(e){}"
+                    + "})()";
+            socialMateWebView.evaluateJavascript(js, null);
+        });
+    }
+
+    /** 原生提示条：语音错误必须肉眼可见，不静默、不假成功。 */
+    private void showNativeNotice(String text) {
+        if (webHint == null) return;
+        webHint.setTextColor(0xFF1C293A);
+        webHint.setText(text);
+        webHint.setVisibility(View.VISIBLE);
+        webHint.postDelayed(() -> {
+            if (webHint != null) webHint.setVisibility(View.GONE);
+        }, 15000);
     }
 
     private void handleWebDownload(String url, String contentDisposition) {
@@ -888,6 +1716,30 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
             pendingSaveText = null;
             setExportStatus("保存失败：本机没有可用的文件选择器");
         }
+    }
+
+    /** 配对状态文案：明确「已配对/未配对」，未配对时上传会 fail closed。 */
+    private void refreshPairingStatus() {
+        if (pairingStatus == null) return;
+        DevicePairing target = pairing;
+        if (target == null) {
+            pairingStatus.setText("配对：不可用");
+            return;
+        }
+        if (!target.isPaired()) {
+            pairingStatus.setText("配对：未配对（未配对时不会上传，也不会注入令牌）");
+            return;
+        }
+        String token = target.cachedToken();
+        String id = target.deviceId();
+        String shortId = id.length() > 12 ? id.substring(0, 12) + "…" : id;
+        pairingStatus.setText("配对：已配对 " + shortId
+                + (token.isEmpty() ? "（短期令牌待刷新）" : "（短期令牌有效）"));
+    }
+
+    /** 配对/取令牌用的服务基地址：就是私有 UI 服务（8791），不再把归档地址当基址。 */
+    private String uiBaseForPairing() {
+        return privateUiBase();
     }
 
     private void setExportStatus(String text) {
@@ -1005,7 +1857,8 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
 
     private void refreshDeviceInfo() {
         AudioManager am = (AudioManager) getSystemService(AUDIO_SERVICE);
-        AudioDeviceInfo usb = AudioInputs.preferredUsb(am);
+        AudioDeviceInfo usb = config.getBoolean("force_builtin_mic", false)
+                ? AudioInputs.builtinMic(am) : AudioInputs.preferredUsb(am);
         if (usb == null) {
             deviceInfo.setText("未发现 USB 音频输入：将使用系统默认麦克风。双麦验证请先插好博雅接收器。");
         } else {
@@ -1025,13 +1878,33 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
         return b.toString();
     }
 
+    private boolean pendingAutoStart = false;
+
     private void startStreaming() {
-        if (running) return;
-        if (recordingConsent == null || !recordingConsent.isChecked()) {
-            status.setText("请在开启录音前先确认已获得同行者的录音同意。");
+        startStreaming(false);
+    }
+
+    private void startStreaming(boolean oneTap) {
+        if (running) {
+            // 页面显示「开始录音」说明上一轮在界面上已经结束；这里强制重启，
+            // 避免原生 running 残留导致点击后完全没反应。
+            toast(L("正在重新开始录音…", "Restarting recording…"));
+            final Thread previous = worker;
+            running = false;
+            AudioRecord old = recorder;
+            if (old != null) {
+                try { old.stop(); } catch (IllegalStateException ignored) {}
+            }
+            new Thread(() -> {
+                if (previous != null) {
+                    try { previous.join(1400); } catch (InterruptedException ignored) {}
+                }
+                runOnUiThread(() -> startStreaming(oneTap));
+            }, "sm-restart-recording").start();
             return;
         }
         if (checkSelfPermission(Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+            pendingAutoStart = oneTap;
             requestPermissions(new String[]{Manifest.permission.RECORD_AUDIO}, REQUEST_MIC);
             return;
         }
@@ -1054,9 +1927,9 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
                 : new String[]{mode == 0 ? "mix" : (mode == 1 ? "A" : "B")};
 
         if (archiveUrlInput != null) archive.setArchiveUrl(archiveUrlInput.getText().toString());
-        if (archiveTokenInput != null) archive.setToken(archiveTokenInput.getText().toString());
-        // 只认「原文留存」复选框；录音权限本身不代表同意留存。
-        archive.begin(retentionConsent != null && retentionConsent.isChecked(), appVersion());
+        // 一键开录默认留存本轮原文；高级设置里取消勾选则不落盘。
+        boolean keepTranscript = oneTap || retentionConsent == null || retentionConsent.isChecked();
+        archive.begin(keepTranscript, appVersion());
         setArchiveStatus(archive.describe());
         running = true;
         refreshRetentionHint();
@@ -1089,9 +1962,17 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
     private void stream(String baseUrl, String[] tracks) {
         AudioRecord rec = null;
         try {
+            // 本机短令牌是 ASR 握手的唯一身份凭证：没有就 fail closed，不在没鉴权时开麦。
+            final String asrToken = currentAccessToken();
+            if (asrToken.isEmpty()) {
+                throw new Exception(L("未配对或令牌失效，请重新配对后再录音",
+                        "Not paired or token expired; pair this phone again before recording"));
+            }
             AudioManager am = (AudioManager) getSystemService(AUDIO_SERVICE);
-            AudioDeviceInfo usb = AudioInputs.preferredUsb(am);
-            rec = AudioInputs.open(usb);
+            AudioDeviceInfo target = config.getBoolean("force_builtin_mic", false)
+                    ? AudioInputs.builtinMic(am) : AudioInputs.preferredUsb(am);
+            if (target == null) target = AudioInputs.builtinMic(am);
+            rec = AudioInputs.open(target);
             recorder = rec;
             int rate = rec.getSampleRate();
             int channels = rec.getChannelCount();
@@ -1099,12 +1980,13 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
             ArrayList<AsrClient> opened = new ArrayList<>();
             for (String track : tracks) {
                 URI uri = new URI(baseUrl + suffix + "&track=" + track);
-                AsrClient client = new AsrClient(uri, track, this);
+                AsrClient client = new AsrClient(uri, track, asrToken, this);
                 clients.add(client);
                 opened.add(client);
-                if (!client.awaitOpen()) throw new Exception("无法连接 " + uri + "（检查服务端与 adb reverse）");
+                if (!client.awaitOpen()) throw new Exception("无法连接 " + uri.getHost() + "（检查服务端与网络）");
             }
             sessionStartMs = SystemClock.elapsedRealtime();
+            asrLink = "connected";
             runOnUiThread(() -> {
                 status.setText("已连接 · " + rate + " Hz · " + channels + " 声道 · 正在发送音频（"
                         + String.join("+", tracks) + "）");
@@ -1113,6 +1995,7 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
                 if (socialMateWebView != null) {
                     socialMateWebView.evaluateJavascript(
                             "window.smNativeRecordingStarted&&window.smNativeRecordingStarted()", null);
+                    notifyLink("connected", "");
                 }
             });
             rec.startRecording();
@@ -1129,16 +2012,31 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
                 int whole = got - got % (channels * 2);
                 if (whole == 0) continue;
                 byte[] frame = whole == buffer.length ? buffer : java.util.Arrays.copyOf(buffer, whole);
-                synchronized (clients) {
-                    for (AsrClient client : clients) client.sendPcm(frame);
+                List<AsrClient> snapshot;
+                synchronized (clients) { snapshot = new ArrayList<>(clients); }
+                for (AsrClient client : snapshot) {
+                    if (!client.isAlive()) {
+                        // 断线 ≠ 正在识别：先标记重连，帧在这段时间丢弃，新会话只收后续音频。
+                        reconnectTrack(client, baseUrl + suffix, asrToken);
+                        continue;
+                    }
+                    client.sendPcm(frame);
                 }
             }
         } catch (Exception e) {
             String msg = e.getMessage() == null ? e.getClass().getSimpleName() : e.getMessage();
-            runOnUiThread(() -> status.setText("连接/录音失败：" + msg));
+            final String shown = msg;
+            android.util.Log.e("SocialMateRec", "recording failed: " + msg);
+            runOnUiThread(() -> {
+                status.setText("连接/录音失败：" + shown);
+                toast(L("录音失败：" + shown, "Recording failed: " + shown));
+                notifyLink("lost", "连接中断，本轮未开始；可重试");
+            });
             appendLine("[错误] " + msg);
         } finally {
             running = false;
+            asrLink = "";
+            reconnecting.clear();
             if (rec != null) {
                 try {
                     if (rec.getRecordingState() == AudioRecord.RECORDSTATE_RECORDING) rec.stop();
@@ -1170,7 +2068,6 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
             runOnUiThread(() -> {
                 startButton.setEnabled(true);
                 stopButton.setEnabled(false);
-                if (recordingConsent != null) recordingConsent.setChecked(false);
                 suggestButton.setEnabled(false);
                 urlInput.setEnabled(true);
                 trackPicker.setEnabled(true);
@@ -1179,9 +2076,75 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
                 if (!status.getText().toString().startsWith("连接/录音失败"))
                     status.setText("状态：已停止 · 收到事件 " + eventCount + " 条"
                             + (archive.lastSessionId() == null ? "" : " · 可点「本轮原文与复盘」"));
+                // 原生已停录：让网页把「监听中」收起来，避免界面与实际麦克风状态不一致。
+                if (socialMateWebView != null) {
+                    socialMateWebView.evaluateJavascript(
+                            "(function(){try{if(window.smNativeRecordingStopped)window.smNativeRecordingStopped();}catch(e){}})()",
+                            null);
+                }
                 updateReviewEntry();
             });
         }
+    }
+
+    /** 断线重连：同一 track 单飞，退避 1s/2s/4s，最多 3 次；失败则明确停录并提示。 */
+    private void reconnectTrack(AsrClient lost, String baseWithParams, String token) {
+        final String track = lost.label();
+        if (!reconnecting.add(track)) return;
+        asrLink = "reconnecting";
+        notifyLink("reconnecting", "连接中断 · 正在重连…");
+        new Thread(() -> {
+            boolean recovered = false;
+            for (int attempt = 1; attempt <= 3 && running; attempt++) {
+                notifyLink("reconnecting", "连接中断 · 正在重连（" + attempt + "/3）…");
+                try { Thread.sleep(1000L << (attempt - 1)); }
+                catch (InterruptedException e) { Thread.currentThread().interrupt(); break; }
+                if (!running) break;
+                AsrClient next = null;
+                try {
+                    URI uri = new URI(baseWithParams + "&track=" + track);
+                    next = new AsrClient(uri, track, token, this);
+                    if (next.awaitOpen() && running) {
+                        synchronized (clients) {
+                            clients.remove(lost);
+                            clients.add(next);
+                        }
+                        recovered = true;
+                        break;
+                    }
+                } catch (Exception ignored) {
+                    // 继续下一次退避；原因不展示给用户，避免把 WS 细节泄漏到界面。
+                }
+                if (next != null) {
+                    try { next.closeBlocking(); } catch (Exception ignored) { }
+                }
+            }
+            reconnecting.remove(track);
+            if (recovered) {
+                asrLink = "connected";
+                notifyLink("recovered", "连接已恢复");
+            } else if (running) {
+                asrLink = "lost";
+                notifyLink("lost", "连接中断，本轮已停止；可重新开始");
+                stopStreaming("连接中断");
+            }
+        }, "asr-reconnect-" + track).start();
+    }
+
+    /** 只给私有页面一句人类可读的连接状态，不暴露 URL/WS 细节。 */
+    private void notifyLink(String state, String text) {
+        runOnUiThread(() -> {
+            if (status != null) status.setText(text == null || text.isEmpty()
+                    ? (state.equals("recovered") ? "已恢复连接" : status.getText().toString())
+                    : text);
+            WebView view = socialMateWebView;
+            if (view == null) return;
+            String safeState = state == null ? "" : state.replace("'", "");
+            String safeText = text == null ? "" : text.replace("\\", "\\\\").replace("'", "\\'");
+            view.evaluateJavascript(
+                    "(function(){try{if(window.smNativeLinkState)window.smNativeLinkState('"
+                            + safeState + "','" + safeText + "');}catch(e){}})()", null);
+        });
     }
 
     private void stopStreaming(String reason) {
@@ -1197,9 +2160,10 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
     @Override public void onRequestPermissionsResult(int code, String[] names, int[] results) {
         super.onRequestPermissionsResult(code, names, results);
         if (code == REQUEST_MIC && results.length > 0 && results[0] == PackageManager.PERMISSION_GRANTED) {
-            startStreaming();
+            startStreaming(pendingAutoStart);
         } else if (code == REQUEST_MIC) {
             status.setText("没有麦克风权限，无法识别。");
+            toast(L("麦克风权限被拒绝，请在系统设置里允许", "Microphone permission denied; enable it in Settings."));
         }
     }
 
@@ -1320,15 +2284,54 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
         });
     }
 
+    @Override protected void onStart() {
+        super.onStart();
+        // 前台可见时接住服务事件；切后台后事件仍会写进队列状态，回来再同步。
+        TtsPlaybackService.setUiListener(this::onTtsState);
+    }
+
+    @Override protected void onResume() {
+        super.onResume();
+        // CG02：重新进入 App 时把后台队列的真实进度推给页面，避免显示「已停止」。
+        pushQueueStateToPage();
+    }
+
     @Override protected void onStop() {
         super.onStop();
-        // No foreground service: background capture is deliberately impossible.
+        TtsPlaybackService.clearUiListener(null);
+        // No foreground capture: background microphone remains deliberately impossible.
         stopStreaming("切到后台");
+        /* V1.4：后台朗读队列由前台服务持有，熄屏/切后台绝不能在这里被 stop 掉。
+           只有在没有活动队列时才保持旧的「切页即释放」语义。 */
+        if (ttsController != null && !TtsPlaybackService.hasActiveQueue()) ttsController.onStop();
+    }
+
+    /** 把服务里的队列真实状态回灌给页面（恢复当前项与轮次，不重播）。 */
+    private void pushQueueStateToPage() {
+        if (socialMateWebView == null) return;
+        JSONObject state = TtsPlaybackService.queueState();
+        if (state == null) return;
+        final String payload = state.toString();
+        runOnUiThread(() -> {
+            if (socialMateWebView == null) return;
+            String js = "(function(){"
+                    + "var m=" + JSONObject.quote(payload) + ";"
+                    + "try{if(window.SocialMateTtsHost&&typeof window.SocialMateTtsHost.onState==='function')"
+                    + "{window.SocialMateTtsHost.onState(m);}}catch(e){}"
+                    + "})()";
+            socialMateWebView.evaluateJavascript(js, null);
+        });
     }
 
     @Override protected void onDestroy() {
         running = false;
         unregisterNetworkRecovery();
+        TtsPlaybackService.clearUiListener(null);
+        // V1.4：队列还在跑时不能 shutdown 引擎（后台继续朗读要靠它）。
+        if (ttsController != null && !TtsPlaybackService.hasActiveQueue()) {
+            ttsController.shutdown();
+            ttsController = null;
+        }
         if (archive != null) archive.setListener(null);
         pendingSaveName = null;
         pendingSaveText = null;
@@ -1336,6 +2339,10 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
             if (bridgeAttached) {
                 socialMateWebView.removeJavascriptInterface(BRIDGE_NAME);
                 bridgeAttached = false;
+            }
+            if (ttsBridgeAttached) {
+                socialMateWebView.removeJavascriptInterface(TTS_BRIDGE_NAME);
+                ttsBridgeAttached = false;
             }
             socialMateWebView.stopLoading();
             ViewGroup parent = (ViewGroup) socialMateWebView.getParent();

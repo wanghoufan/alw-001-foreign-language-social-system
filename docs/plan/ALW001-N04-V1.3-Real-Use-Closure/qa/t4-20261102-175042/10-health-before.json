@@ -1,0 +1,36 @@
+{
+  "ok": true,
+  "blockedAny": false,
+  "checkedAt": "2026-11-02T18:11:28+0800",
+  "ports": [
+    {
+      "port": 8790,
+      "service": "asr-ws",
+      "ok": true,
+      "blocked": false,
+      "detail": "tencent-asr pid=98785"
+    },
+    {
+      "port": 8791,
+      "service": "private-ui-ai",
+      "ok": true,
+      "blocked": false,
+      "detail": "private-ui+ai pid=98785"
+    },
+    {
+      "port": 8781,
+      "service": "archive",
+      "ok": true,
+      "blocked": false,
+      "detail": "archive pid=98839"
+    },
+    {
+      "port": 8782,
+      "service": "demo-archive",
+      "ok": true,
+      "blocked": false,
+      "detail": "demo-archive pid=98902"
+    }
+  ],
+  "exit": 0
+}

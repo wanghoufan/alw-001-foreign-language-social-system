@@ -1,0 +1,13 @@
+# 同一段预置音频（fileMs=1250）各播 3 次，取 wallMs 均值
+04-rate-100.txt: loops=3 meanWallMs=1373 rate=1.0
+04-rate-075.txt: loops=3 meanWallMs=1607 rate=0.75
+
+## PlaybackParams（speed/pitch 实测）
+11-03 09:02:42.272 I/SocialMateTts(31284): PlaybackParams loop 3/5 speed=0.9 pitch=1.0 rate=0.9
+11-03 09:02:42.302 I/SocialMateTts(31284): PlaybackParams live change speed=1.0 pitch=1.0 rate=1.0
+11-03 09:02:42.492 I/SocialMateTts(31284): PlaybackParams loop 1/3 speed=1.0 pitch=1.0 rate=1.0
+11-03 09:02:44.444 I/SocialMateTts(31284): PlaybackParams loop 2/3 speed=1.0 pitch=1.0 rate=1.0
+11-03 09:02:46.406 I/SocialMateTts(31284): PlaybackParams loop 3/3 speed=1.0 pitch=1.0 rate=1.0
+11-03 09:02:50.837 I/SocialMateTts(31284): PlaybackParams loop 1/3 speed=0.75 pitch=1.0 rate=0.75
+11-03 09:02:53.071 I/SocialMateTts(31284): PlaybackParams loop 2/3 speed=0.75 pitch=1.0 rate=0.75
+11-03 09:02:55.268 I/SocialMateTts(31284): PlaybackParams loop 3/3 speed=0.75 pitch=1.0 rate=0.75

@@ -12,9 +12,10 @@ start_here: docs/plan/ALW001-N04-V1.3-Real-Use-Closure/README.md
 plan: docs/plan/ALW001-N04-V1.3-Real-Use-Closure/PLAN.md
 preflight: docs/plan/ALW001-N04-V1.3-Real-Use-Closure/PREFLIGHT.md
 acceptance: docs/plan/ALW001-N04-V1.3-Real-Use-Closure/ACCEPTANCE.md
+qa_ledger: docs/plan/ALW001-N04-V1.3-Real-Use-Closure/QA-LEDGER.md
 prior_sent: SM-ALW001-20261102-N04-PERSONAS
 task_relation: CONTINUATION
-latest_code_baseline: android-poc/app/build.gradle 0.7.7 versionCode 32 (2026-11-02 cloud read; verify again)
+latest_code_baseline: T1–T5 已完成；当前 0.8.1 / versionCode 36，APK SHA-256 9971836f…042296（2026-11-02 18:17 真机构建+安装）
 human_gate: FINAL_ONLY
 
 **获批内容：用户 2026-11-02 明确回复“同意 方案 1”，范围严格为五项 T1–T5 和一次性全阶段前置检查。本文件可直接交由当前 ALW-001 的唯一主开发者连续执行，不等重新批准。**
@@ -33,7 +34,7 @@ human_gate: FINAL_ONLY
 技术/隐私禁止项：服务不公开、凭证不入日志、不绕过TLS、不加预算（腾讯ASR和DeepSeek各1元），人物事实必须**用户确认**，未经录音/原文留存同意不能暗中录音或留存；spk_0 != 实名；不能擅自申请付费服务、发布APP、要求用户手动运行终端或转发一大段文档。
 
 **项目入口/工件**：
-- `android-poc/app/build.gradle` 现0.7.7(32)，但最近确证USB安装是0.7.4(29)，不等于新版本通过。
+- `android-poc/app/build.gradle` 现 **0.8.1(36)**；真机已安装同版本并通过 T5 端到端（`qa/20261102-t5/`）。文中 0.7.7(32) / 0.7.4(29) 均为历史值，不代表当前状态。
 - `socialmate-prototype/ai-gateway/demo-store.mjs` 的 `REPLAY_FINALS` 与fixture 3句逐字错配，T1优先修复。
 - `docs/plan/ALW001-N04-Persona-Memory-Regression-V1.0/qa/20261102/` 有原始合成数据QA、截图、9对Mac Demo清单；保留，不覆盖。
 - `docs/plan/ALW001-N04-Remaining-Closure-V1.2.md`与`-PREFLIGHT.md`是旧草案/调查基线，本V1.3已批准并覆盖其过时版本陈述。

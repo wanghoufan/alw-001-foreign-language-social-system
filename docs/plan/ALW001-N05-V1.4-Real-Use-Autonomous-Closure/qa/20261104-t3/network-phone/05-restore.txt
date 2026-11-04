@@ -1,0 +1,26 @@
+=== timestamp === 2026-11-04 10:42:16 +0800
+=== wifi_on ===
+1
+=== mobile_data ===
+1
+=== airplane_mode_on ===
+0
+=== wlan0 ===
+=== forward list ===
+indq5xfi6hovay4d tcp:9226 localabstract:webview_devtools_remote_29925
+
+=== wlan0 (retry) ===
+33: wlan0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc mq state DOWN mode DORMANT group default qlen 3000\    link/ether 44:71:47:24:79:1b brd ff:ff:ff:ff:ff:ff
+34: wlan1: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 3000\    link/ether 44:71:47:26:79:1b brd ff:ff:ff:ff:ff:ff
+=== wifi detail ===
+Wi-Fi is enabled
+curState=EnabledState
+curState=ConnectModeState
+curState=DisconnectedState
+curState=UninitializedState
+curState=DisconnectedState
+=== vpn still up ===
+ni{VPN CONNECTED extra: }
+    inet 100.91.121.33/32 scope global tun1
+    inet6 fd7a:115c:a1e0::7d36:7923/128 scope global 
+    inet6 fe80::c719:7b12:a519:89ee/64 scope link stable-privacy 

@@ -2,7 +2,7 @@
 
 task_id: SM-ALW001-20261101-N03
 执行日期: 2026-11-01
-设备: Redmi Note 11 5G（21091116AC / Android 11 / serial `adb-WGBMXWDIAIFMPFCQ-1AcFJM._adb-tls-connect._tcp`）
+设备: Redmi Note 11 5G（21091116AC / Android 11 / serial `adb-REDACTED-SERIAL._adb-tls-connect._tcp`）
 最终 APK: `android-poc/app/build/outputs/apk/debug/app-debug.apk` · 0.6.0（versionCode 15）· SHA-256 `972eed42d9fe1722e9f47d63f0bd69a073878747560eb2392e3dae42d24861b1`
 
 判定口径：PASS = 本轮真机或真实服务实际跑过并有证据；PARTIAL = 主路径已实现并有自动化/单测，但某一环（真机点击写真实数据、特定机型）未跑；NOT_RUN = 未执行，附原因。

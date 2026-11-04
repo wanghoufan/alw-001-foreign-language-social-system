@@ -1,0 +1,14 @@
+# hashes AFTER full T5 chain @ 2026-11-02T18:35:41+08:00
+People   78482d07840f5f3b41e8b1c857b592e03fcaf3c57713d970b405efc4953534d3  -
+Demo     ee241688bdb0c69384c3b6f5ec498921d91c2d8fbcc946db4b09012fa6e2cdef  -
+--- phone outbox/exported/state ---
+{"schema":1,"retention":false,"savedSegments":0,"pending":0,"uploading":false,"retryAttempt":0,"retryMax":6,"retryDelaysMs":[3000,10000,30000,60000,60000,60000],"retryExhausted":false,"lastUploadFailed":false,"lastErrorCode":"","lastHttpStatus":0,"lastError":"","configMissing":false,"everSynced":true,"lastSyncedAt":"2026-11-02 18:28","recoveredSessions":0,"quarantinedSessions":0,"maxUploadBytes":524288,"tokenSource":"device-pairing","updatedAt":"2026-11-02T10:32:13.599Z"}
+sess_20261101T041251_d71d90.json
+sess_20261102T092052_bc60b9.ack.json
+sess_20261102T092052_bc60b9.json
+sess_20261102T092602_48c27b.ack.json
+sess_20261102T092602_48c27b.json
+sess_20261102T102615_e52f2f.ack.json
+sess_20261102T102615_e52f2f.json
+--- Mac archive count ---
+       3

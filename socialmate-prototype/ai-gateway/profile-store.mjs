@@ -18,6 +18,7 @@ import crypto from "node:crypto";
 import fs from "node:fs/promises";
 import path from "node:path";
 import {fileURLToPath} from "node:url";
+import {classifySection, sectionKeyFor} from "./people-store.mjs";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = path.resolve(HERE, "..", "..");
@@ -261,11 +262,20 @@ export async function planProfileCandidates(input, options = {}) {
   /** 需要同步到正式人物主档的事实（只含已被用户显式归属到真实 slug 的条目）。 */
   const peopleFacts = [];
 
+  const speakerMap = options.speakerMap && typeof options.speakerMap === "object" ? options.speakerMap : {};
   for (const raw of items) {
-    const kind = raw?.kind === "person" ? "person" : raw?.kind === "self" ? "self" : null;
     const factText = cleanFact(raw?.text);
     const segmentIndex = Number.isFinite(Number(raw?.segmentIndex)) ? Number(raw.segmentIndex) : null;
     const originalText = cleanFact(raw?.originalText);
+    // 会话级说话人归属：一次映射，整段会话生效，不再逐句选人。
+    const mapped = speakerMap[String(raw?.speakerId || "")];
+    let kind = raw?.kind === "person" ? "person" : raw?.kind === "self" ? "self" : null;
+    let inferredSlug = "";
+    if (!kind && mapped) {
+      if (mapped === "self") kind = "self";
+      else if (typeof mapped === "string") { kind = "person"; inferredSlug = mapped; }
+      else if (mapped?.peopleSlug) { kind = "person"; inferredSlug = mapped.peopleSlug; }
+    }
     if (!kind) { skipped.push({text: factText, reason: "UNKNOWN_KIND"}); continue; }
     if (factText.length < 2) { skipped.push({text: factText, reason: "EMPTY_TEXT"}); continue; }
     if (segmentIndex === null || !validIndexes.has(segmentIndex)) {
@@ -298,7 +308,7 @@ export async function planProfileCandidates(input, options = {}) {
     }
 
     // 人物事实：身份只能由用户从真实人物主档里显式选择，不能靠显示名猜测。
-    const slug = String(raw?.peopleSlug || "").trim();
+    const slug = String(raw?.peopleSlug || inferredSlug || "").trim();
     if (!slug) { skipped.push({text: factText, reason: "PERSON_NOT_SELECTED"}); continue; }
     if (!Object.prototype.hasOwnProperty.call(knownPeople, slug)) {
       skipped.push({text: factText, reason: "UNKNOWN_PERSON", peopleSlug: slug}); continue;
@@ -315,7 +325,8 @@ export async function planProfileCandidates(input, options = {}) {
     if (person.notes.some((note) => String(note).replace(/\s+/g, " ").trim() === factText)) {
       skipped.push({text: factText, reason: "DUPLICATE"}); continue;
     }
-    const section = typeof raw?.section === "string" ? raw.section.trim().slice(0, 40) : "";
+    // 分节：优先用户显式选择；否则用本地关键词规则归类，不再全部堆到「已确认偏好」。
+    const section = sectionKeyFor(raw?.section) || classifySection(factText);
     person.notes.push(factText);
     added.notes += 1;
     sources.push({key, sessionId, kind, segmentIndex, target: `person:${person.id}`, peopleSlug: slug,

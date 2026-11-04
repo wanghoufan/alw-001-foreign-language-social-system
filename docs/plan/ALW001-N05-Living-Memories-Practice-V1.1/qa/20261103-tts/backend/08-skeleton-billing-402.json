@@ -1,0 +1,1 @@
+{"ok":false,"code":"TTS_BUDGET_ZERO","error":"TTS 计费预算为 0：任何计费请求都会被拒绝，账本不会变动","providerId":"azure","budget":{"currency":"CNY","limitCny":0,"spentCny":0,"entries":0}}

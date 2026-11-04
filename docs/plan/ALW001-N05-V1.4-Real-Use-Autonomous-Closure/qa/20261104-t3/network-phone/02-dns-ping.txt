@@ -1,0 +1,12 @@
+=== timestamp === 2026-11-04 10:39:30 +0800
+=== ping mac-mini.tail4e4317.ts.net ===
+PING mac-mini.tail4e4317.ts.net (100.125.100.15) 56(84) bytes of data.
+64 bytes from mac-mini.tail4e4317.ts.net (100.125.100.15): icmp_seq=1 ttl=64 time=928 ms
+64 bytes from mac-mini.tail4e4317.ts.net (100.125.100.15): icmp_seq=2 ttl=64 time=352 ms
+
+--- mac-mini.tail4e4317.ts.net ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 999ms
+rtt min/avg/max/mdev = 352.066/640.049/928.032/287.983 ms
+ping_rc=0
+=== getent/nslookup? (informational) ===
+/system/bin/nc

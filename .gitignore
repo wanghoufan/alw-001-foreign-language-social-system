@@ -65,3 +65,9 @@ docs/成果整理/Hainan-Travel-Guide/logs/
 
 # 智能体工作区（记忆/日志，私有）
 .workbuddy/
+
+# 本机 Android SDK 路径与 QA 临时取证（不入库）
+android-poc/local.properties
+/.arts/
+**/logcat*.txt
+**/logcat-*.txt

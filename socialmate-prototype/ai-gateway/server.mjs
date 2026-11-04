@@ -17,11 +17,23 @@ import {confirmReview} from "./review-confirm.mjs";
 import {buildAiReview,buildLocalReview} from "./session-review.mjs";
 import {addDemoFact,bulkDeleteDemoFacts,clearDemo,confirmDemoPending,deleteDemoFact,demoConversationsRoot,demoRoot,demoStatus,editDemoFact,ensureDemoSeeded,ignoreDemoPending,injectDemoFinal,listInbox,listPersonas,moveDemoFactsGroup,readDemoChangelog,readPersona,readSession,restoreDemo,undoDemoChangelog} from "./demo-store.mjs";
 import {demoArchiveStatus,pushDemoArchive} from "./demo-archive.mjs";
+import {clear as clearLiveFacts,confirmLivePending,ignoreLivePending,listLiveFacts,pending as pendingLiveFacts,status as liveFactsStatus,withdrawLiveFact} from "./live-facts.mjs";
+import {createWriteGuard,sameOriginOf,WRITE_HEADER} from "./demo-write-guard.mjs";
+import {claimPairing,isLoopback,issuePairingCode,listDevices,pairingCodeStatus,refreshToken,revokeDevice,verifyToken} from "./pairing.mjs";
+import {createManualFactsStore} from "./manual-facts.mjs";
+import {callDeepSeekMatch,createPlaceNotesStore} from "./place-notes.mjs";
+import {createPrivatePlaces} from "./private-places.mjs";
+import {createPracticeReportsStore} from "./practice-reports.mjs";
+import {createLearningArchive} from "./learning-archive.mjs";
+import {assertPrivacy, createTtsService, normalizeSpeakRequest} from "./tts-providers.mjs";
+import {sha256Hex} from "./tts-cache.mjs";
+import {isPrivateIp} from "./lan-net.mjs";
+import {startLanDiscovery} from "./lan-discovery.mjs";
 const here=path.dirname(fileURLToPath(import.meta.url));
 const proto=path.resolve(here,"..");
 const repoRoot=path.resolve(here,"..","..");
 const PORT=Number(process.env.SOCIALMATE_AI_PORT||8791);
-const HOST="127.0.0.1"; // Never bind publicly without authentication and HTTPS.
+const HOST=String(process.env.SOCIALMATE_HOST||"").trim()||"127.0.0.1"; // 局域网模式由启动脚本显式开启；默认仍只绑回环。
 // User-authorized DeepSeek budget. Conservative peak rates (yuan / 1M tokens):
 // official pricing 2026-11: cache hit 0.04, miss 2, output 8 for deepseek-flash.
 const BUDGET_LIMIT=Math.max(0,Number(process.env.DEEPSEEK_BUDGET_CNY||1));
@@ -75,6 +87,25 @@ const STATIC=new Map([
   ["/public-places.js","public-places.js"]
 ]);
 const MIME={".html":"text/html; charset=utf-8",".js":"text/javascript; charset=utf-8",".css":"text/css; charset=utf-8"};
+/** 单段 Range 解析（bytes=a-b / a- / -n）；非法返回 {invalid:true}，交由路由回 416。 */
+function parseRange(header,total){
+  const raw=String(header||"").trim();
+  if(!raw)return null;
+  const match=/^bytes=(\d*)-(\d*)$/.exec(raw);
+  if(!match)return {invalid:true};
+  let start=match[1]===""?null:Number(match[1]);
+  let end=match[2]===""?null:Number(match[2]);
+  if(start===null&&end===null)return {invalid:true};
+  if(start===null){
+    const suffix=end;
+    if(!Number.isFinite(suffix)||suffix<=0)return {invalid:true};
+    start=Math.max(0,total-suffix);end=total-1;
+  }else if(end===null||end>=total){
+    end=total-1;
+  }
+  if(!Number.isFinite(start)||!Number.isFinite(end)||start>end||start>=total)return {invalid:true};
+  return {start,end};
+}
 function json(res,code,obj){
   res.writeHead(code,{"Content-Type":"application/json; charset=utf-8","Cache-Control":"no-store",
     "X-Content-Type-Options":"nosniff","Referrer-Policy":"no-referrer"});
@@ -151,15 +182,18 @@ let activeRequest=false,lastRequestAt=0; // One private user; avoid accidental r
 // 写入类接口的限流：单机单人场景，防止误连点与脚本重放把档案写乱。
 const APPLY_WINDOW_MS=60_000, APPLY_MAX=12, APPLY_MIN_GAP_MS=400;
 /** 每个 handler 实例独立的限流器：测试可拿到干净状态，生产仍只有一个实例。 */
-function createRateLimiter(){
+function createRateLimiter(limits){
+  const windowMs=(limits&&limits.windowMs)||APPLY_WINDOW_MS;
+  const max=(limits&&limits.max)||APPLY_MAX;
+  const minGapMs=(limits&&limits.minGapMs)||APPLY_MIN_GAP_MS;
   let hits=[],lastAt=0;
   return ()=>{
     const now=Date.now();
-    hits=hits.filter((t)=>now-t<APPLY_WINDOW_MS);
-    if(now-lastAt<APPLY_MIN_GAP_MS)
-      return {ok:false,retryAfterMs:APPLY_MIN_GAP_MS-(now-lastAt)};
-    if(hits.length>=APPLY_MAX)
-      return {ok:false,retryAfterMs:APPLY_WINDOW_MS-(now-hits[0])};
+    hits=hits.filter((t)=>now-t<windowMs);
+    if(now-lastAt<minGapMs)
+      return {ok:false,retryAfterMs:minGapMs-(now-lastAt)};
+    if(hits.length>=max)
+      return {ok:false,retryAfterMs:windowMs-(now-hits[0])};
     hits.push(now);lastAt=now;
     return {ok:true};
   };
@@ -193,8 +227,61 @@ export function createHandler(options={}){
   const archive=options.archive||defaultArchive;
   const port=Number(options.port)||PORT;
   const rateLimit=options.rateLimit||createRateLimiter();
+  /* N05 V1.3：朗读合成是「多条短请求」型负载，用独立额度（48 次/分钟、最小间隔 150ms）。
+     仍然限流，只是不让一轮完整多语队列（15+ 项）被必然拒绝；缓存命中不消耗该额度。 */
+  const ttsRateLimit=options.ttsRateLimit||createRateLimiter({windowMs:60000,max:48,minGapMs:150});
+  const writeGuard=options.writeGuard||createWriteGuard();
+  /* N05 S2/S3/S5：人物手工补记、私有地点活档案、单段练习复盘。
+     存储根目录均可注入（测试用临时目录），生产默认落到 SocialMate-Data 下。 */
+  const practiceStore=options.practiceStore||createPracticeReportsStore({
+    notesRoot:options.placeNotesRoot,
+    privatePlacesRoot:options.privatePlacesRoot,
+    ...(options.now?{now:options.now}:{})});
+  const privatePlaces=options.privatePlaces||createPrivatePlaces(
+    options.privatePlacesRoot?{root:options.privatePlacesRoot}:{});
+  const learningArchive=options.learningArchive||createLearningArchive({
+    ...(options.learningArchiveRoot?{root:options.learningArchiveRoot}:{}),
+    projectRoot:repoRoot,
+    ...(options.conversationRoot?{conversationRoot:options.conversationRoot}:{}),
+  });
+  const placeNotes=options.placeNotes||createPlaceNotesStore({
+    notesRoot:options.placeNotesRoot,
+    placesFile:options.placesFile,
+    practiceStore,
+    ...(options.now?{now:options.now}:{}),
+    ...(options.aiMatch?{aiMatch:options.aiMatch}:{aiMatch:callDeepSeekMatch}),
+  });
+  const manualFacts=options.manualFacts||createManualFactsStore({
+    root:options.manualFactsRoot,
+    ...(options.now?{now:options.now}:{}),
+    ...(options.aiExtract?{aiExtract:options.aiExtract}:{}),
+    budgetStatus,
+  });
+  /* N05 TTS 适配层：缓存根可注入（测试用临时目录），默认 SocialMate-Data/TtsCache。 */
+  const tts=options.ttsService||createTtsService({root:options.ttsCacheRoot});
+  /**
+   * 演示写操作闸（T1-4）：同源 + CSRF 票 + 写授权。
+   * 只对「会改状态」的请求生效；读演示仍然免令牌，手机首次打开不会是空白。
+   */
+  const requireWriteAuth=(req,res)=>{
+    const same=sameOriginOf(req,port);
+    if(!same.ok){
+      json(res,403,{ok:false,code:same.reason,
+        error:"写操作必须来自本服务同源页面（缺少或跨源的 Origin/Referer 一律拒绝）"});
+      return false;
+    }
+    const ticket=writeGuard.consume(req);
+    if(!ticket.ok){
+      json(res,403,{ok:false,code:ticket.code,
+        error:"写操作需要一次性的写授权票（先 GET /v12/api/demo/write-ticket）"});
+      return false;
+    }
+    return true;
+  };
   return async(req,res)=>{
   try{
+    if(!isPrivateIp(req.socket.remoteAddress))
+      return json(res,403,{ok:false,code:"LAN_ONLY",error:"仅允许本机或局域网访问"});
     const url=new URL(req.url||"/","http://127.0.0.1:"+port);
     if(!originOK(req,port))return json(res,403,{ok:false,code:"ORIGIN_REJECTED"});
     if(url.pathname==="/api/asr/live"&&req.method==="GET"){
@@ -213,6 +300,115 @@ export function createHandler(options={}){
       const bridge=asrStatus();
       return json(res,200,{ok:true,...bridge,
         service:"ALW001 combined ASR + AI gateway"});
+    }
+    /* ===================== T2：真实 ASR final → 待确认候选 =====================
+       候选只在本进程内存里（逐字原文不落盘）；读接口供手机私有 UI 轮询/事件刷新，
+       写接口必须同源 + 一次性写票 + confirm:true + 用户显式选人。
+       真实 SocialMate-Data/People 没有任何写路径，只写隔离的 Demo/People。 */
+    if(url.pathname==="/v12/api/live/status"&&req.method==="GET"){
+      return json(res,200,{ok:true,...liveFactsStatus(),
+        note:"逐字 final 只在内存短暂展示；不写录音、不写逐字到文件。"});
+    }
+    if(url.pathname==="/v12/api/live/pending"&&req.method==="GET"){
+      await ensureDemoSeeded();
+      const items=pendingLiveFacts({sessionId:url.searchParams.get("sessionId")||""});
+      const people=await listPersonas();
+      return json(res,200,{ok:true,count:items.length,items,
+        targets:people.map((person)=>({slug:person.slug,name:person.name,
+          nameZh:person.nameZh,nameEn:person.nameEn})),
+        privacy:{transcriptInMemoryOnly:true,requiresAttribution:true,speakerUnknown:true,
+          realPeopleUntouched:true}});
+    }
+    if(url.pathname==="/v12/api/live/facts"&&req.method==="GET"){
+      return json(res,200,{ok:true,
+        items:await listLiveFacts({sessionId:url.searchParams.get("sessionId")||""})});
+    }
+    /* 离开会话/页面：只清内存候选，不碰已确认档案，因此不需要写票（同源仍校验）。 */
+    if(url.pathname==="/v12/api/live/clear"&&req.method==="POST"){
+      const body=await readPayload(req,4000).catch(()=>({}));
+      return json(res,200,{ok:true,...clearLiveFacts({sessionId:body?.sessionId||""})});
+    }
+    const livePendingMatch=url.pathname.match(/^\/v12\/api\/live\/pending\/([^/]+)\/(confirm|ignore)$/);
+    if(livePendingMatch&&req.method==="POST"){
+      if(!requireWriteAuth(req,res))return;
+      const limit=rateLimit();
+      if(!limit.ok)
+        return json(res,429,{ok:false,code:"RATE_LIMITED",error:"操作过于频繁，请稍后再试",
+          retryAfterMs:limit.retryAfterMs});
+      let pendingId;
+      try{pendingId=decodeURIComponent(livePendingMatch[1]);}
+      catch{return json(res,400,{ok:false,code:"INVALID_PENDING_ID",error:"候选标识不合法"});}
+      const body=await readPayload(req,8000);
+      if(body?.confirm!==true)
+        return json(res,400,{ok:false,code:"CONFIRM_REQUIRED",error:"处理实时候选需要用户显式确认"});
+      if(livePendingMatch[2]==="ignore")
+        return json(res,200,{...await ignoreLivePending({pendingId,confirm:true}),
+          demo:true,realPeopleUntouched:true});
+      return json(res,200,{...await confirmLivePending({pendingId,slug:body?.slug,
+        candidateFact:body?.candidateFact,confirm:true}),demo:true});
+    }
+    const liveWithdrawMatch=url.pathname.match(/^\/v12\/api\/live\/facts\/([^/]+)\/withdraw$/);
+    if(liveWithdrawMatch&&req.method==="POST"){
+      if(!requireWriteAuth(req,res))return;
+      const limit=rateLimit();
+      if(!limit.ok)
+        return json(res,429,{ok:false,code:"RATE_LIMITED",error:"操作过于频繁，请稍后再试",
+          retryAfterMs:limit.retryAfterMs});
+      let factId;
+      try{factId=decodeURIComponent(liveWithdrawMatch[1]);}
+      catch{return json(res,400,{ok:false,code:"INVALID_FACT_ID",error:"事实标识不合法"});}
+      const body=await readPayload(req,8000);
+      if(body?.confirm!==true)
+        return json(res,400,{ok:false,code:"CONFIRM_REQUIRED",error:"撤回事实需要用户显式确认"});
+      return json(res,200,{...await withdrawLiveFact({factId,slug:body?.slug,confirm:true}),demo:true});
+    }
+    /* ===================== 设备配对 / 短期令牌（T1-3） =====================
+       长期归档令牌不再进 APK：手机先本机配对，再用设备 secret 换 ≤24h 的短期令牌。
+       配对码只对回环请求可见（首次必须由用户在 Mac 上点一次），单次有效。 */
+    if(url.pathname==="/v12/api/pair/code"&&req.method==="GET"){
+      if(!isLoopback(req))
+        return json(res,403,{ok:false,code:"PAIRING_CODE_LOCAL_ONLY",
+          error:"配对码只能在本机（Mac 回环地址）读取"});
+      const issued=issuePairingCode();
+      console.log(`[socialmate-ai] pairing code issued, expires ${issued.expiresAt}`);
+      return json(res,200,{ok:true,code:issued.code,expiresAt:issued.expiresAt,ttlMs:issued.ttlMs,
+        note:"在手机「配对」里输入这 6 位数字；一次性、5 分钟内有效。"});
+    }
+    if(url.pathname==="/v12/api/pair/claim"&&req.method==="POST"){
+      const body=await readPayload(req,8000);
+      const claimed=await claimPairing({code:body?.code,deviceName:body?.deviceName});
+      // 设备密钥只在这一次响应里出现，服务端只留封装副本。
+      return json(res,200,{ok:true,deviceId:claimed.deviceId,deviceSecret:claimed.deviceSecret,
+        token:claimed.token,expiresAt:claimed.expiresAt,ttlHours:claimed.ttlHours,
+        note:"deviceSecret 请存进 Keystore，不要写日志、不要再回传。"});
+    }
+    if(url.pathname==="/v12/api/pair/token"&&req.method==="POST"){
+      const body=await readPayload(req,8000);
+      const refreshed=await refreshToken(body||{});
+      return json(res,200,{ok:true,...refreshed});
+    }
+    if(url.pathname==="/v12/api/pair/status"&&req.method==="GET"){
+      const token=String(req.headers["x-archive-token"]||"").trim();
+      if(!isLoopback(req)){
+        const check=await verifyToken(token).catch(()=>null);
+        if(!check?.ok)return json(res,401,{ok:false,code:"UNAUTHORIZED",error:"查看设备列表需要本机访问或有效令牌"});
+      }
+      return json(res,200,{ok:true,devices:await listDevices(),code:pairingCodeStatus()});
+    }
+    if(url.pathname==="/v12/api/pair/revoke"&&req.method==="POST"){
+      if(!isLoopback(req))
+        return json(res,403,{ok:false,code:"REVOKE_LOCAL_ONLY",error:"撤销设备只能在本机执行"});
+      const body=await readPayload(req,8000);
+      if(body?.confirm!==true)
+        return json(res,400,{ok:false,code:"CONFIRM_REQUIRED",error:"撤销设备需要显式确认"});
+      const revoked=await revokeDevice(body?.deviceId);
+      return json(res,200,{ok:true,...revoked,note:"撤销后该设备之前签发的令牌立即失效。"});
+    }
+    /* 写授权票：GET 不改状态，跨源页面即使能发请求也读不到响应（本服务无 CORS 头）。 */
+    if(url.pathname==="/v12/api/demo/write-ticket"&&req.method==="GET"){
+      const ticket=writeGuard.issue();
+      return json(res,200,{ok:true,ticket:ticket.ticket,expiresAt:ticket.expiresAt,
+        ttlMs:ticket.ttlMs,header:WRITE_HEADER,note:"一次写一张票，过期或重放都会被拒绝。"});
     }
     if(url.pathname==="/api/profile"&&req.method==="GET"){
       return json(res,200,{ok:true,profile:await readProfile()});
@@ -317,6 +513,27 @@ export function createHandler(options={}){
       }
       return token;
     };
+    /* TTS 沿用同一套鉴权：配对短期令牌优先，其次回落到本机归档令牌探测；
+       令牌只从请求头读取，不回显、不落盘、不进日志。 */
+    const ttsToken=async(res,action)=>{
+      const token=String(req.headers["x-archive-token"]||"").trim();
+      if(!token){
+        json(res,401,{ok:false,code:"TOKEN_REQUIRED",error:action+"需要设备令牌或本机归档令牌"});
+        return null;
+      }
+      const paired=await verifyToken(token).catch(()=>null);
+      if(paired?.ok)return token;
+      const check=await archive.get("/api/archive/session/__token_probe__",token).catch(()=>null);
+      if(!check){
+        json(res,503,{ok:false,code:"ARCHIVE_UNAVAILABLE",error:"归档服务未启动或不可达"});
+        return null;
+      }
+      if(check.status===401){
+        json(res,401,{ok:false,code:"UNAUTHORIZED",error:"令牌无效"});
+        return null;
+      }
+      return token;
+    };
     if(url.pathname==="/v12/api/people"&&req.method==="GET"){
       const token=await peopleToken(res,"读取人物主档列表");
       if(!token)return;
@@ -387,6 +604,356 @@ export function createHandler(options={}){
       const result=await revokePersonFact(slug,{factId:body?.factId,confirm:body?.confirm===true});
       return json(res,200,result);
     }
+    /* ===================== N05 S2：人物手工补记（MEM01） =====================
+       草稿只写 SocialMate-Data/ManualFactBatches；确认才写 People/<slug>/00-profile.md。
+       AI 只在用户点「AI 整理」并显式同意时调用一次 DeepSeek；不可用就降级为手工切句。 */
+    const manualDraftMatch=url.pathname.match(/^\/v12\/api\/people\/([^/]+)\/facts\/draft$/);
+    if(manualDraftMatch&&req.method==="POST"){
+      const token=await peopleToken(res,"整理人物补记草稿");
+      if(!token)return;
+      if(!requireWriteAuth(req,res))return;
+      const limit=rateLimit();
+      if(!limit.ok)
+        return json(res,429,{ok:false,code:"RATE_LIMITED",error:"操作过于频繁，请稍后再试",
+          retryAfterMs:limit.retryAfterMs});
+      let slug;
+      try{slug=decodeURIComponent(manualDraftMatch[1]);}
+      catch{return json(res,400,{ok:false,code:"INVALID_PERSON_SLUG",error:"人物标识不合法"});}
+      const body=await readPayload(req,32000);
+      const {status:httpStatus,...result}=await manualFacts.draft(slug,body);
+      return json(res,httpStatus||200,result);
+    }
+    const manualConfirmMatch=url.pathname.match(/^\/v12\/api\/people\/([^/]+)\/facts\/confirm$/);
+    if(manualConfirmMatch&&req.method==="POST"){
+      const token=await peopleToken(res,"确认人物补记");
+      if(!token)return;
+      if(!requireWriteAuth(req,res))return;
+      const limit=rateLimit();
+      if(!limit.ok)
+        return json(res,429,{ok:false,code:"RATE_LIMITED",error:"操作过于频繁，请稍后再试",
+          retryAfterMs:limit.retryAfterMs});
+      let slug;
+      try{slug=decodeURIComponent(manualConfirmMatch[1]);}
+      catch{return json(res,400,{ok:false,code:"INVALID_PERSON_SLUG",error:"人物标识不合法"});}
+      const body=await readPayload(req,32000);
+      const result=await manualFacts.confirm(slug,body);
+      return json(res,200,result);
+    }
+    const manualRevokeMatch=url.pathname.match(/^\/v12\/api\/people\/([^/]+)\/facts\/revoke-manual$/);
+    if(manualRevokeMatch&&req.method==="POST"){
+      const token=await peopleToken(res,"撤回人物手工补记");
+      if(!token)return;
+      if(!requireWriteAuth(req,res))return;
+      const limit=rateLimit();
+      if(!limit.ok)
+        return json(res,429,{ok:false,code:"RATE_LIMITED",error:"操作过于频繁，请稍后再试",
+          retryAfterMs:limit.retryAfterMs});
+      let slug;
+      try{slug=decodeURIComponent(manualRevokeMatch[1]);}
+      catch{return json(res,400,{ok:false,code:"INVALID_PERSON_SLUG",error:"人物标识不合法"});}
+      const body=await readPayload(req,16000);
+      return json(res,200,await manualFacts.revoke(slug,body));
+    }
+    const manualDraftsMatch=url.pathname.match(/^\/v12\/api\/people\/([^/]+)\/facts\/drafts$/);
+    if(manualDraftsMatch&&req.method==="GET"){
+      const token=await peopleToken(res,"读取人物补记草稿");
+      if(!token)return;
+      let slug;
+      try{slug=decodeURIComponent(manualDraftsMatch[1]);}
+      catch{return json(res,400,{ok:false,code:"INVALID_PERSON_SLUG",error:"人物标识不合法"});}
+      return json(res,200,await manualFacts.listDrafts(slug));
+    }
+    // 草稿只在本机可删（回环地址 + 写票 + 同源），不触碰已确认内容。
+    const manualDraftDeleteMatch=url.pathname.match(/^\/v12\/api\/people\/facts\/drafts\/([^/]+)$/);
+    if(manualDraftDeleteMatch&&req.method==="DELETE"){
+      if(!isLoopback(req))
+        return json(res,403,{ok:false,code:"DRAFT_DELETE_LOCAL_ONLY",error:"删除草稿只能在本机执行"});
+      if(!requireWriteAuth(req,res))return;
+      const limit=rateLimit();
+      if(!limit.ok)
+        return json(res,429,{ok:false,code:"RATE_LIMITED",error:"操作过于频繁，请稍后再试",
+          retryAfterMs:limit.retryAfterMs});
+      let draftId;
+      try{draftId=decodeURIComponent(manualDraftDeleteMatch[1]);}
+      catch{return json(res,400,{ok:false,code:"INVALID_DRAFT_ID",error:"草稿标识不合法"});}
+      if(url.searchParams.get("confirm")!=="1")
+        return json(res,400,{ok:false,code:"CONFIRM_REQUIRED",error:"删除草稿需要 confirm=1"});
+      return json(res,200,await manualFacts.deleteDraft(draftId,{confirm:true}));
+    }
+    /* ===================== N05 S3：私有地点活档案（LOC01） =====================
+       原介绍只读 115 源；私有记录只写 SocialMate-Data/PlaceNotes/<placeId>/records。 */
+    if(url.pathname==="/v12/api/places/match"&&req.method==="POST"){
+      const token=await peopleToken(res,"地点匹配");
+      if(!token)return;
+      const limit=rateLimit();
+      if(!limit.ok)
+        return json(res,429,{ok:false,code:"RATE_LIMITED",error:"操作过于频繁，请稍后再试",
+          retryAfterMs:limit.retryAfterMs});
+      const body=await readPayload(req,16000);
+      const budget=budgetStatus();
+      const aiConsent=body?.aiConsent===true&&budget.remainingCny>RESERVE_CNY;
+      const result=await placeNotes.matchPlace({text:body?.text,aiConsent});
+      return json(res,200,{...result,
+        ...(body?.aiConsent===true&&!aiConsent?{aiUnavailable:{code:"AI_UNAVAILABLE",reason:"BUDGET_EXHAUSTED"}}:{}),
+        realPlacesUntouched:true});
+    }
+    if(url.pathname==="/v12/api/places/unassigned"&&req.method==="GET"){
+      const token=await peopleToken(res,"读取未归属地点草稿");
+      if(!token)return;
+      return json(res,200,{...await placeNotes.listUnassigned(),realPlacesUntouched:true});
+    }
+    if(url.pathname==="/v12/api/private-places"&&req.method==="GET"){
+      const token=await peopleToken(res,"读取私有地点");
+      if(!token)return;
+      const list=await privatePlaces.readAll();
+      return json(res,200,{ok:true,count:list.length,
+        places:list.map((place)=>privatePlaces.toPublic(place)),realPlacesUntouched:true});
+    }
+    if(url.pathname==="/v12/api/private-places"&&req.method==="POST"){
+      const token=await peopleToken(res,"新建私有地点");
+      if(!token)return;
+      if(!requireWriteAuth(req,res))return;
+      const limit=rateLimit();
+      if(!limit.ok)
+        return json(res,429,{ok:false,code:"RATE_LIMITED",error:"操作过于频繁，请稍后再试",
+          retryAfterMs:limit.retryAfterMs});
+      const body=await readPayload(req,16000);
+      const created=await privatePlaces.create(body||{});
+      return json(res,200,{...created,realPlacesUntouched:true});
+    }
+    const placeSegmentMatch=url.pathname.match(/^\/v12\/api\/places\/(\d{1,3}|pv-[a-z0-9-]{1,32})\/records\/segment$/);
+    if(placeSegmentMatch&&req.method==="POST"){
+      const token=await peopleToken(res,"分段预览");
+      if(!token)return;
+      const limit=rateLimit();
+      if(!limit.ok)
+        return json(res,429,{ok:false,code:"RATE_LIMITED",error:"操作过于频繁，请稍后再试",
+          retryAfterMs:limit.retryAfterMs});
+      const body=await readPayload(req,64000);
+      const budget=budgetStatus();
+      const aiConsent=body?.aiConsent===true&&budget.remainingCny>RESERVE_CNY;
+      const result=await placeNotes.segmentPreview(body?.rawInput,{
+        maxSentencesPerBlock:body?.maxSentencesPerBlock, aiConsent});
+      return json(res,200,{...result,
+        ...(body?.aiConsent===true&&!aiConsent?{aiUnavailable:{code:"AI_UNAVAILABLE",reason:"BUDGET_EXHAUSTED"}}:{}),
+        sourceTextUnchanged:true});
+    }
+    const placeRecordsMatch=url.pathname.match(/^\/v12\/api\/places\/(\d{1,3}|unassigned|pv-[a-z0-9-]{1,32})\/records$/);
+    if(placeRecordsMatch&&req.method==="POST"){
+      const token=await peopleToken(res,"保存地点记录");
+      if(!token)return;
+      if(!requireWriteAuth(req,res))return;
+      const limit=rateLimit();
+      if(!limit.ok)
+        return json(res,429,{ok:false,code:"RATE_LIMITED",error:"操作过于频繁，请稍后再试",
+          retryAfterMs:limit.retryAfterMs});
+      const body=await readPayload(req,48000);
+      const result=await placeNotes.createRecord(placeRecordsMatch[1],body);
+      return json(res,200,{...result,realPlacesUntouched:true});
+    }
+    const placeWeakMatch=url.pathname.match(/^\/v12\/api\/places\/(\d{1,3}|pv-[a-z0-9-]{1,32})\/practice\/weak$/);
+    if(placeWeakMatch&&req.method==="GET"){
+      const token=await peopleToken(res,"读取练习弱项");
+      if(!token)return;
+      return json(res,200,await practiceStore.aggregate(placeWeakMatch[1]));
+    }
+    /* ===================== N05 S5：单段练习复盘（PRACT01） ===================== */
+    const practiceMatch=url.pathname.match(
+      /^\/v12\/api\/places\/(\d{1,3}|pv-[a-z0-9-]{1,32})\/records\/([^/]+)\/blocks\/([^/]+)\/practice$/);
+    if(practiceMatch&&req.method==="POST"){
+      const token=await peopleToken(res,"保存练习复盘");
+      if(!token)return;
+      if(!requireWriteAuth(req,res))return;
+      const limit=rateLimit();
+      if(!limit.ok)
+        return json(res,429,{ok:false,code:"RATE_LIMITED",error:"操作过于频繁，请稍后再试",
+          retryAfterMs:limit.retryAfterMs});
+      let recordId,blockId;
+      try{
+        recordId=decodeURIComponent(practiceMatch[2]);
+        blockId=decodeURIComponent(practiceMatch[3]);
+      }catch{return json(res,400,{ok:false,code:"INVALID_PRACTICE_TARGET",error:"标识不合法"});}
+      const body=await readPayload(req,24000);
+      const result=await practiceStore.save(practiceMatch[1],recordId,blockId,body);
+      return json(res,200,{...result,recordUntouched:true});
+    }
+    const placeDetailMatch=url.pathname.match(/^\/v12\/api\/places\/(\d{1,3}|pv-[a-z0-9-]{1,32})$/);
+    if(placeDetailMatch&&req.method==="GET"){
+      const token=await peopleToken(res,"读取地点详情");
+      if(!token)return;
+      return json(res,200,await placeNotes.getPlaceDetail(placeDetailMatch[1]));
+    }
+    /* ===================== 自动学习资料归档（ADDENDUM V1.0） =====================
+       只读索引 + 本地扫描；不搬原文件、不改原文。status 供日报/健康检查读取；
+       scan/ingest 需要设备令牌，限流防误连点。ingest 只接受白名单类型、大小与扩展名。 */
+    if(url.pathname==="/v12/api/learning-archive/status"&&req.method==="GET"){
+      const token=await peopleToken(res,"读取学习资料归档状态");
+      if(!token)return;
+      return json(res,200,await learningArchive.status());
+    }
+    if(url.pathname==="/v12/api/learning-archive/scan"&&req.method==="POST"){
+      const token=await peopleToken(res,"扫描学习资料归档");
+      if(!token)return;
+      const limit=rateLimit();
+      if(!limit.ok)
+        return json(res,429,{ok:false,code:"RATE_LIMITED",error:"操作过于频繁，请稍后再试",
+          retryAfterMs:limit.retryAfterMs});
+      await readPayload(req,4000).catch(()=>({}));
+      const summary=await learningArchive.runScan();
+      return json(res,summary.ok?200:423,summary);
+    }
+    if(url.pathname==="/v12/api/learning-archive/ingest"&&req.method==="POST"){
+      const token=await peopleToken(res,"投递学习资料");
+      if(!token)return;
+      const limit=rateLimit();
+      if(!limit.ok)
+        return json(res,429,{ok:false,code:"RATE_LIMITED",error:"操作过于频繁，请稍后再试",
+          retryAfterMs:limit.retryAfterMs});
+      const body=await readPayload(req,2*1024*1024);
+      if(!body||typeof body.content!=="string")
+        return json(res,400,{ok:false,code:"CONTENT_REQUIRED",error:"需要 content 文本"});
+      try{
+        const result=await learningArchive.ingest({
+          sourceType:body.sourceType,
+          filename:body.filename||"material.md",
+          content:body.content,
+          sourceApp:body.sourceApp,
+        });
+        return json(res,result.ok?200:422,result);
+      }catch(error){
+        return json(res,error.status||400,{ok:false,code:error.code||"INGEST_FAILED",error:error.message});
+      }
+    }
+    if(url.pathname==="/v12/api/learning-archive/materials"&&req.method==="GET"){
+      const token=await peopleToken(res,"读取学习资料索引");
+      if(!token)return;
+      return json(res,200,await learningArchive.list({
+        sourceType:url.searchParams.get("sourceType")||undefined,
+        status:url.searchParams.get("status")||undefined,
+        limit:url.searchParams.get("limit")||200,
+      }));
+    }
+    /* ===================== N05 S6：TTS 提供商适配层 =====================
+       provider：aws-polly（真实云，用户选定）/ aws-polly-fake（本地替身，真机验收）/
+       fake（本地预置）/ system-fallback（服务端不合成，FALLBACK_ONLY）/ 三个未接骨架。
+       /synthesize 顺序：参数校验 → 同意闸 403 → aws-polly 未配置 501 → 计费 402 → 合成。
+       aws-polly 使用独立账本（硬上限 0），任何计费请求在进入适配器前就被拒，账本零变动。
+       音频只经 audioId 读取，客户端无法指定目录或厂商 URL；响应/日志不含 AWS Key。 */
+    if(url.pathname==="/v12/api/tts/providers"&&req.method==="GET"){
+      const token=await ttsToken(res,"读取 TTS 提供商清单");
+      if(!token)return;
+      return json(res,200,await tts.listProviders());
+    }
+    if(url.pathname==="/v12/api/tts/voices"&&req.method==="GET"){
+      const token=await ttsToken(res,"读取 TTS 语音清单");
+      if(!token)return;
+      return json(res,200,tts.listVoices(url.searchParams.get("locale")||""));
+    }
+    if(url.pathname==="/v12/api/tts/synthesize"&&req.method==="POST"){
+      const token=await ttsToken(res,"申请合成朗读音频");
+      if(!token)return;
+      const limit=ttsRateLimit();
+      if(!limit.ok)
+        return json(res,429,{ok:false,code:"RATE_LIMITED",error:"合成请求过于频繁，请稍后再试",
+          retryAfterMs:limit.retryAfterMs});
+      const body=await readPayload(req,64000);
+      const speak=normalizeSpeakRequest(body||{});
+      await assertPrivacy(body,speak);
+      // 客户端可选声明 textSha256：用来发现「文本在传输/前端被改写」，不一致直接拒绝。
+      if(body?.textSha256!==undefined
+        &&String(body.textSha256).toLowerCase()!==sha256Hex(speak.text))
+        return json(res,400,{ok:false,code:"TEXT_SHA_MISMATCH",
+          error:"text 与客户端声明的 textSha256 不一致（服务端不改写文本）"});
+      const policy=tts.policyOf(speak.providerId);
+      const estimate=body?.estimate===true;
+      if(estimate){
+        // 只报价：不写音频、不建缓存条目、不动账本。
+        return json(res,200,await tts.quote(speak,{explicitConsent:body?.explicitConsent===true}));
+      }
+      if(!requireWriteAuth(req,res))return;
+      // ① 同意闸：云 provider 未显式同意 → 403（回显摘录只 40 字，不含任何 Key）。
+      if(policy.requiresConsent&&body?.explicitConsent!==true){
+        const echo=tts.consentEcho(speak);
+        return json(res,403,{ok:false,code:"CONSENT_REQUIRED",
+          error:"把学习文本发送给第三方 TTS 属于外部数据传输，默认关闭；需要本次显式同意（explicitConsent:true）",
+          consent:{required:true,given:false,explicit:false,willTransmit:false,
+            providerId:echo.providerId,providerLabel:echo.providerLabel,
+            textExcerpt:echo.textExcerpt,charCount:echo.charCount,
+            estimatedCostCny:echo.estimatedCostCny,currency:echo.currency,
+            region:echo.region,engine:echo.engine,configured:echo.configured,
+            wouldStoreAs:echo.storedAs}});
+      }
+      // ② Amazon Polly 未配置（无凭据/无 SDK）→ 501；只回 Region 与原因码，不回凭据、不发网络。
+      if(speak.providerId==="aws-polly"&&policy.configured!==true){
+        return json(res,501,{ok:false,code:"PROVIDER_NOT_CONFIGURED",
+          error:"Amazon Polly 尚未配置：本轮不发起任何真实云请求",
+          providerId:"aws-polly",region:policy.region||null,
+          reason:policy.configuredReason||"CREDENTIALS_NOT_FOUND",
+          realCloudCallsThisBuild:0});
+      }
+      // ③ 计费闸：aws-polly 走独立账本；limit=0 仍 402，用户填预算并重启后才放行。
+      if(policy.billingEnabled){
+        const polly=speak.providerId==="aws-polly";
+        const ledger=polly?await tts.providerLedger("aws-polly"):await tts.ledger();
+        const spent=Number(ledger.spentCny)||0;
+        const limit=Number(ledger.limitCny)||0;
+        const cost=Number(tts.costOf(speak))||0;
+        if(limit<=0||spent+cost>limit){
+          return json(res,402,{ok:false,code:"TTS_BUDGET_ZERO",
+            error:limit<=0
+              ?"TTS 计费预算为 0：任何计费请求都会被拒绝，账本不会变动"
+              :"TTS 预算余额不足：本次请求会被拒绝，账本不会变动",
+            providerId:speak.providerId,
+            ledgerProviderId:polly?"aws-polly":"tts",
+            budget:{currency:"CNY",limitCny:limit,spentCny:spent,
+              estimatedCostCny:cost,
+              entries:Array.isArray(ledger.entries)?ledger.entries.length:0,
+              ...(polly?{file:"TtsCache/ledger/aws-polly.json"}:{})}});
+        }
+      }
+      const result=await tts.synthesize(speak);
+      let budgetInfo=null;
+      if(policy.billingEnabled){
+        try{ await tts.recordBilling(speak); }
+        catch(error){ budgetInfo={recorded:false,code:error?.code||"BILLING_RECORD_FAILED"}; }
+        if(!budgetInfo){
+          const ledger=speak.providerId==="aws-polly"?await tts.providerLedger("aws-polly"):await tts.ledger();
+          budgetInfo={recorded:true,limitCny:Number(ledger.limitCny)||0,spentCny:Number(ledger.spentCny)||0};
+        }
+      }
+      return json(res,200,{...result,
+        ...(policy.kind==="cloud"?{consent:tts.consentEcho(speak)}:{}),
+        ...(budgetInfo?{budget:budgetInfo}:{})});
+    }
+    const ttsAudioMatch=url.pathname.match(/^\/v12\/api\/tts\/audio\/(tts-[a-f0-9]{32})$/);
+    if(ttsAudioMatch&&req.method==="GET"){
+      const token=await ttsToken(res,"读取朗读音频");
+      if(!token)return;
+      const {meta,bytes,audioSha256}=await tts.audio(ttsAudioMatch[1]);
+      const total=bytes.length;
+      const common={
+        "Content-Type":meta.mimeType||"audio/wav",
+        "Accept-Ranges":"bytes",
+        "Cache-Control":"private, max-age=0, must-revalidate",
+        "ETag":'"'+audioSha256+'"',
+        "X-Tts-Audio-Sha256":audioSha256,
+        "X-Content-Type-Options":"nosniff",
+        "Referrer-Policy":"no-referrer",
+      };
+      const range=parseRange(req.headers.range,total);
+      if(range?.invalid){
+        res.writeHead(416,{...common,"Content-Range":"bytes */"+total,"Content-Length":"0"});
+        return res.end();
+      }
+      if(range){
+        const slice=bytes.subarray(range.start,range.end+1);
+        res.writeHead(206,{...common,"Content-Range":`bytes ${range.start}-${range.end}/${total}`,
+          "Content-Length":String(slice.length)});
+        return res.end(slice);
+      }
+      res.writeHead(200,{...common,"Content-Length":String(total)});
+      return res.end(bytes);
+    }
     // P2-03：收藏表达（本机 Markdown/JSON，不碰 Profile）。
     if(url.pathname==="/v12/api/favorites"&&req.method==="GET"){
       return json(res,200,{ok:true,...await listFavorites()});
@@ -453,6 +1020,7 @@ export function createHandler(options={}){
       if(isProfileWrite){
         const token=await peopleToken(res,"编辑演示人物档案");
         if(!token)return;
+        if(!requireWriteAuth(req,res))return;
         const limit=rateLimit();
         if(!limit.ok)
           return json(res,429,{ok:false,code:"RATE_LIMITED",error:"写入操作过于频繁，请稍后再试",
@@ -490,6 +1058,7 @@ export function createHandler(options={}){
     /* 演示 final → 待确认 → 人工确认/忽略。全部只写 SocialMate-Data/Demo；
        确认后才写演示人物档案，写的是 Demo/People（appendPeopleFacts 注入 root）。 */
     if(url.pathname==="/v12/api/demo/final"&&req.method==="POST"){
+      if(!requireWriteAuth(req,res))return;
       const limit=rateLimit();
       if(!limit.ok)
         return json(res,429,{ok:false,code:"RATE_LIMITED",error:"操作过于频繁，请稍后再试",
@@ -502,6 +1071,7 @@ export function createHandler(options={}){
     const demoPendingMatch=url.pathname.match(
       /^\/v12\/api\/demo\/(?:people\/([^/]+)\/)?pending\/([^/]+)\/(confirm|ignore)$/);
     if(demoPendingMatch&&req.method==="POST"){
+      if(!requireWriteAuth(req,res))return;
       const limit=rateLimit();
       if(!limit.ok)
         return json(res,429,{ok:false,code:"RATE_LIMITED",error:"操作过于频繁，请稍后再试",
@@ -521,6 +1091,7 @@ export function createHandler(options={}){
       return json(res,200,{...result,realPeopleUntouched:true});
     }
     if((url.pathname==="/v12/api/demo/clear"||url.pathname==="/v12/api/demo/restore")&&req.method==="POST"){
+      if(!requireWriteAuth(req,res))return;
       const limit=rateLimit();
       if(!limit.ok)
         return json(res,429,{ok:false,code:"RATE_LIMITED",error:"操作过于频繁，请稍后再试",
@@ -540,6 +1111,7 @@ export function createHandler(options={}){
         ...await demoArchiveStatus({demoRoot:demoRoot(),conversationsDir:demoConversationsRoot()})});
     }
     if(url.pathname==="/v12/api/demo/archive/push"&&req.method==="POST"){
+      if(!requireWriteAuth(req,res))return;
       const limit=rateLimit();
       if(!limit.ok)
         return json(res,429,{ok:false,code:"RATE_LIMITED",error:"同步演示归档过于频繁，请稍后再试",
@@ -558,8 +1130,16 @@ export function createHandler(options={}){
     }
     if(url.pathname==="/v12"||url.pathname==="/v12/"){
       const html=await fs.readFile(path.resolve(proto,"..","socialmate-v1.2","index.html"));
+      /* T1-2 第二道闸：frame-src 'none' 让页面连 iframe 都不能建。
+         WebView 的 addJavascriptInterface 会暴露给本 WebView 的所有 frame，
+         因此「非私有 frame」必须在文档层就不存在，而不是等它加载完再判断。 */
       return res.writeHead(200,{"Content-Type":"text/html; charset=utf-8",
-        "Cache-Control":"no-store","X-Content-Type-Options":"nosniff"}).end(html);
+        "Cache-Control":"no-store","X-Content-Type-Options":"nosniff",
+        "Content-Security-Policy":
+          "default-src 'self' data: blob:; script-src 'self' 'unsafe-inline' 'unsafe-eval'; "
+          + "style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; "
+          + "connect-src 'self'; media-src 'self' blob:; frame-src 'none'; child-src 'none'; "
+          + "object-src 'none'; base-uri 'none'; form-action 'none'"}).end(html);
     }
     // 海南地点配图：同源静态图片，路径固定为 /v12/img/<city_folder>/<id3>/<file>.webp
     // 只为「地点卡片」服务：白名单后缀 + 禁止 .. 穿越，命中失败直接 404。
@@ -603,8 +1183,16 @@ export function createHandler(options={}){
     if(err instanceof AiError)
       return json(res,err.status,{ok:false,code:err.code,error:err.message});
     const statusCode=Number(err?.status);
-    if(Number.isInteger(statusCode)&&statusCode>=400&&statusCode<500)
-      return json(res,statusCode,{ok:false,code:String(err.code||"REJECTED"),error:err.message});
+    // 4xx/5xx 只在错误自带 code 时原样返回（AI_UNAVAILABLE、PLACES_CORRUPT 等），
+    // 未知异常仍统一收敛成 500，避免把内部细节暴露给客户端。
+    if(Number.isInteger(statusCode)&&statusCode>=400&&statusCode<600&&typeof err?.code==="string"){
+      // 只透出可公开的补充字段（如 409 时保留的客户端稿件），不整包解构错误对象。
+      const extra={};
+      for(const key of ["reason","keptDraft","currentRevision","currentRawSha256","options"]){
+        if(err[key]!==undefined)extra[key]=err[key];
+      }
+      return json(res,statusCode,{ok:false,code:String(err.code),error:err.message,...extra});
+    }
     return json(res,500,{ok:false,code:"INTERNAL_ERROR",
       error:"服务内部错误（不暴露凭证和个人资料）"});
   }
@@ -628,7 +1216,10 @@ if(process.env.SM_AI_NO_LISTEN!=="1"){
   tightenPermissions().then((r)=>{
     if(r.changed.length)console.log("[socialmate-ai] permissions tightened:",JSON.stringify(r.changed));
   }).catch((error)=>console.error("[socialmate-ai] permission check failed:",error.message));
-  server.listen(PORT,HOST,()=>console.log("[socialmate-ai] http://"+HOST+":"+PORT+
-    " | models configured:",JSON.stringify(Object.fromEntries(Object.entries(status()).map(([k,x])=>[k,x.configured])))));
+  server.listen(PORT,HOST,()=>{
+    console.log("[socialmate-ai] http://"+HOST+":"+PORT+
+      " | models configured:",JSON.stringify(Object.fromEntries(Object.entries(status()).map(([k,x])=>[k,x.configured]))));
+    if(HOST==="0.0.0.0")startLanDiscovery({aiPort:PORT});
+  });
 }
 export {server};

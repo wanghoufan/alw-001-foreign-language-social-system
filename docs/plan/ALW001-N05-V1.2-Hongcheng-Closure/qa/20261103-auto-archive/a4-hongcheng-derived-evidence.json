@@ -1,0 +1,59 @@
+{
+  "materialId": "lm-f412f4ea81b5359e",
+  "sourceType": "thought",
+  "derivation": "existing_ai_segmentation",
+  "derivationStatus": "ai_suggested_existing",
+  "cloudDerivation": "awaiting_consent",
+  "original": {
+    "pathRef": "private_places:pv-hongcheng-lake-park/records/rec-20261103072022-16b79c.json",
+    "sha256": "a26ca09ec8658db7ab5f6cc0c94ad7cb1057418b9b337afd72aa739e157d537b",
+    "bytes": 26699,
+    "revision": 2
+  },
+  "placeRefs": [
+    "pv-hongcheng-lake-park"
+  ],
+  "recordId": "rec-20261103072022-16b79c",
+  "recordRevision": 2,
+  "blockCount": 19,
+  "blockIds": [
+    "blk-hc-1",
+    "blk-hc-2",
+    "blk-hc-3",
+    "blk-hc-4",
+    "blk-hc-5",
+    "blk-hc-6",
+    "blk-hc-7",
+    "blk-hc-8",
+    "blk-hc-9",
+    "blk-hc-10",
+    "blk-hc-11",
+    "blk-hc-12",
+    "blk-hc-13",
+    "blk-hc-14",
+    "blk-hc-15",
+    "blk-hc-16",
+    "blk-hc-17",
+    "blk-hc-18",
+    "blk-hc-19"
+  ],
+  "blockSample": {
+    "blockId": "blk-hc-1",
+    "cn": [
+      "晚上在红城湖湖边散散步，还是非常愉悦的。",
+      "有微风，很凉爽。"
+    ],
+    "enA": "Taking a walk along the edge of Hongcheng Lake — an evening stroll here is really delightful. There's a nice breeze, nice and cool.",
+    "enB": "Walking by Hongcheng Lake in the evening is genuinely pleasant. The breeze is lovely and cool.",
+    "phrases": [
+      "take a walk / stroll along",
+      "along the edge of the lake / by the lake",
+      "evening stroll",
+      "delightful / genuinely pleasant",
+      "a nice breeze",
+      "nice and cool / lovely and cool"
+    ]
+  },
+  "pronunciationPolicy": "not_evaluated_no_audio",
+  "note": "Evidence copy: full private text remains in the original record; this file only keeps structural proof."
+}

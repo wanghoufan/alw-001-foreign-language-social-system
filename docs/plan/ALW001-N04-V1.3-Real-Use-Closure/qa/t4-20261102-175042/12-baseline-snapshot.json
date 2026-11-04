@@ -1,0 +1,14 @@
+{
+  "ok": true,
+  "savedAt": "2026-11-02 18:11:37",
+  "personas": 3,
+  "sessions": 9,
+  "segments": 54,
+  "pending": 3,
+  "cleared": false,
+  "people": [
+    "Oliver Reed",
+    "Maya Torres",
+    "Ji-eun Park"
+  ]
+}

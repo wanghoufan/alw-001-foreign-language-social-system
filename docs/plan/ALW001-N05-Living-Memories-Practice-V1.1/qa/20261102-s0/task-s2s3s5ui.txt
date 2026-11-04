@@ -1,0 +1,39 @@
+你是 ALW-001 N05 V1.1 的前端联调执行者（把已就绪的后端接口接到手机 UI：旧友补记、地点活档案、分段听读、GPT 练习）。项目根：/Users/zzymima0000/Developer/coding/1.Active/alw-001-外语社交系统
+
+必读：`docs/plan/ALW001-N05-Living-Memories-Practice-V1.1/SDD-REVIEW-V1.1.md`（第三节内容与交互、第四节数据合同）、`qa/20261102-s1s3/S1-EVIDENCE.md`、`qa/20261102-s4/S4-RESULT.md`。
+
+## 写入边界
+可改：`socialmate-v1.2/source/V1.1-baseline.html`、`socialmate-v1.2/index.html`（仅经 `python3 socialmate-v1.2/build-v12.py` 生成）、新增 `socialmate-v1.2/verify-n05-ui.mjs`。
+禁改：`socialmate-prototype/ai-gateway/**`（后端已定稿，只调用）、`android-poc/**`、`public/**`、`public-share.*`、`sw.js`、`places-115.json`、`SocialMate-Data/People/**`。
+
+## 可用的后端接口（已在 8791 就绪，勿改）
+- `POST /v12/api/people/:slug/facts/draft` `{rawInput,source,batchId,aiConsent,confirm}`；503 `AI_UNAVAILABLE` 带 `manualFallback`
+- `POST /v12/api/people/:slug/facts/confirm` `{draftId,idempotencyKey,confirm,items[{factId,action,targetFactKey}]}`
+- `POST /v12/api/people/:slug/facts/revoke-manual` `{factKeys[],confirm}`
+- `GET /v12/api/places/:id`、`POST /v12/api/places/:id/records`（409 `REVISION_CONFLICT` 保稿）、`POST /v12/api/places/match`、`GET /v12/api/places/unassigned`
+- `POST /v12/api/places/:id/records/:rid/blocks/:bid/practice`、`GET /v12/api/places/:id/practice/weak`
+- Android 原生 TTS 桥（App 内可用，0.8.2/37）：`speakText/stop/setRate`，错误码 `TTS_LANG_UNAVAILABLE`；浏览器里必须优雅降级为「当前环境无原生语音」而不是假成功。
+
+## 任务
+1. **旧友补记（MEM01 前端）**：人物详情「＋ 补充我知道的信息」→ 粘贴/输入多段，🎙 语音输入按钮（App 内走系统 SpeechRecognizer 或提示手动输入，浏览器隐藏）→「AI 整理」得到候选卡（对象/属性/原句/分组/置信度）→ 可编辑、勾选、标重复/矛盾、改归属 →「确认写入」；原文区始终逐字可见；未确认不写；失败保稿。
+2. **地点活档案（LOC01 前端）**：海南「龙兴路」详情 = 只读原介绍（中英）+「我的游玩记录」倒序 →「记录新想法」支持一次粘贴 10+ 段，地点建议 ≤3 个候选可手选/取消，未匹配可「暂存未归属」；保存失败保原稿并给恢复入口。
+3. **分段听读（LANG01 前端）**：每段显示「第 N/M 段」+ 中文/英A/英B/表达按钮 + 听词组 + 循环本段（次数可设）+ 停止 + 上一段/下一段 + 0.75/0.9/1.0 倍速；切段/离页停读；语言分别绑定 zh/en voice；无语音包时显示安装提示。
+4. **GPT 练习（PRACT01 前端）**：每段「复制 GPT 语音练习 Prompt」（含地点、recordId、blockId、contentRevision、中文段、英A/B、目标短语；**不含**其它人物/其它地点/任何 token）→ 复制按钮 + 系统分享降级；下方「回贴复盘」文本框，先让用户确认归属段/版本再保存；同段两次报告并列可见（时间、通过/需复习、薄弱表达、下次重点），旧报告不覆盖；弱项按段可见。
+5. 段落支持用户调整：合并/拆分/编辑句子（仅 UI 层传参给后端重算），任何调整都要能回到原文。
+6. 主题：浅色默认 + 深色 + 跟随系统，跨重启保持；主字 ≥15–16px，点按 ≥44dp。
+
+## 验收（真跑，贴退出码）
+新增 `socialmate-v1.2/verify-n05-ui.mjs`（CDP 驱动真实 8791 页面）：
+①补记：3 段输入 → 候选卡出现 → 勾掉 1 条不写 → 确认写入后该人物事实增加、另一人物 sha 不变；未确认时 0 写入；
+②地点：10 段粘贴 → 分段数 ≥3、每段可回溯原文、英A/B 都显示；保存后 `places-115.json` sha 不变、私有记录可重开；
+③听读：点中文/英A/英B 各触发一次桥调用（App 内），参数语言正确；切段后旧队列停止；
+④GPT：Prompt 复制内容含段 ID 与版本、不含他人姓名；回贴两份报告→两条记录并存、旧记录字节不变；
+⑤错匹配：手选地点后记录落到正确 placeId；
+⑥失败路径：停掉 AI（或传 aiConsent=false）→ 显示 `AI_UNAVAILABLE` 降级与手工切句入口，输入不丢。
+`python3 socialmate-v1.2/build-v12.py` 退出码 0；真机 serial `REDACTED-SERIAL` 启动 App 截图 4 张（补记/地点/听读/练习）存 `docs/plan/ALW001-N05-Living-Memories-Practice-V1.1/qa/20261102-s5ui/`。
+
+## 红线
+不 commit/push；不跑全量回归；不改预算；不动真实 People 档案（用虚构人设与自创旅行笔记做测试）；不改后端、不改 APK 版本号。
+
+## 回报
+改动文件 + 每条验收命令与退出码 + verify 结论 + 截图路径 + 未完成/降级项（例如浏览器无原生 TTS）。35 行内。

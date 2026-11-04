@@ -773,11 +773,21 @@ a.applink{font-size:14px;padding:9px 14px;min-height:40px;border:1px solid var(-
       }
     });
     dlBtn.addEventListener("click", () => {
-      const blob = new Blob([sessionMarkdown(s)], {type: "text/markdown;charset=utf-8"});
+      const markdown = sessionMarkdown(s);
+      const name = t('hist.downloadName', {id: s.sessionId});
+      // App 内：走原生桥 → SAF 由用户选保存位置（WebView 对 blob: 下载通常不会触发下载器）。
+      try {
+        const bridge = window.SocialMateAndroid;
+        if (bridge && typeof bridge.saveText === "function" && bridge.saveText(name, markdown)) {
+          setStatus("detailStatus", 'hist.download', "ok");
+          return;
+        }
+      } catch {}
+      const blob = new Blob([markdown], {type: "text/markdown;charset=utf-8"});
       const href = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = href;
-      a.download = t('hist.downloadName', {id: s.sessionId});
+      a.download = name;
       a.click();
       setTimeout(() => URL.revokeObjectURL(href), 4000);
     });
@@ -1083,6 +1093,10 @@ a.applink{font-size:14px;padding:9px 14px;min-height:40px;border:1px solid var(-
       const sectionSelect = document.createElement("select");
       sectionSelect.dataset.role = "section";
       sectionSelect.classList.add("hidden");
+      const autoOpt = document.createElement("option");
+      autoOpt.value = "";
+      autoOpt.textContent = LANG === "en" ? "Auto by content" : "自动分节（按内容）";
+      sectionSelect.appendChild(autoOpt);
       SECTIONS.forEach(([value, key]) => {
         const opt = document.createElement("option");
         opt.value = value;
@@ -1138,6 +1152,68 @@ a.applink{font-size:14px;padding:9px 14px;min-height:40px;border:1px solid var(-
       });
     }
 
+    // 一次映射整段会话：不用逐句选人；spk → 对方/我 只需确认一次。
+    const mapSpeakers = (review.summary && Array.isArray(review.summary.speakers))
+      ? review.summary.speakers : [];
+    const personFromUrl = new URLSearchParams(location.search).get("person")
+      || (function(){try{return sessionStorage.getItem("sm-person")||""}catch{return ""}})();
+    const mapping = {};
+    const mapPanel = el("div", "row");
+    mapPanel.style.marginTop = "10px";
+    mapPanel.dataset.role = "speakerMap";
+    const mapTitle = el("div", "hint",
+      LANG === "en"
+        ? "One-time speaker mapping: assign each cluster to the other person or to me; it applies to the whole session."
+        : "说话人一次性映射：把每个聚类指给对方或我；对整段会话生效，不再逐句选人。");
+    mapPanel.appendChild(mapTitle);
+    mapSpeakers.forEach((spk, i) => {
+      const wrap = el("span", "row");
+      wrap.style.marginRight = "12px";
+      const lbl = el("span", "src", (LANG === "en" ? "Speaker " : "说话人 ") + spk + " = ");
+      const sel = document.createElement("select");
+      sel.dataset.speaker = spk;
+      const meOpt = document.createElement("option");
+      meOpt.value = "self";
+      meOpt.textContent = t('hist.saveSelf');
+      sel.appendChild(meOpt);
+      const emptyOpt = document.createElement("option");
+      emptyOpt.value = "";
+      emptyOpt.textContent = LANG === "en" ? "Not assigned" : "不归属";
+      sel.appendChild(emptyOpt);
+      people.forEach((pp) => {
+        const opt = document.createElement("option");
+        opt.value = pp.slug;
+        opt.textContent = pp.name === pp.slug ? pp.name : `${pp.name}（${pp.slug}）`;
+        sel.appendChild(opt);
+      });
+      const preferred = i === 0 ? (personFromUrl || "self") : "self";
+      sel.value = people.some((pp) => pp.slug === preferred) ? preferred : "self";
+      if (sel.value) mapping[spk] = sel.value;
+      sel.addEventListener("change", () => {
+        if (sel.value) mapping[spk] = sel.value; else delete mapping[spk];
+      });
+      wrap.append(lbl, sel);
+      mapPanel.appendChild(wrap);
+    });
+    const applyMap = el("button", "", LANG === "en" ? "Apply mapping to candidates" : "把映射应用到候选");
+    applyMap.style.marginTop = "6px";
+    applyMap.addEventListener("click", () => {
+      rows.forEach((r) => {
+        const spk = r.item.source && r.item.source.speakerId;
+        const target = mapping[spk];
+        if (!target) return;
+        r.target.value = target === "self" ? "self" : "person";
+        if (target !== "self") r.personSelect.value = target;
+        r.sectionSelect.value = "";
+        r.check.checked = true;
+        r.target.dispatchEvent(new Event("change"));
+      });
+      saveStatus.textContent = LANG === "en" ? "Mapping applied; review and save." : "映射已应用到候选；请核对后保存。";
+      saveStatus.className = "status";
+    });
+    mapPanel.appendChild(applyMap);
+    host.appendChild(mapPanel);
+
     const tools = el("div", "row");
     tools.style.marginTop = "10px";
     const pickAll = el("button", "", t('hist.pickAll'));
@@ -1187,7 +1263,8 @@ a.applink{font-size:14px;padding:9px 14px;min-height:40px;border:1px solid var(-
           peopleSlug: r.target.value !== "person" ? undefined : (isNew ? r.newSlug.value.trim() : r.personSelect.value),
           createPerson: isNew ? true : undefined,
           personName: isNew ? r.newName.value.trim() : undefined,
-          section: r.target.value === "person" ? r.sectionSelect.value : undefined,
+          section: r.target.value === "person" && r.sectionSelect.value ? r.sectionSelect.value : undefined,
+          speakerId: r.item.source.speakerId,
           text: r.text.value.trim(),
           originalText: r.item.text,
           segmentIndex: r.item.source.segmentIndex,
@@ -1202,7 +1279,10 @@ a.applink{font-size:14px;padding:9px 14px;min-height:40px;border:1px solid var(-
       saveStatus.textContent = t('hist.writing');
       saveStatus.className = "status";
       try {
-        const result = await postJson("api/review/apply", {confirm: true, sessionId: session.sessionId, items});
+        const result = await postJson("api/review/apply", {
+          confirm: true, sessionId: session.sessionId, items,
+          speakerMap: Object.keys(mapping).length ? mapping : undefined,
+        });
         if (result.unchanged) {
           saveStatus.textContent = t('hist.saveUnchanged', {
             reasons: (result.skipped || []).map((x) => x.reason).join("/"),

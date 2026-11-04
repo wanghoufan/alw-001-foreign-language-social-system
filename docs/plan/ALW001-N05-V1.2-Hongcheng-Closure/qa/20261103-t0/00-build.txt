@@ -1,0 +1,9 @@
+time=2026-11-03T14:57:32+08:00
+HEAD=fc2379c
+dirty=84
+apk_bytes=308956
+apk_sha256=66aea6d5d39f3fbc02210bc01ff1b537410db9238422fca2fccd5d0f581a2e71
+Success
+    versionCode=45 minSdk=26 targetSdk=35
+    versionName=0.8.10
+    flags=[ DEBUGGABLE HAS_CODE ALLOW_CLEAR_USER_DATA ]

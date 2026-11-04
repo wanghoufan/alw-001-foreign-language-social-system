@@ -1,0 +1,28 @@
+你是 ALW-001 N05 V1.1 的 S4 执行者（Android 原生中英 TTS 听读）。项目根：/Users/zzymima0000/Developer/coding/1.Active/alw-001-外语社交系统
+
+必读：`docs/plan/ALW001-N05-Living-Memories-Practice-V1.1/SDD-REVIEW-V1.1.md`（第二节 SpeechRecognizer/TextToSpeech queries 与 S4、第三节双语听读、第五节 S4）、`qa/20261102-s0/env-matrix.md`（TTS 引擎 com.xiaomi.mibrain.speech；语音包 UNKNOWN）。
+
+## 写入边界
+可改/新建：`android-poc/**`（Java、Manifest、res、build.gradle）；可新建 `verify-n05-tts.mjs` 或 adb 脚本于 `android-poc/tools/`。
+禁改：`socialmate-prototype/ai-gateway/**`、`socialmate-v1.2/source/V1.1-baseline.html`、`socialmate-v1.2/index.html`（另一路正在改前端）、`public/**`、`public-share.*`、`sw.js`、`places-115.json`、`SocialMate-Data/**`。
+
+## 任务
+1. **原生能力**：在 Android 侧用 `TextToSpeech`（不是浏览器 SpeechSynthesis）实现朗读桥，暴露给 WebView JS：`speakText(text, lang)`、`stop()`、`setRate(0.75|0.9|1.0)`、队列状态回调。语音选择用 `getVoices()`/`setVoice()`/`isLanguageAvailable()`，中文用 zh-CN（或 zh_CN），英文 en-US/en-GB 分别绑定**不同 voice**；绝不用 en 声线读中文。
+2. **Manifest queries**：Android 11 需 `<queries>` 声明 `TTS_SERVICE` 与 `RecognitionService`，否则 `getVoices()` 返回空；按官方 API 实现，不猜。
+3. **队列与生命周期**：按语言切换重建 utterance 队列；句级边界加短停顿；切段/退出页面/Activity onStop 释放队列并 `stop()`；Activity 销毁 `shutdown()`；再次使用前重新 init。
+4. **播放控制**：单项朗读（中文/英A/英B/表达）、循环本段、停止、上一段/下一段；循环次数可设；倍速 0.75/0.9/1.0。
+5. **失败可理解**：无中文/英文声线或语音包缺失时，返回结构化错误码（如 `TTS_LANG_UNAVAILABLE` + 缺失语言），APP 显示「去系统设置安装语音包 / 更换 TTS 引擎」提示，禁止静默无声或假成功。
+6. **进度本地持久化**：每段 `已听熟` 标记与语速/循环设置本地持久化（SharedPreferences 即可），不产生任何云调用费用。
+7. 版本升到 **0.8.2 / versionCode 37**；`install -r` 保留数据；`dumpsys` 回读。
+
+## 验收（真跑，贴退出码，必须真机）
+- `gradle assembleDebug` 退出码 0；APK SHA256、签名指纹、versionName/versionCode；
+- 真机 serial `REDACTED-SERIAL`：①中文朗读（zh voice）听得到、日志显示所用 voice 名称；②英文A/B 用 en voice；③切段停读、循环 2 次后自停、停止生效；④0.75/1.0 倍速差异可听；⑤插/拔耳机后仍在正确输出；⑥故意选不存在语言（如 ja-JP）→ 返回 `TTS_LANG_UNAVAILABLE` 且 UI 有提示，不静默；
+- 证据：截图 + `adb logcat` 片段（过滤 token）+ APK 元数据，落 `docs/plan/ALW001-N05-Living-Memories-Practice-V1.1/qa/20261102-s4/`。
+- 引擎是小米 mibrain：若英文声线缺失，如实记 `PARTIAL` 并写清缺哪个语言、给出用户在系统设置装语音包的步骤；**不得改判 PASS**。
+
+## 红线
+不 commit/push；不跑全量回归；不改预算；不卸载 App、不动真实数据；不动前端 HTML。
+
+## 回报
+改动文件 + 构建/安装命令与退出码 + APK 元数据 + 真机各项听测结论（PASS/PARTIAL/NOT_RUN 逐条）+ 证据路径 + 未完成项。30 行内。

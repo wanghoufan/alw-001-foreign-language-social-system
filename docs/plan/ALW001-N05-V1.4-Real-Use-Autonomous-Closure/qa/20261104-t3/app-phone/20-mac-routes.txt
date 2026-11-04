@@ -1,0 +1,4 @@
+200 https://mac-mini.tail4e4317.ts.net:8443/v12
+200 https://mac-mini.tail4e4317.ts.net:8443/api/asr/status
+200 https://mac-mini.tail4e4317.ts.net/alw/health
+200 https://mac-mini.tail4e4317.ts.net:10000/health

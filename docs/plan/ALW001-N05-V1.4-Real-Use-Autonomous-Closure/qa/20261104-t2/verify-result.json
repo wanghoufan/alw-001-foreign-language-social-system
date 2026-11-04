@@ -1,0 +1,47 @@
+{
+  "at": "2026-11-03T23:53:33.145Z",
+  "results": [
+    {
+      "name": "一次扫描后再次扫描新增 0（幂等）",
+      "status": "PASS",
+      "at": "2026-11-03T23:53:33.089Z",
+      "detail": "run1 indexed=1｜run2 indexed=0 unchanged=1"
+    },
+    {
+      "name": "源文件修改记新版本，旧版本条目与原件都不覆盖",
+      "status": "PASS",
+      "at": "2026-11-03T23:53:33.105Z",
+      "detail": "v1=49927b5dbc1c v2=62d892ee96c3 条目数=2"
+    },
+    {
+      "name": "QA fixture 文件名自动打标 test/sourceTag",
+      "status": "PASS",
+      "at": "2026-11-03T23:53:33.117Z",
+      "detail": "total=2 realTotal=1 fixtures=1"
+    },
+    {
+      "name": "health：连续漏扫 2 个周期标 DEGRADED",
+      "status": "PASS",
+      "at": "2026-11-03T23:53:33.122Z",
+      "detail": "state=DEGRADED missed=2 consecutive=2"
+    },
+    {
+      "name": "health：心跳 PID 不存在标 NOT_RUNNING",
+      "status": "PASS",
+      "at": "2026-11-03T23:53:33.125Z",
+      "detail": "running=false state=NOT_RUNNING recovery=launchctl kickstart -k gui/$(id -u)/com.alw.learning-archive-watch"
+    },
+    {
+      "name": "断网（fetch 抛错）仍可完成本地扫描",
+      "status": "PASS",
+      "at": "2026-11-03T23:53:33.129Z",
+      "detail": "indexed=1 cloudCalls=0"
+    },
+    {
+      "name": "worker 被杀后新实例自动补扫新增文件",
+      "status": "PASS",
+      "at": "2026-11-03T23:53:33.134Z",
+      "detail": "停机期间新增补扫 indexed=1 total=2 healthBefore=NOT_RUNNING"
+    }
+  ]
+}

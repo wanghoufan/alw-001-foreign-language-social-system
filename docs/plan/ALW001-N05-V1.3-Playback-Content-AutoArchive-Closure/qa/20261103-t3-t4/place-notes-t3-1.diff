@@ -1,0 +1,67 @@
+--- docs/plan/ALW001-N05-V1.3-Playback-Content-AutoArchive-Closure/qa/20261103-t3-t4/place-notes.mjs.before-t3-1.bak	2026-11-03 22:23:24
++++ socialmate-prototype/ai-gateway/place-notes.mjs	2026-11-03 22:23:35
+@@ -67,6 +67,35 @@
+   return text;
+ }
+ 
++/**
++ * T3-1 读时归属兼容（只影响读取，不写回磁盘、不升 revision）。
++ *
++ * 背景：早期保存到私有地点的记录里 placeId 落成了 null（写路径用 Number("pv-…") 转换，
++ * 非数字 → NaN → JSON 序列化成 null），文件本身在 PrivatePlaces/<placeId>/records/ 下。
++ * 读取时按「目录归属」补齐 placeId，并用 placeIdSource 明确来源：
++ *   - "record"     文件里本来就写了非空 placeId（原生，原样返回）；
++ *   - "directory"  文件里是 null/空，按调用方请求的目录归属推导；
++ *   - "unassigned" 未归属草稿目录，保持 null。
++ * 磁盘文件一个字节都不改。回滚：本文件在 git 里是未跟踪文件（`??`），
++ * 用 qa/20261103-t3-t4/place-notes.mjs.before-t3-1.bak 覆盖回去即可；
++ * 若已被跟踪，则 git checkout -- 本文件。详见同目录 place-id-compat.md。
++ */
++function placeIdForRecordsDir(placeId) {
++  if (isUnassignedId(placeId)) return null;
++  const id = assertPlaceId(placeId);
++  return typeof id === "string" ? id : Number(id);
++}
++
++function withPlaceIdCompat(record, placeId) {
++  if (!record || typeof record !== "object" || Array.isArray(record)) return record;
++  const native = record.placeId;
++  if (native !== null && native !== undefined && native !== "") {
++    return {...record, placeId: native, placeIdSource: "record"};
++  }
++  const derived = placeIdForRecordsDir(placeId);
++  return {...record, placeId: derived, placeIdSource: derived === null ? "unassigned" : "directory"};
++}
++
+ function normalizeLocalName(value) {
+   return String(value ?? "")
+     .toLowerCase()
+@@ -145,7 +174,8 @@
+     const records = [];
+     for (const name of names) {
+       try {
+-        records.push(JSON.parse(await fs.readFile(path.join(recordsDir(placeId), name), "utf8")));
++        records.push(withPlaceIdCompat(
++          JSON.parse(await fs.readFile(path.join(recordsDir(placeId), name), "utf8")), placeId));
+       } catch {}
+     }
+     return records.sort((a, b) => String(b.createdAt).localeCompare(String(a.createdAt))
+@@ -154,7 +184,8 @@
+ 
+   async function readRecord(placeId, recordId) {
+     try {
+-      return JSON.parse(await fs.readFile(recordFile(placeId, recordId), "utf8"));
++      return withPlaceIdCompat(
++        JSON.parse(await fs.readFile(recordFile(placeId, recordId), "utf8")), placeId);
+     } catch (error) {
+       if (error.code === "ENOENT") throw fail(404, "RECORD_NOT_FOUND", "地点记录不存在");
+       throw error;
+@@ -319,6 +350,8 @@
+       : null;
+     const byBlock = new Map((progress?.blocks || []).map((block) => [block.blockId, block]));
+     return records.map((record) => ({
++        placeId: record.placeId ?? null,
++        placeIdSource: record.placeIdSource || "record",
+         recordId: record.recordId,
+         revision: record.revision,
+         rawInput: record.rawInput,

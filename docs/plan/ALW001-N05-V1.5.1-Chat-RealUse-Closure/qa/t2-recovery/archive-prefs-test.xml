@@ -1,0 +1,5 @@
+<?xml version='1.0' encoding='utf-8' standalone='yes' ?>
+<map>
+    <string name="archive_url">http://192.168.31.61:8797/api/archive/session</string>
+    <string name="last_synced_at">2026-11-04 22:43</string>
+</map>

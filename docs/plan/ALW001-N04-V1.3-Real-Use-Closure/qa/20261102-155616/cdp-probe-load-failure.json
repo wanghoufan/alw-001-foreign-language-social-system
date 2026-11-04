@@ -1,0 +1,65 @@
+{
+  "serial": "REDACTED-SERIAL",
+  "at": "2026-11-02T08:08:48.124Z",
+  "steps": [
+    {
+      "name": "01-current-url",
+      "value": "chrome-error://chromewebdata/"
+    },
+    {
+      "name": "02-private-page-bridge",
+      "value": "{\"hasBridge\":true,\"saveText\":\"undefined\",\"openRecordingPanel\":\"undefined\"}"
+    },
+    {
+      "name": "03-private-page-bridge-json",
+      "value": "{\"hasBridge\":true}"
+    },
+    {
+      "name": "04-cross-origin-frame-state",
+      "value": "{\"src\":\"http://127.0.0.1:18793/evil.html\",\"hasContentWindow\":true,\"frameReadable\":false,\"blockedBy\":\"same-origin-policy\",\"frameBridgeReadable\":false}"
+    },
+    {
+      "name": "04a-execution-contexts",
+      "value": [
+        {
+          "origin": "://",
+          "frameId": "835E9EF5"
+        },
+        {
+          "origin": "http://127.0.0.1:18793",
+          "frameId": "F64C8B0E"
+        }
+      ]
+    },
+    {
+      "name": "04b-frame-tree",
+      "value": [
+        {
+          "id": "835E9EF5C3CD3AFCBD5612A00A861637",
+          "url": "chrome-error://chromewebdata/",
+          "securityOrigin": "://"
+        },
+        {
+          "id": "F64C8B0EDCBAD2DBB6B3CCD12D5385DA",
+          "url": "http://127.0.0.1:18793/evil.html",
+          "securityOrigin": "http://127.0.0.1:18793"
+        }
+      ]
+    },
+    {
+      "name": "05-after-external-nav-attempt",
+      "value": "{\"href\":\"chrome-error://chromewebdata/\",\"before\":\"chrome-error://chromewebdata/\"}"
+    },
+    {
+      "name": "06-bridge-after-steps",
+      "value": "{\"hasBridge\":true}"
+    }
+  ],
+  "targets": [
+    {
+      "type": "page",
+      "url": "http://127.0.0.1:18799/v12",
+      "title": "网页无法打开"
+    }
+  ]
+}
