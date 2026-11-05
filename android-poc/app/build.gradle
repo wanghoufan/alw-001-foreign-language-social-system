@@ -10,8 +10,8 @@ android {
         applicationId 'app.socialmate.dualmic'
         minSdk 26
         targetSdk 35
-        versionCode 66
-        versionName '0.8.31'
+        versionCode 69
+        versionName '0.9.1'
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17

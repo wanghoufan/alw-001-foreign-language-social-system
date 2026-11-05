@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>四路口对话教学台</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="top">
+    <div>
+      <h1>四路口对话教学台</h1>
+      <p>四类角色 · 七个阶段 · 可回退 · 可确认记忆</p>
+    </div>
+    <div class="top-badge">中文教学演示</div>
+  </header>
+
+  <main class="layout">
+    <aside class="sidebar">
+      <section class="card">
+        <h2>教学样本</h2>
+        <label class="field-label" for="sampleSelect">选择样本</label>
+        <select id="sampleSelect" class="field"></select>
+        <p id="sampleScenario" class="muted"></p>
+        <p id="sampleGoal" class="muted"></p>
+      </section>
+
+      <section class="card">
+        <h2>语言路线</h2>
+        <label class="radio"><input type="radio" name="route" value="zh" checked> 中文路线</label>
+        <label class="radio"><input type="radio" name="route" value="en"> 英语路线</label>
+        <button id="newSession" class="block">开新会话</button>
+        <p class="hint">切换路线保留当前会话；开新会话才重置。</p>
+      </section>
+
+      <section class="card">
+        <h2>会话信息</h2>
+        <p>会话：<span id="sessionId" class="mono">—</span></p>
+        <p>当前阶段：<span id="stageLabel">—</span></p>
+        <p>已确认记忆：<span id="memoryCount">0</span> 条</p>
+      </section>
+    </aside>
+
+    <section class="workspace">
+      <section class="card">
+        <h2>阶段流程</h2>
+        <div id="stageRail" class="stage-rail"></div>
+        <p id="stageGuide" class="guide"></p>
+        <div class="actions">
+          <button id="rewind">上一阶段</button>
+          <button id="replay">重新讲解</button>
+          <button id="advance" class="primary">继续下一阶段</button>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>本轮角色</h2>
+        <div id="agentCards" class="agent-grid"></div>
+      </section>
+
+      <section class="card">
+        <h2>标准答案与易错表达</h2>
+        <p><strong>标准答案：</strong><span id="standardAnswer"></span></p>
+        <p><strong>参考回答：</strong><span id="referenceAnswer"></span></p>
+        <p><strong>表达风格：</strong><span id="styleText"></span></p>
+        <ul id="mistakeList" class="mistakes"></ul>
+      </section>
+
+      <section class="card">
+        <h2>学员输入</h2>
+        <div class="two-col">
+          <label class="field-label">谁在说<select id="actorSelect" class="field"></select></label>
+          <label class="field-label">面向谁<select id="audienceSelect" class="field"></select></label>
+        </div>
+        <label class="field-label" for="contentInput">这句话</label>
+        <textarea id="contentInput" class="field" placeholder="用中文说出你这句话……"></textarea>
+        <div class="actions">
+          <button id="sendTurn" class="primary">发送这句话</button>
+        </div>
+        <p id="turnStatus" class="hint">准备开始。</p>
+      </section>
+
+      <section class="card">
+        <h2>对话建议</h2>
+        <div id="suggestionList"></div>
+      </section>
+
+      <section class="card">
+        <h2>已确认记忆</h2>
+        <div id="memoryList"></div>
+      </section>
+
+      <section class="card">
+        <h2>历史建议</h2>
+        <div id="historyList"></div>
+      </section>
+
+      <section class="card">
+        <h2>对话时间线</h2>
+        <div id="timeline"></div>
+      </section>
+    </section>
+  </main>
+
+  <script type="module" src="/app.js"></script>
+</body>
+</html>

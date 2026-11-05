@@ -71,27 +71,24 @@
 - 2026-11-04 · P066 流式接 ALW · final 恒为 0、只有 interim · P066 `translate()` 只判外层 `msg.final`，腾讯定稿句子用 `sentence_type=1` · 改为 `sentence_type=1 || msg.final` 双判，并把 final 数量写进验收；改后单段 1、多段 2。`建议进用户级`
 - 2026-11-04 · P066 修 final · 只在本机 `stream-relay.mjs` · 重部署会覆盖 · 保留 `.bak-20261104-finalfix`，验收写死 `sentence_type` 与 final 数。
 
-## 密钥填写（项目补充）
-
-- 规则见 `~/.codeartsdoer/AGENTS.md` 第三节「文件与敏感信息」：先给官方获取链接 → 建完整文档 → 密钥字段放最底部 → 打开文档给用户填；已完成不重复。
-- 本项目 TTS 密钥：填写文档 `docs/DOUBAO-TTS-KEY.md`；真实值只进 `socialmate-prototype/ai-gateway/.env`（已 gitignore），`.env.example` 只留空值。
-
-## 豆包 TTS（2026-11-05）
-
-- 控制台给的是 **API Key**，请求头必须 `X-Api-Key` + `X-Api-Resource-Id: seed-tts-2.0`；旧 `X-Api-App-Id` + `X-Api-Access-Key` 返回 401 `45000010`，`volc.service_type.10035` 返回 403 `45000030`。
-- 密钥只进 `socialmate-prototype/ai-gateway/.env` 的 `SM_DOUBAO_API_KEY`；填写文档 `docs/DOUBAO-TTS-KEY.md` 填完即清空。
-
 ## 2026-11-05 阶段复盘（V1.5.2 / 人物 / 豆包）
 
-- 2026-11-05 · 沉浸高度 · 真机建议区撑到 976px、页面溢出 · 真机 WebView 不支持 `100dvh`，同规则后一条无效声明覆盖了 `100vh` 回退 · 先写 `100vh`，再用 `@supports(height:100dvh)` 覆盖；真机复测比例 0.500。`建议进用户级`
-- 2026-11-05 · 新增样式块 · v152 规则部分失效 · 上一块 `v151-realuse` 的 `</style>` 被一并替换，v152 被吞进上一块 · 插入新 `<style>` 时保留前置 `</style>`，并确认 `querySelectorAll('style')` 含新 id。`建议进用户级`
+> 沉浸高度、样式块 `</style>`、Note 12T 豆包朗读、N05 暂停/控制栏、中文整理明细已迁：`docs/archive/agent-pitfalls-20261105-detail.md`（原文保留）。
+
 - 2026-11-05 · App 内云端朗读 · 点「听本段」仍回退系统 TTS 并报「朗读被系统中断」 · WebView 自动取消 `window.confirm`，首次确认返回 false · 云端朗读默认授权 `S.v152.ttsConsent=true`，不依赖 confirm；实测豆包音频播放完成。`建议进用户级`
 - 2026-11-05 · TTS 账本 · 同一句扣两次 0.0069 · `synthesize()` 内记账后路由又 `recordBilling()` · 只在新合成时记账，缓存命中不重复计费；修正重复条目。
 - 2026-11-05 · 收藏 · 第二次点 ☆ 不取消、还要去「关于我」删 · `saveFavorite()` 只 POST 新增，服务端按英文去重返回 duplicate · 改为先查 `S.fav.items` 命中则 DELETE；人物页进入时预加载收藏。`建议进用户级`
 - 2026-11-05 · 人物档案层级 · 顶部是「见面前准备」且开发式文案占屏 · 详情按数据块顺序渲染，没有把主档章节汇总到顶部 · `getPersonDetail()` 返回 `profileSections`，前端按章节密排；开发文案移出。`建议进用户级`
 - 2026-11-05 · 真机旧 JS · 改完前端仍走原生 TTS · WebView 缓存旧 `index.html`，`am start` 不重新加载 · force-stop+start 或 `location.replace(url+'?v='+Date.now())`；核对 innerHTML 含新函数。`建议进用户级`
-- 2026-11-05 · Note 12T 豆包朗读 · 第 2 项起变系统声、重复点击叠加、循环无反馈 · `<audio>` 每次新建元素被 autoplay 拦截；旧 source 未 stop；循环按钮无 `.on` · 改 Web Audio 连续播放、切换前 `smStopAudio`、循环按钮加高亮与提示；统一音色用 Tina（英文音色读中文会空音频）。`建议进用户级`
-- 2026-11-05 · N05 暂停 · 点暂停报 `TTS_NOT_PLAYING` · 豆包走 Web Audio，按钮却调原生 `pause` · 改 `AudioContext.suspend()/resume()`，原生仅回退。`建议进用户级`
-- 2026-11-05 · N05 控制栏 · 滚到第 2 段后无法暂停、控制区占半屏 · 未吸顶且按钮过大 · `position:sticky;top:56px`，压到 105px、一行四键。
-- 2026-11-05 · 中文整理 · 19 段实为原始转写，含口水词/残句 · 只改 blk-2/4/11/17 并备份，revision+1；其余检查后保持原样。
 - 2026-11-05 · 显示改动越权 · 用户没要求却把英 B 折叠 · 不确定的显示改动先不做，只改用户点名的；误改已回退。`建议进用户级`
+
+> 豆包 API Key 鉴权与密钥填写规范已迁：`docs/archive/agent-pitfalls-20261105-detail.md`（原文保留）。
+
+## V1.6 活资料库（2026-11-05）
+
+- 2026-11-05 · 图片压缩 · `createImageBitmap(file,{imageOrientation:'from-image'})` 报「not a valid enum value」 · Android WebView 不支持该枚举值 · 改用 `<img>` 解码 blob URL（Chromium 自动按 EXIF 摆正）再 Canvas 重绘。`建议进用户级`
+- 2026-11-05 · 前端模块作用域 · 页面按钮点击报 `smCardNew is not defined` · 卡片模块写在 N05 的 IIFE 内，函数不挂全局 · 需要跨脚本调用时用 `window.__smCards` 显式暴露，别直接引用函数名。`建议进用户级`
+- 2026-11-05 · 前端构建 · 页面改动在真机不生效，仍显示旧 UI · 只改 source 未执行 `build-v12.py`，WebView 拿到旧 `index.html` · 改前端后先 build、grep 新标记，再 force-stop 启动验证。`建议进用户级`
+- 2026-11-05 · Android 构建 · 报「非法字符 / 非法的表达式开始」 · Java 块注释里写了 `type */*`，其中的 `*/` 提前闭合注释 · 注释里不写 `*/`，用「通配类型」等文字代替。
+- 2026-11-05 · 批量上传 · 保存卡片后第二张图片 429 · 媒体上传与文字保存共用 400ms 间隔限流桶 · 批量写接口用独立限流桶（限总量与窗口，不设最小间隔）。`建议进用户级`
+- 2026-11-05 · 交付报告 · 报告写「无 JS 错误」但页面重载即失效 · 用的是 CDP 临时注入的 `window.__errs`，未标注来源 · 报告证据必须注明「产品埋点 / 临时注入 / 模拟」，PASS 项要能在当前环境复现。`建议进用户级`

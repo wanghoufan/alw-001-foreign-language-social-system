@@ -1,5 +1,59 @@
 # Changelog
 
+## 2026-11-05 · V1.6 分角色审查整改（0.9.1 未变版本）
+
+1. **P0 全部关闭**：并发写加随机临时名 + 同路径串行锁；`restore` 在库同 id 返回 409 `RESTORE_CONFLICT`；三类列表/详情渲染封面与图库（blob URL）；上传串行 + 429 重试、失败不关弹层；关于我只保留统一「编辑」入口；详情补「复制中文 / 复制英文 / 分享图片」。
+2. **P1**：PATCH 缺 `revision` → 400 `REVISION_REQUIRED`（前端保存前先取单卡）；`deleteMedia` 只按 mediaId 在卡片目录内匹配；`readMedia` 拒绝符号链接与越界；`draft-en` 需令牌；令牌探测 30s 实例内缓存；媒体限流去掉 200ms 间隔；列表失败显示「离线：显示上次数据 / 读取失败 · 重试」。
+3. **字号**：底部导航 11.5→15px，`.tag/.previewtag/.formlabel/.n05mini`→15px，`.hero p` 13/12→15px；`.cardbottom small` 保持 14px（非关键元信息）。
+4. **测试**：新增 12 条路由/存储用例（并发、恢复冲突、路径穿越、鉴权、媒体、warnings）；后端全量 **158 pass / 0 fail**。
+5. **独立复审**：P0 全部关闭，结论「可发布」（`docs/qa/V1.6-Living-Card-Library/re-review.md`）。
+6. **修正首轮报告不实之处**：测试卡 `v1-6` 实际在回收站（此前写 PASS）；`window.__errs` 是 CDP 临时注入，不是产品埋点；媒体 429 为整改前状态，现连续 3 图已通过。
+7. **仍未交付**：覆盖层前端入口、备份/恢复、相机拍照、393×852、非 WiFi→Tailscale 的 origin 切换验证。
+
+## 2026-11-05 · V1.6 真机验收修复（**0.9.1 / 69**）
+
+1. **表单底部按钮不可见**（真机截图 + 图像审查发现）：新建/编辑表单超过弹窗高度，保存按钮滚到屏幕外。改为操作条 `position:sticky; bottom:0`，中文/英文输入框从 4 行收到 3 行；复审截图中「取消 / 保存 / AI 生成英文草稿」无需滚动即可见。
+2. **相册入口缺失**（真机复测发现）：`FileChooserParams.createIntent()` 在 MIUI 上停「下载内容」，侧栏没有相册。改为给系统选择器：默认「相册」（`ACTION_PICK` + `MediaStore.Images`），备选「文件/文件管理」；真机已见三项，可进相册。
+3. **构建失败记录**：Java 块注释里写了 `type */*`，`*/` 提前结束注释导致 `非法字符`；注释改为「通配类型」后构建通过。
+4. **补充真机验证**：真实停掉 8791（非 fetch 模拟）后打开红城湖，仍显示 1 条记录/19 段与「离线缓存 · 上次同步 18:31」；服务恢复后点「刷新」标记消失。
+5. **版本**：0.9.0/68 → **0.9.1/69**，APK `release/SocialMate-0.9.1-vc69-debug.apk`，SHA-256 `dce4519b53c32a41681346797fe9e92dc2f7c29a578174d4aa2adf5d42dc3e97`。
+
+## 2026-11-05 · V1.6 三大活资料库 MVP（**0.9.0 / 68**）
+
+1. **统一卡片层**：新增 `ai-gateway/private-cards.mjs`，三类卡片（place/story/app）共用新建/读取/编辑/软删/恢复/媒体接口；落 `SocialMate-Data/PrivateCards/{places,stories,apps,trash,overrides,media}`，目录 0700、文件 0600、写前备份、tmp+rename 原子写。
+2. **冲突与恢复**：`revision` 版本号，PATCH 带旧版本返回 409 并回 `currentRevision`；删除只进回收站，可恢复；覆盖层 `overrides/<kind>-<id>.json` 只记改写字段，原 115 地点与内置资料不动。
+3. **媒体**：前端 Canvas 重绘压缩（长边 1600、JPEG 0.82，重绘即剥离 EXIF/位置/方向），服务端校验 base64、magic bytes、边长 ≤4096、单张 ≤6MB，落盘并自动设首张封面。
+4. **三页 UI**：海南、关于我、软件作品统一「＋新建 / 回收站」；表单含中英、分类、标签、状态与图片；列表页保持首屏干净，管理工具只在详情/编辑出现。
+5. **关于我中英直显**：列表卡片中文在前、英文紧随，不折叠、不要求切语言。
+6. **AI 英文草稿**：新增 `POST /api/ai/draft-en`，复用 DeepSeek 账本、consent 与 busy 闸；只填草稿，中文真源不被覆盖，失败仍可单独保存中文。
+7. **原生**：`AsrActivity` 补 `WebChromeClient.onShowFileChooser` + `onActivityResult`，网页 `<input type=file>` 可打开系统相册/文档选择器；不接管 alert/confirm。
+8. **修复**：卡片模块位于 N05 IIFE 内，通过 `window.__smCards` 暴露给 Tab/详情页；冷启动在令牌到达后补拉；媒体上传独立限流（60s/30 次、200ms），避免保存后连传第二张即 429。
+9. **验证**：`private-cards.test.mjs` 7/7；后端全量 146/146；Note 11 真机完成新建→编辑→双图上传→AI 草稿→软删→回收站恢复；未做相机拍照、覆盖层前端入口、备份恢复与 393×852，详见 `docs/plan/ALW001-N05-V1.6-Living-Card-Library/qa/FINAL-REPORT.md`。
+10. **版本**：0.8.32/67 → **0.9.0/68**，APK `release/SocialMate-0.9.0-vc68-debug.apk`，SHA-256 `9a691100787816a3d0a1a0524ed288f2e3c3891eb53a4c29292b9290398049dd`；已 `install -r` 到 Note 11 5G。
+
+## 2026-11-05 · 弱网首屏与地点记录加速（**0.8.32 / 67**）
+
+1. **问题**：不连 WiFi 时进入软件很慢，红城湖游玩记录也要转半天。根因三处：`/v12` 与全部静态资源 `Cache-Control: no-store`，冷启动每次重下 582KB 未压缩页面；地点详情与记录接口同样不缓存，前端只放内存，刷新即丢；手机保存的是局域网地址 `192.168.31.61:8791`，离开 WiFi 后不可达，WebView 要等 TCP 超时才失败。
+2. **服务端**：`/v12`、`/v12/history`、静态白名单改为 `no-cache` + ETag + gzip（`server.mjs` 的 `sendTextCached`）；实测 596,198 → 168,999 字节，内容未变回 304（0 字节）；内容改动后 ETag 变化，仍立即生效。
+3. **前端**：地点详情写 `localStorage['sm.place.cache.v1.<id>']`，先渲染缓存再后台刷新，弱网显示「离线缓存 · 上次同步 本地时间」；私有地点列表写 `sm.privatePlaces.v1`，断网不再退回 115 条。
+4. **原生**：非 WiFi 且配置为局域网地址时自动改用 Tailscale 私有入口（回环地址不动，USB + adb reverse 仍可用），避免等局域网 TCP 超时。
+5. **验证**：Note 11 5G 真机冷启动 `domContentLoaded=295ms`、TTFB 11ms（304 命中）；模拟断网后红城湖仍显示 1 条记录/19 段并标「离线缓存 · 上次同步 2026-11-05 18:31」。
+6. **版本**：0.8.31/66 → **0.8.32/67**，APK `release/SocialMate-0.8.32-vc67-debug.apk`，SHA-256 `ca0a4d03ad6c47d67c45a01de04612ea82c697f189da165b19bdf4e9c952b371`；已 `install -r` 到 Note 11 5G。
+
+## 2026-11-05 · 音色跨网络持久化，缓存命中恢复
+
+1. **问题**：局域网 `http://192.168.31.61:8791` 与 Tailscale `https://…ts.net:8443` 各自一套 localStorage；换网络后朗读音色回默认 Tina，而缓存键包含音色 → 整页缓存失效、重复合成（同一句 94 字符英文 B 当天扣了 5 次 0.0282 元）。
+2. **修复**：新增 `GET/POST /v12/api/prefs`（`SocialMate-Data/Prefs/ui.json`，仅存 `ttsVoice` / `ttsEngine`，音色白名单 + 写票校验）；页面加载拉取并应用，设置变更回写；播放前最多等 1.5s 让偏好就位。
+3. **验证**：Tailscale 源保存小何 → 刷新后 localStorage 恢复小何；点英文 B 走豆包，账本 79→79 条、¥1.0989 不变（命中缓存）。
+4. 版本仍是 **0.8.31 / 66**，仅网页与服务端改动，无需重装；手机当前 WiFi 关闭、VPN 为 Tailscale，保持不切回。
+
+## 2026-11-05 · 豆包朗读额度 10 元 + 额度不足不再静默换系统声
+
+1. **预算**：`SM_DOUBAO_BUDGET_CNY` 1 → 10（独立账本 `TtsCache/ledger/doubao.json`；改后重启 8791 生效）。原 1 元已花 0.951，新的英文 B 被 402 拦下后静默回退系统 TTS，表现为「播到一半换声」。
+2. **预检**：`startStudyQueue` 开始前按字符本地估算本段成本（0.0003 元/字符），剩余额度不足则不启动并明确提示，避免整段播到一半才发现额度不够。
+3. **硬闸**：`ttsSpeakItem` / `speak` 遇 `TTS_BUDGET_*` 或 `RATE_LIMITED` 停止并提示，不回退原生 TTS；原生仅用于设置里主动选系统语音，或非额度类失败。
+4. **验证**：Note 12T 听英文 B 与听本段 15/15 项均 `engine=doubao`、`native=0`；暂停→已暂停、继续→播放中、停止→待机，无 `TTS_NOT_PLAYING`；滚动 900 后控制栏 `top=56`、高 105px。账本 10 元，已花 1.07，剩 8.93。
+
 ## 2026-11-05 · N05 V1.5.2 聊天录音页压缩与分享卡（**0.8.31 / 66**）
 
 1. **全屏录音页**：录音成功进入 `S.v152.immersive`，隐藏页面标题栏与 5 Tab；单排控制（对象 / 状态 / ⋯ / 停止）；⋯ 含对调说话人、连接方式、诊断、退出全屏；系统返回先退全屏，录音不停。

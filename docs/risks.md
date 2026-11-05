@@ -197,3 +197,27 @@
 - **人物紧凑样式限定 `.pcompact`**：抽屉被其他详情共用，不要在 `.drawerbody` 全局压字号/间距；会话记录用 `<details>` 默认折叠，展开后仍走原链接。
 - **人物档案聚合只读**：`profileSections` 从 `00-profile.md` 派生，不回写；撤回仍按 `factId` 走原接口，人工段落只显示「我补充」且无撤回按钮。章节顺序来自主档 `#` 标题，新增章节无需改前端。
 - **`v152-compact` 必须是独立 `<style>`**：上一块 `v151-realuse` 的 `</style>` 丢失时，整段 v152 CSS 被吞进上一块，样式虽多数生效但沉浸高度选择器异常；改动样式块后先确认 `document.querySelectorAll('style')` 中有 `v152-compact`。
+## N05 V1.5.2 增补 · 预算与偏好（2026-11-05 下午）
+
+- **额度不足不得静默换声**：豆包 `TTS_BUDGET_EXHAUSTED` / `RATE_LIMITED` 必须停止并给提示，禁止回退系统 TTS（用户已要求统一豆包声线）；只有设置里显式选「系统语音」才走原生。
+- **预算上限不得擅改**：当前 10 元（2026-11-05 用户同意由 1 元上调）；本地账本是估算，真实账单以火山控制台为准。
+- **偏好不能只靠 localStorage**：局域网与 Tailscale 是两个源，音色重置会改缓存键并触发重复计费；必须走 `/v12/api/prefs`，文件 `SocialMate-Data/Prefs/ui.json`（已 gitignore）。
+- **prefs 写接口只认白名单**：只接受三个音色 ID 与 `doubao|system`；新增字段先加服务端白名单，不得透传任意 JSON。
+- **项目级 skill 强制**：凡改 WebView 连续音频（朗读队列、播放/暂停、控制栏），必须先调 `webview-media-control-guard-local-zh` 并出三项回执。
+## 缓存与弱网（2026-11-05 新增）
+
+- **不要改回 `no-store`**：`/v12` 是 582KB 单页，`no-store` 会让离开 WiFi 的冷启动每次重下整页；当前 `no-cache` + ETag 已保证不拿旧页面，改完好立即生效（内容变 → ETag 变 → 200）。
+- **若改强缓存必须加版本穿透**：任何 `max-age` 都必须配合 `?v=<build>`，否则真机 WebView 会长期拿旧 JS（本轮前踩过）。
+- **线上地点缓存只读展示**：`sm.place.cache.v1.*` 是展示副本，写操作仍必须走服务端；不得把缓存当权威数据或据此判断保存成功。
+- **非 WiFi 自适应不是万能**：自动切 Tailscale 依赖手机已登录并开启 Tailscale；不可达时仍会失败，界面应给出提示，不得写成「离网可用」。
+- **缓存里可能含私有内容**：地点详情含游玩记录与原文，只存本机 WebView localStorage，不进公开 PWA；清缓存会丢展示副本，但服务端数据不受影响。
+## V1.6 活资料库（2026-11-05 新增）
+
+- **卡片写接口必须双闸**：`peopleToken` + `requireWriteAuth`（同源 + 一次性写票），不得新增无令牌写入口。
+- **删除只做软删**：进 `trash/`，列表接口默认不返回；硬删需人工处理，代码里不提供批量清空。
+- **覆盖层不得改源数据**：用户改写 115 地点/内置软件只落 `overrides/<kind>-<id>.json`；`places-115.json` 与 `D.apps` 基线保持只读。
+- **媒体校验在服务端**：前端压缩只是体验优化，服务端仍必须校验 base64、magic bytes、边长与 6MB 上限。
+- **卡片模块在 IIFE 内**：外部脚本只能调 `window.__smCards`；直接引用函数名会报 `is not defined`（本轮已踩过）。
+- **删除确认不能用 `confirm`**：App WebView 会自动取消 `window.confirm`，必须用页内二次确认按钮。
+- **图片显示要带令牌**：`/v12/media/*` 需 `x-archive-token`，`<img src>` 直链会 401，必须 fetch 成 blob URL。
+- **AI 草稿不是原文**：`draft-en` 只产出草稿，不得自动覆盖用户英文或当成用户已确认内容。

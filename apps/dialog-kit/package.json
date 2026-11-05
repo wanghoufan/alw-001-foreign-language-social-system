@@ -1,0 +1,14 @@
+{
+  "name": "@alw/dialog-kit",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "四类代理、七个阶段、实体关系与置信度确认的中文对话教学演示。",
+  "scripts": {
+    "start": "node app/server.mjs",
+    "test": "node --test tests/*.test.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

@@ -6,6 +6,7 @@
 import http from "node:http";
 import fs from "node:fs/promises";
 import path from "node:path";
+import zlib from "node:zlib";
 import {fileURLToPath} from "node:url";
 import {analyze,AiError,status,PROVIDERS} from "./core.mjs";
 import {liveAsrHub} from "./live-asr-hub.mjs";
@@ -23,6 +24,7 @@ import {claimPairing,isLoopback,issuePairingCode,listDevices,pairingCodeStatus,r
 import {createManualFactsStore} from "./manual-facts.mjs";
 import {callDeepSeekMatch,createPlaceNotesStore} from "./place-notes.mjs";
 import {createPrivatePlaces} from "./private-places.mjs";
+import {CardError, createPrivateCards} from "./private-cards.mjs";
 import {createPracticeReportsStore} from "./practice-reports.mjs";
 import {createLearningArchive} from "./learning-archive.mjs";
 import {assertPrivacy, createTtsService, normalizeSpeakRequest} from "./tts-providers.mjs";
@@ -39,6 +41,19 @@ const HOST=String(process.env.SOCIALMATE_HOST||"").trim()||"127.0.0.1"; // 局�
 const BUDGET_LIMIT=Math.max(0,Number(process.env.DEEPSEEK_BUDGET_CNY||1));
 const BUDGET_FILE=process.env.DEEPSEEK_BUDGET_FILE||path.join(here,".local","ai-budget.json");
 const RESERVE_CNY=0.01; // one bounded reply cannot exceed this at current rates
+// 界面偏好（朗读音色/引擎）：局域网与 Tailscale 两个访问地址共用同一份，避免换网后音色重置导致缓存全部失效。
+const UI_PREFS_FILE=path.join(repoRoot,"SocialMate-Data","Prefs","ui.json");
+const UI_PREF_VOICES=new Set(["zh_female_xiaohe_uranus_bigtts","zh_male_m191_uranus_bigtts","zh_female_yingyujiaoxue_uranus_bigtts"]);
+async function readUiPrefs(){
+  try{
+    const parsed=JSON.parse(await fs.readFile(UI_PREFS_FILE,"utf8"));
+    return parsed&&typeof parsed==="object"?parsed:{};
+  }catch{return {};}
+}
+async function writeUiPrefs(next){
+  await fs.mkdir(path.dirname(UI_PREFS_FILE),{recursive:true});
+  await fs.writeFile(UI_PREFS_FILE,JSON.stringify(next,null,2),{mode:0o600});
+}
 let budget={spentCny:0,calls:0,updatedAt:null};
 try{budget={...budget,...JSON.parse(await fs.readFile(BUDGET_FILE,"utf8"))};}catch{}
 function budgetStatus(){
@@ -110,6 +125,37 @@ function json(res,code,obj){
   res.writeHead(code,{"Content-Type":"application/json; charset=utf-8","Cache-Control":"no-store",
     "X-Content-Type-Options":"nosniff","Referrer-Policy":"no-referrer"});
   res.end(JSON.stringify(obj));
+}
+/**
+ * 静态文本资源（页面/脚本）的 send：no-cache + ETag + gzip。
+ * 原实现统一 no-store：真机离开 WiFi（蜂窝 + Tailscale）时每次冷启动都要重下 582KB 页面，
+ * 首屏和地点详情明显慢。no-cache 仍要求每次校验，内容没变回 304，改完立即生效的能力不变。
+ */
+const TEXT_CACHE=new Map();
+async function sendTextCached(req,res,filePath,{contentType="text/html; charset=utf-8",csp=""}={}){
+  let st;
+  try{ st=await fs.stat(filePath); }
+  catch{ return json(res,404,{ok:false,code:"NOT_FOUND"}); }
+  let c=TEXT_CACHE.get(filePath);
+  if(!c||c.mtimeMs!==st.mtimeMs||c.size!==st.size){
+    const raw=await fs.readFile(filePath);
+    c={mtimeMs:st.mtimeMs,size:st.size,etag:'"'+sha256Hex(raw).slice(0,16)+'"',raw,gz:null};
+    TEXT_CACHE.set(filePath,c);
+  }
+  const headers={"Content-Type":contentType,"Cache-Control":"no-cache","ETag":c.etag,
+    "Vary":"Accept-Encoding","X-Content-Type-Options":"nosniff"};
+  if(csp)headers["Content-Security-Policy"]=csp;
+
+  if(String(req.headers["if-none-match"]||"")===c.etag){
+    res.writeHead(304,headers);
+    return res.end();
+  }
+  if(String(req.headers["accept-encoding"]||"").includes("gzip")){
+    if(!c.gz)c.gz=zlib.gzipSync(c.raw);
+    headers["Content-Encoding"]="gzip";
+    return res.writeHead(200,headers).end(c.gz);
+  }
+  return res.writeHead(200,headers).end(c.raw);
 }
 const ARCHIVE_HOST="127.0.0.1";
 const ARCHIVE_PORT=Number(process.env.SM_ARCHIVE_PORT||8781);
@@ -185,7 +231,8 @@ const APPLY_WINDOW_MS=60_000, APPLY_MAX=12, APPLY_MIN_GAP_MS=400;
 function createRateLimiter(limits){
   const windowMs=(limits&&limits.windowMs)||APPLY_WINDOW_MS;
   const max=(limits&&limits.max)||APPLY_MAX;
-  const minGapMs=(limits&&limits.minGapMs)||APPLY_MIN_GAP_MS;
+  // minGapMs 显式为 0 时必须生效（`||` 会把它吞成默认 400ms）。
+  const minGapMs=(limits&&limits.minGapMs!==undefined)?limits.minGapMs:APPLY_MIN_GAP_MS;
   let hits=[],lastAt=0;
   return ()=>{
     const now=Date.now();
@@ -230,6 +277,9 @@ export function createHandler(options={}){
   /* N05 V1.3：朗读合成是「多条短请求」型负载，用独立额度（48 次/分钟、最小间隔 150ms）。
      仍然限流，只是不让一轮完整多语队列（15+ 项）被必然拒绝；缓存命中不消耗该额度。 */
   const ttsRateLimit=options.ttsRateLimit||createRateLimiter({windowMs:60000,max:48,minGapMs:150});
+  /* 图片上传与卡片的文字保存走不同节奏：一张卡片保存后常常立刻连传 2–6 张图。
+     媒体只保留每分钟 30 次的总量闸，不再要求最小间隔（0ms），否则连续多图必被 429。 */
+  const mediaRateLimit=options.mediaRateLimit||createRateLimiter({windowMs:60000,max:30,minGapMs:0});
   const writeGuard=options.writeGuard||createWriteGuard();
   /* N05 S2/S3/S5：人物手工补记、私有地点活档案、单段练习复盘。
      存储根目录均可注入（测试用临时目录），生产默认落到 SocialMate-Data 下。 */
@@ -239,6 +289,9 @@ export function createHandler(options={}){
     ...(options.now?{now:options.now}:{})});
   const privatePlaces=options.privatePlaces||createPrivatePlaces(
     options.privatePlacesRoot?{root:options.privatePlacesRoot}:{});
+  /* V1.6 三大活资料库：统一私有卡片层（新建/编辑/软删/恢复/覆盖层/媒体）。 */
+  const privateCards=options.privateCards||createPrivateCards(
+    options.privateCardsRoot?{root:options.privateCardsRoot}:{});
   const learningArchive=options.learningArchive||createLearningArchive({
     ...(options.learningArchiveRoot?{root:options.learningArchiveRoot}:{}),
     projectRoot:repoRoot,
@@ -277,6 +330,26 @@ export function createHandler(options={}){
       return false;
     }
     return true;
+  };
+  /* 归档令牌探测缓存：只在当前 handler 实例内（不落到全局模块变量），TTL 30 秒。
+     只缓存「有效」结果；401 与归档不可达都不缓存，令牌失效能立刻反映到下一次请求。
+     图片墙一屏 12 张图不会再各自打一次 8781。 */
+  const TOKEN_PROBE_TTL_MS=30000;
+  const tokenProbeCache=new Map();
+  const probeArchiveToken=async(token)=>{
+    const now=Date.now();
+    const hit=tokenProbeCache.get(token);
+    if(hit&&hit.expiresAt>now)return {ok:true};
+    if(hit)tokenProbeCache.delete(token);
+    const check=await archive.get("/api/archive/session/__token_probe__",token).catch(()=>null);
+    if(!check)return {ok:false,reason:"unavailable"};
+    if(check.status===401)return {ok:false,reason:"unauthorized"};
+    if(tokenProbeCache.size>=256){
+      for(const [key,value] of tokenProbeCache)if(value.expiresAt<=now)tokenProbeCache.delete(key);
+      if(tokenProbeCache.size>=256)tokenProbeCache.clear();
+    }
+    tokenProbeCache.set(token,{expiresAt:now+TOKEN_PROBE_TTL_MS});
+    return {ok:true};
   };
   return async(req,res)=>{
   try{
@@ -491,6 +564,66 @@ export function createHandler(options={}){
         return json(res,502,{ok:false,code:"PROVIDER_NETWORK",error:"请求模型 API 失败"});
       }finally{clearTimeout(timer);activeRequest=false;}
     }
+    /* V1.6 T4：中文 → 自然英文草稿（活资料库用）。
+       与按需翻译共用 DeepSeek 账本、consent 与 busy 闸；中文真源由调用方保存，AI 失败不阻断。 */
+    if(url.pathname==="/api/ai/draft-en"&&req.method==="POST"){
+      // 花钱接口不能只靠 consent：先校验归档令牌，局域网内任意设备没有令牌就不能消耗预算。
+      const token=String(req.headers["x-archive-token"]||"").trim();
+      if(!token)
+        return json(res,401,{ok:false,code:"TOKEN_REQUIRED",error:"生成英文草稿需要归档访问令牌"});
+      const probe=await probeArchiveToken(token);
+      if(!probe.ok){
+        if(probe.reason==="unavailable")
+          return json(res,503,{ok:false,code:"ARCHIVE_UNAVAILABLE",error:"归档服务未启动或不可达"});
+        return json(res,401,{ok:false,code:"UNAUTHORIZED",error:"归档令牌无效"});
+      }
+      const body=await readPayload(req,20000);
+      if(body?.consent!==true)
+        return json(res,403,{ok:false,code:"CONSENT_REQUIRED",error:"生成英文草稿前需要明确同意"});
+      const text=String(body?.text||"").trim().slice(0,1200);
+      if(!text)return json(res,400,{ok:false,code:"INVALID_INPUT",error:"缺少中文内容"});
+      if(!/[\u3400-\u9fff]/.test(text))return json(res,200,{ok:true,en:text,mode:"passthrough"});
+      const cfg=PROVIDERS.deepseek;
+      const secret=String(process.env[cfg.keyEnv]||"").trim();
+      if(!secret)return json(res,503,{ok:false,code:"PROVIDER_NOT_CONFIGURED",error:"服务端未配置 "+cfg.keyEnv});
+      if(budgetStatus().remainingCny<=RESERVE_CNY)
+        return json(res,402,{ok:false,code:"BUDGET_EXHAUSTED",
+          error:"DeepSeek 授权额度已用尽（上限 "+BUDGET_LIMIT+" 元）",budget:budgetStatus()});
+      if(activeRequest||Date.now()-lastRequestAt<1200)
+        return json(res,429,{ok:false,code:"AI_BUSY",error:"上一轮 AI 尚未结束或请求过于频繁，请稍候"});
+      activeRequest=true;lastRequestAt=Date.now();
+      const startedAt=Date.now();
+      const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),9500);
+      try{
+        const response=await fetch(cfg.url,{method:"POST",signal:controller.signal,
+          headers:{"Content-Type":"application/json",Authorization:"Bearer "+secret},
+          body:JSON.stringify({model:cfg.model,max_tokens:400,stream:false,
+            response_format:{type:"json_object"},thinking:{type:"disabled"},
+            messages:[{role:"system",content:"Turn the user's Simplified Chinese note into natural spoken English (1-2 short sentences). Keep names, places and numbers accurate. Never invent experiences or facts that are not in the Chinese text. Output exactly one JSON object {\"en\":\"English draft\"}. No explanations, no pinyin, no Chinese."},
+              {role:"user",content:text}]})});
+        if(!response.ok){
+          const code=response.status===429?"PROVIDER_LIMIT":response.status===401||response.status===403?"PROVIDER_AUTH":"PROVIDER_ERROR";
+          return json(res,response.status===429?503:502,{ok:false,code,error:"上游 API 返回 HTTP "+response.status});
+        }
+        const data=await response.json();
+        const content=data?.choices?.[0]?.message?.content||"";
+        let parsed=null;
+        try{parsed=JSON.parse(content);}catch{
+          const fenced=content.replace(/^```(?:json)?\s*/i,"").replace(/\s*```$/,"").trim();
+          const match=fenced.match(/\{[\s\S]*\}/);
+          try{parsed=match?JSON.parse(match[0]):null;}catch{parsed=null;}
+        }
+        const en=String(parsed?.en||"").trim().slice(0,1200);
+        if(!en)return json(res,502,{ok:false,code:"INVALID_AI_OUTPUT",error:"上游未返回英文草稿"});
+        try{await recordDeepSeekUsage(data.usage);}
+        catch(error){console.error("[socialmate-ai] budget ledger write failed:",error.message);}
+        return json(res,200,{ok:true,en,provider:"deepseek",model:cfg.model,mode:"real-ai",
+          draft:true,latencyMs:Date.now()-startedAt,usage:data.usage||null,budget:budgetStatus()});
+      }catch(error){
+        if(error?.name==="AbortError")return json(res,504,{ok:false,code:"PROVIDER_TIMEOUT",error:"生成英文草稿超时"});
+        return json(res,502,{ok:false,code:"PROVIDER_NETWORK",error:"请求模型 API 失败"});
+      }finally{clearTimeout(timer);activeRequest=false;}
+    }
     // 会后复盘：读的是已归档原文，因此必须带归档令牌（由归档服务校验，本服务不存储令牌）。
     // mode=local 只用本地规则，0 次外部请求；mode=ai 需要当轮显式同意 + 1 元预算闸。
     if(url.pathname==="/v12/api/review"&&req.method==="POST"){
@@ -551,13 +684,12 @@ export function createHandler(options={}){
         json(res,401,{ok:false,code:"TOKEN_REQUIRED",error:action+"需要归档访问令牌"});
         return null;
       }
-      const check=await archive.get("/api/archive/session/__token_probe__",token).catch(()=>null);
-      if(!check){
-        json(res,503,{ok:false,code:"ARCHIVE_UNAVAILABLE",error:"归档服务未启动或不可达"});
-        return null;
-      }
-      if(check.status===401){
-        json(res,401,{ok:false,code:"UNAUTHORIZED",error:"归档令牌无效"});
+      const check=await probeArchiveToken(token);
+      if(!check.ok){
+        if(check.reason==="unavailable")
+          json(res,503,{ok:false,code:"ARCHIVE_UNAVAILABLE",error:"归档服务未启动或不可达"});
+        else
+          json(res,401,{ok:false,code:"UNAUTHORIZED",error:"归档令牌无效"});
         return null;
       }
       return token;
@@ -731,6 +863,24 @@ export function createHandler(options={}){
     }
     /* ===================== N05 S3：私有地点活档案（LOC01） =====================
        原介绍只读 115 源；私有记录只写 SocialMate-Data/PlaceNotes/<placeId>/records。 */
+    if(url.pathname==="/v12/api/prefs"&&req.method==="GET"){
+      const token=await peopleToken(res,"读取界面设置");
+      if(!token)return;
+      return json(res,200,{ok:true,prefs:await readUiPrefs()});
+    }
+    if(url.pathname==="/v12/api/prefs"&&req.method==="POST"){
+      const token=await peopleToken(res,"保存界面设置");
+      if(!token)return;
+      if(!requireWriteAuth(req,res))return;
+      const body=await readPayload(req,4000);
+      const cur=await readUiPrefs();
+      const next={...cur};
+      if(typeof body?.ttsVoice==="string"&&UI_PREF_VOICES.has(body.ttsVoice))next.ttsVoice=body.ttsVoice;
+      if(body?.ttsEngine==="doubao"||body?.ttsEngine==="system")next.ttsEngine=body.ttsEngine;
+      next.updatedAt=new Date().toISOString();
+      await writeUiPrefs(next);
+      return json(res,200,{ok:true,prefs:next});
+    }
     if(url.pathname==="/v12/api/places/match"&&req.method==="POST"){
       const token=await peopleToken(res,"地点匹配");
       if(!token)return;
@@ -769,6 +919,120 @@ export function createHandler(options={}){
       const body=await readPayload(req,16000);
       const created=await privatePlaces.create(body||{});
       return json(res,200,{...created,realPlacesUntouched:true});
+    }
+    /* ===== V1.6 三大活资料库：统一私有卡片层 =====
+       三类卡片共用一套新建/读取/编辑/软删/恢复/媒体接口；115 公开地点与内置资料只读，
+       用户改写只落 overrides/<kind>-<id>.json，可撤销还原。 */
+    if(url.pathname==="/v12/api/cards"&&req.method==="GET"){
+      const token=await peopleToken(res,"读取活资料库");
+      if(!token)return;
+      const kind=String(url.searchParams.get("kind")||"");
+      if(!["place","story","app"].includes(kind))
+        return json(res,400,{ok:false,code:"KIND_INVALID",error:"kind 只能是 place / story / app"});
+      const includeDeleted=url.searchParams.get("includeDeleted")==="1";
+      // 损坏的卡片文件不能静默消失：随列表返回 warnings（同时也打服务端日志）。
+      const warnings=[];
+      const cards=await privateCards.list(kind,{includeDeleted,warnings});
+      const body={ok:true,kind,count:cards.length,cards};
+      if(warnings.length)body.warnings=warnings;
+      return json(res,200,body);
+    }
+    if(url.pathname==="/v12/api/cards"&&req.method==="POST"){
+      const token=await peopleToken(res,"新建活资料卡片");
+      if(!token)return;
+      if(!requireWriteAuth(req,res))return;
+      const limit=rateLimit();
+      if(!limit.ok)
+        return json(res,429,{ok:false,code:"RATE_LIMITED",error:"操作过于频繁，请稍后再试",
+          retryAfterMs:limit.retryAfterMs});
+      const body=await readPayload(req,64000);
+      const card=await privateCards.create(body||{});
+      return json(res,200,{ok:true,card,realPlacesUntouched:true});
+    }
+    if(url.pathname==="/v12/api/cards/stats"&&req.method==="GET"){
+      const token=await peopleToken(res,"读取活资料库统计");
+      if(!token)return;
+      return json(res,200,{ok:true,...await privateCards.stats()});
+    }
+    const cardMatch=url.pathname.match(/^\/v12\/api\/cards\/(place|story|app)\/([a-z0-9][a-z0-9-]{0,63})(?:\/(restore|cover|media)(?:\/(m[a-f0-9]{16}))?)?$/);
+    if(cardMatch){
+      const [,kind,id,action,mediaId]=cardMatch;
+      const write=req.method==="PATCH"||req.method==="DELETE"||req.method==="POST";
+      const token=await peopleToken(res,write?"修改活资料卡片":"读取活资料卡片");
+      if(!token)return;
+      if(write&&!requireWriteAuth(req,res))return;
+      if(req.method==="GET"&&!action){
+        const card=await privateCards.get(kind,id);
+        const override=await privateCards.getOverride(kind,id);
+        return json(res,200,{ok:true,card,override});
+      }
+      if(req.method==="PATCH"&&!action){
+        const limit=rateLimit();
+        if(!limit.ok)
+          return json(res,429,{ok:false,code:"RATE_LIMITED",error:"操作过于频繁，请稍后再试",
+            retryAfterMs:limit.retryAfterMs});
+        const body=await readPayload(req,64000);
+        const card=await privateCards.update(kind,id,{revision:body?.revision,patch:body?.patch||body});
+        return json(res,200,{ok:true,card});
+      }
+      if(req.method==="DELETE"&&!action){
+        if(url.searchParams.get("confirm")!=="1")
+          return json(res,400,{ok:false,code:"CONFIRM_REQUIRED",error:"删除卡片需要 confirm=1"});
+        const limit=rateLimit();
+        if(!limit.ok)
+          return json(res,429,{ok:false,code:"RATE_LIMITED",error:"操作过于频繁，请稍后再试",
+            retryAfterMs:limit.retryAfterMs});
+        const card=await privateCards.softDelete(kind,id);
+        return json(res,200,{ok:true,card,trashed:true});
+      }
+      if(req.method==="POST"&&action==="restore"){
+        const card=await privateCards.restore(kind,id);
+        return json(res,200,{ok:true,card,restored:true});
+      }
+      if(req.method==="POST"&&action==="media"){
+        const limit=mediaRateLimit();
+        if(!limit.ok)
+          return json(res,429,{ok:false,code:"RATE_LIMITED",error:"操作过于频繁，请稍后再试",
+            retryAfterMs:limit.retryAfterMs});
+        const body=await readPayload(req,9*1024*1024);
+        return json(res,200,{ok:true,...await privateCards.addMedia(kind,id,{data:body?.data,mime:body?.mime})});
+      }
+      if(req.method==="DELETE"&&action==="media"&&mediaId){
+        const card=await privateCards.deleteMedia(kind,id,mediaId);
+        return json(res,200,{ok:true,card});
+      }
+      if(req.method==="POST"&&action==="cover"){
+        const body=await readPayload(req,4000);
+        const card=await privateCards.setCover(kind,id,String(body?.mediaId||""));
+        return json(res,200,{ok:true,card});
+      }
+      return json(res,405,{ok:false,code:"METHOD_NOT_ALLOWED"});
+    }
+    const cardOverrideMatch=url.pathname.match(/^\/v12\/api\/cards\/(place|story|app)\/([a-z0-9][a-z0-9-]{0,63})\/override$/);
+    if(cardOverrideMatch){
+      const [,kind,id]=cardOverrideMatch;
+      const token=await peopleToken(res,"改写资料覆盖层");
+      if(!token)return;
+      if(req.method==="GET"){
+        return json(res,200,{ok:true,override:await privateCards.getOverride(kind,id)});
+      }
+      if(!requireWriteAuth(req,res))return;
+      if(req.method==="DELETE"){
+        await privateCards.deleteOverride(kind,id);
+        return json(res,200,{ok:true,restored:true});
+      }
+      const body=await readPayload(req,64000);
+      const override=await privateCards.putOverride(kind,id,body?.values||body||{});
+      return json(res,200,{ok:true,override});
+    }
+    const cardMediaFileMatch=url.pathname.match(/^\/v12\/media\/([a-z0-9][a-z0-9-]{0,63})\/(m[a-f0-9]{16}\.(?:jpg|png|webp))$/);
+    if(cardMediaFileMatch&&req.method==="GET"){
+      const token=await peopleToken(res,"读取卡片图片");
+      if(!token)return;
+      const {buf,mime}=await privateCards.readMedia(cardMediaFileMatch[1],cardMediaFileMatch[2]);
+      return res.writeHead(200,{"Content-Type":mime,
+        "Cache-Control":"private, max-age=86400","X-Content-Type-Options":"nosniff",
+        "Content-Length":String(buf.length)}).end(buf);
     }
     const placeSegmentMatch=url.pathname.match(/^\/v12\/api\/places\/(\d{1,3}|pv-[a-z0-9-]{1,32})\/records\/segment$/);
     if(placeSegmentMatch&&req.method==="POST"){
@@ -1176,17 +1440,15 @@ export function createHandler(options={}){
         "Cache-Control":"no-store","X-Content-Type-Options":"nosniff"}).end(bytes);
     }
     if(url.pathname==="/v12"||url.pathname==="/v12/"){
-      const html=await fs.readFile(path.resolve(proto,"..","socialmate-v1.2","index.html"));
       /* T1-2 第二道闸：frame-src 'none' 让页面连 iframe 都不能建。
          WebView 的 addJavascriptInterface 会暴露给本 WebView 的所有 frame，
          因此「非私有 frame」必须在文档层就不存在，而不是等它加载完再判断。 */
-      return res.writeHead(200,{"Content-Type":"text/html; charset=utf-8",
-        "Cache-Control":"no-store","X-Content-Type-Options":"nosniff",
-        "Content-Security-Policy":
-          "default-src 'self' data: blob:; script-src 'self' 'unsafe-inline' 'unsafe-eval'; "
+      return sendTextCached(req,res,path.resolve(proto,"..","socialmate-v1.2","index.html"),{
+        contentType:"text/html; charset=utf-8",
+        csp:"default-src 'self' data: blob:; script-src 'self' 'unsafe-inline' 'unsafe-eval'; "
           + "style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; "
           + "connect-src 'self'; media-src 'self' blob:; frame-src 'none'; child-src 'none'; "
-          + "object-src 'none'; base-uri 'none'; form-action 'none'"}).end(html);
+          + "object-src 'none'; base-uri 'none'; form-action 'none'"});
     }
     // 海南地点配图：同源静态图片，路径固定为 /v12/img/<city_folder>/<id3>/<file>.webp
     // 只为「地点卡片」服务：白名单后缀 + 禁止 .. 穿越，命中失败直接 404。
@@ -1210,11 +1472,9 @@ export function createHandler(options={}){
     // /v12/history        → 归档历史页（静态壳，不含任何数据）
     // /v12/api/archive/*  → 反代到本机归档接收端（令牌由调用方以请求头携带）
     if(url.pathname==="/v12/history"||url.pathname==="/v12/history/"){
-      const html=await fs.readFile(path.join(here,"archive-history.html"));
-      return res.writeHead(200,{"Content-Type":"text/html; charset=utf-8",
-        "Cache-Control":"no-store","X-Content-Type-Options":"nosniff",
-        "Content-Security-Policy":
-          "default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; connect-src 'self'; img-src 'self' data:; base-uri 'none'; form-action 'none'"}).end(html);
+      return sendTextCached(req,res,path.join(here,"archive-history.html"),{
+        contentType:"text/html; charset=utf-8",
+        csp:"default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; connect-src 'self'; img-src 'self' data:; base-uri 'none'; form-action 'none'"});
     }
     if(url.pathname.startsWith("/v12/api/archive/")){
       await archive.proxy(req,res,url);
@@ -1223,9 +1483,8 @@ export function createHandler(options={}){
     const file=STATIC.get(url.pathname);
     if(!file)return json(res,404,{ok:false,code:"NOT_FOUND"});
     // Fixed allowlist, no directory traversal or dotfiles.
-    const bytes=await fs.readFile(path.join(proto,file));
-    return res.writeHead(200,{"Content-Type":MIME[path.extname(file)]||"application/octet-stream",
-      "Cache-Control":"no-store","X-Content-Type-Options":"nosniff"}).end(bytes);
+    return sendTextCached(req,res,path.join(proto,file),{
+      contentType:MIME[path.extname(file)]||"application/octet-stream"});
   }catch(err){
     if(err instanceof AiError)
       return json(res,err.status,{ok:false,code:err.code,error:err.message});

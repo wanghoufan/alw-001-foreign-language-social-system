@@ -10,8 +10,10 @@ import path from "node:path";
 import test from "node:test";
 
 import {appendPeopleFacts, createPersonFile, listPeople} from "./people-store.mjs";
+import {createPrivatePlaces} from "./private-places.mjs";
 
 const TOKEN = "sm-test-token-0123456789abcdef";
+const PNG_1X1 = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==";
 
 async function makeWorkspace(t) {
   const root = await fs.mkdtemp(path.join(os.tmpdir(), "sm-http-"));
@@ -19,23 +21,40 @@ async function makeWorkspace(t) {
     people: path.join(root, "People"),
     profile: path.join(root, "Profile"),
     favorites: path.join(root, "Favorites"),
+    cards: path.join(root, "PrivateCards"),
+    privatePlaces: path.join(root, "PrivatePlaces"),
+    placeNotes: path.join(root, "PlaceNotes"),
   };
   for (const dir of Object.values(dirs)) await fs.mkdir(dir, {recursive: true});
+  // 115 源文件的临时只读副本：卡片写入不得触碰它。
+  dirs.places115 = path.join(root, "places-115.json");
+  await fs.writeFile(dirs.places115,
+    JSON.stringify(Array.from({length: 115}, (_, index) => ({id: index + 1, cnName: `固定地点${index + 1}`})), null, 2),
+    "utf8");
   const previous = {
     people: process.env.SM_PEOPLE_DIR,
     profile: process.env.SM_PROFILE_DIR,
     favorites: process.env.SM_FAVORITES_DIR,
+    cards: process.env.SM_PRIVATE_CARDS_DIR,
+    privatePlaces: process.env.SM_PRIVATE_PLACES_DIR,
+    places115: process.env.SM_PLACES_FILE,
     noListen: process.env.SM_AI_NO_LISTEN,
   };
   process.env.SM_PEOPLE_DIR = dirs.people;
   process.env.SM_PROFILE_DIR = dirs.profile;
   process.env.SM_FAVORITES_DIR = dirs.favorites;
+  process.env.SM_PRIVATE_CARDS_DIR = dirs.cards;
+  process.env.SM_PRIVATE_PLACES_DIR = dirs.privatePlaces;
+  process.env.SM_PLACES_FILE = dirs.places115;
   process.env.SM_AI_NO_LISTEN = "1";
   t.after(async () => {
     const restore = (key, value) => (value === undefined ? delete process.env[key] : (process.env[key] = value));
     restore("SM_PEOPLE_DIR", previous.people);
     restore("SM_PROFILE_DIR", previous.profile);
     restore("SM_FAVORITES_DIR", previous.favorites);
+    restore("SM_PRIVATE_CARDS_DIR", previous.cards);
+    restore("SM_PRIVATE_PLACES_DIR", previous.privatePlaces);
+    restore("SM_PLACES_FILE", previous.places115);
     restore("SM_AI_NO_LISTEN", previous.noListen);
     await fs.rm(root, {recursive: true, force: true});
   });
@@ -87,7 +106,7 @@ function call(port, pathname, {method = "GET", headers = {}, body = null} = {}) 
 
 async function startServer(t, options = {}) {
   const {createHandler} = await import("./server.mjs");
-  const server = http.createServer(createHandler({archive: options.archive || fakeArchive()}));
+  const server = http.createServer(createHandler({...options, archive: options.archive || fakeArchive()}));
   await new Promise((resolve) => server.listen(0, "127.0.0.1", resolve));
   t.after(() => new Promise((resolve) => server.close(resolve)));
   return {port: server.address().port, server};
@@ -366,4 +385,290 @@ test("P1-02 新建人物：未确认 400、无令牌 401、非法标识 400、�
   assert.equal(again.json.created, false, "重复新建不新增也不覆盖");
   assert.equal(again.json.existing, true);
   assert.deepEqual((await fs.readdir(dirs.people)).sort(), ["new-friend"]);
+});
+/* ===================== V1.6 活资料库：卡片 / 媒体 / draft-en 路由 ===================== */
+
+/** 卡片写操作不验证限流节奏，避免测试被 400ms 最小间隔拖慢或被误判成 429。 */
+const allowAll = () => ({ok: true});
+
+async function writeTicket(port) {
+  const res = await call(port, "/v12/api/demo/write-ticket");
+  assert.equal(res.status, 200, `取写票失败：${res.text}`);
+  return res.json.ticket;
+}
+
+function writeHeaders(port, ticket) {
+  return {
+    origin: `http://127.0.0.1:${port}`,
+    "x-archive-token": TOKEN,
+    "x-sm-write": ticket,
+  };
+}
+
+async function authedWrite(port, pathname, {method = "POST", body = null} = {}) {
+  const ticket = await writeTicket(port);
+  return call(port, pathname, {method, headers: writeHeaders(port, ticket), body});
+}
+
+async function createCard(port, input) {
+  const res = await authedWrite(port, "/v12/api/cards", {body: input});
+  assert.equal(res.status, 200, `建卡失败：${res.text}`);
+  return res.json.card;
+}
+
+test("V1.6 卡片路由负例：无令牌 401、无写票 403、非法 kind 400、不存在 404、删除缺 confirm 400", async (t) => {
+  await makeWorkspace(t);
+  const {port} = await startServer(t);
+  const tokenHeaders = {"x-archive-token": TOKEN};
+
+  const noToken = await call(port, "/v12/api/cards?kind=app");
+  assert.equal(noToken.status, 401);
+  assert.equal(noToken.json.code, "TOKEN_REQUIRED");
+
+  // 有令牌但没带一次性写票：必须先被挡在写授权层，且不能落盘。
+  const noTicket = await call(port, "/v12/api/cards", {
+    method: "POST",
+    headers: {...tokenHeaders, origin: `http://127.0.0.1:${port}`},
+    body: {kind: "app", title: "无票", cn: "无票"},
+  });
+  assert.equal(noTicket.status, 403);
+  assert.equal(noTicket.json.code, "WRITE_TICKET_REQUIRED");
+  const untouched = await call(port, "/v12/api/cards?kind=app", {headers: tokenHeaders});
+  assert.equal(untouched.status, 200);
+  assert.equal(untouched.json.count, 0, "无写票的请求不能写入卡片");
+
+  const badKind = await call(port, "/v12/api/cards?kind=people", {headers: tokenHeaders});
+  assert.equal(badKind.status, 400);
+  assert.equal(badKind.json.code, "KIND_INVALID");
+
+  const missing = await call(port, "/v12/api/cards/app/no-such-card", {headers: tokenHeaders});
+  assert.equal(missing.status, 404);
+  assert.equal(missing.json.code, "CARD_NOT_FOUND");
+
+  const noConfirm = await authedWrite(port, "/v12/api/cards/app/no-such-card", {method: "DELETE"});
+  assert.equal(noConfirm.status, 400);
+  assert.equal(noConfirm.json.code, "CONFIRM_REQUIRED");
+});
+
+test("V1.6 PATCH revision 契约：缺失 400、旧值 409 带 currentRevision、正确值 200 且 revision+1", async (t) => {
+  const {dirs} = await makeWorkspace(t);
+  const {port} = await startServer(t, {rateLimit: allowAll});
+  const tokenHeaders = {"x-archive-token": TOKEN};
+
+  const card = await createCard(port, {kind: "story", id: "rev-story", title: "版本", cn: "第一版"});
+  assert.equal(card.revision, 1);
+
+  const missing = await authedWrite(port, "/v12/api/cards/story/rev-story",
+    {method: "PATCH", body: {patch: {cn: "缺版本"}}});
+  assert.equal(missing.status, 400);
+  assert.equal(missing.json.code, "REVISION_REQUIRED");
+  assert.equal(missing.json.currentRevision, 1);
+  assert.equal((await call(port, "/v12/api/cards/story/rev-story", {headers: tokenHeaders})).json.card.cn, "第一版");
+
+  const accepted = await authedWrite(port, "/v12/api/cards/story/rev-story",
+    {method: "PATCH", body: {revision: 1, patch: {cn: "第二版"}}});
+  assert.equal(accepted.status, 200);
+  assert.equal(accepted.json.card.revision, 2);
+  assert.equal(accepted.json.card.cn, "第二版");
+
+  const stale = await authedWrite(port, "/v12/api/cards/story/rev-story",
+    {method: "PATCH", body: {revision: 1, patch: {cn: "旧版本写入"}}});
+  assert.equal(stale.status, 409);
+  assert.equal(stale.json.code, "REVISION_CONFLICT");
+  assert.equal(stale.json.currentRevision, 2);
+
+  const next = await authedWrite(port, "/v12/api/cards/story/rev-story",
+    {method: "PATCH", body: {revision: 2, patch: {cn: "第三版"}}});
+  assert.equal(next.status, 200);
+  assert.equal(next.json.card.revision, 3);
+
+  const onDisk = JSON.parse(await fs.readFile(path.join(dirs.cards, "stories", "rev-story.json"), "utf8"));
+  assert.equal(onDisk.revision, 3);
+  assert.equal(onDisk.cn, "第三版");
+});
+
+test("V1.6 软删后同 id 新建再 restore：409 RESTORE_CONFLICT，且新建内容未被覆盖", async (t) => {
+  const {dirs} = await makeWorkspace(t);
+  const {port} = await startServer(t, {rateLimit: allowAll});
+  const tokenHeaders = {"x-archive-token": TOKEN};
+
+  await createCard(port, {kind: "story", id: "restore-clash", title: "原始", cn: "原始内容"});
+  const removed = await authedWrite(port, "/v12/api/cards/story/restore-clash?confirm=1", {method: "DELETE"});
+  assert.equal(removed.status, 200);
+  assert.equal(removed.json.trashed, true);
+
+  const recreated = await createCard(port, {kind: "story", id: "restore-clash", title: "新建", cn: "新建内容"});
+  assert.equal(recreated.revision, 1);
+  assert.equal(recreated.cn, "新建内容");
+
+  const conflict = await authedWrite(port, "/v12/api/cards/story/restore-clash/restore", {method: "POST"});
+  assert.equal(conflict.status, 409);
+  assert.equal(conflict.json.code, "RESTORE_CONFLICT");
+
+  const live = await call(port, "/v12/api/cards/story/restore-clash", {headers: tokenHeaders});
+  assert.equal(live.status, 200);
+  assert.equal(live.json.card.cn, "新建内容", "恢复冲突时不得覆盖同 id 的新卡片");
+  assert.equal(live.json.card.title, "新建");
+
+  const onDisk = JSON.parse(await fs.readFile(path.join(dirs.cards, "stories", "restore-clash.json"), "utf8"));
+  assert.equal(onDisk.cn, "新建内容");
+  assert.equal(onDisk.deletedAt, null);
+});
+
+test("V1.6 媒体：连续上传 3 张不 429、非法数据 400、删除只影响该卡片匹配文件", async (t) => {
+  const {dirs} = await makeWorkspace(t);
+  const {port} = await startServer(t, {rateLimit: allowAll});
+  const tokenHeaders = {"x-archive-token": TOKEN};
+
+  await createCard(port, {kind: "place", id: "media-card", cnName: "海边", cn: "自己的海边"});
+  const mediaDir = path.join(dirs.cards, "media", "media-card");
+
+  const uploaded = [];
+  for (let index = 0; index < 3; index += 1) {
+    // 连续上传，中间不等待：媒体限流不再要求最小间隔，第 2/3 张不得 429。
+    const res = await authedWrite(port, "/v12/api/cards/place/media-card/media",
+      {body: {data: PNG_1X1, mime: "image/png"}});
+    assert.equal(res.status, 200, `第 ${index + 1} 张连续上传被拒：${res.text}`);
+    assert.match(res.json.media.id, /^m[a-f0-9]{16}$/);
+    uploaded.push(res.json.media);
+  }
+  assert.equal(new Set(uploaded.map((item) => item.id)).size, 3, "每次上传都应生成新 mediaId");
+  const cardAfterUpload = (await call(port, "/v12/api/cards/place/media-card", {headers: tokenHeaders})).json.card;
+  assert.equal(cardAfterUpload.media.length, 3);
+  assert.equal(cardAfterUpload.coverMediaId, uploaded[0].id, "第一张成为封面");
+
+  const invalidBase64 = await authedWrite(port, "/v12/api/cards/place/media-card/media",
+    {body: {data: "!!!!", mime: "image/png"}});
+  assert.equal(invalidBase64.status, 400);
+  assert.equal(invalidBase64.json.code, "MEDIA_INVALID");
+
+  const notImage = await authedWrite(port, "/v12/api/cards/place/media-card/media",
+    {body: {data: Buffer.from("definitely not an image").toString("base64"), mime: "image/png"}});
+  assert.equal(notImage.status, 400);
+  assert.equal(notImage.json.code, "MEDIA_TYPE_INVALID");
+
+  // 同目录诱饵文件：删除单张图片时不得连带删除。
+  const decoy = path.join(mediaDir, "decoy-keep.txt");
+  await fs.writeFile(decoy, "必须保留", "utf8");
+  const target = path.join(mediaDir, uploaded[0].file);
+
+  const deleted = await authedWrite(port, `/v12/api/cards/place/media-card/media/${uploaded[0].id}`, {method: "DELETE"});
+  assert.equal(deleted.status, 200);
+  assert.equal(deleted.json.card.media.length, 2);
+  await assert.rejects(() => fs.stat(target), (err) => err.code === "ENOENT", "被删图片应真正移除");
+  assert.equal(await fs.readFile(decoy, "utf8"), "必须保留", "同目录诱饵文件不得被删除");
+  assert.equal((await fs.readdir(mediaDir)).includes("decoy-keep.txt"), true);
+});
+
+test("V1.6 并发写同一卡片：5 次 PATCH 不丢写、落盘与最终响应一致、无 ENOENT", async (t) => {
+  const {dirs} = await makeWorkspace(t);
+  const {port} = await startServer(t, {rateLimit: allowAll});
+  const tokenHeaders = {"x-archive-token": TOKEN};
+
+  await createCard(port, {kind: "story", id: "race-card", title: "并发", cn: "起点"});
+
+  const successes = [];
+  const failures = [];
+  const worker = async (workerId) => {
+    for (let attempt = 0; attempt < 15; attempt += 1) {
+      const current = await call(port, "/v12/api/cards/story/race-card", {headers: tokenHeaders});
+      if (current.status !== 200) {
+        failures.push({status: current.status, code: current.json?.code, text: current.text});
+        return;
+      }
+      const res = await authedWrite(port, "/v12/api/cards/story/race-card", {
+        method: "PATCH",
+        body: {revision: current.json.card.revision,
+          patch: {cn: `worker-${workerId}-attempt-${attempt}`, tags: [`w${workerId}`]}},
+      });
+      if (res.status === 200) {
+        successes.push(res.json.card);
+        return;
+      }
+      if (res.status === 409) continue;
+      failures.push({status: res.status, code: res.json?.code, text: res.text});
+      return;
+    }
+    failures.push({status: 0, code: "RETRY_EXHAUSTED"});
+  };
+
+  await Promise.all(Array.from({length: 5}, (_, index) => worker(index)));
+
+  assert.equal(failures.length, 0, `并发写出现非 409 失败：${JSON.stringify(failures)}`);
+  assert.equal(successes.length, 5, "每次带当前 revision 的重试都应最终成功");
+  const expectedRevision = 1 + successes.length;
+  assert.equal(Math.max(...successes.map((card) => card.revision)), expectedRevision);
+
+  const finalCard = (await call(port, "/v12/api/cards/story/race-card", {headers: tokenHeaders})).json.card;
+  assert.equal(finalCard.revision, expectedRevision);
+  const winner = successes.find((card) => card.revision === expectedRevision);
+  assert.ok(winner, "必须有一条响应对应最终 revision");
+  assert.equal(finalCard.cn, winner.cn, "接口返回值必须与最终落盘内容一致");
+  assert.deepEqual(finalCard.tags, winner.tags);
+
+  const onDisk = JSON.parse(await fs.readFile(path.join(dirs.cards, "stories", "race-card.json"), "utf8"));
+  assert.equal(onDisk.revision, expectedRevision);
+  assert.equal(onDisk.cn, winner.cn, "磁盘内容必须与最后一次成功响应一致");
+  assert.deepEqual(onDisk.tags, winner.tags);
+});
+
+test("V1.6 draft-en：无令牌 401，有令牌但未同意 403", async (t) => {
+  await makeWorkspace(t);
+  const {port} = await startServer(t);
+
+  const noToken = await call(port, "/api/ai/draft-en",
+    {method: "POST", body: {consent: true, text: "今天在海边散步。"}});
+  assert.equal(noToken.status, 401);
+  assert.equal(noToken.json.code, "TOKEN_REQUIRED");
+
+  const noConsent = await call(port, "/api/ai/draft-en",
+    {method: "POST", headers: {"x-archive-token": TOKEN}, body: {text: "今天在海边散步。"}});
+  assert.equal(noConsent.status, 403);
+  assert.equal(noConsent.json.code, "CONSENT_REQUIRED");
+});
+
+test("V1.6 卡片列表私有隔离：不含 PrivatePlaces 旧数据，也不改 115 源文件", async (t) => {
+  const {dirs} = await makeWorkspace(t);
+  const privatePlaces = createPrivatePlaces({root: dirs.privatePlaces});
+  const legacy = await privatePlaces.create({confirm: true, cnName: "红城湖", enName: "Hongcheng Lake"});
+  assert.equal(legacy.created, true);
+
+  const beforeText = await fs.readFile(dirs.places115, "utf8");
+  const beforeStat = await fs.stat(dirs.places115);
+
+  const {port} = await startServer(t, {rateLimit: allowAll});
+  const card = await createCard(port, {kind: "place", id: "isolation-place", cnName: "私有海边", cn: "自己的地点"});
+  assert.equal(card.kind, "place");
+
+  const list = await call(port, "/v12/api/cards?kind=place", {headers: {"x-archive-token": TOKEN}});
+  assert.equal(list.status, 200);
+  const ids = list.json.cards.map((item) => item.id);
+  assert.deepEqual(ids, ["isolation-place"], "卡片列表只应来自私有卡片目录");
+  assert.equal(ids.includes(legacy.place.id), false, "卡片列表不得混入 PrivatePlaces 旧数据");
+  assert.equal(ids.includes("12"), false, "卡片列表不得混入 115 源地点");
+  assert.equal(list.json.cards.every((item) => item.private === true), true);
+
+  const afterText = await fs.readFile(dirs.places115, "utf8");
+  const afterStat = await fs.stat(dirs.places115);
+  assert.equal(afterText, beforeText, "115 源文件内容不得被修改");
+  assert.equal(afterStat.mtimeMs, beforeStat.mtimeMs, "115 源文件 mtime 不得变化");
+  assert.deepEqual((await fs.readdir(dirs.cards)).sort(), ["places"], "只应写入临时 PrivateCards 目录");
+});
+
+test("V1.6 卡片列表：坏 JSON 返回 warnings，好卡片照常返回", async (t) => {
+  const {dirs} = await makeWorkspace(t);
+  const {port} = await startServer(t, {rateLimit: allowAll});
+
+  await createCard(port, {kind: "app", id: "good-card", title: "好卡片", cn: "正常"});
+  await fs.mkdir(path.join(dirs.cards, "apps"), {recursive: true});
+  await fs.writeFile(path.join(dirs.cards, "apps", "broken-card.json"), "{not json", "utf8");
+
+  const list = await call(port, "/v12/api/cards?kind=app", {headers: {"x-archive-token": TOKEN}});
+  assert.equal(list.status, 200);
+  assert.equal(list.json.count, 1, "坏文件不能拖垮整张列表");
+  assert.equal(list.json.cards[0].id, "good-card");
+  assert.ok(Array.isArray(list.json.warnings), "坏 JSON 必须回报 warnings");
+  assert.equal(list.json.warnings.length, 1);
+  assert.equal(list.json.warnings[0].file, "broken-card.json");
+  assert.equal(list.json.warnings[0].kind, "app");
 });

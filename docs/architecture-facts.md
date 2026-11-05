@@ -220,3 +220,29 @@
 - **人物详情**：`getPersonDetail()` 返回 `profileSections`（按 `00-profile.md` 的 `# 章节` 合并 confirmed 与 manualEntries）；前端顶部「基本档案」→「见面前准备」→「会话记录」，旧 facts/manual 仅在无新字段时回退。
 - **真机**：Note 11 5G 393×791；A/B/C/D/E/F 通过（TTS 回环录音）；归档 6/6、201、pending 0；继续录音 1/1；D3 档案未写；人物详情区块顺序正确。
 - **证据**：`docs/plan/ALW001-N05-V1.5.2-Chat-Compact-Layout/qa/QA-REPORT.md`、`qa/t10-device/`。
+## N05 V1.5.2 增补 · 偏好持久化与预算（2026-11-05 下午）
+
+- **界面偏好跨网络**：新增 `GET/POST /v12/api/prefs`（`x-archive-token` 必填，写需写票），落盘 `SocialMate-Data/Prefs/ui.json`（0600），只收 `ttsVoice`（三个可读中英音色白名单）与 `ttsEngine`（`doubao|system`）；页面加载后 200ms 拉取并回写 localStorage，设置变更即 POST。用途：局域网 `http://…:8791` 与 Tailscale `https://…:8443` 各自一套 localStorage，换网后音色重置会改变缓存键、整页重复合成。
+- **豆包预算**：`SM_DOUBAO_BUDGET_CNY` 由 1 调到 10（用户 2026-11-05 同意），账本 `TtsCache/ledger/doubao.json` 未重置；剩余额度读 `GET /v12/api/tts/providers` 的 `providerBudgets.doubao`。
+- **不静默回退**：`speak()` 与 N05 `ttsSpeakItem()` 在 `ttsEngine!=system` 时，遇 `TTS_BUDGET_*` / `RATE_LIMITED` / 其它豆包失败即停止并给提示，不再自动切原生 TTS；原生只用于设置里显式选「系统语音」。
+
+## 独立应用 · apps/dialog-kit（2026-11-05）
+
+- 纯本地中文对话教学最小项目：Node 20+、零依赖，`make test` / `make run`，默认 `127.0.0.1:4190`；运行时数据 `apps/dialog-kit/data/runtime/`（已 gitignore）。
+- 四类角色（mia/maria/daniel/tutor）+ 七阶段（问候→定题→澄清→角色扮演→反馈→巩固→收束）；`POST /api/dialog/rewind` 只回退阶段、不删历史事件；不调用外部模型或网络服务。
+## 缓存与弱网（2026-11-05，0.8.32/67）
+
+- **页面/静态资源**：`server.mjs` 的 `sendTextCached` 统一处理 `/v12`、`/v12/history` 与 STATIC 白名单；响应 `Cache-Control: no-cache` + `ETag`（内容 sha256 前 16 位）+ `Vary: Accept-Encoding`，命中 `If-None-Match` 回 304；`Accept-Encoding` 含 gzip 时压缩。内存缓存按 mtime+size 失效，改文件即换 ETag。实测 596,198 → 168,999 字节。
+- **接口**：`json()` 仍 `no-store`，API 不做 HTTP 缓存；离线能力由前端 localStorage 承担。
+- **前端离线缓存**：地点详情 `sm.place.cache.v1.<placeId>`（`{savedAt,detail}`），`loadPlace` 先渲染缓存再后台刷新；私有地点 `sm.privatePlaces.v1`；缓存时间用 `smLocalStamp` 按本地时区显示。
+- **原生地址自适应**：`AsrActivity.effectiveUiBase()` 在非 WiFi 且配置为 RFC1918 局域网地址时改用 `TRAVEL_UI_URL`；回环地址不替换（USB + adb reverse 保留）。
+- **注意**：`/v12` 无版本号参数，靠 ETag 校验保证不拿旧页面；若以后改成强缓存（max-age），必须同步加 `?v=<build>` 版本穿透。
+## V1.6 三大活资料库（2026-11-05，0.9.0/68）
+
+- 模块 `ai-gateway/private-cards.mjs`；存储 `SocialMate-Data/PrivateCards/{places,stories,apps,overrides,trash,media}`，目录 0700、文件 0600、写前 `.sm-backup`、tmp+rename 原子写。
+- API：`GET/POST /v12/api/cards`、`GET/PATCH/DELETE /v12/api/cards/<kind>/<id>`、`/restore`、`/media`、`/cover`、`/override`、`GET /v12/api/cards/stats`、`GET /v12/media/<cardId>/<file>`；全部需 `x-archive-token`，写操作另需 `x-sm-write` 写票。
+- 并发：卡片带 `revision`，PATCH 带旧值返回 409 `REVISION_CONFLICT` 与 `currentRevision`；删除为软删（`trash/`），可恢复。
+- 媒体：前端 Canvas 重绘压缩（长边 1600、JPEG 0.82，重绘即剥离 EXIF/方向），服务端校验 base64/magic/边长 ≤4096/≤6MB；`<img>` 不能带头取图，前端用带令牌 `fetch` + blob URL。
+- AI：`POST /api/ai/draft-en`，`consent:true` 必填，复用 DeepSeek 账本与 `AI_BUSY` 闸，只返回草稿。
+- 前端桥：卡片模块位于 N05 的 IIFE 内，页面其它脚本通过 `window.__smCards` 调用；令牌注入后由 `__smAfterToken` 补拉三类卡片。
+- 原生：`AsrActivity` 注册 `WebChromeClient` 仅覆盖 `onShowFileChooser`，`onActivityResult` 用 `FileChooserParams.parseResult` 回传；不接管 alert/confirm。

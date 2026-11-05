@@ -7,9 +7,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.Network;
+import android.net.NetworkCapabilities;
 import android.net.Uri;
 import android.webkit.DownloadListener;
 import android.webkit.JavascriptInterface;
+import android.webkit.ValueCallback;
+import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -23,6 +26,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
 import android.os.SystemClock;
+import android.provider.MediaStore;
 import android.view.View;
 import android.view.WindowInsets;
 import android.view.WindowManager;
@@ -111,6 +115,9 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
     private View sheetScrim;
     private LinearLayout advancedTools;
     private WebView socialMateWebView;
+    /** V1.6 图片上传：网页 <input type="file"> 的系统选择器回调（仅相册/文档，不接管其它 JS 对话框）。 */
+    private ValueCallback<Uri[]> fileChooserCallback;
+    private static final int REQUEST_FILE_CHOOSER = 4102;
     private CheckBox recordingConsent;
     private EditText urlInput;
     private EditText suggestInput;
@@ -750,6 +757,50 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
             settings.setJavaScriptCanOpenWindowsAutomatically(false);
             settings.setSupportMultipleWindows(false);
             settings.setMixedContentMode(WebSettings.MIXED_CONTENT_NEVER_ALLOW);
+            /* V1.6 图片上传：只补 onShowFileChooser，让网页的 <input type="file"> 能打开系统
+               相册/文档选择器；App 仍不接管 alert/confirm 等其它 JS 对话框（行为与之前一致）。 */
+            socialMateWebView.setWebChromeClient(new WebChromeClient() {
+                @Override public boolean onShowFileChooser(WebView view, ValueCallback<Uri[]> callback,
+                                                           FileChooserParams params) {
+                    if (fileChooserCallback != null) fileChooserCallback.onReceiveValue(null);
+                    fileChooserCallback = callback;
+                    try {
+                        Intent intent = params.createIntent();
+                        /* accept="image/*" 时要明确把类型收窄到图片：默认 createIntent() 在部分 MIUI
+                           上会打开「下载内容」（通配类型），用户找不到相册入口。 */
+                        String[] types = params.getAcceptTypes();
+                        boolean wantsImage = types == null || types.length == 0;
+                        if (types != null) {
+                            for (String type : types) {
+                                if (type != null && type.toLowerCase(Locale.US).startsWith("image/")) {
+                                    wantsImage = true;
+                                    break;
+                                }
+                            }
+                        }
+                        if (wantsImage) {
+                            intent.setType("image/*");
+                            boolean multiple = params.getMode() == FileChooserParams.MODE_OPEN_MULTIPLE;
+                            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, multiple);
+                            /* MIUI 的 DocumentsUI 默认停在「下载内容」，侧栏没有相册入口；
+                               统一给一个选择器：默认「图库」（ACTION_PICK 直接进相册），备选「文件」。 */
+                            Intent gallery = new Intent(Intent.ACTION_PICK,
+                                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                            gallery.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, multiple);
+                            Intent chooser = Intent.createChooser(gallery, "选择图片");
+                            chooser.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{intent});
+                            startActivityForResult(chooser, REQUEST_FILE_CHOOSER);
+                        } else {
+                            startActivityForResult(intent, REQUEST_FILE_CHOOSER);
+                        }
+                        return true;
+                    } catch (Exception e) {
+                        fileChooserCallback = null;
+                        setExportStatus("无法打开图片选择器：" + e.getMessage());
+                        return false;
+                    }
+                }
+            });
             // 只有一个 WebViewClient：URL 白名单、桥的挂载/撤销、令牌注入都在这里，
             // 避免第二次 setWebViewClient 把安全回调整个覆盖掉（N04 V1.3 T1-2 缺陷根因）。
             socialMateWebView.setWebViewClient(new WebViewClient() {
@@ -845,7 +896,7 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
                     handleWebDownload(url, contentDisposition);
                 }
             });
-            // 不注册 WebChromeClient：没有 onShowFileChooser，网页无法触发系统文件选择器；
+            // 只有一个 WebViewClient：URL 白名单、桥的挂载/撤销、令牌注入都在这里，
             // 导出统一走 DownloadListener + SAF（ACTION_CREATE_DOCUMENT，用户显式选位置）。
             // 首次加载的目标恒为私有 origin，因此在 loadUrl 之前挂桥：
             // WebView 的 Java 桥只在文档创建时注入，事后再 add 对已存在文档无效（实测）。
@@ -897,14 +948,68 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
         }
     }
 
-    /** 配置的聊天页基地址；默认本机，可改为 Tailscale HTTPS。 */
-    private String privateUiBase() {
+    /** 配置的聊天页基地址（原样，未做网络适配）；默认本机，可改为 Tailscale HTTPS。 */
+    private String rawUiBase() {
         String value = config.getString("ui_url", PRIVATE_UI_URL);
         if (value == null) value = PRIVATE_UI_URL;
-        value = value.trim();
-        while (value.endsWith("/")) value = value.substring(0, value.length() - 1);
-        if (value.endsWith("/v12")) value = value.substring(0, value.length() - 4);
-        return value;
+        return normalizeBase(value);
+    }
+
+    private static String normalizeBase(String value) {
+        String v = value == null ? "" : value.trim();
+        while (v.endsWith("/")) v = v.substring(0, v.length() - 1);
+        if (v.endsWith("/v12")) v = v.substring(0, v.length() - 4);
+        return v;
+    }
+
+    /**
+     * 离开 WiFi 且配置的是局域网地址时，局域网 IP 必然不可达；继续用它会让 WebView
+     * 等 TCP 超时（真机表现为「进软件加载半天」）。此时直接改用 Tailscale 私有入口；
+     * 回环地址不动（USB + adb reverse 场景仍然可用）。
+     */
+    private String effectiveUiBase() {
+        String base = rawUiBase();
+        if (isOnWifi()) return base;
+        try {
+            String host = Uri.parse(base).getHost();
+            if (isPrivateLanHost(host)) {
+                android.util.Log.i("SocialMateBridge", "off-wifi lan base -> tailscale");
+                return normalizeBase(TRAVEL_UI_URL);
+            }
+        } catch (Exception ignored) { }
+        return base;
+    }
+
+    private static boolean isPrivateLanHost(String host) {
+        if (host == null) return false;
+        if (host.startsWith("192.168.") || host.startsWith("10.")) return true;
+        if (host.startsWith("172.")) {
+            String[] parts = host.split("\\.");
+            if (parts.length >= 2) {
+                try {
+                    int second = Integer.parseInt(parts[1]);
+                    return second >= 16 && second <= 31;
+                } catch (NumberFormatException ignored) { }
+            }
+        }
+        return false;
+    }
+
+    private boolean isOnWifi() {
+        try {
+            ConnectivityManager cm = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+            if (cm == null) return false;
+            Network network = cm.getActiveNetwork();
+            if (network == null) return false;
+            NetworkCapabilities caps = cm.getNetworkCapabilities(network);
+            return caps != null && caps.hasTransport(NetworkCapabilities.TRANSPORT_WIFI);
+        } catch (Exception ignored) {
+            return false;
+        }
+    }
+
+    private String privateUiBase() {
+        return effectiveUiBase();
     }
 
     /** Recording start passes live=1 so the page auto-opens a session and reconnects subtitles after refresh. */
@@ -1802,6 +1907,13 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
 
     @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_FILE_CHOOSER) {
+            if (fileChooserCallback != null) {
+                fileChooserCallback.onReceiveValue(WebChromeClient.FileChooserParams.parseResult(resultCode, data));
+                fileChooserCallback = null;
+            }
+            return;
+        }
         if (requestCode != REQUEST_SAVE_TEXT) return;
         String name = pendingSaveName;
         String body = pendingSaveText;

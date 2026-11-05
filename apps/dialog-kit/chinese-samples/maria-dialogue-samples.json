@@ -1,0 +1,119 @@
+{
+  "source": "本地等价教学夹具",
+  "route": "zh",
+  "events": [
+    {
+      "type": "stage",
+      "stage": "greet",
+      "actors": ["mia", "me"],
+      "content": "美玲，好久不见。你最近还在那家跨境电商公司做东南亚市场运营吗？",
+      "entities": [
+        {"type": "person", "key": "mia", "label": "陈美玲"},
+        {"type": "project", "key": "cross_border", "label": "跨境电商"}
+      ],
+      "relations": [
+        {"from": "mia", "to": "cross_border", "type": "works_on"}
+      ],
+      "score": null,
+      "confidence": 0.84,
+      "suggestedActions": ["ask_clarify"],
+      "createdAt": "2026-11-04T10:00:00.000Z"
+    },
+    {
+      "type": "stage",
+      "stage": "topic",
+      "actors": ["mia", "me"],
+      "content": "对，还是做 Shopee 和 TikTok Shop 的店铺运营。最近这个 campaign 的 ROI 也要再看一下。",
+      "entities": [
+        {"type": "person", "key": "mia", "label": "陈美玲"},
+        {"type": "project", "key": "shopee", "label": "Shopee 店铺"},
+        {"type": "project", "key": "tiktok_shop", "label": "TikTok Shop"},
+        {"type": "project", "key": "campaign", "label": "营销活动"}
+      ],
+      "relations": [
+        {"from": "mia", "to": "shopee", "type": "works_on"},
+        {"from": "mia", "to": "campaign", "type": "works_on"}
+      ],
+      "score": null,
+      "confidence": 0.88,
+      "suggestedActions": ["practice_phrase"],
+      "createdAt": "2026-11-04T10:01:00.000Z"
+    },
+    {
+      "type": "stage",
+      "stage": "clarify",
+      "actors": ["me", "mia"],
+      "content": "那周末出来走走吧。这周六下午三点，红城湖公园东门，预算两百以内，你看可以吗？",
+      "entities": [
+        {"type": "time", "key": "saturday_3pm", "label": "周六下午三点"},
+        {"type": "place", "key": "hongcheng_park", "label": "红城湖公园"},
+        {"type": "need", "key": "budget_200", "label": "预算两百以内"}
+      ],
+      "relations": [
+        {"from": "me", "to": "hongcheng_park", "type": "located_at"},
+        {"from": "me", "to": "budget_200", "type": "needs"}
+      ],
+      "score": null,
+      "confidence": 0.91,
+      "suggestedActions": ["confirm_relation", "ask_clarify"],
+      "createdAt": "2026-11-04T10:02:00.000Z"
+    },
+    {
+      "type": "stage",
+      "stage": "roleplay",
+      "actors": ["mia", "me"],
+      "content": "可以，两百以内没问题，最好不用门票。我最近还在算搬家的成本，海甸岛那边一室一厅大概三千二。",
+      "entities": [
+        {"type": "person", "key": "mia", "label": "陈美玲"},
+        {"type": "place", "key": "haidian_island", "label": "海甸岛"},
+        {"type": "place", "key": "guoxing_avenue", "label": "国兴大道"},
+        {"type": "need", "key": "no_ticket", "label": "不用门票"}
+      ],
+      "relations": [
+        {"from": "mia", "to": "haidian_island", "type": "located_at"},
+        {"from": "mia", "to": "no_ticket", "type": "needs"}
+      ],
+      "score": null,
+      "confidence": 0.86,
+      "suggestedActions": ["review_history"],
+      "createdAt": "2026-11-04T10:03:00.000Z"
+    },
+    {
+      "type": "stage",
+      "stage": "feedback",
+      "actors": ["tutor", "me"],
+      "content": "先把“预算两百以内”的上限说清楚，再补一句英文确认。",
+      "entities": [
+        {"type": "need", "key": "budget_200", "label": "预算两百以内"},
+        {"type": "need", "key": "three_numbers", "label": "时间、地点、预算三个数字"}
+      ],
+      "relations": [
+        {"from": "me", "to": "three_numbers", "type": "needs"}
+      ],
+      "score": 84,
+      "confidence": 0.9,
+      "suggestedActions": ["practice_phrase"],
+      "createdAt": "2026-11-04T10:04:00.000Z"
+    },
+    {
+      "type": "stage",
+      "stage": "consolidate",
+      "actors": ["system", "me"],
+      "content": "确认人物：陈美玲；地点：红城湖公园；时间：周六下午三点；预算：两百以内。",
+      "entities": [
+        {"type": "person", "key": "mia", "label": "陈美玲"},
+        {"type": "place", "key": "hongcheng_park", "label": "红城湖公园"},
+        {"type": "time", "key": "saturday_3pm", "label": "周六下午三点"},
+        {"type": "need", "key": "budget_200", "label": "预算两百以内"}
+      ],
+      "relations": [
+        {"from": "mia", "to": "hongcheng_park", "type": "located_at"},
+        {"from": "mia", "to": "budget_200", "type": "needs"}
+      ],
+      "score": null,
+      "confidence": 0.95,
+      "suggestedActions": ["confirm_relation"],
+      "createdAt": "2026-11-04T10:05:00.000Z"
+    }
+  ]
+}
