@@ -178,6 +178,17 @@
 - **原资料页同 Activity 内视图**：`S.v152.view='origin'` 不重建会话；期间 final 只进数据不进 DOM，返回后一次性渲染，避免打断图片滚动。
 - **沉浸态与原资料页共用 `sm-immersive`**：`smBack` 退出顺序为 停止弹层 → 分享卡 → 菜单 → 原资料 → 退全屏；改动顺序会导致返回键一次退两层。
 - **沉浸高度不能用 `100dvh` 单条**：真机 WebView 不支持 dvh 且会保留“最后一条”无效声明，使 `height` 回落 auto、建议区撑到 976px；必须先用 `100vh`，再用 `@supports(height:100dvh)` 覆盖。
+- **N05 控制栏吸顶**：`.n05controls` 用 `position:sticky; top:56px`（drawerhead 高度），滚动后固定在顶部；不要改回普通流式，否则第 2 段后无法暂停/停止。
+- **暂停/继续只走 Web Audio**：豆包播放时原生 `pause` 会回 `TTS_NOT_PLAYING`；必须 `AudioContext.suspend()/resume()`，原生仅作回退。
+- **中文整理写回有备份**：只改 `PrivatePlaces/.../records/rec-*.json` 的 `cnSentences`，`sourceText`/英文不变；写前备份 `.bak-20261105-cn`，记录 revision 递增。
+- **对照区不要平铺重复**：`sourceText` 与 `cnSentences` 内容高度重合，必须把原文折叠；中文只渲染一次，末尾短残句标「（原话未完）」，不要拼成完整句或让 A/B 各翻译一遍。英 B 默认折叠。
+- **GPT 练习判定只认一种自然表达**：中文考短语或整段时，说出一种对得上大意的英文即算掌握；英文 A/B、目标短语只作参考，不得要求两种都说或强行使用低频复杂表达（如 `on the edge of the lake`）。
+- **统一音色默认 Tina**：豆包中文/中英混音色可读英文，英文音色（Tim/Dacey/Stokie）读中文会返回空音频；设置页只保留一个「朗读音色」下拉且只列小何/云舟/Tina（可读中英），`smDoubaoSpeak` 不按语言切换 voice；旧 localStorage 若是 Tim/Dacey/Stokie 自动回退 Tina。
+- **切换/停止必须 stop 旧 AudioBufferSource**：否则连续点击会多个音频叠加；`smPlayBuffer` 与 `smqCancel/smqFail/smqFinish` 都要 `smStopAudio()`，旧队列 await 后检查 `SMQ` 再续播。
+- **豆包必须用 Web Audio 连续播放**：`<audio>` 每次新建元素时，WebView autoplay 只允许首次手势，第二项起 `play()` 被 blocked 并回退原生 TTS。必须用 `AudioContext`（首次点击 resume）+ `BufferSource`，播放 Promise 仍带「时长+3s、最少 8s」超时。验收看 `__ttsEngineLog`，不能只看 `speechSynthesis`（App 内不存在）。
+- **队列重启要忽略旧 stopped**：`startStudyQueue` 先 `ttsStop()` 再建新队列，旧 `stopped` 回调会把新队列误判「被系统中断」；启动后 1.5s 内忽略 `stopped`。
+- **朗读按钮不得复用 `data-lang`**：N05 的「听词组/中文/英文 A/B」曾复用 `data-lang`，被界面语言开关先命中，表现为切语言或不播放；必须用 `data-tts-lang`。新增朗读按钮同样处理。
+- **系统语音选项走原生桥**：设置「朗读引擎=系统语音」时 App WebView 没有 `window.speechSynthesis`，由原生 TTS 前台服务播放；不要在页面判断 `speechSynthesis` 是否存在。
 - **豆包 TTS 鉴权是 `X-Api-Key`**：控制台给的是 API Key，不是 AppID+Access Token；旧组合返回 401 `45000010`，`volc.service_type.10035` 返回 403 `45000030`，只有 `X-Api-Key` + `seed-tts-2.0` 为 200。密钥只进 `ai-gateway/.env` 的 `SM_DOUBAO_API_KEY`。
 - **收藏是 toggle**：`saveFavorite()` 先确保 `S.fav.items` 已加载，命中同句则删除；人物页进入时预加载收藏，按钮 ☆/★ 由它决定。服务端仍按英文去重，不会重复插入。
 - **听本段与普通朗读共用 `smDoubaoSpeak`**：N05 队列的 `ttsSpeakItem` 先豆包，成功直接 `smqAdvance`；豆包失败才调原生，避免等待原生回调超时。

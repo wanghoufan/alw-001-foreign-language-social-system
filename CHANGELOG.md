@@ -13,17 +13,40 @@
 9. **验证**：Note 11 5G 真机 393×791 通过 A1–A5、B1–B4、C1–C4、D1–D5、E1–E6、F1–F6；D2 进 `/v12/history`，D3 档案未写，D4/E6 `activeSessions=1`。录音为 TTS 回环（SYNTHETIC），不是真人验收。
 10. **版本**：0.8.30/65 → **0.8.31/66**，APK `release/SocialMate-0.8.31-vc66-debug.apk`，SHA-256 `b8fa8b24c6232aabeab661d7c379ef82f8c5f614c7583163daec669a1903b9a9`；已 `install -r` 到 Note 11 5G 与 Note 12T Pro。
 
+## 2026-11-05 · N05 播放控制吸顶/紧凑、暂停修复、中文整理写回
+
+1. **控制栏吸顶**：倍速/循环/暂停/继续/停止/重试与状态收进 `.n05controls`，`position:sticky; top:56px`；滚到第 2 段以后仍可随时暂停/停止。真机滚动后 `ctrlTop=56`。
+2. **紧凑**：控制区高度压到 **105px**（原占半屏）；按钮 32px 高、13px 字，一行四键。
+3. **暂停/继续修复**：豆包音频改走 Web Audio 的 `suspend()/resume()`，不再调原生 `pause`，消除 `TTS_NOT_PLAYING`。真机暂停/继续/停止均成功。
+4. **中文整理写回**：按用户 A1 只改 `blk-hc-2/4/11/17`——残句标「（原话未完）」、删「知道吗？」「什么的」「嘛」、去掉重复「孤单」；记录 revision 3→4，原文件备份 `.bak-20261105-cn`；其余 15 段不动。
+
+## 2026-11-05 · N05 对照区去重（中文/英文不再重复）
+
+1. **原文折叠**：`sourceText` 收进「原文 [start–end]」`<details>`，默认收起，不再与中文正文平铺重复。
+2. **中文只显示一次**：正文只渲染 `cnSentences`；末尾短残句（如「就是要……」）不再单独成句，统一标「（原话未完）」。
+3. **英 B 折叠**：默认只显示英 A；英 B 收进「另一种说法（英 B）」，且与英 A 相同则不显示。
+4. **真机验证**：第 2/19 段可见中文出现 1 次，原文与英 B 默认收起，中文为「…很舒适。（原话未完）」。
+
+## 2026-11-05 · GPT 练习 Prompt 判定放宽
+
+1. **中文考短语/整段**：只要说出一种自然、对得上中文大意的英文，就算掌握；英文 A/B 与目标短语只作参考，不要求两种都说，也不要求用最复杂的那一种。
+2. **示例写进 Prompt**：「在湖边」说 `by the lake` 即可，不必用 `on the edge of the lake`；另一种表达只作提醒。
+3. **真机验证**：复制 Prompt 含「一种自然」「by the lake」，`window.__n05LastPrompt` 可读到完整规则。
+
 ## 2026-11-05 · 豆包语音合成 2.0 接入（朗读默认豆包，系统 TTS 回退）
 
-1. **适配器**：新增 `tts-adapter-doubao.mjs`，HTTP Chunked `POST /api/v3/tts/unidirectional`；鉴权用 `X-Api-Key` + `X-Api-Resource-Id: seed-tts-2.0`；中文小何 2.0、英文 Tim；30s 超时；错误只带状态码/上游 code，不显文本与密钥。
+1. **适配器**：新增 `tts-adapter-doubao.mjs`，HTTP Chunked `POST /api/v3/tts/unidirectional`；鉴权用 `X-Api-Key` + `X-Api-Resource-Id: seed-tts-2.0`；30s 超时；错误只带状态码/上游 code，不显文本与密钥。
 2. **注册**：`tts-providers.mjs` 新增 `doubao`（云、需显式同意、3 元/万字符、独立账本 `SM_DOUBAO_BUDGET_CNY=1`）；`tts-cache.mjs` 新增 `doubao` 独立账本；server 的 501/402 从写死 aws-polly 泛化为按 `kind==="cloud"` 与 provider 账本。
-3. **修复重复记账**：`synthesize()` 内已记账，路由层又调用 `recordBilling()`，导致同一句记两次（实测 0.0069×2）；改为只在新合成时记账，缓存命中不重复计费。
-4. **前端**：`speak()` 优先豆包合成（首次确认、超 1800 字按句分段、blob 播放），失败回退系统 TTS；`prepare` 等朗读入口共用。
-5. **验证**：中文 38637B、英文 34221B，均为 ID3 MP3；真机红城湖句播放 5.232s 完成；同文本二次 `cacheHit=true`、账本不再增加；累计 0.0069 元 / 23 字。
-6. **音色可切换**：设置页（右上角 ⚙）新增「中文朗读音色 / 英文朗读音色」两个下拉——中文小何 2.0 / 云舟 2.0 / Tina老师 2.0，英文 Tim / Dacey / Stokie；选择即时生效并保存到 `localStorage`（`sm.ttsVoiceZh` / `sm.ttsVoiceEn`）。
-7. **豆包朗读默认开启**：App WebView 会把 `window.confirm` 自动取消，导致 N05 队列的首次确认失败并回退系统 TTS（截图里的「朗读被系统中断」）。现改为 `S.v152.ttsConsent` 默认 `true`，刷新后「听本段 / 循环听词组 / 听中文 / 听英文 A/B」全部直接走豆包，不再弹确认；实测 5.448s 音频播放完成。
-7. **听本段接豆包**：`ttsSpeakItem()` 改 async，先走 `smDoubaoSpeak()`，成功返回 `{ok:true,doubao:true}` 并直接推进队列，失败才回退原生 TTS；`smqSpeakCurrent()` 同步处理豆包完成。实测豆包音频 4.872s 播放完成。
-7. **人物详情可读性**：正文 17px、英文 18px、章节 16px（仍保持紧凑，内容高度 4563→1655）；收藏 ☆ 点一次收藏、再点一次取消（`saveFavorite` 改为 toggle）；收藏列表正文占满 345/367，复制/朗读/取消三个 32px 图标移到正文下方，不再挤压右侧。
+3. **修复重复记账**：`synthesize()` 内已记账，路由层又 `recordBilling()`，同一句记两次；改为只在新合成时记账，缓存命中不重复计费。
+4. **前端**：`speak()` 优先豆包合成（超 1800 字按句分段），失败回退系统 TTS；`prepare` 等入口共用。
+5. **验证**：中文 38637B、英文 34221B，均为 ID3 MP3；同文本二次 `cacheHit=true`、账本不再增加。
+6. **Note 12T 根因修复**：`<audio>` 每次新建元素，WebView autoplay 只允许首次手势，第二项起 `play()` 被 blocked（`__ttsEngineLog` reason=autoplay blocked），全部回退原生 TTS。改用 Web Audio（首次点击 resume `AudioContext`，`BufferSource` 连续播放）后，听本段 15/15、听词组 12/12、英文 A/B、听中文全部 `engine=doubao`。
+7. **验证方法修正**：App WebView 没有 `speechSynthesis`，原生 TTS 走原生桥；新增 `window.__ttsEngineLog` 逐项记录 engine/reason/voice，验收以此为准。
+8. **N05 按钮接豆包**：`听词组 / 听中文 / 听英文 A/B` 复用 `data-lang` 被界面语言开关先命中，统一改为 `data-tts-lang`。
+9. **朗读引擎可切换**：设置页「朗读引擎」= 豆包 2.0（默认）/ 系统语音；选系统时不再调用豆包。`applyLang` 对非法历史值回退 `zh`。
+10. **统一音色（中英一个音色）**：设置页只保留「朗读音色（中英统一）」，默认 Tina老师 2.0；`smDoubaoSpeak` 不再按语言切换 voice。服务端放宽豆包 locale 校验：中文/中英混音色可读英文，英文音色读中文会被上游拒绝。设置页只保留小何/云舟/Tina 三个可读中英的音色，旧的英文音色偏好自动回退 Tina，避免误选后中文回退系统。
+11. **防叠加与循环反馈**：新合成或停止时先 `stop` 旧 `AudioBufferSource`；旧队列 await 后检查 `SMQ` 不再续播。循环按钮点击后高亮 `.on` 并提示「循环播放 N 次」，完成/停止清除。
+12. **豆包朗读默认开启**：App WebView 会自动取消 `window.confirm`，改为 `S.v152.ttsConsent=true`，不再依赖 confirm。
 
 ## 2026-11-05 · 人物详情顶部改为基本档案（页面修复，0.8.31 无需重装）
 

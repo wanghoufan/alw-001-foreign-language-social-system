@@ -29,3 +29,13 @@
 ## 播放队列（2026-11-03）
 
 - 2026-11-03 · 多元素朗读 · 第 13 项 `TTS_REMOTE_REJECTED` · 合成限流按单次朗读设计（12 次/60s），与批量队列冲突 · 朗读拆独立额度（48 次/60s、150ms）；新增限流先按真实批量核对。`建议进用户级`
+
+## 后台朗读（2026-11-04）
+
+- 2026-11-04 · 后台结束回前台 · 队列已跑完，页面仍显示旧进度 · `queue_state` 只回灌 `running=true`，漏了已结束分支 · 状态同步带 `outcome`（finished/stopped/failed）并覆盖三条分支。
+
+## 2026-11-04 真机与建议区（阶段复盘迁出）
+
+- 2026-11-04 · Note 12 Pro 装 APK · `INSTALL_FAILED_USER_RESTRICTED` · MIUI 未允许 USB 安装，改 settings 无效 · 推送后由用户在手机点安装/允许；不要把 adb 绕过写成成功。
+- 2026-11-04 · Note 12 Pro 配对 · 原生高级设置滚不到配对码输入 · 面板滚动被 WebView 内容干扰 · 加内部桥 `SocialMateAndroid.pairDevice(code)`（不暴露 UI），配对后回读 prefs + 服务端 `paired:true`。
+- 2026-11-04 · V1.5 建议区 · 用户读建议时被新 final 抢刷新 · 原 `showRecs()` 每次重建 · `S.suggFreeze` + 「有新的接话建议」徽标，点击才刷新；四方向禁止 `slice(0,1)`。

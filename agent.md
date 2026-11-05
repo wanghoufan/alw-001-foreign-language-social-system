@@ -61,18 +61,14 @@
 
 - 2026-11-04 · 会话开工 · 在 `~/WorkBuddy/<时间戳>` 空目录里找项目，子代理按该 cwd 落盘 · 新建会话默认工作区 ≠ 项目目录，子代理继承父会话 cwd · 开工先确认项目绝对路径，每条子代理提示词写死路径并禁止写项目外目录。`建议进用户级`
 - 2026-11-04 · 无人值守守护 · 归档 watch「一直在跑」却从不扫描 · 手工 `node --watch` 不是 launchd 托管，会话结束即消失 · 定时任务必须 RunAtLoad+KeepAlive 托管，验收回读 `launchctl list` + 本轮扫描时间戳。`建议进用户级`
-- 2026-11-04 · 页面按钮属性 · 点「听词组」弹出「显示与阅读设置」并写坏界面语言 · 朗读按钮复用 `data-lang`，与界面语言开关同名，`closest('[data-lang]')` 先命中 · 语义不同的控件不得复用同名 data 属性，朗读用 `data-tts-lang`。
+- 2026-11-04 · 页面按钮属性 · 点「听词组」弹出「显示与阅读设置」并写坏界面语言 · 朗读按钮复用 `data-lang`，与界面语言开关同名，`closest('[data-lang]')` 先命中 · 语义不同的控件不得复用同名 data 属性，朗读用 `data-tts-lang`；2026-11-05 N05 新按钮复犯，已统一并真机四按钮验证。
 - 2026-11-04 · 原生队列段类型 · 中文词组被英文声线朗读（日志 `lang=en text=晚上散步`） · 按 `kind` 映射 segment 丢了 lang，落到 `phrase → en-US` · 段类型一律由 `lang` 推导（`segmentOfLang`），kind 只做展示。
 - 2026-11-04 · 长任务取证 · 熄屏 45 项无法用 logcat 判完整性 · 休眠后 logcat 丢事件，`-d` 只取缓存 · 长任务由原生写 `files/tts-queue-timeline.jsonl`（事件+时间戳+idx），验收以文件为准。
-- 2026-11-04 · 后台结束回前台 · 队列已跑完，页面仍显示旧进度 · `queue_state` 只回灌 `running=true`，漏了已结束分支 · 状态同步带 `outcome`（finished/stopped/failed）并覆盖三条分支。
 - 2026-11-04 · 归档索引 · 生产索引 thought 43→44 多出一条测试样本 · 子代理验证链路时投了自造文件且未标 fixture · QA 样本必须带 `qa_fixture`，验完 `--remove` + 删文件，并回读 `realTotal/testFixtures`。
 
 ## P066 / 聊天页 V1.5（2026-11-04 阶段复盘）
 
 - 2026-11-04 · P066 流式接 ALW · final 恒为 0、只有 interim · P066 `translate()` 只判外层 `msg.final`，腾讯定稿句子用 `sentence_type=1` · 改为 `sentence_type=1 || msg.final` 双判，并把 final 数量写进验收；改后单段 1、多段 2。`建议进用户级`
-- 2026-11-04 · Note 12 Pro 装 APK · `INSTALL_FAILED_USER_RESTRICTED` · MIUI 未允许 USB 安装，改 settings 无效 · 推送后由用户在手机点安装/允许；不要把 adb 绕过写成成功。
-- 2026-11-04 · Note 12 Pro 配对 · 原生高级设置滚不到配对码输入 · 面板滚动被 WebView 内容干扰 · 加内部桥 `SocialMateAndroid.pairDevice(code)`（不暴露 UI），配对后回读 prefs + 服务端 `paired:true`。
-- 2026-11-04 · V1.5 建议区 · 用户读建议时被新 final 抢刷新 · 原 `showRecs()` 每次重建 · `S.suggFreeze` + 「有新的接话建议」徽标，点击才刷新；四方向禁止 `slice(0,1)`。
 - 2026-11-04 · P066 修 final · 只在本机 `stream-relay.mjs` · 重部署会覆盖 · 保留 `.bak-20261104-finalfix`，验收写死 `sentence_type` 与 final 数。
 
 ## 密钥填写（项目补充）
@@ -94,3 +90,8 @@
 - 2026-11-05 · 收藏 · 第二次点 ☆ 不取消、还要去「关于我」删 · `saveFavorite()` 只 POST 新增，服务端按英文去重返回 duplicate · 改为先查 `S.fav.items` 命中则 DELETE；人物页进入时预加载收藏。`建议进用户级`
 - 2026-11-05 · 人物档案层级 · 顶部是「见面前准备」且开发式文案占屏 · 详情按数据块顺序渲染，没有把主档章节汇总到顶部 · `getPersonDetail()` 返回 `profileSections`，前端按章节密排；开发文案移出。`建议进用户级`
 - 2026-11-05 · 真机旧 JS · 改完前端仍走原生 TTS · WebView 缓存旧 `index.html`，`am start` 不重新加载 · force-stop+start 或 `location.replace(url+'?v='+Date.now())`；核对 innerHTML 含新函数。`建议进用户级`
+- 2026-11-05 · Note 12T 豆包朗读 · 第 2 项起变系统声、重复点击叠加、循环无反馈 · `<audio>` 每次新建元素被 autoplay 拦截；旧 source 未 stop；循环按钮无 `.on` · 改 Web Audio 连续播放、切换前 `smStopAudio`、循环按钮加高亮与提示；统一音色用 Tina（英文音色读中文会空音频）。`建议进用户级`
+- 2026-11-05 · N05 暂停 · 点暂停报 `TTS_NOT_PLAYING` · 豆包走 Web Audio，按钮却调原生 `pause` · 改 `AudioContext.suspend()/resume()`，原生仅回退。`建议进用户级`
+- 2026-11-05 · N05 控制栏 · 滚到第 2 段后无法暂停、控制区占半屏 · 未吸顶且按钮过大 · `position:sticky;top:56px`，压到 105px、一行四键。
+- 2026-11-05 · 中文整理 · 19 段实为原始转写，含口水词/残句 · 只改 blk-2/4/11/17 并备份，revision+1；其余检查后保持原样。
+- 2026-11-05 · 显示改动越权 · 用户没要求却把英 B 折叠 · 不确定的显示改动先不做，只改用户点名的；误改已回退。`建议进用户级`

@@ -227,7 +227,11 @@ export function normalizeSpeakRequest(input = {}) {
     throw fail(400, "LOCALE_NOT_SUPPORTED", "该提供商没有这个 locale 的语音");
   }
   const voiceProfileId = String(input.voiceProfileId || candidates[0].voiceId);
-  const voice = candidates.find((item) => item.voiceId === voiceProfileId);
+  /* 豆包 2.0 的中文/中英混音色可读英文；英文音色读中文会被上游拒绝。
+     因此豆包只校验 voiceProfileId 是否存在，不强制 locale 匹配。 */
+  const voice = providerId === "doubao"
+    ? voices.find((item) => item.voiceId === voiceProfileId)
+    : candidates.find((item) => item.voiceId === voiceProfileId);
   if (!voice) throw fail(400, "UNKNOWN_VOICE", "该提供商没有这个 voiceProfileId（或与 locale 不匹配）");
 
   return {
