@@ -183,11 +183,11 @@ html[data-theme=dark] .tag.warn{background:#3d3220;color:#f0c88a}
 .prep .zh{font-size:var(--reading-meta);color:var(--muted);margin:4px 0 0}
 .prepacts{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
 .prepacts .btn{padding:8px 10px;min-height:44px;flex:1 1 84px}
-.favrow{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--stroke);border-radius:12px;padding:11px 12px;margin-bottom:9px;background:var(--paper)}
-.favrow .favtext{flex:1;min-width:0}
+.favrow{display:block;border:1px solid var(--stroke);border-radius:12px;padding:8px 10px;margin-bottom:7px;background:var(--paper)}
+.favrow .favtext{width:100%;min-width:0}
 .favrow .en{font-size:var(--reading-en);line-height:1.5;margin:0;overflow-wrap:anywhere}
 .favrow .zh{font-size:var(--reading-meta);color:var(--muted);margin:4px 0 0}
-.favacts{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.favacts{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end;margin-top:3px}
 .favacts .btn{padding:8px 10px;min-height:44px}
 .slugbox{border:1px dashed var(--stroke);border-radius:12px;padding:10px 12px;margin:10px 0;font-size:var(--reading-meta);color:var(--muted);line-height:1.6;overflow-wrap:anywhere}
 .slugbox b{color:var(--pine);font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
@@ -457,6 +457,123 @@ html[data-theme=dark] .n05ttsstate[data-state=paused]{background:#3d3220;color:#
  .chatv15 .compose .actions{gap:6px}
  .chatv15 .info{font-size:14px;line-height:1.5}
 }
+</style><style id="v152-compact">
+.chatv15.v152{position:relative;display:flex!important;flex-direction:column;gap:6px}
+.v152bar{display:flex;align-items:center;gap:7px;padding:4px 2px;min-height:54px;flex:0 0 auto}
+.v152person{flex:1;min-width:0;display:flex;align-items:center}
+.v152person select{width:100%;min-height:40px;font-size:16px;font-weight:800;border:0;background:transparent;color:var(--ink);padding:4px 2px;text-overflow:ellipsis}
+.v152state{display:inline-flex;align-items:center;gap:5px;background:var(--soft);color:var(--pine);border-radius:999px;padding:5px 9px;font-size:15px;font-weight:800;white-space:nowrap;flex:0 0 auto;max-width:34vw;overflow:hidden;text-overflow:ellipsis}
+.v152state i{width:7px;height:7px;border-radius:50%;background:#2f9e6a;flex:0 0 auto}
+.v152state[data-state="reconnecting"] i,.v152state[data-state="connecting"] i{background:var(--amber,#a35d18)}
+.v152state[data-state="off"]{background:var(--bg);color:var(--muted)}
+.v152state[data-state="off"] i{background:var(--muted)}
+.v152more{min-width:44px;min-height:44px;border:1px solid var(--stroke);background:var(--paper);border-radius:11px;font-size:20px;line-height:1;color:var(--ink);flex:0 0 auto}
+.v152stop,.v152start{min-height:44px;border:0;border-radius:11px;background:var(--pine);color:#fff;font-size:16px;font-weight:800;padding:0 14px;flex:0 0 auto;white-space:nowrap}
+.v152start{background:var(--pine)}
+.v152subs{flex:0 0 232px;min-height:0;overflow:hidden;display:flex;flex-direction:column;gap:4px;border-bottom:1px solid var(--stroke);padding-bottom:4px}
+.v152msgs{flex:1;min-height:0;overflow-y:auto;display:flex;flex-direction:column;gap:5px;padding:2px 0}
+.v152bubble{background:var(--paper);border:1px solid var(--stroke);border-radius:12px;padding:7px 10px 6px}
+.v152bubble.mine{background:var(--soft)}
+.v152line{display:flex;gap:7px;align-items:flex-start}
+.v152who{flex:0 0 34px;font-size:14px;color:var(--muted);line-height:1.6;padding-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.v152en{flex:1;min-width:0;font-size:19px;line-height:1.35;margin:0;color:var(--ink);overflow-wrap:anywhere}
+.v152tr{flex:0 0 auto;border:0;background:transparent;color:var(--pine);font-size:15px;font-weight:800;min-height:32px;padding:2px 0;text-decoration:underline}
+.v152zh{margin:4px 0 0 41px;font-size:15px;line-height:1.45;color:var(--muted)}
+.v152coach{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding:0 2px 2px 0}
+.v152coach .coachtopic{display:none}
+.v152coach .sgroup{margin:0}
+.v152coach .sgroup h3{font-size:15px;margin:2px 0 2px;display:flex;align-items:baseline;gap:6px;color:var(--pine);font-weight:800}
+.v152coach .sgroup h3 small{font-size:14px;color:var(--muted);font-weight:400}
+.v152card{display:flex;flex-direction:column;gap:2px;margin-bottom:4px;padding:3px 8px 3px;border:1px solid var(--stroke);border-radius:12px;background:var(--paper);min-height:0}
+.v152card .suggtext{font-size:19px!important;line-height:1.25;margin:0;color:var(--ink)}
+.v152card .v152zh{margin:2px 0 0;font-size:15px;color:var(--muted)}
+.v152acts{display:flex;justify-content:flex-end;gap:6px;align-items:center}
+.v152mini{position:relative;border:1px solid var(--stroke);background:var(--paper);border-radius:8px;min-height:30px;padding:0 9px;font-size:15px;line-height:1.2;font-weight:700;color:var(--pine)}
+.v152mini:after,.v152fav:after{content:"";position:absolute;left:0;right:0;top:-7px;bottom:-7px}
+.v152fav{position:relative;border:1px solid var(--stroke);background:var(--paper);border-radius:8px;min-height:30px;min-width:36px;display:grid;place-items:center;font-size:17px;line-height:1;color:var(--amber,#a35d18)}
+.v152fav.on{background:var(--soft);border-color:var(--amber,#a35d18)}
+.v152badgewrap{position:sticky;top:0;z-index:3;display:flex;justify-content:flex-end;padding:0;background:var(--bg)}
+.v152badgewrap .badge{font-size:15px;min-height:36px}
+.v152refs{flex:0 0 auto;display:flex;gap:6px;overflow-x:auto;padding:4px 1px 6px;scrollbar-width:none}
+.v152refs::-webkit-scrollbar{display:none}
+.v152chip{white-space:nowrap;border:1px solid #cddbd2;background:var(--soft);color:var(--pine);border-radius:999px;padding:5px 10px;font-size:15px;min-height:40px;display:inline-flex;align-items:center}
+.v152chip.on{background:var(--pine);color:#fff;border-color:var(--pine)}
+.v152chiptip{font-size:15px;color:var(--muted);padding:6px 2px}
+.v152menubg{position:fixed;inset:0;z-index:19;background:transparent}
+.v152menu{position:absolute;right:10px;top:58px;z-index:20;background:var(--paper);border:1px solid var(--stroke);border-radius:12px;box-shadow:0 8px 22px #10203322;padding:5px;min-width:200px}
+.v152menu button{display:block;width:100%;border:0;background:none;text-align:left;font-size:16px;min-height:44px;padding:0 12px;color:var(--ink);border-radius:8px}
+.v152menu small{display:block;font-size:14px;color:var(--muted);padding:6px 12px 8px}
+.v152scrim{position:fixed;inset:0;background:#102a3577;z-index:34}
+.v152sheet{position:fixed;left:0;right:0;bottom:0;z-index:35;background:var(--paper);border-radius:22px 22px 0 0;padding:14px 15px calc(16px + env(safe-area-inset-bottom));box-shadow:0 -12px 30px #10203333;max-height:76vh;overflow:auto}
+.v152sheet h2{font-size:23px;margin:2px 0 4px;text-align:center}
+.v152sheet h3{font-size:23px;margin:0 0 1px}
+.v152sheet .v152sub{font-size:15px;color:var(--muted);text-align:center;margin:0 0 12px}
+.v152sheet .v152stack{display:flex;flex-direction:column;gap:8px}
+.v152sheet>.v152big{width:100%}
+.v152big{min-height:50px;border-radius:13px;border:1px solid var(--pine);background:var(--pine);color:#fff;font-size:19px;font-weight:800}
+.v152big.ghost{background:var(--paper);color:var(--pine)}
+.v152cancel{display:block;margin:10px auto 0;border:0;background:transparent;color:var(--muted);font-size:15px;font-weight:700;min-height:44px;padding:0 12px}
+.v152kind{font-size:15px;color:var(--muted);margin:0 0 2px}
+.v152enname{font-size:16px;color:var(--muted);margin:0 0 8px}
+.v152sharetext{font-size:20px;line-height:1.5;margin:0 0 8px;font-weight:600;overflow-wrap:anywhere}
+.v152sharezh{font-size:15px;line-height:1.55;color:var(--muted);margin:0 0 8px}
+.v152row{display:flex;gap:8px;align-items:center;margin:0 0 10px;flex-wrap:wrap}
+.v152src{font-size:14px;color:var(--muted);margin-left:auto}
+.v152originhead{display:flex;align-items:center;gap:10px;flex:0 0 auto;padding:4px 2px;border-bottom:1px solid var(--stroke)}
+.v152back{border:0;background:transparent;color:var(--pine);font-size:17px;font-weight:800;min-height:44px;padding:0 4px}
+.v152livepill{display:inline-flex;align-items:center;gap:5px;background:var(--soft);color:var(--pine);border-radius:999px;padding:5px 9px;font-size:15px;font-weight:800;margin-left:auto}
+.v152livepill i{width:7px;height:7px;border-radius:50%;background:#2f9e6a}
+.v152livepill.off{background:var(--bg);color:var(--muted)}
+.v152livepill.off i{background:var(--muted)}
+.v152originbody{flex:1;min-height:0;overflow-y:auto;padding:2px 1px 8px}
+.v152photos{display:flex;gap:8px;overflow-x:auto;scroll-snap-type:x mandatory;padding:8px 0 4px;scrollbar-width:none}
+.v152photos::-webkit-scrollbar{display:none}
+.v152photo{flex:0 0 auto;width:300px;height:178px;border-radius:14px;overflow:hidden;background:linear-gradient(160deg,#bfd8d1,#5b8d80);position:relative;margin:0;scroll-snap-align:start}
+.v152photo img{width:100%;height:100%;object-fit:cover;display:block}
+.v152photo figcaption{position:absolute;right:10px;bottom:8px;background:#14201c99;color:#fff;border-radius:999px;padding:2px 9px;font-size:14px}
+.v152photo.noimg{display:grid;place-items:center;color:#fff;font-size:16px;font-weight:700}
+.v152origin h1{font-size:23px;margin:8px 0 2px}
+.v152origin .v152enname2{font-size:16px;color:var(--muted);margin:0 0 6px}
+.v152origin .v152addr{font-size:15px;color:var(--pine);margin:0 0 10px}
+.v152block{background:var(--paper);border:1px solid var(--stroke);border-radius:13px;padding:10px 12px;margin:0 0 10px}
+.v152block h2{font-size:16px;margin:0 0 4px;color:var(--pine)}
+.v152block p{font-size:15px;line-height:1.6;margin:0;color:var(--ink);overflow-wrap:anywhere}
+.v152block p[lang="en"]{font-size:19px}
+.v152originfoot{flex:0 0 auto;text-align:center;font-size:15px;color:var(--muted);padding:8px 0 4px}
+body.sm-immersive .top,body.sm-immersive .mobilebar{display:none!important}
+body.sm-immersive .side{display:none}
+body.sm-immersive #app{display:block}
+body.sm-immersive .content{padding:6px 10px calc(6px + env(safe-area-inset-bottom))!important;max-width:none}
+body.sm-immersive .chatv15.v152{height:calc(100vh - 12px - env(safe-area-inset-bottom))}
+@supports(height:100dvh){body.sm-immersive .chatv15.v152{height:calc(100dvh - 12px - env(safe-area-inset-bottom))}}
+body.sm-immersive .chatv15.v152 .v152subs{flex:0 0 calc((100vh - 134px) / 3)}
+
+.pcompact{margin:-6px -6px 0}
+.pcompact h2{font-size:23px;margin:0;line-height:1.18}
+.pcompact .pmeta{display:flex;flex-wrap:wrap;gap:2px 12px;font-size:15px;color:var(--muted);margin:0}
+.pcompact .psec{margin:4px 0 0}
+.pcompact .psec>h3{font-size:16px;line-height:1.3;color:var(--pine);margin:5px 0 1px;font-weight:800}
+.pcompact .plist{list-style:none;margin:0;padding:0}
+.pcompact .plist>li{position:relative;padding:3px 26px 3px 0;border-bottom:1px solid var(--stroke);font-size:17px;line-height:1.45;overflow-wrap:anywhere}
+.pcompact .plist>li:last-child{border-bottom:0}
+.pcompact .prevoke{position:absolute;right:-6px;top:0;min-width:30px;min-height:30px;border:0;background:transparent;color:var(--muted);font-size:15px;line-height:1;padding:0}
+.pcompact .ptag{font-size:14px;color:var(--muted);margin-left:6px;white-space:nowrap}
+.pcompact .pempty{font-size:15px;color:var(--muted);padding:2px 0}
+.pcompact .preplist>li{padding:2px 0}
+.pcompact .preplist .en{font-size:18px;line-height:1.4;margin:0;color:var(--ink)}
+.pcompact .preplist .zh{font-size:17px;line-height:1.4;margin:1px 0 0;color:var(--muted)}
+.pcompact .prepacts{display:flex;gap:5px;margin-top:2px}
+.icobtn{width:32px;height:32px;border:1px solid var(--stroke);border-radius:8px;background:var(--paper);color:var(--pine);font-size:16px;line-height:1;padding:0}
+.pcompact .icobtn.on{background:var(--soft);border-color:var(--amber,#a35d18);color:var(--amber,#a35d18)}
+.pcompact .psess{display:flex;align-items:center;gap:7px;padding:4px 0;border-bottom:1px solid var(--stroke);font-size:16px;line-height:1.35}
+.pcompact .psess:last-child{border-bottom:0}
+.pcompact .psess b{font-weight:700;white-space:nowrap}
+.pcompact .psess span{color:var(--muted);font-size:15px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pcompact .psess .btn{margin-left:auto;min-height:30px;padding:0 8px;font-size:14px;border-radius:8px}
+.pcompact .pdetails{margin:5px 0 0;padding-top:2px;border-top:1px solid var(--stroke)}
+.pcompact .pdetails summary{font-size:15px;font-weight:800;color:var(--pine);padding:2px 0;cursor:pointer}
+.pcompact .actions{margin:8px 0 0;gap:6px}
+.pcompact .actions .btn{min-height:36px;padding:0 10px;font-size:14px}
 </style></head><body><div id="app"><aside class="side"><div class="brand"><div class="logo">s<em>.</em></div><div><b>SocialMate</b><small>让聊天更自然</small></div></div><nav class="navside"><button type="button" data-nav="software" class="current"><i class="ico" aria-hidden="true">▦</i>软件</button><button type="button" data-nav="hainan" class=""><i class="ico" aria-hidden="true">⌖</i>海南</button><button type="button" data-nav="chat" class=""><i class="ico" aria-hidden="true">◉</i>聊天</button><button type="button" data-nav="self" class=""><i class="ico" aria-hidden="true">♙</i>关于我</button><button type="button" data-nav="people" class=""><i class="ico" aria-hidden="true">♧</i>人物</button></nav><div class="sidetip"><b>● 已就绪</b><div>51 款正式 V1.4 软件 · 23 个海南地点预览</div><div>录音前请先征得同行者同意</div></div></aside><div class="main"><header class="top"><div><div class="sup" id="subTitle">SOFTWARE COLLECTION</div><h1 id="pageTitle">我的软件</h1></div><div class="right"><span class="previewtag">手机优先</span><button class="iconbutton" id="theme" aria-label="切换浅色深色" title="切换主题">☾</button><button class="iconbutton" id="displaySettings" type="button" aria-label="显示设置：字体大小、英文阅读、页面间距" title="显示设置">⚙</button></div></header><main id="content" class="content"></main></div><nav class="mobilebar"><button type="button" data-nav="software" class="current"><i class="ico" aria-hidden="true">▦</i>软件</button><button type="button" data-nav="hainan" class=""><i class="ico" aria-hidden="true">⌖</i>海南</button><button type="button" data-nav="chat" class=""><i class="ico" aria-hidden="true">◉</i>聊天</button><button type="button" data-nav="self" class=""><i class="ico" aria-hidden="true">♙</i>关于我</button><button type="button" data-nav="people" class=""><i class="ico" aria-hidden="true">♧</i>人物</button></nav></div><div id="drawerbg" class="drawerbg"></div><aside class="drawer" id="drawer" aria-label="详情"><div class="drawerhead"><span class="sup">BILINGUAL REFERENCE</span><button class="iconbutton" id="closeDrawer" aria-label="关闭详情">×</button></div><div class="drawerbody" id="drawerbody"></div></aside><div id="modalbg" class="modalbg"><div class="modal" id="modalcontent"></div></div><div id="toast" class="toast" aria-live="polite"></div><script type="application/json" id="dataset">{"apps":[{"id":"P002","name":"人生物种测试 · Personality Quiz","cat":"A","cn":"这是我做的一个趣味性格测试软件。我觉得很多人其实不太清楚自己是什么性格、喜欢什么样的生活，所以想通过一些简单有趣的问题，帮大家更好地认识自己。做完测试后，还可以跟朋友分享结果，看看彼此有什么不同。","en":"I made this fun personality quiz to help people understand themselves a little better. You answer some simple questions, and it gives you insights into your personality and preferences. It’s also a fun way to compare results with friends and learn more about each other.","status":"资料有限：场景讲解稿，未经过手机真机逐键验收","steps":[{"n":1,"cn":"介绍测评主题","detail":"先告诉朋友这是一个了解性格的趣味测评。","en":"This is a fun quiz about personality and preferences."},{"n":2,"cn":"展示问题","detail":"打开可用题目，读一条你觉得有趣的问题。","en":"Here’s the kind of question it asks."},{"n":3,"cn":"解释答题","detail":"用一两个问题解释你会怎样选择答案。","en":"I choose the answer that feels most like me."},{"n":4,"cn":"展示讨论","detail":"如果实际版本提供结果页，展示结果并与朋友讨论。","en":"We can talk about the results and see what we have in common."}]},{"id":"P005","name":"亲缘图谱 · Family Tree","cat":"A","cn":"这是一个整理家庭成员关系的软件。比如家里亲戚太多，碰到远房亲戚不知道怎么称呼，就可以在里面查。它能把几代人的关系画成家族图谱，还可以保存家人的照片，特别适合大家族。","en":"I built a family tree app that helps you keep track of your relatives. In Chinese families, there are so many different names for relatives, and it can get really confusing. My app figures out how people are related and what you should call them. You can also add family photos and explore your whole family tree.","status":"逐项讲解（按顺序边操作边说）","steps":[{"n":1,"cn":"建立家族成员：在成员管理里新增姓名和亲属资料。","detail":"","en":"First, I add family members and their details."},{"n":2,"cn":"连接亲属关系：把父母、配偶和兄弟姐妹的关系录进去。","detail":"","en":"Then I connect people as parents, partners, or siblings."},{"n":3,"cn":"查询称呼：选择两位家人，查看彼此应该怎么称呼。","detail":"","en":"I can pick any two people and see how they are related and what they should call each other."},{"n":4,"cn":"展示家族图：缩放关系图，点开照片，或导出图谱分享。","detail":"","en":"And here’s the family tree. I can zoom in, look at photos, and export it to share."}]},{"id":"P011","name":"我的地点 · My Places","cat":"A","cn":"这是我做的一个私人地点手账。比如我发现一家不错的咖啡馆，或者去了一个很漂亮的地方，就可以把照片、地点和自己的感受记录下来。以后想回忆或者推荐给朋友，直接打开就能找到。","en":"I made this app to keep track of places I’ve visited. Whenever I find a nice café, a beautiful spot, or somewhere interesting, I can save photos and write a few notes about it. Later, I can easily find those places again or share my favorites with friends. It’s basically my personal travel and lifestyle journal.","status":"逐项讲解（按顺序边操作边说）","steps":[{"n":1,"cn":"记录地点：进入记录页，选地点、上传照片、写下感受。","detail":"","en":"I tap the record section, choose a place, add some photos, and write a few notes."},{"n":2,"cn":"浏览回忆：切换画廊或地点视图，看看去过的地方。","detail":"","en":"Here I can browse my memories as a gallery or by location."},{"n":3,"cn":"寻找地点：在搜索页输入关键词，搭配地区或类型筛选。","detail":"","en":"If I want to find a place again, I just search for it and add filters."},{"n":4,"cn":"分享地点：选一条记录生成分享卡片或只读链接。","detail":"","en":"And I can share a place with a friend without sharing my private notes."}]},{"id":"P016","name":"懒得打字 · Speak Instead of Typing","cat":"A","cn":"这是我做的一款语音翻译输入软件。比如我跟外国朋友聊天，想表达一段比较复杂的意思，但英语不够好，就直接用中文说出来。它会帮我整理成自然的英语，直接填到微信或者其他聊天软件里，不用反复复制粘贴。","en":"I built this app because I wanted an easier way to chat with international friends. Instead of typing in English, I can just speak Chinese, and the app turns what I say into natural English and puts it directly into my chat. It also works for other languages, reviews, and journal entries. It makes communicating in another language a lot easier.","status":"逐项讲解（按顺序边操作边说）","steps":[{"n":1,"cn":"选择模式：打开悬浮工具，选直翻外语或口语查询。","detail":"","en":"I open the floating tool and pick the translation mode."},{"n":2,"cn":"语音输入：在聊天输入框里说出中文。","detail":"","en":"Then I simply speak Chinese while I’m in a chat."},{"n":3,"cn":"查看结果：软件整理出自然的外语表达，可按需核对。","detail":"","en":"It turns what I said into more natural English, and I can check the result."},{"n":4,"cn":"写回聊天：把结果写进当前输入框，再自行检查发送。","detail":"","en":"The translation goes back into the chat box, and I can review it before sending."}]},{"id":"P019","name":"拍照点助手 · Photo Spot Finder","cat":"A","cn":"这个软件主要是帮助喜欢拍照的人整理和寻找拍摄地点。比如刷到别人拍得很漂亮的照片，我希望能够方便地找到拍摄地点、保存参考照片，出门拍照时就不用临时到处找地方。","en":"This is a project I’ve been working on for people who love photography. The idea is to help you discover interesting photo spots and organize your shooting locations and reference photos. That way, when you go out to take pictures, you already have some good places in mind.","status":"资料有限：场景讲解稿，未经过手机真机逐键验收","steps":[{"n":1,"cn":"展示参考照片","detail":"打开已有拍摄参考图，说明你想模仿的感觉。","en":"I save photo references so I can plan a shoot."},{"n":2,"cn":"解释选地点","detail":"结合参考图讲述自己为什么选择这个地点。","en":"This helps me decide where I want to take photos."},{"n":3,"cn":"整理拍摄准备","detail":"展示实际存在的地点或参考图记录；若尚无界面，用现有素材讲述思路。","en":"I keep my location ideas and photo references together."},{"n":4,"cn":"对照拍摄成品","detail":"拿出手机里已经拍摄的实拍照片与参考图比较。","en":"Here’s how the actual photo turned out."}]},{"id":"P020","name":"拉伸换边计时器 · Stretch Timer","cat":"A","cn":"我平时拉伸的时候，经常需要左右两边轮流做动作，但每次都要自己看时间，所以做了这个软件。只要设置好时间，它就会自动倒计时，到时间提醒换边，还可以播放提示音和背景音乐。","en":"I built this because I do a lot of stretching, and I got tired of constantly checking the time. You just set how long you want to stretch each side, and the app automatically tells you when to switch. It also has different sounds and background music, so you can focus on stretching instead of watching the clock.","status":"逐项讲解（按顺序边操作边说）","steps":[{"n":1,"cn":"设置计时：选择单侧时长和训练总时长。","detail":"","en":"First, I choose how long to stretch each side and the total session time."},{"n":2,"cn":"开始拉伸：点开始，跟着倒计时动作。","detail":"","en":"I tap Start and follow the countdown."},{"n":3,"cn":"自动换边：听到提醒后换到另一边，无需自己重设秒表。","detail":"","en":"When it makes a sound, I switch sides. I don’t need to restart the timer."},{"n":4,"cn":"查看记录：结束后打开历史页回顾训练。","detail":"","en":"Afterwards, I can check my workout history."}]},{"id":"P025","name":"拉伸训练 · Stretch Routine","cat":"A","cn":"这是一个帮助自己规律做拉伸的软件。我希望把常见的拉伸动作和训练安排整理好，这样每天打开手机就可以照着练，不用每次都重新找教程。","en":"I started this app to make daily stretching easier. The idea is to organize stretching exercises into simple routines, so you can just open the app and follow along instead of searching for different videos every time. It’s all about making stretching a regular habit.","status":"资料有限：场景讲解稿，未经过手机真机逐键验收","steps":[{"n":1,"cn":"介绍训练目标","detail":"告诉朋友这一套拉伸为哪些身体部位服务。","en":"I use this to organize my stretching routine."},{"n":2,"cn":"选择动作","detail":"从实际可见的训练内容中选一个动作。","en":"I choose a stretch I want to work on."},{"n":3,"cn":"示范动作","detail":"跟随真实训练内容做一次动作，不编造计时按钮。","en":"Then I follow the exercise step by step."},{"n":4,"cn":"说明长期使用","detail":"展示已有记录；如没有统计页，仅介绍希望养成的习惯。","en":"The goal is to make stretching part of my daily routine."}]},{"id":"P026","name":"夜间补光灯 · Screen Fill Light","cat":"A","cn":"这是一个把手机屏幕变成临时补光灯的小工具。比如晚上自拍、拍视频或者视频聊天，光线不太好的时候，可以直接用手机补一点光，不用专门带一盏灯。","en":"This is a little tool that turns your phone screen into a fill light. It’s useful when you’re taking selfies, recording videos, or making video calls in low light. The idea is to have a quick, simple lighting option without carrying extra equipment.","status":"资料有限：场景讲解稿，未经过手机真机逐键验收","steps":[{"n":1,"cn":"说明弱光场景","detail":"在室内暗一点的地方说明补光需求。","en":"Sometimes I need a little extra light for a photo."},{"n":2,"cn":"使用屏幕补光","detail":"在实际应用中打开可用的补光画面。","en":"I use the phone screen as a simple fill light."},{"n":3,"cn":"比较效果","detail":"切换应用前后对比脸部照明。","en":"You can see how it changes the lighting on my face."},{"n":4,"cn":"实际自拍","detail":"用另一台设备拍照对比效果。","en":"Here’s the difference in a real photo."}]},{"id":"P027 / P062","name":"蛋白质计算器 · Protein Calculator","cat":"A","cn":"这是我为健身做的蛋白质计算器。因为很多人不知道自己每天需要多少蛋白质，也不清楚一块鸡胸肉或者几个鸡蛋到底含多少蛋白质。这个软件可以根据体重和健身目标计算每天的需要量，还可以把吃过的食物加进去，看看今天吃够了没有。","en":"I made this protein calculator because I work out and wanted an easy way to track my protein intake. You enter your weight and fitness goal, and it estimates how much protein you need each day. You can also add foods like eggs, chicken, or milk to see how much protein you’re getting and how much more you might need.","status":"逐项讲解（按顺序边操作边说）","steps":[{"n":1,"cn":"计算目标：输入体重、选择维持或增肌等目标。","detail":"","en":"I enter my weight and pick a goal, like muscle gain."},{"n":2,"cn":"添加食物：从食物列表选鸡蛋、牛奶等并调整份量。","detail":"","en":"Then I add foods like eggs or milk and set the portion sizes."},{"n":3,"cn":"查看差额：对比已经吃到的蛋白质和每日目标。","detail":"","en":"It shows how much protein I’ve had and how much I still need."},{"n":4,"cn":"浏览榜单：打开高蛋白食物榜，快速对比常见食物。","detail":"","en":"I can also browse a list of high-protein foods to get ideas."}]},{"id":"P028","name":"聚会之夜 · Party Night","cat":"A","cn":"这是一个为朋友聚会设计的娱乐软件。有时候大家聚在一起，不知道玩什么，气氛比较尴尬，所以我想做一个能随时打开、帮助大家活跃气氛的小工具。","en":"I started this project to make hanging out with friends more fun. You know those moments when everyone gets together but nobody knows what to do? The idea is to have some easy party activities right on your phone, so it’s easier to break the ice and get everyone involved.","status":"资料有限：场景讲解稿，未经过手机真机逐键验收","steps":[{"n":1,"cn":"介绍聚会用途","detail":"向朋友解释它旨在减少聚会冷场。","en":"I wanted a simple way to make gatherings less awkward."},{"n":2,"cn":"展示现有内容","detail":"打开已实现的活动或游戏内容。","en":"Here’s the kind of activity I had in mind."},{"n":3,"cn":"邀请朋友参与","detail":"选取实际存在的玩法，邀请朋友尝试。","en":"We can try one together."},{"n":4,"cn":"聊体验","detail":"解释为什么你觉得这种互动适合新认识的人。","en":"It gives people something fun to talk about."}]},{"id":"P039","name":"酒吧游戏 · Bar Games","cat":"A","cn":"这是一个为酒吧和朋友聚会准备的小游戏软件。特别是大家刚认识的时候，有时候不知道聊什么。可以通过一些简单的互动游戏来破冰，让气氛更轻松。","en":"I made this for nights out with friends, especially when you’re meeting new people. Sometimes conversations can get a little awkward, so the idea is to use simple party games to break the ice and help everyone relax and have fun together.","status":"资料有限：场景讲解稿，未经过手机真机逐键验收","steps":[{"n":1,"cn":"说明破冰场景","detail":"解释朋友第一次见面时为什么需要小游戏。","en":"It’s designed for breaking the ice when people first meet."},{"n":2,"cn":"展示游戏","detail":"打开当前真实存在的一项游戏。","en":"Let me show you one of the games."},{"n":3,"cn":"一起尝试","detail":"按照实际规则玩一轮。","en":"Let’s give it a try."},{"n":4,"cn":"解释结果","detail":"说说游戏如何帮助大家交流。","en":"It gives everyone an easy way to join the conversation."}]},{"id":"P040","name":"才艺展示厅 · Talent Showcase","cat":"A","cn":"这是一个用来展示个人才艺和作品的软件。比如你会跳舞、唱歌，或者拍了一些不错的视频，就可以把这些内容集中整理起来，让朋友更方便地了解你的兴趣和作品。","en":"I built this project as a place where people can showcase their talents and creative work. For example, if you’re into dancing, singing, or making videos, you can organize your work in one place instead of having it scattered across different apps. It’s a simple way to show people what you love doing.","status":"资料有限：场景讲解稿，未经过手机真机逐键验收","steps":[{"n":1,"cn":"展示作品合集","detail":"打开当前可用的作品展示页。","en":"This is where I bring my creative work together."},{"n":2,"cn":"介绍一个视频","detail":"选一段自己拍摄的作品播放。","en":"Let me show you a video I made."},{"n":3,"cn":"讲作品背景","detail":"解释当时为什么拍、怎样创作。","en":"Here’s the story behind it."},{"n":4,"cn":"分享作品","detail":"用已实现的分享方式打开给朋友看；如未实现，则现场播放。","en":"It’s much easier than searching through old chat messages."}]},{"id":"P043","name":"成片集 · Photo Delivery App","cat":"A","cn":"这是我专门给摄影师做的拍照和交付软件。比如在公园给游客拍照，拍完以后可以直接整理照片，让客户在手机上挑选喜欢的照片，然后按照套餐购买，最后交付原图。这样就不用手工一张张发照片，也方便管理拍摄订单。","en":"I built this app for photographers, especially people doing portrait shoots or event photography. After a shoot, the photographer can organize the photos and let clients choose their favorites on their own phones. Clients can pick a photo package, and the photographer can deliver the original images afterward. It makes the whole process, from taking photos to delivering them, much easier.","status":"逐项讲解（按顺序边操作边说）","steps":[{"n":1,"cn":"拍摄管理：打开拍摄页拍照，检查并删除废片。","detail":"","en":"I take photos in the app and remove the bad shots."},{"n":2,"cn":"邀请选片：创建分享链接或二维码，让客户在手机上看照片。","detail":"","en":"Then I share a link or QR code so the client can view their pictures."},{"n":3,"cn":"选择套餐：让客户挑喜欢的照片和购买数量。","detail":"","en":"The client selects their favorites and chooses a photo package."},{"n":4,"cn":"交付原图：人工核实付款后，完成原始照片交付。","detail":"","en":"After payment is confirmed, I deliver the original photos."}]},{"id":"P045","name":"盆底肌训练 · Pelvic Floor Trainer","cat":"A","cn":"这是我做的一款男性盆底肌训练软件。很多人做凯格尔训练时，不知道收紧多久、放松多久，还得自己默数。我把它做成语音引导的形式，戴着耳机跟着练就可以了，还有不同训练等级和进度记录。","en":"I developed a pelvic floor training app for men. A lot of people find Kegel exercises difficult to follow because they have to count and time everything themselves. My app guides you through the exercises with voice instructions, so you don’t have to keep looking at the screen. It also has different training levels and progress tracking.","status":"逐项讲解（按顺序边操作边说）","steps":[{"n":1,"cn":"能力摸底：在能力页选择测试，跟随语音完成。","detail":"","en":"I can start with a short assessment, following the voice instructions."},{"n":2,"cn":"开始训练：选当前等级，点今日训练。","detail":"","en":"Then I choose my level and start today’s session."},{"n":3,"cn":"跟练节奏：听收紧、保持、放松提示，必要时暂停。","detail":"","en":"The app tells me when to contract, hold, and relax, and I can pause anytime."},{"n":4,"cn":"查看进步：打开历史页了解训练次数、时间与等级变化。","detail":"","en":"Here I can see my training history and how I’ve progressed."}]},{"id":"P046","name":"麻将小白助手 · Mahjong Beginner’s Guide","cat":"A","cn":"这是我做的一个海南麻将入门软件。因为麻将对新手来说有很多规则和术语，第一次玩的时候经常听不懂。我把常见规则和牌型做成了带图片的简单说明，让完全不会打麻将的人也能快速上手。","en":"I built this app to help complete beginners learn Mahjong, especially the version played in Hainan. Mahjong can be pretty confusing when you’re new to it, with all the rules and different tile combinations. My app explains the basics using real tile pictures and simple examples, so you can learn how to play without getting overwhelmed.","status":"逐项讲解（按顺序边操作边说）","steps":[{"n":1,"cn":"查胡牌规则：点开能胡牌的条件，看真实牌例。","detail":"","en":"I start with the rules for winning a hand, using real tile examples."},{"n":2,"cn":"看失败案例：对照不能胡的例子找原因。","detail":"","en":"Then I can look at hands that don’t qualify and see why."},{"n":3,"cn":"学基本术语：打开术语表看吃、碰、杠等。","detail":"","en":"There’s also a glossary explaining the basic Mahjong terms."},{"n":4,"cn":"用座次工具：输入四人名字、选择庄家，查看风向。","detail":"","en":"And this little tool helps us keep track of seating and wind positions."}]},{"id":"P047","name":"慢食刻 · BiteTempo","cat":"A","cn":"这是一个提醒自己放慢吃饭速度的软件。因为很多人吃饭特别快，我就做了一个安静的用餐计时器。吃饭时可以跟着倒计时慢慢吃，吃完还可以用语音记录自己的感受，回头看看自己的用餐习惯有没有变化。","en":"I made this app to help people slow down when they eat. A lot of us eat too quickly without even noticing, so I created a simple, quiet meal timer. You can take your time, enjoy your food, and record how you felt afterward. The app also helps you track your eating habits over time.","status":"逐项讲解（按顺序边操作边说）","steps":[{"n":1,"cn":"启动用餐：选择 10、12、15 或 20 分钟计时。","detail":"","en":"I pick a meal duration, such as fifteen minutes, and start the timer."},{"n":2,"cn":"慢慢吃饭：跟着安静倒计时和文字提示吃饭。","detail":"","en":"I eat at a slower pace while the app quietly keeps time."},{"n":3,"cn":"留下心得：餐后说一句感受，按需让 AI 整理并确认。","detail":"","en":"After eating, I can record a quick voice note and tidy it up with AI."},{"n":4,"cn":"查看统计：打开统计页，看用餐次数和近七天记录。","detail":"","en":"And this screen shows my meals and habits over the past week."}]},{"id":"P049","name":"海口去哪玩 · Haikou What’s On","cat":"A","cn":"这是我专门为海口做的一个本地活动推荐软件。平时想出去玩或者认识新朋友，却不知道哪里有活动。它会整理当地的市集、演出、英语角、运动聚会等信息，让我能快速知道今天或者周末有什么值得参加的活动。","en":"I built this app for Haikou, the city where I live in China. It’s basically a local event guide that helps you discover things to do, like live music, markets, language exchanges, sports meetups, and social events. Instead of checking a bunch of different apps, you can see what’s happening today or this weekend in one place. It’s especially useful for meeting new people and exploring the city.","status":"逐项讲解（按顺序边操作边说）","steps":[{"n":1,"cn":"看今日推荐：打开首页查看今天最值得去的几项活动。","detail":"","en":"Here are a few events worth checking out today."},{"n":2,"cn":"找周末活动：进入周末分类，筛选感兴趣的项目。","detail":"","en":"I can switch to weekend events and find something I like."},{"n":3,"cn":"了解详情：点开活动，核对时间、地点和来源。","detail":"","en":"I open an event to check the time, location, and source."},{"n":4,"cn":"按提示参加：查看是否需要提前预约、报名或联系主办方。","detail":"","en":"And it tells me whether I need to book, register, or contact the organizer."}]},{"id":"P051","name":"妹妹的听书小屋 · My Sister’s Audiobook Library","cat":"A","cn":"这是我给妹妹做的一个私人听书软件。因为家里以前买过很多有声课程，但都放在电脑硬盘里，想听很麻烦。我把它们整理成一个手机上的课程书库，可以按学科和难度找内容，还支持倍速播放、睡眠定时和离线下载。","en":"I built this app for my younger sister. We already had a large collection of educational audio courses stored on a computer, but they weren’t very convenient to listen to. So I turned them into a private audiobook library she can access on her phone. She can browse by subject and difficulty level, adjust the playback speed, set a sleep timer, and download lessons to listen offline.","status":"逐项讲解（按顺序边操作边说）","steps":[{"n":1,"cn":"挑课程：按学科和难度筛选课程。","detail":"","en":"I choose a subject and difficulty level to find a course."},{"n":2,"cn":"逐集播放：打开课程，选择一集，调整倍速。","detail":"","en":"Then I pick an episode and adjust the playback speed."},{"n":3,"cn":"睡前听：开启睡眠定时或单集循环。","detail":"","en":"I can set a sleep timer or repeat the same episode."},{"n":4,"cn":"离线下载：提前下载课程，没网时继续收听。","detail":"","en":"I can also download lessons and listen without internet access."}]},{"id":"P052","name":"真心话大冒险 · Truth or Dare","cat":"A","cn":"这是我做的一个朋友聚会游戏。里面有真心话、大冒险、谁最可能、从来没有这四种玩法，一共 1500 多道题。可以根据大家的熟悉程度选择不同等级，朋友聚会时拿出手机就能玩。","en":"I made a party game app with over 1,500 questions and challenges. It includes Truth or Dare, Never Have I Ever, and Most Likely To. You can choose different levels depending on how comfortable everyone is with each other. It’s great for house parties, game nights, or just getting to know new friends.","status":"逐项讲解（按顺序边操作边说）","steps":[{"n":1,"cn":"选择玩法：在真心话、大冒险等四个分类间切换。","detail":"","en":"First, we choose a game, like Truth or Dare or Never Have I Ever."},{"n":2,"cn":"选择尺度：选 L1 到 L5 的等级。","detail":"","en":"Then we pick a level, depending on how adventurous everyone feels."},{"n":3,"cn":"抽取题目：打开题卡，轮流回答或完成挑战。","detail":"","en":"We draw a question and take turns answering or doing the challenge."},{"n":4,"cn":"离线使用：提前打开缓存后，即使没有网络也能继续玩。","detail":"","en":"And once it’s cached, we can even play without internet access."}]},{"id":"P053","name":"眨眼守护 · BlinkGuard","cat":"A","cn":"这个软件是为了保护长期看电脑的人的眼睛。我发现自己盯着电脑时经常忘记眨眼，所以想利用一台闲置安卓手机，通过前置摄像头检测眨眼情况。如果太久没有眨眼，它就会提醒你。还能记录用眼时间和眨眼情况。","en":"I built this app because I spend a lot of time in front of a computer and sometimes forget to blink enough. You just place an old Android phone next to your monitor, and it uses the front camera to detect your blinking. If you haven’t blinked for a while, it reminds you. It also tracks your screen time and blinking patterns, and everything runs locally on the phone.","status":"逐项讲解（按顺序边操作边说）","steps":[{"n":1,"cn":"摆放设备：把安卓手机放到显示器旁，让前摄拍到脸。","detail":"","en":"I place an old Android phone beside my monitor, facing me."},{"n":2,"cn":"开始监测：点开始，让它在本机检测完整眨眼。","detail":"","en":"Then I tap Start, and it starts tracking my blinks locally."},{"n":3,"cn":"体验提醒：长时间没眨眼时，听语音或提示音。","detail":"","en":"If I forget to blink for too long, it gives me a reminder."},{"n":4,"cn":"看统计技巧：打开统计和技巧页，查看用眼情况与护眼提示。","detail":"","en":"I can also check the statistics and some eye-care tips."}]},{"id":"P055","name":"姿势守护 · PostureGuard","cat":"A","cn":"这是一个帮助改善坐姿和久坐习惯的软件。因为长时间坐电脑前，很容易不知不觉驼背或者头往前伸。我把手机放在身体侧面，让它通过摄像头观察坐姿。如果姿势不对或者坐太久，就会语音提醒，还能统计每天坐了多久。","en":"I built this app to help people improve their posture while working at a desk. You place an Android phone beside you, and its camera checks whether you’re leaning forward, slouching, or looking down too much. If your posture gets worse or you’ve been sitting for too long, it gives you a gentle reminder. It also tracks your sitting habits over time.","status":"逐项讲解（按顺序边操作边说）","steps":[{"n":1,"cn":"摆放与校准：把手机放身体侧面，按照自己的自然坐姿校准。","detail":"","en":"I put the phone beside me and calibrate it to my normal sitting posture."},{"n":2,"cn":"开始监测：在监测页观察头部和上身姿态。","detail":"","en":"Then I start monitoring and see how my posture changes."},{"n":3,"cn":"听语音提醒：姿势偏离或久坐过久时收到提醒。","detail":"","en":"If I lean forward too much or sit too long, it reminds me."},{"n":4,"cn":"看久坐统计：打开统计页，查看坐姿时长和起身次数。","detail":"","en":"And I can check how long I’ve been sitting and how often I got up."}]},{"id":"P056","name":"筋形 LAB · Muscle Shape Lab","cat":"A","cn":"这是我做的一个 AI 健身参考软件。比如你已经健身一段时间，但不知道身体哪个肌肉部位相对薄弱。你可以拍几张不同角度的身体照片，它会帮你分析肌肉外观，推荐一些针对性的训练动作。过段时间再拍，还可以对比变化。","en":"I’m building this AI fitness app to help people see which muscle groups might need more attention. You take a few photos from different angles, and the app analyzes your overall muscle appearance and suggests exercises for areas you might want to improve. You can also compare photos over time to see how your physique is changing.","status":"逐项讲解（按顺序边操作边说）","steps":[{"n":1,"cn":"拍摄三张照片：在扫描页照提示拍正面、背面和侧面。","detail":"","en":"I start by taking front, back, and side photos using the guides."},{"n":2,"cn":"查看分析：打开肌肉区域的外观观察报告。","detail":"","en":"Then I open the report to see which areas may need attention."},{"n":3,"cn":"参考动作：选择肌肉区域和现有器械，查看候选动作。","detail":"","en":"I can choose a muscle group and see exercise suggestions for the equipment I have."},{"n":4,"cn":"对比变化：过段时间重新拍照，在进步页对比照片。","detail":"","en":"Later, I can take new photos and compare the results side by side."}]},{"id":"P057","name":"舞蹈大师 · Dance Master","cat":"A","cn":"这个软件是给喜欢学舞蹈的人做的，特别适合学抖音热门舞蹈或者 K-pop。因为跟着视频学舞特别麻烦，要反复暂停、倒退。我把视频按音乐的八拍切成一段一段，可以慢放、镜像、单段循环。先练熟每一段，再把整支舞连起来。","en":"I built this app because I enjoy learning dance routines, especially K-pop and trending TikTok-style dances. Learning from regular videos can be frustrating because you’re constantly pausing and rewinding. My app lets you break a dance down into eight-count sections, slow it down, mirror the video, and loop specific parts. You can practice each section until you get it right, then put the whole routine together.","status":"逐项讲解（按顺序边操作边说）","steps":[{"n":1,"cn":"收藏舞蹈：在我的舞蹈里添加喜欢的舞蹈链接或本地视频。","detail":"","en":"First, I save a dance link or import a video I’m allowed to use."},{"n":2,"cn":"分八拍练习：进入练舞页，设置节拍，选择想练的一小段。","detail":"","en":"Then I open the practice player and break the dance into eight-count sections."},{"n":3,"cn":"慢速镜像循环：把动作放慢、镜像，反复练同一个片段。","detail":"","en":"I can slow it down, mirror it, and loop one section until I get it right."},{"n":4,"cn":"整曲合练：切换整曲模式，练习完整编舞。","detail":"","en":"Once I’m ready, I switch to the full routine and dance all the way through."}]},{"id":"P059","name":"双屏协同提词器 · Dual-Screen Teleprompter","cat":"A","cn":"这是我为拍短视频和采访做的提词器。比如拍摄时，一个人当导演，一个人面对镜头说台词。导演可以用一台手机控制台词和翻页，演员用另一台手机看稿，中间的 iPhone 专门负责拍摄。两边通过二维码连接，还能快速修改稿件，特别适合小团队拍视频。","en":"I built this teleprompter app for filming videos and interviews with a small team. One person can control the script on their phone, while the person on camera reads it from another screen. A third phone is used just for filming. The two screens stay in sync, and you can even make quick script changes during a shoot. It makes filming much smoother.","status":"逐项讲解（按顺序边操作边说）","steps":[{"n":1,"cn":"准备文稿：在编导端粘贴或编辑台词，保存并分页。","detail":"","en":"First, I paste the script into the director’s screen and split it into pages."},{"n":2,"cn":"扫码连接：另一台手机扫描二维码成为提词屏。","detail":"","en":"The performer scans a QR code to open the same script on another phone."},{"n":3,"cn":"协同翻页：编导控制翻页，演员看提词屏，中间手机拍摄。","detail":"","en":"I control the pages while the performer reads from the other screen, and a third phone records."},{"n":4,"cn":"临场改稿：需要时即时编辑文字，并检查两屏显示。","detail":"","en":"If we change a line during filming, I can edit it and check the updated script."}]},{"id":"P063","name":"静蹲计时器 · Wall Sit Timer","cat":"A","cn":"这是一个专门用来做靠墙静蹲训练的计时器。因为这个动作主要是坚持一定时间，所以我想让训练时的计时更加简单，不用每次都打开手机自带的秒表。","en":"I made this little timer specifically for wall sit exercises. It’s a simple leg-strengthening exercise where you hold a sitting position against a wall. The idea is to make timing your workouts easier without having to use a regular stopwatch every time.","status":"资料有限：场景讲解稿，未经过手机真机逐键验收","steps":[{"n":1,"cn":"示范静蹲姿势","detail":"面对墙演示靠墙坐姿。","en":"A wall sit is where you hold this position against a wall."},{"n":2,"cn":"开始计时","detail":"用实际可用的倒计时功能开始训练。","en":"I start the timer when I get into position."},{"n":3,"cn":"坚持训练","detail":"向朋友展示计时过程。","en":"Then I try to hold the position until the timer finishes."},{"n":4,"cn":"结束训练","detail":"真实软件支持时结束和查看记录。","en":"When I’m done, I stop the timer."}]},{"id":"P064","name":"肌肉守护者 · Muscle Guardian","cat":"A","cn":"这是我给家里长辈做的腿部训练软件。因为随着年龄增长，保持腿部力量很重要。我希望让他们不用研究复杂的健身软件，打开手机就能跟着语音提示做简单的深蹲训练，还可以记录每次的训练时间和成绩。","en":"I built this app for older family members because maintaining leg strength becomes really important as we age. It’s designed to be super simple. You choose a training duration, follow the voice instructions, and do some basic squat exercises. It also records your progress, so you can see how you’re improving over time.","status":"逐项讲解（按顺序边操作边说）","steps":[{"n":1,"cn":"开始训练：在训练页选择时长，一点就开始。","detail":"","en":"I just choose a duration and tap to start."},{"n":2,"cn":"跟随语音：听计时和完成提示，必要时暂停。","detail":"","en":"It guides me with voice prompts, and I can pause whenever needed."},{"n":3,"cn":"做能力测试：进入测试页记录一次训练成绩。","detail":"","en":"There’s also a simple test to record how I’m doing."},{"n":4,"cn":"查看统计：在统计页查看今天、近七天和近三十天的数据。","detail":"","en":"Here I can see my training history for today, the past week, or the past month."}]},{"id":"P041","name":"NightRec · Night Recording","cat":"B","cn":"这是一个围绕夜间录制场景设计的软件项目。我想让晚上需要录制内容的时候，操作更方便一些，不必每次都使用功能复杂的普通拍摄软件。","en":"This is a recording app project focused on nighttime use. The idea is to make recording in low-light or nighttime situations simpler and more convenient, without having to deal with a lot of unnecessary camera controls.","status":"资料有限：场景讲解稿，未经过手机真机逐键验收","steps":[{"n":1,"cn":"讲夜间录制需求","detail":"解释夜晚拍摄的困难。","en":"Recording at night can be inconvenient."},{"n":2,"cn":"展示运行画面","detail":"仅在有可运行版本时打开实际录制页面。","en":"Here’s the recording interface I’m working on."},{"n":3,"cn":"尝试短录制","detail":"如已实现录制，拍摄一个短样本。","en":"I can make a quick test recording."},{"n":4,"cn":"查看结果","detail":"如有成片，播放刚才的短样本。","en":"And here’s how the recording turned out."}]},{"id":"P044","name":"AI 分镜工作室 · AI Storyboard Studio","cat":"B","cn":"这个软件主要是帮助拍短视频的人设计分镜。比如你有一个视频创意，但不知道应该怎么安排镜头、拍摄顺序和画面。我希望利用 AI 帮忙把这些想法整理成更清楚的拍摄方案。","en":"I’m working on an AI storyboard tool for video creators. Sometimes you have a great video idea, but it’s hard to figure out the shots and how everything should flow. The goal is to use AI to help turn those ideas into a clearer shooting plan, so filming becomes easier and more organized.","status":"资料有限：场景讲解稿，未经过手机真机逐键验收","steps":[{"n":1,"cn":"提出创意","detail":"先说一个想拍的短视频故事。","en":"Suppose I have an idea for a short video."},{"n":2,"cn":"说明镜头拆分","detail":"用纸上或现有页面示范镜头结构。","en":"I break the idea into a series of shots."},{"n":3,"cn":"展示分镜","detail":"若有可运行生成器则展示，否则明确是设计目标。","en":"The goal is to make the shooting plan easier to visualize."},{"n":4,"cn":"联系实拍","detail":"展示一张真实参考照片或拍摄片段。","en":"This helps me plan what I need to film."}]},{"id":"P060","name":"VoiceCut · AI Video Rough-Cut Editor","cat":"B","cn":"这是我做的一个自动视频粗剪软件。比如拍摄时有些镜头拍好了，有些说错了要重拍。传统剪辑要把所有视频看一遍，很费时间。现在只要拍摄时在片段结尾说“这段保留”或者“这段不要”，软件就能识别这些口令，把废弃片段剪掉，再把保留的片段拼接成视频，还会把用到的原始片段单独整理出来。","en":"I built this video editing tool to save time after filming. Normally, when you shoot a video, you end up with lots of clips, including mistakes and retakes. Instead of going through everything manually, you can simply say “keep this take” or “delete this take” while filming. The software recognizes those voice commands, removes the unwanted parts, and automatically puts the good clips together into a rough cut. It also organizes the original clips you used, which makes further editing easier.","status":"逐项讲解（按顺序边操作边说）","steps":[{"n":1,"cn":"选择素材：粘贴脚本，导入视频文件夹或上传原片。","detail":"","en":"I paste in the script and select the raw video files."},{"n":2,"cn":"识别口令：录制时口播保留或废弃的指令，交给软件识别。","detail":"","en":"During filming, we say which takes to keep or discard, and the software detects those commands."},{"n":3,"cn":"生成粗剪：开始处理，让它剔除废片并拼接保留镜头。","detail":"","en":"Then I start processing, and it puts the selected takes into a rough cut."},{"n":4,"cn":"下载结果：查看成片 MP4、已用片段 ZIP 和时间明细 CSV。","detail":"","en":"At the end, I get the video, a ZIP of used clips, and a detailed cut list."}]},{"id":"P001","name":"家庭保险看板 · Family Insurance Dashboard","cat":"C","cn":"这是一个整理家庭保险信息的项目。因为一个家庭可能有很多不同的保单，时间久了很难记得每个人买了什么保险、什么时候到期。我希望把这些信息集中在一起，让家庭保障情况一目了然。","en":"I started this project to make it easier to manage family insurance. When several family members have different policies, it gets difficult to remember what’s covered and when everything expires. The idea is to put all that information in one place, so it’s easier to understand the family’s overall insurance coverage.","status":"项目专属讲解（以仓库资料为依据，未经过现场点击验收）","steps":[{"n":1,"cn":"展示家庭保障概念","detail":"先说明家庭成员各自可能持有不同保险。","en":"Different family members can have different insurance policies."},{"n":2,"cn":"举一个保单例子","detail":"拿一份脱敏示例保单说明保障范围。","en":"Here’s an example of the coverage I want to keep track of."},{"n":3,"cn":"解释到期管理","detail":"讲述为什么需要记住续保日期。","en":"I want to see when each policy needs renewing."},{"n":4,"cn":"说明项目目标","detail":"这款目前没有核实可运行管理界面，不现场声称已经自动提醒。","en":"The goal is to see our family’s coverage in one place."}]},{"id":"P003","name":"后翻学长个人网站 · My Personal Website","cat":"C","cn":"这是我给自己做的个人网站，相当于我的线上名片。上面展示了我开发的软件、一些兴趣爱好和个人经历。朋友如果想了解我平时在做什么，可以直接打开网站，有些软件还可以直接在线体验或者下载安装。","en":"I built my own personal website to showcase the things I’ve been working on. It includes my software projects, personal interests, and some of my experiences. It’s basically my online portfolio, but more personal than a typical résumé. If you’re curious about what I create, you can check it out and even try some of the apps yourself.","status":"逐项讲解（按顺序边操作边说）","steps":[{"n":1,"cn":"浏览作品：在首页进入作品区。","detail":"","en":"Here’s the section where I showcase my apps."},{"n":2,"cn":"按类型筛选：切换网页、手机、桌面等类别。","detail":"","en":"I can filter the projects by type."},{"n":3,"cn":"打开详情：选择一个项目查看背景和成果。","detail":"","en":"I open a project to show what it does and why I made it."},{"n":4,"cn":"试用产品：从页面进入在线体验或下载链接。","detail":"","en":"And for some projects, I can open a live demo or download the app."}]},{"id":"P006","name":"提示词管理器 · Prompt Manager","cat":"C","cn":"这是一个专门管理 AI 提示词的软件。因为平时用 AI 时，经常会写一些特别好用的指令，但时间久了就找不到。我做这个工具把它们整理成卡片，可以搜索、分类、保存版本，还可以直接让 AI 调用这些提示词。","en":"I built this tool to organize the prompts I use with AI. When you work with ChatGPT or other AI tools a lot, you end up collecting useful prompts, but they’re easy to lose. My app keeps them organized, searchable, and reusable. You can also connect it to compatible AI tools, so you don’t have to copy and paste the same instructions over and over again.","status":"逐项讲解（按顺序边操作边说）","steps":[{"n":1,"cn":"建立卡片：新建提示词，粘贴正文。","detail":"","en":"I create a new card and paste in a useful AI prompt."},{"n":2,"cn":"搜索筛选：输入关键词或选择标签。","detail":"","en":"I can search for it later or filter prompts by tags."},{"n":3,"cn":"快速复制：打开卡片复制提示词。","detail":"","en":"I just open a card and copy the prompt when I need it."},{"n":4,"cn":"版本回退：查看旧版本，必要时恢复。","detail":"","en":"And if I accidentally change something, I can restore an earlier version."}]},{"id":"P008","name":"告别打字 · Less Typing","cat":"C","cn":"这是一个围绕减少手动打字设计的软件项目。因为日常工作和聊天经常要输入很多文字，我希望通过语音和更方便的输入方式，让这些操作变得轻松一点。","en":"I started this project because I wanted to spend less time typing. The idea is to make everyday text input easier, especially through voice-based tools, so writing messages and handling routine tasks feels less repetitive.","status":"资料有限：场景讲解稿，未经过手机真机逐键验收","steps":[{"n":1,"cn":"介绍问题","detail":"讲述输入长段文字有多费时。","en":"Typing long messages can get tiring."},{"n":2,"cn":"描述设想","detail":"说明希望通过语音减少键盘输入。","en":"The idea is to speak instead of typing everything."},{"n":3,"cn":"展示已有成果","detail":"仅展示已完成的可运行功能或界面。","en":"Here’s what I’ve built so far."},{"n":4,"cn":"区别P016","detail":"解释与“懒得打字”的功能联系，尚未核实不当作两款成熟成品。","en":"I’ve also worked on a related Android app for multilingual messages."}]},{"id":"P009","name":"滴答清单时间管理 · Time Management System","cat":"C","cn":"这是一个帮助自己安排任务和管理时间的项目。因为每天事情比较多，我希望把任务、计划和时间安排结合起来，让工作和生活更有条理。","en":"I started this project to organize my daily tasks and manage my time more effectively. When you have lots of things going on, it’s easy to lose track of priorities. The idea is to bring tasks and schedules together so I can stay more organized and focused.","status":"资料有限：场景讲解稿，未经过手机真机逐键验收","steps":[{"n":1,"cn":"看任务列表","detail":"只在实际连接滴答清单时展示现有任务。","en":"I keep track of the things I need to do."},{"n":2,"cn":"安排优先级","detail":"用一个日常任务说明排序思路。","en":"I decide what needs my attention first."},{"n":3,"cn":"安排时间","detail":"如存在日程页面则展示，没有则用当前计划说明。","en":"Then I plan when to work on each task."},{"n":4,"cn":"回顾完成","detail":"展示已完成项目或已有记录。","en":"It helps me see what I’ve actually finished."}]},{"id":"P010","name":"DeepSeek 余额监控 · AI Usage Monitor","cat":"C","cn":"这是我做的一个 AI 使用额度监控工具。因为我经常使用不同的 AI 服务，需要知道还剩多少余额、用了多少额度，不想每次都登录网站后台查看。所以做了一个可以直接在电脑上快速查看的小工具。","en":"I built this little desktop tool because I use AI services quite a lot and wanted an easier way to monitor my usage and remaining balance. Instead of logging into different dashboards every time, I can quickly check the information from my computer. It’s available for both Mac and Windows.","status":"项目专属讲解（以仓库资料为依据，未经过现场点击验收）","steps":[{"n":1,"cn":"打开桌面工具","detail":"在 Mac 或 Windows 打开 DeepSeekBalanceWidget。","en":"This is a small desktop app for checking my AI usage."},{"n":2,"cn":"查看余额","detail":"在实际显示的余额位置指出剩余额度。","en":"Here I can see how much credit I have left."},{"n":3,"cn":"解释费用","detail":"说明频繁调用 AI 接口为什么需要监控。","en":"I use AI APIs a lot, so I like knowing how much I’m spending."},{"n":4,"cn":"展示设置","detail":"如需展示，打开设置但不要暴露 API Key。","en":"I can configure it for my own account without showing my API key."}]},{"id":"P012","name":"投资组合再平衡 · Portfolio Rebalancing Dashboard","cat":"C","cn":"这是我给自己做的长期投资管理工具。比如原本计划股票占多少、债券占多少、黄金占多少，但市场涨跌以后，这些比例会发生变化。软件可以帮你算出现在偏离目标多少，以及需要买卖多少才能恢复到计划中的资产配置。","en":"I built this dashboard to help manage my long-term investments. For example, I might want a certain percentage of my money in stocks, bonds, and gold, but those percentages change as markets go up and down. My app shows how far my portfolio has drifted from my target and calculates how much I would need to buy or sell to rebalance it.","status":"逐项讲解（按顺序边操作边说）","steps":[{"n":1,"cn":"录入资产：输入持仓金额和理想目标比例。","detail":"","en":"I enter what I currently own and my target allocation."},{"n":2,"cn":"比较偏离：查看各类资产偏离目标多少。","detail":"","en":"It shows which parts of my portfolio are out of balance."},{"n":3,"cn":"切换方案：对比完整再平衡、超阈值调整与不调整。","detail":"","en":"I can compare different rebalancing strategies."},{"n":4,"cn":"看操作清单：阅读买卖金额与成本的测算。","detail":"","en":"And it calculates possible trades and estimated costs."}]},{"id":"P013","name":"滚仓计算器 · Trading Position Calculator","cat":"C","cn":"这是一个用来模拟不同杠杆交易策略的计算器。你可以输入本金、价格和杠杆倍数，看看不同阶段理论上会产生什么样的资金变化，还能保存计算记录和实际交易记录。","en":"I built this calculator to explore different leveraged trading scenarios. You enter your starting capital, price, and leverage, and it shows how your position and account value could change across different stages. You can also save calculations and track actual trades. It’s mainly a tool for analyzing strategies, not predicting profits.","status":"逐项讲解（按顺序边操作边说）","steps":[{"n":1,"cn":"填参数：输入本金、价格和杠杆。","detail":"","en":"I enter the capital, price, and leverage."},{"n":2,"cn":"观察推演：查看各阶段的理论变化。","detail":"","en":"The calculator shows how the numbers change across stages."},{"n":3,"cn":"保存快照：把方案存到历史记录。","detail":"","en":"I can save a calculation and come back to it later."},{"n":4,"cn":"记录实盘：在盈亏台账里加入交易和截图。","detail":"","en":"I can also record real trades and attach screenshots."}]},{"id":"P014","name":"加密货币突破雷达 · Crypto Breakout Radar","cat":"C","cn":"这是我做的一个加密货币行情研究工具。因为有些币突然上涨之前，会出现一些价格和成交量变化，但假突破也很多。我想把这些数据结合起来，帮助观察市场目前处于蓄势、突破还是突破失败的阶段，并跟历史行情做对比。","en":"I built this tool to study cryptocurrency price movements, especially breakout patterns. It looks at things like price, trading volume, and market conditions to help identify whether a coin is building momentum, breaking out, or showing signs of a failed breakout. You can also compare current patterns with historical examples. It’s a research tool rather than something that predicts prices with certainty.","status":"项目专属讲解（以仓库资料为依据，未经过现场点击验收）","steps":[{"n":1,"cn":"展示行情总览","detail":"打开实时雷达，选择 PEPE 或 DOGE。","en":"This is the market overview for a coin I’m tracking."},{"n":2,"cn":"解释状态","detail":"指出蓄势、突破或失败等标签。","en":"It shows whether the market is building momentum or a breakout is failing."},{"n":3,"cn":"查看证据","detail":"打开指标信息，解释成交量和价格依据。","en":"I can look at the numbers behind each signal."},{"n":4,"cn":"比较历史","detail":"打开历史事件对照过往走势。","en":"I can compare current conditions with past breakouts."}]},{"id":"P015 / P029","name":"私人照片图库 · Personal Photo Library","cat":"C","cn":"这是我做的私人照片管理项目。因为这些年拍了很多照片和视频，分散在不同硬盘里，想找一张旧照片非常费时间。我把它们集中到自己的电脑里，利用照片搜索、人脸识别和重复检测等功能，让以前的照片更容易找出来，而且尽量不修改原始文件。","en":"I set up this personal photo library because I’ve collected thousands of photos and videos over the years, and they were scattered across different hard drives. The system organizes them in one place and helps me search for pictures, recognize faces, and find duplicates. The best part is that everything stays on my own computer, and the original files are kept safe.","status":"逐项讲解（按顺序边操作边说）","steps":[{"n":1,"cn":"浏览图库：在私人相簿里按时间翻看照片。","detail":"","en":"Here I can browse photos by date."},{"n":2,"cn":"搜索图片：用关键词寻找旧照片。","detail":"","en":"I can search for photos instead of digging through folders."},{"n":3,"cn":"找人脸和重复：查看相似面孔和重复照片。","detail":"","en":"It can also help group faces and identify duplicates."},{"n":4,"cn":"保护原片：只读查看，不直接改动来源硬盘。","detail":"","en":"Most importantly, it leaves the original photos untouched."}]},{"id":"P017","name":"个人 RSS 阅读器 · Personal RSS Reader","cat":"C","cn":"这个软件是为了把我感兴趣的网络资讯集中到一起。因为每天要关注很多网站和文章，逐个打开很费时间。我希望通过它集中订阅和阅读，减少到处找信息的麻烦。","en":"I started building my own RSS reader because I follow a lot of websites and online content. Instead of visiting each site separately, I wanted one place where I could keep up with everything I’m interested in. The idea is to make reading and finding useful information much more efficient.","status":"资料有限：场景讲解稿，未经过手机真机逐键验收","steps":[{"n":1,"cn":"解释订阅","detail":"以两个经常阅读的网站举例。","en":"I follow several websites and want the updates in one place."},{"n":2,"cn":"展示来源","detail":"展示真实订阅列表（若存在）。","en":"Here are the sources I follow."},{"n":3,"cn":"打开文章","detail":"从实际可打开的列表进入文章。","en":"I open an article that looks interesting."},{"n":4,"cn":"说明节省时间","detail":"对比逐个访问网页的方式。","en":"This saves me from checking every website separately."}]},{"id":"P018","name":"视频转知识笔记 · Video to Notes","cat":"C","cn":"这个软件是想把视频里的知识变成可以长期保存的笔记。比如看了一段很长的教学视频，里面有很多有用内容，但下次想找又要重新看。我希望它能把视频内容整理成文字，保存到自己的知识库里，方便搜索和复习。","en":"I started this project because I learn a lot from videos, but it’s hard to remember or find specific information later. The idea is to turn useful video content into organized notes and save them in my personal knowledge base. That way, I can search for what I’ve learned instead of watching the same video again.","status":"项目专属讲解（以仓库资料为依据，未经过现场点击验收）","steps":[{"n":1,"cn":"选一个学习视频","detail":"说明为什么自己想保存视频知识。","en":"I often learn useful things from videos."},{"n":2,"cn":"展示视频笔记","detail":"如存在已生成的 Obsidian 笔记则打开。","en":"Here are some notes I saved from a video."},{"n":3,"cn":"快速搜索","detail":"在 Obsidian 中检索一个视频知识点。","en":"I can search my notes instead of rewatching the whole video."},{"n":4,"cn":"说明核实边界","detail":"视频到笔记的自动转换能力需按当前版本确认。","en":"The idea is to make what I learn from videos easier to find later."}]},{"id":"P022","name":"红利低波计算器 · Dividend Index Calculator","cat":"C","cn":"这是一个围绕红利低波指数投资设计的计算工具。我希望把相关的投资数据和计算集中在一个地方，减少每次查指标、手工计算的麻烦，帮助自己更方便地分析这类投资。","en":"I started this calculator for analyzing dividend-focused, low-volatility stock indexes. The goal is to bring useful investment calculations and information into one place, so I don’t have to keep looking up data and calculating everything manually.","status":"资料有限：场景讲解稿，未经过手机真机逐键验收","steps":[{"n":1,"cn":"说明红利低波","detail":"用普通话解释关注稳定派息与波动的指数。","en":"I use this for researching dividend-focused, lower-volatility indexes."},{"n":2,"cn":"展示输入数据","detail":"展示真实存在的参数或表格。","en":"These are the numbers I want to compare."},{"n":3,"cn":"解释结果","detail":"指着已有计算结果说出它的含义。","en":"Here’s what the calculation tells me."},{"n":4,"cn":"说清边界","detail":"强调这只是分析工具，不代替投资判断。","en":"It helps me think through the numbers, not predict the market."}]},{"id":"P023","name":"A 股指数估值看板 · Chinese Stock Market Valuation Dashboard","cat":"C","cn":"这是一个用来观察中国股票市场估值的网页工具。比如想知道沪深300或者红利低波指数现在算贵还是便宜，就可以看它们跟过去十年的估值相比处在什么位置，帮助自己做长期投资研究。","en":"I built this dashboard to help me understand whether major Chinese stock indexes look expensive or relatively cheap compared with their historical valuations. It compares different indexes using data from roughly the past ten years, so I can get a clearer picture of where the market stands instead of making investment decisions based purely on emotion.","status":"逐项讲解（按顺序边操作边说）","steps":[{"n":1,"cn":"选择指数：打开指数估值汇总表。","detail":"","en":"I open the overview of major Chinese stock indexes."},{"n":2,"cn":"查看分位：比较当前估值与过去十年的位置。","detail":"","en":"I compare today’s valuations with their historical ranges."},{"n":3,"cn":"对比指标：查看估值、股息率等不同维度。","detail":"","en":"I can compare valuation metrics and dividend yields."},{"n":4,"cn":"理解结果：把颜色作为研究参考，而不是买卖指令。","detail":"","en":"The colors make comparison easier, but they’re not trading signals."}]},{"id":"P030","name":"Skill 日报 · AI Skills Daily","cat":"C","cn":"这是我做的一套 AI 工具发现系统。现在每天都有很多新的 AI Skill 出现，但根本没时间一个个研究。它会自动收集、筛选和对比这些工具，告诉我哪些值得尝试、哪些可能有风险、哪些跟自己已经安装的工具重复。","en":"I built this system to keep track of new AI tools and skills. There are so many coming out every day that it’s impossible to check them all manually. My system scans different sources, compares new tools with what I already use, and gives me a daily summary of what’s worth trying, what’s outdated, and what might be risky.","status":"项目专属讲解（以仓库资料为依据，未经过现场点击验收）","steps":[{"n":1,"cn":"打开日报","detail":"找到已经生成的 Skill 日报 Markdown。","en":"Here’s a daily report about new AI skills."},{"n":2,"cn":"查看候选工具","detail":"选一条推荐解释用途。","en":"It highlights tools that might be worth trying."},{"n":3,"cn":"看风险或重复","detail":"指出与已装 Skill 重叠、安全风险的分析。","en":"It also checks for overlap and potential risks."},{"n":4,"cn":"说明不会自动安装","detail":"强调安装升级由自己确认。","en":"It never installs anything without me deciding to do it."}]},{"id":"P036","name":"人民币美元汇率看板 · Currency Exchange Rate Dashboard","cat":"C","cn":"这是一个专门查看人民币和美元汇率的小工具。我希望平时需要换汇或者关注汇率变化的时候，可以直接打开一个简单的页面，不用反复找财经网站。","en":"I made this little dashboard to keep an eye on the exchange rate between the Chinese yuan and the US dollar. It’s useful when I’m dealing with foreign currencies or paying for overseas services. I wanted a simple way to check exchange rates without having to browse through financial websites.","status":"资料有限：场景讲解稿，未经过手机真机逐键验收","steps":[{"n":1,"cn":"查看汇率","detail":"用实际数据页面查看美元兑人民币。","en":"This shows the exchange rate between US dollars and Chinese yuan."},{"n":2,"cn":"举例使用","detail":"以支付海外订阅为例。","en":"I often need this when paying for services overseas."},{"n":3,"cn":"对比金额","detail":"如有换算功能则现场换算，否则口述实例。","en":"I can quickly see roughly how much something costs in yuan."},{"n":4,"cn":"提醒变化","detail":"若真实页面提供走势可展示，否则只讲关注汇率的理由。","en":"It’s useful to keep an eye on currency movements."}]},{"id":"P037","name":"AI 编程训练营 · AI Coding Bootcamp","cat":"C","cn":"这是一个围绕 AI 编程学习的网站项目。主要是想帮助没有传统编程基础的人了解怎么使用 AI 开发软件，把自己的想法逐步做成真正能使用的产品。","en":"This is a website project focused on learning to build software with AI. The idea is to help people who don’t have a traditional programming background understand how AI can help them turn ideas into real applications. It’s about making software development more approachable for beginners.","status":"资料有限：场景讲解稿，未经过手机真机逐键验收","steps":[{"n":1,"cn":"介绍受众","detail":"说明面向 AI 编程初学者。","en":"This is aimed at beginners who want to build apps with AI."},{"n":2,"cn":"展示学习内容","detail":"打开网站里真实存在的一项内容。","en":"Here’s a topic the site covers."},{"n":3,"cn":"讲具体例子","detail":"用自己完成过的应用举例。","en":"For example, this is an app I built with AI."},{"n":4,"cn":"解释学习价值","detail":"强调从想法到产品的过程。","en":"I want people to see how an idea can become a working app."}]},{"id":"P038","name":"健身训练资料库 · Fitness Workout Library","cat":"C","cn":"这是一个整理健身训练资料的项目。因为我平时会研究不同的训练动作和方法，希望把这些资料放在一个地方，以后去健身房的时候能更方便地查找和参考。","en":"I started this project to organize fitness and workout resources. I like learning about different exercises and training methods, so I wanted one place to keep useful information that I can easily look up whenever I need it.","status":"资料有限：场景讲解稿，未经过手机真机逐键验收","steps":[{"n":1,"cn":"说明资料整理","detail":"说说你收集的动作和训练资料。","en":"I like keeping my workout resources organized."},{"n":2,"cn":"找一个动作","detail":"打开确实存在的练习资料。","en":"Let me find an exercise I’ve saved."},{"n":3,"cn":"看训练要点","detail":"展示已经写下的动作注意事项。","en":"These notes remind me what to focus on."},{"n":4,"cn":"健身房使用","detail":"说明训练时如何临时查询。","en":"It’s handy when I need a quick reminder at the gym."}]},{"id":"P042","name":"AIHOT · AI News and Updates","cat":"C","cn":"这是一个 AI 行业信息收集项目。因为现在 AI 发展太快，新模型、新功能、新编程工具几乎每天都在出现。我希望通过它把这些更新集中整理起来，快速了解哪些变化真正值得关注。","en":"I built this project to keep up with how quickly AI is changing. New models, coding tools, and AI features seem to come out almost every day. Instead of checking dozens of websites, I wanted one place to collect and organize the important updates, especially the ones that could actually improve how I work.","status":"资料有限：场景讲解稿，未经过手机真机逐键验收","steps":[{"n":1,"cn":"解释新闻来源","detail":"告诉朋友每天 AI 更新很多。","en":"There are so many AI updates coming out every day."},{"n":2,"cn":"浏览更新","detail":"从真实情报页面打开一条更新。","en":"Here’s one of the latest updates I’m following."},{"n":3,"cn":"挑重点","detail":"解释为何它值得关注。","en":"I try to focus on updates that actually matter."},{"n":4,"cn":"应用到工作","detail":"举例说明某模型更新如何影响自己的软件开发。","en":"Then I decide whether it’s useful for the apps I’m building."}]},{"id":"P050","name":"社交平台活动发布 · Event Publishing Tool","cat":"C","cn":"这是一个帮助整理和发布活动信息的项目。比如组织线下聚会、英语角或者其他社交活动时，可能需要在微信公众号和小红书分别发布内容。我希望把这件事变得更方便，减少重复编辑。","en":"I’m working on a tool to make promoting local events easier. For example, when organizing a meetup or language exchange, you often need to post the same information on different social platforms. The idea is to simplify that process so you spend less time editing and publishing the same content repeatedly.\n\n---","status":"资料有限：场景讲解稿，未经过手机真机逐键验收","steps":[{"n":1,"cn":"介绍活动发布","detail":"例如组织一场英语角。","en":"Say I’m organizing a language exchange meetup."},{"n":2,"cn":"整理活动信息","detail":"列出标题时间地点报名方式。","en":"I put together the time, place, and event details."},{"n":3,"cn":"对比平台","detail":"展示已有公众号与小红书活动文案。","en":"I usually need to share the same information on different platforms."},{"n":4,"cn":"介绍开发目标","detail":"说明希望减少重复编辑，但不冒充已经自动发布。","en":"The idea is to avoid writing everything from scratch each time."}]},{"id":"P054","name":"后翻科学研究雷达 · Science Research Radar","cat":"C","cn":"这是我为自己做的科学研究知识库。因为网上有很多关于健康、健身和长寿的说法，但有些根本没有可靠证据。我希望系统能自动寻找新的高质量科学研究，把论文翻译成容易理解的中文，告诉我研究发现了什么、证据有多可靠，以及哪些说法还不能确定。","en":"I built this personal research tool because I’m really interested in health, fitness, and longevity, but there’s so much conflicting information online. My system keeps track of new scientific studies, especially high-quality human research, and turns them into easy-to-understand summaries. It explains what the researchers found, how strong the evidence is, and what we still don’t know. It helps me make more informed decisions instead of just following random health advice online.","status":"逐项讲解（按顺序边操作边说）","steps":[{"n":1,"cn":"浏览新研究：打开精选或全部，寻找近期研究。","detail":"","en":"I open the research feed to see the latest findings."},{"n":2,"cn":"读通俗解读：查看研究结论、证据强弱和局限性。","detail":"","en":"I can read a plain-language summary of the findings, evidence, and limitations."},{"n":3,"cn":"按专题查找：进入健身、长寿等专题继续阅读。","detail":"","en":"I can browse topics like fitness or longevity."},{"n":4,"cn":"收藏与导出：把有用内容收藏，按需导出 Markdown 或同步笔记。","detail":"","en":"And I can save useful articles or export them to my notes."}]},{"id":"P058","name":"AI 编程毕业展示 · AI Coding Showcase","cat":"C","cn":"这是一个集中展示 AI 编程成果的项目。我希望把学习过程中做过的软件、解决过的问题和最终作品整理成一个容易观看的展示空间，让别人了解 AI 编程可以做出哪些实际产品。","en":"I started this project to showcase what I’ve built while learning to develop software with AI. I wanted a place where people could see the actual applications and projects, rather than just looking at code. It’s a way to share my progress and show what’s possible with AI-assisted development.","status":"资料有限：场景讲解稿，未经过手机真机逐键验收","steps":[{"n":1,"cn":"展示作品集","detail":"打开当前可访问的毕业作品展示页。","en":"This is a showcase of the apps I’ve worked on."},{"n":2,"cn":"选一个作品","detail":"挑一款最容易上手的手机软件。","en":"Let me pick one of the projects."},{"n":3,"cn":"解释过程","detail":"说明从想法到做成软件。","en":"I started with a simple idea and worked on it with AI."},{"n":4,"cn":"展示实际成果","detail":"用已经安装或上线的真实软件演示。","en":"And here’s the actual app running on my phone."}]}],"places":[{"id":1,"cnName":"龙兴路","enName":"Longxing Road","city":"海口","category":"城市街拍","cn":"国贸片区的一条短街，咖啡馆、绿植、外摆和复古门店很适合街拍。","en":"A short street in Haikou’s Guomao district, known for cafés, greenery, vintage shops, and street photography."},{"id":2,"cnName":"滨海新村","enName":"Binhai Xincun Neighborhood","city":"海口","category":"城市街拍","cn":"老社区与有趣的咖啡馆交织，适合拍有生活感的照片。","en":"An old neighborhood with interesting new cafés and small shops among narrow lanes."},{"id":3,"cnName":"骑楼老街","enName":"Qilou Old Street","city":"海口","category":"城市街拍","cn":"中山路附近的南洋骑楼建筑群，适合边走边体验老海口小吃。","en":"Arcaded old buildings near Zhongshan Road, with Southeast Asian architectural influences and local snacks."},{"id":4,"cnName":"云洞图书馆","enName":"Cloud Cave Library","city":"海口","category":"城市街拍","cn":"海口湾边的弧线白色建筑，特别适合散步、拍照和看日落。","en":"A beautifully curved white building by Haikou Bay, popular for photos and sunset walks."},{"id":5,"cnName":"天空之山","enName":"Sky Mountain","city":"海口","category":"城市街拍","cn":"美丽沙路附近的海边建筑，可以沿着步道走上屋顶观海。","en":"A striking coastal building with curved walkways and sea views."},{"id":6,"cnName":"海大南门夜市","enName":"Hainan University South Gate Night Market","city":"海口","category":"美食夜生活","cn":"晚上热闹的小吃街，海南粉、烧烤、清补凉等很丰富。","en":"A lively night market full of Hainan noodles, barbecue, local desserts, and late-night food."},{"id":7,"cnName":"荣山寮村","enName":"Rongshanliao Village","city":"海口","category":"海滨日落","cn":"西海岸保留渔村氛围的村落，傍晚看日落和渔船。","en":"A coastal fishing village on the west side of Haikou, with boats, seafood, and sunset views."},{"id":8,"cnName":"898艺术村","enName":"898 Art Village","city":"海口","category":"城市街拍","cn":"村落里有墙绘、陶艺和一些手作活动。","en":"A creative village with colorful murals, artists, pottery, and local crafts."},{"id":9,"cnName":"雷琼火山口地质公园","enName":"Haikou Volcano Park","city":"海口","category":"自然体验","cn":"火山地貌与黑色火山岩，适合户外徒步探索。","en":"A volcanic landscape with old craters, dark lava rock, and walking trails."},{"id":10,"cnName":"北港岛","enName":"Beigang Island","city":"海口","category":"自然体验","cn":"东寨港附近的渔岛，潮汐和滩涂要注意安全。","en":"A quiet fishing island with mudflats, boats, and rich coastal life."},{"id":11,"cnName":"海甸溪畔","enName":"Haidian Creek Waterfront","city":"海口","category":"美食夜生活","cn":"适合傍晚沿水边散步，看看城市灯光。","en":"A lovely waterside area at dusk, with cafés, restaurants, and reflections of city lights."},{"id":12,"cnName":"海甸岛捕捞村","enName":"Haidian Fishing Village","city":"海口","category":"城市街拍","cn":"老渔村与年轻人的咖啡小店相结合。","en":"A working old fishing community with new cafés and independent shops nearby."},{"id":13,"cnName":"侨中里文化街","enName":"Qiaozhongli Cultural Street","city":"海口","category":"城市街拍","cn":"学生喜欢的文化街区，有甜品和特色小店。","en":"A youthful creative street with small shops, desserts, and playful design details."},{"id":14,"cnName":"高兴里特色文化街区","enName":"Gaoxingli Creative District","city":"海口","category":"美食夜生活","cn":"开放式商业街区，餐饮、展览、小店兼备。","en":"An open-air district with restaurants, design shops, and occasional art events."},{"id":15,"cnName":"FUNBAY自在湾街区","enName":"FUNBAY Waterfront","city":"海口","category":"美食夜生活","cn":"靠海的餐饮休闲区，有时有现场音乐。","en":"A waterfront place for food, sea breezes, and occasional live music."},{"id":16,"cnName":"西溪里商业街","enName":"Xixili Riverside Street","city":"海口","category":"美食夜生活","cn":"临海甸溪北岸的酒馆与餐厅，夜景比较好看。","en":"A riverside street with restaurants and relaxed evening bars."},{"id":17,"cnName":"华彩海口湾滨海街区","enName":"Huacai Haikou Bay Waterfront","city":"海口","category":"海滨日落","cn":"现代化海景商圈，吃过饭可沿海边走。","en":"A modern waterfront district with restaurants, coastal walks, and city lights."},{"id":18,"cnName":"水巷口","enName":"Shuixiangkou Food Street","city":"海口","category":"美食夜生活","cn":"骑楼旁的本地美食街，适合吃辣汤饭和清补凉。","en":"A local food street beside Qilou Old Street, known for spicy breakfast dishes and Hainan snacks."},{"id":19,"cnName":"得胜沙路","enName":"Deshengsha Road","city":"海口","category":"城市街拍","cn":"老骑楼街的店招和门面很有年代感。","en":"An older shopping street with historic shop signs and arcaded buildings."},{"id":20,"cnName":"府城老街","enName":"Fucheng Old Streets","city":"海口","category":"城市街拍","cn":"府城片区有许多老店和传统海南小吃。","en":"Old streets full of local life, food stalls, and traditional Hainan flavors."},{"id":39,"cnName":"万绿园","enName":"Evergreen Park (Wanlüyuan)","city":"海口","category":"海滨日落","cn":"海口市龙华区滨海大道38号，海口湾边。万绿园是海口人经常去散步、跑步、野餐的大草坪，天气舒服时很有生活气。比起拍一个固定景点，更适合带朋友放松，看草地、椰树和海边城市风景。","en":"It is at No. 38 Binhai Avenue, Longhua District, right by Haikou Bay. This is where locals picnic, run, and relax on big lawns near the bay. Come to slow down and see everyday Haikou life rather than chase a famous landmark."},{"id":41,"cnName":"海口湾滨海步道","enName":"Haikou Bay Waterfront Walk","city":"海口","category":"海滨日落","cn":"海口市龙华区海口湾沿岸，世纪公园至云洞图书馆一带。这条路线适合边走边看现代海口，不需要门票，也不必专门安排项目。海风、桥梁、海边建筑和落日都能拍到，晚上散步也很舒服。","en":"It is along Haikou Bay in Longhua District, around Century Park and Cloud Cave Library. This waterfront walk gives you bridges, modern buildings, and sea views in one easy route. It's free, relaxed, and especially pleasant toward sunset."},{"id":45,"cnName":"白沙门公园","enName":"Baishamen Park","city":"海口","category":"海滨日落","cn":"海口市美兰区海甸六东路一带的白沙门公园。这里更像海口人的海边生活公园，草地、树荫和休闲步道都有。适合早晚散步或带朋友轻松运动，不是那种需要排队拍照的大景区。","en":"You can find it at Baishamen Park near Haidian Sixth East Road, Meilan District. A local seaside park with lawns, shade, and walking paths. It's best for a relaxed stroll or light exercise rather than a big sightseeing itinerary."}],"stories":[{"id":"haikou","title":"我来自海口","cat":"生活","cn":"我在海口出生和长大，目前也主要住在这里。","en":"I was born and raised in Haikou. I live here now, too."},{"id":"cities","title":"我待过的城市","cat":"经历","cn":"我在长沙读了四年大学，后来去重庆待了一年，也在广东工作过。","en":"I went to university in Changsha for four years, then spent a year in Chongqing and worked in Guangdong."},{"id":"apps","title":"喜欢自己做软件","cat":"兴趣","cn":"我喜欢把生活中的问题做成自己能用的软件。","en":"I like building little apps that solve everyday problems."},{"id":"gym","title":"健身和锻炼","cat":"兴趣","cn":"我平时喜欢去健身房，也爱了解更有效的训练方法。","en":"I enjoy working out and learning how to train more effectively."},{"id":"coffee","title":"咖啡","cat":"兴趣","cn":"我喜欢中度烘焙，也经常在家做拿铁。","en":"I enjoy medium-roast coffee, and I often make lattes at home."}]}</script><script>const D=JSON.parse(document.getElementById('dataset').textContent);
 const TABS=[['software','软件','▦','SOFTWARE COLLECTION'],['hainan','海南','⌖','DISCOVER HAINAN'],['chat','聊天','◉','CONVERSATION COMPANION'],['self','关于我','♙','MY STORIES'],['people','人物','♧','PEOPLE & CONVERSATIONS']];
 // —— 多语言框架：UI 骨架双语，内容本身已是中英对照 ——
@@ -532,6 +649,7 @@ const I18N={zh:{
  'people.remoteSub':'标识 {slug} · 私有在线 · 来自 Mac 主档',
  'people.lastContact':'上次联系 {v}','people.noRecord':'暂无记录',
  'people.lastTopic':'上次聊过：{v}','people.noTopicHistory':'还没有来自已确认事实的会话记录',
+ 'people.profileTitle':'基本档案','people.profileSub':'会话确认 + 我的补充','people.manualTag':'我补充','people.profileEmpty':'还没有汇总信息；对话确认后会自动出现在这里。',
  'people.prepTitle':'见面前准备','people.prepSub':'最多 3 条 · 本地规则，不上云',
  'people.prepOff':'准备建议暂时不可用（测试版）。',
  'people.prepEmpty':'还没有已确认的资料。第一次见面先用三个通用问题开场，聊完确认事实后再生成准备清单。',
@@ -693,6 +811,7 @@ const I18N={zh:{
  'people.remoteSub':'ID {slug} · private online · from the Mac profile',
  'people.lastContact':'Last contact {v}','people.noRecord':'no record yet',
  'people.lastTopic':'Last talked about: {v}','people.noTopicHistory':'No sessions from confirmed facts yet',
+ 'people.profileTitle':'Basic profile','people.profileSub':'confirmed in sessions + my notes','people.manualTag':'My note','people.profileEmpty':'No profile yet; confirmed details will appear here.',
  'people.prepTitle':'Before you meet','people.prepSub':'Up to 3 · local rules, never uploaded',
  'people.prepOff':'Preparation tips are not available in this preview.',
  'people.prepEmpty':'Nothing confirmed yet. Open with three general questions, confirm the facts afterwards, and the prep list will appear.',
@@ -806,12 +925,14 @@ for(const k of Object.keys(displayValid))if(!displayValid[k].includes(SAV.displa
 
 const LIVE_MODE=/[?&]live=1(?:&|$)/.test(String(window.location?.search||''));
 let S={tab:'software',group:'A',q:'',cat:'全部',storyTag:'全部',person:'',session:null,recs:[],ai:null,aiState:'demo',aiError:'',aiSeq:0,asrState:'off',asrInterim:'',asrStream:null,asrSeen:new Set(),lastLiveAiAt:0,review:'',details:null,asrWanted:false,asrRetry:0,asrRetryTimer:null,cloudConsentPref:false,autoTop:true,speakerSwapN:0,suggFreeze:false,suggSig:'',suggStale:''};
+S.v152=S.v152||{immersive:false,view:'chat',translated:new Set(),zhOpen:new Set(),favs:new Set(),share:null,origin:null,menu:false,stopSheet:false,shareZh:false,translateConsent:false,ttsConsent:true};
+try{S.v152.voiceZh=S.v152.voiceZh||localStorage.getItem('sm.ttsVoiceZh')||'zh_female_xiaohe_uranus_bigtts';S.v152.voiceEn=S.v152.voiceEn||localStorage.getItem('sm.ttsVoiceEn')||'en_male_tim_uranus_bigtts';}catch{}
 window.__smProfile={snapshot:()=>({stories:SAV.stories,people:SAV.people,updatedAt:SAV.updatedAt||null}),apply:p=>{if(Array.isArray(p.stories))SAV.stories=p.stories;if(Array.isArray(p.people))SAV.people=p.people;if(p.updatedAt)SAV.updatedAt=p.updatedAt;persist();render();}};const persist=()=>{SAV.updatedAt=new Date().toISOString();try{localStorage.setItem('alw-preview-v1',JSON.stringify(SAV))}catch{}},tip=msg=>{let t=$('#toast');t.textContent=msg;t.style.display='block';clearTimeout(window._tt);window._tt=setTimeout(()=>t.style.display='none',2200)};
 const icon=code=>'<i class="ico" aria-hidden="true">'+code+'</i>';
 function themeResolved(){if(SAV.theme==='system')return (window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light';return SAV.theme==='dark'?'dark':'light'}
 function theming(){const r=themeResolved();document.documentElement.setAttribute('data-theme',r);const b=$('#theme');if(b)b.textContent=SAV.theme==='system'?'◐':(r==='light'?'☾':'☼');applyDisplay()}
 function applyDisplay(){for(const k of Object.keys(displayValid))document.documentElement.setAttribute('data-'+k,SAV.display[k])}
-function setTab(id){S.tab=id;if(id==='hainan'&&typeof loadPrivatePlacesIntoDataset==='function')setTimeout(()=>loadPrivatePlacesIntoDataset(),0);S.q='';S.cat='全部';document.querySelector('#drawer').classList.remove('open');$('#drawerbg').classList.remove('open');document.querySelectorAll('[data-nav]').forEach(n=>n.classList.toggle('current',n.dataset.nav===id));const tab=tabInfo(id);$('#pageTitle').textContent=tab[1];$('#subTitle').textContent=tab[3];render();window.scrollTo(0,0)}
+function setTab(id){if(S.v152){S.v152.view='chat';S.v152.origin=null;S.v152.share=null;S.v152.shareZh=false;S.v152.menu=false;S.v152.stopSheet=false}S.tab=id;if(id==='hainan'&&typeof loadPrivatePlacesIntoDataset==='function')setTimeout(()=>loadPrivatePlacesIntoDataset(),0);S.q='';S.cat='全部';document.querySelector('#drawer').classList.remove('open');$('#drawerbg').classList.remove('open');document.querySelectorAll('[data-nav]').forEach(n=>n.classList.toggle('current',n.dataset.nav===id));const tab=tabInfo(id);$('#pageTitle').textContent=tab[1];$('#subTitle').textContent=tab[3];render();window.scrollTo(0,0);smApplyImmersive()}
 function head(){return ''} // Content first: no decorative hero on first-level pages.
 function searchInput(placeholder){return `<label class="search"><span>⌕</span><input id="search" type="search" placeholder="${placeholder}" value="${esc(S.q)}" aria-label="${placeholder}"></label>`}
 function filters(entries,value,k){return `<div class="filter">${entries.map(a=>`<button type="button" data-filter="${k}" data-value="${esc(a[0])}" class="${value===a[0]?'on':''}">${esc(a[1])}</button>`).join('')}</div>`}
@@ -880,6 +1001,11 @@ function startRecording(){
 // 系统返回键：先关最上层的弹层/抽屉，再退回首页 Tab；都关完了返回 false 交给原生退出。
 window.smBack=function(){
  try{
+  if(S.v152&&S.v152.stopSheet){S.v152.stopSheet=false;if(S.tab==='chat')render();return true}
+  if(S.v152&&S.v152.share){S.v152.share=null;S.v152.shareZh=false;if(S.tab==='chat')render();return true}
+  if(S.v152&&S.v152.menu){S.v152.menu=false;if(S.tab==='chat')render();return true}
+  if(S.v152&&S.v152.view==='origin'){vsCloseOrigin();return true}
+  if(S.v152&&S.v152.immersive){window.smExitImmersive();return true}
   const mb=document.querySelector('#modalbg');
   if(mb&&mb.classList.contains('open')){document.querySelector('#modalbg').classList.remove('open');return true}
   const dr=document.querySelector('#drawer');
@@ -891,13 +1017,14 @@ window.smBack=function(){
  }catch(e){return false}
 };
 window.smNativeRecordingStarted=function(){
- // 原生录音面板也能直接开录：页面此时可能还没有会话，要先建立本轮，再订阅字幕。
  try{
   if(!S.session){
    S.session={id:String(Date.now()),messages:[],date:new Date().toLocaleString('zh-CN'),
     cloudConsent:false,provider:'deepseek',model:'deepseek-flash',liveMode:true};
    S.ai=null;S.aiState='demo';S.aiError='';S.asrSeen=new Set();S.lastLiveAiAt=0;
   }
+  S.v152.immersive=true;S.v152.view='chat';S.v152.stopSheet=false;
+  S.v152.share=null;S.v152.shareZh=false;S.v152.menu=false;
   setTab('chat');
  }catch(e){}
  if(S.asrState==='off'||S.asrState==='error')connectLiveASR();
@@ -915,41 +1042,226 @@ window.smNativeLinkState=function(state,text){
  }catch(e){}
 };
 function chat(){
+ if(S.v152.view==='origin')return originView();
  let active=!!S.session;
  if(S.session)S.session.messages.forEach(m=>{if(m.speaker)speakerLabel(m.speaker)});
  const msgs=S.session?S.session.messages:[];
  const ended=!!msgs.length&&(!active||S.asrState==='off');
- const recLabel=!active?'未开始':S.asrState==='off'?(msgs.length?'已结束 · 可复盘':'未开始'):S.asrLink==='reconnecting'?'连接中断 · 重连中':S.asrLink==='lost'?'连接中断':S.asrState==='connecting'?'正在连接…':S.asrState==='ready'?'正在听':S.asrState==='mock'?'演示转录':S.asrState==='error'?'连接中断':ended?'已结束 · 可复盘':'未开始';
+ const recLabel=!active?'未开始':S.asrState==='off'?(msgs.length?'已结束':'未开始'):S.asrLink==='reconnecting'?'连接中断 · 重连中':S.asrLink==='lost'?'连接中断':S.asrState==='connecting'?'正在连接…':S.asrState==='ready'?'正在听':S.asrState==='mock'?'演示转录':S.asrState==='error'?'连接中断':ended?'已结束':'未开始';
+ const stateClass=!active||S.asrState==='off'?'off':S.asrLink==='reconnecting'||S.asrState==='connecting'?'reconnecting':S.asrLink==='lost'||S.asrState==='error'?'off':'live';
  const last=msgs.slice(-3).reverse();
- const history=msgs.slice().reverse();
- return `<div class="chatv15">
- <section class="chathead">
-   <label class="personpick"><span>对话对象</span><select id="chatPerson" class="field">${chatPersonOptions()}</select></label>
-   <span class="tag" id="recState">${esc(recLabel)}</span>
-   <span class="connpill" id="connPill">${esc(connModeLabel())}</span>
-   <button type="button" class="btn mainbtn recbtn" data-act="${(!active||S.asrState==='off')?'start-recording':'disconnect-asr'}">${(!active||S.asrState==='off')?(msgs.length?'开始新一轮':'开始录音'):'停止录音'}</button>
-   <button type="button" class="linkbtn" data-act="swapspeakers">对调说话人</button>
+ const liveNow=active&&S.asrState!=='off';
+ const startLabel=msgs.length?'开始新一轮':'开始录音';
+ return `<div class="chatv15 v152">
+ <div class="v152bar" id="v152bar">
+  <label class="v152person"><select id="chatPerson" class="v152select" aria-label="对话对象">${chatPersonOptions()}</select></label>
+  <span class="v152state" id="recState" data-state="${stateClass}"><i></i>${esc(recLabel)}</span>
+  <button type="button" class="v152more" data-v152="menu" aria-label="更多设置">⋯</button>
+  ${liveNow?`<button type="button" class="v152stop" data-v152="stop">停止</button>`:`<button type="button" class="v152start" data-act="start-recording">${esc(startLabel)}</button>`}
+ </div>
+ ${S.v152.menu?vsMenu():''}
+ <section class="v152subs" id="v152subs" aria-label="对话">
+  <div id="asrInterim" class="live-interim" aria-live="polite">${esc(S.asrInterim||'')}</div>
+  <div id="messages" class="v152msgs">${last.length?last.map(m=>bubbleHTML(m)).join(''):'<div class="stateempty">'+esc(t('chat.empty'))+'</div>'}</div>
  </section>
- <section class="panel subpanel">
-   <div class="paneltitle"><span>对话原文</span><small>最近 3 句</small></div>
-   <div id="asrInterim" class="live-interim" aria-live="polite">${esc(S.asrInterim||'')}</div>
-   <div class="convwrap"><button type="button" id="backlatest" class="backlatest hidden">回到最新</button><div id="messages" class="conversation subs3${!msgs.length?' empty':''}">${!msgs.length?('<div class="stateempty">'+esc(t('chat.empty'))+'</div>'):last.map(m=>bubbleHTML(m)).join('')}</div></div>
-   <details class="historybox"${msgs.length?'':' hidden'}><summary>展开历史（${msgs.length} 句）</summary><div id="msgHistory" class="conversation historylist">${history.map(m=>bubbleHTML(m)).join('')}</div></details>
-   <div id="liveFacts" class="livefacts"></div>
+ <section class="v152coach" id="suggestionArea" aria-label="接话建议">
+  <div class="v152badgewrap"><button type="button" id="suggNewBadge" class="badge hidden" data-act="refresh-sugg">有新的接话建议 · 点击更新</button></div>
+  <div id="coachresults"></div>
  </section>
- <section class="panel suggestionpanel" id="suggestionArea">
-   <div class="paneltitle"><span>接话建议</span><small>英文为主 · 中文可展开</small><button type="button" id="suggNewBadge" class="badge hidden" data-act="refresh-sugg">有新的接话建议 · 点击更新</button></div>
-   <div id="coachresults"></div>
- </section>
- <section class="panel refspanel">
-   <div class="paneltitle"><span>关联资料</span><small>来自你已有的数据库</small></div>
-   <div id="refresults" class="refstrip"></div>
-   <details class="manualextra advrefs"><summary>手动查找资料</summary><div class="manualbody"><label class="search"><span>⌕</span><input id="refq" placeholder="搜索景点、作品或话题…"></label><div class="actions"><button class="btn tinted" data-act="refsearch">搜索</button><button class="btn" data-act="clearref">恢复自动推荐</button></div></div></details>
- </section>
- <div class="compose">${!active?'':`<div class="actions"><button class="btn tinted" data-act="review">结束并人工确认</button><button class="btn" data-act="discard">放弃本轮</button></div>`}</div>
- <p class="info">录音前请先征得同行者同意。字幕原文只保存在本机，是否把文字用于生成建议由你逐轮决定。</p>
+ <div class="v152refs" id="refresults" aria-label="关联资料"></div>
+ <div id="liveFacts" class="livefacts" style="display:none"></div>
+ ${S.v152.stopSheet?vsStopSheet():''}
+ ${S.v152.share?vsShareSheet():''}
  </div>`;
 }
+function vsMenu(){
+ return `<div class="v152menubg" data-v152="menu-close"></div><div class="v152menu" id="v152menu">
+  <small>连接：${esc(connModeLabel()||'未连接')}</small>
+  <button type="button" data-v152="swap">对调说话人</button>
+  <button type="button" data-v152="diag">诊断 / 设置</button>
+  <button type="button" data-v152="exit">退出全屏</button>
+ </div>`;
+}
+function vsStopSheet(){
+ const n=S.session?S.session.messages.length:0;
+ return `<div class="v152scrim" data-v152="dismiss-stop"></div><div class="v152sheet" role="dialog" aria-label="本轮已停止">
+  <h2>本轮已停止</h2>
+  <p class="v152sub">${n?'已保存 '+n+' 句原文':'本轮还没有字幕'} · 选择下一步</p>
+  <div class="v152stack">
+   <button type="button" class="v152big" data-v152="finish">结束并人工确认</button>
+   <button type="button" class="v152big ghost" data-v152="discard">放弃本轮</button>
+  </div>
+  <button type="button" class="v152cancel" data-v152="resume">继续录音</button>
+ </div>`;
+}
+function vsShareData(){
+ const ref=S.v152.share;if(!ref)return null;
+ const kind=String(ref.kind),id=String(ref.id);
+ if(kind==='place'){
+  const p=D.places.find(x=>String(x.id)===id);if(!p)return null;
+  const id3=String(p.id).padStart(3,'0');
+  const slots=(Array.isArray(p.photos)&&p.photos.length)?p.photos:[1];
+  const photos=slots.map(slot=>'/v12/img/'+encodeURIComponent(p.cityFolder||p.city_folder||'Haikou')+'/'+id3+'/0'+slot+'.webp');
+  const sp=String(p.specialEn||'').trim(),full=String(p.en||'').trim();
+  const en=full?(sp&&!full.includes(sp)?sp+' '+full:full):sp;
+  return {kind,kindLabel:'分享 · 地点',title:p.cnName||'',enName:p.enName||'',en,zh:p.cn||'',src:'来源：海南地点 · 已确认',photos,originKind:'place',locationCn:p.locationCn||'',locationEn:p.locationEn||'',noEn:!en};
+ }
+ if(kind==='story'){
+  const s=SAV.stories.find(x=>String(x.id)===id);if(!s)return null;
+  const en=String(s.en||'').trim();
+  return {kind,kindLabel:'分享 · 关于我',title:s.title||'',enName:'',en,zh:s.cn||'',src:'来源：我的故事 · 已确认',photos:[],originKind:'story',locationCn:'',locationEn:'',noEn:!en};
+ }
+ if(kind==='person'){
+  const p=(S.people.list||[]).find(x=>x.slug===id)||(SAV.people||[]).find(x=>String(x.id)===id);
+  if(!p)return null;
+  const en=String(p.aboutEn||p.about_en||'').trim();
+  return {kind,kindLabel:'分享 · 人物',title:p.name||'',enName:p.regionEn||'',en,zh:p.about||'',src:'来源：人物档案',photos:[],originKind:'person',locationCn:'',locationEn:'',noEn:!en};
+ }
+ if(kind==='app'){
+  const a=D.apps.find(x=>x.id===id);if(!a)return null;
+  const en=String(a.en||'').trim();
+  return {kind,kindLabel:'分享 · 软件',title:a.name||'',enName:a.id||'',en,zh:a.cn||'',src:'来源：软件作品',photos:[],originKind:'app',locationCn:'',locationEn:'',noEn:!en};
+ }
+ return null;
+}
+function vsShareSheet(){
+ const d=vsShareData();if(!d)return '';
+ const zhText=String(d.zh||'').trim();
+ const canTranslate=!!zhText&&!d.noEn;
+ const body=d.noEn
+  ?`<p class="v152sharezh">该资料暂无英文表达；下面是已有中文事实，不生成假英文。</p>${zhText?`<p class="v152sharezh">${esc(zhText)}</p>`:''}`
+  :`<p class="v152sharetext" lang="en">${esc(d.en)}</p>${S.v152.shareZh&&zhText?`<p class="v152sharezh">${esc(zhText)}</p>`:''}`;
+ return `<div class="v152scrim" data-v152="close-share"></div><div class="v152sheet" id="v152share" role="dialog" aria-label="关联资料分享卡">
+  <p class="v152kind">${esc(d.kindLabel)}</p>
+  <h3>${esc(d.title)}</h3>
+  ${d.enName?`<p class="v152enname">${esc(d.enName)}</p>`:''}
+  ${body}
+  <div class="v152row">
+   ${d.originKind?`<button type="button" class="v152mini" data-v152="origin">原资料 ›</button>`:''}
+   ${canTranslate?`<button type="button" class="v152mini" data-v152="toggle-zh">${S.v152.shareZh?'收起中文':'翻译'}</button>`:''}
+   <span class="v152src">${esc(d.src)}</span>
+  </div>
+  <button type="button" class="v152big ghost" data-v152="close-share">关闭</button>
+ </div>`;
+}
+function originView(){
+ const d=S.v152.origin||vsShareData();
+ if(!d)return `<div class="chatv15 v152 v152origin" id="v152origin"><div class="v152originhead"><button type="button" class="v152back" data-v152="back-chat">‹ 返回对话</button><span class="v152livepill off"><i></i>未录音</span></div><p class="stateempty">资料已不存在</p></div>`;
+ const live=!!(S.session&&S.asrState!=='off');
+ const photos=(d.photos&&d.photos.length)
+  ?d.photos.map((src,i)=>`<figure class="v152photo"><img src="${esc(src)}" alt="${esc(d.title)} ${i+1}" onerror="this.style.display='none';this.parentElement.classList.add('noimg')"><figcaption>${i+1} / ${d.photos.length}</figcaption></figure>`).join('')
+  :`<div class="v152photo noimg"><span>${d.kind==='story'?'我的故事 · 无配图':'暂无图片'}</span></div>`;
+ const addr=[d.locationCn,d.locationEn].filter(Boolean).join(' · ');
+ const enBlock=d.en?`<div class="v152block"><h2>English</h2><p lang="en">${esc(d.en)}</p></div>`:`<div class="v152block"><h2>English</h2><p>该资料暂无英文表达。</p></div>`;
+ const zhBlock=String(d.zh||'').trim()?`<div class="v152block"><h2>${d.kind==='story'?'中文全文':'中文资料'}</h2><p>${esc(d.zh)}</p></div>`:'';
+ return `<div class="chatv15 v152 v152origin" id="v152origin">
+ <div class="v152originhead">
+  <button type="button" class="v152back" data-v152="back-chat">‹ 返回对话</button>
+  <span class="v152livepill${live?'':' off'}"><i></i>${live?'录音中':'未录音'}</span>
+ </div>
+ <div class="v152originbody">
+  <div class="v152photos">${photos}</div>
+  <h1>${esc(d.title)}</h1>
+  ${d.enName?`<p class="v152enname2">${esc(d.enName)}</p>`:''}
+  ${addr?`<p class="v152addr">${esc(addr)}</p>`:''}
+  ${zhBlock}${enBlock}
+ </div>
+ <div class="v152originfoot">录音在后台继续 · 点左上「返回对话」即可接着说</div>
+ </div>`;
+}
+function vsRefreshMessages(){
+ const box=$('#messages');if(!box)return;
+ const last=(S.session?.messages||[]).slice(-3).reverse();
+ box.innerHTML=last.map(m=>bubbleHTML(m)).join('');
+}
+function vsTranslateMessage(id){
+ const m=(S.session?.messages||[]).find(x=>msgId(x)===id);
+ if(!m)return;
+ if(S.v152.translated.has(id)){S.v152.translated.delete(id);return vsRefreshMessages()}
+ S.v152.translated.add(id);
+ if(m.zh||!/[A-Za-z]/.test(String(m.text||'')))return vsRefreshMessages();
+ if(m.zhState==='loading')return vsRefreshMessages();
+ const run=()=>{
+  m.zhState='loading';vsRefreshMessages();
+  fetch('/api/ai/translate',{method:'POST',headers:{'Content-Type':'application/json'},
+   body:JSON.stringify({consent:true,text:String(m.text||'').slice(0,700)})})
+   .then(async r=>{const d=await r.json().catch(()=>({}));if(!r.ok)throw Object.assign(Error(d.error||d.code||('HTTP '+r.status)),{code:d.code});return d})
+   .then(d=>{if(!d.zh)throw Error('翻译结果为空');m.zh=d.zh;m.zhState='ready';vsRefreshMessages()})
+   .catch(e=>{m.zhState='error';m.zhError=String(e.code==='BUDGET_EXHAUSTED'?'翻译额度已用尽':(e.message||'翻译失败'));vsRefreshMessages()});
+ };
+ if(S.v152.translateConsent)return run();
+ if(!window.confirm('将这一句英文发送给云端翻译（DeepSeek，按次计费）？确认后本次会话不再重复询问。')){
+  S.v152.translated.delete(id);return vsRefreshMessages();
+ }
+ S.v152.translateConsent=true;run();
+}
+function vsToggleZh(ref){
+ if(S.v152.zhOpen.has(ref))S.v152.zhOpen.delete(ref);else S.v152.zhOpen.add(ref);
+ const open=S.v152.zhOpen.has(ref);
+ const item=suggByRef(ref)||{};
+ const card=Array.prototype.find.call(document.querySelectorAll('.v152card'),x=>x.dataset.sugg===ref);
+ if(card){
+  let zh=card.querySelector('.v152zh');
+  const acts=card.querySelector('.v152acts');
+  if(open&&!zh){
+   zh=document.createElement('p');zh.className='v152zh';
+   zh.textContent=String(item.zh||'').trim()||'暂无中文释义，可先用英文。';
+   if(acts)card.insertBefore(zh,acts);else card.appendChild(zh);
+  }else if(!open&&zh){zh.remove()}
+  const b=card.querySelector('[data-v152zh]');
+  if(b){b.textContent=open?'收起':'中文';b.setAttribute('aria-expanded',String(open))}
+ }
+}
+function vsToggleFav(ref){
+ const item=suggByRef(ref);if(!item)return;
+ const on=S.v152.favs.has(ref);
+ if(on)S.v152.favs.delete(ref);else{ S.v152.favs.add(ref); saveFavorite(item.en,item.zh||'','接话建议',currentPersonSlug()); }
+ const b=Array.prototype.find.call(document.querySelectorAll('[data-v152fav]'),x=>x.dataset.v152fav===ref);
+ if(b){b.classList.toggle('on',!on);b.textContent=on?'☆':'★'}
+}
+function vsOpenShare(kind,id){
+ S.v152.share={kind:String(kind),id:String(id)};
+ S.v152.shareZh=false;S.v152.menu=false;
+ if(S.tab==='chat')render();
+}
+function vsOpenOrigin(){
+ const d=vsShareData();if(!d)return;
+ S.v152.origin=d;S.v152.view='origin';
+ S.v152.share=null;S.v152.shareZh=false;S.v152.menu=false;
+ if(S.tab==='chat')render();
+}
+function vsCloseOrigin(){
+ S.v152.view='chat';S.v152.origin=null;
+ if(S.tab==='chat')render();
+}
+function vsStopRecording(){
+ S.v152.menu=false;S.v152.stopSheet=true;S.v152.immersive=false;
+ smApplyImmersive();
+ disconnectLiveASR(false);
+}
+function vsDiscard(){
+ S.v152.stopSheet=false;
+ const ok=window.confirm('放弃本轮？本轮不会写入人物档案；已上传的归档无法撤回。');
+ if(!ok){if(S.tab==='chat')render();return}
+ try{disconnectLiveASR();}catch{}
+ S.aiSeq++;S.ai=null;S.aiState='demo';S.session=null;S.recs=[];
+ S.suggFreeze=false;S.suggStale='';
+ S.v152.view='chat';S.v152.origin=null;S.v152.share=null;S.v152.shareZh=false;
+ S.v152.translated=new Set();S.v152.zhOpen=new Set();
+ if(S.tab==='chat')render();
+ tip('已放弃本轮；已上传的归档不可撤回');
+}
+function smApplyImmersive(){
+ try{
+  const on=!!S.v152.immersive&&S.tab==='chat';
+  document.body.classList.toggle('sm-immersive',on);
+ }catch{}
+}
+window.smExitImmersive=function(){
+ S.v152.immersive=false;S.v152.menu=false;smApplyImmersive();
+ if(S.tab==='chat')render();
+ return true;
+};
 /* T3-EVAL:SM-START —— qa/t3-quality/eval-suggestions.mjs 按标记抽取本段纯函数 */
 const SM_LEXICON=[
  [/hong ?han( ?lake)?( ?park)?|hong ?cheng( ?lake)?( ?park)?|hong ?chen( ?lake)?( ?park)?|红城湖/gi,'红城湖公园'],
@@ -1190,19 +1502,18 @@ function automaticCards(){
 
 
 function disconnectLiveASR(fromNative){
-  // 网页「停止接收」必须同时停掉原生麦克风，否则界面显示已停、麦克风还在录（隐私问题）。
-  // 由原生回调触发时不再回桥，避免递归。
-  if(!fromNative){
-   try{const b=window.SocialMateAndroid;if(b&&typeof b.stopRecording==='function')b.stopRecording();}catch{}
-  }
-  S.asrWanted=false;S.asrRetry=0;
-  if(S.asrRetryTimer){clearTimeout(S.asrRetryTimer);S.asrRetryTimer=null;}
-  try{S.asrStream?.close();}catch{}
-  S.asrStream=null;S.asrState='off';S.asrInterim='';S.asrLink='';
-  if(S.tab==='chat')render();
+ if(!fromNative){
+  try{const b=window.SocialMateAndroid;if(b&&typeof b.stopRecording==='function')b.stopRecording();}catch{}
+  S.v152.immersive=false;S.v152.menu=false;smApplyImmersive();
+ }
+ S.asrWanted=false;S.asrRetry=0;
+ if(S.asrRetryTimer){clearTimeout(S.asrRetryTimer);S.asrRetryTimer=null;}
+ try{S.asrStream?.close();}catch{}
+ S.asrStream=null;S.asrState='off';S.asrInterim='';S.asrLink='';
+ if(S.tab==='chat')render();
 }
 // 原生已经停止录音（用户点了面板里的 Stop）：同步收起网页的「监听中」状态。
-window.smNativeRecordingStopped=function(){try{S.asrLink='';disconnectLiveASR(true);}catch{}};
+window.smNativeRecordingStopped=function(){try{S.v152.immersive=false;smApplyImmersive();S.asrLink='';disconnectLiveASR(true);}catch{}};
 function handleLiveAsrEvent(event){
   if(!S.session||S.asrState==='off'||!event||typeof event!=='object')return;
   if(event.type==='session'){
@@ -1535,22 +1846,33 @@ function planNow(){
   askZh:(s.groups.find(g=>g.key==='ask')?.items||[]).map(x=>x.zh),
   share:pick('share').en,shareZh:pick('share').zh,ai:s.ai};
 }
-function suggCard(key,index,item){
- const long=String(item.en||'').length>120;
- return `<article class="suggcard" data-sugg="${key}-${index}">
-  <p class="suggtext${long?' clamp':''}" lang="en">${esc(item.en)}</p>
-  ${long?'<button type="button" class="linkbtn" data-expand="1">展开全文 ▾</button>':''}
-  <details class="suggzh"><summary>中文解释</summary><p>${esc(item.zh||'暂无中文释义，可先用英文。')}</p></details>
-  <div class="suggacts">
-   <button type="button" class="iconbtn" title="朗读" aria-label="朗读" data-sspeak="${key}-${index}">🔊</button>
-   <button type="button" class="iconbtn" title="复制" aria-label="复制" data-scopy="${key}-${index}">⧉</button>
-   <button type="button" class="iconbtn" title="收藏" aria-label="收藏" data-sfav="${key}-${index}">☆</button>
+function suggCard(key,index,item,name){
+ const ref=key+'-'+index,open=S.v152.zhOpen.has(ref);
+ const zh=String(item.zh||'').trim()||'暂无中文释义，可先用英文。';
+ return `<article class="suggcard v152card" data-sugg="${esc(ref)}">
+  <p class="suggtext" lang="en">${esc(item.en)}</p>
+  ${open?`<p class="v152zh">${esc(zh)}</p>`:''}
+  <div class="v152acts">
+   <button type="button" class="v152mini" data-v152zh="${esc(ref)}" aria-expanded="${open}">${open?'收起':'中文'}</button>
+   <button type="button" class="v152fav${S.v152.favs.has(ref)?' on':''}" data-v152fav="${esc(ref)}" aria-label="收藏">${S.v152.favs.has(ref)?'★':'☆'}</button>
   </div>
  </article>`;
 }
+function vsGroups(sugg){
+ const order=[['respond','接话'],['ask','追问'],['switch','换题'],['share','分享']];
+ const quota={respond:2,ask:2,switch:3,share:3};
+ const out=[];
+ for(const [key,label] of order){
+  const g=(sugg.groups||[]).find(x=>x.key===key);
+  const items=((g&&g.items)||[]).slice(0,quota[key]);
+  if(items.length)out.push({key,label,items});
+ }
+ return out;
+}
 function showRecs(force){
  const sugg=suggestionsNow();
- const sig=JSON.stringify({name:sugg.name,ai:sugg.ai,groups:sugg.groups});
+ const groups=vsGroups(sugg);
+ const sig=JSON.stringify({name:sugg.name,ai:sugg.ai,groups:groups.map(g=>({key:g.key,items:g.items.map(i=>i.en)}))});
  const host=$('#coachresults');
  if(host){
   const stale=host.dataset.sig&&host.dataset.sig!==sig;
@@ -1561,25 +1883,23 @@ function showRecs(force){
    host.dataset.sig=sig;S.suggStale='';
    const badge=$('#suggNewBadge');if(badge)badge.classList.add('hidden');
    host.innerHTML=!S.session?.messages.length?('<div class="stateempty">'+esc(t('chat.coachEmpty'))+'</div>'):
-    '<div class="coachtopic"><span class="tag">'+esc(sugg.name)+'</span><small>'+(sugg.ai?'智能建议':'本地建议')+'</small></div>'+
-    sugg.groups.map(g=>`<section class="sgroup" data-sgroup="${g.key}"><h3>${esc(g.label)}<small>${esc(g.hint)}</small></h3>${g.items.map((it,i)=>suggCard(g.key,i,it)).join('')}</section>`).join('');
+    groups.map(g=>`<section class="sgroup" data-sgroup="${g.key}"><h3>${esc(g.label)}<small>${g.items.length} 条</small></h3>${g.items.map((it,i)=>suggCard(g.key,i,it,sugg.name)).join('')}</section>`).join('');
   }
  }
  const refs=[...S.recs];
- if(S.person&&S.people.list.some(p=>p.slug===S.person)&&!refs.some(r=>r.kind==='person')){
-  const p=S.people.list.find(p=>p.slug===S.person);
+ if(S.person&&(S.people.list||[]).some(p=>p.slug===S.person)&&!refs.some(r=>r.kind==='person')){
+  const p=(S.people.list||[]).find(p=>p.slug===S.person);
   refs.unshift({kind:'person',id:p.slug,title:p.name,en:p.about||'当前对话对象'});
  }
  const rsig=refs.map(i=>i.kind+':'+i.id).join(',');
  const rhost=$('#refresults');
  if(rhost&&(force||rhost.dataset.sig!==rsig)){
   rhost.dataset.sig=rsig;
-  rhost.innerHTML=refs.length?refs.slice(0,6).map(i=>`<button class="refcard" data-related="${i.kind}" data-id="${esc(i.id)}">
-   <span class="tag">${i.kind==='place'?'海南地点':i.kind==='app'?'软件作品':i.kind==='person'?'人物':'关于我'}</span>
-   <b>${esc(i.title)}</b><p>${esc(trunc(i.en,90))}</p></button>`).join(''):'<div class="stateempty">对话里提到地点、兴趣或作品时，会自动关联已有资料。</div>';
+  const cur=S.v152.share?S.v152.share.kind+':'+S.v152.share.id:'';
+  rhost.innerHTML=refs.length?refs.slice(0,8).map(i=>`<button type="button" class="v152chip${cur===i.kind+':'+i.id?' on':''}" data-v152share="${esc(i.kind)}" data-id="${esc(i.id)}">${esc(i.title)}</button>`).join(''):'<span class="v152chiptip">对话里提到地点、兴趣或作品时，这里会出现可说的资料</span>';
  }
 }
-function render(){let view=S.tab==='software'?software():S.tab==='hainan'?hainan():S.tab==='self'?self():S.tab==='people'?people():chat();$('#content').innerHTML=view;if(S.tab==='chat'){refreshLiveFacts();showRecs();layoutCoach();return}updateResults();if(S.tab==='self')renderFavList()}
+function render(){let view=S.tab==='software'?software():S.tab==='hainan'?hainan():S.tab==='self'?self():S.tab==='people'?people():chat();$('#content').innerHTML=view;if(S.tab==='chat'){refreshLiveFacts();showRecs();layoutCoach();smApplyImmersive();return}updateResults();if(S.tab==='self')renderFavList();smApplyImmersive()}
 function updateResults(){let q=S.q.trim().toLowerCase(),res=[],count='';if(S.tab==='software'){res=D.apps.filter(a=>a.cat===S.group&&[a.id,a.name,a.cn,a.en].join(' ').toLowerCase().includes(q));$('#results').innerHTML=res.map(appCard).join('')||('<div class="stateempty">'+esc(t('soft.empty'))+'</div>');count=tf('soft.count',{n:res.length},res.length);}if(S.tab==='hainan'){res=D.places.filter(x=>(S.cat==='全部'||x.category===S.cat)&&[x.cnName,x.enName,x.category,x.cn,x.en].join(' ').toLowerCase().includes(q));$('#results').innerHTML=res.map(placeCard).join('')||('<div class="stateempty">'+esc(t('hainan.empty'))+'</div>');count=tf('hainan.count',{n:res.length,total:D.places.length});}if(S.tab==='self'){res=SAV.stories.filter(x=>(S.storyTag==='全部'||storyTags(x).includes(S.storyTag))&&[x.title,x.cn,x.en,storyTags(x).join(' ')].join(' ').toLowerCase().includes(q));$('#results').innerHTML='<div class="cards">'+res.map(storyCard).join('')+'</div>';count=tf('self.count',{n:res.length},res.length);}if(S.tab==='people'){count=renderPeopleResults(q);}if(S.tab!=='people'&&S.tab!=='self'&&S.tab!=='hainan'&&S.tab!=='software')return;if(S.tab==='software'||S.tab==='hainan'){$('#results').className='cards'}$('#count').textContent=count}
 function closeDrawer(){$('#drawer').classList.remove('open');$('#drawerbg').classList.remove('open')}
 function openDrawer(content){$('#drawerbody').innerHTML=content;$('#drawer').classList.add('open');$('#drawerbg').classList.add('open')}
@@ -1595,6 +1915,14 @@ function settingOptions(group,choices){
   return '<div class="setting-options" role="group" aria-label="'+({font:'整体字号',english:'英文阅读字号',density:'页面疏密'}[group])+'">'+
     choices.map(function(a){return '<button type="button" class="setting-option '+(SAV.display[group]===a[0]?'on':'')+'" data-display="'+group+'" data-value="'+a[0]+'" aria-pressed="'+(SAV.display[group]===a[0])+'">'+a[1]+'</button>';}).join('')+'</div>';
 }
+document.addEventListener('change',function(e){
+ const t=e&&e.target;
+ if(!t||t.id!=='ttsVoiceZh'&&t.id!=='ttsVoiceEn')return;
+ const key=t.id==='ttsVoiceZh'?'voiceZh':'voiceEn';
+ S.v152[key]=t.value;
+ try{localStorage.setItem('sm.ttsVoiceZh',S.v152.voiceZh);localStorage.setItem('sm.ttsVoiceEn',S.v152.voiceEn);}catch{}
+ tip('已切换朗读音色');
+});
 function openSettings(){
   const th=SAV.theme||'light';
   modal('<div class="setting-head"><h2>'+esc(t('set.title'))+'</h2><button type="button" class="iconbutton" data-action="close" aria-label="close">×</button></div>'+
@@ -1608,7 +1936,7 @@ function openSettings(){
       [['zh','中文'],['en','English'],['system',t('set.langSystem')]].map(function(a){
         return '<button type="button" class="setting-option '+(((SAV.lang||'zh')===a[0])?'on':'')+'" data-lang="'+a[0]+'" aria-pressed="'+(((SAV.lang||'zh')===a[0]))+'">'+esc(a[1])+'</button>';
       }).join('')+'</div>'+
-    '<label class="formlabel">'+esc(t('set.font'))+'</label>'+settingOptions('font',[['normal',t('set.normal')],['large',t('set.large')],['extra',t('set.extra')],['huge',t('set.huge')]])+
+    '<label class="formlabel">中文朗读音色（豆包 2.0）</label><select id="ttsVoiceZh" class="field">'+[['zh_female_xiaohe_uranus_bigtts','小何 2.0 · 女声'],['zh_male_m191_uranus_bigtts','云舟 2.0 · 男声'],['zh_female_yingyujiaoxue_uranus_bigtts','Tina老师 2.0 · 中英混']].map(function(a){return '<option value="'+a[0]+'"'+(((S.v152.voiceZh)||'')===a[0]?' selected':'')+'>'+a[1]+'</option>'}).join('')+'</select>'+'<label class="formlabel">英文朗读音色（豆包 2.0）</label><select id="ttsVoiceEn" class="field">'+[['en_male_tim_uranus_bigtts','Tim · 美式男声'],['en_female_dacey_uranus_bigtts','Dacey · 美式女声'],['en_female_stokie_uranus_bigtts','Stokie · 美式女声']].map(function(a){return '<option value="'+a[0]+'"'+(((S.v152.voiceEn)||'')===a[0]?' selected':'')+'>'+a[1]+'</option>'}).join('')+'</select>'+'<label class="formlabel">'+esc(t('set.font'))+'</label>'+settingOptions('font',[['normal',t('set.normal')],['large',t('set.large')],['extra',t('set.extra')],['huge',t('set.huge')]])+
     '<label class="formlabel">'+esc(t('set.english'))+'</label>'+settingOptions('english',[['normal',t('set.normal')],['large',t('set.large')],['extra',t('set.extra')]])+
     '<label class="formlabel">'+esc(t('set.density'))+'</label>'+settingOptions('density',[['compact',t('set.compact')],['comfortable',t('set.comfortable')],['relaxed',t('set.relaxed')]])+
     '<div class="setting-preview"><strong>'+esc(t('set.preview'))+'</strong><p>'+(LANG==='en'?'Haikou has plenty of good places for a walk.':'海口有很多适合散步的地方。')+'</p><p class="english-reading" lang="en">Do you prefer running by the sea or walking in a park?</p></div>'+
@@ -1840,6 +2168,7 @@ async function openRemotePerson(slug){
   try{prep=await apiCall('/v12/api/people/'+encodeURIComponent(slug)+'/prep')}catch{prep=null}
   S.people.detail=Object.assign({},detail.person,{prep});
   S.people.prepItems=prep&&Array.isArray(prep.items)?prep.items:[];
+  if(S.fav.state==='idle'||!Array.isArray(S.fav.items)){try{await loadFavorites()}catch{}}
  }
  renderRemotePerson();
 }
@@ -1855,21 +2184,27 @@ function renderRemotePerson(){
  const p=S.people.detail;
  if(!p){host.innerHTML='<div class="stateempty">'+esc(S.people.err||t('people.errUnreadable'))+'</div>';return}
  const prepItems=S.people.prepItems||[];
- const prep=!p.prep?`<div class="stateempty">${t('people.prepOff')}</div>`
-  :(p.prep.empty||!prepItems.length)?`<div class="stateempty">${t('people.prepEmpty')}</div>`
-  :prepItems.map((it,i)=>`<div class="prep"><span class="chip">${it.source==='confirmed-fact'?t('people.srcFact'):t('people.srcTemplate')}</span><p class="en" lang="en">${esc(it.en)}</p><p class="zh">${esc(it.zh)}</p><div class="prepacts"><button type="button" class="btn tinted" data-copyprep="${i}">${t('common.copy')}</button><button type="button" class="btn" data-speakprep="${i}">${t('common.speak')}</button><button type="button" class="btn" data-favprep="${i}">${t('modal.favBtn')}</button></div></div>`).join('');
- const facts=(p.confirmed||[]).length?(p.confirmed||[]).map(f=>`<div class="factrow"><p>${esc(f.text)}</p><span class="src">${tf('people.factSrc',{v:(f.source?('Session '+esc(String(f.source.sessionId||'').slice(0,10))+'… · '+esc(f.source.date||t('people.dateUnknown'))):t('people.factNoSource'))+tf('people.factSection',{v:esc(f.section||'—')})})}</span><div class="factacts"><button type="button" class="btn" data-revoke="${esc(f.id)}">${t('people.revokeThis')}</button></div></div>`).join('')
-  :'<div class="stateempty">'+esc(t('people.factsEmpty'))+'</div>';
- const manual=(p.manual||[]).length?(p.manual||[]).map(x=>`<p>${esc(x)}</p>`).join(''):'<p class="footnote">'+esc(t('people.manualEmpty'))+'</p>';
+ let sections=Array.isArray(p.profileSections)?p.profileSections.filter(x=>x.items&&x.items.length):[];
+ if(!sections.length){
+  sections=[
+   {section:t('people.factsTitle'),items:(p.confirmed||[]).map(f=>({kind:'confirmed',text:f.text,factId:f.id}))},
+   {section:t('people.manualTitle'),items:(p.manual||[]).map(x=>({kind:'manual',text:x}))},
+  ].filter(x=>x.items.length);
+ }
+ const profile=sections.length?sections.map(sec=>`<div class="psec"><h3>${esc(sec.section)}</h3><ul class="plist">${sec.items.map(it=>`<li>${esc(it.text)}${it.kind==='confirmed'?`<button type="button" class="prevoke" data-revoke="${esc(it.factId)}" aria-label="${t('people.revokeThis')}" title="${t('people.revokeThis')}">×</button>`:`<span class="ptag">${esc(t('people.manualTag'))}</span>`}</li>`).join('')}</ul></div>`).join(''):`<div class="pempty">${esc(t('people.profileEmpty'))}</div>`;
+ const prep=!p.prep?`<div class="pempty">${esc(t('people.prepOff'))}</div>`
+  :(p.prep.empty||!prepItems.length)?`<div class="pempty">${esc(t('people.prepEmpty'))}</div>`
+  :`<ul class="plist preplist">${prepItems.map((it,i)=>{const faved=(S.fav.items||[]).some(x=>String(x.en||'').trim().toLowerCase()===String(it.en||'').trim().toLowerCase());return `<li><p class="en" lang="en">${esc(it.en)}</p><p class="zh">${esc(it.zh)}</p><div class="prepacts"><button type="button" class="icobtn" data-copyprep="${i}" title="${t('common.copy')}" aria-label="${t('common.copy')}">⧉</button><button type="button" class="icobtn" data-speakprep="${i}" title="${t('common.speak')}" aria-label="${t('common.speak')}">▶</button><button type="button" class="icobtn${faved?' on':''}" data-favprep="${i}" title="${t('modal.favBtn')}" aria-label="${t('modal.favBtn')}">${faved?'★':'☆'}</button></div></li>`}).join('')}</ul>`;
+ const sess=(p.sessions||[]).length?(p.sessions||[]).map(s=>`<div class="psess"><b>${esc(s.date?fmtWhen(s.date):t('people.dateUnknown'))}</b><span>${tf('people.sessMetaRemote',{n:s.confirmedCount,s:(s.archived?t('people.archived'):t('people.notArchived'))})}</span>${HTTP_UI?`<a class="btn" href="/v12/history?session=${encodeURIComponent(s.sessionId)}" target="_self">${t('people.readOriginal')}</a>`:''}</div>`).join(''):`<div class="pempty">${esc(t('people.noSessions'))}</div>`;
  const lastTopic=p.sessions&&p.sessions[0]&&p.sessions[0].topics&&p.sessions[0].topics.length?p.sessions[0].topics.join('、'):'';
- host.innerHTML=`<h2>${esc(p.name||p.slug)}</h2><p class="sub">${tf('people.remoteSub',{slug:esc(p.slug)})}</p>
-  <div class="onlinebar"><div class="row1"><span class="chip">${tf('people.lastContact',{v:esc(p.lastContact?fmtWhen(p.lastContact):t('people.noRecord'))})}</span></div><small>${lastTopic?tf('people.lastTopic',{v:esc(lastTopic)}):t('people.noTopicHistory')}</small></div>
-  <div class="sectiontitle"><strong>${t('people.prepTitle')}</strong><small>${t('people.prepSub')}</small></div>${prep}
-  <div class="sectiontitle"><strong>${t('people.factsTitle')}</strong><small>${tf('people.factsCount',{n:(p.confirmed||[]).length},(p.confirmed||[]).length)}</small></div>${facts}
-  <div class="sectiontitle"><strong>${t('people.manualTitle')}</strong><small>${t('people.manualSub')}</small></div><div class="detailbox">${manual}</div>
-  <div class="sectiontitle"><strong>${t('people.sessionTitle')}</strong><small>${tf('people.sessionsCount',{n:(p.sessions||[]).length},(p.sessions||[]).length)}</small></div>
-  ${(p.sessions||[]).length?(p.sessions||[]).map(s=>`<div class="person"><div class="avatar">▣</div><div><strong>${esc(s.date?fmtWhen(s.date):t('people.dateUnknown'))}</strong><small>${tf('people.sessMetaRemote',{n:s.confirmedCount,s:(s.archived?t('people.archived'):t('people.notArchived'))})}${s.topics&&s.topics.length?' · '+esc(s.topics.join('、')):''}</small></div>${HTTP_UI?`<a class="btn" href="/v12/history?session=${encodeURIComponent(s.sessionId)}" target="_self">${t('people.readOriginal')}</a>`:''}</div>`).join(''):'<div class="stateempty">'+esc(t('people.noSessions'))+'</div>'}
-  <div class="actions"><button type="button" class="btn mainbtn" data-n05="mem-open" data-slug="${esc(p.slug)}" data-name="${esc(p.name||p.slug)}">＋ 补充我知道的信息</button><button type="button" class="btn mainbtn" data-pchat="${esc(p.slug)}">${t('people.setChatPerson')}</button><button type="button" class="btn" data-rperson="${esc(p.slug)}">${t('people.reload')}</button></div>`;
+ host.innerHTML=`<div class="pcompact">
+  <h2>${esc(p.name||p.slug)}</h2>
+  <div class="pmeta"><span>${tf('people.lastContact',{v:esc(p.lastContact?fmtWhen(p.lastContact):t('people.noRecord'))})}</span>${lastTopic?`<span>${tf('people.lastTopic',{v:esc(lastTopic)})}</span>`:''}</div>
+  ${profile}
+  <div class="psec"><h3>${t('people.prepTitle')}</h3>${prep}</div>
+  <details class="pdetails"><summary>${t('people.sessionTitle')} · ${(p.sessions||[]).length}</summary>${sess}</details>
+  <div class="actions"><button type="button" class="btn mainbtn" data-n05="mem-open" data-slug="${esc(p.slug)}" data-name="${esc(p.name||p.slug)}">＋ 补充我知道的信息</button><button type="button" class="btn mainbtn" data-pchat="${esc(p.slug)}">${t('people.setChatPerson')}</button><button type="button" class="btn" data-rperson="${esc(p.slug)}">${t('people.reload')}</button></div>
+ </div>`;
 }
 function askRevoke(factId){
  const p=S.people.detail,f=p&&(p.confirmed||[]).find(x=>x.id===factId);
@@ -1891,17 +2226,75 @@ async function doRevoke(factId){
  }
 }
 /* —— 朗读（只用系统语音，不联网） —— */
-function speak(text){
- const value=String(text||'').trim();
- if(!value)return tip(t('msg.noSpeak'));
+let smAudioEl=null;
+function smSplitSpeech(value){
+ const parts=[];let rest=String(value||'');
+ while(rest.length>1800){
+  let cut=-1;
+  for(const mark of ['。','！','？','\n','. ','! ','? ']){const i=rest.lastIndexOf(mark,1800);if(i>cut)cut=i+(mark.length>1?1:1)}
+  if(cut<200)cut=1800;
+  parts.push(rest.slice(0,cut));rest=rest.slice(cut);
+ }
+ if(rest.trim())parts.push(rest);
+ return parts;
+}
+async function smDoubaoTicket(){
+ try{const t=await smTicket();smWriteTicket={value:'',exp:0};return t}catch{return ''}
+}
+function speakSystem(value){
  const synth=window.speechSynthesis;
  if(!synth||typeof window.SpeechSynthesisUtterance!=='function')return tip(t('msg.noSpeakSupport'));
+ try{synth.cancel();const u=new window.SpeechSynthesisUtterance(value);u.lang='en-US';u.rate=.95;synth.speak(u);tip(t('msg.speaking'))}catch{tip(t('msg.speakFailed'))}
+}
+async function smDoubaoSpeak(value,opts){
+ const o=opts||{};
+ if(!(HTTP_UI&&uiToken()))return false;
+ if(!S.v152.ttsConsent){
+  if(o.silent)return false;
+  const ok=window.confirm('用豆包语音朗读这段文字？文本会发送到火山引擎合成，按 3 元/万字符计费。确认后本次会话不再重复询问。');
+  if(!ok)return false;
+  S.v152.ttsConsent=true;
+ }
  try{
-  synth.cancel();
-  const u=new window.SpeechSynthesisUtterance(value);
-  u.lang='en-US';u.rate=.95;
-  synth.speak(u);tip(t('msg.speaking'));
- }catch{tip(t('msg.speakFailed'))}
+  const parts=smSplitSpeech(value);
+  let index=0;
+  for(const part of parts){
+   const ticket=await smDoubaoTicket();
+   if(!ticket)throw Object.assign(Error('write ticket unavailable'),{code:'WRITE_TICKET_UNAVAILABLE'});
+   const zh=/[\u4e00-\u9fa5]/.test(part);
+   const locale=zh?'zh-CN':'en-US';
+   const voice=zh?(S.v152.voiceZh||'zh_female_xiaohe_uranus_bigtts'):(S.v152.voiceEn||'en_male_tim_uranus_bigtts');
+   const res=await fetch('/v12/api/tts/synthesize',{method:'POST',cache:'no-store',headers:{
+    'Content-Type':'application/json','x-archive-token':uiToken(),'x-sm-write':ticket},
+    body:JSON.stringify({providerId:'doubao',segmentType:zh?'cn':'enA',locale,voiceProfileId:voice,
+     text:part,requestId:'spk-'+Date.now().toString(36)+'-'+(index++),recordId:o.recordId||'read',blockId:o.blockId||'',revision:Number(o.revision)||0,explicitConsent:true})});
+   const d=await res.json().catch(()=>({}));
+   if(!res.ok||!d?.result?.audioId)throw Object.assign(Error(d.error||d.code||('HTTP '+res.status)),{code:d.code});
+   const audio=await fetch('/v12/api/tts/audio/'+encodeURIComponent(d.result.audioId),{headers:{'x-archive-token':uiToken()},cache:'no-store'});
+   if(!audio.ok)throw Error('audio HTTP '+audio.status);
+   const blob=await audio.blob();
+   if(smAudioEl){try{smAudioEl.pause()}catch{}}
+   const url=URL.createObjectURL(blob);
+   smAudioEl=new Audio(url);
+   await new Promise((resolve,reject)=>{
+    smAudioEl.addEventListener('ended',resolve,{once:true});
+    smAudioEl.addEventListener('error',()=>reject(Error('audio play failed')),{once:true});
+    smAudioEl.play().catch(reject);
+   });
+   URL.revokeObjectURL(url);
+  }
+  return true;
+ }catch(err){
+  console.warn('[tts] doubao failed',err?.code||err?.message||'unknown');
+  return false;
+ }
+}
+async function speak(text){
+ const value=String(text||'').trim();
+ if(!value)return tip(t('msg.noSpeak'));
+ if(await smDoubaoSpeak(value)){tip('豆包朗读');return true}
+ speakSystem(value);
+ return false;
 }
 function suggByRef(ref){
  const [key,idx]=String(ref||'').split('-');
@@ -1935,6 +2328,9 @@ async function saveFavorite(en,zh,source,personSlug){
  if(!value)return tip(t('msg.noFav'));
  if(!HTTP_UI)return tip(t('msg.favOffline'));
  try{
+  if(S.fav.state==='idle'||!Array.isArray(S.fav.items)){try{await loadFavorites()}catch{}}
+  const hit=(S.fav.items||[]).find(x=>String(x.en||'').trim().toLowerCase()===value.toLowerCase());
+  if(hit){await removeFavoriteById(hit.id);return}
   const d=await apiCall('/v12/api/favorites',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({en:value,zh:String(zh||''),source:String(source||''),personSlug:personSlug||undefined,confirm:true})});
   if(d&&d.duplicate)return tip(t('msg.favAdded'));
   if(d&&d.item){
@@ -1943,6 +2339,7 @@ async function saveFavorite(en,zh,source,personSlug){
   }
   tip(t('msg.favAddedSelf'));
   if(S.tab==='self')renderFavList();
+  else if(S.people.detail)renderRemotePerson();
  }catch(err){
   tip(err.status===409?t('msg.favLimit')
    :err.status===400?(t('msg.favBad')+(err.message||t('msg.favFormatBad')))
@@ -1954,7 +2351,9 @@ async function removeFavoriteById(id){
   await apiCall('/v12/api/favorites/'+encodeURIComponent(id),{method:'DELETE'});
   S.fav.items=(S.fav.items||[]).filter(x=>x.id!==id);
   S.fav.total=S.fav.items.length;
-  renderFavList();tip(t('msg.unfavDone'));
+  if(S.tab==='self')renderFavList();
+  else if(S.people.detail)renderRemotePerson();
+  tip(t('msg.unfavDone'));
  }catch(err){tip(err.status===404?t('msg.favGone'):(t('msg.unfavFail')+(err.message||t('common.previewUnavailable'))))}
 }
 function renderFavList(){
@@ -1964,7 +2363,7 @@ function renderFavList(){
  if(F.state==='loading'&&!(F.items||[]).length){host.innerHTML='<div class="stateempty">'+esc(t('self.favLoading'))+'</div>';if(cnt)cnt.textContent='';return}
  if(F.state==='error'){host.innerHTML='<div class="stateempty">'+esc(t('self.favError'))+esc(F.error||t('self.favReadFail'))+'</div>';if(cnt)cnt.textContent='';return}
  if(!(F.items||[]).length){host.innerHTML='<div class="stateempty">'+esc(t('self.favNone'))+'</div>';if(cnt)cnt.textContent=tf('self.favCount',{n:0});return}
- host.innerHTML=F.items.map((it,i)=>`<div class="favrow"><div class="favtext"><p class="en" lang="en">${esc(it.en)}</p>${it.zh?`<p class="zh">${esc(it.zh)}</p>`:''}<p class="zh">${esc(it.source||t('self.favSource'))}${it.createdAt?' · '+esc(String(it.createdAt).slice(0,10)):''}</p></div><div class="favacts"><button type="button" class="btn tinted" data-copyfav="${i}">${t('common.copy')}</button><button type="button" class="btn" data-speakfav="${i}">${t('common.speak')}</button><button type="button" class="btn" data-remfav="${esc(it.id)}">${t('common.unfav')}</button></div></div>`).join('');
+ host.innerHTML=F.items.map((it,i)=>`<div class="favrow"><div class="favtext"><p class="en" lang="en">${esc(it.en)}</p>${it.zh?`<p class="zh">${esc(it.zh)}</p>`:''}<p class="zh">${esc(it.source||t('self.favSource'))}${it.createdAt?' · '+esc(String(it.createdAt).slice(0,10)):''}</p></div><div class="favacts"><button type="button" class="icobtn" data-copyfav="${i}" title="${t('common.copy')}">⧉</button><button type="button" class="icobtn" data-speakfav="${i}" title="${t('common.speak')}">▶</button><button type="button" class="icobtn" data-remfav="${esc(it.id)}" title="${t('common.unfav')}">×</button></div></div>`).join('');
  if(cnt)cnt.textContent=F.limit?tf('self.favCountLimit',{n:F.items.length,limit:F.limit}):tf('self.favCount',{n:F.items.length});
 }
 /* —— 新建人物：先建议标识，确认前不建人 —— */
@@ -2045,8 +2444,16 @@ async function createOnlinePersonDraft(){
 function bubbleHTML(m){
  const isMe=m.who==='me'||(m.speaker&&speakerLabel(m.speaker)===t('chat.mine'));
  const label=m.speaker?speakerLabel(m.speaker):(m.who==='me'?t('chat.mine'):m.who==='friend'?t('chat.friend'):t('chat.unknown'));
- return `<div class="bubble ${isMe?'mine':''}">${esc(m.text)}<small>${esc(label)} · ${m.source==='tencent'?'实时字幕':m.source==='mock'?'非实时转录':'手动补充'}</small></div>`;
+ const id=msgId(m);
+ const open=S.v152.translated.has(id);
+ const hasZh=!!String(m.zh||'').trim();
+ const zh=hasZh?String(m.zh):(m.zhState==='loading'?'正在翻译…':m.zhState==='error'?String(m.zhError||'翻译失败；可再点一次重试。'):(/[\u4e00-\u9fa5]/.test(m.text)?'':'暂无中文翻译；点「翻译」从云端获取。'));
+ return `<div class="v152bubble ${isMe?'mine':''}" data-mid="${esc(id)}">
+  <div class="v152line"><span class="v152who">${esc(label)}</span><p class="v152en" lang="en">${esc(m.text)}</p><button type="button" class="v152tr" data-v152tr="${esc(id)}" aria-expanded="${open}">${open?'收起':'翻译'}</button></div>
+  ${open?`<p class="v152zh">${esc(zh)}</p>`:''}
+ </div>`;
 }
+function msgId(m){if(!m.id){m.id='m'+Date.now().toString(36)+Math.random().toString(36).slice(2,7)}return m.id}
 function connModeLabel(){
  const b=(typeof window!=='undefined')?window.SocialMateAndroid:null;
  const m=b&&typeof b.connectionMode==='function'?b.connectionMode():'';
@@ -2065,6 +2472,7 @@ if(typeof window!=='undefined'&&typeof window.addEventListener==='function'){
 }
 function appendBubble(m){
  if(S.tab!=='chat')return render();
+ if(S.v152.view==='origin')return;
  const box=$('#messages');
  if(!box||typeof box.insertAdjacentHTML!=='function')return render();
  if(typeof box.querySelector==='function'&&box.querySelector('.stateempty'))box.innerHTML='';
@@ -2083,6 +2491,27 @@ function smNewClick(e){
  const t=e&&e.target;if(!t||typeof t.closest!=='function')return false;
  let n;
  if(smDemoClick(e))return true;
+ if((n=t.closest('[data-v152tr]'))){vsTranslateMessage(n.dataset.v152tr);return true}
+ if((n=t.closest('[data-v152zh]'))){vsToggleZh(n.dataset.v152zh);return true}
+ if((n=t.closest('[data-v152fav]'))){vsToggleFav(n.dataset.v152fav);return true}
+ if((n=t.closest('[data-v152share]'))){vsOpenShare(n.dataset.v152share,n.dataset.id);return true}
+ if((n=t.closest('[data-v152]'))){
+  const a=n.dataset.v152;
+  if(a==='menu'){S.v152.menu=!S.v152.menu;render();return true}
+  if(a==='menu-close'){S.v152.menu=false;render();return true}
+  if(a==='swap'){S.v152.menu=false;render();window.smSwapSpeakers&&window.smSwapSpeakers();return true}
+  if(a==='diag'){S.v152.menu=false;render();openSettings();return true}
+  if(a==='exit'){window.smExitImmersive();return true}
+  if(a==='stop'){vsStopRecording();return true}
+  if(a==='finish'){S.v152.stopSheet=false;render();review();return true}
+  if(a==='discard'){vsDiscard();return true}
+  if(a==='resume'){S.v152.stopSheet=false;render();startRecording();return true}
+  if(a==='dismiss-stop'){S.v152.stopSheet=false;render();return true}
+  if(a==='close-share'){S.v152.share=null;S.v152.shareZh=false;render();return true}
+  if(a==='toggle-zh'){S.v152.shareZh=!S.v152.shareZh;render();return true}
+  if(a==='origin'){vsOpenOrigin();return true}
+  if(a==='back-chat'){vsCloseOrigin();return true}
+ }
  if((n=t.closest('[data-theme-set]'))){
   SAV.theme=n.dataset.themeSet||'light';persist();theming();openSettings();return true;
  }
@@ -2959,10 +3388,12 @@ function buildStudyPlaybackQueue(rec,block,mode,opts){
 }
 
 /* ---------- 单元素朗读：只播一次，循环由队列自己管 ---------- */
-function ttsSpeakItem(item,ctx){
+async function ttsSpeakItem(item,ctx){
+  if(!String(item&&item.text||'').trim()) return {ok:false,code:'TTS_EMPTY_TEXT'};
+  const c0=ctx||{};
+  if(await smDoubaoSpeak(String(item.text),{recordId:c0.recordId,blockId:c0.blockId,revision:c0.revision})) return {ok:true,doubao:true};
   const b=ttsBridge();
   if(!b){ setTtsState('failed','当前环境无原生语音'); return {ok:false,code:'TTS_NO_BRIDGE'}; }
-  if(!String(item&&item.text||'').trim()) return {ok:false,code:'TTS_EMPTY_TEXT'};
   if(typeof b.speakText!=='function'&&typeof b.speakTextWithIds!=='function')
     return {ok:false,code:'TTS_NO_ENTRY'};
   const c=ctx||{};
@@ -3026,7 +3457,7 @@ function smqWatchdog(q,item){
     smqFail('TTS_ITEM_TIMEOUT','第 '+(q.idx+1)+' 项 '+cap+'ms 内无完成回调');
   },cap);
 }
-function smqSpeakCurrent(){
+async function smqSpeakCurrent(){
   const q=SMQ; if(!q) return;
   if(q.idx>=q.items.length){ return smqRoundDone(); }
   const item=q.items[q.idx];
@@ -3035,10 +3466,15 @@ function smqSpeakCurrent(){
   setTtsState(q.loopTotal>1?'looping':'playing',
     '第 '+(q.loopDone+1)+'/'+q.loopTotal+' 轮 · 第 '+(q.idx+1)+'/'+q.items.length+' 项 · '+(item.label||''));
   smqLog(q,{ev:'item_start',idx:q.idx,kind:item.kind,lang:item.lang,label:item.label,chars:String(item.text||'').length,round:q.loopDone+1,message:item.text});
-  const r=ttsSpeakItem(item,{recordId:q.recordId,blockId:q.blockId,revision:q.revision});
+  const r=await ttsSpeakItem(item,{recordId:q.recordId,blockId:q.blockId,revision:q.revision});
   if(!r.ok){
     q.awaiting=false;
     smqFail(r.code||'TTS_FAILED',r.message||'');
+    return;
+  }
+  if(r.doubao){
+    q.awaiting=false;
+    smqAdvance();
     return;
   }
   smqWatchdog(q,item);

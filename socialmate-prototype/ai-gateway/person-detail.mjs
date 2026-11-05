@@ -90,6 +90,7 @@ export function parsePersonProfile(text) {
 
   const confirmed = [];
   const manual = [];
+  const manualEntries = [];
   const sections = [];
   let section = "";
 
@@ -106,7 +107,9 @@ export function parsePersonProfile(text) {
     const marker = content.match(MARKER);
     if (!marker) {
       // 人工段落/人工列表项原样保留，永不参与撤回。
-      manual.push(content.trim());
+      const text = content.trim();
+      manual.push(text);
+      manualEntries.push({text, section: section || null});
       continue;
     }
     const sourceMatch = content.match(SOURCE);
@@ -134,7 +137,7 @@ export function parsePersonProfile(text) {
     });
   }
 
-  return {name, lastContactRaw, confirmed, manual, sections};
+  return {name, lastContactRaw, confirmed, manual, manualEntries, sections};
 }
 
 async function readProfileFile(slug, root = peopleRoot()) {
@@ -211,6 +214,30 @@ export async function getPersonDetail(slug, options = {}) {
   const fromFrontMatter = utcIso(parsed.lastContactRaw);
   const lastContact = [fromFacts, fromFrontMatter].filter(Boolean).sort().pop() || null;
 
+  // 基本档案：按主档章节把「会话确认事实」与「人工补充」汇总；只读，不改文件。
+  const buckets = new Map();
+  const bucket = (name) => {
+    const key = name && String(name).trim() ? String(name).trim() : "其他";
+    if (!buckets.has(key)) buckets.set(key, []);
+    return buckets.get(key);
+  };
+  for (const fact of confirmed) {
+    bucket(fact.section).push({kind: "confirmed", text: fact.text, factId: fact.id,
+      section: fact.section, source: fact.source});
+  }
+  for (const entry of parsed.manualEntries || []) {
+    bucket(entry.section).push({kind: "manual", text: entry.text, section: entry.section});
+  }
+  const order = [];
+  for (const raw of [...parsed.sections, ...confirmed.map((f) => f.section),
+    ...(parsed.manualEntries || []).map((m) => m.section), "其他"]) {
+    const name = raw && String(raw).trim() ? String(raw).trim() : "其他";
+    if (!order.includes(name)) order.push(name);
+  }
+  const profileSections = order
+    .map((section) => ({section, items: buckets.get(section) || []}))
+    .filter((entry) => entry.items.length);
+
   return {
     person: {
       slug: String(slug),
@@ -219,6 +246,7 @@ export async function getPersonDetail(slug, options = {}) {
       manual: parsed.manual,
       lastContact,
       sessions,
+      profileSections,
     },
   };
 }

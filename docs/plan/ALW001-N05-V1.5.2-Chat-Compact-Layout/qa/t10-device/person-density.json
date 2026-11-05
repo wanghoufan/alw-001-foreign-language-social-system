@@ -1,0 +1,41 @@
+{
+  "measuredAt": "2026-11-05T04:09:50.325Z",
+  "port": 9230,
+  "packageName": "app.socialmate.dualmic",
+  "slug": "Mia-Chen",
+  "drawerOpen": true,
+  "viewport": {
+    "width": 393,
+    "height": 791,
+    "dpr": 2.75
+  },
+  "drawer": {
+    "visibleHeight": 791,
+    "scrollHeight": 1750,
+    "bodyScrollHeight": 1675
+  },
+  "sectionTitles": [],
+  "firstSection": null,
+  "prepIndex": null,
+  "visibleFacts": 0,
+  "totalItems": 0,
+  "devTextHits": {
+    "标识 ": false,
+    "私有在线": false,
+    "来自 Mac 主档": false,
+    "会话确认 + 我的补充": false,
+    "最多 3 条": false,
+    "来源：会话": false,
+    " 条": true
+  },
+  "fontSizes": {
+    "bodyPx": 16,
+    "sectionTitlePx": null,
+    "metaPx": null
+  },
+  "verticalGaps": {
+    "average": null,
+    "count": 0
+  },
+  "blankRatio": 1
+}

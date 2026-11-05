@@ -1,0 +1,316 @@
+[
+  {
+    "label": "immersive-default",
+    "viewport": {
+      "w": 393,
+      "h": 852,
+      "dpr": 2
+    },
+    "immersive": true,
+    "topVisible": false,
+    "tabVisible": false,
+    "barButtons": 3,
+    "subs": {
+      "h": 232,
+      "w": 373,
+      "top": 66,
+      "bottom": 298
+    },
+    "coach": {
+      "h": 489,
+      "w": 373,
+      "top": 304,
+      "bottom": 793
+    },
+    "ratio": "0.474",
+    "cards": 10,
+    "visibleCards": 5,
+    "speakCopy": 0,
+    "zhSamples": [],
+    "chips": 3,
+    "chipTip": false,
+    "hasPanelTitle": false,
+    "share": false,
+    "origin": false,
+    "stopSheet": false,
+    "barText": "暂不关联人物 | 未配对：请先在高级设置完成配对 | Mia Chen（陈美玲） | 正在听 | ⋯ | 停止",
+    "state": "ready",
+    "messages": 3,
+    "englishOnlyBubbles": true
+  },
+  {
+    "label": "translate-one",
+    "viewport": {
+      "w": 393,
+      "h": 852,
+      "dpr": 2
+    },
+    "immersive": true,
+    "topVisible": false,
+    "tabVisible": false,
+    "barButtons": 3,
+    "subs": {
+      "h": 232,
+      "w": 373,
+      "top": 66,
+      "bottom": 298
+    },
+    "coach": {
+      "h": 489,
+      "w": 373,
+      "top": 304,
+      "bottom": 793
+    },
+    "ratio": "0.474",
+    "cards": 10,
+    "visibleCards": 5,
+    "speakCopy": 0,
+    "zhSamples": [
+      "暂无中文翻译；可先用英文照说。"
+    ],
+    "chips": 3,
+    "chipTip": false,
+    "hasPanelTitle": false,
+    "share": false,
+    "origin": false,
+    "stopSheet": false,
+    "barText": "暂不关联人物 | 未配对：请先在高级设置完成配对 | Mia Chen（陈美玲） | 正在听 | ⋯ | 停止",
+    "state": "ready",
+    "messages": 3,
+    "englishOnlyBubbles": false
+  },
+  {
+    "label": "share-open",
+    "viewport": {
+      "w": 393,
+      "h": 852,
+      "dpr": 2
+    },
+    "immersive": true,
+    "topVisible": false,
+    "tabVisible": false,
+    "barButtons": 3,
+    "subs": {
+      "h": 232,
+      "w": 373,
+      "top": 66,
+      "bottom": 298
+    },
+    "coach": {
+      "h": 489,
+      "w": 373,
+      "top": 304,
+      "bottom": 793
+    },
+    "ratio": "0.474",
+    "cards": 10,
+    "visibleCards": 5,
+    "speakCopy": 0,
+    "zhSamples": [
+      "暂无中文翻译；可先用英文照说。"
+    ],
+    "chips": 3,
+    "chipTip": false,
+    "hasPanelTitle": false,
+    "share": true,
+    "origin": false,
+    "stopSheet": false,
+    "barText": "暂不关联人物 | 未配对：请先在高级设置完成配对 | Mia Chen（陈美玲） | 正在听 | ⋯ | 停止",
+    "state": "ready",
+    "messages": 3,
+    "englishOnlyBubbles": false
+  },
+  {
+    "label": "origin-view",
+    "viewport": {
+      "w": 393,
+      "h": 852,
+      "dpr": 2
+    },
+    "immersive": true,
+    "topVisible": false,
+    "tabVisible": false,
+    "barButtons": 0,
+    "subs": null,
+    "coach": null,
+    "ratio": null,
+    "cards": 0,
+    "visibleCards": null,
+    "speakCopy": 0,
+    "zhSamples": [],
+    "chips": 0,
+    "chipTip": false,
+    "hasPanelTitle": false,
+    "share": false,
+    "origin": true,
+    "stopSheet": false,
+    "barText": null,
+    "state": "ready",
+    "messages": 3,
+    "englishOnlyBubbles": true
+  },
+  {
+    "label": "back-chat",
+    "viewport": {
+      "w": 393,
+      "h": 852,
+      "dpr": 2
+    },
+    "immersive": true,
+    "topVisible": false,
+    "tabVisible": false,
+    "barButtons": 3,
+    "subs": {
+      "h": 232,
+      "w": 373,
+      "top": 66,
+      "bottom": 298
+    },
+    "coach": {
+      "h": 489,
+      "w": 373,
+      "top": 304,
+      "bottom": 793
+    },
+    "ratio": "0.474",
+    "cards": 10,
+    "visibleCards": 5,
+    "speakCopy": 0,
+    "zhSamples": [
+      "暂无中文翻译；可先用英文照说。"
+    ],
+    "chips": 3,
+    "chipTip": false,
+    "hasPanelTitle": false,
+    "share": false,
+    "origin": false,
+    "stopSheet": false,
+    "barText": "暂不关联人物 | 未配对：请先在高级设置完成配对 | Mia Chen（陈美玲） | 正在听 | ⋯ | 停止",
+    "state": "ready",
+    "messages": 3,
+    "englishOnlyBubbles": false
+  },
+  {
+    "label": "menu",
+    "viewport": {
+      "w": 393,
+      "h": 852,
+      "dpr": 2
+    },
+    "immersive": true,
+    "topVisible": false,
+    "tabVisible": false,
+    "barButtons": 3,
+    "subs": {
+      "h": 232,
+      "w": 373,
+      "top": 66,
+      "bottom": 298
+    },
+    "coach": {
+      "h": 489,
+      "w": 373,
+      "top": 304,
+      "bottom": 793
+    },
+    "ratio": "0.474",
+    "cards": 10,
+    "visibleCards": 5,
+    "speakCopy": 0,
+    "zhSamples": [
+      "暂无中文翻译；可先用英文照说。"
+    ],
+    "chips": 3,
+    "chipTip": false,
+    "hasPanelTitle": false,
+    "share": false,
+    "origin": false,
+    "stopSheet": false,
+    "barText": "暂不关联人物 | 未配对：请先在高级设置完成配对 | Mia Chen（陈美玲） | 正在听 | ⋯ | 停止",
+    "state": "ready",
+    "messages": 3,
+    "englishOnlyBubbles": false
+  },
+  {
+    "label": "stop-sheet",
+    "viewport": {
+      "w": 393,
+      "h": 852,
+      "dpr": 2
+    },
+    "immersive": false,
+    "topVisible": true,
+    "tabVisible": true,
+    "barButtons": 3,
+    "subs": {
+      "h": 232,
+      "w": 367,
+      "top": 135,
+      "bottom": 367
+    },
+    "coach": {
+      "h": 934,
+      "w": 367,
+      "top": 373,
+      "bottom": 1307
+    },
+    "ratio": "0.248",
+    "cards": 10,
+    "visibleCards": 10,
+    "speakCopy": 0,
+    "zhSamples": [
+      "暂无中文翻译；可先用英文照说。"
+    ],
+    "chips": 3,
+    "chipTip": false,
+    "hasPanelTitle": false,
+    "share": false,
+    "origin": false,
+    "stopSheet": true,
+    "barText": "暂不关联人物 | 未配对：请先在高级设置完成配对 | Mia Chen（陈美玲） | 已结束 | ⋯ | 开始新一轮",
+    "state": "off",
+    "messages": 3,
+    "englishOnlyBubbles": false
+  },
+  {
+    "label": "exit-fullscreen",
+    "viewport": {
+      "w": 393,
+      "h": 852,
+      "dpr": 2
+    },
+    "immersive": false,
+    "topVisible": true,
+    "tabVisible": true,
+    "barButtons": 3,
+    "subs": {
+      "h": 232,
+      "w": 367,
+      "top": 135,
+      "bottom": 367
+    },
+    "coach": {
+      "h": 934,
+      "w": 367,
+      "top": 373,
+      "bottom": 1307
+    },
+    "ratio": "0.248",
+    "cards": 10,
+    "visibleCards": 10,
+    "speakCopy": 0,
+    "zhSamples": [
+      "暂无中文翻译；可先用英文照说。"
+    ],
+    "chips": 3,
+    "chipTip": false,
+    "hasPanelTitle": false,
+    "share": false,
+    "origin": false,
+    "stopSheet": false,
+    "barText": "暂不关联人物 | 未配对：请先在高级设置完成配对 | Mia Chen（陈美玲） | 已结束 | ⋯ | 开始新一轮",
+    "state": "off",
+    "messages": 3,
+    "englishOnlyBubbles": false
+  }
+]

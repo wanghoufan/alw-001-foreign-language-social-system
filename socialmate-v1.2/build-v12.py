@@ -14,6 +14,8 @@ real = json.loads(PLACES.read_text(encoding='utf-8'))
 data['places'] = [{
     'id': p['id'], 'cnName': p['name'], 'enName': p['en_name'], 'city': p['city'],
     'category': p['category'], 'cn': p['cn'], 'en': p['en'],
+    'specialEn': p.get('special_en') or '',
+    'photos': [x.get('slot') for x in (p.get('photos') or []) if x.get('slot')] or [1],
     'cityFolder': p.get('city_folder', 'Haikou'), 'photoNote': p.get('photo_note') or {25: '示意', 26: '示意', 69: '示意'}.get(p['id'], ''),
     'locationCn': p.get('location_cn', ''), 'locationEn': p.get('location_en', ''),
     'mapAmap': p.get('map_amap', ''), 'mapGoogle': p.get('map_google', ''),

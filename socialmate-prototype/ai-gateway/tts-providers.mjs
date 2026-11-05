@@ -16,8 +16,9 @@
  * 3. 计费请求在进入适配器之前就被 402 拦下（limitCny 硬编码 0），第三方文本传输默认 OFF。
  */
 import crypto from "node:crypto";
-import {createTtsCache, sha256Hex, TTS_BUDGET_LIMIT_CNY, AWS_POLLY_BUDGET_LIMIT_CNY} from "./tts-cache.mjs";
+import {createTtsCache, sha256Hex, TTS_BUDGET_LIMIT_CNY, AWS_POLLY_BUDGET_LIMIT_CNY, DOUBAO_BUDGET_LIMIT_CNY} from "./tts-cache.mjs";
 import {createFakeAdapter} from "./tts-adapter-fake.mjs";
+import {DOUBAO_VOICES, createDoubaoAdapter} from "./tts-adapter-doubao.mjs";
 import {createSkeletonAdapter} from "./tts-adapter-skeleton.mjs";
 import {
   POLLY_VOICES, FAKE_POLLY_MODEL_VERSION, POLLY_RUNTIME_STATS,
@@ -43,6 +44,7 @@ function fail(status, code, message, extra = {}) {
 }
 
 const VOICES = {
+  doubao: DOUBAO_VOICES.map((voice) => ({...voice})),
   /* Amazon Polly：真实云与本地替身共用同一组 voiceId / engine（Android 端按此实现）。 */
   "aws-polly": POLLY_VOICES.map((voice) => ({...voice})),
   "aws-polly-fake": POLLY_VOICES.map((voice) => ({...voice})),
@@ -83,6 +85,13 @@ const REGISTRY = new Map([
     ratePer1kCharsCny: 0.15, keyEnv: "AWS_ACCESS_KEY_ID",
     /* Polly 的 rate 只影响客户端播放速度，不改变合成音频字节 → 缓存键排除 rate。 */
     rateAffectsAudio: false,
+  }],
+  ["doubao", {
+    providerId: "doubao", label: "豆包语音合成 2.0（Seed-TTS，需显式同意与预算）", kind: "cloud",
+    enabled: true, fallbackOnly: false, requiresConsent: true, billingEnabled: true,
+    synthesizesOnServer: true, modelVersion: "doubao-seed-tts-2.0-v1",
+    ratePer1kCharsCny: 0.3, keyEnv: "SM_DOUBAO_API_KEY",
+    rateAffectsAudio: true,
   }],
   ["aws-polly-fake", {
     providerId: "aws-polly-fake", label: "Amazon Polly 本地替身（预置音频，真机验收用）", kind: "local-preset",
@@ -136,6 +145,7 @@ function publicProvider(provider, {probe, budget} = {}) {
   const probed = typeof probe === "function" ? probe() : null;
   const engines = [...new Set(voices.map((voice) => voice.engine).filter(Boolean))];
   const isPolly = provider.providerId === "aws-polly" || provider.providerId === "aws-polly-fake";
+  const hasEngines = engines.length > 0;
   return {
     providerId: provider.providerId,
     label: provider.label,
@@ -148,7 +158,7 @@ function publicProvider(provider, {probe, budget} = {}) {
     /* configured 只信适配器探测结果，云 provider 绝不硬编码 true。 */
     configured: provider.kind === "cloud" ? Boolean(probed?.configured) : true,
     ...(provider.kind === "cloud" ? {configuredReason: probed?.reason || null} : {}),
-    ...(isPolly ? {
+    ...(hasEngines ? {
       engine: engines[0] || null,
       engines,
       rateAffectsAudio: provider.rateAffectsAudio !== false,
@@ -311,6 +321,7 @@ export function createTtsService(options = {}) {
 
   const adapters = {
     fake: createFakeAdapter({cache}),
+    doubao: createDoubaoAdapter({}),
     "aws-polly": createPollyAdapter({}),
     "aws-polly-fake": createFakePollyAdapter({cache}),
     azure: createSkeletonAdapter({providerId: "azure", label: "Azure Speech", keyEnv: "AZURE_SPEECH_KEY", modelVersion: "azure-rest-v1(unconfigured)"}),
@@ -337,6 +348,7 @@ export function createTtsService(options = {}) {
   async function listProviders() {
     const ledger = await cache.ledger();
     const pollyLedger = await cache.providerLedger("aws-polly");
+    const doubaoLedger = await cache.providerLedger("doubao");
     const pollyBudget = {
       providerId: "aws-polly", currency: "CNY",
       limitCny: AWS_POLLY_BUDGET_LIMIT_CNY,
@@ -345,18 +357,26 @@ export function createTtsService(options = {}) {
       exists: pollyLedger.exists === true,
       file: "TtsCache/ledger/aws-polly.json",
     };
+    const doubaoBudget = {
+      providerId: "doubao", currency: "CNY",
+      limitCny: DOUBAO_BUDGET_LIMIT_CNY,
+      spentCny: Number(doubaoLedger.spentCny) || 0,
+      entries: Array.isArray(doubaoLedger.entries) ? doubaoLedger.entries.length : 0,
+      exists: doubaoLedger.exists === true,
+      file: "TtsCache/ledger/doubao.json",
+    };
     return {
       ok: true,
       providers: [...REGISTRY.values()].map((provider) => publicProvider(provider, {
         probe: adapters[provider.providerId]?.probe,
-        budget: provider.providerId === "aws-polly" ? pollyBudget : null,
+        budget: provider.providerId === "aws-polly" ? pollyBudget : provider.providerId === "doubao" ? doubaoBudget : null,
       })),
       defaults: {providerId: "fake", note: "默认用本地预置音频，避免任何外部请求；真机验收用 aws-polly-fake"},
       budget: {
         currency: "CNY", limitCny: TTS_BUDGET_LIMIT_CNY,
         spentCny: Number(ledger.spentCny) || 0, entries: Array.isArray(ledger.entries) ? ledger.entries.length : 0,
       },
-      providerBudgets: {"aws-polly": pollyBudget},
+      providerBudgets: {"aws-polly": pollyBudget, doubao: doubaoBudget},
       stats: {...stats},
       policy: {
         neuralFirst: true, systemTtsFallbackOnly: true,

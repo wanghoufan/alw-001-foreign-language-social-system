@@ -31,9 +31,10 @@ function parseBudgetCny(value) {
   return Math.min(Math.round(amount * 1e6) / 1e6, 1000);
 }
 export const AWS_POLLY_BUDGET_LIMIT_CNY = parseBudgetCny(process.env.SM_POLLY_BUDGET_CNY);
+export const DOUBAO_BUDGET_LIMIT_CNY = parseBudgetCny(process.env.SM_DOUBAO_BUDGET_CNY);
 
 /** 按 provider 的独立账本上限表（未列出的 provider 一律 0）。 */
-export const PROVIDER_LEDGER_LIMITS = {"aws-polly": AWS_POLLY_BUDGET_LIMIT_CNY};
+export const PROVIDER_LEDGER_LIMITS = {"aws-polly": AWS_POLLY_BUDGET_LIMIT_CNY, doubao: DOUBAO_BUDGET_LIMIT_CNY};
 
 /** 音频扩展名由 mimeType 决定；.wav / .mp3 都算合法缓存文件（旧缓存继续可读）。 */
 const AUDIO_EXT_BY_MIME = {"audio/wav": ".wav", "audio/mpeg": ".mp3"};

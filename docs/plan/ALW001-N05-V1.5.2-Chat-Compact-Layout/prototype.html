@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>N05 V1.5.2 聊天录音页 · 布局草图 v2</title>
+<style>
+  :root{
+    --bg:#f3f1e8; --paper:#fffdf7; --ink:#22312c; --muted:#6b7a74;
+    --pine:#2f5d50; --pine-soft:#e4ede7; --line:#d9ded8; --amber:#a35d18;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:#e8e6de;font-family:-apple-system,"PingFang SC","Noto Sans SC",system-ui,sans-serif;color:var(--ink)}
+  .board{width:1300px;margin:22px auto 36px;display:flex;gap:26px;align-items:flex-start}
+  .col{width:393px}
+  .caption{font-size:15px;color:#3d4a45;margin:0 0 8px;font-weight:800}
+  .phone{width:393px;height:852px;background:var(--bg);border:1px solid #cfd4cd;border-radius:26px;overflow:hidden;position:relative;box-shadow:0 10px 28px rgba(30,40,35,.12);display:flex;flex-direction:column}
+  .statusbar{height:26px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;font-size:12px;color:var(--muted);flex:0 0 auto}
+  /* 唯一一排控制 */
+  .topbar{height:54px;display:flex;align-items:center;gap:8px;padding:0 11px;background:var(--paper);border-bottom:1px solid var(--line);flex:0 0 auto}
+  .person{display:flex;align-items:center;gap:5px;min-width:0;flex:1;font-size:16px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .caret{color:var(--muted);font-size:14px}
+  .live{display:inline-flex;align-items:center;gap:5px;background:var(--pine-soft);color:var(--pine);border-radius:999px;padding:5px 9px;font-size:15px;font-weight:800;flex:0 0 auto}
+  .dot{width:7px;height:7px;border-radius:50%;background:#2f9e6a;box-shadow:0 0 0 3px rgba(47,158,106,.16)}
+  .iconbtn{width:36px;height:36px;border:1px solid var(--line);background:var(--paper);border-radius:10px;display:grid;place-items:center;font-size:19px;color:var(--muted);flex:0 0 auto}
+  .stop{height:38px;border:0;border-radius:11px;background:var(--pine);color:#fff;font-size:16px;font-weight:800;padding:0 13px;flex:0 0 auto}
+  /* 上 1/3：对话纯英文 */
+  .subs{flex:0 0 232px;padding:8px 11px 6px;overflow:hidden;border-bottom:1px solid #e2e6e0}
+  .bubble{background:var(--paper);border:1px solid var(--line);border-radius:13px;padding:7px 10px 6px;margin-bottom:6px}
+  .bubble .line{display:flex;gap:8px;align-items:flex-start}
+  .bubble .who{font-size:14px;color:var(--muted);flex:0 0 26px;line-height:1.5;padding-top:2px}
+  .bubble .en{font-size:19px;line-height:1.38;margin:0;flex:1}
+  .tr{flex:0 0 auto;border:0;background:transparent;color:var(--pine);font-size:15px;font-weight:700;padding:2px 0 0;text-decoration:underline;line-height:1.4}
+  .bubble .zh{margin:5px 0 0 34px;font-size:15px;line-height:1.45;color:var(--muted)}
+  .bubble.me{background:#eaf1ec}
+  .bubble .zh.hide{display:none}
+  /* 下 2/3：建议 + 追问 + 换题 */
+  .coach{flex:1;padding:6px 11px 0;display:flex;flex-direction:column;gap:4px;overflow:hidden}
+  .sect{display:flex;align-items:baseline;gap:6px;margin:2px 0 0}
+  .sect b{font-size:15px;color:var(--pine)}
+  .sect span{font-size:14px;color:var(--muted)}
+  .card{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:6px 9px 5px;display:flex;flex-direction:column;gap:3px}
+  .card .en{font-size:19px;line-height:1.34;margin:0}
+  .card .zh{font-size:15px;line-height:1.4;color:var(--muted);margin:0}
+  .card .zh.hide{display:none}
+  .card .foot{display:flex;align-items:center;gap:8px;justify-content:flex-end;margin-top:2px}
+  .act{border:1px solid var(--line);background:var(--paper);border-radius:8px;height:28px;padding:0 9px;font-size:15px;font-weight:700;color:var(--pine)}
+  .act.fav{color:var(--amber);width:34px;padding:0;display:grid;place-items:center;font-size:17px}
+  /* 关联资料：一条 chips，无标题无类别 */
+  .refs{flex:0 0 auto;display:flex;gap:6px;padding:5px 11px 7px;overflow:hidden}
+  .ref{font-size:15px;padding:5px 9px;border-radius:999px;background:var(--pine-soft);color:var(--pine);border:1px solid #cddbd2;white-space:nowrap}
+  .hintbar{flex:0 0 auto;text-align:center;font-size:12px;color:#9aa5a0;padding:0 0 6px}
+  /* 弹层 */
+  .scrim{position:absolute;inset:0;background:rgba(24,32,28,.38)}
+  .sheet{position:absolute;left:0;right:0;bottom:0;background:var(--paper);border-radius:22px 22px 0 0;padding:16px 15px 18px;box-shadow:0 -12px 30px rgba(20,30,25,.18)}
+  .sheet h2{font-size:23px;margin:2px 0 3px;text-align:center}
+  .sheet p{font-size:15px;color:var(--muted);margin:0 0 12px;text-align:center}
+  .big{display:flex;flex-direction:column;gap:8px}
+  .btnf{height:50px;border-radius:13px;border:1px solid var(--pine);background:var(--pine);color:#fff;font-size:19px;font-weight:800}
+  .btnf.ghost{background:var(--paper);color:var(--pine)}
+  .cancel{display:block;margin:10px auto 0;border:0;background:transparent;color:var(--muted);font-size:15px;font-weight:700}
+  .notes{width:393px;font-size:14px;line-height:1.7;color:#3d4a45;background:#fffdf7;border:1px dashed #b9c1b9;border-radius:14px;padding:11px 13px;margin-top:12px}
+  .notes b{color:var(--pine)}
+  .notes ol{margin:5px 0 0 17px;padding:0}
+  .tag{display:inline-block;font-size:12px;color:#8a5a12;background:#f6ead6;border-radius:6px;padding:1px 6px;margin-left:6px;vertical-align:2px}
+</style>
+</head>
+<body>
+<div class="board">
+  <!-- A 默认：纯英文 -->
+  <div class="col">
+    <p class="caption">A · 录音中默认：对话和建议都是纯英文</p>
+    <div class="phone">
+      <div class="statusbar"><span>8:43</span><span>5G · 68%</span></div>
+      <div class="topbar">
+        <div class="person">Mia Chen（陈美玲）<span class="caret">▾</span></div>
+        <span class="live"><i class="dot"></i>正在听</span>
+        <button class="iconbtn">⋯</button>
+        <button class="stop">停止</button>
+      </div>
+
+      <div class="subs">
+        <div class="bubble">
+          <div class="line"><span class="who">Mia</span><p class="en">There's a small café near the park.</p><button class="tr">翻译</button></div>
+          <p class="zh hide">公园附近有家小咖啡馆。</p>
+        </div>
+        <div class="bubble me">
+          <div class="line"><span class="who">我</span><p class="en">Sure. I'd like an iced coffee.</p><button class="tr">翻译</button></div>
+          <p class="zh hide">好啊。我想喝冰咖啡。</p>
+        </div>
+        <div class="bubble">
+          <div class="line"><span class="who">Mia</span><p class="en">Do you want to get a coffee first?</p><button class="tr">翻译</button></div>
+          <p class="zh hide">你想先喝杯咖啡吗？</p>
+        </div>
+      </div>
+
+      <div class="coach">
+        <div class="sect"><b>接话</b><span>2 条</span></div>
+        <article class="card">
+          <p class="en">Sure, a coffee sounds good.</p>
+          <p class="zh hide">好啊，喝杯咖啡不错。</p>
+          <div class="foot"><button class="act">中文</button><button class="act fav">☆</button></div>
+        </article>
+        <article class="card">
+          <p class="en">I'd like an iced coffee, please.</p>
+          <p class="zh hide">我想要一杯冰咖啡。</p>
+          <div class="foot"><button class="act">中文</button><button class="act fav">☆</button></div>
+        </article>
+
+        <div class="sect"><b>追问</b><span>2 条</span></div>
+        <article class="card">
+          <p class="en">Is the café far from here?</p>
+          <p class="zh hide">那家咖啡馆离这里远吗？</p>
+          <div class="foot"><button class="act">中文</button><button class="act fav">☆</button></div>
+        </article>
+        <article class="card">
+          <p class="en">Do they have outdoor seats?</p>
+          <p class="zh hide">他们家有室外的座位吗？</p>
+          <div class="foot"><button class="act">中文</button><button class="act fav">☆</button></div>
+        </article>
+
+        <div class="sect"><b>换题</b><span>2 条</span></div>
+        <article class="card">
+          <p class="en">By the way, have you tried the noodle shop?</p>
+          <p class="zh hide">对了，你试过那家面馆吗？</p>
+          <div class="foot"><button class="act">中文</button><button class="act fav">☆</button></div>
+        </article>
+      </div>
+
+      <div class="refs">
+        <span class="ref">海口湾滨海步道</span><span class="ref">云洞图书馆</span><span class="ref">我来自海口</span>
+      </div>
+      <div class="hintbar">返回退出全屏并恢复底部 Tab</div>
+    </div>
+  </div>
+
+  <!-- B 点翻译后才出中文 -->
+  <div class="col">
+    <p class="caption">B · 只有点了「翻译 / 中文」才展开 <span class="tag">按需</span></p>
+    <div class="phone">
+      <div class="statusbar"><span>8:43</span><span>5G · 68%</span></div>
+      <div class="topbar">
+        <div class="person">Mia Chen（陈美玲）<span class="caret">▾</span></div>
+        <span class="live"><i class="dot"></i>正在听</span>
+        <button class="iconbtn">⋯</button>
+        <button class="stop">停止</button>
+      </div>
+
+      <div class="subs">
+        <div class="bubble">
+          <div class="line"><span class="who">Mia</span><p class="en">There's a small café near the park.</p><button class="tr">收起</button></div>
+          <p class="zh">公园附近有家小咖啡馆。</p>
+        </div>
+        <div class="bubble me">
+          <div class="line"><span class="who">我</span><p class="en">Sure. I'd like an iced coffee.</p><button class="tr">翻译</button></div>
+        </div>
+        <div class="bubble">
+          <div class="line"><span class="who">Mia</span><p class="en">Do you want to get a coffee first?</p><button class="tr">翻译</button></div>
+        </div>
+      </div>
+
+      <div class="coach">
+        <div class="sect"><b>接话</b><span>2 条</span></div>
+        <article class="card">
+          <p class="en">Sure, a coffee sounds good.</p>
+          <p class="zh">好啊，喝杯咖啡不错。</p>
+          <div class="foot"><button class="act">收起</button><button class="act fav">★</button></div>
+        </article>
+        <article class="card">
+          <p class="en">I'd like an iced coffee, please.</p>
+          <div class="foot"><button class="act">中文</button><button class="act fav">☆</button></div>
+        </article>
+
+        <div class="sect"><b>追问</b><span>2 条</span></div>
+        <article class="card">
+          <p class="en">Is the café far from here?</p>
+          <div class="foot"><button class="act">中文</button><button class="act fav">☆</button></div>
+        </article>
+      </div>
+
+      <div class="refs">
+        <span class="ref">海口湾滨海步道</span><span class="ref">云洞图书馆</span>
+      </div>
+      <div class="hintbar">展开中文只在当前条目占空间，其他条目保持紧凑</div>
+    </div>
+  </div>
+
+  <!-- C 停止弹层 -->
+  <div class="col">
+    <p class="caption">C · 点「停止」才出现结束/放弃</p>
+    <div class="phone">
+      <div class="statusbar"><span>8:43</span><span>5G · 68%</span></div>
+      <div class="topbar">
+        <div class="person">Mia Chen（陈美玲）<span class="caret">▾</span></div>
+        <span class="live"><i class="dot"></i>正在听</span>
+        <button class="iconbtn">⋯</button>
+        <button class="stop">停止</button>
+      </div>
+      <div class="subs">
+        <div class="bubble">
+          <div class="line"><span class="who">Mia</span><p class="en">There's a small café near the park.</p><button class="tr">翻译</button></div>
+        </div>
+        <div class="bubble me">
+          <div class="line"><span class="who">我</span><p class="en">Sure. I'd like an iced coffee.</p><button class="tr">翻译</button></div>
+        </div>
+      </div>
+      <div class="scrim"></div>
+      <div class="sheet">
+        <h2>本轮已停止</h2>
+        <p>已保存 40 句原文 · 确认后写入人物档案</p>
+        <div class="big">
+          <button class="btnf">结束并人工确认</button>
+          <button class="btnf ghost">放弃本轮</button>
+        </div>
+        <button class="cancel">继续录音</button>
+      </div>
+    </div>
+
+    <div class="notes">
+      <b>这版只改两点</b>
+      <ol>
+        <li>对话默认纯英文；点每条右侧「翻译」才展开中文，再点收起。</li>
+        <li>比例固定：上面约 1/3 是对话，下面约 2/3 是接话、追问、换题；首屏能看到 5 条建议。</li>
+      </ol>
+      <b>保留</b>：全屏无 Tab、只有一排按键、无说明长文、关联资料一行 chips、收藏 ☆、停止后弹层。
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -43,8 +43,11 @@ import org.json.JSONObject;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Foreground-only ASR streamer. Sends PCM16 to the local bridge and renders its JSON events.
@@ -72,6 +75,14 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
     private final List<AsrClient> clients = Collections.synchronizedList(new ArrayList<>());
     /** 每个 track 同一时刻只允许一个重连线程，避免断线抖动时建立多条重复会话。 */
     private final java.util.Set<String> reconnecting = java.util.Collections.synchronizedSet(new java.util.HashSet<>());
+    /**
+     * T6：本轮 ASR 上游「会话已结束」信号。初值 = 本轮 tracks 数量（最少 1），
+     * onAsrEvent 每收到一条 type=session/status=ended 就 countDown；停止流程最多等 3s。
+     */
+    private volatile CountDownLatch asrEndedLatch;
+    /** 同一 client 可能重复上报 ended，按对象身份去重，避免提前放行。 */
+    private final java.util.Set<AsrClient> asrEndedClients =
+            java.util.Collections.synchronizedSet(java.util.Collections.newSetFromMap(new IdentityHashMap<>()));
     private volatile String asrLink = "";
     private final StringBuilder finals = new StringBuilder();
     private volatile boolean running;
@@ -1961,6 +1972,11 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
 
     private void stream(String baseUrl, String[] tracks) {
         AudioRecord rec = null;
+        // T6：本轮结束信号按 track 计数（最少 1）。上游每条会话收尾都会推一条 session/ended，
+        // 收到就不再固定 sleep，避免尾部 final 晚于 1500ms 到达而丢失归档。
+        final CountDownLatch endedLatch = new CountDownLatch(Math.max(1, tracks == null ? 0 : tracks.length));
+        asrEndedClients.clear();
+        asrEndedLatch = endedLatch;
         try {
             // 本机短令牌是 ASR 握手的唯一身份凭证：没有就 fail closed，不在没鉴权时开麦。
             final String asrToken = currentAccessToken();
@@ -2048,7 +2064,15 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
                 for (AsrClient client : clients) client.finish();
             }
             if (!clients.isEmpty()) {
-                try { Thread.sleep(1500); } catch (InterruptedException ignored) { Thread.currentThread().interrupt(); }
+                // T6：等待上游把所有 final 推完（每条 track 一条 session/ended），最长 3000ms；
+                // 收到 ended 立即继续；断线/异常路径最多也只等这 3s，不会无限等待。
+                try {
+                    boolean ended = endedLatch.await(3000L, TimeUnit.MILLISECONDS);
+                    android.util.Log.i("SocialMateRec", "stop wait ended=" + ended
+                            + " remaining=" + endedLatch.getCount());
+                } catch (InterruptedException ignored) {
+                    Thread.currentThread().interrupt();
+                }
             }
             synchronized (clients) {
                 for (AsrClient client : clients) {
@@ -2178,6 +2202,14 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
         String type = event.optString("type", "");
         if ("session".equals(type)) {
             String s = event.optString("status", "");
+            // T6：上游会话明确结束（ended / end）即「本轮 final 已全部推送」的信号。
+            // 只统计当前仍在本轮的 client，避免重连被替换下来的旧会话误放行。
+            if ("ended".equals(s) || "end".equals(s)) {
+                CountDownLatch latch = asrEndedLatch;
+                if (latch != null && clients.contains(client) && asrEndedClients.add(client)) {
+                    latch.countDown();
+                }
+            }
             if ("error".equals(s) || "ended".equals(s)) {
                 appendLine("[会话] " + s + (event.has("message") ? "：" + event.optString("message") : ""));
             }

@@ -1,0 +1,345 @@
+[
+  {
+    "label": "immersive-default",
+    "viewport": {
+      "w": 393,
+      "h": 791,
+      "dpr": 2.75
+    },
+    "immersive": true,
+    "top": false,
+    "tab": false,
+    "barOrder": [
+      "LABEL",
+      "SPAN",
+      "BUTTON",
+      "BUTTON"
+    ],
+    "subs": {
+      "h": 232,
+      "top": 66,
+      "bottom": 298
+    },
+    "coach": {
+      "h": 425,
+      "top": 304,
+      "bottom": 729
+    },
+    "ratio": "0.546",
+    "cards": 10,
+    "visible": 4,
+    "chatEn": "19px",
+    "suggEn": "19px",
+    "zhSize": null,
+    "speakCopy": 0,
+    "zh": [],
+    "chips": 3,
+    "chipH": 40,
+    "share": false,
+    "origin": false,
+    "stop": false,
+    "activeSessions": null,
+    "state": "ready",
+    "messages": 3
+  },
+  {
+    "label": "translate-one",
+    "viewport": {
+      "w": 393,
+      "h": 791,
+      "dpr": 2.75
+    },
+    "immersive": true,
+    "top": false,
+    "tab": false,
+    "barOrder": [
+      "LABEL",
+      "SPAN",
+      "BUTTON",
+      "BUTTON"
+    ],
+    "subs": {
+      "h": 232,
+      "top": 66,
+      "bottom": 298
+    },
+    "coach": {
+      "h": 425,
+      "top": 304,
+      "bottom": 729
+    },
+    "ratio": "0.546",
+    "cards": 10,
+    "visible": 4,
+    "chatEn": "19px",
+    "suggEn": "19px",
+    "zhSize": null,
+    "speakCopy": 0,
+    "zh": [
+      "暂无中文翻译；可先用英文照说。"
+    ],
+    "chips": 3,
+    "chipH": 40,
+    "share": false,
+    "origin": false,
+    "stop": false,
+    "activeSessions": null,
+    "state": "ready",
+    "messages": 3
+  },
+  {
+    "label": "share-open",
+    "viewport": {
+      "w": 393,
+      "h": 791,
+      "dpr": 2.75
+    },
+    "immersive": true,
+    "top": false,
+    "tab": false,
+    "barOrder": [
+      "LABEL",
+      "SPAN",
+      "BUTTON",
+      "BUTTON"
+    ],
+    "subs": {
+      "h": 232,
+      "top": 66,
+      "bottom": 298
+    },
+    "coach": {
+      "h": 425,
+      "top": 304,
+      "bottom": 729
+    },
+    "ratio": "0.546",
+    "cards": 10,
+    "visible": 4,
+    "chatEn": "19px",
+    "suggEn": "19px",
+    "zhSize": null,
+    "speakCopy": 0,
+    "zh": [
+      "暂无中文翻译；可先用英文照说。"
+    ],
+    "chips": 3,
+    "chipH": 40,
+    "share": true,
+    "origin": false,
+    "stop": false,
+    "activeSessions": null,
+    "state": "ready",
+    "messages": 3
+  },
+  {
+    "label": "origin-view",
+    "viewport": {
+      "w": 393,
+      "h": 791,
+      "dpr": 2.75
+    },
+    "immersive": true,
+    "top": false,
+    "tab": false,
+    "barOrder": [],
+    "subs": null,
+    "coach": null,
+    "ratio": null,
+    "cards": 0,
+    "visible": null,
+    "chatEn": null,
+    "suggEn": null,
+    "zhSize": null,
+    "speakCopy": 0,
+    "zh": [],
+    "chips": 0,
+    "chipH": null,
+    "share": false,
+    "origin": true,
+    "stop": false,
+    "activeSessions": null,
+    "state": "ready",
+    "messages": 3
+  },
+  {
+    "label": "back-chat",
+    "viewport": {
+      "w": 393,
+      "h": 791,
+      "dpr": 2.75
+    },
+    "immersive": true,
+    "top": false,
+    "tab": false,
+    "barOrder": [
+      "LABEL",
+      "SPAN",
+      "BUTTON",
+      "BUTTON"
+    ],
+    "subs": {
+      "h": 232,
+      "top": 66,
+      "bottom": 298
+    },
+    "coach": {
+      "h": 425,
+      "top": 304,
+      "bottom": 729
+    },
+    "ratio": "0.546",
+    "cards": 10,
+    "visible": 4,
+    "chatEn": "19px",
+    "suggEn": "19px",
+    "zhSize": null,
+    "speakCopy": 0,
+    "zh": [
+      "暂无中文翻译；可先用英文照说。"
+    ],
+    "chips": 3,
+    "chipH": 40,
+    "share": false,
+    "origin": false,
+    "stop": false,
+    "activeSessions": null,
+    "state": "ready",
+    "messages": 3
+  },
+  {
+    "label": "menu",
+    "viewport": {
+      "w": 393,
+      "h": 791,
+      "dpr": 2.75
+    },
+    "immersive": true,
+    "top": false,
+    "tab": false,
+    "barOrder": [
+      "LABEL",
+      "SPAN",
+      "BUTTON",
+      "BUTTON"
+    ],
+    "subs": {
+      "h": 232,
+      "top": 66,
+      "bottom": 298
+    },
+    "coach": {
+      "h": 425,
+      "top": 304,
+      "bottom": 729
+    },
+    "ratio": "0.546",
+    "cards": 10,
+    "visible": 4,
+    "chatEn": "19px",
+    "suggEn": "19px",
+    "zhSize": null,
+    "speakCopy": 0,
+    "zh": [
+      "暂无中文翻译；可先用英文照说。"
+    ],
+    "chips": 3,
+    "chipH": 40,
+    "share": false,
+    "origin": false,
+    "stop": false,
+    "activeSessions": null,
+    "state": "ready",
+    "messages": 3
+  },
+  {
+    "label": "stop-sheet",
+    "viewport": {
+      "w": 393,
+      "h": 791,
+      "dpr": 2.75
+    },
+    "immersive": false,
+    "top": true,
+    "tab": true,
+    "barOrder": [
+      "LABEL",
+      "SPAN",
+      "BUTTON",
+      "BUTTON"
+    ],
+    "subs": {
+      "h": 232,
+      "top": 135,
+      "bottom": 367
+    },
+    "coach": {
+      "h": 1000,
+      "top": 373,
+      "bottom": 1373
+    },
+    "ratio": "0.232",
+    "cards": 10,
+    "visible": 10,
+    "chatEn": "19px",
+    "suggEn": "19px",
+    "zhSize": null,
+    "speakCopy": 0,
+    "zh": [
+      "暂无中文翻译；可先用英文照说。"
+    ],
+    "chips": 3,
+    "chipH": 40,
+    "share": false,
+    "origin": false,
+    "stop": true,
+    "activeSessions": null,
+    "state": "off",
+    "messages": 3
+  },
+  {
+    "label": "exit-fullscreen",
+    "viewport": {
+      "w": 393,
+      "h": 791,
+      "dpr": 2.75
+    },
+    "immersive": false,
+    "top": true,
+    "tab": true,
+    "barOrder": [
+      "LABEL",
+      "SPAN",
+      "BUTTON",
+      "BUTTON"
+    ],
+    "subs": {
+      "h": 232,
+      "top": 135,
+      "bottom": 367
+    },
+    "coach": {
+      "h": 1000,
+      "top": 373,
+      "bottom": 1373
+    },
+    "ratio": "0.232",
+    "cards": 10,
+    "visible": 10,
+    "chatEn": "19px",
+    "suggEn": "19px",
+    "zhSize": null,
+    "speakCopy": 0,
+    "zh": [
+      "暂无中文翻译；可先用英文照说。"
+    ],
+    "chips": 3,
+    "chipH": 40,
+    "share": false,
+    "origin": false,
+    "stop": false,
+    "activeSessions": null,
+    "state": "off",
+    "messages": 3
+  }
+]

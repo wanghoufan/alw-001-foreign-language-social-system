@@ -7,7 +7,7 @@ import http from "node:http";
 import fs from "node:fs/promises";
 import path from "node:path";
 import {fileURLToPath} from "node:url";
-import {analyze,AiError,status} from "./core.mjs";
+import {analyze,AiError,status,PROVIDERS} from "./core.mjs";
 import {liveAsrHub} from "./live-asr-hub.mjs";
 import {readProfile,writeProfile,tightenPermissions} from "./profile-store.mjs";
 import {createPersonFile,listPeople,suggestSlug} from "./people-store.mjs";
@@ -441,6 +441,55 @@ export function createHandler(options={}){
         }
         return json(res,200,{ok:true,...result});
       }finally{activeRequest=false;}
+    }
+    // 按需单句翻译：只在用户点「翻译」时调用；一次一句，写同一 DeepSeek 预算账本。
+    if(url.pathname==="/api/ai/translate"&&req.method==="POST"){
+      const body=await readPayload(req,20000);
+      if(body?.consent!==true)
+        return json(res,403,{ok:false,code:"CONSENT_REQUIRED",error:"翻译前需要对这一句明确同意"});
+      const text=String(body?.text||"").trim().slice(0,700);
+      if(!text)return json(res,400,{ok:false,code:"INVALID_INPUT",error:"缺少待翻译句子"});
+      if(!/[A-Za-z]/.test(text))return json(res,200,{ok:true,zh:text,mode:"passthrough"});
+      const cfg=PROVIDERS.deepseek;
+      const secret=String(process.env[cfg.keyEnv]||"").trim();
+      if(!secret)return json(res,503,{ok:false,code:"PROVIDER_NOT_CONFIGURED",error:"服务端未配置 "+cfg.keyEnv});
+      if(budgetStatus().remainingCny<=RESERVE_CNY)
+        return json(res,402,{ok:false,code:"BUDGET_EXHAUSTED",
+          error:"DeepSeek 授权额度已用尽（上限 "+BUDGET_LIMIT+" 元）",budget:budgetStatus()});
+      if(activeRequest||Date.now()-lastRequestAt<1200)
+        return json(res,429,{ok:false,code:"AI_BUSY",error:"上一轮 AI 尚未结束或请求过于频繁，请稍候"});
+      activeRequest=true;lastRequestAt=Date.now();
+      const startedAt=Date.now();
+      const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),9500);
+      try{
+        const response=await fetch(cfg.url,{method:"POST",signal:controller.signal,
+          headers:{"Content-Type":"application/json",Authorization:"Bearer "+secret},
+          body:JSON.stringify({model:cfg.model,max_tokens:300,stream:false,
+            response_format:{type:"json_object"},thinking:{type:"disabled"},
+            messages:[{role:"system",content:"Translate the user's English sentence into natural, concise Simplified Chinese. Output exactly one JSON object {\"zh\":\"中文翻译\"}. Keep names, places and numbers accurate. Do not add explanations, pinyin, or the original English."},
+              {role:"user",content:text}]})});
+        if(!response.ok){
+          const code=response.status===429?"PROVIDER_LIMIT":response.status===401||response.status===403?"PROVIDER_AUTH":"PROVIDER_ERROR";
+          return json(res,response.status===429?503:502,{ok:false,code,error:"上游 API 返回 HTTP "+response.status});
+        }
+        const data=await response.json();
+        const content=data?.choices?.[0]?.message?.content||"";
+        let parsed=null;
+        try{parsed=JSON.parse(content);}catch{
+          const fenced=content.replace(/^```(?:json)?\s*/i,"").replace(/\s*```$/,"").trim();
+          const match=fenced.match(/\{[\s\S]*\}/);
+          try{parsed=JSON.parse(fenced);}catch{try{parsed=match?JSON.parse(match[0]):null;}catch{parsed=null;}}
+        }
+        const zh=String(parsed?.zh||"").trim().slice(0,600);
+        if(!zh)return json(res,502,{ok:false,code:"INVALID_AI_OUTPUT",error:"上游未返回中文翻译"});
+        try{await recordDeepSeekUsage(data.usage);}
+        catch(error){console.error("[socialmate-ai] budget ledger write failed:",error.message);}
+        return json(res,200,{ok:true,zh,provider:"deepseek",model:cfg.model,mode:"real-ai",
+          latencyMs:Date.now()-startedAt,usage:data.usage||null,budget:budgetStatus()});
+      }catch(error){
+        if(error?.name==="AbortError")return json(res,504,{ok:false,code:"PROVIDER_TIMEOUT",error:"翻译超时"});
+        return json(res,502,{ok:false,code:"PROVIDER_NETWORK",error:"请求模型 API 失败"});
+      }finally{clearTimeout(timer);activeRequest=false;}
     }
     // 会后复盘：读的是已归档原文，因此必须带归档令牌（由归档服务校验，本服务不存储令牌）。
     // mode=local 只用本地规则，0 次外部请求；mode=ai 需要当轮显式同意 + 1 元预算闸。
@@ -883,18 +932,18 @@ export function createHandler(options={}){
             region:echo.region,engine:echo.engine,configured:echo.configured,
             wouldStoreAs:echo.storedAs}});
       }
-      // ② Amazon Polly 未配置（无凭据/无 SDK）→ 501；只回 Region 与原因码，不回凭据、不发网络。
-      if(speak.providerId==="aws-polly"&&policy.configured!==true){
+      // ② 云 provider 未配置（无凭据/无 SDK）→ 501；只回原因码，不回凭据、不发网络。
+      if(policy.kind==="cloud"&&policy.configured!==true){
         return json(res,501,{ok:false,code:"PROVIDER_NOT_CONFIGURED",
-          error:"Amazon Polly 尚未配置：本轮不发起任何真实云请求",
-          providerId:"aws-polly",region:policy.region||null,
+          error:speak.providerId==="aws-polly"?"Amazon Polly 尚未配置：本轮不发起任何真实云请求":"该云 TTS 尚未配置：缺少服务端密钥",
+          providerId:speak.providerId,region:policy.region||null,
           reason:policy.configuredReason||"CREDENTIALS_NOT_FOUND",
           realCloudCallsThisBuild:0});
       }
-      // ③ 计费闸：aws-polly 走独立账本；limit=0 仍 402，用户填预算并重启后才放行。
+      // ③ 计费闸：计费 provider 走各自独立账本；limit=0 仍 402，用户填预算并重启后才放行。
       if(policy.billingEnabled){
-        const polly=speak.providerId==="aws-polly";
-        const ledger=polly?await tts.providerLedger("aws-polly"):await tts.ledger();
+        const ledgerProvider=speak.providerId;
+        const ledger=await tts.providerLedger(ledgerProvider);
         const spent=Number(ledger.spentCny)||0;
         const limit=Number(ledger.limitCny)||0;
         const cost=Number(tts.costOf(speak))||0;
@@ -904,22 +953,20 @@ export function createHandler(options={}){
               ?"TTS 计费预算为 0：任何计费请求都会被拒绝，账本不会变动"
               :"TTS 预算余额不足：本次请求会被拒绝，账本不会变动",
             providerId:speak.providerId,
-            ledgerProviderId:polly?"aws-polly":"tts",
+            ledgerProviderId:ledgerProvider,
             budget:{currency:"CNY",limitCny:limit,spentCny:spent,
               estimatedCostCny:cost,
               entries:Array.isArray(ledger.entries)?ledger.entries.length:0,
-              ...(polly?{file:"TtsCache/ledger/aws-polly.json"}:{})}});
+              file:`TtsCache/ledger/${ledgerProvider}.json`}});
         }
       }
       const result=await tts.synthesize(speak);
       let budgetInfo=null;
       if(policy.billingEnabled){
-        try{ await tts.recordBilling(speak); }
-        catch(error){ budgetInfo={recorded:false,code:error?.code||"BILLING_RECORD_FAILED"}; }
-        if(!budgetInfo){
-          const ledger=speak.providerId==="aws-polly"?await tts.providerLedger("aws-polly"):await tts.ledger();
-          budgetInfo={recorded:true,limitCny:Number(ledger.limitCny)||0,spentCny:Number(ledger.spentCny)||0};
-        }
+        /* 记账只发生在 synthesize() 的新合成分支；缓存命中不重复计费，这里只回读账本。 */
+        const ledger=await tts.providerLedger(speak.providerId);
+        budgetInfo={recorded:result.synthesis?.performed===true,
+          limitCny:Number(ledger.limitCny)||0,spentCny:Number(ledger.spentCny)||0};
       }
       return json(res,200,{...result,
         ...(policy.kind==="cloud"?{consent:tts.consentEcho(speak)}:{}),

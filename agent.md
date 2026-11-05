@@ -7,6 +7,7 @@
 > 音频/设备、端口/清理、深色模式等低频条目已迁：`docs/archive/agent-pitfalls-legacy-20261104.md`。
 > ASR / 运行时（含预算闸、TLS、分离参数）已迁：`docs/archive/agent-pitfalls-asr-20261104.md`。
 > V1.3 队列实现与灭屏 `onStop` 相关条目（含低频 TTS/密钥条目）已迁：`docs/archive/agent-pitfalls-v13-playback-20261104.md`。
+> 2026-11-03 验收/桥接/AI 分段/派工条目已迁：`docs/archive/agent-pitfalls-20261105-migrated.md`（原文保留）。
 
 ## 构建
 
@@ -41,20 +42,9 @@
 ## 播放队列（V1.3 已归档，结论仍有效）
 
 - V1.3 的队列实现与灭屏 `onStop` 相关结论已归档：`docs/archive/agent-pitfalls-v13-playback-20261104.md`（原文保留）。V1.4 已把队列搬进前台服务，勿按旧架构改回网页推进。
-- 2026-11-03 · 多元素朗读 · 第 13 项 `TTS_REMOTE_REJECTED` · 合成限流按单次朗读设计（12 次/60s），与批量队列冲突 · 朗读拆独立额度（48 次/60s、150ms）；新增限流先按真实批量核对。`建议进用户级`
 - 2026-11-04 · 私有地点入口 · 海南从 116 掉回 115、红城湖消失 · 一次性初始化失败后永不重试且 `catch{}` 静默 · 3 次退避重试 + 切页补拉 + `window.__smLoadPrivate()` 手动入口。`建议进用户级`
 
-## 验收 / 证据
 
-- 2026-11-03 · TTS UI 验收 · 点「朗读」远端一律 400 `blockId 不合法` · 只跑过 ADB 捷径，UI 把中文标签当 ID · 验收必须走真实点击路径；ID 字段一律 ASCII。`建议进用户级`
-- 2026-11-03 · 隐藏功能 · 设置页存在但用户进不去 · 桥接已暴露、页面从未调用 · 新开关必须同时补 UI 入口并点击验证。`建议进用户级`
-- 2026-11-03 · 冷启动 · 点朗读报「正在初始化」 · init 与首点竞态 · 挂起本次朗读（≤4 s）就绪后自动播放。
-
-## 原生 ↔ 页面桥接
-
-- 2026-11-03 · 状态推送 · 页面抛 `onState is not a function` · 注入前未判回调存在 · 加 `typeof === 'function'` 守卫。
-- 2026-11-03 · 云端同意 · 每段都弹同意框 · `consentGrantedOnce` 每次朗读后清零 · 改会话级，切服务商才重置。
-- 2026-11-03 · 未配置云服务商 · 仍弹同意框但注定 501 · 未看报价 `configured` · 未配置直接报错、不弹框。
 
 
 ## 会后复盘 / 档案写入
@@ -65,19 +55,7 @@
 - 说话人只有聚类编号：`attribution` 只能是 `unknown`，由用户选「关于我 / 人物 / 不保存」。
 
 
-## AI 分段 / 私有地点（2026-11-03）
 
-- 2026-11-03 · AI 分段 · `AI_BAD_GROUPS` · 模型返回区间式 `[[0,2],[3,4]]`（1 基、闭区间），与「句子数组」契约不符 · 服务端归一化兼容 `[start,end]`/`{start,end}`/0 或 1 基，再 `raw.slice(span)` 确定性切块。`建议进用户级`
-- 2026-11-03 · 写入分段 · `SEGMENT_LOSS_DETECTED` · 只给 `span+sourceText`，`cnSentences` 拼不回原文 · 走按句切分写入：逐句 split 后 `join('')` 必须等于 `sourceText`。
-- 2026-11-03 · 验证 AI 能力 · 裸 `node` 调 DeepSeek 报 `AI_UNAVAILABLE`，服务内却成功 · `.env` 只由 8791 进程加载 · 验 AI 走 HTTP 接口，不在 shell 里裸调。
-- 2026-11-03 · 私有地点合并 · 新地点 116 不在列表 · 前端 `apiCall` 不在作用域、静默失败 · 合并走带桥守卫的重试路径，并核对条数 115→116。`建议进用户级`
-- 2026-11-03 · WebView CDP · `UND_ERR_SOCKET` · `tail -1` 取到 stale socket · 遍历全部 `webview_devtools_remote_*`，各自 forward 不同端口，用 `/json/version` 的 `Android-Package` 认领。
-
-## 派工 / 本地子代理（2026-11-03）
-
-- 2026-11-03 · 派工 · 日志 `command not found` 但退出码 0 · 安装目录被移除、子 shell 丢 PATH · 派工前 `command -v`，并回读日志首行，不只看 exit code。
-- 2026-11-03 · 派工命令写法 · `&& codearts ... &` 下环境变量未生效 · `&` 把整条链放子 shell · 先 `export` 再单独执行，或用绝对路径。
-- 2026-11-03 · 本地子代理 · `Agent` 偶发 `request timed out after 5000ms` 或 `ECONNREFUSED ... .sock` · 本地 PAC 套接字瞬时不可用，与被派任务无关 · 直接重派同一条任务，不改任务内容、不怀疑环境。
 
 ## N05 V1.4 后台朗读 / 自动归档（2026-11-04 阶段复盘）
 
@@ -96,3 +74,23 @@
 - 2026-11-04 · Note 12 Pro 配对 · 原生高级设置滚不到配对码输入 · 面板滚动被 WebView 内容干扰 · 加内部桥 `SocialMateAndroid.pairDevice(code)`（不暴露 UI），配对后回读 prefs + 服务端 `paired:true`。
 - 2026-11-04 · V1.5 建议区 · 用户读建议时被新 final 抢刷新 · 原 `showRecs()` 每次重建 · `S.suggFreeze` + 「有新的接话建议」徽标，点击才刷新；四方向禁止 `slice(0,1)`。
 - 2026-11-04 · P066 修 final · 只在本机 `stream-relay.mjs` · 重部署会覆盖 · 保留 `.bak-20261104-finalfix`，验收写死 `sentence_type` 与 final 数。
+
+## 密钥填写（项目补充）
+
+- 规则见 `~/.codeartsdoer/AGENTS.md` 第三节「文件与敏感信息」：先给官方获取链接 → 建完整文档 → 密钥字段放最底部 → 打开文档给用户填；已完成不重复。
+- 本项目 TTS 密钥：填写文档 `docs/DOUBAO-TTS-KEY.md`；真实值只进 `socialmate-prototype/ai-gateway/.env`（已 gitignore），`.env.example` 只留空值。
+
+## 豆包 TTS（2026-11-05）
+
+- 控制台给的是 **API Key**，请求头必须 `X-Api-Key` + `X-Api-Resource-Id: seed-tts-2.0`；旧 `X-Api-App-Id` + `X-Api-Access-Key` 返回 401 `45000010`，`volc.service_type.10035` 返回 403 `45000030`。
+- 密钥只进 `socialmate-prototype/ai-gateway/.env` 的 `SM_DOUBAO_API_KEY`；填写文档 `docs/DOUBAO-TTS-KEY.md` 填完即清空。
+
+## 2026-11-05 阶段复盘（V1.5.2 / 人物 / 豆包）
+
+- 2026-11-05 · 沉浸高度 · 真机建议区撑到 976px、页面溢出 · 真机 WebView 不支持 `100dvh`，同规则后一条无效声明覆盖了 `100vh` 回退 · 先写 `100vh`，再用 `@supports(height:100dvh)` 覆盖；真机复测比例 0.500。`建议进用户级`
+- 2026-11-05 · 新增样式块 · v152 规则部分失效 · 上一块 `v151-realuse` 的 `</style>` 被一并替换，v152 被吞进上一块 · 插入新 `<style>` 时保留前置 `</style>`，并确认 `querySelectorAll('style')` 含新 id。`建议进用户级`
+- 2026-11-05 · App 内云端朗读 · 点「听本段」仍回退系统 TTS 并报「朗读被系统中断」 · WebView 自动取消 `window.confirm`，首次确认返回 false · 云端朗读默认授权 `S.v152.ttsConsent=true`，不依赖 confirm；实测豆包音频播放完成。`建议进用户级`
+- 2026-11-05 · TTS 账本 · 同一句扣两次 0.0069 · `synthesize()` 内记账后路由又 `recordBilling()` · 只在新合成时记账，缓存命中不重复计费；修正重复条目。
+- 2026-11-05 · 收藏 · 第二次点 ☆ 不取消、还要去「关于我」删 · `saveFavorite()` 只 POST 新增，服务端按英文去重返回 duplicate · 改为先查 `S.fav.items` 命中则 DELETE；人物页进入时预加载收藏。`建议进用户级`
+- 2026-11-05 · 人物档案层级 · 顶部是「见面前准备」且开发式文案占屏 · 详情按数据块顺序渲染，没有把主档章节汇总到顶部 · `getPersonDetail()` 返回 `profileSections`，前端按章节密排；开发文案移出。`建议进用户级`
+- 2026-11-05 · 真机旧 JS · 改完前端仍走原生 TTS · WebView 缓存旧 `index.html`，`am start` 不重新加载 · force-stop+start 或 `location.replace(url+'?v='+Date.now())`；核对 innerHTML 含新函数。`建议进用户级`

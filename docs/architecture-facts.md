@@ -26,7 +26,7 @@
 - 页面：`MainActivity` 首页 SocialMate 入口，BOYA 检测折叠在高级工具；`AsrActivity` 先录音同意、再启动 ASR，并在同 Activity 内嵌私有 WebView。
 - 采集：AudioRecord 48000/44100/16000，优先 stereo，音源优先 `UNPROCESSED` → `VOICE_RECOGNITION` → `MIC`；`setPreferredDevice` 指向 USB。
 - 录音文件：`getExternalFilesDir(Music)/dualmic/<timestamp>_<A|B>/`，含 `original/left/right.wav` + `diagnostics.json`。
-- 当前版本：**0.8.15（versionCode 50）**，Debug 签名（`DEBUGGABLE`，不可对外分发）；APK `android-poc/app/build/outputs/apk/debug/app-debug.apk`，SHA-256 `21f6857695bbc5fa27a08add27b48d8d0cc133b1819644aecd6df4486a00aca9`。
+- 当前版本：**0.8.31（versionCode 66）**，Debug 签名（`DEBUGGABLE`，不可对外分发）；APK `release/SocialMate-0.8.31-vc66-debug.apk`，SHA-256 `b8fa8b24c6232aabeab661d7c379ef82f8c5f614c7583163daec669a1903b9a9`。
 - 朗读（N05）：`TtsPlaybackController` 统一调度；provider 默认 `system`（本机 TTS，`system_fallback` 默认开），可选 `fake`（预置占位音）/`remote`（Mac 服务）；`remote` 下服务商 `fake`/`aws-polly-fake`/`aws-polly`。`aws-polly` 未配置直接 `TTS_PROVIDER_NOT_CONFIGURED`，同意为**本次运行一次**。
 - 新建想法：服务端 `MAX_RAW_INPUT=20000` 字符；`segmentRawInput` 每段句数可由客户端 `maxSentencesPerBlock` 指定（服务端允许 1–8，默认 4），单段 ≤600 字；前端选择存 `localStorage.sm_seg_gran`。
 - 网络策略（0.5.2）：`usesCleartextTraffic=false` + `res/xml/network_security_config.xml`，明文只放行 `127.0.0.1`/`localhost`/`::1`；非回环明文在 WebView 报 `ERR_CLEARTEXT_NOT_PERMITTED`。未覆写 `onReceivedSslError`，坏证书走系统默认拒绝。
@@ -206,3 +206,17 @@
 - **接话质量**：`SM_COACH_PLANS` 10 话题（weather/arrival/running/coffee/hainan/software/travel/weekend/music/other），`suggestionsNow()` 跨方向去重、switch 随话题；素材 `docs/plan/ALW001-N05-V1.5.1-Chat-RealUse-Closure/qa/t3-quality/`。
 - **TTS 调试入口**：release 清单 `exported=false`，debug 单独放开；`remote_base` 白名单校验在 Activity 与 Controller 双处。
 - **证据**：`docs/plan/ALW001-N05-V1.5.1-Chat-RealUse-Closure/qa/QA-REPORT.md`。
+## N05 V1.5.2 聊天页压缩（2026-11-05）
+
+- **版本**：Android `0.8.31` / `versionCode 66`；APK SHA-256 `b8fa8b24…`。
+- **样式块**：`<style id="v152-compact">`（独立 `<style>`，需保留前一块的 `</style>`，否则整段 CSS 会被吞进上一块）；状态对象 `S.v152`（`immersive/view/translated/zhOpen/favs/share/origin/menu/stopSheet/shareZh/translateConsent`）。
+- **全屏**：`body.sm-immersive` 隐藏 `.top/.mobilebar`；沉浸时 `.chatv15.v152` 高 `100vh`（`@supports` 才用 `100dvh`，真机 WebView 不支持 dvh）；对话区 `flex:0 0 calc((100vh - 134px)/3)`、建议区 `flex:1` 独立滚动、chips 一行。
+- **建议配额**：`vsGroups()` 固定 respond 2 / ask 2 / switch 3 / share 3；`showRecs()` 仍用 `S.suggFreeze` 冻结与 `#suggNewBadge`；AI 首候选仍排 respond 第一。
+- **翻译**：对话每条 `S.v152.translated`、建议每条 `S.v152.zhOpen`；点对话「翻译」调用 `POST /api/ai/translate`（DeepSeek 单句、`consent:true`、同一预算账本），首次前端确认后本会话复用；结果缓存在 `m.zh`，失败显示可重试文案。
+- **分享卡**：`vsShareData()` 地点取 `special_en` 与 `en`（去重后拼接），故事取 `en`，人物无英文显式提示；`originKind` 控制「原资料」入口。
+- **原资料页**：`S.v152.view='origin'`，图片路径 `/v12/img/<cityFolder>/<id3>/0<slot>.webp`；`photos` 由 `build-v12.py` 从 `places-115.json` 映射。
+- **原生**：`AsrActivity.stream()` 用 `CountDownLatch` 等待 `session/ended` 最长 3s 再 `archive.end()`。
+- **豆包 TTS**：provider `doubao`，适配器 `tts-adapter-doubao.mjs`；`X-Api-Key` + `X-Api-Resource-Id: seed-tts-2.0`；`/api/v3/tts/unidirectional`；账本 `TtsCache/ledger/doubao.json`（`SM_DOUBAO_BUDGET_CNY`，当前 1 元）；缓存键不含 `requestId`，命中不重复计费；前端 `speak()` 与 N05 `ttsSpeakItem` 都优先豆包、失败回退系统 TTS；音色在设置页切换，`S.v152.voiceZh/voiceEn` 持久化到 `localStorage`。
+- **人物详情**：`getPersonDetail()` 返回 `profileSections`（按 `00-profile.md` 的 `# 章节` 合并 confirmed 与 manualEntries）；前端顶部「基本档案」→「见面前准备」→「会话记录」，旧 facts/manual 仅在无新字段时回退。
+- **真机**：Note 11 5G 393×791；A/B/C/D/E/F 通过（TTS 回环录音）；归档 6/6、201、pending 0；继续录音 1/1；D3 档案未写；人物详情区块顺序正确。
+- **证据**：`docs/plan/ALW001-N05-V1.5.2-Chat-Compact-Layout/qa/QA-REPORT.md`、`qa/t10-device/`。

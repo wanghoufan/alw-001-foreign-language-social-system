@@ -75,6 +75,19 @@ test("详情：confirmed 只含带来源的已确认事实，manual 保留人工
     "已确认事实不应混进 manual");
 });
 
+test("详情：profileSections 按章节汇总 confirmed 与 manual", async (t) => {
+  await withAnna(t);
+  const {person} = await getPersonDetail("anna");
+  assert.ok(Array.isArray(person.profileSections));
+  const basic = person.profileSections.find((s) => s.section === "基本情况");
+  assert.ok(basic, "基本情况章节必须出现");
+  assert.ok(basic.items.some((i) => i.kind === "manual" && i.text.includes("俄罗斯人")));
+  const interest = person.profileSections.find((s) => s.section === "兴趣");
+  assert.ok(interest, "confirmed 与 manual 必须汇总到同一章节");
+  assert.ok(interest.items.some((i) => i.kind === "confirmed" && i.text.includes("喜欢在海边喝咖啡")));
+  assert.ok(interest.items.some((i) => i.kind === "manual" && i.text.includes("健身")));
+});
+
 test("详情：没有来源标记的内容绝不当作 confirmed", async (t) => {
   const dir = await setup(t);
   await fs.mkdir(path.join(dir, "bob"), {recursive: true});

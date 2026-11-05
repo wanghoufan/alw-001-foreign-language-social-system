@@ -221,3 +221,16 @@
 - 版本变更：0.8.29/64 → **0.8.30/65**。
 - 证据：`docs/plan/ALW001-N05-V1.5.1-Chat-RealUse-Closure/qa/QA-REPORT.md`、`qa/t1-security/`、`qa/t2-recovery/`、`qa/t3-quality/`。
 - 未验：真人 30 分钟连续交流、Wi-Fi↔蜂窝切换运行期、来电/耳机、P066 402/300s/撤销、Polly。
+## N05 V1.5.2 聊天录音页压缩（2026-11-05）· **0.8.31（versionCode 66）— 当前安装版本**
+
+- 构建：`JAVA_HOME=/opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home sh android-poc/build-apk.sh` → `BUILD SUCCESSFUL`。
+- APK：`release/SocialMate-0.8.31-vc66-debug.apk`，SHA-256 `b8fa8b24c6232aabeab661d7c379ef82f8c5f614c7583163daec669a1903b9a9`；Note 11 5G 与 Note 12T Pro `install -r` → Success，回读 `versionCode=66 / versionName=0.8.31`。
+- 原生：`AsrActivity.stream()` 新增 `CountDownLatch`（初值=tracks 数）；`finally` 中 `finish()` 后等待 `session/ended` 最长 3s 再 `archive.end()`，替换固定 `sleep(1500)`。
+- 页面：`v152-compact` 全屏录音页（232px 对话 + flex 建议 + chips）、停止弹层、英文分享卡、页内原资料页；`build-v12.py` 补充 `special_en/photos` 映射。
+- 真机（Note 11 5G，393×791）：A1–A5/B1–B4/C1–C4/D1–D5/E1–E6/F1–F6 PASS；对话/建议 219/438=0.500；首屏 5 条；D2 进 `/v12/history`；D3 档案 mtime 未变；D4/E6 `activeSessions=1`。
+- 归档：真实 P066 TTS 回环 6 段 → 页面 6 / 归档 6 / HTTP 201 / pending 0 / Mac 落地；继续录音后 1/1。
+- 翻译：`POST /api/ai/translate` 实测「刚到海口，天气太潮湿了。」，1.4s、约 0.00027 元；无 consent 403。
+- 四方向 eval 各 3 条、0 重复、0 编造。
+- **NOT_RUN**：真人 30 分钟、Wi‑Fi↔蜂窝切换、来电/耳机/音频焦点；本轮录音为 TTS 回环（SYNTHETIC），不是真人验收。
+- 翻译按需调用 DeepSeek（用户已授权）；单句缓存，不批量预翻译。
+- 证据：`docs/plan/ALW001-N05-V1.5.2-Chat-Compact-Layout/qa/QA-REPORT.md`。

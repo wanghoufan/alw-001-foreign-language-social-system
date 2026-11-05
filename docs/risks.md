@@ -169,3 +169,20 @@
 - **TTS 回环 ≠ 真人录音**：本轮真机 10 条 final 来源是手机系统 TTS 经扬声器回环（SYNTHETIC_TTS_LOOPBACK），只能证明链路通，不是面对面验收。
 - **关联资料仍可能来自本地演示故事**：聊天页「关于我 · 我来自海口」来自页面本地 `stories`，不是 `Profile/current.json` 已确认事实；真机使用前需用户确认或清理，不能当作已核实自我事实。
 - **T2 QA 假端已收尾**：401 验证用的临时 8781 假端（只回 401/201、不写目录）已停止，真实 `archive-service.sh` 已恢复；设备内 QA fixture 已删除。若再复跑 401 实验，必须同样先停假端再恢复真实端，并核对 `~/Documents/SocialMate/Conversations` 无 `qa_` 文件。
+## N05 V1.5.2（2026-11-05 新增）
+
+- **按需翻译是付费调用**：`POST /api/ai/translate` 走 DeepSeek 1 元账本；必须带 `consent:true`，一次约 0.0003 元，剩余 ≤0.01 元返回 402。前端只在点「翻译」时逐句调用并缓存，不得改成批量预翻译；不得用词典/模板拼中文冒充。
+- **V1.5.2 录音是 TTS 回环**：Note 11 5G 的 6 段 final 来自系统 TTS 经扬声器回环（SYNTHETIC），只证明链路与归档一致；真人 30 分钟、蜂窝切换、来电/耳机仍 NOT_RUN，不得写成真人验收。
+- **归档尾部已验证但依赖上游 ended**：真机 6/6、1/1、201、pending 0；若 P066 上游不发 `session/ended`，仍会走 3s 超时并可能丢尾部 final，需保留 `stop wait ended=...` 日志。
+- **分享卡英文长度**：地点把 `special_en` 与 `en` 去重后拼接，长句可达 500+ 字符；抽屉可滚动，但不要在小屏改成截断后当成完整句子朗读。
+- **原资料页同 Activity 内视图**：`S.v152.view='origin'` 不重建会话；期间 final 只进数据不进 DOM，返回后一次性渲染，避免打断图片滚动。
+- **沉浸态与原资料页共用 `sm-immersive`**：`smBack` 退出顺序为 停止弹层 → 分享卡 → 菜单 → 原资料 → 退全屏；改动顺序会导致返回键一次退两层。
+- **沉浸高度不能用 `100dvh` 单条**：真机 WebView 不支持 dvh 且会保留“最后一条”无效声明，使 `height` 回落 auto、建议区撑到 976px；必须先用 `100vh`，再用 `@supports(height:100dvh)` 覆盖。
+- **豆包 TTS 鉴权是 `X-Api-Key`**：控制台给的是 API Key，不是 AppID+Access Token；旧组合返回 401 `45000010`，`volc.service_type.10035` 返回 403 `45000030`，只有 `X-Api-Key` + `seed-tts-2.0` 为 200。密钥只进 `ai-gateway/.env` 的 `SM_DOUBAO_API_KEY`。
+- **收藏是 toggle**：`saveFavorite()` 先确保 `S.fav.items` 已加载，命中同句则删除；人物页进入时预加载收藏，按钮 ☆/★ 由它决定。服务端仍按英文去重，不会重复插入。
+- **听本段与普通朗读共用 `smDoubaoSpeak`**：N05 队列的 `ttsSpeakItem` 先豆包，成功直接 `smqAdvance`；豆包失败才调原生，避免等待原生回调超时。
+- **TTS 记账只能一次**：`synthesize()` 已在新合成时记账，路由层不得再 `recordBilling()`；缓存命中不收费。豆包 3 元/万字符，1 元预算约 3333 字符。
+- **豆包朗读会外发文本**：用户已明确要求用豆包替换系统语音，`S.v152.ttsConsent` 默认 `true`；App WebView 会取消 `window.confirm`，不要再依赖它做首次确认。失败回退系统 TTS，日志只记错误码，不记文本与密钥。
+- **人物紧凑样式限定 `.pcompact`**：抽屉被其他详情共用，不要在 `.drawerbody` 全局压字号/间距；会话记录用 `<details>` 默认折叠，展开后仍走原链接。
+- **人物档案聚合只读**：`profileSections` 从 `00-profile.md` 派生，不回写；撤回仍按 `factId` 走原接口，人工段落只显示「我补充」且无撤回按钮。章节顺序来自主档 `#` 标题，新增章节无需改前端。
+- **`v152-compact` 必须是独立 `<style>`**：上一块 `v151-realuse` 的 `</style>` 丢失时，整段 v152 CSS 被吞进上一块，样式虽多数生效但沉浸高度选择器异常；改动样式块后先确认 `document.querySelectorAll('style')` 中有 `v152-compact`。

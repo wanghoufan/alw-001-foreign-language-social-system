@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>N05 V1.5.2 · 点关联资料后的英文分享卡</title>
+<style>
+  :root{
+    --bg:#f3f1e8; --paper:#fffdf7; --ink:#22312c; --muted:#6b7a74;
+    --pine:#2f5d50; --pine-soft:#e4ede7; --line:#d9ded8; --amber:#a35d18;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:#e8e6de;font-family:-apple-system,"PingFang SC","Noto Sans SC",system-ui,sans-serif;color:var(--ink)}
+  .board{width:830px;margin:18px auto 30px;display:flex;gap:24px;align-items:flex-start}
+  .col{width:393px}
+  .caption{font-size:15px;font-weight:800;color:#3d4a45;margin:0 0 8px}
+  .phone{width:393px;height:852px;background:var(--bg);border:1px solid #cfd4cd;border-radius:26px;overflow:hidden;position:relative;box-shadow:0 10px 28px rgba(30,40,35,.12)}
+  .statusbar{height:26px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;font-size:12px;color:var(--muted)}
+  .topbar{height:54px;display:flex;align-items:center;gap:8px;padding:0 11px;background:var(--paper);border-bottom:1px solid var(--line)}
+  .person{display:flex;align-items:center;gap:5px;min-width:0;flex:1;font-size:16px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .caret{color:var(--muted);font-size:14px}
+  .live{display:inline-flex;align-items:center;gap:5px;background:var(--pine-soft);color:var(--pine);border-radius:999px;padding:5px 9px;font-size:15px;font-weight:800}
+  .dot{width:7px;height:7px;border-radius:50%;background:#2f9e6a;box-shadow:0 0 0 3px rgba(47,158,106,.16)}
+  .iconbtn{width:36px;height:36px;border:1px solid var(--line);background:var(--paper);border-radius:10px;display:grid;place-items:center;font-size:19px;color:var(--muted)}
+  .stop{height:38px;border:0;border-radius:11px;background:var(--pine);color:#fff;font-size:16px;font-weight:800;padding:0 13px}
+  .subs{padding:8px 11px 4px}
+  .bubble{background:var(--paper);border:1px solid var(--line);border-radius:13px;padding:7px 10px 6px;margin-bottom:6px}
+  .bubble .line{display:flex;gap:8px;align-items:flex-start}
+  .bubble .who{font-size:14px;color:var(--muted);flex:0 0 26px;line-height:1.5;padding-top:2px}
+  .bubble .en{font-size:19px;line-height:1.38;margin:0;flex:1}
+  .tr{flex:0 0 auto;border:0;background:transparent;color:var(--pine);font-size:15px;font-weight:700;padding:2px 0 0;text-decoration:underline}
+  .bubble.me{background:#eaf1ec}
+  .sect{display:flex;align-items:baseline;gap:6px;margin:4px 11px 3px}
+  .sect b{font-size:15px;color:var(--pine)}
+  .sect span{font-size:14px;color:var(--muted)}
+  .card{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:6px 9px 5px;margin:0 11px 5px}
+  .card .en{font-size:19px;line-height:1.34;margin:0}
+  .card .foot{display:flex;justify-content:flex-end;gap:8px;margin-top:3px}
+  .act{border:1px solid var(--line);background:var(--paper);border-radius:8px;height:28px;padding:0 9px;font-size:15px;font-weight:700;color:var(--pine)}
+  .act.fav{color:var(--amber);width:34px;padding:0;display:grid;place-items:center;font-size:17px}
+  .refs{display:flex;gap:6px;padding:4px 11px 8px}
+  .ref{font-size:15px;padding:5px 9px;border-radius:999px;background:var(--pine-soft);color:var(--pine);border:1px solid #cddbd2;white-space:nowrap}
+  .ref.on{background:var(--pine);color:#fff;border-color:var(--pine)}
+  /* 分享卡抽屉 */
+  .scrim{position:absolute;inset:0;background:rgba(24,32,28,.30)}
+  .sheet{position:absolute;left:0;right:0;bottom:0;background:var(--paper);border-radius:22px 22px 0 0;padding:8px 16px 16px;box-shadow:0 -14px 34px rgba(20,30,25,.2)}
+  .grab{width:44px;height:5px;border-radius:99px;background:#d3d9d3;margin:0 auto 10px}
+  .kind{font-size:15px;color:var(--muted);margin:0 0 2px}
+  .sheet h2{font-size:23px;margin:0 0 1px}
+  .enname{font-size:16px;color:var(--muted);margin:0 0 10px}
+  .share{font-size:20px;line-height:1.5;margin:0 0 10px;font-weight:600}
+  .zh{font-size:16px;line-height:1.55;color:var(--muted);margin:0 0 10px}
+  .zh.hide{display:none}
+  .row{display:flex;gap:8px;align-items:center;margin:0 0 12px}
+  .smallbtn{border:1px solid var(--line);background:var(--paper);border-radius:9px;height:34px;padding:0 12px;font-size:15px;font-weight:700;color:var(--pine)}
+  .src{font-size:14px;color:#8a958f;margin-left:auto}
+  .close{width:100%;height:48px;border-radius:13px;border:1px solid var(--pine);background:var(--paper);color:var(--pine);font-size:19px;font-weight:800}
+</style>
+</head>
+<body>
+<div class="board">
+  <!-- 地点 -->
+  <div class="col">
+    <p class="caption">D · 点「云洞图书馆」：直接给英文分享句</p>
+    <div class="phone">
+      <div class="statusbar"><span>8:43</span><span>5G · 68%</span></div>
+      <div class="topbar">
+        <div class="person">Mia Chen（陈美玲）<span class="caret">▾</span></div>
+        <span class="live"><i class="dot"></i>正在听</span>
+        <button class="iconbtn">⋯</button>
+        <button class="stop">停止</button>
+      </div>
+      <div class="subs">
+        <div class="bubble">
+          <div class="line"><span class="who">Mia</span><p class="en">There's a small café near the park.</p><button class="tr">翻译</button></div>
+        </div>
+        <div class="bubble me">
+          <div class="line"><span class="who">我</span><p class="en">Sure. I'd like an iced coffee.</p><button class="tr">翻译</button></div>
+        </div>
+      </div>
+      <div class="sect"><b>接话</b><span>2 条</span></div>
+      <article class="card">
+        <p class="en">Sure, a coffee sounds good.</p>
+        <div class="foot"><button class="act">中文</button><button class="act fav">☆</button></div>
+      </article>
+      <article class="card">
+        <p class="en">Is the café far from here?</p>
+        <div class="foot"><button class="act">中文</button><button class="act fav">☆</button></div>
+      </article>
+      <div class="refs">
+        <span class="ref">海口湾滨海步道</span><span class="ref on">云洞图书馆</span><span class="ref">我来自海口</span>
+      </div>
+
+      <div class="scrim"></div>
+      <div class="sheet">
+        <div class="grab"></div>
+        <p class="kind">分享 · 地点</p>
+        <h2>云洞图书馆</h2>
+        <p class="enname">Cloud Cave Library</p>
+        <p class="share">It is right beside Haikou Bay. The white curved building looks almost like a sculpture. Its openings frame the sea beautifully, and sunset is a popular time for photos.</p>
+        <p class="zh hide">它就在海口湾边。白色弧形建筑像一座雕塑，开口正好框住大海，日落时很适合拍照。</p>
+        <div class="row"><button class="smallbtn">原资料 ›</button><button class="smallbtn">翻译</button><span class="src">来源：海南地点 · 已确认</span></div>
+        <button class="close">关闭</button>
+      </div>
+    </div>
+    <p style="font-size:14px;line-height:1.6;color:#3d4a45;margin:8px 2px 0">英文直接来自地点库；点「原资料」去看图片和完整卡片，点「翻译」才出中文。</p>
+  </div>
+
+  <!-- 关于我 -->
+  <div class="col">
+    <p class="caption">E · 点「我来自海口」：同样先给英文</p>
+    <div class="phone">
+      <div class="statusbar"><span>8:43</span><span>5G · 68%</span></div>
+      <div class="topbar">
+        <div class="person">Mia Chen（陈美玲）<span class="caret">▾</span></div>
+        <span class="live"><i class="dot"></i>正在听</span>
+        <button class="iconbtn">⋯</button>
+        <button class="stop">停止</button>
+      </div>
+      <div class="subs">
+        <div class="bubble me">
+          <div class="line"><span class="who">我</span><p class="en">Yes, I've lived here for a long time.</p><button class="tr">翻译</button></div>
+        </div>
+      </div>
+      <div class="sect"><b>接话</b><span>2 条</span></div>
+      <article class="card">
+        <p class="en">That's great. What do you like most about it?</p>
+        <div class="foot"><button class="act">中文</button><button class="act fav">☆</button></div>
+      </article>
+      <div class="refs">
+        <span class="ref on">我来自海口</span><span class="ref">云洞图书馆</span>
+      </div>
+
+      <div class="scrim"></div>
+      <div class="sheet">
+        <div class="grab"></div>
+        <p class="kind">分享 · 关于我</p>
+        <h2>我来自海口</h2>
+        <p class="enname">Where I'm from</p>
+        <p class="share">I was born and raised in Haikou. I live here now, too.</p>
+        <p class="zh hide">我在海口出生和长大，目前也主要住在这里。</p>
+        <div class="row"><button class="smallbtn">原资料 ›</button><button class="smallbtn">翻译</button><span class="src">来源：我的故事 · 已确认</span></div>
+        <button class="close">关闭</button>
+      </div>
+    </div>
+    <p style="font-size:14px;line-height:1.6;color:#3d4a45;margin:8px 2px 0">故事卡同样先给英文；需要图片/完整卡片时点「原资料」。</p>
+  </div>
+</div>
+</body>
+</html>
