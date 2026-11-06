@@ -75,7 +75,7 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
     private static final String LOCAL_ARCHIVE_URL = "http://127.0.0.1:8781/api/archive/session";
     /* T4 外出模式：Tailscale 私有入口（tailnet only，不是公网域名；无 HTTP 明文）。 */
     private static final String TRAVEL_ASR_URL = "wss://mac-mini.tail4e4317.ts.net:10000/asr";
-    private static final String TRAVEL_UI_URL = "https://mac-mini.tail4e4317.ts.net:8443/v12";
+    private static final String TRAVEL_UI_URL = "http://100.125.100.15:8791/v12";
     private static final String TRAVEL_ARCHIVE_URL = "https://mac-mini.tail4e4317.ts.net/alw/api/archive/session";
     /** T4 只读降级的本地快照（成功加载在线界面时刷新；离线时读它渲染）。 */
     private static final String OFFLINE_DIR = "offline";
@@ -1567,7 +1567,14 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
             try {
                 String base = AsrActivity.this.macUiBase();
                 String token = AsrActivity.this.currentAccessToken();
-                return LocalSync.push(AsrActivity.this, LocalStore.get(AsrActivity.this), base, token).toString();
+                try {
+                    return LocalSync.push(AsrActivity.this, LocalStore.get(AsrActivity.this), base, token).toString();
+                } catch (Exception lanFailed) {
+                    // 5G 无 LAN 时走 Tailscale 直连；LAN 地址已失败再试一次。
+                    if (base.contains("100.")) throw lanFailed;
+                    return LocalSync.push(AsrActivity.this, LocalStore.get(AsrActivity.this),
+                            "http://100.125.100.15:8791", token).toString();
+                }
             } catch (Exception e) {
                 return syncFail(e.getMessage());
             }
@@ -1580,9 +1587,23 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
             if (page == null || !isPrivatePanelUrl(Uri.parse(page))) return syncFail("页面不受信任");
             try {
                 String base = AsrActivity.this.macUiBase();
+                long t0 = android.os.SystemClock.elapsedRealtime();
                 String token = AsrActivity.this.currentAccessToken();
-                return LocalSync.pull(AsrActivity.this, LocalStore.get(AsrActivity.this), base, token).toString();
+                android.util.Log.i("SocialMateSync", "pull base=" + base
+                        + " tokenLen=" + (token == null ? 0 : token.length())
+                        + " tokenMs=" + (android.os.SystemClock.elapsedRealtime() - t0));
+                try {
+                    JSONObject pulled = LocalSync.pull(AsrActivity.this, LocalStore.get(AsrActivity.this), base, token);
+                    android.util.Log.i("SocialMateSync", "pull ok ms="
+                            + (android.os.SystemClock.elapsedRealtime() - t0));
+                    return pulled.toString();
+                } catch (Exception lanFailed) {
+                    if (base.contains("100.")) throw lanFailed;
+                    return LocalSync.pull(AsrActivity.this, LocalStore.get(AsrActivity.this),
+                            "http://100.125.100.15:8791", token).toString();
+                }
             } catch (Exception e) {
+                android.util.Log.e("SocialMateSync", "pull failed: " + e.getMessage());
                 return syncFail(e.getMessage());
             }
         }

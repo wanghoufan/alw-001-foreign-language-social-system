@@ -38,10 +38,10 @@
 
 ## 2. 下一步
 
-1. **真实 4G 验收**：手机 SIM 目前 `ABSENT`；插卡/开数据或连热点后，重跑 5 分钟录音 + 切后台 2 分钟 + WiFi↔蜂窝切换。
-2. **C3 剩余**：LAN 双向冲突合并、传输加密（当前 push 归档 + pull 补缺，明文 JSON + token）。
+1. **5G/Tailscale 同步已验证**：Note 12T Pro 关 WiFi 后 push 76,106B、pull `imported 2`（46.6s）；另一台无 SIM 的 4G 仍 NOT_RUN。
+2. **C3 剩余**：LAN 双向冲突合并、传输加密；5G pull 46.6s 可做压缩/分页优化。
 3. **C4 云端（可选）**：需平台/账号/域名/费用授权，未部署。
-4. **工作树**：已提交 `0d5b5d4` 并推送 `main`；未跟踪 `sp` 与 `V1.1-baseline.html.bak-*` 为本地临时，未入库；最新 APK `release/SocialMate-0.9.2-vc70-debug.apk`。
+4. **工作树**：已提交 `0d5b5d4`/`86ccab0` 并推送 `main`；本轮 Key/5G 修复待提交；未跟踪 `sp` 与 `V1.1-baseline.html.bak-*` 为本地临时。
 
 ## 3. 未完成 / NOT_RUN
 

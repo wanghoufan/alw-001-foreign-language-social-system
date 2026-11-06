@@ -31,7 +31,9 @@
 27. **ASR P1-2/P1-3/P1-6**：断线缓存最近 20 帧并在重连后补发；重连事件加时间轴偏移；首连最多 3 次重试；direct 模式不再被 `ws://` 地址格式拦截。
 29. **ASR P1-5（PASS）**：新增 `AsrForegroundService`（`foregroundServiceType=microphone`），`onStop` 不再停录；真机 HOME 切后台 12 秒、锁屏 10 秒后从最近任务返回，`isRecording=true`、URL 保持 `?live=1`、服务存活。之前用 `am start` 测试会重建 Activity，是测试方法错误。
 30. **ASR P1-7**：Mac 中继重连重新获取短期令牌，不再复用开局令牌。
-31. **版本**：0.9.1/69 → 0.9.2/70；`release/SocialMate-0.9.2-vc70-debug.apk`，SHA-256 `5cfb736c6ca4d9ea6cff5df421a1e328bc341ae60c7d1e51f62fa19d2811c997`。
+32. **Key 误报修复**：`CloudKeys.get` 增加 120ms 短重试；Note 12T Pro 启动后 `cloudKeyStatus` 三项 `true`，DeepSeek 通联成功，不再把已配置误报成未配置。
+33. **5G / Tailscale 同步**：`lan-net.isTailscaleIp` 允许 `100.64.0.0/10`；`TRAVEL_UI_URL` 改 `http://100.125.100.15:8791/v12`；`LocalSync` 在 LAN 失败时 fallback 同一 Tailscale 地址。Note 12T Pro 关 WiFi（5G + Tailscale）下 push 76,106B、pull `imported 2`（46.6s）。不再要求同一 WiFi，但需 Tailscale 连接。
+34. **版本**：0.9.1/69 → 0.9.2/70；`release/SocialMate-0.9.2-vc70-debug.apk`，SHA-256 `fd922f3b769114aa4cc9b617aacfed97215a9b7d16bb68d449a3e28517004296`。
 
 ## 2026-11-05 · V1.6 分角色审查整改（0.9.1 未变版本）
 

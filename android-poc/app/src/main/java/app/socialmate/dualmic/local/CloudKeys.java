@@ -30,7 +30,18 @@ public final class CloudKeys {
     }
 
     public String get(String kind) {
-        return store.get(PREFIX + normalize(kind));
+        String key = PREFIX + normalize(kind);
+        String value = store.get(key);
+        if (value == null || value.isEmpty()) {
+            // 页面刚启动时 Keystore 可能尚未就绪；短重试一次，避免把已配置误报成未配置。
+            try {
+                Thread.sleep(120L);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+            value = store.get(key);
+        }
+        return value == null ? "" : value;
     }
 
     public boolean put(String kind, String value) {

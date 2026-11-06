@@ -27,6 +27,19 @@ export function isPrivateIp(addr) {
   return false;
 }
 
+/**
+ * Tailscale 来源：100.64.0.0/10（CGNAT）或 fd7a:115c:a1e0::/48。
+ * 只在“是否允许进入私有服务”时放行；不并入 lanIpv4List，避免端点发现误选 Tailscale 接口。
+ */
+export function isTailscaleIp(addr) {
+  const ip = normalizeIp(addr);
+  const parts = ip.split(".").map(Number);
+  if (parts.length === 4 && parts.every((n) => Number.isInteger(n) && n >= 0 && n <= 255)) {
+    return parts[0] === 100 && parts[1] >= 64 && parts[1] <= 127;
+  }
+  return /^fd7a:115c:a1e0:/i.test(ip);
+}
+
 export function lanIpv4List() {
   const result = [];
   for (const [name, addresses] of Object.entries(os.networkInterfaces())) {

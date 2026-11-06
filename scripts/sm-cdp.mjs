@@ -51,9 +51,10 @@ async function target(port) {
 }
 
 async function evaluate(wsUrl, expression) {
+    const timeoutMs = Number(process.env.SM_CDP_TIMEOUT || 60000);
     const socket = new WebSocket(wsUrl);
     const result = await new Promise((resolve, reject) => {
-        const timer = setTimeout(() => reject(new Error("CDP 超时（15s）")), 15000);
+        const timer = setTimeout(() => reject(new Error(`CDP 超时（${Math.round(timeoutMs / 1000)}s）`)), timeoutMs);
         socket.addEventListener("open", () => {
             socket.send(JSON.stringify({
                 id: 1,

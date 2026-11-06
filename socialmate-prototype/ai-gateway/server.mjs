@@ -29,7 +29,7 @@ import {createPracticeReportsStore} from "./practice-reports.mjs";
 import {createLearningArchive} from "./learning-archive.mjs";
 import {assertPrivacy, createTtsService, normalizeSpeakRequest} from "./tts-providers.mjs";
 import {sha256Hex} from "./tts-cache.mjs";
-import {isPrivateIp} from "./lan-net.mjs";
+import {isPrivateIp, isTailscaleIp} from "./lan-net.mjs";
 import {startLanDiscovery} from "./lan-discovery.mjs";
 import {createLocalSync} from "./local-sync.mjs";
 const here=path.dirname(fileURLToPath(import.meta.url));
@@ -363,7 +363,7 @@ export function createHandler(options={}){
   };
   return async(req,res)=>{
   try{
-    if(!isPrivateIp(req.socket.remoteAddress))
+    if(!isPrivateIp(req.socket.remoteAddress) && !isTailscaleIp(req.socket.remoteAddress))
       return json(res,403,{ok:false,code:"LAN_ONLY",error:"仅允许本机或局域网访问"});
     const url=new URL(req.url||"/","http://127.0.0.1:"+port);
     if(!originOK(req,port))return json(res,403,{ok:false,code:"ORIGIN_REJECTED"});
