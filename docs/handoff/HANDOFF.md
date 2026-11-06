@@ -41,7 +41,7 @@
 1. **真实 4G 验收**：手机 SIM 目前 `ABSENT`；插卡/开数据或连热点后，重跑 5 分钟录音 + 切后台 2 分钟 + WiFi↔蜂窝切换。
 2. **C3 剩余**：LAN 双向冲突合并、传输加密（当前 push 归档 + pull 补缺，明文 JSON + token）。
 3. **C4 云端（可选）**：需平台/账号/域名/费用授权，未部署。
-4. **工作树**：dirty；用户明确未授权 commit/push；最新 APK `release/SocialMate-0.9.2-vc70-debug.apk`。
+4. **工作树**：已提交 `0d5b5d4` 并推送 `main`；未跟踪 `sp` 与 `V1.1-baseline.html.bak-*` 为本地临时，未入库；最新 APK `release/SocialMate-0.9.2-vc70-debug.apk`。
 
 ## 3. 未完成 / NOT_RUN
 
