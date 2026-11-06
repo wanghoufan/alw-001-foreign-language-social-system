@@ -31,6 +31,7 @@ import {assertPrivacy, createTtsService, normalizeSpeakRequest} from "./tts-prov
 import {sha256Hex} from "./tts-cache.mjs";
 import {isPrivateIp} from "./lan-net.mjs";
 import {startLanDiscovery} from "./lan-discovery.mjs";
+import {createLocalSync} from "./local-sync.mjs";
 const here=path.dirname(fileURLToPath(import.meta.url));
 const proto=path.resolve(here,"..");
 const repoRoot=path.resolve(here,"..","..");
@@ -44,9 +45,9 @@ const RESERVE_CNY=0.01; // one bounded reply cannot exceed this at current rates
 // 界面偏好（朗读音色/引擎）：局域网与 Tailscale 两个访问地址共用同一份，避免换网后音色重置导致缓存全部失效。
 const UI_PREFS_FILE=path.join(repoRoot,"SocialMate-Data","Prefs","ui.json");
 const UI_PREF_VOICES=new Set(["zh_female_xiaohe_uranus_bigtts","zh_male_m191_uranus_bigtts","zh_female_yingyujiaoxue_uranus_bigtts"]);
-async function readUiPrefs(){
+async function readUiPrefs(file=UI_PREFS_FILE){
   try{
-    const parsed=JSON.parse(await fs.readFile(UI_PREFS_FILE,"utf8"));
+    const parsed=JSON.parse(await fs.readFile(file,"utf8"));
     return parsed&&typeof parsed==="object"?parsed:{};
   }catch{return {};}
 }
@@ -312,6 +313,15 @@ export function createHandler(options={}){
   });
   /* N05 TTS 适配层：缓存根可注入（测试用临时目录），默认 SocialMate-Data/TtsCache。 */
   const tts=options.ttsService||createTtsService({root:options.ttsCacheRoot});
+  /* V1.7 局域网同步：复用已建好的活资料库实例，只写 SocialMate-Data/Backups。 */
+  const localSync=options.localSync||createLocalSync({
+    ...(options.dataDir?{dataDir:options.dataDir}:{}),
+    ...(options.backupsDir?{backupsDir:options.backupsDir}:{}),
+    privateCards,privatePlaces,placeNotes,practiceStore,
+    readPrefs:options.dataDir
+      ?(()=>readUiPrefs(path.join(options.dataDir,"Prefs","ui.json")))
+      :readUiPrefs,
+  });
   /**
    * 演示写操作闸（T1-4）：同源 + CSRF 票 + 写授权。
    * 只对「会改状态」的请求生效；读演示仍然免令牌，手机首次打开不会是空白。
@@ -694,6 +704,23 @@ export function createHandler(options={}){
       }
       return token;
     };
+    /* V1.7 局域网同步：手机上传整份备份到 Backups/；拉取是只读导出；状态只读。
+       鉴权与其它私有接口一致：私网/同源前置闸 + x-archive-token。 */
+    if(url.pathname==="/v12/api/local/sync/push"&&req.method==="POST"){
+      const token=await peopleToken(res,"上传局域网同步备份");
+      if(!token)return;
+      return localSync.handlePush(req,res);
+    }
+    if(url.pathname==="/v12/api/local/sync/pull"&&req.method==="GET"){
+      const token=await peopleToken(res,"拉取局域网同步备份");
+      if(!token)return;
+      return localSync.handlePull(req,res);
+    }
+    if(url.pathname==="/v12/api/local/sync/status"&&req.method==="GET"){
+      const token=await peopleToken(res,"读取局域网同步状态");
+      if(!token)return;
+      return localSync.handleStatus(req,res);
+    }
     /* TTS 沿用同一套鉴权：配对短期令牌优先，其次回落到本机归档令牌探测；
        令牌只从请求头读取，不回显、不落盘、不进日志。 */
     const ttsToken=async(res,action)=>{

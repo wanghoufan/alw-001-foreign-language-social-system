@@ -1,5 +1,38 @@
 # Changelog
 
+## 2026-11-06 · V1.7 R2 本机 origin + SQLite 本地真源（**0.9.2 / 70**，PARTIAL）
+
+1. **C0 盘点**：新增 `docs/plan/ALW001-N05-V1.7-R2/` 四份矩阵：真相源、前端 52 个 URL/37 个桥方法分类、可逆迁移与回滚、风险 18 条（高 6 / 中 9 / 低 3）。
+2. **C1 首屏脱 Mac**：新增 `LocalServer`（127.0.0.1 随机端口、Host/Origin/随机 token 校验、APK assets 提供 `/v12`）；`AsrActivity` 启动改为「起本地 origin → 立刻五 Tab」，LAN 探测仅后台更新 ASR/归档地址，不再重建界面；Mac 地址只用于配对、令牌、归档、ASR、同步。
+3. **C2 本地真源**：新增 `LocalStore`（SQLite schema 1：people/cards/card_media/overrides/favorites/private_places/place_records/practice_reports/prefs/profile/manual_drafts/sync_log）与 `LocalSegments`（移植句数守恒/逐字回查/全文复原）；新增 `/v12/api/*` 本地路由与 `/api/profile`、`/v12/history`。
+4. **迁移**：`scripts/v17-export-migration-backup.mjs` 从 8791 只读导出（不含密钥/令牌/会话原文），计数 people 8 / cards 1 / favorites 1 / pv 1 / records 41 / practice 38 / media 3；手机 `files/migration/backup.json` 一次性导入。
+5. **真机断网**：WiFi/数据关闭、Tailscale 不可用、8790/8791/8781/8782 停止、`adb reverse` 清除后冷启动 `TotalTime 666ms`、DOM 363ms；五 Tab/people 8/fav 1/海南 116/地点 36/搜索 1/116/卡片 CRUD（建→改 revision 2→软删→恢复→删）全通过；截图 5 张见 V1.7 evidence。
+6. **C3 备份实测**：设置页导出 → SAF 保存 → `SocialMate-backup-20261106-0739.smbak.zip` 39,802B（backup.json + 3 张 JPG）；删除收藏后导入恢复 `imported 41 / media 3 / favorites 1`。MIUI 选择器点选文件不返回，补 `POST /v12/api/local/import-file` 内部投递入口。ZIP 未加密、LAN 同步未实现。
+7. **C4 云网关**：`cloud-gateway/` 33 项 node:test 通过；未部署。
+8. **修复**：`readAllBytes` 在 Android 不存在；prefs 字符串未按 JSON 存导致备份接口断开；媒体索引未含迁移图片；WebView 预连接占满 4 线程 + 15s 超时导致详情卡「正在读取」；构建改 Gradle 8.14.3 + `~/.gradle-alw001` + `--offline`。
+9. **未完成**：4G/5G 真实 AI/ASR/TTS、300s、393×852、深色/拍照、P50/P95、备份加密、LAN 同步。**V1.7 不得标 DONE**。
+10. **方案 2 手机直连（用户选择）**：设置页「云端 Key（仅本机）」+ `CloudKeys`（Android Keystore AES-256-GCM）+ `DirectCloud`（DeepSeek 翻译/草稿/建议、豆包 TTS）+ **腾讯 ASR 直连**（`TencentAsrSign` HMAC-SHA1 + `TencentAsrClient` wss v2 + `Pcm16` 16k/mono 重采样）+ 每日额度（DeepSeek 1 元/豆包 2 元，402 超额）；优先级「手机 Key → 云网关 → 503 / Mac 中继」。假 Key 已验证请求到达厂商（DeepSeek 401→403、豆包 401/45000010→403、腾讯 WS 被拒触发重连）；真实 Key 待用户录入。Key 不进 APK/git/备份/日志。
+11. **输入法与测试**：Key 输入框从 `type="password"` 改为 `type="text"` + `-webkit-text-security:disc`，解决 MIUI 强制小米安全键盘、微信输入法不可用；DeepSeek/豆包/腾讯每项新增「测试通联」（腾讯只握手不发音频），无 Key 不发请求。覆盖安装 `install -r` 实测 Key 保留。
+12. **C3 备份加密**：`.smbak` = `SMBK1` + salt16 + iv12 + AES-256-GCM；PBKDF2WithHmacSHA256 120000；导出先设口令（至少 6 位），导入自动识别加密/旧 ZIP 并提示口令；口令不存储。真机验证：导出 39,973B、Node 解密得 ZIP、删除收藏后导入恢复 `imported 42/media 3`。
+13. **公开 115 图片离线**：构建时把 `docs/成果整理/Hainan-Travel-Guide/images` 复制进 APK assets（211 个 webp，APK 54MB）；`LocalServer` 的 `/v12/img/*` 改为 assets 读取，真机 `200 image/webp`。
+14. **LAN 同步 MVP**：Mac 新增 `POST /v12/api/local/sync/push`、`GET /pull`、`GET /status`；手机新增 `LocalSync` + 设置页「同步到 Mac / 从 Mac 拉取」。真机：push 446,319B 写入 `SocialMate-Data/Backups/`，pull `imported 2`，status `backups:1`。
+15. **性能**：真机 10 次冷启动 P50 1039ms / P95 1064ms；Tab 最大 海南 P50 126.8ms / P95 222.7ms，全部低于 2000ms / 300ms 门槛；报告 `PERF-REPORT.md`。
+16. **393×852 / 深色**：CDP 视口覆盖 393×852 无横向溢出，深色背景 `#192d35`；截图 `evidence/07-393x852.png`、`08-dark-393x852.png`。
+17. **300s 真实会话（PASS）**：直连模式加 `direct_asr_max_ms`（默认 300000）；4G/WiFi 下连续录音 300 秒，到点自动停止、页面显示「已结束」，本轮识别 15 段 final，页面同时给出 DeepSeek 接话；`retention:false` 时按设计不落原文。
+18. **TTS 直连**：`RemoteTtsAdapter` 增加「手机豆包 Key 优先直连」分支；页面朗读 `/v12/api/tts/synthesize` 直连豆包已实测返回 `audioId`。原生 `startQueue` 的直连真机验证受 MIUI 权限弹窗打断，未确认成功，不得写成「原生队列已直连」。
+19. **拍照入卡片**：用户用系统相机拍摄 `IMG_20261106_114447.jpg`；压缩到 1600px 后经页面内 `POST /v12/api/cards/story/c-2585f970/media` 导入，卡片 `revision 7 / media 4`；页面重载后 4 张图全部 `blob:` 显示，截图 `evidence/09-card-photo.png`。相册选择器已验证弹出；App 内“拍照”入口未单独验证。
+20. **修复卡片保存失败**：本地服务对 `/v12/api/demo/write-ticket` 也要求 token，而页面取票不带 token → `WRITE_TICKET_UNAVAILABLE`。改为写票生成免 token（写请求仍校验 token），真机卡片保存返回「已保存」。
+21. **ASR P0-1**：`LocalServer` SSE 增加 256 条环形缓冲、单调 `id`、`Last-Event-ID` 补发；断线重连不再丢 final。真机验证：停止录音后新建 `EventSource('/api/asr/live')`，收到缓冲补发 `id 1–10` 共 10 条。
+22. **ASR P0-2**：`stopRequested` 只在主动停止后允许 `session/ended` 放行；腾讯同包 `final=1` 先收 `sentences` 再结束。短录音 `stop wait ended=true remaining=0`。
+23. **录音按钮复位**：`stopStreaming` 立即恢复「开始录音」按钮，避免收尾异常后界面卡在禁用态。
+24. **原生 TTS 直连豆包**：`RemoteTtsAdapter` 优先手机豆包 Key；音色白名单过滤系统 voice 名称（Ruth → 豆包默认）；真机缓存 `audioId=direct-a34cf6b87269fc26`。
+25. **App 内相机**：新增 `capturePhoto(kind,cardId)` 走 `ACTION_IMAGE_CAPTURE` + MediaStore 全尺寸输出，压缩 1600px/JPEG82 后写入卡片；真机拍照后 `revision 10 / media 5`。
+26. **重负载性能**：海南卡片加 `content-visibility:auto` 后录音中重测：海南 P50 131.7ms / P95 205.3ms（原 457.3/557.3），软件 55.7/93.7、聊天 33.5/115.8、关于我 26.8/36.4、人物 24.5/37.1，全部 PASS。
+27. **ASR P1-2/P1-3/P1-6**：断线缓存最近 20 帧并在重连后补发；重连事件加时间轴偏移；首连最多 3 次重试；direct 模式不再被 `ws://` 地址格式拦截。
+29. **ASR P1-5（PASS）**：新增 `AsrForegroundService`（`foregroundServiceType=microphone`），`onStop` 不再停录；真机 HOME 切后台 12 秒、锁屏 10 秒后从最近任务返回，`isRecording=true`、URL 保持 `?live=1`、服务存活。之前用 `am start` 测试会重建 Activity，是测试方法错误。
+30. **ASR P1-7**：Mac 中继重连重新获取短期令牌，不再复用开局令牌。
+31. **版本**：0.9.1/69 → 0.9.2/70；`release/SocialMate-0.9.2-vc70-debug.apk`，SHA-256 `5cfb736c6ca4d9ea6cff5df421a1e328bc341ae60c7d1e51f62fa19d2811c997`。
+
 ## 2026-11-05 · V1.6 分角色审查整改（0.9.1 未变版本）
 
 1. **P0 全部关闭**：并发写加随机临时名 + 同路径串行锁；`restore` 在库同 id 返回 409 `RESTORE_CONFLICT`；三类列表/详情渲染封面与图库（blob URL）；上传串行 + 429 重试、失败不关弹层；关于我只保留统一「编辑」入口；详情补「复制中文 / 复制英文 / 分享图片」。

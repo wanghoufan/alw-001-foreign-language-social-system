@@ -1,0 +1,20 @@
+{
+  "name": "alw001-cloud-gateway",
+  "version": "1.7.0-r2-c4.0",
+  "private": true,
+  "type": "module",
+  "description": "ALW-001 V1.7 R2 C4 无状态薄网关：DeepSeek / 豆包 TTS / 腾讯 ASR 中继。",
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "scripts": {
+    "start": "node src/server.mjs",
+    "test": "node --test test/*.test.mjs"
+  },
+  "dependencies": {
+    "ws": "^8.22.1"
+  },
+  "optionalDependencies": {
+    "redis": "^5.0.0"
+  }
+}

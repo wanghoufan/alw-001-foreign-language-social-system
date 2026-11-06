@@ -1,6 +1,6 @@
 # ALW-001 架构与构建事实
 
-更新：2026-11-01
+更新：2026-11-06
 
 ## 并行工作区
 
@@ -26,11 +26,15 @@
 - 页面：`MainActivity` 首页 SocialMate 入口，BOYA 检测折叠在高级工具；`AsrActivity` 先录音同意、再启动 ASR，并在同 Activity 内嵌私有 WebView。
 - 采集：AudioRecord 48000/44100/16000，优先 stereo，音源优先 `UNPROCESSED` → `VOICE_RECOGNITION` → `MIC`；`setPreferredDevice` 指向 USB。
 - 录音文件：`getExternalFilesDir(Music)/dualmic/<timestamp>_<A|B>/`，含 `original/left/right.wav` + `diagnostics.json`。
-- 当前版本：**0.8.31（versionCode 66）**，Debug 签名（`DEBUGGABLE`，不可对外分发）；APK `release/SocialMate-0.8.31-vc66-debug.apk`，SHA-256 `b8fa8b24c6232aabeab661d7c379ef82f8c5f614c7583163daec669a1903b9a9`。
+- 当前版本：**0.9.2（versionCode 70）**，Debug 签名（`DEBUGGABLE`，不可对外分发）；回滚包 `release/SocialMate-0.9.1-vc69-debug.apk`。0.9.2 APK `release/SocialMate-0.9.2-vc70-debug.apk`（约 55MB，含 211 张离线 webp），SHA-256 `5cfb736c6ca4d9ea6cff5df421a1e328bc341ae60c7d1e51f62fa19d2811c997`；签名证书 SHA-256 `8e82a7975008e8ec87ff0f2ecadf495b5263effa34aaec9ab6f135ebea911cf3`（覆盖安装必须一致）。
 - 朗读（N05）：`TtsPlaybackController` 统一调度；provider 默认 `system`（本机 TTS，`system_fallback` 默认开），可选 `fake`（预置占位音）/`remote`（Mac 服务）；`remote` 下服务商 `fake`/`aws-polly-fake`/`aws-polly`。`aws-polly` 未配置直接 `TTS_PROVIDER_NOT_CONFIGURED`，同意为**本次运行一次**。
 - 新建想法：服务端 `MAX_RAW_INPUT=20000` 字符；`segmentRawInput` 每段句数可由客户端 `maxSentencesPerBlock` 指定（服务端允许 1–8，默认 4），单段 ≤600 字；前端选择存 `localStorage.sm_seg_gran`。
 - 网络策略（0.5.2）：`usesCleartextTraffic=false` + `res/xml/network_security_config.xml`，明文只放行 `127.0.0.1`/`localhost`/`::1`；非回环明文在 WebView 报 `ERR_CLEARTEXT_NOT_PERMITTED`。未覆写 `onReceivedSslError`，坏证书走系统默认拒绝。
 - `AsrActivity` 录音后同 Activity 显示私有 WebView `/v12?live=1`；debug 构建启用 `WebContentsDebuggingEnabled`，用于 Mac CDP 验收。
+- **V1.7 本机 origin（0.9.2）**：`AsrActivity.onCreate` 先启动 `LocalServer`（绑定 `127.0.0.1` 随机端口），页面 URL 为 `http://127.0.0.1:<port>/v12`；首次加载不等 LAN 探测，探测只在后台更新 ASR/归档地址。`ui_mode=mac` 可回旧 Mac 页面。
+- **V1.7 本地真源**：`LocalStore`（SQLite `socialmate_local.db`，schema 1）存人物/事实/收藏/卡片与媒体/私有地点/地点记录/练习/偏好/档案；媒体文件在 `files/local-media/<cardId>/`。
+- **V1.7 构建**：`app/build.gradle` 的 `copyWebAssets` 把 `socialmate-v1.2/index.html`、`ai-gateway/profile-sync.js`、`source/places-115.json` 复制到 APK assets，不维护第二份 HTML。
+- **V1.7 迁移**：`node scripts/v17-export-migration-backup.mjs` → 手机 `files/migration/backup.json` 一次性导入；详见 `docs/plan/ALW001-N05-V1.7-R2/IMPLEMENTATION-NOTES.md`。
 
 ## ASR 桥接
 

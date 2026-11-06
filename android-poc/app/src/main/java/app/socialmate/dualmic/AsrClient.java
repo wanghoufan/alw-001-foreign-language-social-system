@@ -21,7 +21,7 @@ import org.java_websocket.handshake.ServerHandshake;
  * N05 V1.5.1：开启连接丢失探测（ping/pong），让 Wi-Fi→蜂窝切换后的“半开连接”能被发现，
  * 由 AsrActivity 做一次受限重连，而不是永远显示“正在听”。
  */
-final class AsrClient extends WebSocketClient {
+class AsrClient extends WebSocketClient {
     interface Listener {
         void onAsrEvent(AsrClient client, JSONObject event);
         void onAsrState(AsrClient client, String state);
@@ -30,8 +30,10 @@ final class AsrClient extends WebSocketClient {
     /** 半开连接探测：超过该秒数没有 pong 就判定断开（服务端在本机/Tailnet，20s 足够）。 */
     private static final int CONNECTION_LOST_SECONDS = 20;
 
-    private final Listener listener;
-    private final String label;
+    protected final Listener listener;
+    protected final String label;
+    /** P1-2：重连后的事件时间轴偏移（本轮已录毫秒），避免页面字幕时间倒退。 */
+    volatile long timeOffsetMs = 0;
 
     AsrClient(URI uri, String label, String token, Listener listener) {
         super(uri, handshakeHeaders(token));

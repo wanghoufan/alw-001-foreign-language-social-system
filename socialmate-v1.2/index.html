@@ -385,6 +385,8 @@ html[data-theme=dark] .n05warn{background:#3d3220;border-color:#7a5a1f;color:#f0
 html[data-theme=dark] .n05err{background:#3d2422;border-color:#8c3a33;color:#f2b3ad}
 .n05row{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin:9px 0}
 .n05row .btn,.n05row select,.n05row input{min-height:44px;font-size:15px}
+.sm-secret{-webkit-text-security:disc;text-security:disc}
+.placecard{content-visibility:auto;contain-intrinsic-size:auto 240px}
 .n05field{width:100%;min-height:110px;border:1px solid var(--stroke);border-radius:11px;background:var(--paper);color:var(--ink);padding:11px;font-size:16px;line-height:1.6;resize:vertical}
 .n05field.small{min-height:64px}
 .n05label{display:block;font-size:15px;font-weight:700;margin:12px 0 5px;color:var(--ink)}
@@ -638,12 +640,12 @@ const I18N={zh:{
  'hainan.cardMeta':'中英双语 · 地图','hainan.cardView':'查看分享卡 →',
  'hainan.cnHead':'中文介绍','hainan.enHead':'English — 可以这样跟朋友说','hainan.amap':'高德地图 ↗',
  'self.search':'搜索海口、健身、咖啡、工作…','self.add':'＋ 新建','self.sync':'同步到本机档案',
- 'self.section':'我的故事与兴趣','self.localOnly':'仅本机草稿 · 未同步 Mac','self.favSection':'我的收藏表达',
- 'self.favEmpty':'收藏来自聊天建议卡与复盘句子，加载后显示在这里。',
- 'self.info':'话题默认只在本浏览器（仅本机草稿）；点「同步到本机档案」并确认后才写入 SocialMate-Data/Profile。收藏存在 Mac 本机，不上传云端。',
- 'self.draftTag':'仅本机草稿','self.enLabel':'自然英文表达','self.cardView':'查看 / 引用 →','self.count':'{n} 项','self.count.one':'{n} 项',
- 'self.editable':'可编辑','self.cnHead':'中文','self.enHead':'English','self.editThis':'编辑这段话',
- 'self.favOffline':'收藏需要 Mac mini 私有服务；当前是本地预览，暂不可用。',
+'self.section':'我的故事与兴趣','self.localOnly':'仅本机草稿 · 待同步','self.favSection':'我的收藏表达',
+  'self.favEmpty':'收藏来自聊天建议卡与复盘句子，加载后显示在这里。',
+  'self.info':'话题默认只在本机；点「同步到本机档案」并确认后才写入本机档案。收藏只在本机，不上传云端。',
+  'self.draftTag':'仅本机草稿','self.enLabel':'自然英文表达','self.cardView':'查看 / 引用 →','self.count':'{n} 项','self.count.one':'{n} 项',
+  'self.editable':'可编辑','self.cnHead':'中文','self.enHead':'English','self.editThis':'编辑这段话',
+  'self.favOffline':'收藏数据在本机；当前读取失败，稍后重试。',
  'self.favLoading':'正在读取收藏…','self.favError':'测试版暂不可用：','self.favReadFail':'读取收藏失败',
  'self.favNone':'还没有收藏。在聊天建议卡或复盘句子旁点「☆ 收藏」。',
  'self.favCount':'{n} 条','self.favCountLimit':'{n} 条 / 上限 {limit}','self.favSource':'收藏',
@@ -660,9 +662,9 @@ const I18N={zh:{
  'set.tokenTitle':'归档令牌（测试 / 配对用）',
  'set.tokenHint':'令牌只放请求头并存在本次会话（sessionStorage），关闭页面即失效；不写入长期存储，也不进网址。',
  'people.onlineTag':'私有在线 · 正式主档','people.draftTag':'本机草稿 · 未同步',
- 'people.checking':'正在检测 Mac mini 私有服务…','people.offlineNote':'未连接私有服务：当前显示本机草稿',
- 'people.noteNeedToken':'未配对：请在「录音与留存设置」里用一次性配对码连接这台 Mac（也可临时粘贴短期令牌）',
- 'people.noteReading':'正在读取 Mac 人物主档…','people.noteOnline':'已连接 Mac mini 人物主档 · {n} 位',
+'people.checking':'正在读取本机人物主档…','people.offlineNote':'未连接私有服务：当前显示本机草稿',
+  'people.noteNeedToken':'未配对：如需云端 AI/ASR，请在「录音与留存设置」里配对；本地资料浏览不需要配对',
+  'people.noteReading':'正在读取本机人物主档…','people.noteOnline':'私有主档 · {n} 位',
  'people.noteBadToken':'令牌无效：请重新粘贴（令牌只在本次会话有效）',
  'people.noteServiceOff':'测试版暂不可用：归档服务未启动',
  'people.noteOfflineHttp':'连不上私有服务（{err}），已回退本机草稿',
@@ -691,7 +693,7 @@ const I18N={zh:{
  'people.profiles':'人物档案','people.sessionsTitle':'本机会话记录',
  'people.sessionsCount':'{n} 条','people.sessionsCount.one':'{n} 条','people.sessMeta':'{date} · {n} 句话 · 已确认',
  'people.sessEmpty':'还没有本机会话记录。录音结束后到归档历史页看原文与复盘。',
- 'people.infoOnline':'人物主档在 Mac mini：只写你确认过的事实；撤回只删那一条，人工段落不动。',
+ 'people.infoOnline':'人物主档在本机：只写你确认过的事实；撤回只删那一条，人工段落不动。',
  'people.infoLocal':'人物只保存在当前浏览器；连接主档后以正式记录为准。',
  'people.listEmptyOnline':'还没有人物主档。首次建档需要一条已确认的会话事实（在归档复盘页确认后写入）。',
  'people.listEmptyLocal':'还没有人物档案。新建后可记录对方确认过的事实。',
@@ -700,7 +702,7 @@ const I18N={zh:{
  'people.noneConfirmed':'暂无已确认的内容。','people.setChatPerson':'设为聊天对象',
  'people.sessionTitle':'会话记录','people.downloadMd':'下载 Markdown',
  'modal.newPerson':'新建人物',
- 'modal.newPersonOnline':'先确认姓名与目录标识；确认前不会写入 Mac 人物主档。',
+ 'modal.newPersonOnline':'先确认姓名与目录标识；确认前不会写入人物主档。',
  'modal.newPersonLocal':'当前未连接人物主档，确认后只存本机草稿。',
  'modal.name':'称呼','modal.namePlaceholder':'如：Anna',
  'modal.slugIdle':'输入姓名后自动给出目录标识建议。',
@@ -709,7 +711,7 @@ const I18N={zh:{
  'modal.slugAdv':'高级：手动修改标识',
  'modal.slugLabel':'目录标识（字母/数字/-/_）','modal.slugPlaceholder':'如 anna-lee',
  'modal.note':'备注（可选 · 仅本机草稿）','modal.notePlaceholder':'只记录对方明确说过的事实',
- 'modal.createOnline':'确认新建（写入 Mac 主档）','modal.createLocal':'确认新建（仅本机草稿）',
+ 'modal.createOnline':'确认新建（写入本机主档）','modal.createLocal':'确认新建（仅本机草稿）',
  'modal.editTopic':'编辑个人话题','modal.newTopic':'新增个人话题',
  'modal.title':'标题','modal.cat':'分类','modal.catPlaceholder':'例如：兴趣 / 家乡 / 工作',
  'modal.tags':'标签（逗号分隔）','modal.tagsPlaceholder':'例如：户外,跑步,英语角',
@@ -750,13 +752,13 @@ const I18N={zh:{
  'msg.sourceLost':'无法精确定位来源，请手工处理','msg.factGone':'这条事实已不在档案里，正在刷新','msg.revokeFail':'撤回失败：',
  'msg.noSpeak':'这句没有可朗读的英文','msg.noSpeakSupport':'本机不支持朗读，请复制后手动朗读',
  'msg.speaking':'正在朗读（系统语音，不联网）','msg.speakFailed':'朗读失败，请复制后手动朗读',
- 'msg.noFav':'这句没有可收藏的英文','msg.favOffline':'收藏需要 Mac mini 私有服务，当前是本地预览',
- 'msg.favAdded':'已收藏','msg.favAddedSelf':'已加入「关于我 · 我的收藏表达」','msg.unfavDone':'已取消收藏',
- 'msg.favLimit':'收藏已达上限，请先在「关于我」取消一些',
- 'msg.favBad':'这句不能收藏：','msg.favFail':'收藏失败：','msg.favFormatBad':'格式不合要求',
- 'msg.favGone':'这条收藏已经不在了','msg.unfavFail':'取消收藏失败：',
- 'msg.draftSaved':'已记为仅本机草稿（未写入 Mac 主档）','msg.draftDeleted':'已删除本机草稿',
- 'msg.personExists':'这个人已经在 Mac 主档里，未重复新建','msg.personWritten':'已写入 Mac 主档（备注仅本机草稿）',
+'msg.noFav':'这句没有可收藏的英文','msg.favOffline':'收藏数据在本机；当前读取失败',
+  'msg.favAdded':'已收藏','msg.favAddedSelf':'已加入「关于我 · 我的收藏表达」','msg.unfavDone':'已取消收藏',
+  'msg.favLimit':'收藏已达上限，请先在「关于我」取消一些',
+  'msg.favBad':'这句不能收藏：','msg.favFail':'收藏失败：','msg.favFormatBad':'格式不合要求',
+  'msg.favGone':'这条收藏已经不在了','msg.unfavFail':'取消收藏失败：',
+  'msg.draftSaved':'已记为仅本机草稿（未写入本机主档）','msg.draftDeleted':'已删除本机草稿',
+  'msg.personExists':'这个人已经在主档里，未重复新建','msg.personWritten':'已写入本机主档（备注仅本机草稿）',
  'msg.needToken':'请先粘贴归档令牌','msg.tokenCleared':'已清空令牌',
  'msg.connected':'已连接：人物主档来自 Mac mini','msg.connectFail':'连接失败，已回退本机草稿',
  'msg.tokenInvalid':'令牌已失效，请重新粘贴令牌',
@@ -796,16 +798,16 @@ const I18N={zh:{
  'soft.footnote':' · Check these details on the installed app.',
  'hainan.search':'Search arcades, coffee, beaches, volcano…','hainan.section':'Places worth sharing',
  'hainan.count':'Showing {n} of {total}','hainan.empty':'No place matches that. Try another keyword.',
- 'hainan.info':'This downloadable preview bundles 23 of the original 115 places so you can browse right away; the full Mac mini build still holds all 115. Nothing else here is invented.',
+ 'hainan.info':'This build bundles all 115 original places with their Chinese and English text. Nothing else here is invented.',
  'hainan.cardMeta':'Bilingual · map','hainan.cardView':'View share card →',
  'hainan.cnHead':'Chinese intro','hainan.enHead':'English — how to say it to a friend','hainan.amap':'Amap ↗',
  'self.search':'Search Haikou, gym, coffee, work…','self.add':'+ New','self.sync':'Sync to local profile',
- 'self.section':'My stories & interests','self.localOnly':'Local draft only · not synced to Mac','self.favSection':'Saved phrases',
- 'self.favEmpty':'Saved phrases come from chat suggestions and post-chat reviews; they appear here once loaded.',
- 'self.info':'Topics stay in this browser (local draft only). They reach SocialMate-Data/Profile only after you tap “Sync to local profile” and confirm. Saved phrases live on the Mac and never go to the cloud.',
- 'self.draftTag':'Local draft only','self.enLabel':'Natural English','self.cardView':'View / quote →','self.count':'{n} items','self.count.one':'{n} item',
- 'self.editable':'Editable','self.cnHead':'Chinese','self.enHead':'English','self.editThis':'Edit this entry',
- 'self.favOffline':'Saved phrases need the private Mac mini service; this local preview cannot show them.',
+'self.section':'My stories & interests','self.localOnly':'Local draft only · not synced yet','self.favSection':'Saved phrases',
+  'self.favEmpty':'Saved phrases come from chat suggestions and post-chat reviews; they appear here once loaded.',
+  'self.info':'Topics stay on this phone (local draft only). They reach the local profile only after you tap “Sync to local profile” and confirm. Saved phrases stay on this phone and never go to the cloud.',
+  'self.draftTag':'Local draft only','self.enLabel':'Natural English','self.cardView':'View / quote →','self.count':'{n} items','self.count.one':'{n} item',
+  'self.editable':'Editable','self.cnHead':'Chinese','self.enHead':'English','self.editThis':'Edit this entry',
+  'self.favOffline':'Saved phrases live on this phone; reading them failed, try again later.',
  'self.favLoading':'Loading saved phrases…','self.favError':'Preview unavailable:','self.favReadFail':'Could not load saved phrases',
  'self.favNone':'Nothing saved yet. Tap “☆ Save” beside a chat suggestion or a review line.',
  'self.favCount':'{n} saved','self.favCountLimit':'{n} saved / limit {limit}','self.favSource':'Saved phrase',
@@ -821,10 +823,10 @@ const I18N={zh:{
  'set.demoOpen':'Demo data loads only after you expand this section. Off by default, so real People never mixes demo people in.',
  'set.tokenTitle':'Archive token (testing / pairing)',
  'set.tokenHint':'The token is sent only in request headers and kept in this session (sessionStorage); it expires when the page closes and is never stored long-term or put in the URL.',
- 'people.onlineTag':'Private online · master profile','people.draftTag':'Local draft · not synced',
- 'people.checking':'Checking the private Mac mini service…','people.offlineNote':'Private service not connected — showing local drafts',
- 'people.noteNeedToken':'Not paired yet: use the one-time pairing code in Recording settings, or paste a short-lived token',
- 'people.noteReading':'Loading the Mac people profile…','people.noteOnline':'Connected to the Mac mini profile · {n} people',
+'people.onlineTag':'Private profile · on this phone','people.draftTag':'Local draft · not synced',
+  'people.checking':'Loading the private profile…','people.offlineNote':'Private service not connected — showing local drafts',
+  'people.noteNeedToken':'Not paired yet: pairing is only needed for cloud AI / ASR; local browsing works without it',
+  'people.noteReading':'Loading the local people profile…','people.noteOnline':'Private profile · {n} people',
  'people.noteBadToken':'Invalid token — paste it again (tokens only last for this session)',
  'people.noteServiceOff':'Preview unavailable: the archive service is not running',
  'people.noteOfflineHttp':'Cannot reach the private service ({err}); showing local drafts',
@@ -853,7 +855,7 @@ const I18N={zh:{
  'people.profiles':'People','people.sessionsTitle':'Local session log',
  'people.sessionsCount':'{n} entries','people.sessionsCount.one':'{n} entry','people.sessMeta':'{date} · {n} lines · confirmed',
  'people.sessEmpty':'No local sessions yet. After recording, open the archive page for the transcript and review.',
- 'people.infoOnline':'The master profile lives on the Mac mini: only facts you confirmed are written, and revoking removes just that one line — manual paragraphs stay untouched.',
+ 'people.infoOnline':'The master profile lives on this phone: only facts you confirmed are written, and revoking removes just that one line — manual paragraphs stay untouched.',
  'people.infoLocal':'People are stored in this browser only. Once the master profile is connected, official records win.',
  'people.listEmptyOnline':'No one in the master profile yet. The first record needs one confirmed session fact (confirmed on the archive review page).',
  'people.listEmptyLocal':'No people yet. Create one to record facts they have confirmed.',
@@ -912,15 +914,15 @@ const I18N={zh:{
  'msg.sourceLost':'The source could not be located exactly; please fix it by hand','msg.factGone':'That fact is no longer in the profile — refreshing','msg.revokeFail':'Could not revoke: ',
  'msg.noSpeak':'There is no English here to read aloud','msg.noSpeakSupport':'Read-aloud is not supported on this device; copy the text instead',
  'msg.speaking':'Reading aloud (system voice, offline)','msg.speakFailed':'Read-aloud failed; copy the text and read it yourself',
- 'msg.noFav':'There is no English here to save','msg.favOffline':'Saving needs the private Mac mini service; this is a local preview',
+ 'msg.noFav':'There is no English here to save','msg.favOffline':'Saved phrases live on this phone; reading them failed',
  'msg.favAdded':'Saved','msg.favAddedSelf':'Added to “About me · Saved phrases”','msg.unfavDone':'Removed from saved',
  'msg.favLimit':'Saved list is full — remove a few in “About me” first',
  'msg.favBad':'This line cannot be saved: ','msg.favFail':'Could not save: ','msg.favFormatBad':'the format is not accepted',
  'msg.favGone':'That saved phrase is already gone','msg.unfavFail':'Could not remove: ',
- 'msg.draftSaved':'Saved as a local draft (not written to the Mac profile)','msg.draftDeleted':'Local draft deleted',
- 'msg.personExists':'This person is already in the Mac profile — nothing new was created','msg.personWritten':'Written to the Mac profile (the note stays a local draft)',
+'msg.draftSaved':'Saved as a local draft (not written to the profile)','msg.draftDeleted':'Local draft deleted',
+  'msg.personExists':'This person is already in the profile — nothing new was created','msg.personWritten':'Written to the local profile (the note stays a local draft)',
  'msg.needToken':'Paste the archive token first','msg.tokenCleared':'Token cleared',
- 'msg.connected':'Connected: people profile loaded from the Mac mini','msg.connectFail':'Connection failed — showing local drafts',
+ 'msg.connected':'Connected: private profile loaded from this phone','msg.connectFail':'Connection failed — showing local drafts',
  'msg.tokenInvalid':'The token is no longer valid — paste it again',
  'msg.nativeDevOnly':'Device check is only available in the dev build','msg.nativeUnavailable':'This device feature is not available right now',
  'msg.netError':'network error',
@@ -1950,7 +1952,15 @@ function settingOptions(group,choices){
 }
 document.addEventListener('change',function(e){
  const t=e&&e.target;
- if(!t||t.id!=='ttsVoiceZh'&&t.id!=='ttsVoiceEn'&&t.id!=='ttsVoice'&&t.id!=='ttsEngine')return;
+ if(!t||t.id!=='ttsVoiceZh'&&t.id!=='ttsVoiceEn'&&t.id!=='ttsVoice'&&t.id!=='ttsEngine'&&t.id!=='asrMode')return;
+ if(t.id==='asrMode'){
+  const b=smCloudBridge();
+  if(b&&typeof b.setAsrMode==='function'){
+   let d=null;try{d=JSON.parse(b.setAsrMode(t.value))}catch(e){}
+   tip(d&&d.ready?'已切换实时字幕引擎':'已切换；腾讯 Key 未配置完整，将回退 Mac');
+  }
+  return;
+ }
  if(t.id==='ttsVoice'){
   S.v152.voice=t.value;S.v152.voiceZh=t.value;S.v152.voiceEn=t.value;
   try{localStorage.setItem('sm.ttsVoice',t.value);localStorage.setItem('sm.ttsVoiceZh',t.value);localStorage.setItem('sm.ttsVoiceEn',t.value);}catch{}
@@ -1959,6 +1969,7 @@ document.addEventListener('change',function(e){
  if(t.id==='ttsEngine'){
   S.v152.ttsEngine=t.value;
   try{localStorage.setItem('sm.ttsEngine',t.value);}catch{}
+  try{if(window.SocialMateAndroid&&SocialMateAndroid.setTtsProvider)SocialMateAndroid.setTtsProvider(t.value)}catch(e){}
   tip(t.value==='system'?'已切换为系统语音':'已切换为豆包语音');
   return;
  }
@@ -1967,8 +1978,104 @@ document.addEventListener('change',function(e){
  try{localStorage.setItem('sm.ttsVoiceZh',S.v152.voiceZh);localStorage.setItem('sm.ttsVoiceEn',S.v152.voiceEn);}catch{}
  tip('已切换朗读音色');
 });
+function smCloudBridge(){return window.SocialMateAndroid||null}
+function smCloudKeyStatus(){const b=smCloudBridge();if(!b||typeof b.cloudKeyStatus!=='function')return null;try{return JSON.parse(b.cloudKeyStatus())}catch{return null}}
+function smRefreshCloudKeyStatus(){
+  const d=smCloudKeyStatus(),s=(d&&d.status)||{};
+  [['smKeyDeepseekStatus',!!s.deepseek],['smKeyDoubaoStatus',!!s.doubao],['smKeyTencentStatus',!!s.tencent]].forEach(function(pair){
+    const el=document.querySelector('#'+pair[0]);if(el)el.textContent=pair[1]?'已配置（仅本机）':'未配置';
+  });
+}
+function smSaveCloudKey(kind,inputId){
+  const b=smCloudBridge();if(!b||typeof b.saveCloudKey!=='function')return tip('仅 App 内可用');
+  const input=document.querySelector('#'+inputId),v=(input&&input.value||'').trim();
+  if(!v)return tip('请先填写 Key');
+  let d=null;try{d=JSON.parse(b.saveCloudKey(kind,v))}catch(e){}
+  if(input)input.value='';
+  smRefreshCloudKeyStatus();
+  tip(d&&d.ok?'已保存到本机 Keystore':'保存失败');
+}
+function smClearCloudKey(kind){
+  const b=smCloudBridge();if(!b||typeof b.clearCloudKey!=='function')return tip('仅 App 内可用');
+  try{b.clearCloudKey(kind)}catch(e){}
+  smRefreshCloudKeyStatus();tip('已清除本机 Key');
+}
+function smTestCloudKey(kind,statusId){
+  const b=smCloudBridge();if(!b||typeof b.testCloudKey!=='function')return tip('仅 App 内可用');
+  const el=document.querySelector('#'+statusId);
+  if(el)el.textContent='测试中…（会产生少量费用）';
+  tip('测试中…（会产生少量费用）');
+  setTimeout(function(){
+    let d=null;try{d=JSON.parse(b.testCloudKey(kind))}catch(e){d={ok:false,message:String(e&&e.message||e)}}
+    const msg=(d&&d.message)||'';
+    if(el)el.textContent=(d&&d.ok?'通联成功':'通联失败'+(msg?'：'+msg:''));
+    tip(d&&d.ok?'通联成功':('通联失败'+(msg?'：'+msg:'')));
+  },80);
+}
+function smSync(kind){
+  const b=smCloudBridge();if(!b||typeof b.syncPush!=='function')return tip('仅 App 内可用');
+  const el=document.querySelector('#smSyncStatus');
+  if(el)el.textContent='同步中…';tip('同步中…');
+  setTimeout(function(){
+    let d=null;
+    try{d=JSON.parse(kind==='push'?b.syncPush():b.syncPull())}catch(e){d={ok:false,message:String(e&&e.message||e)}}
+    const msg=d&&d.ok?(kind==='push'?'已推送 '+(d.bytes||0)+' 字节到 Mac':('已导入 '+(d.imported||0)+' 项')):('失败：'+((d&&d.message)||'未知'));
+    if(el)el.textContent=msg;tip(msg);
+  },80);
+}
+window.smRefreshCloudKeyStatus=smRefreshCloudKeyStatus;
+document.addEventListener('click',function(e){
+  const t=e&&e.target;
+  if(!t||typeof t.closest!=='function')return;
+  if(t.closest('#smCardCamera')){
+    const f=document.querySelector('#smCardFile');
+    const kind=(f&&f.dataset.cardKind)||'', id=(f&&f.dataset.cardId)||'';
+    if(!id)return tip('请先保存卡片，再拍照');
+    if(window.SocialMateAndroid&&typeof window.SocialMateAndroid.capturePhoto==='function'){
+      window.SocialMateAndroid.capturePhoto(kind,id);tip('拍照完成后会自动加入卡片');
+    }else tip('仅 App 内可用');
+    return;
+  }
+  if(t.closest('#smSyncPush')){smSync('push');return;}
+  if(t.closest('#smSyncPull')){smSync('pull');return;}
+  if(t.closest('#smKeyTestDeepseek')){smTestCloudKey('deepseek','smKeyDeepseekStatus');return;}
+  if(t.closest('#smKeyTestDoubao')){smTestCloudKey('doubao','smKeyDoubaoStatus');return;}
+  if(t.closest('#smKeyTestTencent')){smTestCloudKey('tencent','smKeyTencentStatus');return;}
+  if(t.closest('#smKeySaveDeepseek')){smSaveCloudKey('deepseek','smKeyDeepseek');return;}
+  if(t.closest('#smKeyClearDeepseek')){smClearCloudKey('deepseek');return;}
+  if(t.closest('#smKeySaveDoubao')){smSaveCloudKey('doubao','smKeyDoubao');return;}
+  if(t.closest('#smKeyClearDoubao')){smClearCloudKey('doubao');return;}
+  if(t.closest('#smKeySaveTencent')){
+    const b=smCloudBridge();if(!b||typeof b.saveCloudKey!=='function')return tip('仅 App 内可用');
+    let ok=true;
+    [['tencent_app_id','smKeyTencentAppId'],['tencent_secret_id','smKeyTencentSecretId'],['tencent_secret_key','smKeyTencentSecretKey']].forEach(function(pair){
+      const el=document.querySelector('#'+pair[1]),v=(el&&el.value||'').trim();
+      if(v){try{const r=JSON.parse(b.saveCloudKey(pair[0],v));if(!r.ok)ok=false}catch(e){ok=false}}
+      if(el)el.value='';
+    });
+    smRefreshCloudKeyStatus();tip(ok?'腾讯 Key 已保存':'保存失败');return;
+  }
+  if(t.closest('#smKeyClearTencent')){
+    const b=smCloudBridge();if(!b||typeof b.clearCloudKey!=='function')return tip('仅 App 内可用');
+    ['tencent_app_id','tencent_secret_id','tencent_secret_key'].forEach(function(k){try{b.clearCloudKey(k)}catch(e){}});
+    smRefreshCloudKeyStatus();tip('已清除腾讯 Key');return;
+  }
+  if(t.closest('#smBackupExport')){
+    if(window.SocialMateAndroid&&typeof window.SocialMateAndroid.exportBackup==='function'){
+      tip(window.SocialMateAndroid.exportBackup()?'请选择备份保存位置…':'本机备份仅 App 内可用');
+    }else tip('本机备份仅 App 内可用');
+    return;
+  }
+  if(t.closest('#smBackupImport')){
+    if(window.SocialMateAndroid&&typeof window.SocialMateAndroid.importBackup==='function'){
+      tip(window.SocialMateAndroid.importBackup()?'请选择 SocialMate 备份包…':'本机备份仅 App 内可用');
+    }else tip('本机备份仅 App 内可用');
+    return;
+  }
+});
 function openSettings(){
   const th=SAV.theme||'light';
+  const am=(function(){try{return JSON.parse(window.SocialMateAndroid.getAsrMode()).mode||'mac'}catch(e){return 'mac'}})();
   modal('<div class="setting-head"><h2>'+esc(t('set.title'))+'</h2><button type="button" class="iconbutton" data-action="close" aria-label="close">×</button></div>'+
     '<p class="setting-hint">'+esc(t('set.hint'))+'</p>'+'<details class="settingadvanced"><summary>高级诊断</summary><p class="setting-hint">连接：'+esc(connModeLabel()||'未连接')+' · ASR：P066 流式 · 服务端口 8790/8791 · 账本以 P066 为准</p></details>'+
     '<label class="formlabel">'+esc(t('set.theme'))+'</label><div class="setting-options" role="group" aria-label="theme">'+
@@ -1980,7 +2087,16 @@ function openSettings(){
       [['zh','中文'],['en','English'],['system',t('set.langSystem')]].map(function(a){
         return '<button type="button" class="setting-option '+(((SAV.lang||'zh')===a[0])?'on':'')+'" data-lang="'+a[0]+'" aria-pressed="'+(((SAV.lang||'zh')===a[0]))+'">'+esc(a[1])+'</button>';
       }).join('')+'</div>'+
-    '<label class="formlabel">朗读引擎</label><select id="ttsEngine" class="field"><option value="doubao"'+(((S.v152.ttsEngine||'doubao')==='doubao')?' selected':'')+'>豆包语音 2.0（推荐）</option><option value="system"'+(((S.v152.ttsEngine||'doubao')==='system')?' selected':'')+'>系统语音（离线）</option></select>'+'<label class="formlabel">朗读音色（中英统一）</label><select id="ttsVoice" class="field">'+[['zh_female_xiaohe_uranus_bigtts','小何 2.0 · 女声'],['zh_male_m191_uranus_bigtts','云舟 2.0 · 男声'],['zh_female_yingyujiaoxue_uranus_bigtts','Tina老师 2.0 · 中英混']].map(function(a){return '<option value="'+a[0]+'"'+(((S.v152.voice)||'')===a[0]?' selected':'')+'>'+a[1]+'</option>'}).join('')+'</select>'+'<label class="formlabel">'+esc(t('set.font'))+'</label>'+settingOptions('font',[['normal',t('set.normal')],['large',t('set.large')],['extra',t('set.extra')],['huge',t('set.huge')]])+
+    '<label class="formlabel">实时字幕引擎</label><select id="asrMode" class="field"><option value="mac"'+(am==='mac'?' selected':'')+'>Mac 中继（Tailscale / USB）</option><option value="direct"'+(am==='direct'?' selected':'')+'>腾讯直连（手机 4G/5G）</option></select><p class="setting-hint">直连需要下方腾讯 AppId / SecretId / SecretKey；不配置时自动回退 Mac。</p>'+'<label class="formlabel">朗读引擎</label><select id="ttsEngine" class="field"><option value="doubao"'+(((S.v152.ttsEngine||'doubao')==='doubao')?' selected':'')+'>豆包语音 2.0（推荐）</option><option value="system"'+(((S.v152.ttsEngine||'doubao')==='system')?' selected':'')+'>系统语音（离线）</option></select>'+'<label class="formlabel">朗读音色（中英统一）</label><select id="ttsVoice" class="field">'+[['zh_female_xiaohe_uranus_bigtts','小何 2.0 · 女声'],['zh_male_m191_uranus_bigtts','云舟 2.0 · 男声'],['zh_female_yingyujiaoxue_uranus_bigtts','Tina老师 2.0 · 中英混']].map(function(a){return '<option value="'+a[0]+'"'+(((S.v152.voice)||'')===a[0]?' selected':'')+'>'+a[1]+'</option>'}).join('')+'</select>'+'<div class="n05section">云端 Key（仅本机）</div><p class="n05mini">Key 只经 Android Keystore 加密存本机：不编译进 APK、不上传、不进备份。留空则不使用直连。本机每日额度：DeepSeek 1 元 / 豆包 2 元。</p>'
+    +'<label class="formlabel">DeepSeek API Key</label><div class="n05row"><input id="smKeyDeepseek" class="field sm-secret" type="text" autocomplete="off" spellcheck="false" autocapitalize="none" placeholder="sk-…"><button type="button" class="btn" id="smKeySaveDeepseek">保存</button><button type="button" class="btn" id="smKeyTestDeepseek">测试通联</button><button type="button" class="btn" id="smKeyClearDeepseek">清除</button></div><p class="n05mini" id="smKeyDeepseekStatus">未配置</p>'
+    +'<label class="formlabel">豆包 API Key</label><div class="n05row"><input id="smKeyDoubao" class="field sm-secret" type="text" autocomplete="off" spellcheck="false" autocapitalize="none" placeholder="豆包语音 API Key"><button type="button" class="btn" id="smKeySaveDoubao">保存</button><button type="button" class="btn" id="smKeyTestDoubao">测试通联</button><button type="button" class="btn" id="smKeyClearDoubao">清除</button></div><p class="n05mini" id="smKeyDoubaoStatus">未配置</p>'
+    +'<label class="formlabel">腾讯 ASR AppId</label><input id="smKeyTencentAppId" class="field sm-secret" type="text" autocomplete="off" spellcheck="false" autocapitalize="none" placeholder="数字 AppId">'
+    +'<label class="formlabel">腾讯 ASR SecretId</label><input id="smKeyTencentSecretId" class="field sm-secret" type="text" autocomplete="off" spellcheck="false" autocapitalize="none" placeholder="SecretId">'
+    +'<label class="formlabel">腾讯 ASR SecretKey</label><input id="smKeyTencentSecretKey" class="field sm-secret" type="text" autocomplete="off" spellcheck="false" autocapitalize="none" placeholder="SecretKey">'
+    +'<div class="n05row"><button type="button" class="btn" id="smKeySaveTencent">保存腾讯三项</button><button type="button" class="btn" id="smKeyTestTencent">测试通联</button><button type="button" class="btn" id="smKeyClearTencent">清除腾讯三项</button></div><p class="n05mini" id="smKeyTencentStatus">未配置</p>'
+    +'<div class="n05section">本机备份</div><p class="n05mini">导出人物、收藏、卡片、地点记录、图片与偏好的私有包（ZIP）；保存位置由你选择，不上传云端。导入会按 ID 与修订号合并，不覆盖更新的本机记录。</p><div class="n05row"><button type="button" class="btn mainbtn" id="smBackupExport">导出本机备份</button><button type="button" class="btn" id="smBackupImport">导入备份</button></div>'
+    +'<div class="n05section">局域网同步</div><p class="n05mini">需要手机与 Mac 同一 WiFi，Mac 私有服务在线。推送只写 Mac 的 Backups 目录，不改真源；拉取只补本机没有的记录。</p><div class="n05row"><button type="button" class="btn" id="smSyncPush">同步到 Mac</button><button type="button" class="btn" id="smSyncPull">从 Mac 拉取</button></div><p class="n05mini" id="smSyncStatus">未同步</p>'
+    +'<label class="formlabel">'+esc(t('set.font'))+'</label>'+settingOptions('font',[['normal',t('set.normal')],['large',t('set.large')],['extra',t('set.extra')],['huge',t('set.huge')]])+
     '<label class="formlabel">'+esc(t('set.english'))+'</label>'+settingOptions('english',[['normal',t('set.normal')],['large',t('set.large')],['extra',t('set.extra')]])+
     '<label class="formlabel">'+esc(t('set.density'))+'</label>'+settingOptions('density',[['compact',t('set.compact')],['comfortable',t('set.comfortable')],['relaxed',t('set.relaxed')]])+
     '<div class="setting-preview"><strong>'+esc(t('set.preview'))+'</strong><p>'+(LANG==='en'?'Haikou has plenty of good places for a walk.':'海口有很多适合散步的地方。')+'</p><p class="english-reading" lang="en">Do you prefer running by the sea or walking in a park?</p></div>'+
@@ -1988,10 +2104,11 @@ function openSettings(){
     '<details class="advbox"><summary>'+esc(t('set.advanced'))+'</summary><div class="advinner">'+
       '<details class="demoAdv" id="demoAdv"><summary>'+esc(t('set.demoTest'))+'</summary>'+demoAdvancedHTML()+'</details>'+
       (HTTP_UI?'<label class="formlabel">'+esc(t('set.tokenTitle'))+'</label><p class="setting-hint">'+esc(t('set.tokenHint'))+'</p>'+
-        '<input id="peopleToken" class="field" type="password" autocomplete="off" placeholder="'+esc(t('people.tokenPlaceholder'))+'">'+
+        '<input id="peopleToken" class="field sm-secret" type="text" autocomplete="off" spellcheck="false" autocapitalize="none" placeholder="'+esc(t('people.tokenPlaceholder'))+'">'+
         '<div class="actions"><button type="button" class="btn mainbtn" data-act="ptoken">'+esc(t('people.connect'))+'</button><button type="button" class="btn" data-act="ptokenclear">'+esc(t('people.tokenClear'))+'</button></div>':'')+
     '</div></details>'+
     '<div class="actions"><button type="button" class="btn" data-act="resetDisplay">'+esc(t('set.reset'))+'</button><button type="button" class="btn mainbtn" data-action="close">'+esc(t('set.done'))+'</button></div>');
+  setTimeout(smRefreshCloudKeyStatus,120);
   // 已在设置外读过演示数据（恢复/清空后重开设置）时，直接重绘面板，避免仍显示「0 人」占位。
   if(S.demo&&(S.demo.state==='online'||S.demo.state==='offline'))setTimeout(demoPaint,0);
 }
@@ -4059,7 +4176,8 @@ function smCardFilesHtml(card){
     +'<button type="button" class="btn" data-act="card-mediadel" data-kind="'+esc(card.kind)+'" data-id="'+esc(card.id)+'" data-media="'+esc(m.id)+'">删除</button></div></div>').join('');
   return '<div class="smcmediawrap">'+(items||'<p class="n05mini">还没有图片。</p>')+'</div>'
     +'<label class="formlabel">添加图片（自动压缩、去除位置信息）</label>'
-    +'<input type="file" id="smCardFile" accept="image/*" multiple class="field">'
+    +'<input type="file" id="smCardFile" accept="image/*" multiple class="field" data-card-kind="'+esc(card.kind||'')+'" data-card-id="'+esc(card.id||'')+'">'
+    +'<div class="n05row"><button type="button" class="btn" id="smCardCamera">用相机拍照</button></div><p class="n05mini">拍照后点保存上传；也可以在上方选择相册图片。</p>'
     +'<p class="n05mini" id="smCardMediaMsg"></p>';
 }
 

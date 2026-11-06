@@ -14,6 +14,12 @@
 - 适用信号：出现「改了源但显示没变」「两份卡片对不上」「计数/版本/更新时间不一致」，或同步地图、登记表、台账、索引时。
 - skill 位置：项目根 `sm-card-regression-local-zh/SKILL.md`。
 
+## 覆盖安装（强制）
+
+- **凡安装新版本 APK、覆盖安装或更新手机端，必须先调用 `android-overwrite-install-guard-local-zh` 并完成强制回执：`已核对签名 / 已核对版本递增 / 已核对 Key 与本地库保留`。任一缺失不得报完成。**
+- 禁止 `adb uninstall`、`pm clear`、删除 `shared_prefs`、恢复出厂；签名不一致时停止，不得卸载绕过。
+- 备份包不含厂商 Key；不得把「有备份」写成「Key 可恢复」。
+
 ## 项目事实
 
 - 组合服务：`bash socialmate-v1.2/service-all.sh health`（8790/8791/8781/8782）。

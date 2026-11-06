@@ -71,3 +71,10 @@ android-poc/local.properties
 /.arts/
 **/logcat*.txt
 **/logcat-*.txt
+# V1.7 真机证据（含真实照片/人物名，只留本机）
+/docs/plan/ALW001-N05-V1.7-R2/evidence/
+# 历史大日志
+/docs/plan/ALW001-N05-V1.5.1-Chat-RealUse-Closure/qa/t4-device/
+# 手工备份文件
+/android-poc/app/src/main/java/app/socialmate/dualmic/AsrActivity.java.bak-*
+/socialmate-v1.2/index.html.bak-*

@@ -44,6 +44,13 @@ import android.widget.TextView;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import app.socialmate.dualmic.local.CloudKeys;
+import app.socialmate.dualmic.local.DirectCloud;
+import app.socialmate.dualmic.local.LocalBackup;
+import app.socialmate.dualmic.local.LocalServer;
+import app.socialmate.dualmic.local.LocalStore;
+import app.socialmate.dualmic.local.LocalSync;
+
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -60,6 +67,9 @@ import java.util.concurrent.TimeUnit;
 public final class AsrActivity extends Activity implements AsrClient.Listener {
     private static final int REQUEST_MIC = 201;
     private static final int REQUEST_SAVE_TEXT = 202;
+    private static final int REQUEST_EXPORT_BACKUP = 203;
+    private static final int REQUEST_IMPORT_BACKUP = 204;
+    private static final int REQUEST_CAPTURE_PHOTO = 205;
     private static final String DEFAULT_URL = "ws://127.0.0.1:8790/asr";
     private static final String PRIVATE_UI_URL = "http://127.0.0.1:8791/v12";
     private static final String LOCAL_ARCHIVE_URL = "http://127.0.0.1:8781/api/archive/session";
@@ -84,6 +94,12 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
      * onAsrEvent 每收到一条 type=session/status=ended 就 countDown；停止流程最多等 3s。
      */
     private volatile CountDownLatch asrEndedLatch;
+    /** 只有用户/上限主动停止后，session/ended 才能放行收尾；中途 VAD 自动结束不算本轮结束。 */
+    private volatile boolean stopRequested = false;
+    /** 断线重连窗口内保留最近 2 秒音频（20×100ms），重连成功后补发，避免整段对话缺字。 */
+    private static final int RECONNECT_BUFFER_FRAMES = 20;
+    private final java.util.Map<String, java.util.ArrayDeque<byte[]>> reconnectBuffers =
+            new java.util.concurrent.ConcurrentHashMap<>();
     /** 同一 client 可能重复上报 ended，按对象身份去重，避免提前放行。 */
     private final java.util.Set<AsrClient> asrEndedClients =
             java.util.Collections.synchronizedSet(java.util.Collections.newSetFromMap(new IdentityHashMap<>()));
@@ -130,6 +146,16 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
     private volatile String lastFinal = "";
     private SessionArchive archive;
     private DevicePairing pairing;
+    /** V1.7：手机内置本地 origin（127.0.0.1:随机端口），首屏不依赖 Mac。 */
+    private LocalServer localServer;
+    private volatile String localBaseUrl = "";
+    /** 本地模式下的随机访问令牌，只注入页面 sessionStorage，不写盘、不进日志。 */
+    private volatile String localToken = "";
+    /** 加密备份口令：只在一次导出过程中驻留内存，完成后立即清空。 */
+    private volatile String pendingBackupPassword = "";
+    private android.net.Uri pendingCaptureUri;
+    private String pendingCaptureKind = "";
+    private String pendingCaptureCardId = "";
     private CheckBox retentionConsent;
     private TextView archiveStatusView;
     private TextView retentionHint;
@@ -186,21 +212,48 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
         // 否则后台队列与页面各有一台引擎，熄屏后会互相打断。
         ttsController = TtsPlaybackService.controller(this);
         ttsController.ensureReady();
+        // V1.7：先把本机 origin 起来。页面、数据、图片都从这里出，Mac 是否可达不再阻塞首屏。
+        startLocalOrigin();
         showConnectingUi();
-        // 只在后台做一次短发现：家里 WiFi 直连优先，找不到再回退 Tailscale。
+        // 首屏不等待网络：立刻构建五 Tab 主界面。
+        buildUi();
+        refreshDeviceInfo();
+        registerNetworkRecovery();
+        showSocialMatePanel();
+        // 冷启动/重启后 outbox 里的待传文件会自动补传（幂等键是 sessionId，重复上传不会重复归档）。
+        archive.flushAsync(this::setArchiveStatus);
+        // LAN 发现只用于同步/ASR 地址提示，找到后只更新地址，不再重建界面。
         new Thread(() -> {
             EndpointResolver.LanEndpoint lan = EndpointResolver.discoverLan(900);
-            runOnUiThread(() -> {
-                applyAutoEndpoint(lan);
-                buildUi();
-                refreshDeviceInfo();
-                registerNetworkRecovery();
-                // 打开 App 直接是五 Tab 主界面；原生录音面板只在用户从「⋮」进入时出现。
-                showSocialMatePanel();
-                // 冷启动/重启后 outbox 里的待传文件会自动补传（幂等键是 sessionId，重复上传不会重复归档）。
-                archive.flushAsync(this::setArchiveStatus);
-            });
+            runOnUiThread(() -> applyAutoEndpoint(lan));
         }, "sm-lan-discovery").start();
+    }
+
+    /**
+     * 启动手机内置本地 origin。失败时保持 Mac 模式（旧行为），并明确记录原因；
+     * 页面永远有兜底，不会因为本地服务异常白屏。
+     */
+    private void startLocalOrigin() {
+        try {
+            // 首次升级：若用户已把迁移备份放到 files/migration/backup.json，这里导入一次。
+            try {
+                Object result = LocalStore.get(this).importMigrationIfPresent();
+                if (result != null) android.util.Log.i("SocialMateLocal", "migration: " + result);
+            } catch (Exception e) {
+                android.util.Log.e("SocialMateLocal", "migration skipped: " + e.getMessage());
+            }
+            LocalServer server = new LocalServer(this);
+            server.start();
+            localServer = server;
+            localBaseUrl = server.baseUrl();
+            localToken = server.token();
+            android.util.Log.i("SocialMateLocal", "local origin ready " + localBaseUrl);
+        } catch (Exception e) {
+            localServer = null;
+            localBaseUrl = "";
+            localToken = "";
+            android.util.Log.e("SocialMateLocal", "local origin failed: " + e.getMessage());
+        }
     }
 
     /** 发现完成前只显示一句中文状态，不暴露任何服务地址或调试控件。 */
@@ -208,7 +261,7 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
         FrameLayout root = new FrameLayout(this);
         root.setBackgroundColor(0xFFF5F7F8);
         TextView label = new TextView(this);
-        label.setText("正在连接 Mac…");
+        label.setText(localServer == null ? "正在连接 Mac…" : "正在打开本机资料…");
         label.setTextSize(19);
         label.setTextColor(0xFF12232E);
         label.setGravity(android.view.Gravity.CENTER);
@@ -218,18 +271,21 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
 
     private void applyAutoEndpoint(EndpointResolver.LanEndpoint lan) {
         if (lan != null) {
-            applyEndpointValues(lan.asr, lan.base + "/v12", lan.archive);
+            // 本地模式下页面来源恒为本机 origin；这里只更新 ASR/归档地址，绝不把页面切回 Mac。
+            applyEndpointValues(lan.asr, localUiMode() ? null : lan.base + "/v12", lan.archive);
         } else if (EndpointResolver.tailscaleUp()) {
-            applyEndpointValues(TRAVEL_ASR_URL, TRAVEL_UI_URL, TRAVEL_ARCHIVE_URL);
+            applyEndpointValues(TRAVEL_ASR_URL, localUiMode() ? null : TRAVEL_UI_URL, TRAVEL_ARCHIVE_URL);
         }
     }
 
     private void applyEndpointValues(String asr, String ui, String archiveUrl) {
         if (urlInput != null) urlInput.setText(asr);
-        if (uiUrlInput != null) uiUrlInput.setText(ui);
+        if (ui != null && uiUrlInput != null) uiUrlInput.setText(ui);
         if (archiveUrlInput != null) archiveUrlInput.setText(archiveUrl);
         if (archive != null) archive.setArchiveUrl(archiveUrl);
-        config.edit().putString("asr_url", asr).putString("ui_url", ui).apply();
+        SharedPreferences.Editor editor = config.edit().putString("asr_url", asr);
+        if (ui != null) editor.putString("ui_url", ui);
+        editor.apply();
     }
 
     /** 网络恢复即补传；本 Activity 生命周期内注册，onDestroy 注销，不做常驻轮询。 */
@@ -1008,7 +1064,19 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
         }
     }
 
+    /** 页面实际加载的 origin：默认本机；仅当用户显式切到 mac 模式才回旧行为。 */
     private String privateUiBase() {
+        if (localUiMode()) return localBaseUrl;
+        return macUiBase();
+    }
+
+    /** V1.7：本机页面优先；本地服务没起来或用户选择 mac 模式时为 false。 */
+    private boolean localUiMode() {
+        return localServer != null && !"mac".equals(config.getString("ui_mode", "local"));
+    }
+
+    /** Mac 私有服务基地址：只用于配对、令牌刷新、归档、ASR 与同步，页面不再依赖它。 */
+    private String macUiBase() {
         return effectiveUiBase();
     }
 
@@ -1025,6 +1093,9 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
     }
 
     private String endpointModeHint() {
+        if (localUiMode()) {
+            return "当前：本机资料库 · 页面与数据都在手机上，Mac 关机也能用";
+        }
         return isTravelMode()
                 ? "当前：外出模式 · 走 Tailscale 私有 HTTPS（不需要 USB，不经过公网）"
                 : "当前：本机模式 · 需要 USB + adb reverse（仅开发用）";
@@ -1035,6 +1106,7 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
      * 用户不需要终端：这是「拔掉 USB 之后」唯一要做的图形界面动作。
      */
     private void applyEndpointPreset(boolean travel) {
+        config.edit().putString("ui_mode", travel ? "mac" : "local").apply();
         String asr = travel ? TRAVEL_ASR_URL : DEFAULT_URL;
         String ui = travel ? TRAVEL_UI_URL : PRIVATE_UI_URL;
         String archiveUrl = travel ? TRAVEL_ARCHIVE_URL : LOCAL_ARCHIVE_URL;
@@ -1078,7 +1150,9 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
     /** 在线加载成功后刷新本地快照：只存「演示 + 计数」，不存逐字原文、不存令牌。 */
     private void refreshOfflineSnapshotAsync(String pageUrl) {
         if (pageUrl == null) return;
-        final String base = privateUiBase();
+        // 本地 origin 自身就是离线真源，不需要再拉「只读快照」。
+        if (localUiMode()) return;
+        final String base = macUiBase();
         if (base.isEmpty()) return;
         new Thread(() -> {
             try {
@@ -1251,9 +1325,10 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
     private void injectAccessToken(WebView view, String url) {
         if (view == null) return;
         if (!isPrivatePanelUrl(url == null ? null : Uri.parse(url))) return;
-        String token = pairing == null ? "" : pairing.cachedToken();
+        // 本地页面用本地随机令牌；Mac 页面仍用配对短期令牌。
+        String token = localUiMode() ? localToken : (pairing == null ? "" : pairing.cachedToken());
         if (token.isEmpty()) {
-            warmTokenAsync();
+            if (!localUiMode()) warmTokenAsync();
             return;
         }
         String js = "(function(){try{sessionStorage.setItem('sm-archive-token','"
@@ -1272,7 +1347,7 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
         if (tokenWarming) return;
         tokenWarming = true;
         new Thread(() -> {
-            String token = target.refreshToken(privateUiBase(), line -> { });
+            String token = target.refreshToken(macUiBase(), line -> { });
             tokenWarming = false;
             if (token.isEmpty()) return;
             runOnUiThread(() -> {
@@ -1296,7 +1371,7 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
             warmTokenAsync();
             return "";
         }
-        return target.refreshToken(privateUiBase(), line -> { });
+        return target.refreshToken(macUiBase(), line -> { });
     }
 
     /** 注入导出桥；非私有 origin 一律撤掉（fail closed）。 */
@@ -1360,6 +1435,296 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
             String page = trustedPageUrl;
             if (page == null || !isPrivatePanelUrl(Uri.parse(page))) return false;
             runOnUiThread(AsrActivity.this::openReview);
+            return true;
+        }
+
+        /** 方案 2：保存厂商 Key。值只进 Keystore 加密存储，不回显、不写日志。 */
+        @JavascriptInterface
+        public String saveCloudKey(String kind, String value) {
+            String page = trustedPageUrl;
+            if (page == null || !isPrivatePanelUrl(Uri.parse(page))) return "{\"ok\":false,\"code\":\"UNTRUSTED\"}";
+            CloudKeys keys = new CloudKeys(AsrActivity.this);
+            boolean ok = keys.put(kind, value);
+            JSONObject out = new JSONObject();
+            try {
+                out.put("ok", ok);
+                out.put("status", keys.status());
+            } catch (Exception ignored) {}
+            return out.toString();
+        }
+
+        @JavascriptInterface
+        public String clearCloudKey(String kind) {
+            String page = trustedPageUrl;
+            if (page == null || !isPrivatePanelUrl(Uri.parse(page))) return "{\"ok\":false,\"code\":\"UNTRUSTED\"}";
+            CloudKeys keys = new CloudKeys(AsrActivity.this);
+            boolean ok = keys.put(kind, "");
+            JSONObject out = new JSONObject();
+            try {
+                out.put("ok", ok);
+                out.put("status", keys.status());
+            } catch (Exception ignored) {}
+            return out.toString();
+        }
+
+        @JavascriptInterface
+        public String cloudKeyStatus() {
+            String page = trustedPageUrl;
+            if (page == null || !isPrivatePanelUrl(Uri.parse(page))) return "{\"ok\":false,\"code\":\"UNTRUSTED\"}";
+            JSONObject out = new JSONObject();
+            try {
+                out.put("ok", true);
+                out.put("status", new CloudKeys(AsrActivity.this).status());
+            } catch (Exception ignored) {}
+            return out.toString();
+        }
+
+        /** 用户点「测试通联」：真实调用一次厂商接口，只回结果，不改 Key。 */
+        @JavascriptInterface
+        public String testCloudKey(String kind) {
+            String page = trustedPageUrl;
+            if (page == null || !isPrivatePanelUrl(Uri.parse(page))) return testResult(false, "页面不受信任");
+            String k = kind == null ? "" : kind.trim().toLowerCase(java.util.Locale.ROOT);
+            try {
+                DirectCloud direct = new DirectCloud(AsrActivity.this);
+                if ("deepseek".equals(k)) {
+                    if (!direct.canAi()) return testResult(false, "未配置 DeepSeek Key");
+                    JSONObject result = direct.translate(new JSONObject().put("text", "hello").put("consent", true));
+                    return testResult(true, "DeepSeek 通联成功：" + result.optString("zh", ""));
+                }
+                if ("doubao".equals(k)) {
+                    if (!direct.canTts()) return testResult(false, "未配置豆包 Key");
+                    direct.tts(new JSONObject()
+                            .put("text", "你好")
+                            .put("voiceProfileId", "zh_female_xiaohe_uranus_bigtts")
+                            .put("explicitConsent", true));
+                    return testResult(true, "豆包通联成功（已生成 2 字音频）");
+                }
+                if ("tencent".equals(k)) return testTencentAsr();
+                return testResult(false, "未知 Key 类型");
+            } catch (Exception e) {
+                return testResult(false, e.getMessage() == null ? e.getClass().getSimpleName() : e.getMessage());
+            }
+        }
+
+        private String testResult(boolean ok, String message) {
+            JSONObject out = new JSONObject();
+            try {
+                out.put("ok", ok);
+                out.put("message", message == null ? "" : message);
+            } catch (Exception ignored) {}
+            return out.toString();
+        }
+
+        /** 腾讯 ASR 只做握手测试：不发音频、不建立长会话。 */
+        private String testTencentAsr() {
+            try {
+                CloudKeys keys = new CloudKeys(AsrActivity.this);
+                if (!keys.hasTencentAsr()) return testResult(false, "腾讯 AppId / SecretId / SecretKey 未配置完整");
+                String voice = TencentAsrSign.newVoiceId();
+                String url = TencentAsrSign.createUrl(
+                        keys.get(CloudKeys.TENCENT_APP_ID),
+                        keys.get(CloudKeys.TENCENT_SECRET_ID),
+                        keys.get(CloudKeys.TENCENT_SECRET_KEY),
+                        "16k_zh_en_speaker_2.0", "mix", voice);
+                final java.util.concurrent.CountDownLatch latch = new java.util.concurrent.CountDownLatch(1);
+                final String[] message = {""};
+                final boolean[] ready = {false};
+                TencentAsrClient client = new TencentAsrClient(new URI(url), "mix", voice, new AsrClient.Listener() {
+                    @Override public void onAsrEvent(AsrClient c, JSONObject e) {
+                        String type = e.optString("type", "");
+                        if ("session".equals(type) && "ready".equals(e.optString("status", ""))) {
+                            ready[0] = true;
+                            latch.countDown();
+                        } else if ("error".equals(type)) {
+                            message[0] = e.optString("text", "");
+                            latch.countDown();
+                        }
+                    }
+                    @Override public void onAsrState(AsrClient c, String state) {
+                        if (state.startsWith("closed") || state.startsWith("error")) {
+                            if (!ready[0] && message[0].isEmpty()) message[0] = state;
+                            latch.countDown();
+                        }
+                    }
+                });
+                if (!client.awaitOpen()) return testResult(false, "无法连接腾讯云 ASR（网络或签名被拒）");
+                boolean signaled = latch.await(6, TimeUnit.SECONDS);
+                try { client.close(); } catch (Exception ignored) {}
+                if (ready[0]) return testResult(true, "腾讯 ASR 通联成功（仅握手，未发送音频）");
+                if (!message[0].isEmpty()) return testResult(false, message[0]);
+                return testResult(false, signaled ? "腾讯未返回就绪" : "等待腾讯就绪超时");
+            } catch (Exception e) {
+                return testResult(false, e.getMessage() == null ? e.getClass().getSimpleName() : e.getMessage());
+            }
+        }
+
+        /** 局域网同步：手机 → Mac 的 Backups 目录（不改真源）。 */
+        @JavascriptInterface
+        public String syncPush() {
+            String page = trustedPageUrl;
+            if (page == null || !isPrivatePanelUrl(Uri.parse(page))) return syncFail("页面不受信任");
+            try {
+                String base = AsrActivity.this.macUiBase();
+                String token = AsrActivity.this.currentAccessToken();
+                return LocalSync.push(AsrActivity.this, LocalStore.get(AsrActivity.this), base, token).toString();
+            } catch (Exception e) {
+                return syncFail(e.getMessage());
+            }
+        }
+
+        /** 从 Mac 拉取快照并合并：本机已有记录不覆盖。 */
+        @JavascriptInterface
+        public String syncPull() {
+            String page = trustedPageUrl;
+            if (page == null || !isPrivatePanelUrl(Uri.parse(page))) return syncFail("页面不受信任");
+            try {
+                String base = AsrActivity.this.macUiBase();
+                String token = AsrActivity.this.currentAccessToken();
+                return LocalSync.pull(AsrActivity.this, LocalStore.get(AsrActivity.this), base, token).toString();
+            } catch (Exception e) {
+                return syncFail(e.getMessage());
+            }
+        }
+
+        private String syncFail(String message) {
+            JSONObject out = new JSONObject();
+            try {
+                out.put("ok", false);
+                out.put("message", message == null ? "同步失败" : message);
+            } catch (Exception ignored) {}
+            return out.toString();
+        }
+
+        /** 实时字幕引擎：mac = Mac 中继；direct = 手机直连腾讯。 */
+        @JavascriptInterface
+        public String setAsrMode(String mode) {
+            String page = trustedPageUrl;
+            if (page == null || !isPrivatePanelUrl(Uri.parse(page))) return "{\"ok\":false,\"code\":\"UNTRUSTED\"}";
+            String value = "direct".equals(mode) ? "direct" : "mac";
+            config.edit().putString("asr_mode", value).apply();
+            JSONObject out = new JSONObject();
+            try {
+                out.put("ok", true);
+                out.put("mode", value);
+                out.put("ready", "mac".equals(value) || new CloudKeys(AsrActivity.this).hasTencentAsr());
+            } catch (Exception ignored) {}
+            return out.toString();
+        }
+
+        @JavascriptInterface
+        public String getAsrMode() {
+            JSONObject out = new JSONObject();
+            try {
+                String value = config.getString("asr_mode", "mac");
+                out.put("ok", true);
+                out.put("mode", value);
+                out.put("ready", "mac".equals(value) || new CloudKeys(AsrActivity.this).hasTencentAsr());
+            } catch (Exception ignored) {}
+            return out.toString();
+        }
+
+        /** 用系统相机拍照并直接写入指定卡片（全尺寸，MediaStore 输出，不申请额外存储权限）。 */
+        @JavascriptInterface
+        public boolean capturePhoto(String kind, String cardId) {
+            String page = trustedPageUrl;
+            if (page == null || !isPrivatePanelUrl(Uri.parse(page))) return false;
+            if (cardId == null || !cardId.matches("^[a-z0-9-]{1,64}$")) return false;
+            String k = "place".equals(kind) || "app".equals(kind) ? kind : "story";
+            runOnUiThread(() -> {
+                try {
+                    android.content.ContentValues values = new android.content.ContentValues();
+                    values.put(android.provider.MediaStore.Images.Media.DISPLAY_NAME,
+                            "sm-" + System.currentTimeMillis() + ".jpg");
+                    values.put(android.provider.MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
+                    android.net.Uri uri = getContentResolver().insert(
+                            android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+                    if (uri == null) {
+                        setExportStatus("无法创建相机输出文件");
+                        return;
+                    }
+                    pendingCaptureUri = uri;
+                    pendingCaptureKind = k;
+                    pendingCaptureCardId = cardId;
+                    android.content.Intent intent = new android.content.Intent(
+                            android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                    intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, uri);
+                    startActivityForResult(intent, REQUEST_CAPTURE_PHOTO);
+                    setExportStatus("请拍照，完成后会自动加入卡片…");
+                } catch (Exception e) {
+                    setExportStatus("无法打开相机：" + e.getMessage());
+                }
+            });
+            return true;
+        }
+
+        /** 导出本机私人备份包（AES-256-GCM 加密的 .smbak）：先设口令，再选保存位置。 */
+        @JavascriptInterface
+        public boolean exportBackup() {
+            String page = trustedPageUrl;
+            if (page == null || !isPrivatePanelUrl(Uri.parse(page))) return false;
+            runOnUiThread(this::promptExportPassword);
+            return true;
+        }
+
+        private void promptExportPassword() {
+            android.widget.EditText pwd1 = new android.widget.EditText(AsrActivity.this);
+            pwd1.setHint("备份口令（至少 6 位，请自行记住）");
+            pwd1.setInputType(android.text.InputType.TYPE_CLASS_TEXT
+                    | android.text.InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+            int pad = dp(18);
+            pwd1.setPadding(pad, dp(8), pad, 0);
+            new android.app.AlertDialog.Builder(AsrActivity.this)
+                    .setTitle("加密本机备份")
+                    .setMessage("备份包含人物、卡片、图片；口令不保存，忘记后无法恢复。")
+                    .setView(pwd1)
+                    .setNegativeButton("取消", null)
+                    .setPositiveButton("继续", (dialog, which) -> {
+                        String a = pwd1.getText().toString();
+                        if (a.length() < 6) {
+                            toast("口令至少 6 位");
+                            return;
+                        }
+                        pendingBackupPassword = a;
+                        startBackupSavePicker();
+                    })
+                    .show();
+        }
+
+        private void startBackupSavePicker() {
+            Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+            intent.addCategory(Intent.CATEGORY_OPENABLE);
+            intent.setType("application/octet-stream");
+            String stamp = new java.text.SimpleDateFormat("yyyyMMdd-HHmm", java.util.Locale.US)
+                    .format(new java.util.Date());
+            intent.putExtra(Intent.EXTRA_TITLE, "SocialMate-backup-" + stamp + ".smbak");
+            try {
+                startActivityForResult(intent, REQUEST_EXPORT_BACKUP);
+                setExportStatus("请选择备份保存位置…");
+            } catch (Exception e) {
+                pendingBackupPassword = "";
+                setExportStatus("无法打开保存面板：" + e.getMessage());
+            }
+        }
+
+        /** 从备份包恢复：导入完成并校验后重载本机页面。 */
+        @JavascriptInterface
+        public boolean importBackup() {
+            String page = trustedPageUrl;
+            if (page == null || !isPrivatePanelUrl(Uri.parse(page))) return false;
+            runOnUiThread(() -> {
+                Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                intent.addCategory(Intent.CATEGORY_OPENABLE);
+                intent.setType("*/*");
+                intent.putExtra(Intent.EXTRA_MIME_TYPES, new String[]{
+                        "application/octet-stream", "application/zip", "application/x-zip-compressed"});
+                try {
+                    startActivityForResult(intent, REQUEST_IMPORT_BACKUP);
+                    setExportStatus("请选择 SocialMate 备份包…");
+                } catch (Exception e) {
+                    setExportStatus("无法打开文件选择器：" + e.getMessage());
+                }
+            });
             return true;
         }
 
@@ -1659,6 +2024,20 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
             return ttsJson(() -> ttsController.isListened(key));
         }
 
+        /** 页面「朗读引擎」→ 原生 provider：doubao=remote（手机豆包直连），system=system。 */
+        @JavascriptInterface
+        public String setTtsProvider(String engine) {
+            if (!trustedPage()) return "{\"ok\":false,\"code\":\"UNTRUSTED\"}";
+            String provider = "system".equals(engine) ? "system" : "remote";
+            getSharedPreferences("socialmate-tts", MODE_PRIVATE).edit()
+                    .putString("provider", provider).apply();
+            JSONObject out = new JSONObject();
+            try {
+                out.put("ok", true).put("provider", provider);
+            } catch (Exception ignored) {}
+            return out.toString();
+        }
+
         @JavascriptInterface
         public String prefs() {
             return ttsJson(() -> ttsController.prefsSnapshot());
@@ -1853,9 +2232,9 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
                 + (token.isEmpty() ? "（短期令牌待刷新）" : "（短期令牌有效）"));
     }
 
-    /** 配对/取令牌用的服务基地址：就是私有 UI 服务（8791），不再把归档地址当基址。 */
+    /** 配对/取令牌用的服务基地址：必须指向 Mac 8791，不能用本机页面 origin。 */
     private String uiBaseForPairing() {
-        return privateUiBase();
+        return macUiBase();
     }
 
     private void setExportStatus(String text) {
@@ -1914,6 +2293,85 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
             }
             return;
         }
+        if (requestCode == REQUEST_EXPORT_BACKUP) {
+            if (resultCode != RESULT_OK || data == null || data.getData() == null) {
+                pendingBackupPassword = "";
+                setExportStatus("已取消导出备份");
+                return;
+            }
+            Uri target = data.getData();
+            final String password = pendingBackupPassword;
+            pendingBackupPassword = "";
+            setExportStatus("正在导出加密备份…");
+            new Thread(() -> {
+                try (java.io.OutputStream out = getContentResolver().openOutputStream(target, "w")) {
+                    if (out == null) throw new java.io.IOException("无法写入目标文件");
+                    LocalBackup.exportTo(LocalStore.get(this), out, password);
+                    out.flush();
+                    runOnUiThread(() -> setExportStatus("已导出加密备份（含图片）"));
+                } catch (Exception e) {
+                    runOnUiThread(() -> setExportStatus("导出失败："
+                            + (e.getMessage() == null ? e.getClass().getSimpleName() : e.getMessage())));
+                }
+            }, "sm-backup-export").start();
+            return;
+        }
+        if (requestCode == REQUEST_IMPORT_BACKUP) {
+            if (resultCode != RESULT_OK || data == null || data.getData() == null) {
+                setExportStatus("已取消导入备份");
+                return;
+            }
+            Uri source = data.getData();
+            setExportStatus("正在检查备份包…");
+            new Thread(() -> {
+                boolean encrypted = isEncryptedBackup(source);
+                runOnUiThread(() -> {
+                    if (encrypted) promptImportPassword(source);
+                    else doImportBackup(source, "");
+                });
+            }, "sm-backup-check").start();
+            return;
+        }
+        if (requestCode == REQUEST_CAPTURE_PHOTO) {
+            android.net.Uri uri = pendingCaptureUri;
+            String kind = pendingCaptureKind;
+            String cardId = pendingCaptureCardId;
+            pendingCaptureUri = null;
+            pendingCaptureKind = "";
+            pendingCaptureCardId = "";
+            if (resultCode != RESULT_OK || uri == null) {
+                setExportStatus("已取消拍照");
+                return;
+            }
+            setExportStatus("正在保存照片…");
+            new Thread(() -> {
+                try (java.io.InputStream in = getContentResolver().openInputStream(uri)) {
+                    if (in == null) throw new java.io.IOException("无法读取照片");
+                    android.graphics.Bitmap bmp = android.graphics.BitmapFactory.decodeStream(in);
+                    if (bmp == null) throw new java.io.IOException("照片解码失败");
+                    int max = 1600;
+                    float scale = Math.min(1f, max / (float) Math.max(bmp.getWidth(), bmp.getHeight()));
+                    android.graphics.Bitmap outBmp = scale < 1f
+                            ? android.graphics.Bitmap.createScaledBitmap(bmp,
+                                    Math.max(1, (int) (bmp.getWidth() * scale)),
+                                    Math.max(1, (int) (bmp.getHeight() * scale)), true)
+                            : bmp;
+                    java.io.ByteArrayOutputStream baos = new java.io.ByteArrayOutputStream();
+                    outBmp.compress(android.graphics.Bitmap.CompressFormat.JPEG, 82, baos);
+                    String b64 = android.util.Base64.encodeToString(baos.toByteArray(),
+                            android.util.Base64.NO_WRAP);
+                    LocalStore.get(this).addCardMedia(kind, cardId, b64, "image/jpeg");
+                    runOnUiThread(() -> {
+                        setExportStatus("照片已加入卡片");
+                        if (socialMateWebView != null) socialMateWebView.reload();
+                    });
+                } catch (Exception e) {
+                    runOnUiThread(() -> setExportStatus("拍照保存失败："
+                            + (e.getMessage() == null ? e.getClass().getSimpleName() : e.getMessage())));
+                }
+            }, "sm-capture-save").start();
+            return;
+        }
         if (requestCode != REQUEST_SAVE_TEXT) return;
         String name = pendingSaveName;
         String body = pendingSaveText;
@@ -1933,6 +2391,58 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
         } catch (Exception e) {
             setExportStatus("保存失败：" + (e.getMessage() == null ? e.getClass().getSimpleName() : e.getMessage()));
         }
+    }
+
+    /** 只读文件头，判断是否是 AES-GCM 加密备份（SMBK1）。 */
+    private boolean isEncryptedBackup(Uri uri) {
+        try (java.io.InputStream in = getContentResolver().openInputStream(uri)) {
+            if (in == null) return false;
+            byte[] head = new byte[5];
+            int read = 0;
+            while (read < 5) {
+                int n = in.read(head, read, 5 - read);
+                if (n < 0) break;
+                read += n;
+            }
+            return read == 5 && head[0] == 'S' && head[1] == 'M' && head[2] == 'B'
+                    && head[3] == 'K' && head[4] == '1';
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    private void promptImportPassword(Uri source) {
+        android.widget.EditText pwd = new android.widget.EditText(this);
+        pwd.setHint("导出时设置的备份口令");
+        pwd.setInputType(android.text.InputType.TYPE_CLASS_TEXT
+                | android.text.InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+        int pad = dp(18);
+        pwd.setPadding(pad, dp(8), pad, 0);
+        new android.app.AlertDialog.Builder(this)
+                .setTitle("解密备份")
+                .setMessage("这是加密备份；口令错误将无法导入。")
+                .setView(pwd)
+                .setNegativeButton("取消", (dialog, which) -> setExportStatus("已取消导入"))
+                .setPositiveButton("导入", (dialog, which) -> doImportBackup(source, pwd.getText().toString()))
+                .show();
+    }
+
+    private void doImportBackup(Uri source, String password) {
+        setExportStatus("正在导入本机备份…");
+        new Thread(() -> {
+            try (java.io.InputStream in = getContentResolver().openInputStream(source)) {
+                if (in == null) throw new java.io.IOException("无法读取备份文件");
+                JSONObject result = LocalBackup.importFrom(LocalStore.get(this), in, getCacheDir(), password);
+                runOnUiThread(() -> {
+                    setExportStatus("已导入 " + result.optInt("imported") + " 项、图片 "
+                            + result.optInt("media") + " 张");
+                    if (socialMateWebView != null) socialMateWebView.reload();
+                });
+            } catch (Exception e) {
+                runOnUiThread(() -> setExportStatus("导入失败："
+                        + (e.getMessage() == null ? e.getClass().getSimpleName() : e.getMessage())));
+            }
+        }, "sm-backup-import").start();
     }
 
     /**
@@ -2035,7 +2545,7 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
         config.edit().putString("asr_url", base)
                 .putString("ui_url", uiUrlInput == null ? PRIVATE_UI_URL : uiUrlInput.getText().toString().trim())
                 .apply();
-        if (!base.startsWith("ws://") && !base.startsWith("wss://")) {
+        if (!directAsrMode() && !base.startsWith("ws://") && !base.startsWith("wss://")) {
             status.setText("服务端地址必须以 ws:// 或 wss:// 开头");
             return;
         }
@@ -2055,6 +2565,9 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
         archive.begin(keepTranscript, appVersion());
         setArchiveStatus(archive.describe());
         running = true;
+        reconnectBuffers.clear();
+        // P1-5：切后台/锁屏仍继续收音，由 microphone 前台服务保活。
+        AsrForegroundService.start(this);
         refreshRetentionHint();
         eventCount = 0;
         lastFinal = "";
@@ -2082,6 +2595,81 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
         t.start();
     }
 
+    /** 直连模式：设置里选「腾讯直连」且 AppId/SecretId/SecretKey 齐全。 */
+    private boolean directAsrMode() {
+        if (!"direct".equals(config.getString("asr_mode", "mac"))) return false;
+        CloudKeys keys = new CloudKeys(this);
+        return keys.hasTencentAsr();
+    }
+
+    /** 按当前模式建 ASR 会话：腾讯直连在手机本地签名，Mac 中继仍走配对令牌。 */
+    private AsrClient openAsrClient(String track, String baseUrl, String suffix, String token) throws Exception {
+        if (directAsrMode()) {
+            CloudKeys keys = new CloudKeys(this);
+            String engine = "mix".equals(track) ? "16k_zh_en_speaker_2.0" : "16k_en";
+            String voice = TencentAsrSign.newVoiceId();
+            String url = TencentAsrSign.createUrl(
+                    keys.get(CloudKeys.TENCENT_APP_ID),
+                    keys.get(CloudKeys.TENCENT_SECRET_ID),
+                    keys.get(CloudKeys.TENCENT_SECRET_KEY),
+                    engine, track, voice);
+            return new TencentAsrClient(new URI(url), track, voice, this);
+        }
+        return new AsrClient(new URI(baseUrl + suffix + "&track=" + track), track, token, this);
+    }
+
+    private String uriHost(String baseUrl) {
+        try {
+            String host = new URI(baseUrl).getHost();
+            return host == null ? baseUrl : host;
+        } catch (Exception e) {
+            return baseUrl;
+        }
+    }
+
+    /** P1-3：首连最多 3 次，避免 4G/TLS 4s 抖动直接判整轮失败。 */
+    private AsrClient openWithRetry(String track, String baseUrl, String suffix, String token) throws Exception {
+        Exception last = null;
+        for (int attempt = 1; attempt <= 3 && running; attempt++) {
+            AsrClient client = null;
+            try {
+                client = openAsrClient(track, baseUrl, suffix, token);
+                if (client.awaitOpen()) return client;
+            } catch (Exception e) {
+                last = e;
+            }
+            if (client != null) {
+                try { client.closeBlocking(); } catch (Exception ignored) {}
+            }
+            if (attempt < 3) {
+                try { Thread.sleep(800L * attempt); }
+                catch (InterruptedException e) { Thread.currentThread().interrupt(); break; }
+            }
+        }
+        throw last == null ? new Exception("无法连接服务端") : last;
+    }
+
+    /** P1-2：断线时把最近音频入有界队列，重连成功后补发。 */
+    private void bufferFrame(String track, byte[] frame) {
+        java.util.ArrayDeque<byte[]> queue = reconnectBuffers.computeIfAbsent(
+                track, k -> new java.util.ArrayDeque<>());
+        synchronized (queue) {
+            while (queue.size() >= RECONNECT_BUFFER_FRAMES) queue.removeFirst();
+            queue.addLast(java.util.Arrays.copyOf(frame, frame.length));
+        }
+    }
+
+    private void flushBuffered(String track, AsrClient client) {
+        java.util.ArrayDeque<byte[]> queue = reconnectBuffers.remove(track);
+        if (queue == null || client == null) return;
+        synchronized (queue) {
+            for (byte[] frame : queue) {
+                if (!client.isAlive()) break;
+                client.sendPcm(frame);
+            }
+        }
+    }
+
     private void stream(String baseUrl, String[] tracks) {
         AudioRecord rec = null;
         // T6：本轮结束信号按 track 计数（最少 1）。上游每条会话收尾都会推一条 session/ended，
@@ -2090,9 +2678,10 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
         asrEndedClients.clear();
         asrEndedLatch = endedLatch;
         try {
-            // 本机短令牌是 ASR 握手的唯一身份凭证：没有就 fail closed，不在没鉴权时开麦。
+            // 手机直连腾讯不需要 Mac 配对令牌；Mac 中继仍 fail closed。
+            final boolean directAsr = directAsrMode();
             final String asrToken = currentAccessToken();
-            if (asrToken.isEmpty()) {
+            if (!directAsr && asrToken.isEmpty()) {
                 throw new Exception(L("未配对或令牌失效，请重新配对后再录音",
                         "Not paired or token expired; pair this phone again before recording"));
             }
@@ -2107,13 +2696,12 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
             String suffix = "?rate=" + rate + "&channels=" + channels;
             ArrayList<AsrClient> opened = new ArrayList<>();
             for (String track : tracks) {
-                URI uri = new URI(baseUrl + suffix + "&track=" + track);
-                AsrClient client = new AsrClient(uri, track, asrToken, this);
+                AsrClient client = openWithRetry(track, baseUrl, suffix, asrToken);
                 clients.add(client);
                 opened.add(client);
-                if (!client.awaitOpen()) throw new Exception("无法连接 " + uri.getHost() + "（检查服务端与网络）");
             }
             sessionStartMs = SystemClock.elapsedRealtime();
+            stopRequested = false;
             asrLink = "connected";
             runOnUiThread(() -> {
                 status.setText("已连接 · " + rate + " Hz · " + channels + " 声道 · 正在发送音频（"
@@ -2131,7 +2719,15 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
                 throw new Exception("startRecording 未启动");
             int frameBytes = rate / 10 * channels * 2;
             byte[] buffer = new byte[frameBytes];
+            // 腾讯云 v2 单会话上限 300s；直连模式到点主动收尾，避免服务端断开后无限重连。
+            final long maxSessionMs = directAsr
+                    ? config.getLong("direct_asr_max_ms", 300_000L) : 0L;
             while (running) {
+                if (directAsr && maxSessionMs > 0
+                        && SystemClock.elapsedRealtime() - sessionStartMs >= maxSessionMs) {
+                    runOnUiThread(() -> stopStreaming("已到 " + (maxSessionMs / 1000) + " 秒上限"));
+                    break;
+                }
                 int got = rec.read(buffer, 0, buffer.length, AudioRecord.READ_BLOCKING);
                 if (got < 0) {
                     if (!running) break;
@@ -2140,15 +2736,18 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
                 int whole = got - got % (channels * 2);
                 if (whole == 0) continue;
                 byte[] frame = whole == buffer.length ? buffer : java.util.Arrays.copyOf(buffer, whole);
+                // 腾讯云 v2 只收 16k/mono；Mac 中继仍收原始帧（由服务端重采样/分轨）。
+                byte[] sendFrame = directAsr ? Pcm16.to16kMono(frame, rate, channels) : frame;
                 List<AsrClient> snapshot;
                 synchronized (clients) { snapshot = new ArrayList<>(clients); }
                 for (AsrClient client : snapshot) {
                     if (!client.isAlive()) {
-                        // 断线 ≠ 正在识别：先标记重连，帧在这段时间丢弃，新会话只收后续音频。
+                        // 断线 ≠ 正在识别：先缓存最近音频并重连；重连成功后补发，避免整段缺字。
+                        bufferFrame(client.label(), sendFrame);
                         reconnectTrack(client, baseUrl + suffix, asrToken);
                         continue;
                     }
-                    client.sendPcm(frame);
+                    client.sendPcm(sendFrame);
                 }
             }
         } catch (Exception e) {
@@ -2238,13 +2837,19 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
                 if (!running) break;
                 AsrClient next = null;
                 try {
-                    URI uri = new URI(baseWithParams + "&track=" + track);
-                    next = new AsrClient(uri, track, token, this);
+                    // baseWithParams 已含 ?rate=...，直连模式会忽略它并重新签名。
+                    // P1-7：重连不复用开局令牌；Mac 中继重新取短期令牌，直连模式不需要。
+                    String freshToken = directAsrMode() ? "" : currentAccessToken();
+                    if (freshToken.isEmpty()) freshToken = token;
+                    next = openAsrClient(track, baseWithParams, "", freshToken);
                     if (next.awaitOpen() && running) {
+                        // P1-2：新会话事件时间轴接着本轮已录时长，避免页面字幕时间倒退。
+                        next.timeOffsetMs = SystemClock.elapsedRealtime() - sessionStartMs;
                         synchronized (clients) {
                             clients.remove(lost);
                             clients.add(next);
                         }
+                        flushBuffered(track, next);
                         recovered = true;
                         break;
                     }
@@ -2286,6 +2891,13 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
     private void stopStreaming(String reason) {
         if (!running) return;
         running = false;
+        stopRequested = true;
+        AsrForegroundService.stop(this);
+        // 停止后立刻恢复「开始录音」按钮，避免收尾异常时界面卡在禁用态。
+        runOnUiThread(() -> {
+            if (startButton != null) startButton.setEnabled(true);
+            if (stopButton != null) stopButton.setEnabled(false);
+        });
         status.setText("正在停止…（" + reason + "）");
         AudioRecord r = recorder;
         if (r != null) {
@@ -2311,6 +2923,17 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
     }
 
     @Override public void onAsrEvent(AsrClient client, JSONObject event) {
+        long offset = client.timeOffsetMs;
+        if (offset > 0) {
+            String t = event.optString("type", "");
+            if ("final".equals(t) || "interim".equals(t)) {
+                try {
+                    event.put("startMs", event.optLong("startMs", 0) + offset);
+                    event.put("endMs", event.optLong("endMs", 0) + offset);
+                } catch (Exception ignored) {}
+            }
+        }
+        publishAsrToPage(client, event);
         String type = event.optString("type", "");
         if ("session".equals(type)) {
             String s = event.optString("status", "");
@@ -2318,7 +2941,7 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
             // 只统计当前仍在本轮的 client，避免重连被替换下来的旧会话误放行。
             if ("ended".equals(s) || "end".equals(s)) {
                 CountDownLatch latch = asrEndedLatch;
-                if (latch != null && clients.contains(client) && asrEndedClients.add(client)) {
+                if (stopRequested && latch != null && clients.contains(client) && asrEndedClients.add(client)) {
                     latch.countDown();
                 }
             }
@@ -2361,6 +2984,34 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
                 setArchiveStatus(archive.describe());
             }
         });
+    }
+
+    /**
+     * 把原生 ASR 事件广播给本机页面的 SSE 订阅者。
+     * 只在内存转发：partial 不落盘；final 的归档仍由 SessionArchive 按留存同意处理。
+     */
+    private void publishAsrToPage(AsrClient client, JSONObject event) {
+        LocalServer server = localServer;
+        if (server == null || event == null) return;
+        try {
+            String type = event.optString("type", "");
+            if (!"session".equals(type) && !"error".equals(type)
+                    && !"interim".equals(type) && !"final".equals(type)) return;
+            JSONObject e = new JSONObject(event.toString());
+            if (!e.has("track")) e.put("track", client == null ? "" : client.label());
+            if ("final".equals(type)) {
+                e.put("final", true);
+                if (!e.has("provider")) e.put("provider", "tencent");
+                if (!e.has("index")) e.put("index", eventCount);
+                if (!e.has("sessionId")) {
+                    String sid = archive == null ? null : archive.lastSessionId();
+                    if (sid != null) e.put("sessionId", sid);
+                }
+            }
+            server.publishAsr(e);
+        } catch (Exception ignored) {
+            // 页面订阅失败不能影响录音与归档主流程。
+        }
     }
 
     private void requestSuggestions() {
@@ -2443,8 +3094,8 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
     @Override protected void onStop() {
         super.onStop();
         TtsPlaybackService.clearUiListener(null);
-        // No foreground capture: background microphone remains deliberately impossible.
-        stopStreaming("切到后台");
+        // P1-5：录音由 microphone 前台服务保活，切后台/锁屏不再停录。
+        // 只有用户点停止、页面销毁或上游明确中断时才停止（onDestroy/stopStreaming）。
         /* V1.4：后台朗读队列由前台服务持有，熄屏/切后台绝不能在这里被 stop 掉。
            只有在没有活动队列时才保持旧的「切页即释放」语义。 */
         if (ttsController != null && !TtsPlaybackService.hasActiveQueue()) ttsController.onStop();
@@ -2469,6 +3120,10 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
 
     @Override protected void onDestroy() {
         running = false;
+        if (localServer != null) {
+            localServer.stop();
+            localServer = null;
+        }
         unregisterNetworkRecovery();
         TtsPlaybackService.clearUiListener(null);
         // V1.4：队列还在跑时不能 shutdown 引擎（后台继续朗读要靠它）。

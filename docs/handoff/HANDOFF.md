@@ -1,9 +1,9 @@
 # HANDOFF · SocialMate（ALW-001 外语社交系统）
 
-> 交接时间：2026-11-05 19:10 ｜ 分支：main ｜ 组合服务：http://127.0.0.1:8791/v12
-> **版本：Android 0.9.1 / vc69**（APK `dce4519b…`；已装 Note 11 5G；上一提交 d51360d）
-> **V1.5.2 真机 PASS**；豆包朗读、统一音色、暂停/吸顶、中文整理、练习判定均已在 Note 12T 复测
-> 真实 P066 录音 6 段→页面 6/归档 6/201/pending 0；30 分钟 TTS 回环 226/226
+> 交接时间：2026-11-06 13:56 ｜ 分支：main ｜ 组合服务：http://127.0.0.1:8791/v12
+> **版本：Android 0.9.2 / vc70（本机 origin + SQLite 本地真源）；0.9.1/vc69 为回滚包**
+> **V1.7 R2 已收口**：C0–C5、方案 2 直连、加密备份、LAN 同步、性能、相机、P0/P1 全关；真实 4G 未测（手机 SIM ABSENT）
+> 报告：`docs/plan/ALW001-N05-V1.7-R2/EXECUTION-REPORT-20261106.md`；复盘：`.../RETRO-20261106.md`；实现：`.../IMPLEMENTATION-NOTES.md`
 
 ## 0. 常驻指针
 
@@ -11,7 +11,7 @@
 - 踩坑：`agent.md`（旧条目在 `docs/archive/agent-pitfalls-*.md`）
 - 阶段流水归档：`docs/archive/handoff-flow-20261031.md`、`docs/archive/handoff-flow-20261103-n05v12.md`
 - Android 验收台账：`android-poc/IMPLEMENTATION_STATUS.md`
-- **本轮证据**：V1.5.2 `docs/plan/ALW001-N05-V1.5.2-Chat-Compact-Layout/qa/QA-REPORT.md`、`qa/t10-device/`
+- **本轮证据**：V1.5.2 `.../V1.5.2-Chat-Compact-Layout/qa/QA-REPORT.md`、`qa/t10-device/`；V1.7 `docs/plan/ALW001-N05-V1.7-R2/`（含 PERF/ASR-AUDIT/RETRO）
 - 豆包接入说明：`docs/plan/ALW001-N05-V1.5.2-Chat-Compact-Layout/DOUBAO-TTS-INTEGRATION.md`；密钥文档 `docs/DOUBAO-TTS-KEY.md`
 - 前序：V1.5.1 `.../ALW001-N05-V1.5.1-Chat-RealUse-Closure/qa/QA-REPORT.md`；V1.5 `.../ALW001-N05-V1.5-Chat-UX/QA-REPORT.md`
 - 红城湖逐字原稿：`docs/archive/20261103-红城湖公园-实测文稿-逐字版-备份.md`
@@ -25,44 +25,31 @@
 
 ### 1.1 已收口
 
-- V1.4：TTS 前台服务 + 锁屏 45/45；Mac 归档 launchd 1800s；P016 交接。
-- T3/0.8.20–0.8.27：Tailscale 断 WiFi PASS；一键开录 / 家庭 WiFi 选路；34 段、归档 201。
-- V1.5 / 0.8.29：单栏聊天、字幕 156px、四方向、阅读冻结、资料横条。
-- V1.5.1 / 0.8.30：ASR 握手鉴权（401/403）、归档 401 刷新、断线重连、10 话题、现场密度。
-- P066 流式：`ASR_UPSTREAM=p066`，`sentence_type=1` 判 final、`end` 2500ms、补 `speaker_diarization`。
+- V1.4–V1.5.1 已收口，细节见 `docs/archive/handoff-flow-*.md`：TTS 前台服务、T3 Tailscale、单栏聊天、ASR 鉴权/归档刷新/断线重连、P066 流式 final。
 
 ### 1.2 V1.5.2 / 人物 / 豆包 / N05（2026-11-05，0.8.31/66）
 
-- 全屏录音：隐藏 `.top` 与 5 Tab；单排「对象 / 状态 / ⋯ / 停止」；系统返回先退全屏、录音不停。
-- 对话区 `calc((100vh - 134px)/3)`；真机 219/438 = 0.500，首屏 5 条；停止弹层三选项；分享卡 + 原资料页；按需翻译（DeepSeek 单句、`consent:true`）。
-- 人物档案：顶部「基本档案」按章节聚合；紧凑版 4563→1655；收藏 ☆⇄★；N05 控制栏 `sticky; top:56px`、高 105px。
-- 豆包 TTS（`tts-adapter-doubao.mjs`，`X-Api-Key` + `seed-tts-2.0`）：Web Audio 连续播放、切换前 `smStopAudio`、暂停/继续走 `AudioContext.suspend()/resume()`；设置页只留一个「朗读音色（中英统一）」，默认 Tina。
-- 偏好跨网络：音色/引擎改由 `/v12/api/prefs` 服务端持久化（局域网与 Tailscale 共用一份）。
-- 预算：豆包 1→10 元；`TTS_BUDGET_*` / `RATE_LIMITED` 停止并提示，**不再静默回退系统声**。
-- 中文整理：只改 4 段（`blk-hc-2/4/11/17`），revision 3→4，备份 `.bak-20261105-cn`。
-- GPT 练习：中文说一种自然表达对上大意即算掌握；英文 A/B 仅作参考。
-- 构建：`release/SocialMate-0.9.1-vc69-debug.apk`，SHA-256 `dce4519b…`。
-- 弱网首屏：`/v12` 改 `no-cache`+ETag+gzip；地点详情/私有地点本地缓存，断网显「离线缓存」；非 WiFi 自动走 Tailscale。
+- 全屏录音单排控制；对话区 219/438=0.500；停止弹层、分享卡、按需翻译；人物档案聚合/紧凑/收藏 toggle。
+- 豆包 TTS：Web Audio 连续播放、切换前 `smStopAudio`、暂停/继续 `AudioContext.suspend()/resume()`；音色中英统一；预算上限 10 元，超额停止不再静默回退。
+- 中文整理只改 4 段（revision 3→4）；GPT 练习中文对上大意即算掌握；弱网 `/v12` no-cache+ETag+gzip，非 WiFi 走 Tailscale。
+- 构建 0.9.1/vc69 `dce4519b…`；V1.5.2 真机 A–F 通过；30 分钟 TTS 回环 226/226。
 - **V1.6 活资料库**：`private-cards.mjs` 三类卡片；三页统一「＋新建/回收站」；关于我中英直显；`/api/ai/draft-en`；原生 `onShowFileChooser`。分角色审查 P0 5 条已整改、复审可发布；新增 `sm-card-regression-local-zh`（项目级）与 `report-evidence-discipline-local-zh`（中央、SM 未导入）；证据见 `docs/qa/V1.6-Living-Card-Library/`。
+- **V1.7 R2（0.9.2/vc70，SHA `5cfb736c…`，APK 约 55MB）**：本机 origin + 211 张离线 webp + SQLite 真源；断网冷启动 P50 1039/P95 1064ms；五 Tab/人物 8/收藏 1/海南 116/地点 36/搜索/CRUD 通过；393×852 无横向溢出、深色 `#192d35`；加密备份 `.smbak`、LAN 同步 push/pull/status、方案 2 三项 Key、真实 300s 直连（15 段 final）、相机入卡片（rev 10/media 5）、原生 TTS 直连（direct-a34c…）。修卡片保存、ASR P0-1/P0-2、P1-2/3/5/6/7、录音按钮；海南重负载 P95 205.3ms。切后台 12s/锁屏 10s 录音保持。真实 4G 未测（SIM ABSENT）。
 
 ## 2. 下一步
 
-1. **V1.6 活资料库 MVP 已收口（0.9.1/69）；分角色审查 P0 全关**：剩覆盖层入口、备份恢复、相机拍照、393×852、Tailscale origin；见 `qa/FINAL-REPORT.md` 与 `docs/qa/V1.6-Living-Card-Library/`。
-2. **工作树待收口**：4 个未提交文件（`CHANGELOG.md`、`docs/relay/CURRENT_TASK.md`、`ai-gateway/server.mjs`、`socialmate-v1.2/index.html`）+ 未跟踪 `AGENTS.md`、`apps/dialog-kit`、V1.6 计划、`docs/review/`、项目级 skill；未获授权前不 commit/push。
-3. **长会话**：30 分钟 TTS 回环 226/226（约 0.50 元）；真人 30 分钟仍待。
-4. **P066 余项**：402 预算不足、300 秒自动结束、撤销 401。
-5. **P016 跟进**：`P016-TRANSFER.md` 的 18791 鉴权/绑定、投递状态机、跨天补传、22:00 重排。
-6. **Polly / 照片 / 第二台设备**：Polly 密钥与预算后补；红城湖 `photos:[]` NO_SOURCE；Android 14 FGS 未验。
-7. **翻译预算**：DeepSeek 剩余 0.78 元；按需翻译一次约 0.0003 元。
+1. **真实 4G 验收**：手机 SIM 目前 `ABSENT`；插卡/开数据或连热点后，重跑 5 分钟录音 + 切后台 2 分钟 + WiFi↔蜂窝切换。
+2. **C3 剩余**：LAN 双向冲突合并、传输加密（当前 push 归档 + pull 补缺，明文 JSON + token）。
+3. **C4 云端（可选）**：需平台/账号/域名/费用授权，未部署。
+4. **工作树**：dirty；用户明确未授权 commit/push；最新 APK `release/SocialMate-0.9.2-vc70-debug.apk`。
 
 ## 3. 未完成 / NOT_RUN
 
 - **真人 30 分钟**、Wi‑Fi↔蜂窝切换、来电/耳机/音频焦点（BG04）仍 NOT_RUN；TTS 回环不是真人验收。
-- P066 流式 402/300s/撤销 NOT_RUN；真实 Amazon Polly NOT_RUN。
-- 豆包真实账单以火山控制台为准；本地账本为估算（3 元/万字符，当前上限 10 元）。
-- 中文整理只覆盖 4 段；其余 15 段经检查未发现明显口水词，保持原样。
-- 393×852 档未单独跑；真机 393×791。
-- V1.6 未做：相机拍照、覆盖层前端入口、备份/恢复、393×852；测试卡已软删在回收站。
+- 真实 4G NOT_RUN：手机 `gsm.sim.state=ABSENT`、无 rmnet，关 WiFi 后腾讯直连无网。
+- P066 流式 402/300s/撤销 NOT_RUN；真实 Amazon Polly NOT_RUN；豆包账单以火山控制台为准（本地为估算）。
+- 中文整理只覆盖 4 段；其余 15 段未发现明显口水词。
+- V1.6/V1.7 剩余：LAN 双向冲突合并、传输加密；App 内相机入口已做。
 - 241M 日志 `qa/t4-device/` 待清理；治理仓库 S2 口径与 `com.alw.socialmate-stack` 待裁定。
 
 ## 4. 红线
@@ -72,21 +59,18 @@
 - 腾讯 ASR 2 元、P066 ASR 3 元/月、DeepSeek 1 元、豆包 TTS 10 元；不得擅自调大。
 - V1.4 与海南资料只读；`socialmate-prototype/` 只改 `ai-gateway`，不 reset/clean 其他会话改动。
 - 端口只停确属本仓库的进程；手机操作必须显式 `--serial`；不 commit/push/release 除非用户明确要求。
-- **前台服务只用于朗读**：不得扩成后台录音、开机自启或常驻服务；通知栏不得出现原文/地点/人名。
+- **前台服务**：朗读用 `mediaPlayback`、录音用 `microphone`；不得扩成开机自启或常驻；通知栏不得出现原文/地点/人名。
 - 对话翻译/豆包朗读不得用词典/模板冒充；密钥不进日志、文档、仓库（`.env` 已 gitignore）。
 - **不确定的显示改动先不做**：用户没要求的折叠/精简不要自作主张；本轮误折叠英 B 已回退。
 
 ## 5. 三日流水
 
-- 2026-11-03 V1.2/V1.3：私有地点 115→116；19 段入库；混合队列 + 词组 + 归档 33→85；0.8.12/0.8.13 真机。
-- 2026-11-04：P066 流式 final 修复；V1.4 0.8.14/49；T3 0.8.15/50；V1.5 0.8.29/64；V1.5.1 0.8.30/65。
-- 2026-11-05：V1.5.2 全屏压缩/停止弹层/分享卡/原资料；0.8.31/66；真机 A–F 通过。
-- 2026-11-05：30 分钟 TTS 回环 226/226；人物档案聚合/紧凑/收藏 toggle；豆包 TTS 与双记账修复。
-- 2026-11-05：豆包 Web Audio、统一音色、防叠加、暂停/吸顶；音色跨网络持久化；预算 1→10 元；项目级 skill 与 V1.6 计划入库。
-- 2026-11-05：弱网加速 0.8.32/67；V1.6 活资料库 MVP 0.9.1/69（卡片 CRUD/软删恢复/媒体/AI 草稿）。
-- 2026-11-05：V1.6 分角色 4 审查（P0 5）→ 整改（原子写/恢复冲突/图片/双入口/分享）→ 独立复审 P0 全关、158 测试；按用户选择保持未提交。
+- 2026-11-03：V1.2/V1.3 私有地点 116、19 段入库、归档 85（细节见 archive）。
+- 2026-11-04：P066 流式 final；V1.4–V1.5.1（0.8.14/49 → 0.8.30/65）。
+- 2026-11-05：V1.5.2 0.8.31/66；30 分钟 TTS 226/226；豆包 Web Audio/暂停吸顶/预算 10；V1.6 0.9.1/69。
+- 2026-11-06：V1.7 C0–C5 收口；方案 2 三项 Key 直连（DeepSeek/豆包/腾讯）、加密备份、LAN 同步、性能（冷启动 P95 1064ms、Tab 最大 P95 205.3ms）、相机入卡片、P0/P1 全关；真实 4G 因 SIM ABSENT NOT_RUN。
 
 ## 6. 接续提示词
 
-先读 §0–§6；V1.6 已收口，等用户发布/提交指令，剩余项见 §3。
-证据先核 `docs/qa/V1.6-Living-Card-Library/` 与 V1.6 计划目录 `qa/`。
+先读 §0–§6；V1.7 R2 已收口，剩 LAN 双向/加密与真实 4G（需插卡）。
+证据先核 `EXECUTION-REPORT-20261106.md`、`RETRO-20261106.md`、`PERF-REPORT.md`。

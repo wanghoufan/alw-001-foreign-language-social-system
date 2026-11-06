@@ -1,0 +1,11 @@
+# 本地状态与密钥
+.env
+*.db
+*.db-wal
+*.db-shm
+.local/
+
+# 依赖与临时文件
+node_modules/
+npm-debug.log*
+.DS_Store

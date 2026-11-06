@@ -6,6 +6,9 @@ import android.util.Log;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import app.socialmate.dualmic.local.CloudKeys;
+import app.socialmate.dualmic.local.DirectCloud;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -93,6 +96,27 @@ public final class RemoteTtsAdapter implements TtsProviderAdapter {
                     callback.onReady(new Prepared(cached, mimeOf(cached), true,
                             readSidecar(cached, "audioId"), readSidecar(cached, "voiceId"),
                             readSidecar(cached, "modelVersion"), "local-cache", ""));
+                    return;
+                }
+                // 方案 2：手机已配置豆包 Key 时，原生朗读也走手机直连，不再依赖 Mac/云端网关。
+                CloudKeys cloudKeys = new CloudKeys(appContext);
+                if (cloudKeys.hasDoubao()) {
+                    JSONObject directBody = request.toJson();
+                    directBody.put("explicitConsent", true);
+                    String voice = directBody.optString("voiceProfileId", "");
+                    if (voice.isEmpty()) voice = directBody.optString("voiceId", "");
+                    if (!voice.matches("^(zh_female_xiaohe_uranus_bigtts|zh_male_m191_uranus_bigtts|zh_female_yingyujiaoxue_uranus_bigtts)$")) {
+                        voice = "zh_female_yingyujiaoxue_uranus_bigtts";
+                    }
+                    directBody.put("voiceProfileId", voice);
+                    DirectCloud.TtsResult audio = new DirectCloud(appContext).tts(directBody);
+                    File written = writeAtomically(cached, audio.bytes);
+                    writeSidecar(cached, "direct-" + sha256Hex(audio.bytes).substring(0, 16),
+                            voice, "seed-tts-2.0", audio.mime);
+                    log("direct doubao ok bytes=" + audio.bytes.length
+                            + " synthRequests=" + synthRequests.incrementAndGet());
+                    callback.onReady(new Prepared(written, audio.mime, false, "", voice,
+                            "seed-tts-2.0", "direct", ""));
                     return;
                 }
                 String base = trimBase(baseUrl.get());
@@ -185,7 +209,8 @@ public final class RemoteTtsAdapter implements TtsProviderAdapter {
                 callback.onFailed(new TtsError(TtsError.CODE_REMOTE_UNREACHABLE,
                         "连不上远端朗读服务（地址不可达）。没有自动切到系统声音。", true));
             } catch (Exception e) {
-                Log.e(TAG, "remote prepare failed " + e.getClass().getSimpleName());
+                Log.e(TAG, "remote prepare failed " + e.getClass().getSimpleName()
+                        + " message=" + e.getMessage());
                 callback.onFailed(new TtsError(TtsError.CODE_INTERNAL,
                         "远端朗读失败：" + e.getClass().getSimpleName(), true));
             }

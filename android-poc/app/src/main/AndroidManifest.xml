@@ -15,6 +15,7 @@
     <!-- N05 V1.4：锁屏/后台连续朗读必须靠 mediaPlayback 前台服务，不是靠常亮屏。 -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-feature android:name="android.hardware.microphone" android:required="true" />
@@ -39,6 +40,10 @@
         <service android:name=".TtsPlaybackService"
             android:exported="false"
             android:foregroundServiceType="mediaPlayback" />
+        <!-- V1.7 P1-5：录音前台服务，切后台/锁屏继续收音。 -->
+        <service android:name=".AsrForegroundService"
+            android:exported="false"
+            android:foregroundServiceType="microphone" />
         <!-- V1.5.1 T-10：release 不再导出；adb 听测仅在 debug 清单里用 tools:replace 放开。 -->
         <activity android:name=".TtsSelfTestActivity" android:exported="false"
             android:launchMode="singleTop"

@@ -1,4 +1,36 @@
 plugins { id 'com.android.application' }
+
+/**
+ * V1.7：页面真源是 socialmate-v1.2/index.html，构建时复制进 APK assets。
+ * 不手工维护第二份 HTML，避免「改了源但 App 没变」。
+ */
+def repoRoot = rootProject.projectDir.parentFile
+def webRoot = new File(repoRoot, "socialmate-v1.2")
+def gatewayRoot = new File(repoRoot, "socialmate-prototype/ai-gateway")
+def imagesRoot = new File(repoRoot, "docs/成果整理/Hainan-Travel-Guide/images")
+def generatedAssets = new File(layout.buildDirectory.get().asFile, "generated/webassets")
+
+tasks.register("copyWebAssets") {
+    inputs.file(new File(webRoot, "index.html"))
+    inputs.file(new File(gatewayRoot, "profile-sync.js"))
+    inputs.file(new File(webRoot, "source/places-115.json"))
+    if (imagesRoot.exists()) inputs.dir(imagesRoot)
+    outputs.dir(generatedAssets)
+    doLast {
+        def v12 = new File(generatedAssets, "v12")
+        def seed = new File(generatedAssets, "seed")
+        v12.mkdirs()
+        seed.mkdirs()
+        copy { from new File(webRoot, "index.html"); into v12 }
+        copy { from new File(gatewayRoot, "profile-sync.js"); into v12 }
+        copy { from new File(webRoot, "source/places-115.json"); into seed }
+        // V1.7：公开 115 地点图片离线（约 54MB；构建时复制，APK 会变大）。
+        if (imagesRoot.exists()) {
+            copy { from imagesRoot; into new File(generatedAssets, "img") }
+        }
+    }
+}
+
 android {
     buildFeatures { buildConfig true }
     namespace 'app.socialmate.dualmic'
@@ -10,14 +42,23 @@ android {
         applicationId 'app.socialmate.dualmic'
         minSdk 26
         targetSdk 35
-        versionCode 69
-        versionName '0.9.1'
+        // V1.7：本机页面 + SQLite 本地真源。
+        versionCode 70
+        versionName '0.9.2'
+    }
+    sourceSets {
+        main {
+            assets.srcDirs += generatedAssets
+        }
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
     }
 }
+
+tasks.named("preBuild").configure { dependsOn("copyWebAssets") }
+
 dependencies {
     implementation 'org.java-websocket:Java-WebSocket:1.5.7'
 }
