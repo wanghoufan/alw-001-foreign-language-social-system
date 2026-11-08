@@ -17,7 +17,7 @@
 - 通过总管家既有结构巡检；不得修改根AGENTS触发词内容、不得新增Gate/角色。
 
 ## Skill 管家接手
-候选Skill存于 `docs/relay-center/v1/skill/SKILL.md`。它尚未在中央Skill仓库注册，**不得称已安装/全局分发**。有权限的Skill管家需按000的 `Skill 管家/说明.md` 加载 `skill-manager-governance-local-zh` 与 `central-skill-creator-mac-local-zh`，审查权威真源、命名、权限、依赖、安全后，再由Skill Manager入库、分发；不要直接复制到 ~/.agents/skills。
+候选 Skill 稿已移除（原 `docs/relay-center/v1/skill/SKILL.md`，2026-11-07 清理）。中央 Skill 仓库已有更新版 `cloud-to-desktop-relay-local-zh`，转发规则与项目登记以 `019-转发管家/` 为唯一真源；不要再使用旧试点稿，也不要直接复制到 `~/.agents/skills`。
 本试点注册表是临时存储：正式移到000的 `转发管家/` 后，将3项目注册入口一起更新为正式路径，旧试点文件保留“已迁移”说明，不让两份注册表同时变真源。
 
 ## 插件封装门槛

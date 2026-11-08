@@ -16,7 +16,7 @@
 
 ## 覆盖安装（强制）
 
-- **凡安装新版本 APK、覆盖安装或更新手机端，必须先调用 `android-overwrite-install-guard-local-zh` 并完成强制回执：`已核对签名 / 已核对版本递增 / 已核对 Key 与本地库保留`。任一缺失不得报完成。**
+- **凡安装新版本 APK、覆盖安装或更新手机端，必须先调用中央 `android-true-device-qa-orchestrator-local-zh` 的覆盖安装守卫（签名指纹比对、敏感配置布尔回读）并完成强制回执：`已核对签名 / 已核对版本递增 / 已核对 Key 与本地库保留`。任一缺失不得报完成。**
 - 禁止 `adb uninstall`、`pm clear`、删除 `shared_prefs`、恢复出厂；签名不一致时停止，不得卸载绕过。
 - 备份包不含厂商 Key；不得把「有备份」写成「Key 可恢复」。
 
