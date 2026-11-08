@@ -1,14 +1,14 @@
-# SocialMate（外语社交系统 · ALW-001）
+简体中文 | [English](./README.en.md)
 
-[English](./README.en.md)
+# SocialMate（外语社交系统）
 
-Local-first 社交知识库 MVP：准备聊天话题、按场景练口语、把真实交流整理成人物档案，数据全部保存在你自己的 Markdown 文件里。本地服务仅监听 `127.0.0.1`，无外部依赖、账号、云端同步或 AI API。
+本地优先的社交知识库 MVP：准备聊天话题、按场景练口语、把真实交流整理成人物档案，数据全部保存在你自己的 Markdown 文件里。本地服务仅监听 `127.0.0.1`，无外部依赖、账号、云端同步或 AI API。
 
-![首页：左侧功能导航，右侧内容区](assets/home.png)
-
-![话题库：左侧话题列表与搜索，右侧阅读区](assets/topics.png)
-
-![口语练习：场景与难度选择，生成练习提示词](assets/practice.png)
+<p>
+  <img src="assets/home.png" width="200" alt="首页：左侧功能导航，右侧内容区">
+  <img src="assets/topics.png" width="200" alt="话题库：左侧话题列表与搜索，右侧阅读区">
+  <img src="assets/practice.png" width="200" alt="口语练习：场景与难度选择，生成练习提示词">
+</p>
 
 ## 它能做什么
 
@@ -49,6 +49,10 @@ docker compose --env-file .env.local ps
 
 健康检查：`http://127.0.0.1:4173/api/health`。查看日志：`docker compose --env-file .env.local logs --tail=100`。停止：`docker compose --env-file .env.local stop`。只有用户明确授权时才删除容器；不得删除 DockerData 或 DockerBackups。
 
+## Android 版本
+
+手机端安装包在 `release/`：`SocialMate-0.9.12-vc80-debug.apk`（包名 `app.socialmate.dualmic`，DEBUG 测试签名，供个人侧载）。手机端会在本机起一个只对 `127.0.0.1` 开放的页面服务，人物资料、卡片与练习记录写进手机本地数据库，不需要一直连着电脑。构建与真机安装说明见 `android-poc/README.md`，逐版变更与未完成项见 `CHANGELOG.md` 和 `docs/plan/`。
+
 ## 数据与审阅
 
 Markdown 文件是唯一数据真源。人物主档编辑须经过 Review 的预览和确认；候选在预览后若已过时会被拒绝。互动记录不可由审阅 API 覆盖。演示人物 `Test-Anna` 完全虚构，可删除 `SocialMate-Data/People/Test-Anna` 清除。
@@ -58,7 +62,7 @@ Markdown 文件是唯一数据真源。人物主档编辑须经过 Review 的预
 - Node 内置 HTTP/文件模块；无需安装包或 API Key。
 - `node scripts/initialize-data.mjs` 初始化目录和模板。
 - `node --test` 运行本地服务验收测试。
-- GitHub：`wanghoufan/alw-001-foreign-language-social-system`（private）
+- GitHub：`wanghoufan/alw-001-foreign-language-social-system`（public）
 
 ## 口语练习记录
 

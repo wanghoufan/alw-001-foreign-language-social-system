@@ -1,6 +1,6 @@
-# SocialMate (Foreign-Language Social System · ALW-001)
+[简体中文](./README.md) | English
 
-[简体中文](./README.md)
+# SocialMate (Foreign-Language Social System)
 
 A local-first social knowledge-base MVP: prepare conversation topics, practice
 speaking by scenario and difficulty, and turn real conversations into people
@@ -8,11 +8,11 @@ profiles — all stored as plain Markdown files you own. The local server listen
 only on `127.0.0.1` (your own machine). There are no external dependencies, no
 accounts, no cloud sync, and no AI API calls.
 
-![Home: left navigation sidebar, right content area](assets/home.png)
-
-![Topics: searchable list on the left, reading pane on the right](assets/topics.png)
-
-![Speaking practice: scenario and difficulty selection with prompt generation](assets/practice.png)
+<p>
+  <img src="assets/home.png" width="200" alt="Home: left navigation sidebar, right content area">
+  <img src="assets/topics.png" width="200" alt="Topics: searchable list on the left, reading pane on the right">
+  <img src="assets/practice.png" width="200" alt="Speaking practice: scenario and difficulty selection with prompt generation">
+</p>
 
 ## What it does
 
@@ -75,6 +75,15 @@ Health check: `http://127.0.0.1:4173/api/health`. Logs: `docker compose --env-fi
 Stop: `docker compose --env-file .env.local stop`. Containers are removed only with
 explicit user authorization; DockerData and DockerBackups must never be deleted.
 
+## Android build
+
+The phone build lives in `release/`: `SocialMate-0.9.12-vc80-debug.apk` (package
+`app.socialmate.dualmic`, DEBUG-signed, for personal sideloading). On the phone it
+runs a page server bound only to `127.0.0.1` and writes people data, cards, and
+practice records into an on-device database, so the computer does not need to stay
+connected. Build and device-install steps are in `android-poc/README.md`; per-version
+changes and open items are in `CHANGELOG.md` and `docs/plan/`.
+
 ## Data and review
 
 Markdown files are the single source of truth. Edits to a person's main profile must go
@@ -88,7 +97,7 @@ through the review API. The demo person `Test-Anna` is entirely fictional; delet
 - Uses Node's built-in HTTP and file modules; no packages to install and no API keys.
 - `node scripts/initialize-data.mjs` initializes the directory tree and templates.
 - `node --test` runs the local-server acceptance tests.
-- GitHub: `wanghoufan/alw-001-foreign-language-social-system` (private)
+- GitHub: `wanghoufan/alw-001-foreign-language-social-system` (public)
 
 ## Speaking-practice records
 
