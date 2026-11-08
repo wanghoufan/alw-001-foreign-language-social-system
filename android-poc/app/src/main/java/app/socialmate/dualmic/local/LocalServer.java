@@ -219,7 +219,7 @@ public final class LocalServer {
         String tokenHeader = headers.get("x-archive-token");
 
         if ("GET".equals(method) && (path.equals("/v12") || path.equals("/v12/") || path.equals("/v12/index.html"))) {
-            writeBytes(out, 200, "text/html; charset=utf-8", pageBytes(), true);
+            writeBytes(out, 200, "text/html; charset=utf-8", pageBytes(), false);
             return;
         }
         if ("GET".equals(method) && path.equals("/profile-sync.js")) {

@@ -159,10 +159,11 @@ export function createLocalSync(options = {}) {
   }
 
   async function collectCards(s) {
-    const out = {};
+    // 手机导入契约是扁平 cards 数组（每条带 kind），不是 {kind: rows} 对象。
+    const out = [];
     for (const kind of CARD_KINDS) {
-      // 备份包含软删卡片：恢复端才有完整历史可还原。
-      out[kind] = await s.privateCards.list(kind, {includeDeleted: true});
+      const rows = await s.privateCards.list(kind, {includeDeleted: true});
+      for (const card of rows) out.push({...card, kind: card.kind || kind});
     }
     return out;
   }
@@ -195,26 +196,25 @@ export function createLocalSync(options = {}) {
       } catch {
         records = [];
       }
-      if (records.length) out.push({placeId, records});
+      // 手机导入契约是扁平 records（每条带 placeId），不是 {placeId, records} 分组。
+      for (const record of records) out.push({...record, placeId});
     }
     return out;
   }
 
   async function collectPractice(s, placeRecords) {
     const out = [];
-    for (const group of placeRecords) {
-      for (const record of group.records || []) {
-        for (const block of record.blocks || []) {
-          let reports = [];
-          try {
-            reports = await s.practiceStore.listReports(group.placeId, block.blockId);
-          } catch {
-            reports = [];
-          }
-          if (reports.length) {
-            out.push({placeId: group.placeId, recordId: record.recordId,
-              blockId: block.blockId, reports});
-          }
+    for (const record of placeRecords) {
+      const placeId = record.placeId;
+      for (const block of record.blocks || []) {
+        let reports = [];
+        try {
+          reports = await s.practiceStore.listReports(placeId, block.blockId);
+        } catch {
+          reports = [];
+        }
+        for (const report of reports) {
+          out.push({...report, placeId, recordId: record.recordId, blockId: block.blockId});
         }
       }
     }

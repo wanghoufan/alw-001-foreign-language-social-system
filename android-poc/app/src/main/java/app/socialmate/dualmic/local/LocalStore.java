@@ -923,6 +923,11 @@ public final class LocalStore extends SQLiteOpenHelper {
         return new File(new File(mediaRoot, cardId), file);
     }
 
+    /** 备份打包用的 App 私有目录（含 archive/exported 已授权会话原文）。 */
+    public File appFilesDir() {
+        return appContext.getFilesDir();
+    }
+
     public synchronized JSONObject importMigrationIfPresent() {
         File dir = new File(appContext.getFilesDir(), "migration");
         File file = new File(dir, "backup.json");
@@ -994,6 +999,30 @@ public final class LocalStore extends SQLiteOpenHelper {
             throw new LocalHttpException(400, "BACKUP_INVALID", "备份格式不正确");
         }
         boolean replace = overwrite != null && overwrite;
+        JSONArray conflicts = new JSONArray();
+        if (!replace) {
+            JSONArray peopleRows = root.optJSONArray("people");
+            if (peopleRows != null) {
+                for (int i = 0; i < peopleRows.length(); i++) {
+                    JSONObject p = peopleRows.optJSONObject(i);
+                    if (p == null) continue;
+                    String slug = p.optString("slug", "");
+                    if (!slug.isEmpty() && personExists(slug)) conflicts.put("people:" + slug);
+                }
+            }
+            JSONArray cardRows = root.optJSONArray("cards");
+            if (cardRows != null) {
+                for (int i = 0; i < cardRows.length(); i++) {
+                    JSONObject c = cardRows.optJSONObject(i);
+                    if (c == null) continue;
+                    String kind = c.optString("kind", "");
+                    String id = c.optString("id", "");
+                    if (kind.matches("^(place|story|app)$") && !id.isEmpty() && readCard(kind, id) != null) {
+                        conflicts.put(kind + ":" + id);
+                    }
+                }
+            }
+        }
         SQLiteDatabase db = getWritableDatabase();
         db.beginTransaction();
         int imported = 0;
@@ -1019,8 +1048,9 @@ public final class LocalStore extends SQLiteOpenHelper {
         } finally {
             db.endTransaction();
         }
-        log("backup.import", "backup", "local", "count=" + imported);
-        return new JSONObject().put("ok", true).put("imported", imported).put("overwrite", replace);
+        log("backup.import", "backup", "local", "count=" + imported + " conflicts=" + conflicts.length());
+        return new JSONObject().put("ok", true).put("imported", imported)
+                .put("overwrite", replace).put("conflicts", conflicts);
     }
 
     public synchronized JSONObject syncState() throws Exception {

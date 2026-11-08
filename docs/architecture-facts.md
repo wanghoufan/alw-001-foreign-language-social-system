@@ -26,7 +26,7 @@
 - 页面：`MainActivity` 首页 SocialMate 入口，BOYA 检测折叠在高级工具；`AsrActivity` 先录音同意、再启动 ASR，并在同 Activity 内嵌私有 WebView。
 - 采集：AudioRecord 48000/44100/16000，优先 stereo，音源优先 `UNPROCESSED` → `VOICE_RECOGNITION` → `MIC`；`setPreferredDevice` 指向 USB。
 - 录音文件：`getExternalFilesDir(Music)/dualmic/<timestamp>_<A|B>/`，含 `original/left/right.wav` + `diagnostics.json`。
-- 当前版本：**0.9.2（versionCode 70）**，Debug 签名（`DEBUGGABLE`，不可对外分发）；回滚包 `release/SocialMate-0.9.1-vc69-debug.apk`。0.9.2 APK `release/SocialMate-0.9.2-vc70-debug.apk`（约 55MB，含 211 张离线 webp），SHA-256 `5cfb736c6ca4d9ea6cff5df421a1e328bc341ae60c7d1e51f62fa19d2811c997`；签名证书 SHA-256 `8e82a7975008e8ec87ff0f2ecadf495b5263effa34aaec9ab6f135ebea911cf3`（覆盖安装必须一致）。
+- 当前版本：**0.9.2（versionCode 70）**，Debug 签名（`DEBUGGABLE`，不可对外分发）；回滚包 `release/SocialMate-0.9.1-vc69-debug.apk`。0.9.2 APK `release/SocialMate-0.9.2-vc70-debug.apk`（约 55MB，含 211 张离线 webp），SHA-256 `b402ff2e7b1bf4d65fb4d1ac25b2021a5f90369bc6ebb7a2d4cc343344e7913a`（2026-11-07 08:27 重打包，与真机 base.apk 一致）；签名证书 SHA-256 `8e82a7975008e8ec87ff0f2ecadf495b5263effa34aaec9ab6f135ebea911cf3`（覆盖安装必须一致）。
 - 朗读（N05）：`TtsPlaybackController` 统一调度；provider 默认 `system`（本机 TTS，`system_fallback` 默认开），可选 `fake`（预置占位音）/`remote`（Mac 服务）；`remote` 下服务商 `fake`/`aws-polly-fake`/`aws-polly`。`aws-polly` 未配置直接 `TTS_PROVIDER_NOT_CONFIGURED`，同意为**本次运行一次**。
 - 新建想法：服务端 `MAX_RAW_INPUT=20000` 字符；`segmentRawInput` 每段句数可由客户端 `maxSentencesPerBlock` 指定（服务端允许 1–8，默认 4），单段 ≤600 字；前端选择存 `localStorage.sm_seg_gran`。
 - 网络策略（0.5.2）：`usesCleartextTraffic=false` + `res/xml/network_security_config.xml`，明文只放行 `127.0.0.1`/`localhost`/`::1`；非回环明文在 WebView 报 `ERR_CLEARTEXT_NOT_PERMITTED`。未覆写 `onReceivedSslError`，坏证书走系统默认拒绝。
@@ -112,7 +112,7 @@
 - 归档状态机：`SessionArchive` 退避 3/10/30/60s（≤6 次、单飞、`NetworkCallback` 触发），四态文案「手机已保存 / 待上传 N 条 / 已同步 Mac / 失败可重试」，仅 2xx 算已同步。
 - WebView 导出：`SocialMateAndroid.saveText(name,text)` 仅在 `isPrivatePanelUrl` 同源页面注入，桥内再校验 `trustedPageUrl`；落盘走 `ACTION_CREATE_DOCUMENT`，清单无 `WRITE_EXTERNAL_STORAGE`。
 - 手机端布局：≤930px 时 `#coachresults` 由 `layoutCoach()` 搬进 `#coachinline`（字幕与输入框之间），`chatsetup` 折叠为一行；紧凑覆盖样式在 `<style id="n03-mobile-compact">`。
-- 服务：组合 8790+8791、归档 8781 未变；预算账本未重置（ASR 0.129189、DeepSeek 0.213634 / 各 1 元）。
+- 服务：组合 8790+8791、归档 8781 未变。预算账本（2026-11-07 11:40 读数）：Mac 中继 ASR `0.582297 / 2 元`（`android-poc/.local/asr-budget.json`）、DeepSeek `0.214590 / 1 元`（`ai-gateway/.local/ai-budget.json`）、豆包 `1.1676 / 10 元`（`SocialMate-Data/TtsCache/ledger/doubao.json`）；手机直连按日重置：ASR 30 分钟/日、DeepSeek 1 元/日、豆包 2 元/日（`shared_prefs/socialmate-cloud-usage.xml`，微元单位）。腾讯实际计费以控制台为准。
 
 ## N03b / N04（2026-11-02）
 

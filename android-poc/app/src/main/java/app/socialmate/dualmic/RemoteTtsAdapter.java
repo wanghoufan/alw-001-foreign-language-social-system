@@ -52,7 +52,7 @@ public final class RemoteTtsAdapter implements TtsProviderAdapter {
     private final Supplier<String> baseUrl;
     private final Supplier<String> serverProvider;
     private final Logger logger;
-    private final ExecutorService io = Executors.newSingleThreadExecutor();
+    private ExecutorService io = Executors.newSingleThreadExecutor();
     private final AtomicInteger synthRequests = new AtomicInteger();
 
     public RemoteTtsAdapter(Context context, DevicePairing pairing,
@@ -84,7 +84,7 @@ public final class RemoteTtsAdapter implements TtsProviderAdapter {
      * fake / aws-polly-fake 不经过这里。
      */
     public void prepare(SpeakRequest request, Callback callback, boolean explicitConsent) {
-        io.execute(() -> {
+        io().execute(() -> {
             try {
                 // 客户端 providerId 是「播放来源」；发给服务端的是服务端逻辑 provider（默认 fake）。
                 final String serverProviderId = serverProviderId();
@@ -106,7 +106,7 @@ public final class RemoteTtsAdapter implements TtsProviderAdapter {
                     String voice = directBody.optString("voiceProfileId", "");
                     if (voice.isEmpty()) voice = directBody.optString("voiceId", "");
                     if (!voice.matches("^(zh_female_xiaohe_uranus_bigtts|zh_male_m191_uranus_bigtts|zh_female_yingyujiaoxue_uranus_bigtts)$")) {
-                        voice = "zh_female_yingyujiaoxue_uranus_bigtts";
+                        voice = "zh_female_xiaohe_uranus_bigtts";
                     }
                     directBody.put("voiceProfileId", voice);
                     DirectCloud.TtsResult audio = new DirectCloud(appContext).tts(directBody);
@@ -229,7 +229,7 @@ public final class RemoteTtsAdapter implements TtsProviderAdapter {
      * 该请求不会触发 Polly 合成，也不会创建缓存或账本。
      */
     public void estimate(SpeakRequest request, QuoteCallback callback) {
-        io.execute(() -> {
+        io().execute(() -> {
             try {
                 String base = trimBase(baseUrl.get());
                 if (base.isEmpty()) {
@@ -338,6 +338,12 @@ public final class RemoteTtsAdapter implements TtsProviderAdapter {
 
     @Override public void release() {
         io.shutdownNow();
+    }
+
+    /** 释放后再次使用（同一 controller 生命周期内）时重建线程池，避免 RejectedExecutionException。 */
+    private synchronized ExecutorService io() {
+        if (io.isShutdown()) io = Executors.newSingleThreadExecutor();
+        return io;
     }
 
     /* --------------------------------------------------------------- 网络 */

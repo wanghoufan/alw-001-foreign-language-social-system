@@ -1,0 +1,6 @@
+.local/oppo-logcat3.txt:11-08 18:01:18.394 E/SocialMateRec(30604): recording failed: 未配对或令牌失效，请重新配对后再录音
+.local/oppo-tts.log:11-08 18:03:23.096 I/SocialMateTtsQueue(30604): queue_stopped reason=restart
+.local/oppo-tts.log:11-08 18:03:23.106 I/SocialMateTtsQueue(30604): queue_start id=q-1794132203096 mode=probe items=1 loop=1 origin=probe
+.local/oppo-tts.log:11-08 18:03:23.124 I/SocialMateTts(30604): speak request id=req-1794132203123 segment=enA provider=system locale=en-US voice=(server-default) rate=0.0 loop=1 chars=32 textSha=996071e2d713
+.local/oppo-tts.log:11-08 18:03:23.135 E/SocialMateTtsQueue(30604): queue_failed code=TTS_INITIALIZING idx=0 message=系统 TTS 正在初始化，请稍后再试。
+.local/oppo-tts.log:11-08 18:03:23.167 I/SocialMateTtsQueue(30604): queue_stopped reason=failed

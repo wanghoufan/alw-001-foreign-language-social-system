@@ -236,6 +236,7 @@ final class TtsQueueRunner {
         try {
             result = controller.speak(request);
         } catch (Exception e) {
+            Log.e("SocialMateTtsQueue", "speak failed", e);
             result = null;
         }
         if (result == null || !result.optBoolean("ok", false)) {

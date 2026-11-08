@@ -1,5 +1,16 @@
 # Changelog
 
+## 2026-11-07 · V1.7 R3 Note 12T Pro 蜂窝实用性（0.9.2 / 70 未变，PARTIAL）
+
+1. **费用闸**：新增 `AsrBudget`（30 分钟/日，本机估算）；真机 6.8 分钟录音后 `asr.used_ms=407722`，`stopStreaming` 只结算一次。
+2. **300 秒自动续接**：`rolloverClients` 在 300 秒边界关闭旧会话、新建同 track 会话并延续时间轴；实测连续 6.8 分钟 `isRecording=true`，无错误、未被迫停止。
+3. **备份含原文**：`LocalBackup` 打包/恢复 `archive/exported`；导出 `SocialMate-backup-20261107-0012.smbak` 36,219B，解密 ZIP 含 27 条。
+4. **导入冲突语义**：`LocalStore.importBackup` 返回 `conflicts`，同 ID 不覆盖；`POST /v12/api/local/import-file` 实测 `imported 2 / archive 27 / conflicts 8`。
+5. **导出路径**：Android 10+ 直接写 `MediaStore.Downloads`，绕开 MIUI DocumentsUI 保存面板不返回。
+6. **未关联人物录音**：`startRecording` 不再强制选人物；未选时弹确认，选择「不关联开始录音」后直接录音，字幕不写入人物档案。
+7. **LAN 安全**：`LocalSync.normalizeBase` 拒绝普通 LAN 明文 HTTP，仅 HTTPS/回环/Tailscale；`lan-net.isTailscaleIp` 允许 `100.64/10`；LAN 失败回退 Tailscale。
+8. **结论**：A01/A02/A07/A09/A10 PASS，A03/A04/A06/A08 PARTIAL；真人字幕、豆包 3 段听音、T4 实景未完成，**不得标 DONE**。证据 `docs/plan/ALW001-N05-V1.7-R3/STATUS-20261107.md`。
+
 ## 2026-11-06 · V1.7 R2 本机 origin + SQLite 本地真源（**0.9.2 / 70**，PARTIAL）
 
 1. **C0 盘点**：新增 `docs/plan/ALW001-N05-V1.7-R2/` 四份矩阵：真相源、前端 52 个 URL/37 个桥方法分类、可逆迁移与回滚、风险 18 条（高 6 / 中 9 / 低 3）。

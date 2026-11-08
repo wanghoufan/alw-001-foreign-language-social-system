@@ -63,6 +63,21 @@ public final class LocalBackup {
                 }
                 zip.closeEntry();
             }
+            // 已获留存同意的会话原文（archive/exported）；quarantine 不打包。
+            File archiveDir = new File(store.appFilesDir(), "archive/exported");
+            File[] archiveFiles = archiveDir.listFiles();
+            if (archiveFiles != null) {
+                for (File file : archiveFiles) {
+                    if (!file.isFile() || !file.getName().endsWith(".json")) continue;
+                    zip.putNextEntry(new ZipEntry("archive/exported/" + file.getName()));
+                    try (InputStream in = new FileInputStream(file)) {
+                        byte[] buf = new byte[8192];
+                        int n;
+                        while ((n = in.read(buf)) > 0) zip.write(buf, 0, n);
+                    }
+                    zip.closeEntry();
+                }
+            }
         }
         String secret = password == null ? "" : password;
         if (secret.trim().isEmpty()) {
@@ -105,7 +120,7 @@ public final class LocalBackup {
                 if (++entries > MAX_ENTRIES) throw new LocalHttpException(413, "BACKUP_TOO_MANY_ENTRIES", "备份条目过多");
                 String name = entry.getName();
                 if (name.contains("..") || name.startsWith("/")) continue;
-                if (!name.equals("backup.json") && !name.startsWith("media/")) continue;
+                if (!name.equals("backup.json") && !name.startsWith("media/") && !name.startsWith("archive/exported/")) continue;
                 File target = new File(tmp, name);
                 File parent = target.getParentFile();
                 if (parent != null && !parent.exists() && !parent.mkdirs()) continue;
@@ -146,6 +161,30 @@ public final class LocalBackup {
             }
         }
         result.put("media", mediaCount);
+        int archiveCount = 0;
+        File archiveTmp = new File(tmp, "archive/exported");
+        File[] archiveFiles = archiveTmp.listFiles();
+        if (archiveFiles != null) {
+            File exportedDir = new File(store.appFilesDir(), "archive/exported");
+            File importedDir = new File(store.appFilesDir(), "archive/imported");
+            if (!importedDir.exists()) //noinspection ResultOfMethodCallIgnored
+                importedDir.mkdirs();
+            for (File file : archiveFiles) {
+                if (!file.isFile() || !file.getName().endsWith(".json")) continue;
+                // 本机已有同名原文（exported 或之前导入）时跳过，避免恢复出重复副本。
+                if (new File(exportedDir, file.getName()).exists()) continue;
+                File target = new File(importedDir, file.getName());
+                if (target.exists()) continue;
+                try (InputStream in = new FileInputStream(file);
+                     OutputStream out = new FileOutputStream(target)) {
+                    byte[] buf = new byte[8192];
+                    int n;
+                    while ((n = in.read(buf)) > 0) out.write(buf, 0, n);
+                }
+                archiveCount++;
+            }
+        }
+        result.put("archive", archiveCount);
         return result;
     }
 

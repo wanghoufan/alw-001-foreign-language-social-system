@@ -9,6 +9,8 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 
+import app.socialmate.dualmic.local.CloudKeys;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -1070,7 +1072,13 @@ public class TtsPlaybackController {
     }
 
     public String currentProvider() {
-        return normalizeProvider(prefs.getString("provider", PROVIDER_SYSTEM));
+        String stored = prefs.getString("provider", "");
+        if (stored != null && !stored.isEmpty()) return normalizeProvider(stored);
+        // 新装/未设置过时：手机已配豆包 Key 就默认豆包直连，避免落到不可用的系统 TTS。
+        try {
+            if (new CloudKeys(appContext).hasDoubao()) return PROVIDER_REMOTE;
+        } catch (Exception ignored) {}
+        return PROVIDER_SYSTEM;
     }
 
     public boolean systemFallbackEnabled() {

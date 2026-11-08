@@ -142,6 +142,8 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
     private TextView stopButton, reviewButton;
     private TextView status, live, transcript, deviceInfo, suggestionsView;
     private long sessionStartMs;
+    /** 本轮录音开始时间，用于 AsrBudget 结算（stopStreaming 只结算一次）。 */
+    private long streamStartedAt;
     private int eventCount;
     private volatile String lastFinal = "";
     private SessionArchive archive;
@@ -1570,10 +1572,14 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
                 try {
                     return LocalSync.push(AsrActivity.this, LocalStore.get(AsrActivity.this), base, token).toString();
                 } catch (Exception lanFailed) {
-                    // 5G 无 LAN 时走 Tailscale 直连；LAN 地址已失败再试一次。
+                    // 5G 无 LAN 时走 Tailscale 直连；LAN 明文 HTTP 已被 LocalSync 拒绝。
                     if (base.contains("100.")) throw lanFailed;
-                    return LocalSync.push(AsrActivity.this, LocalStore.get(AsrActivity.this),
-                            "http://100.125.100.15:8791", token).toString();
+                    try {
+                        return LocalSync.push(AsrActivity.this, LocalStore.get(AsrActivity.this),
+                                "http://100.125.100.15:8791", token).toString();
+                    } catch (Exception tsFailed) {
+                        throw new Exception("局域网明文 HTTP 已拒绝；请开启 Tailscale 或使用 HTTPS 后重试");
+                    }
                 }
             } catch (Exception e) {
                 return syncFail(e.getMessage());
@@ -1599,8 +1605,12 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
                     return pulled.toString();
                 } catch (Exception lanFailed) {
                     if (base.contains("100.")) throw lanFailed;
-                    return LocalSync.pull(AsrActivity.this, LocalStore.get(AsrActivity.this),
-                            "http://100.125.100.15:8791", token).toString();
+                    try {
+                        return LocalSync.pull(AsrActivity.this, LocalStore.get(AsrActivity.this),
+                                "http://100.125.100.15:8791", token).toString();
+                    } catch (Exception tsFailed) {
+                        throw new Exception("局域网明文 HTTP 已拒绝；请开启 Tailscale 或使用 HTTPS 后重试");
+                    }
                 }
             } catch (Exception e) {
                 android.util.Log.e("SocialMateSync", "pull failed: " + e.getMessage());
@@ -1707,9 +1717,47 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
                             return;
                         }
                         pendingBackupPassword = a;
-                        startBackupSavePicker();
+                        if (android.os.Build.VERSION.SDK_INT >= 29) {
+                            exportBackupToDownloads();
+                        } else {
+                            startBackupSavePicker();
+                        }
                     })
                     .show();
+        }
+
+        /** Android 10+：直接写入 Download，避免 MIUI DocumentsUI 保存面板不返回。 */
+        private void exportBackupToDownloads() {
+            final String stamp = new java.text.SimpleDateFormat("yyyyMMdd-HHmm", java.util.Locale.US)
+                    .format(new java.util.Date());
+            final String fileName = "SocialMate-backup-" + stamp + ".smbak";
+            setExportStatus("正在导出加密备份…");
+            android.util.Log.i("SocialMateBackup", "export start " + fileName);
+            new Thread(() -> {
+                try {
+                    android.content.ContentValues values = new android.content.ContentValues();
+                    values.put(android.provider.MediaStore.Downloads.DISPLAY_NAME, fileName);
+                    values.put(android.provider.MediaStore.Downloads.MIME_TYPE, "application/octet-stream");
+                    values.put(android.provider.MediaStore.Downloads.RELATIVE_PATH,
+                            android.os.Environment.DIRECTORY_DOWNLOADS);
+                    android.net.Uri uri = getContentResolver().insert(
+                            android.provider.MediaStore.Downloads.EXTERNAL_CONTENT_URI, values);
+                    if (uri == null) throw new java.io.IOException("无法创建下载文件");
+                    try (java.io.OutputStream out = getContentResolver().openOutputStream(uri)) {
+                        if (out == null) throw new java.io.IOException("无法写入下载文件");
+                        LocalBackup.exportTo(LocalStore.get(AsrActivity.this), out, pendingBackupPassword);
+                        out.flush();
+                    }
+                    android.util.Log.i("SocialMateBackup", "export ok uri=" + uri);
+                    pendingBackupPassword = "";
+                    runOnUiThread(() -> setExportStatus("已导出到 Download/" + fileName));
+                } catch (Exception e) {
+                    android.util.Log.e("SocialMateBackup", "export failed", e);
+                    pendingBackupPassword = "";
+                    runOnUiThread(() -> setExportStatus("导出失败："
+                            + (e.getMessage() == null ? e.getClass().getSimpleName() : e.getMessage())));
+                }
+            }, "sm-backup-export").start();
         }
 
         private void startBackupSavePicker() {
@@ -2562,6 +2610,17 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
             requestPermissions(new String[]{Manifest.permission.RECORD_AUDIO}, REQUEST_MIC);
             return;
         }
+        try {
+            AsrBudget budget = new AsrBudget(this);
+            JSONObject gate = new JSONObject();
+            if (!budget.canStart(60_000L, gate)) {
+                String message = gate.optString("error", "今日本机 ASR 时长已用完（上限 30 分钟）");
+                status.setText(message);
+                toast(message);
+                return;
+            }
+        } catch (Exception ignored) {}
+        streamStartedAt = SystemClock.elapsedRealtime();
         String base = urlInput.getText().toString().trim();
         config.edit().putString("asr_url", base)
                 .putString("ui_url", uiUrlInput == null ? PRIVATE_UI_URL : uiUrlInput.getText().toString().trim())
@@ -2691,6 +2750,30 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
         }
     }
 
+    /** 300 秒边界：关闭旧会话、新建同 track 会话，事件时间轴接着上一段，不中断录音。 */
+    private void rolloverClients(String baseUrl, String suffix, String token, String[] tracks) {
+        final long offset = SystemClock.elapsedRealtime() - sessionStartMs;
+        List<AsrClient> old;
+        synchronized (clients) {
+            old = new ArrayList<>(clients);
+            clients.clear();
+        }
+        for (AsrClient oldClient : old) {
+            try { oldClient.close(); } catch (Exception ignored) {}
+        }
+        for (String track : tracks) {
+            try {
+                AsrClient next = openWithRetry(track, baseUrl, suffix, token);
+                next.timeOffsetMs = offset;
+                synchronized (clients) { clients.add(next); }
+            } catch (Exception e) {
+                android.util.Log.e("SocialMateRec", "rollover failed track=" + track + " " + e.getMessage());
+            }
+        }
+        sessionStartMs = SystemClock.elapsedRealtime();
+        runOnUiThread(() -> status.setText("已跨过 300 秒，自动续接中…"));
+    }
+
     private void stream(String baseUrl, String[] tracks) {
         AudioRecord rec = null;
         // T6：本轮结束信号按 track 计数（最少 1）。上游每条会话收尾都会推一条 session/ended，
@@ -2746,8 +2829,9 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
             while (running) {
                 if (directAsr && maxSessionMs > 0
                         && SystemClock.elapsedRealtime() - sessionStartMs >= maxSessionMs) {
-                    runOnUiThread(() -> stopStreaming("已到 " + (maxSessionMs / 1000) + " 秒上限"));
-                    break;
+                    // 300 秒边界：不停止整轮，改为新腾讯会话并保留时间轴，用户可继续说话。
+                    rolloverClients(baseUrl, suffix, asrToken, tracks);
+                    continue;
                 }
                 int got = rec.read(buffer, 0, buffer.length, AudioRecord.READ_BLOCKING);
                 if (got < 0) {
@@ -2913,6 +2997,13 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
         if (!running) return;
         running = false;
         stopRequested = true;
+        if (streamStartedAt > 0) {
+            long elapsed = Math.max(0, SystemClock.elapsedRealtime() - streamStartedAt);
+            streamStartedAt = 0;
+            try {
+                new AsrBudget(this).consume(elapsed);
+            } catch (Exception ignored) {}
+        }
         AsrForegroundService.stop(this);
         // 停止后立刻恢复「开始录音」按钮，避免收尾异常时界面卡在禁用态。
         runOnUiThread(() -> {

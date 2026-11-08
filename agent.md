@@ -38,3 +38,23 @@
 - 2026-11-06 · Android 读流 · `/v12/api/places/:id` 直接断连 · `InputStream.readAllBytes()` 在 Android 运行时不存在的 `NoSuchMethodError` · 用自写 `readAll(InputStream)` 循环读取。
 - 2026-11-06 · 大图上传 · 3.8MB base64 经 `adb forward` 返回 502 · 代理超时/处理过慢 · 先压到 1600px（约 361KB），或直接在页面内 `fetch` 上传，不走 adb forward。
 - 2026-11-06 · 本地服务错误 · 前端只看到 `Failed to fetch` · `LocalHttpException` 被 catch 后静默关连接 · 在 `handle` 捕获可预期异常并回 JSON（code/status），再关闭。`建议进用户级`
+## 2026-11-07 阶段整理 / 真机对话（本轮新增）
+
+- 2026-11-07 · 阶段整理 · `docs/` 膨胀到 472MB，241MB logcat 直留在 qa 目录 · 原始日志随会话累积且无归档策略 · 压缩为 `.local/archive/*.tar.gz`（18MB）并用行数校验完整性后删原文件。`建议进用户级`
+- 2026-11-07 · 真机多轮录音 · 第二次会话混入上一轮 44 条消息，ASR/归档被污染 · 页面 `S.session` 在两次 `startRecording` 之间不重置，「开始新一轮」只改按钮文案 · 测试前显式清 `S.session/recs/asrSeen`，归档按 sessionId 核对，测试会话用完即删。`建议进用户级`
+- 2026-11-07 · 停止录音 · 10:28 出现停止后的新会话并录到朗读声 · 受控 20 秒复现未重现，暂判为外部点击或页面状态残留 · 停止后必须查 `isRecording` 与 `files/archive/outbox` 的 mtime；发现新会话先清理再定性，未复现不得写成自动重启缺陷。`建议进用户级`
+- 2026-11-07 · 外放语音测试 · `say -o` 生成的部分句子只有 0.005–0.8 秒，ASR 缺句 · 默认音色/语音标记导致截断 · 用 `say -v Samantha/Daniel` 生成，`afinfo` 逐句核对时长后再播放。`建议进用户级`
+- 2026-11-07 · 真机测试收尾 · 两次发现 Wi-Fi 被改回关闭状态 · 测试期间有其它会话/用户操作手机 · 收尾必须复查 `wifi_on` 与 wlan0 IP，不能只执行一次 `svc wifi enable`。`建议进用户级`
+- 2026-11-07 · 文档事实 · STATUS 修正 APK SHA 后 `architecture-facts.md` 仍写旧 `5cfb736c…` · 同一事实两处维护 · 版本/SHA 以真机 `base.apk` 为准，改完同步两处并核对。`建议进用户级`
+- 2026-11-07 · 复盘入口 · `openReviewPage()` 返回 true 但界面仍在聊天页 · 原生 `openReview` 在无 lastSessionId/未导出时只改 status 文本，网页把 true 当成已打开 · 返回 true 只代表受理，必须再查前台 Activity/URL，并补无内容时的明确提示。`建议进用户级`
+
+## 2026-11-08 OPPO 换机 / 字号线 / 原生朗读（本轮新增）
+
+- 2026-11-08 · 页面改字号 · 补丁写了但页面完全没变 · 补丁被插进已有 style 块内部，解析成无效 CSS 文本 · 改后读 `getComputedStyle` 与 DOM 标记验证，grep 命中不等于生效。`建议进用户级`
+- 2026-11-08 · OPPO 底部留白 · 导航栏高 107px、下方 46px 空条 · 原生已扣 44dp 视口，页面又叠 `env(safe-area-inset-bottom)` · 原生已避让时页面不再叠；导航 107→62px。`建议进用户级`
+- 2026-11-08 · 页面改动不生效 · 覆盖安装后仍是旧页面 · WebView 缓存了 max-age=60 的 index.html · 静态页改 no-store，改后查 DOM 标记。`建议进用户级`
+- 2026-11-08 · 页面构建 · 重跑 `build-v12.py` 会覆盖 V1.5–V1.7 手改 · 脚本只基于 V1.1 基线 · 页面真源是 `socialmate-v1.2/index.html`，Gradle 复制进 assets；勿重跑旧脚本。`建议进用户级`
+- 2026-11-08 · 换机/重装 · 录音报「未配对或令牌失效」 · 新机 `asr_mode` 默认 `mac`，填了 Key 但模式没切 · 先 `setAsrMode('direct')` 回读 ready 再测。`建议进用户级`
+- 2026-11-08 · OPPO 原生朗读 · 学习页「听本段」无声，`TTS_INITIALIZING` · 原生队列 provider 默认 `system`，OPPO `tts_default_synth=null` 无系统 TTS · 有豆包 Key 默认 `remote`，系统 TTS 只回退。`建议进用户级`
+- 2026-11-08 · 原生朗读 · `RejectedExecutionException`，队列 `TTS_INTERNAL_ERROR` · 线程池 `release()` 后仍被复用 · 改为按需重建（`isShutdown` 时新建）。`建议进用户级`
+- 2026-11-08 · 字号放大 · 卡片被撑到 463px、人物卡左侧字母头像占位 · 字号放大使 3 行截断失效；`.avatar` 占 40×40 · 恢复 `-webkit-line-clamp`、隐藏 `.person .avatar`；卡片 463→296px、人物卡 117→76px。`建议进用户级`

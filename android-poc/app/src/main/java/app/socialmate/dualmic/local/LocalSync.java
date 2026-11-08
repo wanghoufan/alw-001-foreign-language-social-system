@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.provider.Settings;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
@@ -59,9 +60,13 @@ public final class LocalSync {
             throw new LocalHttpException(502, "SYNC_EMPTY", "Mac 没有返回可导入的备份");
         }
         JSONObject imported = store.importBackup(backup, false);
+        JSONArray conflicts = imported.optJSONArray("conflicts");
+        if (conflicts == null) conflicts = new JSONArray();
         return new JSONObject()
                 .put("ok", true)
                 .put("imported", imported.optInt("imported", 0))
+                .put("conflictCount", conflicts.length())
+                .put("conflicts", conflicts)
                 .put("at", response.optString("at", backup.optString("exportedAt", "")))
                 .put("counts", backup.optJSONObject("counts"));
     }
@@ -127,10 +132,37 @@ public final class LocalSync {
         if (base.isEmpty()) {
             throw new LocalHttpException(400, "SYNC_NO_MAC", "未配置 Mac 私有服务地址；请先在录音设置里配对");
         }
-        if (!base.startsWith("http://") && !base.startsWith("https://")) {
-            throw new LocalHttpException(400, "SYNC_BAD_BASE", "Mac 地址必须以 http:// 或 https:// 开头");
+        java.net.URI uri;
+        try {
+            uri = java.net.URI.create(base);
+        } catch (Exception e) {
+            throw new LocalHttpException(400, "SYNC_BAD_BASE", "Mac 地址格式不正确");
         }
-        return base;
+        String scheme = uri.getScheme();
+        if ("https".equalsIgnoreCase(scheme)) return base;
+        if ("http".equalsIgnoreCase(scheme)) {
+            String host = uri.getHost();
+            if (host != null && ("127.0.0.1".equals(host) || "localhost".equals(host) || isTailscaleHost(host))) {
+                // 回环或 Tailscale WireGuard 隧道内允许 HTTP；普通局域网明文 HTTP 一律拒绝。
+                return base;
+            }
+        }
+        throw new LocalHttpException(400, "SYNC_INSECURE",
+                "同步必须走 HTTPS 或 Tailscale 加密地址；已拒绝明文局域网 HTTP");
+    }
+
+    private static boolean isTailscaleHost(String host) {
+        String[] parts = host.split("\\.");
+        if (parts.length == 4) {
+            try {
+                int a = Integer.parseInt(parts[0]);
+                int b = Integer.parseInt(parts[1]);
+                return a == 100 && b >= 64 && b <= 127;
+            } catch (NumberFormatException ignored) {
+                return false;
+            }
+        }
+        return host.startsWith("fd7a:115c:a1e0:");
     }
 
     private static byte[] readAll(InputStream in) throws Exception {

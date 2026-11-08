@@ -202,7 +202,7 @@ public final class DirectCloud {
         String voice = body.optString("voiceProfileId", body.optString("voiceId", ""));
         if (voice.isEmpty() || !voice.matches("^(zh_female_xiaohe_uranus_bigtts|zh_male_m191_uranus_bigtts|zh_female_yingyujiaoxue_uranus_bigtts)$")) {
             // 页面可能传系统 TTS 的 voice 名称（如 Ruth）；豆包只接受自己的 voicetype。
-            voice = "zh_female_yingyujiaoxue_uranus_bigtts";
+            voice = "zh_female_xiaohe_uranus_bigtts";
         }
         if (!voice.matches("^[A-Za-z0-9._-]{1,80}$")) {
             throw new LocalHttpException(400, "VOICE_INVALID", "音色标识不合法");
