@@ -336,7 +336,7 @@ cmd_agent_install() {
     log "AGENT: 已安装并加载 ${AGENT_LABEL}（开机自动运行、崩溃自动重启）"
   else
     launchctl load -w "$AGENT_PLIST" 2>/dev/null || {
-      echo "BLOCKED: LaunchAgent 加载失败（$AGENT_PLIST）"; return 3; }
+      echo "BLOCKED: LaunchAgent 加载失败（${AGENT_PLIST}）"; return 3; }
     log "AGENT: legacy load -w 方式加载 ${AGENT_LABEL}"
   fi
   sleep 2

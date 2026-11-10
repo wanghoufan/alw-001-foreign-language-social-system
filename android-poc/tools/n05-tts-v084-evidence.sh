@@ -131,7 +131,7 @@ case "$MODE" in
     if [ -x "$GRADLE" ]; then
       ( cd android-poc && "$GRADLE" --no-daemon --console plain :app:clean :app:assembleDebug )
     else
-      echo "WARN: 未找到 $GRADLE，改用 android-poc/build-apk.sh 首次拉取"
+      echo "WARN: 未找到 ${GRADLE}，改用 android-poc/build-apk.sh 首次拉取"
       bash android-poc/build-apk.sh
     fi
     print_apk_meta
