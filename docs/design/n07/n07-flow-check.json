@@ -1,0 +1,123 @@
+{
+  "generatedAt": "2026-11-11T13:59:50.935Z",
+  "results": [
+    {
+      "step": "初始为未开始",
+      "pass": true,
+      "detail": "未开始"
+    },
+    {
+      "step": "未开始点译英只提示不计费",
+      "pass": true,
+      "detail": "先说一句中文，再点「译英」"
+    },
+    {
+      "step": "开始后进入录音中",
+      "pass": true,
+      "detail": 3
+    },
+    {
+      "step": "录音中计时递增",
+      "pass": true,
+      "detail": {
+        "t1": "00:00",
+        "t2": "00:01"
+      }
+    },
+    {
+      "step": "可先点中文气泡选中目标",
+      "pass": true,
+      "detail": "bubble mine pick"
+    },
+    {
+      "step": "译英请求中按钮禁用",
+      "pass": true,
+      "detail": "翻译中"
+    },
+    {
+      "step": "译文嵌入原中文气泡",
+      "pass": true,
+      "detail": "I haven't been yet — I'd love to try it with you sometime."
+    },
+    {
+      "step": "译英期间录音继续计时",
+      "pass": true,
+      "detail": {
+        "tm1": "00:02",
+        "tm2": "00:03"
+      }
+    },
+    {
+      "step": "暂停后状态/麦克风/主按钮一致",
+      "pass": true,
+      "detail": [
+        "已暂停",
+        "麦克风已关闭"
+      ]
+    },
+    {
+      "step": "暂停后计时冻结",
+      "pass": true,
+      "detail": {
+        "pt1": "00:03",
+        "pt2": "00:03"
+      }
+    },
+    {
+      "step": "暂停态点译英不暗中恢复采音",
+      "pass": true,
+      "detail": "这句已经译好了，照着念就行"
+    },
+    {
+      "step": "继续回到同一轮并追加字幕",
+      "pass": true,
+      "detail": [
+        5,
+        1
+      ]
+    },
+    {
+      "step": "⋯ 菜单可打开且含结束本轮",
+      "pass": true,
+      "detail": "sheet open"
+    },
+    {
+      "step": "结束本轮需二次确认",
+      "pass": true,
+      "detail": false
+    },
+    {
+      "step": "确认后封存且主按钮回开始",
+      "pass": true,
+      "detail": "已结束"
+    },
+    {
+      "step": "结束后译英禁用",
+      "pass": true,
+      "detail": true
+    },
+    {
+      "step": "结束后重新开始为新的一轮",
+      "pass": true,
+      "detail": [
+        0,
+        0
+      ]
+    },
+    {
+      "step": "可切深色",
+      "pass": true,
+      "detail": "dark"
+    },
+    {
+      "step": "可切回浅色",
+      "pass": true,
+      "detail": "light"
+    },
+    {
+      "step": "界面无禁用控件文案",
+      "pass": true,
+      "detail": []
+    }
+  ]
+}

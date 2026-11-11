@@ -1,0 +1,2325 @@
+{
+  "generatedAt": "2026-11-11T13:55:37.543Z",
+  "chrome": "Chrome/156.0.8078.81",
+  "runs": [
+    {
+      "width": 375,
+      "state": "resumed",
+      "data": {
+        "state": "recording",
+        "vw": 375,
+        "innerH": 852,
+        "docScrollW": 375,
+        "bodyScrollW": 375,
+        "appW": 375,
+        "appH": 852,
+        "overflowX": false,
+        "offenders": [],
+        "buttons": [
+          {
+            "id": "btnEn",
+            "w": 48,
+            "h": 44,
+            "right": 265,
+            "font": "15px"
+          },
+          {
+            "id": "btnMain",
+            "w": 50,
+            "h": 44,
+            "right": 319,
+            "font": "15px"
+          },
+          {
+            "id": "btnMore",
+            "w": 44,
+            "h": 44,
+            "right": 367,
+            "font": "20px"
+          }
+        ],
+        "select": {
+          "w": 94.3,
+          "h": 44,
+          "font": "15px"
+        },
+        "baseFont": "19px",
+        "draftFont": "18px",
+        "minFontViolations": [],
+        "topRow": {
+          "wrap": "nowrap",
+          "clientW": 359,
+          "scrollW": 359,
+          "kids": [
+            {
+              "el": "person",
+              "left": 8,
+              "right": 102.3,
+              "w": 94.3,
+              "h": 44
+            },
+            {
+              "el": "statePill",
+              "left": 106.3,
+              "right": 213,
+              "w": 106.7,
+              "h": 32
+            },
+            {
+              "el": "btnEn",
+              "left": 217,
+              "right": 265,
+              "w": 48,
+              "h": 44
+            },
+            {
+              "el": "btnMain",
+              "left": 269,
+              "right": 319,
+              "w": 50,
+              "h": 44
+            },
+            {
+              "el": "btnMore",
+              "left": 323,
+              "right": 367,
+              "w": 44,
+              "h": 44
+            }
+          ],
+          "allInside": true
+        },
+        "stateClip": {
+          "pillW": 106.7,
+          "pillScroll": 107,
+          "pillClient": 107,
+          "textW": 42,
+          "textScroll": 42,
+          "textClient": 42,
+          "clipped": false
+        },
+        "headerTopBefore": 0,
+        "headerTopAfterScroll": 0,
+        "draft": {
+          "text": "I haven't been yet — I'd love to try it with you sometime.",
+          "top": 307,
+          "bottom": 364.4,
+          "w": 289,
+          "lineBottom": 299,
+          "gapBelowLine": 8,
+          "fontSize": "18px",
+          "color": "rgb(12, 119, 102)"
+        },
+        "tagsBottom": 844,
+        "coachBottom": 807.8,
+        "forbiddenWords": []
+      }
+    },
+    {
+      "width": 375,
+      "state": "translating",
+      "data": {
+        "state": "recording",
+        "vw": 375,
+        "innerH": 852,
+        "docScrollW": 375,
+        "bodyScrollW": 375,
+        "appW": 375,
+        "appH": 852,
+        "overflowX": false,
+        "offenders": [],
+        "buttons": [
+          {
+            "id": "btnEn",
+            "w": 63,
+            "h": 44,
+            "right": 265,
+            "font": "15px"
+          },
+          {
+            "id": "btnMain",
+            "w": 50,
+            "h": 44,
+            "right": 319,
+            "font": "15px"
+          },
+          {
+            "id": "btnMore",
+            "w": 44,
+            "h": 44,
+            "right": 367,
+            "font": "20px"
+          }
+        ],
+        "select": {
+          "w": 79.3,
+          "h": 44,
+          "font": "15px"
+        },
+        "baseFont": "19px",
+        "draftFont": "15px",
+        "minFontViolations": [],
+        "topRow": {
+          "wrap": "nowrap",
+          "clientW": 359,
+          "scrollW": 359,
+          "kids": [
+            {
+              "el": "person",
+              "left": 8,
+              "right": 87.3,
+              "w": 79.3,
+              "h": 44
+            },
+            {
+              "el": "statePill",
+              "left": 91.3,
+              "right": 198,
+              "w": 106.7,
+              "h": 32
+            },
+            {
+              "el": "btnEn",
+              "left": 202,
+              "right": 265,
+              "w": 63,
+              "h": 44
+            },
+            {
+              "el": "btnMain",
+              "left": 269,
+              "right": 319,
+              "w": 50,
+              "h": 44
+            },
+            {
+              "el": "btnMore",
+              "left": 323,
+              "right": 367,
+              "w": 44,
+              "h": 44
+            }
+          ],
+          "allInside": true
+        },
+        "stateClip": {
+          "pillW": 106.7,
+          "pillScroll": 107,
+          "pillClient": 107,
+          "textW": 42,
+          "textScroll": 42,
+          "textClient": 42,
+          "clipped": false
+        },
+        "headerTopBefore": 0,
+        "headerTopAfterScroll": 0,
+        "draft": {
+          "text": "正在翻成能直接说出口的英文…",
+          "top": 307,
+          "bottom": 335,
+          "w": 289,
+          "lineBottom": 299,
+          "gapBelowLine": 8,
+          "fontSize": "15px",
+          "color": "rgb(92, 111, 121)"
+        },
+        "tagsBottom": 844,
+        "coachBottom": 807.8,
+        "forbiddenWords": []
+      }
+    },
+    {
+      "width": 375,
+      "state": "menu",
+      "data": {
+        "state": "recording",
+        "vw": 375,
+        "innerH": 852,
+        "docScrollW": 375,
+        "bodyScrollW": 375,
+        "appW": 375,
+        "appH": 852,
+        "overflowX": false,
+        "offenders": [],
+        "buttons": [
+          {
+            "id": "btnEn",
+            "w": 48,
+            "h": 44,
+            "right": 265,
+            "font": "15px"
+          },
+          {
+            "id": "btnMain",
+            "w": 50,
+            "h": 44,
+            "right": 319,
+            "font": "15px"
+          },
+          {
+            "id": "btnMore",
+            "w": 44,
+            "h": 44,
+            "right": 367,
+            "font": "20px"
+          }
+        ],
+        "select": {
+          "w": 94.3,
+          "h": 44,
+          "font": "15px"
+        },
+        "baseFont": "19px",
+        "draftFont": "19px",
+        "minFontViolations": [],
+        "topRow": {
+          "wrap": "nowrap",
+          "clientW": 359,
+          "scrollW": 359,
+          "kids": [
+            {
+              "el": "person",
+              "left": 8,
+              "right": 102.3,
+              "w": 94.3,
+              "h": 44
+            },
+            {
+              "el": "statePill",
+              "left": 106.3,
+              "right": 213,
+              "w": 106.7,
+              "h": 32
+            },
+            {
+              "el": "btnEn",
+              "left": 217,
+              "right": 265,
+              "w": 48,
+              "h": 44
+            },
+            {
+              "el": "btnMain",
+              "left": 269,
+              "right": 319,
+              "w": 50,
+              "h": 44
+            },
+            {
+              "el": "btnMore",
+              "left": 323,
+              "right": 367,
+              "w": 44,
+              "h": 44
+            }
+          ],
+          "allInside": true
+        },
+        "stateClip": {
+          "pillW": 106.7,
+          "pillScroll": 107,
+          "pillClient": 107,
+          "textW": 42,
+          "textScroll": 42,
+          "textClient": 42,
+          "clipped": false
+        },
+        "headerTopBefore": 0,
+        "headerTopAfterScroll": 0,
+        "draft": null,
+        "tagsBottom": 844,
+        "coachBottom": 807.8,
+        "forbiddenWords": []
+      }
+    },
+    {
+      "width": 375,
+      "state": "draft",
+      "data": {
+        "state": "recording",
+        "vw": 375,
+        "innerH": 852,
+        "docScrollW": 375,
+        "bodyScrollW": 375,
+        "appW": 375,
+        "appH": 852,
+        "overflowX": false,
+        "offenders": [],
+        "buttons": [
+          {
+            "id": "btnEn",
+            "w": 48,
+            "h": 44,
+            "right": 265,
+            "font": "15px"
+          },
+          {
+            "id": "btnMain",
+            "w": 50,
+            "h": 44,
+            "right": 319,
+            "font": "15px"
+          },
+          {
+            "id": "btnMore",
+            "w": 44,
+            "h": 44,
+            "right": 367,
+            "font": "20px"
+          }
+        ],
+        "select": {
+          "w": 94.3,
+          "h": 44,
+          "font": "15px"
+        },
+        "baseFont": "19px",
+        "draftFont": "18px",
+        "minFontViolations": [],
+        "topRow": {
+          "wrap": "nowrap",
+          "clientW": 359,
+          "scrollW": 359,
+          "kids": [
+            {
+              "el": "person",
+              "left": 8,
+              "right": 102.3,
+              "w": 94.3,
+              "h": 44
+            },
+            {
+              "el": "statePill",
+              "left": 106.3,
+              "right": 213,
+              "w": 106.7,
+              "h": 32
+            },
+            {
+              "el": "btnEn",
+              "left": 217,
+              "right": 265,
+              "w": 48,
+              "h": 44
+            },
+            {
+              "el": "btnMain",
+              "left": 269,
+              "right": 319,
+              "w": 50,
+              "h": 44
+            },
+            {
+              "el": "btnMore",
+              "left": 323,
+              "right": 367,
+              "w": 44,
+              "h": 44
+            }
+          ],
+          "allInside": true
+        },
+        "stateClip": {
+          "pillW": 106.7,
+          "pillScroll": 107,
+          "pillClient": 107,
+          "textW": 42,
+          "textScroll": 42,
+          "textClient": 42,
+          "clipped": false
+        },
+        "headerTopBefore": 0,
+        "headerTopAfterScroll": 0,
+        "draft": {
+          "text": "I haven't been yet — I'd love to try it with you sometime.",
+          "top": 307,
+          "bottom": 364.4,
+          "w": 289,
+          "lineBottom": 299,
+          "gapBelowLine": 8,
+          "fontSize": "18px",
+          "color": "rgb(12, 119, 102)"
+        },
+        "tagsBottom": 844,
+        "coachBottom": 807.8,
+        "forbiddenWords": []
+      }
+    },
+    {
+      "width": 375,
+      "state": "paused",
+      "data": {
+        "state": "paused",
+        "vw": 375,
+        "innerH": 852,
+        "docScrollW": 375,
+        "bodyScrollW": 375,
+        "appW": 375,
+        "appH": 852,
+        "overflowX": false,
+        "offenders": [],
+        "buttons": [
+          {
+            "id": "btnEn",
+            "w": 48,
+            "h": 44,
+            "right": 265,
+            "font": "15px"
+          },
+          {
+            "id": "btnMain",
+            "w": 50,
+            "h": 44,
+            "right": 319,
+            "font": "15px"
+          },
+          {
+            "id": "btnMore",
+            "w": 44,
+            "h": 44,
+            "right": 367,
+            "font": "20px"
+          }
+        ],
+        "select": {
+          "w": 94.3,
+          "h": 44,
+          "font": "15px"
+        },
+        "baseFont": "19px",
+        "draftFont": "18px",
+        "minFontViolations": [],
+        "topRow": {
+          "wrap": "nowrap",
+          "clientW": 359,
+          "scrollW": 359,
+          "kids": [
+            {
+              "el": "person",
+              "left": 8,
+              "right": 102.3,
+              "w": 94.3,
+              "h": 44
+            },
+            {
+              "el": "statePill",
+              "left": 106.3,
+              "right": 213,
+              "w": 106.7,
+              "h": 32
+            },
+            {
+              "el": "btnEn",
+              "left": 217,
+              "right": 265,
+              "w": 48,
+              "h": 44
+            },
+            {
+              "el": "btnMain",
+              "left": 269,
+              "right": 319,
+              "w": 50,
+              "h": 44
+            },
+            {
+              "el": "btnMore",
+              "left": 323,
+              "right": 367,
+              "w": 44,
+              "h": 44
+            }
+          ],
+          "allInside": true
+        },
+        "stateClip": {
+          "pillW": 106.7,
+          "pillScroll": 107,
+          "pillClient": 107,
+          "textW": 42,
+          "textScroll": 42,
+          "textClient": 42,
+          "clipped": false
+        },
+        "headerTopBefore": 0,
+        "headerTopAfterScroll": 0,
+        "draft": {
+          "text": "I haven't been yet — I'd love to try it with you sometime.",
+          "top": 307,
+          "bottom": 364.4,
+          "w": 289,
+          "lineBottom": 299,
+          "gapBelowLine": 8,
+          "fontSize": "18px",
+          "color": "rgb(12, 119, 102)"
+        },
+        "tagsBottom": 844,
+        "coachBottom": 807.8,
+        "forbiddenWords": []
+      }
+    },
+    {
+      "width": 375,
+      "state": "idle",
+      "data": {
+        "state": "idle",
+        "vw": 375,
+        "innerH": 852,
+        "docScrollW": 375,
+        "bodyScrollW": 375,
+        "appW": 375,
+        "appH": 852,
+        "overflowX": false,
+        "offenders": [],
+        "buttons": [
+          {
+            "id": "btnEn",
+            "w": 48,
+            "h": 44,
+            "right": 265,
+            "font": "15px"
+          },
+          {
+            "id": "btnMain",
+            "w": 50,
+            "h": 44,
+            "right": 319,
+            "font": "15px"
+          },
+          {
+            "id": "btnMore",
+            "w": 44,
+            "h": 44,
+            "right": 367,
+            "font": "20px"
+          }
+        ],
+        "select": {
+          "w": 94.3,
+          "h": 44,
+          "font": "15px"
+        },
+        "baseFont": "19px",
+        "draftFont": "19px",
+        "minFontViolations": [],
+        "topRow": {
+          "wrap": "nowrap",
+          "clientW": 359,
+          "scrollW": 359,
+          "kids": [
+            {
+              "el": "person",
+              "left": 8,
+              "right": 102.3,
+              "w": 94.3,
+              "h": 44
+            },
+            {
+              "el": "statePill",
+              "left": 106.3,
+              "right": 213,
+              "w": 106.7,
+              "h": 32
+            },
+            {
+              "el": "btnEn",
+              "left": 217,
+              "right": 265,
+              "w": 48,
+              "h": 44
+            },
+            {
+              "el": "btnMain",
+              "left": 269,
+              "right": 319,
+              "w": 50,
+              "h": 44
+            },
+            {
+              "el": "btnMore",
+              "left": 323,
+              "right": 367,
+              "w": 44,
+              "h": 44
+            }
+          ],
+          "allInside": true
+        },
+        "stateClip": {
+          "pillW": 106.7,
+          "pillScroll": 107,
+          "pillClient": 107,
+          "textW": 42,
+          "textScroll": 42,
+          "textClient": 42,
+          "clipped": false
+        },
+        "headerTopBefore": 0,
+        "headerTopAfterScroll": 0,
+        "draft": null,
+        "tagsBottom": 844,
+        "coachBottom": 807.8,
+        "forbiddenWords": []
+      }
+    },
+    {
+      "width": 375,
+      "state": "finished",
+      "data": {
+        "state": "finished",
+        "vw": 375,
+        "innerH": 852,
+        "docScrollW": 375,
+        "bodyScrollW": 375,
+        "appW": 375,
+        "appH": 852,
+        "overflowX": false,
+        "offenders": [],
+        "buttons": [
+          {
+            "id": "btnEn",
+            "w": 48,
+            "h": 44,
+            "right": 265,
+            "font": "15px"
+          },
+          {
+            "id": "btnMain",
+            "w": 50,
+            "h": 44,
+            "right": 319,
+            "font": "15px"
+          },
+          {
+            "id": "btnMore",
+            "w": 44,
+            "h": 44,
+            "right": 367,
+            "font": "20px"
+          }
+        ],
+        "select": {
+          "w": 94.3,
+          "h": 44,
+          "font": "15px"
+        },
+        "baseFont": "19px",
+        "draftFont": "18px",
+        "minFontViolations": [],
+        "topRow": {
+          "wrap": "nowrap",
+          "clientW": 359,
+          "scrollW": 359,
+          "kids": [
+            {
+              "el": "person",
+              "left": 8,
+              "right": 102.3,
+              "w": 94.3,
+              "h": 44
+            },
+            {
+              "el": "statePill",
+              "left": 106.3,
+              "right": 213,
+              "w": 106.7,
+              "h": 32
+            },
+            {
+              "el": "btnEn",
+              "left": 217,
+              "right": 265,
+              "w": 48,
+              "h": 44
+            },
+            {
+              "el": "btnMain",
+              "left": 269,
+              "right": 319,
+              "w": 50,
+              "h": 44
+            },
+            {
+              "el": "btnMore",
+              "left": 323,
+              "right": 367,
+              "w": 44,
+              "h": 44
+            }
+          ],
+          "allInside": true
+        },
+        "stateClip": {
+          "pillW": 106.7,
+          "pillScroll": 107,
+          "pillClient": 107,
+          "textW": 42,
+          "textScroll": 42,
+          "textClient": 42,
+          "clipped": false
+        },
+        "headerTopBefore": 0,
+        "headerTopAfterScroll": 0,
+        "draft": {
+          "text": "I haven't been yet — I'd love to try it with you sometime.",
+          "top": 307,
+          "bottom": 364.4,
+          "w": 289,
+          "lineBottom": 299,
+          "gapBelowLine": 8,
+          "fontSize": "18px",
+          "color": "rgb(12, 119, 102)"
+        },
+        "tagsBottom": 844,
+        "coachBottom": 807.8,
+        "forbiddenWords": []
+      }
+    },
+    {
+      "width": 393,
+      "state": "resumed",
+      "data": {
+        "state": "recording",
+        "vw": 393,
+        "innerH": 852,
+        "docScrollW": 393,
+        "bodyScrollW": 393,
+        "appW": 393,
+        "appH": 852,
+        "overflowX": false,
+        "offenders": [],
+        "buttons": [
+          {
+            "id": "btnEn",
+            "w": 48,
+            "h": 44,
+            "right": 280.7,
+            "font": "15px"
+          },
+          {
+            "id": "btnMain",
+            "w": 50,
+            "h": 44,
+            "right": 334.7,
+            "font": "15px"
+          },
+          {
+            "id": "btnMore",
+            "w": 44,
+            "h": 44,
+            "right": 382.7,
+            "font": "20px"
+          }
+        ],
+        "select": {
+          "w": 110,
+          "h": 44,
+          "font": "15px"
+        },
+        "baseFont": "19px",
+        "draftFont": "18px",
+        "minFontViolations": [],
+        "topRow": {
+          "wrap": "nowrap",
+          "clientW": 377,
+          "scrollW": 377,
+          "kids": [
+            {
+              "el": "person",
+              "left": 8,
+              "right": 118,
+              "w": 110,
+              "h": 44
+            },
+            {
+              "el": "statePill",
+              "left": 122,
+              "right": 228.7,
+              "w": 106.7,
+              "h": 32
+            },
+            {
+              "el": "btnEn",
+              "left": 232.7,
+              "right": 280.7,
+              "w": 48,
+              "h": 44
+            },
+            {
+              "el": "btnMain",
+              "left": 284.7,
+              "right": 334.7,
+              "w": 50,
+              "h": 44
+            },
+            {
+              "el": "btnMore",
+              "left": 338.7,
+              "right": 382.7,
+              "w": 44,
+              "h": 44
+            }
+          ],
+          "allInside": true
+        },
+        "stateClip": {
+          "pillW": 106.7,
+          "pillScroll": 107,
+          "pillClient": 107,
+          "textW": 42,
+          "textScroll": 42,
+          "textClient": 42,
+          "clipped": false
+        },
+        "headerTopBefore": 0,
+        "headerTopAfterScroll": 0,
+        "draft": {
+          "text": "I haven't been yet — I'd love to try it with you sometime.",
+          "top": 307,
+          "bottom": 364.4,
+          "w": 305.9,
+          "lineBottom": 299,
+          "gapBelowLine": 8,
+          "fontSize": "18px",
+          "color": "rgb(12, 119, 102)"
+        },
+        "tagsBottom": 844,
+        "coachBottom": 807.8,
+        "forbiddenWords": []
+      }
+    },
+    {
+      "width": 393,
+      "state": "translating",
+      "data": {
+        "state": "recording",
+        "vw": 393,
+        "innerH": 852,
+        "docScrollW": 393,
+        "bodyScrollW": 393,
+        "appW": 393,
+        "appH": 852,
+        "overflowX": false,
+        "offenders": [],
+        "buttons": [
+          {
+            "id": "btnEn",
+            "w": 63,
+            "h": 44,
+            "right": 283,
+            "font": "15px"
+          },
+          {
+            "id": "btnMain",
+            "w": 50,
+            "h": 44,
+            "right": 337,
+            "font": "15px"
+          },
+          {
+            "id": "btnMore",
+            "w": 44,
+            "h": 44,
+            "right": 385,
+            "font": "20px"
+          }
+        ],
+        "select": {
+          "w": 97.3,
+          "h": 44,
+          "font": "15px"
+        },
+        "baseFont": "19px",
+        "draftFont": "15px",
+        "minFontViolations": [],
+        "topRow": {
+          "wrap": "nowrap",
+          "clientW": 377,
+          "scrollW": 377,
+          "kids": [
+            {
+              "el": "person",
+              "left": 8,
+              "right": 105.3,
+              "w": 97.3,
+              "h": 44
+            },
+            {
+              "el": "statePill",
+              "left": 109.3,
+              "right": 216,
+              "w": 106.7,
+              "h": 32
+            },
+            {
+              "el": "btnEn",
+              "left": 220,
+              "right": 283,
+              "w": 63,
+              "h": 44
+            },
+            {
+              "el": "btnMain",
+              "left": 287,
+              "right": 337,
+              "w": 50,
+              "h": 44
+            },
+            {
+              "el": "btnMore",
+              "left": 341,
+              "right": 385,
+              "w": 44,
+              "h": 44
+            }
+          ],
+          "allInside": true
+        },
+        "stateClip": {
+          "pillW": 106.7,
+          "pillScroll": 107,
+          "pillClient": 107,
+          "textW": 42,
+          "textScroll": 42,
+          "textClient": 42,
+          "clipped": false
+        },
+        "headerTopBefore": 0,
+        "headerTopAfterScroll": 0,
+        "draft": {
+          "text": "正在翻成能直接说出口的英文…",
+          "top": 307,
+          "bottom": 335,
+          "w": 305.9,
+          "lineBottom": 299,
+          "gapBelowLine": 8,
+          "fontSize": "15px",
+          "color": "rgb(92, 111, 121)"
+        },
+        "tagsBottom": 844,
+        "coachBottom": 807.8,
+        "forbiddenWords": []
+      }
+    },
+    {
+      "width": 393,
+      "state": "menu",
+      "data": {
+        "state": "recording",
+        "vw": 393,
+        "innerH": 852,
+        "docScrollW": 393,
+        "bodyScrollW": 393,
+        "appW": 393,
+        "appH": 852,
+        "overflowX": false,
+        "offenders": [],
+        "buttons": [
+          {
+            "id": "btnEn",
+            "w": 48,
+            "h": 44,
+            "right": 280.7,
+            "font": "15px"
+          },
+          {
+            "id": "btnMain",
+            "w": 50,
+            "h": 44,
+            "right": 334.7,
+            "font": "15px"
+          },
+          {
+            "id": "btnMore",
+            "w": 44,
+            "h": 44,
+            "right": 382.7,
+            "font": "20px"
+          }
+        ],
+        "select": {
+          "w": 110,
+          "h": 44,
+          "font": "15px"
+        },
+        "baseFont": "19px",
+        "draftFont": "19px",
+        "minFontViolations": [],
+        "topRow": {
+          "wrap": "nowrap",
+          "clientW": 377,
+          "scrollW": 377,
+          "kids": [
+            {
+              "el": "person",
+              "left": 8,
+              "right": 118,
+              "w": 110,
+              "h": 44
+            },
+            {
+              "el": "statePill",
+              "left": 122,
+              "right": 228.7,
+              "w": 106.7,
+              "h": 32
+            },
+            {
+              "el": "btnEn",
+              "left": 232.7,
+              "right": 280.7,
+              "w": 48,
+              "h": 44
+            },
+            {
+              "el": "btnMain",
+              "left": 284.7,
+              "right": 334.7,
+              "w": 50,
+              "h": 44
+            },
+            {
+              "el": "btnMore",
+              "left": 338.7,
+              "right": 382.7,
+              "w": 44,
+              "h": 44
+            }
+          ],
+          "allInside": true
+        },
+        "stateClip": {
+          "pillW": 106.7,
+          "pillScroll": 107,
+          "pillClient": 107,
+          "textW": 42,
+          "textScroll": 42,
+          "textClient": 42,
+          "clipped": false
+        },
+        "headerTopBefore": 0,
+        "headerTopAfterScroll": 0,
+        "draft": null,
+        "tagsBottom": 844,
+        "coachBottom": 807.8,
+        "forbiddenWords": []
+      }
+    },
+    {
+      "width": 393,
+      "state": "draft",
+      "data": {
+        "state": "recording",
+        "vw": 393,
+        "innerH": 852,
+        "docScrollW": 393,
+        "bodyScrollW": 393,
+        "appW": 393,
+        "appH": 852,
+        "overflowX": false,
+        "offenders": [],
+        "buttons": [
+          {
+            "id": "btnEn",
+            "w": 48,
+            "h": 44,
+            "right": 280.7,
+            "font": "15px"
+          },
+          {
+            "id": "btnMain",
+            "w": 50,
+            "h": 44,
+            "right": 334.7,
+            "font": "15px"
+          },
+          {
+            "id": "btnMore",
+            "w": 44,
+            "h": 44,
+            "right": 382.7,
+            "font": "20px"
+          }
+        ],
+        "select": {
+          "w": 110,
+          "h": 44,
+          "font": "15px"
+        },
+        "baseFont": "19px",
+        "draftFont": "18px",
+        "minFontViolations": [],
+        "topRow": {
+          "wrap": "nowrap",
+          "clientW": 377,
+          "scrollW": 377,
+          "kids": [
+            {
+              "el": "person",
+              "left": 8,
+              "right": 118,
+              "w": 110,
+              "h": 44
+            },
+            {
+              "el": "statePill",
+              "left": 122,
+              "right": 228.7,
+              "w": 106.7,
+              "h": 32
+            },
+            {
+              "el": "btnEn",
+              "left": 232.7,
+              "right": 280.7,
+              "w": 48,
+              "h": 44
+            },
+            {
+              "el": "btnMain",
+              "left": 284.7,
+              "right": 334.7,
+              "w": 50,
+              "h": 44
+            },
+            {
+              "el": "btnMore",
+              "left": 338.7,
+              "right": 382.7,
+              "w": 44,
+              "h": 44
+            }
+          ],
+          "allInside": true
+        },
+        "stateClip": {
+          "pillW": 106.7,
+          "pillScroll": 107,
+          "pillClient": 107,
+          "textW": 42,
+          "textScroll": 42,
+          "textClient": 42,
+          "clipped": false
+        },
+        "headerTopBefore": 0,
+        "headerTopAfterScroll": 0,
+        "draft": {
+          "text": "I haven't been yet — I'd love to try it with you sometime.",
+          "top": 307,
+          "bottom": 364.4,
+          "w": 305.9,
+          "lineBottom": 299,
+          "gapBelowLine": 8,
+          "fontSize": "18px",
+          "color": "rgb(12, 119, 102)"
+        },
+        "tagsBottom": 844,
+        "coachBottom": 807.8,
+        "forbiddenWords": []
+      }
+    },
+    {
+      "width": 393,
+      "state": "paused",
+      "data": {
+        "state": "paused",
+        "vw": 393,
+        "innerH": 852,
+        "docScrollW": 393,
+        "bodyScrollW": 393,
+        "appW": 393,
+        "appH": 852,
+        "overflowX": false,
+        "offenders": [],
+        "buttons": [
+          {
+            "id": "btnEn",
+            "w": 48,
+            "h": 44,
+            "right": 280.7,
+            "font": "15px"
+          },
+          {
+            "id": "btnMain",
+            "w": 50,
+            "h": 44,
+            "right": 334.7,
+            "font": "15px"
+          },
+          {
+            "id": "btnMore",
+            "w": 44,
+            "h": 44,
+            "right": 382.7,
+            "font": "20px"
+          }
+        ],
+        "select": {
+          "w": 110,
+          "h": 44,
+          "font": "15px"
+        },
+        "baseFont": "19px",
+        "draftFont": "18px",
+        "minFontViolations": [],
+        "topRow": {
+          "wrap": "nowrap",
+          "clientW": 377,
+          "scrollW": 377,
+          "kids": [
+            {
+              "el": "person",
+              "left": 8,
+              "right": 118,
+              "w": 110,
+              "h": 44
+            },
+            {
+              "el": "statePill",
+              "left": 122,
+              "right": 228.7,
+              "w": 106.7,
+              "h": 32
+            },
+            {
+              "el": "btnEn",
+              "left": 232.7,
+              "right": 280.7,
+              "w": 48,
+              "h": 44
+            },
+            {
+              "el": "btnMain",
+              "left": 284.7,
+              "right": 334.7,
+              "w": 50,
+              "h": 44
+            },
+            {
+              "el": "btnMore",
+              "left": 338.7,
+              "right": 382.7,
+              "w": 44,
+              "h": 44
+            }
+          ],
+          "allInside": true
+        },
+        "stateClip": {
+          "pillW": 106.7,
+          "pillScroll": 107,
+          "pillClient": 107,
+          "textW": 42,
+          "textScroll": 42,
+          "textClient": 42,
+          "clipped": false
+        },
+        "headerTopBefore": 0,
+        "headerTopAfterScroll": 0,
+        "draft": {
+          "text": "I haven't been yet — I'd love to try it with you sometime.",
+          "top": 307,
+          "bottom": 364.4,
+          "w": 305.9,
+          "lineBottom": 299,
+          "gapBelowLine": 8,
+          "fontSize": "18px",
+          "color": "rgb(12, 119, 102)"
+        },
+        "tagsBottom": 844,
+        "coachBottom": 807.8,
+        "forbiddenWords": []
+      }
+    },
+    {
+      "width": 393,
+      "state": "idle",
+      "data": {
+        "state": "idle",
+        "vw": 393,
+        "innerH": 852,
+        "docScrollW": 393,
+        "bodyScrollW": 393,
+        "appW": 393,
+        "appH": 852,
+        "overflowX": false,
+        "offenders": [],
+        "buttons": [
+          {
+            "id": "btnEn",
+            "w": 48,
+            "h": 44,
+            "right": 280.7,
+            "font": "15px"
+          },
+          {
+            "id": "btnMain",
+            "w": 50,
+            "h": 44,
+            "right": 334.7,
+            "font": "15px"
+          },
+          {
+            "id": "btnMore",
+            "w": 44,
+            "h": 44,
+            "right": 382.7,
+            "font": "20px"
+          }
+        ],
+        "select": {
+          "w": 110,
+          "h": 44,
+          "font": "15px"
+        },
+        "baseFont": "19px",
+        "draftFont": "19px",
+        "minFontViolations": [],
+        "topRow": {
+          "wrap": "nowrap",
+          "clientW": 377,
+          "scrollW": 377,
+          "kids": [
+            {
+              "el": "person",
+              "left": 8,
+              "right": 118,
+              "w": 110,
+              "h": 44
+            },
+            {
+              "el": "statePill",
+              "left": 122,
+              "right": 228.7,
+              "w": 106.7,
+              "h": 32
+            },
+            {
+              "el": "btnEn",
+              "left": 232.7,
+              "right": 280.7,
+              "w": 48,
+              "h": 44
+            },
+            {
+              "el": "btnMain",
+              "left": 284.7,
+              "right": 334.7,
+              "w": 50,
+              "h": 44
+            },
+            {
+              "el": "btnMore",
+              "left": 338.7,
+              "right": 382.7,
+              "w": 44,
+              "h": 44
+            }
+          ],
+          "allInside": true
+        },
+        "stateClip": {
+          "pillW": 106.7,
+          "pillScroll": 107,
+          "pillClient": 107,
+          "textW": 42,
+          "textScroll": 42,
+          "textClient": 42,
+          "clipped": false
+        },
+        "headerTopBefore": 0,
+        "headerTopAfterScroll": 0,
+        "draft": null,
+        "tagsBottom": 844,
+        "coachBottom": 807.8,
+        "forbiddenWords": []
+      }
+    },
+    {
+      "width": 393,
+      "state": "finished",
+      "data": {
+        "state": "finished",
+        "vw": 393,
+        "innerH": 852,
+        "docScrollW": 393,
+        "bodyScrollW": 393,
+        "appW": 393,
+        "appH": 852,
+        "overflowX": false,
+        "offenders": [],
+        "buttons": [
+          {
+            "id": "btnEn",
+            "w": 48,
+            "h": 44,
+            "right": 280.7,
+            "font": "15px"
+          },
+          {
+            "id": "btnMain",
+            "w": 50,
+            "h": 44,
+            "right": 334.7,
+            "font": "15px"
+          },
+          {
+            "id": "btnMore",
+            "w": 44,
+            "h": 44,
+            "right": 382.7,
+            "font": "20px"
+          }
+        ],
+        "select": {
+          "w": 110,
+          "h": 44,
+          "font": "15px"
+        },
+        "baseFont": "19px",
+        "draftFont": "18px",
+        "minFontViolations": [],
+        "topRow": {
+          "wrap": "nowrap",
+          "clientW": 377,
+          "scrollW": 377,
+          "kids": [
+            {
+              "el": "person",
+              "left": 8,
+              "right": 118,
+              "w": 110,
+              "h": 44
+            },
+            {
+              "el": "statePill",
+              "left": 122,
+              "right": 228.7,
+              "w": 106.7,
+              "h": 32
+            },
+            {
+              "el": "btnEn",
+              "left": 232.7,
+              "right": 280.7,
+              "w": 48,
+              "h": 44
+            },
+            {
+              "el": "btnMain",
+              "left": 284.7,
+              "right": 334.7,
+              "w": 50,
+              "h": 44
+            },
+            {
+              "el": "btnMore",
+              "left": 338.7,
+              "right": 382.7,
+              "w": 44,
+              "h": 44
+            }
+          ],
+          "allInside": true
+        },
+        "stateClip": {
+          "pillW": 106.7,
+          "pillScroll": 107,
+          "pillClient": 107,
+          "textW": 42,
+          "textScroll": 42,
+          "textClient": 42,
+          "clipped": false
+        },
+        "headerTopBefore": 0,
+        "headerTopAfterScroll": 0,
+        "draft": {
+          "text": "I haven't been yet — I'd love to try it with you sometime.",
+          "top": 307,
+          "bottom": 364.4,
+          "w": 305.9,
+          "lineBottom": 299,
+          "gapBelowLine": 8,
+          "fontSize": "18px",
+          "color": "rgb(12, 119, 102)"
+        },
+        "tagsBottom": 844,
+        "coachBottom": 807.8,
+        "forbiddenWords": []
+      }
+    },
+    {
+      "width": 430,
+      "state": "resumed",
+      "data": {
+        "state": "recording",
+        "vw": 430,
+        "innerH": 852,
+        "docScrollW": 430,
+        "bodyScrollW": 430,
+        "appW": 430,
+        "appH": 852,
+        "overflowX": false,
+        "offenders": [],
+        "buttons": [
+          {
+            "id": "btnEn",
+            "w": 50,
+            "h": 44,
+            "right": 300.7,
+            "font": "15px"
+          },
+          {
+            "id": "btnMain",
+            "w": 54,
+            "h": 44,
+            "right": 360.7,
+            "font": "15px"
+          },
+          {
+            "id": "btnMore",
+            "w": 44,
+            "h": 44,
+            "right": 410.7,
+            "font": "20px"
+          }
+        ],
+        "select": {
+          "w": 116,
+          "h": 44,
+          "font": "15px"
+        },
+        "baseFont": "19px",
+        "draftFont": "18px",
+        "minFontViolations": [],
+        "topRow": {
+          "wrap": "nowrap",
+          "clientW": 414,
+          "scrollW": 414,
+          "kids": [
+            {
+              "el": "person",
+              "left": 8,
+              "right": 124,
+              "w": 116,
+              "h": 44
+            },
+            {
+              "el": "statePill",
+              "left": 130,
+              "right": 244.7,
+              "w": 114.7,
+              "h": 32
+            },
+            {
+              "el": "btnEn",
+              "left": 250.7,
+              "right": 300.7,
+              "w": 50,
+              "h": 44
+            },
+            {
+              "el": "btnMain",
+              "left": 306.7,
+              "right": 360.7,
+              "w": 54,
+              "h": 44
+            },
+            {
+              "el": "btnMore",
+              "left": 366.7,
+              "right": 410.7,
+              "w": 44,
+              "h": 44
+            }
+          ],
+          "allInside": true
+        },
+        "stateClip": {
+          "pillW": 114.7,
+          "pillScroll": 115,
+          "pillClient": 115,
+          "textW": 42,
+          "textScroll": 42,
+          "textClient": 42,
+          "clipped": false
+        },
+        "headerTopBefore": 0,
+        "headerTopAfterScroll": 0,
+        "draft": {
+          "text": "I haven't been yet — I'd love to try it with you sometime.",
+          "top": 307,
+          "bottom": 364.4,
+          "w": 340.7,
+          "lineBottom": 299,
+          "gapBelowLine": 8,
+          "fontSize": "18px",
+          "color": "rgb(12, 119, 102)"
+        },
+        "tagsBottom": 844,
+        "coachBottom": 807.8,
+        "forbiddenWords": []
+      }
+    },
+    {
+      "width": 430,
+      "state": "translating",
+      "data": {
+        "state": "recording",
+        "vw": 430,
+        "innerH": 852,
+        "docScrollW": 430,
+        "bodyScrollW": 430,
+        "appW": 430,
+        "appH": 852,
+        "overflowX": false,
+        "offenders": [],
+        "buttons": [
+          {
+            "id": "btnEn",
+            "w": 65,
+            "h": 44,
+            "right": 312,
+            "font": "15px"
+          },
+          {
+            "id": "btnMain",
+            "w": 54,
+            "h": 44,
+            "right": 372,
+            "font": "15px"
+          },
+          {
+            "id": "btnMore",
+            "w": 44,
+            "h": 44,
+            "right": 422,
+            "font": "20px"
+          }
+        ],
+        "select": {
+          "w": 112.3,
+          "h": 44,
+          "font": "15px"
+        },
+        "baseFont": "19px",
+        "draftFont": "15px",
+        "minFontViolations": [],
+        "topRow": {
+          "wrap": "nowrap",
+          "clientW": 414,
+          "scrollW": 414,
+          "kids": [
+            {
+              "el": "person",
+              "left": 8,
+              "right": 120.3,
+              "w": 112.3,
+              "h": 44
+            },
+            {
+              "el": "statePill",
+              "left": 126.3,
+              "right": 241,
+              "w": 114.7,
+              "h": 32
+            },
+            {
+              "el": "btnEn",
+              "left": 247,
+              "right": 312,
+              "w": 65,
+              "h": 44
+            },
+            {
+              "el": "btnMain",
+              "left": 318,
+              "right": 372,
+              "w": 54,
+              "h": 44
+            },
+            {
+              "el": "btnMore",
+              "left": 378,
+              "right": 422,
+              "w": 44,
+              "h": 44
+            }
+          ],
+          "allInside": true
+        },
+        "stateClip": {
+          "pillW": 114.7,
+          "pillScroll": 115,
+          "pillClient": 115,
+          "textW": 42,
+          "textScroll": 42,
+          "textClient": 42,
+          "clipped": false
+        },
+        "headerTopBefore": 0,
+        "headerTopAfterScroll": 0,
+        "draft": {
+          "text": "正在翻成能直接说出口的英文…",
+          "top": 307,
+          "bottom": 335,
+          "w": 340.7,
+          "lineBottom": 299,
+          "gapBelowLine": 8,
+          "fontSize": "15px",
+          "color": "rgb(92, 111, 121)"
+        },
+        "tagsBottom": 844,
+        "coachBottom": 807.8,
+        "forbiddenWords": []
+      }
+    },
+    {
+      "width": 430,
+      "state": "menu",
+      "data": {
+        "state": "recording",
+        "vw": 430,
+        "innerH": 852,
+        "docScrollW": 430,
+        "bodyScrollW": 430,
+        "appW": 430,
+        "appH": 852,
+        "overflowX": false,
+        "offenders": [],
+        "buttons": [
+          {
+            "id": "btnEn",
+            "w": 50,
+            "h": 44,
+            "right": 300.7,
+            "font": "15px"
+          },
+          {
+            "id": "btnMain",
+            "w": 54,
+            "h": 44,
+            "right": 360.7,
+            "font": "15px"
+          },
+          {
+            "id": "btnMore",
+            "w": 44,
+            "h": 44,
+            "right": 410.7,
+            "font": "20px"
+          }
+        ],
+        "select": {
+          "w": 116,
+          "h": 44,
+          "font": "15px"
+        },
+        "baseFont": "19px",
+        "draftFont": "19px",
+        "minFontViolations": [],
+        "topRow": {
+          "wrap": "nowrap",
+          "clientW": 414,
+          "scrollW": 414,
+          "kids": [
+            {
+              "el": "person",
+              "left": 8,
+              "right": 124,
+              "w": 116,
+              "h": 44
+            },
+            {
+              "el": "statePill",
+              "left": 130,
+              "right": 244.7,
+              "w": 114.7,
+              "h": 32
+            },
+            {
+              "el": "btnEn",
+              "left": 250.7,
+              "right": 300.7,
+              "w": 50,
+              "h": 44
+            },
+            {
+              "el": "btnMain",
+              "left": 306.7,
+              "right": 360.7,
+              "w": 54,
+              "h": 44
+            },
+            {
+              "el": "btnMore",
+              "left": 366.7,
+              "right": 410.7,
+              "w": 44,
+              "h": 44
+            }
+          ],
+          "allInside": true
+        },
+        "stateClip": {
+          "pillW": 114.7,
+          "pillScroll": 115,
+          "pillClient": 115,
+          "textW": 42,
+          "textScroll": 42,
+          "textClient": 42,
+          "clipped": false
+        },
+        "headerTopBefore": 0,
+        "headerTopAfterScroll": 0,
+        "draft": null,
+        "tagsBottom": 844,
+        "coachBottom": 807.8,
+        "forbiddenWords": []
+      }
+    },
+    {
+      "width": 430,
+      "state": "draft",
+      "data": {
+        "state": "recording",
+        "vw": 430,
+        "innerH": 852,
+        "docScrollW": 430,
+        "bodyScrollW": 430,
+        "appW": 430,
+        "appH": 852,
+        "overflowX": false,
+        "offenders": [],
+        "buttons": [
+          {
+            "id": "btnEn",
+            "w": 50,
+            "h": 44,
+            "right": 300.7,
+            "font": "15px"
+          },
+          {
+            "id": "btnMain",
+            "w": 54,
+            "h": 44,
+            "right": 360.7,
+            "font": "15px"
+          },
+          {
+            "id": "btnMore",
+            "w": 44,
+            "h": 44,
+            "right": 410.7,
+            "font": "20px"
+          }
+        ],
+        "select": {
+          "w": 116,
+          "h": 44,
+          "font": "15px"
+        },
+        "baseFont": "19px",
+        "draftFont": "18px",
+        "minFontViolations": [],
+        "topRow": {
+          "wrap": "nowrap",
+          "clientW": 414,
+          "scrollW": 414,
+          "kids": [
+            {
+              "el": "person",
+              "left": 8,
+              "right": 124,
+              "w": 116,
+              "h": 44
+            },
+            {
+              "el": "statePill",
+              "left": 130,
+              "right": 244.7,
+              "w": 114.7,
+              "h": 32
+            },
+            {
+              "el": "btnEn",
+              "left": 250.7,
+              "right": 300.7,
+              "w": 50,
+              "h": 44
+            },
+            {
+              "el": "btnMain",
+              "left": 306.7,
+              "right": 360.7,
+              "w": 54,
+              "h": 44
+            },
+            {
+              "el": "btnMore",
+              "left": 366.7,
+              "right": 410.7,
+              "w": 44,
+              "h": 44
+            }
+          ],
+          "allInside": true
+        },
+        "stateClip": {
+          "pillW": 114.7,
+          "pillScroll": 115,
+          "pillClient": 115,
+          "textW": 42,
+          "textScroll": 42,
+          "textClient": 42,
+          "clipped": false
+        },
+        "headerTopBefore": 0,
+        "headerTopAfterScroll": 0,
+        "draft": {
+          "text": "I haven't been yet — I'd love to try it with you sometime.",
+          "top": 307,
+          "bottom": 364.4,
+          "w": 340.7,
+          "lineBottom": 299,
+          "gapBelowLine": 8,
+          "fontSize": "18px",
+          "color": "rgb(12, 119, 102)"
+        },
+        "tagsBottom": 844,
+        "coachBottom": 807.8,
+        "forbiddenWords": []
+      }
+    },
+    {
+      "width": 430,
+      "state": "paused",
+      "data": {
+        "state": "paused",
+        "vw": 430,
+        "innerH": 852,
+        "docScrollW": 430,
+        "bodyScrollW": 430,
+        "appW": 430,
+        "appH": 852,
+        "overflowX": false,
+        "offenders": [],
+        "buttons": [
+          {
+            "id": "btnEn",
+            "w": 50,
+            "h": 44,
+            "right": 300.7,
+            "font": "15px"
+          },
+          {
+            "id": "btnMain",
+            "w": 54,
+            "h": 44,
+            "right": 360.7,
+            "font": "15px"
+          },
+          {
+            "id": "btnMore",
+            "w": 44,
+            "h": 44,
+            "right": 410.7,
+            "font": "20px"
+          }
+        ],
+        "select": {
+          "w": 116,
+          "h": 44,
+          "font": "15px"
+        },
+        "baseFont": "19px",
+        "draftFont": "18px",
+        "minFontViolations": [],
+        "topRow": {
+          "wrap": "nowrap",
+          "clientW": 414,
+          "scrollW": 414,
+          "kids": [
+            {
+              "el": "person",
+              "left": 8,
+              "right": 124,
+              "w": 116,
+              "h": 44
+            },
+            {
+              "el": "statePill",
+              "left": 130,
+              "right": 244.7,
+              "w": 114.7,
+              "h": 32
+            },
+            {
+              "el": "btnEn",
+              "left": 250.7,
+              "right": 300.7,
+              "w": 50,
+              "h": 44
+            },
+            {
+              "el": "btnMain",
+              "left": 306.7,
+              "right": 360.7,
+              "w": 54,
+              "h": 44
+            },
+            {
+              "el": "btnMore",
+              "left": 366.7,
+              "right": 410.7,
+              "w": 44,
+              "h": 44
+            }
+          ],
+          "allInside": true
+        },
+        "stateClip": {
+          "pillW": 114.7,
+          "pillScroll": 115,
+          "pillClient": 115,
+          "textW": 42,
+          "textScroll": 42,
+          "textClient": 42,
+          "clipped": false
+        },
+        "headerTopBefore": 0,
+        "headerTopAfterScroll": 0,
+        "draft": {
+          "text": "I haven't been yet — I'd love to try it with you sometime.",
+          "top": 307,
+          "bottom": 364.4,
+          "w": 340.7,
+          "lineBottom": 299,
+          "gapBelowLine": 8,
+          "fontSize": "18px",
+          "color": "rgb(12, 119, 102)"
+        },
+        "tagsBottom": 844,
+        "coachBottom": 807.8,
+        "forbiddenWords": []
+      }
+    },
+    {
+      "width": 430,
+      "state": "idle",
+      "data": {
+        "state": "idle",
+        "vw": 430,
+        "innerH": 852,
+        "docScrollW": 430,
+        "bodyScrollW": 430,
+        "appW": 430,
+        "appH": 852,
+        "overflowX": false,
+        "offenders": [],
+        "buttons": [
+          {
+            "id": "btnEn",
+            "w": 50,
+            "h": 44,
+            "right": 300.7,
+            "font": "15px"
+          },
+          {
+            "id": "btnMain",
+            "w": 54,
+            "h": 44,
+            "right": 360.7,
+            "font": "15px"
+          },
+          {
+            "id": "btnMore",
+            "w": 44,
+            "h": 44,
+            "right": 410.7,
+            "font": "20px"
+          }
+        ],
+        "select": {
+          "w": 116,
+          "h": 44,
+          "font": "15px"
+        },
+        "baseFont": "19px",
+        "draftFont": "19px",
+        "minFontViolations": [],
+        "topRow": {
+          "wrap": "nowrap",
+          "clientW": 414,
+          "scrollW": 414,
+          "kids": [
+            {
+              "el": "person",
+              "left": 8,
+              "right": 124,
+              "w": 116,
+              "h": 44
+            },
+            {
+              "el": "statePill",
+              "left": 130,
+              "right": 244.7,
+              "w": 114.7,
+              "h": 32
+            },
+            {
+              "el": "btnEn",
+              "left": 250.7,
+              "right": 300.7,
+              "w": 50,
+              "h": 44
+            },
+            {
+              "el": "btnMain",
+              "left": 306.7,
+              "right": 360.7,
+              "w": 54,
+              "h": 44
+            },
+            {
+              "el": "btnMore",
+              "left": 366.7,
+              "right": 410.7,
+              "w": 44,
+              "h": 44
+            }
+          ],
+          "allInside": true
+        },
+        "stateClip": {
+          "pillW": 114.7,
+          "pillScroll": 115,
+          "pillClient": 115,
+          "textW": 42,
+          "textScroll": 42,
+          "textClient": 42,
+          "clipped": false
+        },
+        "headerTopBefore": 0,
+        "headerTopAfterScroll": 0,
+        "draft": null,
+        "tagsBottom": 844,
+        "coachBottom": 807.8,
+        "forbiddenWords": []
+      }
+    },
+    {
+      "width": 430,
+      "state": "finished",
+      "data": {
+        "state": "finished",
+        "vw": 430,
+        "innerH": 852,
+        "docScrollW": 430,
+        "bodyScrollW": 430,
+        "appW": 430,
+        "appH": 852,
+        "overflowX": false,
+        "offenders": [],
+        "buttons": [
+          {
+            "id": "btnEn",
+            "w": 50,
+            "h": 44,
+            "right": 300.7,
+            "font": "15px"
+          },
+          {
+            "id": "btnMain",
+            "w": 54,
+            "h": 44,
+            "right": 360.7,
+            "font": "15px"
+          },
+          {
+            "id": "btnMore",
+            "w": 44,
+            "h": 44,
+            "right": 410.7,
+            "font": "20px"
+          }
+        ],
+        "select": {
+          "w": 116,
+          "h": 44,
+          "font": "15px"
+        },
+        "baseFont": "19px",
+        "draftFont": "18px",
+        "minFontViolations": [],
+        "topRow": {
+          "wrap": "nowrap",
+          "clientW": 414,
+          "scrollW": 414,
+          "kids": [
+            {
+              "el": "person",
+              "left": 8,
+              "right": 124,
+              "w": 116,
+              "h": 44
+            },
+            {
+              "el": "statePill",
+              "left": 130,
+              "right": 244.7,
+              "w": 114.7,
+              "h": 32
+            },
+            {
+              "el": "btnEn",
+              "left": 250.7,
+              "right": 300.7,
+              "w": 50,
+              "h": 44
+            },
+            {
+              "el": "btnMain",
+              "left": 306.7,
+              "right": 360.7,
+              "w": 54,
+              "h": 44
+            },
+            {
+              "el": "btnMore",
+              "left": 366.7,
+              "right": 410.7,
+              "w": 44,
+              "h": 44
+            }
+          ],
+          "allInside": true
+        },
+        "stateClip": {
+          "pillW": 114.7,
+          "pillScroll": 115,
+          "pillClient": 115,
+          "textW": 42,
+          "textScroll": 42,
+          "textClient": 42,
+          "clipped": false
+        },
+        "headerTopBefore": 0,
+        "headerTopAfterScroll": 0,
+        "draft": {
+          "text": "I haven't been yet — I'd love to try it with you sometime.",
+          "top": 307,
+          "bottom": 364.4,
+          "w": 340.7,
+          "lineBottom": 299,
+          "gapBelowLine": 8,
+          "fontSize": "18px",
+          "color": "rgb(12, 119, 102)"
+        },
+        "tagsBottom": 844,
+        "coachBottom": 807.8,
+        "forbiddenWords": []
+      }
+    }
+  ]
+}

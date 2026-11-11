@@ -1,0 +1,695 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f7f3">
+<title>N07 · 聊天顶部与按需译英 · 可点击原型</title>
+<style>
+:root{
+  --bg:#f5f7f3;--paper:#fff;--ink:#1e3c54;--muted:#5c6f79;--stroke:#dde5e7;
+  --pine:#0c7766;--soft:#e9f5f1;--amber:#a35d18;--on-pine:#fff;
+  --shadow:0 6px 24px #142a3910;--canvas:#e9eeec;
+}
+html[data-theme="dark"]{
+  --bg:#192d35;--paper:#233d46;--ink:#eff8f7;--muted:#b4c6ca;--stroke:#44616b;
+  --pine:#5bd0b8;--soft:#31524c;--amber:#e8bd87;--on-pine:#0a2420;
+  --shadow:0 7px 24px #0004;--canvas:#0e1c22;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;background:var(--canvas);color:var(--ink);
+  font:19px/1.45 -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+}
+body.shot *{transition:none!important;animation:none!important}
+body.shot [data-proto]{display:none!important}
+button{font:inherit;cursor:pointer}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+.stage{min-height:100%;display:flex;justify-content:center}
+.app{
+  position:relative;width:100%;height:100dvh;display:flex;flex-direction:column;
+  background:var(--bg);overflow:hidden;
+}
+@media(min-width:600px){
+  .stage{align-items:flex-start;padding:20px}
+  .app{width:393px;height:852px;border:1px solid var(--stroke);border-radius:30px;box-shadow:0 26px 64px #142a3926}
+  html[data-theme="dark"] .app{box-shadow:0 26px 64px #0007}
+}
+
+/* 顶部：固定可见，滚动不动 */
+.top{
+  flex:0 0 auto;position:relative;z-index:20;background:var(--paper);
+  border-bottom:1px solid var(--stroke);
+  padding:calc(6px + env(safe-area-inset-top,0px)) 8px 6px;
+}
+.topactions{display:flex;align-items:center;gap:6px;min-height:48px}
+.person{position:relative;display:flex;align-items:center;flex:1 1 auto;min-width:58px;max-width:116px}
+.person select{
+  width:100%;height:44px;min-width:0;border:1px solid var(--stroke);border-radius:11px;
+  background:var(--paper);color:var(--ink);font-size:15px;font-weight:800;
+  padding:0 22px 0 9px;appearance:none;-webkit-appearance:none;
+  text-overflow:ellipsis;
+}
+.person::after{content:"▾";position:absolute;right:8px;font-size:13px;color:var(--muted);pointer-events:none}
+.state{
+  display:inline-flex;align-items:center;gap:4px;flex:0 1 auto;min-width:0;
+  height:32px;padding:0 8px;border-radius:999px;background:var(--soft);color:var(--pine);
+  font-size:14px;font-weight:800;white-space:nowrap;overflow:hidden;
+}
+.state .dot{width:7px;height:7px;border-radius:50%;background:#2f9e6a;flex:0 0 auto}
+.state b{font-weight:800;min-width:0;overflow:hidden;text-overflow:ellipsis}
+.state em{font-style:normal;font-size:14px;font-weight:700;font-variant-numeric:tabular-nums;opacity:.92;flex:0 0 auto}
+.state[data-state="idle"]{background:var(--bg);color:var(--muted)}
+.state[data-state="idle"] .dot{background:var(--muted)}
+.state[data-state="paused"]{background:#fdf1e4;color:var(--amber)}
+.state[data-state="paused"] .dot{background:var(--amber)}
+html[data-theme="dark"] .state[data-state="paused"]{background:#3d3220;color:#f0c88a}
+html[data-theme="dark"] .state[data-state="paused"] .dot{background:#f0c88a}
+.state[data-state="finished"]{background:var(--bg);color:var(--muted)}
+.state[data-state="finished"] .dot{background:var(--muted)}
+
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;
+  min-height:44px;border:1px solid var(--stroke);border-radius:11px;background:var(--paper);
+  color:var(--ink);font-size:15px;font-weight:800;line-height:1;padding:0 10px;white-space:nowrap;
+}
+.btn.en{border-color:var(--pine);color:var(--pine);background:var(--paper);padding:0 9px}
+.btn.main{border-color:var(--pine);background:var(--pine);color:var(--on-pine);padding:0 11px}
+.btn.more{width:44px;min-width:44px;padding:0;font-size:20px;color:var(--ink);font-weight:700}
+.btn:disabled{opacity:.6;cursor:default}
+
+/* 正文 */
+main{flex:1;min-height:0;display:flex;flex-direction:column;gap:8px;padding:8px 10px calc(8px + env(safe-area-inset-bottom,0px))}
+.live{
+  flex:1 1 auto;min-height:0;display:flex;flex-direction:column;
+  background:var(--paper);border:1px solid var(--stroke);border-radius:16px;overflow:hidden;
+  box-shadow:var(--shadow);
+}
+.livehead{flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 12px;border-bottom:1px solid var(--stroke)}
+.livetitle{font-size:15px;font-weight:800;color:var(--ink)}
+.mic{display:inline-flex;align-items:center;gap:5px;font-size:14px;font-weight:700;color:var(--muted);white-space:nowrap}
+.mic::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--muted)}
+.mic[data-state="live"]{color:var(--pine)}
+.mic[data-state="live"]::before{background:#2f9e6a}
+.mic[data-state="paused"]{color:var(--amber)}
+.mic[data-state="paused"]::before{background:var(--amber)}
+.conv{flex:1;min-height:0;overflow-y:auto;display:flex;flex-direction:column;gap:8px;padding:10px;background:var(--bg);scroll-behavior:smooth}
+.bubble{max-width:94%;align-self:flex-start;background:var(--paper);border:1px solid var(--stroke);border-radius:14px;padding:8px 11px}
+.bubble.mine{align-self:flex-end;background:var(--soft)}
+.bubble .who{font-size:14px;line-height:1.3;color:var(--muted);margin-bottom:2px}
+.bubble .line{margin:0;font-size:19px;line-height:1.38;overflow-wrap:anywhere}
+.bubble[data-zh]{cursor:pointer}
+.bubble.pick{outline:2px solid var(--pine);outline-offset:1px}
+.draft{
+  margin:8px 0 0;padding:6px 0 0 11px;border-top:1px dashed var(--stroke);
+  border-left:3px solid var(--pine);font-size:18px;line-height:1.4;font-weight:650;
+  color:var(--pine);overflow-wrap:anywhere;
+}
+.draft.loading{font-size:15px;font-weight:400;color:var(--muted);border-left-color:var(--stroke)}
+.draft.err{font-size:15px;font-weight:600;color:var(--amber);border-left-color:var(--amber)}
+.sysline{display:flex;align-items:center;gap:8px;justify-content:center;font-size:14px;color:var(--muted);padding:2px 0}
+.sysline::before,.sysline::after{content:"";height:1px;flex:1;background:var(--stroke)}
+.interim{
+  flex:0 0 auto;display:flex;align-items:center;min-height:36px;padding:7px 12px;
+  border-top:1px dashed var(--stroke);font-size:15px;color:var(--pine);background:var(--paper);
+  overflow:hidden;
+}
+.interim[data-state="paused"]{color:var(--amber)}
+.interim[hidden]{display:none}
+.empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:18px}
+.empty .icon{width:52px;height:52px;border-radius:50%;background:var(--soft);color:var(--pine);display:grid;place-items:center;margin-bottom:10px}
+.empty b{font-size:19px;line-height:1.4}
+.empty p{font-size:15px;color:var(--muted);line-height:1.5;margin:4px 0 0;max-width:250px}
+
+.coach{flex:0 0 auto;background:var(--paper);border:1px solid var(--stroke);border-radius:16px;padding:6px 10px 8px;box-shadow:var(--shadow)}
+.coachhead{display:flex;align-items:baseline;justify-content:space-between;gap:8px;padding:2px 2px 5px}
+.coachhead b{font-size:15px;color:var(--pine);font-weight:800}
+.coachhead span{font-size:14px;color:var(--muted)}
+.sugg{display:flex;gap:8px;padding:6px 0;border-top:1px solid var(--stroke)}
+.sugg:first-of-type{border-top:0}
+.sugg .k{flex:0 0 32px;font-size:14px;font-weight:800;color:var(--pine);padding-top:3px}
+.sugg .en{margin:0;font-size:19px;line-height:1.34;overflow-wrap:anywhere}
+.sugg .zh{margin:2px 0 0;font-size:15px;line-height:1.35;color:var(--muted)}
+.coachempty{font-size:15px;line-height:1.45;color:var(--muted);padding:8px 2px 10px}
+
+.tags{flex:0 0 auto;display:flex;gap:6px;padding:0 2px;overflow-x:auto;scrollbar-width:none}
+.tags::-webkit-scrollbar{display:none}
+.tag{flex:0 0 auto;border:1px solid var(--stroke);background:var(--paper);color:var(--muted);border-radius:999px;padding:4px 10px;font-size:14px;line-height:1.3;white-space:nowrap}
+
+/* 底部菜单 */
+.mask{position:absolute;inset:0;z-index:30;background:#0b1d2b66;opacity:0;pointer-events:none}
+.mask.show{opacity:1;pointer-events:auto}
+.sheet{
+  position:absolute;left:0;right:0;bottom:0;z-index:31;background:var(--paper);
+  border-radius:20px 20px 0 0;padding:6px 14px calc(12px + env(safe-area-inset-bottom,0px));
+  transform:translateY(105%);box-shadow:0 -12px 40px #102a3533;max-height:82%;overflow:auto;
+  visibility:hidden;
+}
+.sheet.open{transform:translateY(0);visibility:visible}
+.grab{width:38px;height:4px;border-radius:99px;background:var(--stroke);margin:2px auto 4px}
+.sheettitle{font-size:23px;line-height:1.3;margin:2px 8px 6px}
+.row{
+  display:flex;flex-direction:column;align-items:flex-start;gap:1px;width:100%;
+  min-height:56px;border:0;border-top:1px solid var(--stroke);background:none;
+  color:var(--ink);text-align:left;padding:10px 8px;
+}
+.row span{font-size:19px;font-weight:700;line-height:1.3}
+.row small{font-size:14px;color:var(--muted);line-height:1.35}
+.row.end span{color:var(--amber)}
+.row.cancel{align-items:center;justify-content:center;border-top:8px solid var(--bg);margin-top:4px;padding:8px}
+.row.cancel span{font-size:16px;font-weight:700;color:var(--muted)}
+
+/* 结束确认 */
+.modalwrap{position:absolute;inset:0;z-index:40;display:flex;align-items:center;justify-content:center;padding:22px;background:#0b1d2b99}
+.modalwrap[hidden]{display:none}
+.modal{width:100%;max-width:330px;background:var(--paper);border-radius:19px;padding:18px 17px 14px;box-shadow:0 18px 48px #102a3555}
+.modal h3{font-size:23px;line-height:1.3;margin:0 0 7px}
+.modal p{font-size:15px;line-height:1.55;color:var(--muted);margin:0 0 15px}
+.modalactions{display:flex;gap:8px;justify-content:flex-end}
+.modalactions .btn{padding:0 14px}
+.btn.warn{border-color:var(--amber);background:var(--paper);color:var(--amber)}
+
+/* 原型工具条：桌面预览可见，截图与手机隐藏 */
+.proto{display:none}
+@media(min-width:1000px){
+  .proto{
+    position:fixed;left:18px;top:18px;z-index:60;display:flex;align-items:center;gap:6px;
+    background:var(--paper);border:1px solid var(--stroke);border-radius:12px;padding:7px 9px;
+    box-shadow:var(--shadow);color:var(--muted);font-size:14px;
+  }
+  .proto b{font-size:14px;color:var(--ink);margin-right:2px}
+  .proto button{border:1px solid var(--stroke);background:var(--bg);color:var(--ink);border-radius:8px;font-size:14px;min-height:34px;padding:0 9px}
+  .proto .on{background:var(--soft);border-color:var(--pine);color:var(--pine);font-weight:800}
+  .proto .sep{width:1px;height:22px;background:var(--stroke)}
+}
+.toast{
+  position:absolute;left:50%;bottom:calc(92px + env(safe-area-inset-bottom,0px));transform:translate(-50%,8px);
+  z-index:50;max-width:86%;background:#153d37;color:#fff;border-radius:11px;
+  padding:9px 14px;font-size:15px;line-height:1.35;opacity:0;pointer-events:none;
+}
+html[data-theme="dark"] .toast{background:#0b1d1a;color:#eafaf5;border:1px solid #2f5d55}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+@media(max-width:400px){
+  .topactions{gap:4px}
+  .btn.en{padding:0 8px}
+  .btn.main{padding:0 9px}
+  .state{max-width:30vw;padding:0 5px;gap:3px}
+  .person{max-width:110px}
+}
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="app" id="app">
+    <header class="top">
+      <div class="topactions" id="topActions">
+        <label class="person">
+          <span class="sr">对话人物</span>
+          <select id="person" aria-label="对话人物">
+            <option value="Emma" selected>Emma</option>
+            <option value="Liam">Liam</option>
+            <option value="林雯">林雯</option>
+          </select>
+        </label>
+        <span class="state" id="statePill" data-state="idle">
+          <i class="dot" aria-hidden="true"></i><b id="stateText">未开始</b><em id="timer">00:00</em>
+        </span>
+        <button class="btn en" id="btnEn" type="button">译英</button>
+        <button class="btn main" id="btnMain" type="button">开始</button>
+        <button class="btn more" id="btnMore" type="button" aria-label="更多操作" aria-haspopup="dialog">⋯</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="live" aria-label="实时字幕">
+        <div class="livehead">
+          <span class="livetitle">实时字幕</span>
+          <span class="mic" id="micBadge" data-state="off">麦克风未开启</span>
+        </div>
+        <div class="conv" id="conv"></div>
+        <div class="interim" id="interim" hidden></div>
+      </section>
+
+      <section class="coach" id="coach" aria-label="接话建议"></section>
+
+      <div class="tags">
+        <span class="tag">河边夜市</span>
+        <span class="tag">中秋灯会</span>
+        <span class="tag">Emma</span>
+        <span class="tag">周五晚</span>
+      </div>
+    </main>
+
+    <div class="mask" id="mask"></div>
+    <section class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
+      <div class="grab" aria-hidden="true"></div>
+      <h2 class="sheettitle" id="sheetTitle">更多</h2>
+      <button class="row end" type="button" data-act="end"><span>结束本轮</span><small>封存本轮字幕与译文，进入人工确认</small></button>
+      <button class="row" type="button" data-act="swap"><span>对调说话人</span><small>当前：我 → Emma</small></button>
+      <button class="row" type="button" data-act="diag"><span>诊断与设置</span><small>连接、音量与保存授权</small></button>
+      <button class="row" type="button" data-act="theme" data-proto><span>外观</span><small id="themeLabel">浅色（原型切换）</small></button>
+      <button class="row cancel" type="button" data-act="close"><span>取消</span></button>
+    </section>
+
+    <div class="modalwrap" id="modal" hidden>
+      <div class="modal" role="alertdialog" aria-modal="true" aria-labelledby="modalTitle">
+        <h3 id="modalTitle">结束本轮？</h3>
+        <p>结束后本轮字幕与译文封存；要重新点「开始」才能开新一轮，已封存的这一轮不会自动恢复录音。</p>
+        <div class="modalactions">
+          <button class="btn" type="button" id="mCancel">取消</button>
+          <button class="btn warn" type="button" id="mEnd">结束本轮</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </div>
+</div>
+
+<div class="proto" data-proto>
+  <b>原型</b>
+  <button type="button" id="protoTheme">深色</button>
+  <span class="sep"></span>
+  <button type="button" data-w="375">375</button>
+  <button type="button" data-w="393" class="on">393</button>
+  <button type="button" data-w="430">430</button>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var $ = function(s){ return document.querySelector(s); };
+  var params = new URLSearchParams(location.search);
+  var SHOT = params.get("shot") || "";
+  var AUDIT = params.get("audit") === "1";
+  var EN_DRAFT = "I haven't been yet — I'd love to try it with you sometime.";
+
+  if(SHOT){ document.body.classList.add("shot"); }
+
+  var MSG = {
+    f1:{id:"m1", who:"Emma", side:"friend", text:"So, have you tried the night market down by the river?"},
+    me1:{id:"m2", who:"我", side:"mine", zh:true, text:"我还没去过呢，我想下次跟你一起去试试。"},
+    f2:{id:"m3", who:"Emma", side:"friend", text:"It closes late on Fridays — we could go after dinner."},
+    sys:{id:"s1", type:"sys", text:"已继续 · 仍是同一轮对话"},
+    f3:{id:"m4", who:"Emma", side:"friend", text:"Anyway, what kind of food do you like?"},
+    me2:{id:"m5", who:"我", side:"mine", zh:true, text:"我比较喜欢辣的，你呢？"}
+  };
+
+  var COACH = [
+    {k:"接话", en:"That sounds fun — when do you usually go?", zh:"听起来不错，你一般什么时候去？"},
+    {k:"追问", en:"What's the best thing to try there?", zh:"那里最值得试的是什么？"},
+    {k:"分享", en:"There's a night market near my place too.", zh:"我家附近也有一个夜市。"}
+  ];
+
+  var S = {
+    name:"idle",
+    timer:0,
+    messages:[],
+    selected:null,
+    draft:null,
+    beforeEnd:"recording"
+  };
+  var clock = null;
+
+  function esc(t){
+    return String(t).replace(/[&<>"]/g,function(c){
+      return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];
+    });
+  }
+  function fmt(sec){
+    var m = Math.floor(sec/60), s = sec%60;
+    return (m<10?"0":"")+m+":"+(s<10?"0":"")+s;
+  }
+  function stopClock(){ if(clock){ clearInterval(clock); clock = null; } }
+  function startClock(){
+    stopClock();
+    if(SHOT) return;
+    clock = setInterval(function(){
+      if(S.name === "recording"){ S.timer++; paintHeader(); }
+    },1000);
+  }
+
+  function renderBubble(m){
+    if(m.type === "sys"){ return '<div class="sysline">'+esc(m.text)+'</div>'; }
+    var mine = m.side === "mine";
+    var cls = "bubble" + (mine ? " mine" : "");
+    if(S.selected === m.id){ cls += " pick"; }
+    var attrs = ' data-id="'+m.id+'"';
+    if(mine && m.zh){ attrs += ' data-zh="1"'; }
+    var draft = "";
+    if(S.draft && S.draft.id === m.id){
+      if(S.draft.status === "loading"){
+        draft = '<div class="draft loading">正在翻成能直接说出口的英文…</div>';
+      }else if(S.draft.status === "ready"){
+        draft = '<div class="draft">'+esc(EN_DRAFT)+'</div>';
+      }else if(S.draft.status === "err"){
+        draft = '<div class="draft err">没连上，中文还在，稍后再点「译英」</div>';
+      }
+    }
+    return '<article class="'+cls+'"'+attrs+'>'
+      + '<div class="who">'+esc(m.who)+'</div>'
+      + '<p class="line">'+esc(m.text)+'</p>'
+      + draft
+      + '</article>';
+  }
+
+  function coachHTML(){
+    if(S.name === "idle" || S.name === "finished"){
+      var txt = S.name === "idle"
+        ? "录音时这里会出现接话、追问和分享建议。"
+        : "本轮已结束，建议已收起。";
+      return '<div class="coachhead"><b>接着聊</b><span>'+txt+'</span></div>';
+    }
+    return '<div class="coachhead"><b>接着聊</b><span>听清对方后再用</span></div>'
+      + COACH.map(function(c){
+          return '<div class="sugg"><span class="k">'+c.k+'</span>'
+            + '<div><p class="en">'+esc(c.en)+'</p><p class="zh">'+esc(c.zh)+'</p></div></div>';
+        }).join("");
+  }
+
+  function liveMeta(){
+    if(S.name === "recording"){
+      return {mic:"采集中", micState:"live", interim:"Emma 正在说… 我们、我们周末可以…", interimState:"live"};
+    }
+    if(S.name === "paused"){
+      return {mic:"麦克风已关闭", micState:"paused", interim:"已暂停，没有在采集声音", interimState:"paused"};
+    }
+    if(S.name === "finished"){
+      return {mic:"本轮已封存", micState:"off", interim:"", interimState:"off"};
+    }
+    return {mic:"麦克风未开启", micState:"off", interim:"", interimState:"off"};
+  }
+
+  function paintHeader(){
+    var pill = $("#statePill");
+    var stateText = $("#stateText");
+    var main = $("#btnMain");
+    var en = $("#btnEn");
+    var label = "未开始";
+    if(S.name === "recording"){ label = "录音中"; }
+    else if(S.name === "paused"){ label = "已暂停"; }
+    else if(S.name === "finished"){ label = "已结束"; }
+
+    pill.dataset.state = S.name;
+    stateText.textContent = label;
+    $("#timer").textContent = fmt(S.timer);
+
+    if(S.name === "recording"){ main.textContent = "暂停"; main.setAttribute("aria-label","暂停录音"); }
+    else if(S.name === "paused"){ main.textContent = "继续"; main.setAttribute("aria-label","继续同一轮录音"); }
+    else if(S.name === "finished"){ main.textContent = "开始"; main.setAttribute("aria-label","开始新一轮"); }
+    else { main.textContent = "开始"; main.setAttribute("aria-label","开始录音"); }
+
+    var loading = !!(S.draft && S.draft.status === "loading");
+    if(loading){ en.textContent = "翻译中"; en.disabled = true; en.setAttribute("aria-busy","true"); }
+    else { en.textContent = "译英"; en.disabled = (S.name === "finished"); en.removeAttribute("aria-busy"); }
+  }
+
+  function paint(){
+    paintHeader();
+    var meta = liveMeta();
+    var mic = $("#micBadge");
+    mic.textContent = meta.mic;
+    mic.dataset.state = meta.micState;
+
+    var conv = $("#conv");
+    if(S.name === "idle"){
+      conv.innerHTML = '<div class="empty">'
+        + '<div class="icon" aria-hidden="true">'
+        + '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">'
+        + '<rect x="9" y="3" width="6" height="11" rx="3"></rect><path d="M5 11a7 7 0 0 0 14 0M12 18v3M9 21h6"/></svg>'
+        + '</div><b>这一轮还没有字幕</b>'
+        + '<p>点顶部「开始」，说话就会变成实时字幕。</p></div>';
+    }else{
+      conv.innerHTML = S.messages.map(renderBubble).join("");
+    }
+
+    var interim = $("#interim");
+    if(meta.interim){ interim.hidden = false; interim.textContent = meta.interim; interim.dataset.state = meta.interimState; }
+    else { interim.hidden = true; interim.textContent = ""; }
+
+    $("#coach").innerHTML = coachHTML();
+    $("#person").value = $("#person").value || "Emma";
+  }
+
+  function toast(text){
+    var el = $("#toast");
+    el.textContent = text;
+    el.classList.add("show");
+    clearTimeout(toast._t);
+    toast._t = setTimeout(function(){ el.classList.remove("show"); }, 1700);
+  }
+
+  function setTheme(theme){
+    document.documentElement.dataset.theme = theme;
+    document.querySelector('meta[name="theme-color"]').setAttribute("content", theme === "dark" ? "#192d35" : "#f5f7f3");
+    var label = $("#themeLabel");
+    if(label){ label.textContent = (theme === "dark" ? "深色" : "浅色") + "（原型切换）"; }
+    var btn = $("#protoTheme");
+    if(btn){ btn.textContent = theme === "dark" ? "浅色" : "深色"; }
+  }
+
+  function pickTarget(){
+    if(S.selected){
+      var hit = S.messages.filter(function(m){ return m.id === S.selected && m.zh; })[0];
+      if(hit){ return hit; }
+    }
+    var mines = S.messages.filter(function(m){ return m.side === "mine" && m.zh; });
+    return mines.length ? mines[mines.length-1] : null;
+  }
+
+  function translate(){
+    if(S.name === "idle"){ toast("先说一句中文，再点「译英」"); return; }
+    if(S.name === "finished"){ toast("本轮已结束，下一轮再译"); return; }
+    if(S.draft && S.draft.status === "loading"){ return; }
+    var target = pickTarget();
+    if(!target){ toast("先说一句中文，再点「译英」"); return; }
+    if(S.draft && S.draft.id === target.id && S.draft.status === "ready"){
+      toast("这句已经译好了，照着念就行"); return;
+    }
+    S.selected = target.id;
+    S.draft = {id:target.id, status:"loading"};
+    paint();
+    var timer = setTimeout(function(){
+      if(S.draft && S.draft.status === "loading"){
+        S.draft.status = "ready";
+        paint();
+        toast("已生成，照着念就好");
+      }
+    }, 900);
+    if(SHOT){ clearTimeout(timer); S.draft.status = "ready"; paint(); }
+  }
+
+  function startRound(){
+    stopClock();
+    S.name = "recording";
+    S.timer = 0;
+    S.messages = [MSG.f1, MSG.me1, MSG.f2];
+    S.selected = null;
+    S.draft = null;
+    startClock();
+    paint();
+    toast("已开始，本轮字幕会出现在这里");
+  }
+  function pauseRound(){
+    S.name = "paused";
+    stopClock();
+    paint();
+    toast("已暂停，麦克风已停止采集");
+  }
+  function resumeRound(){
+    S.name = "recording";
+    if(!S.messages.some(function(m){ return m.id === "s1"; })){
+      S.messages = S.messages.concat([MSG.sys, MSG.f3, MSG.me2]);
+    }
+    startClock();
+    paint();
+    toast("已继续，仍是同一轮");
+    var conv = $("#conv");
+    if(!SHOT){ conv.scrollTop = conv.scrollHeight; }
+  }
+  function mainAction(){
+    if(S.name === "idle" || S.name === "finished"){ startRound(); }
+    else if(S.name === "recording"){ pauseRound(); }
+    else if(S.name === "paused"){ resumeRound(); }
+  }
+
+  function openSheet(){
+    S.beforeEnd = S.name;
+    $("#sheet").classList.add("open");
+    $("#mask").classList.add("show");
+  }
+  function closeSheet(){
+    $("#sheet").classList.remove("open");
+    $("#mask").classList.remove("show");
+  }
+  function openModal(){ $("#modal").hidden = false; }
+  function closeModal(){ $("#modal").hidden = true; }
+  function finishRound(){
+    closeModal();
+    S.name = "finished";
+    stopClock();
+    paint();
+    toast("本轮已结束并封存");
+  }
+
+  $("#btnMain").addEventListener("click", mainAction);
+  $("#btnEn").addEventListener("click", translate);
+  $("#btnMore").addEventListener("click", openSheet);
+  $("#mask").addEventListener("click", closeSheet);
+  $("#mCancel").addEventListener("click", closeModal);
+  $("#mEnd").addEventListener("click", finishRound);
+  $("#conv").addEventListener("click", function(e){
+    var b = e.target.closest(".bubble[data-zh]");
+    if(!b){ return; }
+    if(S.name === "idle" || S.name === "finished"){ return; }
+    S.selected = b.dataset.id;
+    paint();
+    toast("已选中这句，点顶部「译英」");
+  });
+  $("#sheet").addEventListener("click", function(e){
+    var row = e.target.closest("[data-act]");
+    if(!row){ return; }
+    var act = row.dataset.act;
+    if(act === "close"){ closeSheet(); }
+    else if(act === "end"){ closeSheet(); openModal(); }
+    else if(act === "swap"){ closeSheet(); toast("已对调说话人"); }
+    else if(act === "diag"){ closeSheet(); toast("本轮只演示聊天顶部与译英改动"); }
+    else if(act === "theme"){
+      var next = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+      setTheme(next);
+    }
+  });
+  $("#protoTheme").addEventListener("click", function(){
+    var next = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+    setTheme(next);
+  });
+  Array.prototype.forEach.call(document.querySelectorAll(".proto [data-w]"), function(btn){
+    btn.addEventListener("click", function(){
+      Array.prototype.forEach.call(document.querySelectorAll(".proto [data-w]"), function(b){ b.classList.remove("on"); });
+      btn.classList.add("on");
+      $("#app").style.width = btn.dataset.w + "px";
+    });
+  });
+  $("#person").addEventListener("change", function(){
+    if(S.name === "recording" || S.name === "paused"){ toast("已切换对话人物：" + this.value); }
+  });
+
+  /* 截图与自检：URL 参数直接落到指定状态 */
+  function applyShot(name){
+    S.selected = null; S.draft = null; S.messages = []; S.timer = 0;
+    if(name === "idle"){
+      S.name = "idle";
+    }else if(name === "recording"){
+      S.name = "recording"; S.messages = [MSG.f1, MSG.me1, MSG.f2]; S.timer = 42;
+    }else if(name === "translating"){
+      S.name = "recording"; S.messages = [MSG.f1, MSG.me1, MSG.f2]; S.timer = 48;
+      S.selected = "m2"; S.draft = {id:"m2", status:"loading"};
+    }else if(name === "draft"){
+      S.name = "recording"; S.messages = [MSG.f1, MSG.me1, MSG.f2]; S.timer = 50;
+      S.selected = "m2"; S.draft = {id:"m2", status:"ready"};
+    }else if(name === "paused"){
+      S.name = "paused"; S.messages = [MSG.f1, MSG.me1, MSG.f2]; S.timer = 66;
+      S.selected = "m2"; S.draft = {id:"m2", status:"ready"};
+    }else if(name === "resumed"){
+      S.name = "recording";
+      S.messages = [MSG.f1, MSG.me1, MSG.f2, MSG.sys, MSG.f3, MSG.me2];
+      S.timer = 80; S.selected = "m2"; S.draft = {id:"m2", status:"ready"};
+    }else if(name === "menu"){
+      S.name = "recording"; S.messages = [MSG.f1, MSG.me1, MSG.f2]; S.timer = 52;
+    }else if(name === "finished"){
+      S.name = "finished"; S.messages = [MSG.f1, MSG.me1, MSG.f2]; S.timer = 66;
+      S.selected = "m2"; S.draft = {id:"m2", status:"ready"};
+    }else if(name === "confirm"){
+      S.name = "recording"; S.messages = [MSG.f1, MSG.me1, MSG.f2]; S.timer = 52;
+    }
+  }
+
+  /* 初始化 */
+  setTheme(params.get("theme") === "dark" ? "dark" : "light");
+  if(SHOT){ applyShot(SHOT); }
+  paint();
+  if(SHOT === "menu"){ openSheet(); }
+  if(SHOT === "confirm"){ openModal(); }
+
+  /* 三档宽度自检：?audit=1&shot=resumed 时把量测结果写入 DOM，供 --dump-dom 读取 */
+  if(AUDIT){
+    setTimeout(function(){
+      var vw = window.innerWidth;
+      var app = document.getElementById("app");
+      var btns = ["btnEn","btnMain","btnMore"].map(function(id){
+        var el = document.getElementById(id);
+        var r = el.getBoundingClientRect();
+        return {id:id, w:+r.width.toFixed(1), h:+r.height.toFixed(1), right:+r.right.toFixed(1), font:getComputedStyle(el).fontSize};
+      });
+      var offenders = [];
+      Array.prototype.forEach.call(document.querySelectorAll("body *"), function(el){
+        var r = el.getBoundingClientRect();
+        if(r.width > 0 && (r.right > vw + 0.5 || r.left < -0.5)){
+          offenders.push((el.id ? "#"+el.id : el.className || el.tagName) + "@" + r.left.toFixed(1) + "→" + r.right.toFixed(1));
+        }
+      });
+      var smallText = [];
+      Array.prototype.forEach.call(document.querySelectorAll("p,b,span,em,small,button,select"), function(el){
+        if(!el.textContent.trim()){ return; }
+        var r = el.getBoundingClientRect();
+        if(r.width < 1 || r.height < 1){ return; }
+        var fs = parseFloat(getComputedStyle(el).fontSize);
+        if(fs < 14){ smallText.push((el.id ? "#"+el.id : el.className || el.tagName) + ":" + fs + "px"); }
+      });
+      var appRect = app.getBoundingClientRect();
+      var topKids = [];
+      Array.prototype.forEach.call(document.querySelectorAll(".topactions > *"), function(el){
+        var r = el.getBoundingClientRect();
+        topKids.push({el:el.id || el.className || el.tagName, left:+r.left.toFixed(1), right:+r.right.toFixed(1), w:+r.width.toFixed(1), h:+r.height.toFixed(1)});
+      });
+      var draft = document.querySelector(".draft");
+      var dLine = draft ? draft.parentElement.querySelector(".line") : null;
+      var dRect = draft ? draft.getBoundingClientRect() : null;
+      var lRect = dLine ? dLine.getBoundingClientRect() : null;
+      var conv = document.querySelector(".conv");
+      var topEl = document.querySelector(".top");
+      var headerTopBefore = +topEl.getBoundingClientRect().top.toFixed(1);
+      if(conv){ conv.scrollTop = conv.scrollHeight; }
+      var headerTopAfter = +topEl.getBoundingClientRect().top.toFixed(1);
+      var tagsRect = document.querySelector(".tags") ? document.querySelector(".tags").getBoundingClientRect() : null;
+      var coachRect = document.querySelector(".coach") ? document.querySelector(".coach").getBoundingClientRect() : null;
+      var forbidden = (app.innerText.match(/发送|复制|自动朗读|中文模式|英文模式/g) || []);
+      var data = {
+        state:S.name,
+        vw:vw,
+        innerH:window.innerHeight,
+        docScrollW:document.documentElement.scrollWidth,
+        bodyScrollW:document.body.scrollWidth,
+        appW:+appRect.width.toFixed(1),
+        appH:+appRect.height.toFixed(1),
+        overflowX:document.documentElement.scrollWidth > vw,
+        offenders:offenders.slice(0,12),
+        buttons:btns,
+        select:function(){ var r=document.getElementById("person").getBoundingClientRect(); return {w:+r.width.toFixed(1),h:+r.height.toFixed(1),font:getComputedStyle(document.getElementById("person")).fontSize}; }(),
+        baseFont:getComputedStyle(document.querySelector(".bubble .line") || document.body).fontSize,
+        draftFont:getComputedStyle(document.querySelector(".draft") || document.body).fontSize,
+        minFontViolations:smallText.slice(0,12),
+        topRow:{wrap:getComputedStyle(document.querySelector(".topactions")).flexWrap, clientW:document.querySelector(".topactions").clientWidth, scrollW:document.querySelector(".topactions").scrollWidth, kids:topKids, allInside:topKids.every(function(k){ return k.right <= +appRect.right.toFixed(1) + 0.5 && k.left >= +appRect.left.toFixed(1) - 0.5; })},
+        stateClip:function(){ var p=document.getElementById("statePill"), b=document.getElementById("stateText"); return {pillW:+p.getBoundingClientRect().width.toFixed(1), pillScroll:p.scrollWidth, pillClient:p.clientWidth, textW:+b.getBoundingClientRect().width.toFixed(1), textScroll:b.scrollWidth, textClient:b.clientWidth, clipped:b.scrollWidth > b.clientWidth}; }(),
+        headerTopBefore:headerTopBefore,
+        headerTopAfterScroll:headerTopAfter,
+        draft:dRect ? {text:draft.textContent, top:+dRect.top.toFixed(1), bottom:+dRect.bottom.toFixed(1), w:+dRect.width.toFixed(1), lineBottom:lRect?+lRect.bottom.toFixed(1):null, gapBelowLine:lRect?+(dRect.top - lRect.bottom).toFixed(1):null, fontSize:getComputedStyle(draft).fontSize, color:getComputedStyle(draft).color} : null,
+        tagsBottom:tagsRect ? +tagsRect.bottom.toFixed(1) : null,
+        coachBottom:coachRect ? +coachRect.bottom.toFixed(1) : null,
+        forbiddenWords:forbidden
+      };
+      var pre = document.createElement("pre");
+      pre.id = "auditOut";
+      pre.style.cssText = "position:absolute;left:0;top:0;z-index:999;font-size:10px;max-width:100%;white-space:pre-wrap;background:#fff;color:#000";
+      pre.textContent = "AUDIT_JSON:" + JSON.stringify(data);
+      document.body.appendChild(pre);
+    }, 250);
+  }
+})();
+</script>
+</body>
+</html>

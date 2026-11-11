@@ -105,7 +105,25 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
             java.util.Collections.synchronizedSet(java.util.Collections.newSetFromMap(new IdentityHashMap<>()));
     private volatile String asrLink = "";
     private final StringBuilder finals = new StringBuilder();
+    /** 采集线程是否应继续跑；暂停时置 false，但不代表本轮结束。 */
     private volatile boolean running;
+    /**
+     * N07 真实录音状态机：idle | recording | paused。
+     * running 只描述采集线程，recState 描述这一轮应用层会话，二者不得互相代替。
+     */
+    private volatile String recState = "idle";
+    /** 暂停中：采集线程退出时不得封存归档（暂停 ≠ 本轮结束）。 */
+    private volatile boolean pauseActive = false;
+    /** 本轮是否已封存归档，避免暂停态停止与采集线程收尾重复 end()。 */
+    private boolean roundFinalized = true;
+    private final Object roundLock = new Object();
+    /** 暂停时保存本轮参数，继续时复用同一应用层会话（不重新 archive.begin）。 */
+    private volatile String roundBaseUrl = "";
+    private volatile String[] roundTracks;
+    /** 本轮累计已采音时长（毫秒）；暂停结算后保留，继续后的字幕时间轴接着走。 */
+    private volatile long roundElapsedMs = 0L;
+    /** 继续请求正在等待麦克风权限。 */
+    private boolean pendingResume = false;
     private volatile AudioRecord recorder;
     private Thread worker;
     private FrameLayout screenRoot;
@@ -142,8 +160,8 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
     private TextView stopButton, reviewButton;
     private TextView status, live, transcript, deviceInfo, suggestionsView;
     private long sessionStartMs;
-    /** 本轮录音开始时间，用于 AsrBudget 结算（stopStreaming 只结算一次）。 */
-    private long streamStartedAt;
+    /** 本段录音开始时间，用于 AsrBudget 结算（暂停/停止各结算一次，置 0 防重复）。 */
+    private volatile long streamStartedAt;
     private int eventCount;
     private volatile String lastFinal = "";
     private SessionArchive archive;
@@ -330,7 +348,7 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
     private void refreshRetentionHint() {
         if (retentionHint == null) return;
         boolean checked = retentionConsent != null && retentionConsent.isChecked();
-        String suffix = running ? L("（本轮录音中，改动从下一次会话生效）"," (applies from the next session)") : "";
+        String suffix = !"idle".equals(recState) ? L("（本轮录音中，改动从下一次会话生效）"," (applies from the next session)") : "";
         if (checked) {
             retentionHint.setText(L("当前：本轮原文留存已开 · 停止录音后自动导出到 Mac","Currently: transcript kept · exported to your Mac after stop") + suffix);
             retentionHint.setBackground(surface(0xFFFDF3E4, 0xFFE7CFA6, 12));
@@ -1299,7 +1317,7 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
         String id = archive.lastSessionId();
         boolean has = id != null && !id.isEmpty();
         boolean exported = has && archive.isExported(id);
-        reviewButton.setEnabled(has && !running);
+        reviewButton.setEnabled(has && "idle".equals(recState));
         reviewButton.setText(exported || !has ? "本轮原文与复盘" : "本轮原文与复盘（待上传）");
     }
 
@@ -1898,7 +1916,108 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
 
         @JavascriptInterface
         public boolean isRecording() {
-            return running;
+            // 暂停仍属于同一轮，只有本轮结束（idle）才返回 false。
+            return !"idle".equals(recState);
+        }
+
+        /** N07：这一轮的真实状态，供网页区分「录音中 / 已暂停 / 本轮未开始」。 */
+        @JavascriptInterface
+        public String recordingState() {
+            return recState;
+        }
+
+        /**
+         * N07：暂停本轮。只停采、停 WS、释放麦克风与前台上报，
+         * 不结束归档会话；下一条字幕仍追加到同一轮。
+         */
+        @JavascriptInterface
+        public boolean pauseRecording() {
+            String page = trustedPageUrl;
+            if (page == null || !isPrivatePanelUrl(Uri.parse(page))) return false;
+            if (!"recording".equals(recState)) return false;
+            // 先切状态再停采，采集线程收尾时据此跳过 archive.end()。
+            recState = "paused";
+            pauseActive = true;
+            running = false;
+            stopRequested = true;
+            AudioRecord current = recorder;
+            boolean stopFailed = false;
+            if (current != null) {
+                try {
+                    current.stop();
+                    stopFailed = current.getRecordingState() == AudioRecord.RECORDSTATE_RECORDING;
+                } catch (IllegalStateException e) {
+                    stopFailed = current.getRecordingState() == AudioRecord.RECORDSTATE_RECORDING;
+                    android.util.Log.e("SocialMateRec", "pause recorder stop failed: " + e.getMessage());
+                }
+            }
+            if (stopFailed) {
+                // 真的停不下采集：保持 recording 并恢复前台服务，交给网页重试。
+                recState = "recording";
+                pauseActive = false;
+                stopRequested = false;
+                running = true;
+                try { AsrForegroundService.start(AsrActivity.this); }
+                catch (Exception e) {
+                    android.util.Log.e("SocialMateRec", "pause rollback fgs failed: " + e.getMessage());
+                }
+                runOnUiThread(() -> {
+                    status.setText(L("暂停失败，请重试", "Pause failed; retry"));
+                    notifyLink("error", L("暂停失败，请重试", "Pause failed; retry"));
+                });
+                return false;
+            }
+            // 只结算本段真实采音时长，暂停不计费；streamStartedAt 归零防重复。
+            settleBudgetOnce();
+            try {
+                AsrForegroundService.stop(AsrActivity.this);
+            } catch (Exception e) {
+                android.util.Log.e("SocialMateRec", "pause fgs stop failed: " + e.getMessage());
+            }
+            final Thread target = worker;
+            new Thread(() -> {
+                if (target != null) {
+                    try { target.join(3400L); }
+                    catch (InterruptedException e) { Thread.currentThread().interrupt(); }
+                }
+                boolean settled = target == null || !target.isAlive();
+                if (settled && worker == target) worker = null;
+                runOnUiThread(() -> {
+                    if (!"paused".equals(recState)) return;
+                    if (startButton != null) startButton.setEnabled(false);
+                    if (stopButton != null) stopButton.setEnabled(true);
+                    if (suggestButton != null) suggestButton.setEnabled(false);
+                    status.setText(settled
+                            ? L("已暂停 · 麦克风已释放 · 已生成字幕仍可查看",
+                            "Paused · microphone released · transcript still available")
+                            : L("已暂停 · 麦克风已释放 · 正在收尾", "Paused · microphone released · finishing"));
+                    updateReviewEntry();
+                    WebView view = socialMateWebView;
+                    if (view != null) {
+                        view.evaluateJavascript(
+                                "(function(){try{if(window.smNativePaused)window.smNativePaused();}catch(e){}})()",
+                                null);
+                    }
+                });
+            }, "sm-pause").start();
+            return true;
+        }
+
+        /** N07：继续同一轮；复用本轮归档会话，只重建底层采集与 ASR 连接。 */
+        @JavascriptInterface
+        public boolean resumeRecording() {
+            String page = trustedPageUrl;
+            if (page == null || !isPrivatePanelUrl(Uri.parse(page))) return false;
+            if (!"paused".equals(recState)) return false;
+            Thread current = worker;
+            if (current != null && current.isAlive()) return false;
+            if (checkSelfPermission(Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+                pendingResume = true;
+                runOnUiThread(() -> requestPermissions(
+                        new String[]{Manifest.permission.RECORD_AUDIO}, REQUEST_MIC));
+                return true;
+            }
+            return doResumeRecording();
         }
 
         /** 内部配对桥：仅供本机取证/自动化使用，不暴露到页面 UI。 */
@@ -1928,6 +2047,8 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
 
         @JavascriptInterface
         public boolean requestRecording() {
+            // 暂停态下网页若仍走旧的「开始录音」入口，继续同一轮，不新开会话。
+            if ("paused".equals(recState)) return resumeRecording();
             runOnUiThread(() -> {
                 String current = socialMateWebView == null ? null : socialMateWebView.getUrl();
                 if (current == null || !isPrivatePanelUrl(Uri.parse(current))) {
@@ -2587,12 +2708,19 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
     }
 
     private void startStreaming(boolean oneTap) {
+        // 暂停态下再次走「开始录音」入口：继续同一轮，绝不重开归档会话。
+        if ("paused".equals(recState)) {
+            doResumeRecording();
+            return;
+        }
         if (running) {
             // 页面显示「开始录音」说明上一轮在界面上已经结束；这里强制重启，
             // 避免原生 running 残留导致点击后完全没反应。
             toast(L("正在重新开始录音…", "Restarting recording…"));
             final Thread previous = worker;
             running = false;
+            recState = "idle";
+            pauseActive = false;
             AudioRecord old = recorder;
             if (old != null) {
                 try { old.stop(); } catch (IllegalStateException ignored) {}
@@ -2644,6 +2772,13 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
         boolean keepTranscript = oneTap || retentionConsent == null || retentionConsent.isChecked();
         archive.begin(keepTranscript, appVersion());
         setArchiveStatus(archive.describe());
+        synchronized (roundLock) { roundFinalized = false; }
+        roundElapsedMs = 0L;
+        roundBaseUrl = clean;
+        roundTracks = tracks;
+        recState = "recording";
+        pauseActive = false;
+        pendingResume = false;
         running = true;
         reconnectBuffers.clear();
         // P1-5：切后台/锁屏仍继续收音，由 microphone 前台服务保活。
@@ -2670,9 +2805,51 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
 
         final String baseUrl = clean;
         final String[] useTracks = tracks;
-        Thread t = new Thread(() -> stream(baseUrl, useTracks), "asr-stream");
+        Thread t = new Thread(() -> stream(baseUrl, useTracks, false), "asr-stream");
         worker = t;
         t.start();
+    }
+
+    /**
+     * N07：继续暂停中的同一轮。不调用 archive.begin()，不生成第二个会话头；
+     * 底层 WS 连接会新建（连接 ID 不保证与暂停前一致），字幕继续追加到同一轮。
+     */
+    private boolean doResumeRecording() {
+        if (!"paused".equals(recState)) return false;
+        Thread current = worker;
+        if (current != null && current.isAlive()) return false;
+        final String base = roundBaseUrl;
+        final String[] tracks = roundTracks;
+        if (base == null || base.isEmpty() || tracks == null || tracks.length == 0) {
+            runOnUiThread(() -> notifyLink("error", L("继续失败，请重试", "Resume failed; retry")));
+            return false;
+        }
+        pauseActive = false;
+        stopRequested = false;
+        recState = "recording";
+        running = true;
+        streamStartedAt = SystemClock.elapsedRealtime();
+        reconnecting.clear();
+        reconnectBuffers.clear();
+        try {
+            AsrForegroundService.start(this);
+        } catch (Exception e) {
+            android.util.Log.e("SocialMateRec", "resume fgs start failed: " + e.getMessage());
+        }
+        Thread t = new Thread(() -> stream(base, tracks, true), "asr-stream");
+        worker = t;
+        t.start();
+        runOnUiThread(() -> {
+            if (startButton != null) startButton.setEnabled(false);
+            if (stopButton != null) stopButton.setEnabled(true);
+            if (suggestButton != null) suggestButton.setEnabled(false);
+            if (urlInput != null) urlInput.setEnabled(false);
+            if (trackPicker != null) trackPicker.setEnabled(false);
+            status.setText(L("正在重新打开麦克风并连接服务端…", "Reopening microphone and reconnecting…"));
+            updateReviewEntry();
+            refreshRetentionHint();
+        });
+        return true;
     }
 
     /** 直连模式：设置里选「腾讯直连」且 AppId/SecretId/SecretKey 齐全。 */
@@ -2752,7 +2929,7 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
 
     /** 300 秒边界：关闭旧会话、新建同 track 会话，事件时间轴接着上一段，不中断录音。 */
     private void rolloverClients(String baseUrl, String suffix, String token, String[] tracks) {
-        final long offset = SystemClock.elapsedRealtime() - sessionStartMs;
+        final long offset = roundElapsedMs + (SystemClock.elapsedRealtime() - sessionStartMs);
         List<AsrClient> old;
         synchronized (clients) {
             old = new ArrayList<>(clients);
@@ -2774,7 +2951,7 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
         runOnUiThread(() -> status.setText("已跨过 300 秒，自动续接中…"));
     }
 
-    private void stream(String baseUrl, String[] tracks) {
+    private void stream(String baseUrl, String[] tracks, boolean resumed) {
         AudioRecord rec = null;
         // T6：本轮结束信号按 track 计数（最少 1）。上游每条会话收尾都会推一条 session/ended，
         // 收到就不再固定 sleep，避免尾部 final 晚于 1500ms 到达而丢失归档。
@@ -2801,6 +2978,8 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
             ArrayList<AsrClient> opened = new ArrayList<>();
             for (String track : tracks) {
                 AsrClient client = openWithRetry(track, baseUrl, suffix, asrToken);
+                // 暂停后继续：新底层会话的时间轴接上本轮已采时长，字幕不回退。
+                client.timeOffsetMs = roundElapsedMs;
                 clients.add(client);
                 opened.add(client);
             }
@@ -2811,10 +2990,12 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
                 status.setText("已连接 · " + rate + " Hz · " + channels + " 声道 · 正在发送音频（"
                         + String.join("+", tracks) + "）");
                 suggestButton.setEnabled(true);
-                // 通知网页：原生已真正开录，可以订阅字幕了（用户没同意时不会走到这里）。
+                // 通知网页：原生已真正开录/已继续，可以订阅字幕了（用户没同意时不会走到这里）。
                 if (socialMateWebView != null) {
-                    socialMateWebView.evaluateJavascript(
-                            "window.smNativeRecordingStarted&&window.smNativeRecordingStarted()", null);
+                    socialMateWebView.evaluateJavascript(resumed
+                                    ? "window.smNativeResumed&&window.smNativeResumed()"
+                                    : "window.smNativeRecordingStarted&&window.smNativeRecordingStarted()",
+                            null);
                     notifyLink("connected", "");
                 }
             });
@@ -2859,7 +3040,21 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
             String msg = e.getMessage() == null ? e.getClass().getSimpleName() : e.getMessage();
             final String shown = msg;
             android.util.Log.e("SocialMateRec", "recording failed: " + msg);
+            if (resumed) {
+                // 继续失败：保持 paused（本轮不封存），允许用户再点继续，绝不显示已恢复。
+                recState = "paused";
+                pauseActive = true;
+                running = false;
+            }
             runOnUiThread(() -> {
+                if (resumed) {
+                    status.setText(L("继续失败：" + shown + " · 仍为暂停状态，可重试",
+                            "Resume failed: " + shown + " · still paused; retry"));
+                    toast(L("继续失败：" + shown, "Resume failed: " + shown));
+                    notifyLink("error", L("继续失败，请重试", "Resume failed; retry"));
+                    return;
+                }
+                if ("paused".equals(recState)) return;
                 status.setText("连接/录音失败：" + shown);
                 toast(L("录音失败：" + shown, "Recording failed: " + shown));
                 notifyLink("lost", "连接中断，本轮未开始；可重试");
@@ -2896,35 +3091,67 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
                 }
                 clients.clear();
             }
-            archive.end();
-            runOnUiThread(() -> {
-                setArchiveStatus(archive.describe());
-                updateReviewEntry();
-            });
-            archive.flushAsync(text -> {
-                setArchiveStatus(text);
-                updateReviewEntry();
-            });
-            runOnUiThread(() -> {
-                startButton.setEnabled(true);
-                stopButton.setEnabled(false);
-                suggestButton.setEnabled(false);
-                urlInput.setEnabled(true);
-                trackPicker.setEnabled(true);
-                live.setText("实时（未定稿）：—");
-                refreshRetentionHint();
-                if (!status.getText().toString().startsWith("连接/录音失败"))
-                    status.setText("状态：已停止 · 收到事件 " + eventCount + " 条"
-                            + (archive.lastSessionId() == null ? "" : " · 可点「本轮原文与复盘」"));
-                // 原生已停录：让网页把「监听中」收起来，避免界面与实际麦克风状态不一致。
-                if (socialMateWebView != null) {
-                    socialMateWebView.evaluateJavascript(
-                            "(function(){try{if(window.smNativeRecordingStopped)window.smNativeRecordingStopped();}catch(e){}})()",
-                            null);
-                }
-                updateReviewEntry();
-            });
+            // 暂停：采集线程可以退出，但本轮归档不封存、不写「本轮结束」。
+            boolean keepPaused = pauseActive || "paused".equals(recState);
+            if (worker == Thread.currentThread()) worker = null;
+            if (keepPaused) {
+                recState = "paused";
+            } else {
+                recState = "idle";
+                finalizeRoundArchive();
+            }
         }
+    }
+
+    /** 暂停只结算当前这一段的真实采音时长；streamStartedAt 置 0 防止重复结算。 */
+    private void settleBudgetOnce() {
+        long started = streamStartedAt;
+        if (started <= 0) return;
+        streamStartedAt = 0;
+        long elapsed = Math.max(0, SystemClock.elapsedRealtime() - started);
+        roundElapsedMs += elapsed;
+        try {
+            new AsrBudget(this).consume(elapsed);
+        } catch (Exception e) {
+            android.util.Log.e("SocialMateRec", "budget consume failed: " + e.getMessage());
+        }
+    }
+
+    /** 本轮真正结束：归档封存 + 上传 + 网页收尾。暂停/继续路径不得调用。 */
+    private void finalizeRoundArchive() {
+        synchronized (roundLock) {
+            if (roundFinalized) return;
+            roundFinalized = true;
+        }
+        archive.end();
+        runOnUiThread(() -> {
+            setArchiveStatus(archive.describe());
+            updateReviewEntry();
+        });
+        archive.flushAsync(text -> {
+            setArchiveStatus(text);
+            updateReviewEntry();
+        });
+        runOnUiThread(() -> {
+            if (startButton != null) startButton.setEnabled(true);
+            if (stopButton != null) stopButton.setEnabled(false);
+            if (suggestButton != null) suggestButton.setEnabled(false);
+            if (urlInput != null) urlInput.setEnabled(true);
+            if (trackPicker != null) trackPicker.setEnabled(true);
+            live.setText("实时（未定稿）：—");
+            refreshRetentionHint();
+            if (status != null && !status.getText().toString().startsWith("连接/录音失败")
+                    && !status.getText().toString().startsWith("继续失败"))
+                status.setText("状态：已停止 · 收到事件 " + eventCount + " 条"
+                        + (archive.lastSessionId() == null ? "" : " · 可点「本轮原文与复盘」"));
+            // 原生已停录：让网页把「监听中」收起来，避免界面与实际麦克风状态不一致。
+            if (socialMateWebView != null) {
+                socialMateWebView.evaluateJavascript(
+                        "(function(){try{if(window.smNativeRecordingStopped)window.smNativeRecordingStopped();}catch(e){}})()",
+                        null);
+            }
+            updateReviewEntry();
+        });
     }
 
     /** 断线重连：同一 track 单飞，退避 1s/2s/4s，最多 3 次；失败则明确停录并提示。 */
@@ -2994,36 +3221,56 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
     }
 
     private void stopStreaming(String reason) {
-        if (!running) return;
+        // 暂停也是同一轮，用户显式停止时必须能真正结束本轮；只有 idle 才是无轮可停。
+        if ("idle".equals(recState)) return;
+        final boolean wasPaused = "paused".equals(recState);
+        recState = "idle";
+        pauseActive = false;
+        pendingResume = false;
         running = false;
         stopRequested = true;
-        if (streamStartedAt > 0) {
-            long elapsed = Math.max(0, SystemClock.elapsedRealtime() - streamStartedAt);
-            streamStartedAt = 0;
-            try {
-                new AsrBudget(this).consume(elapsed);
-            } catch (Exception ignored) {}
-        }
+        settleBudgetOnce();
         AsrForegroundService.stop(this);
-        // 停止后立刻恢复「开始录音」按钮，避免收尾异常时界面卡在禁用态。
         runOnUiThread(() -> {
             if (startButton != null) startButton.setEnabled(true);
             if (stopButton != null) stopButton.setEnabled(false);
+            if (status != null) status.setText("正在停止…（" + reason + "）");
         });
-        status.setText("正在停止…（" + reason + "）");
         AudioRecord r = recorder;
         if (r != null) {
             try { r.stop(); } catch (IllegalStateException ignored) {}
+        }
+        if (wasPaused) {
+            // 暂停时采集线程已退出，由这里封存本轮；若线程仍在收尾，finalize 内部去重。
+            final Thread current = worker;
+            new Thread(() -> {
+                if (current != null) {
+                    try { current.join(2600L); }
+                    catch (InterruptedException e) { Thread.currentThread().interrupt(); }
+                }
+                finalizeRoundArchive();
+            }, "sm-stop-paused").start();
         }
     }
 
     @Override public void onRequestPermissionsResult(int code, String[] names, int[] results) {
         super.onRequestPermissionsResult(code, names, results);
         if (code == REQUEST_MIC && results.length > 0 && results[0] == PackageManager.PERMISSION_GRANTED) {
-            startStreaming(pendingAutoStart);
+            if (pendingResume) {
+                pendingResume = false;
+                if (!doResumeRecording()) {
+                    notifyLink("error", L("继续失败，请重试", "Resume failed; retry"));
+                }
+            } else {
+                startStreaming(pendingAutoStart);
+            }
         } else if (code == REQUEST_MIC) {
+            pendingResume = false;
             status.setText("没有麦克风权限，无法识别。");
             toast(L("麦克风权限被拒绝，请在系统设置里允许", "Microphone permission denied; enable it in Settings."));
+            if ("paused".equals(recState)) {
+                notifyLink("error", L("继续失败：麦克风权限被拒绝", "Resume failed: microphone permission denied"));
+            }
         }
     }
 
@@ -3231,7 +3478,23 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
     }
 
     @Override protected void onDestroy() {
+        // N07：销毁属于异常收尾，必须落到 idle；暂停中的本轮也要封存，避免 current.json 残留。
+        final boolean wasPaused = "paused".equals(recState);
+        recState = "idle";
+        pauseActive = false;
+        pendingResume = false;
         running = false;
+        try {
+            AsrForegroundService.stop(this);
+        } catch (Exception e) {
+            android.util.Log.e("SocialMateRec", "destroy fgs stop failed: " + e.getMessage());
+        }
+        if (wasPaused && archive != null) {
+            try { archive.end(); }
+            catch (Exception e) {
+                android.util.Log.e("SocialMateRec", "destroy archive end failed: " + e.getMessage());
+            }
+        }
         if (localServer != null) {
             localServer.stop();
             localServer = null;
