@@ -1,0 +1,379 @@
+[
+  {
+    "id": "culture-address",
+    "cn": "称呼与辈分",
+    "en": "Addressing elders and relatives",
+    "region": "中国",
+    "theme": "文化习俗",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "中文里亲戚称呼分得很细，爸爸的哥哥、妈妈的哥哥、姑妈的丈夫各有叫法。长辈和同事常用职务加姓来称呼。各地叫法差别很大，别默认对方家也这么排。",
+    "briefEn": "Chinese has a separate word for almost every relative: your father's brother, your mother's brother and your aunt's husband are all addressed differently. People also use job titles plus a surname for colleagues and elders. Families and regions vary a lot, so ask rather than assume.",
+    "questions": [
+      {
+        "cn": "你家怎么称呼爸爸的兄弟和妈妈的兄弟？",
+        "en": "How do you address your father's brother and your mother's brother?"
+      },
+      {
+        "cn": "第一次见长辈，你会怎么叫？",
+        "en": "What do you call an elder you're meeting for the first time?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.cnr.cn/yuleguangbo/lzye/20161221/t20161221_523373118.shtml",
+      "https://www.chinahighlights.com/travelguide/guidebook/etiquette.htm"
+    ],
+    "sourceNote": "央广网《中国人不该叫错的三个称呼》与 China Highlights 中国礼仪指南，2026-11-10 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "culture-first-visit",
+    "cn": "第一次做客带什么",
+    "en": "First visit to someone's home",
+    "region": "中国",
+    "theme": "文化习俗",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "第一次去别人家，很多地方会带点水果、点心或酒，空手上门不太合适。进门换鞋、先问候长辈也常见。各地规矩不一样，送礼前最好先问一句主人的习惯。",
+    "briefEn": "In many parts of China, showing up empty-handed for a first visit feels awkward, so people bring fruit, snacks or a bottle of something. Taking off your shoes at the door and greeting the elders first is also common. Customs differ by region and family, so it's fine to ask your host what they prefer.",
+    "questions": [
+      {
+        "cn": "第一次去朋友家，你一般会带什么？",
+        "en": "What do you usually bring when you visit a friend's home for the first time?"
+      },
+      {
+        "cn": "在你们那边，进门要换鞋吗？",
+        "en": "Do people take off their shoes when entering a home where you're from?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.chinahighlights.com/travelguide/guidebook/etiquette.htm"
+    ],
+    "sourceNote": "China Highlights 中国礼仪指南（含初次拜访与带礼习惯），2026-11-10 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "culture-dining-shared",
+    "cn": "公筷与敬酒",
+    "en": "Shared chopsticks and toasts",
+    "region": "中国",
+    "theme": "文化习俗",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "现在不少餐厅会主动给公筷公勺，给人夹菜也更讲究卫生。敬酒图个热闹，但不喝也能说清楚。劝酒这件事各地各桌差别很大，别默认对方一定要喝。",
+    "briefEn": "Many restaurants now bring shared chopsticks and serving spoons, and people are more careful about using them when taking food for others. Toasting is a big part of a gathering, but it's fine to say you're not drinking. How much people push a drink varies hugely between tables and regions, so don't assume.",
+    "questions": [
+      {
+        "cn": "你们聚餐会用公筷吗？",
+        "en": "Do you use shared chopsticks when you eat together?"
+      },
+      {
+        "cn": "别人给你敬酒，你不喝酒会怎么处理？",
+        "en": "What do you do when someone toasts you and you don't drink?"
+      },
+      {
+        "cn": "你们那边饭桌上会劝酒吗？",
+        "en": "Do people at the table urge each other to drink where you're from?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "http://www.xinhuanet.com/politics/2020-05/11/c_1125966548.htm",
+      "http://health.people.com.cn/n1/2020/0309/c14739-31622921.html",
+      "http://politics.people.com.cn/n/2013/0910/c70731-22869476.html"
+    ],
+    "sourceNote": "新华网《各地出台政策大力推行分餐制——公筷“夹”出餐桌新文明》、人民网《让公筷公勺分餐进食成为文明标配》与人民网《84.0%的人直言反感当下酒桌文化》，2026-11-10 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "culture-split-bill",
+    "cn": "买单与 AA",
+    "en": "Who pays and splitting the bill",
+    "region": "中国",
+    "theme": "文化习俗",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "朋友吃饭，有人习惯抢着买单，有人习惯各付各的。请客和 AA 都能表达心意，关键看关系和场合。各地做法不同，别默认对方一定想被请或一定想 AA。",
+    "briefEn": "With friends, some people insist on paying for the whole meal, while others split the bill. Both treating and going Dutch can be a friendly gesture; it depends on the relationship and the occasion. Practice varies across regions and friend groups, so don't assume which one the other person expects.",
+    "questions": [
+      {
+        "cn": "和朋友吃饭，你们一般谁买单？",
+        "en": "When you eat with friends, who usually pays?"
+      },
+      {
+        "cn": "你怎么看 AA 制？",
+        "en": "What do you think of splitting the bill?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "http://opinion.people.com.cn/n1/2017/0209/c1003-29070108.html",
+      "https://www.chinahighlights.com/travelguide/chinese-food/dining-etiquette.htm"
+    ],
+    "sourceNote": "人民网评论《“走亲戚吃饭AA制”，社会变迁带来的变与不变》与 China Highlights 中国餐桌礼仪，2026-11-10 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "culture-gift",
+    "cn": "送礼讲究",
+    "en": "Gift-giving customs",
+    "region": "中国",
+    "theme": "文化习俗",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "送礼常避开钟表、伞和梨，谐音不太吉利；双数成双更讨喜。礼物不必贵，包装和心意更重要。各地讲究不同，送前先问一句更稳妥。",
+    "briefEn": "People often avoid clocks, umbrellas and pears as gifts because the sounds suggest bad luck, and even numbers are usually preferred. The gift doesn't need to be expensive; wrapping and thought matter more. Local habits differ, so asking or choosing something edible or useful is a safe bet.",
+    "questions": [
+      {
+        "cn": "你们那边送礼会避开哪些东西？",
+        "en": "Are there gifts people avoid where you're from?"
+      },
+      {
+        "cn": "收到礼物时，你会当场打开吗？",
+        "en": "Do you open a gift right away when you receive it?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.chinanews.com.cn/shipin/2014/01-29/news371449.shtml",
+      "https://www.chinahighlights.com/festivals/things-not-give-chinese-new-year.htm",
+      "https://www.chinahighlights.com/travelguide/special-report/chinese-new-year/new-year-gift.htm"
+    ],
+    "sourceNote": "中新网视频《送礼禁忌：“礼”多人真的不怪吗？》与 China Highlights 送礼禁忌、推荐礼品两页，2026-11-10 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "culture-red-envelope",
+    "cn": "红包与婚礼",
+    "en": "Red envelopes and weddings",
+    "region": "中国",
+    "theme": "文化习俗",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "婚礼、春节常送红包，金额图双数吉利，朋友间会提前说好大概数。现在不少地方提倡简办，份子钱压力也被讨论。各地风俗差别大，随礼前先问清当地习惯。",
+    "briefEn": "Red envelopes show up at weddings and Chinese New Year, usually with an even amount for good luck, and friends often agree on a rough figure in advance. Many places now encourage simpler celebrations, and the pressure of cash gifts is openly discussed. Customs vary a lot, so check what's normal locally.",
+    "questions": [
+      {
+        "cn": "你们参加婚礼一般随多少份子钱？",
+        "en": "How much do people usually give at a wedding where you're from?"
+      },
+      {
+        "cn": "红包金额会特意选吉利数字吗？",
+        "en": "Do people pick lucky numbers for red envelope amounts?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.chinanews.com.cn/sh/2023/10-11/10091974.shtml",
+      "https://www.chinanews.com.cn/hr/2024/08-10/10266787.shtml",
+      "https://www.chinahighlights.com/travelguide/festivals/red-envelop.htm"
+    ],
+    "sourceNote": "中新网《国庆节忙着参加婚礼 “份子钱”成沉重负担》《海外华文媒体山西晋城“喜镇苏庄” 探秘中国婚俗文化》与 China Highlights 红包指南，2026-11-10 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "culture-birthday",
+    "cn": "生日怎么过",
+    "en": "How birthdays are celebrated",
+    "region": "中国",
+    "theme": "文化习俗",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "过生日常吃长寿面，图个长长久久；蛋糕和吹蜡烛这几年也很普遍。有人按农历过，有人按公历过。各地习惯不同，问一句对方怎么过最保险。",
+    "briefEn": "Longevity noodles are a traditional birthday dish, and cake with candles has become common too. Some people follow the lunar date and others the solar date, and even one family may do both. Customs differ from place to place, so asking how someone usually celebrates is the safest way.",
+    "questions": [
+      {
+        "cn": "你生日按农历还是公历过？",
+        "en": "Do you celebrate your birthday by the lunar or solar calendar?"
+      },
+      {
+        "cn": "你们家过生日一定会吃长寿面吗？",
+        "en": "Does your family always have longevity noodles on birthdays?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.chinanews.com.cn/hwjy/2011/04-08/2960735.shtml",
+      "http://www.xj.chinanews.com.cn/dizhou/2023-11-01/detail-ihcuqerk7381071.shtml"
+    ],
+    "sourceNote": "中新网《中国民间庆生习俗》与中新网·新疆《若羌：吃一碗长寿面 许一份美好未来》，2026-11-10 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "culture-tea",
+    "cn": "茶与待客",
+    "en": "Tea and hosting guests",
+    "region": "中国",
+    "theme": "文化习俗",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "客人进门先沏茶是很多地方的待客方式，倒茶讲七分满，续水也有礼数。不同地区爱喝绿茶、红茶或功夫茶。茶桌规矩各地差别不小，不确定就跟着主人做。",
+    "briefEn": "Offering tea is a common way to welcome a guest, and cups are usually filled about seven-tenths so they're easy to hold. People in different regions favor green tea, black tea or gongfu-style brewing. Tea table habits vary, so when you're unsure, just follow your host.",
+    "questions": [
+      {
+        "cn": "客人来了，你们家会先倒茶吗？",
+        "en": "Does your family serve tea when guests arrive?"
+      },
+      {
+        "cn": "你平时更爱喝哪种茶？",
+        "en": "Which kind of tea do you usually drink?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.chinanews.com.cn/gn/2025/05-23/10420583.shtml",
+      "http://culture.people.com.cn/n1/2018/1116/c1013-30405749.html"
+    ],
+    "sourceNote": "中新网《时政“留声机”·总书记的“待客茶”》与人民网《中国茶文化传承传播活动在故宫举办》，2026-11-10 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "culture-chopsticks",
+    "cn": "筷子使用习惯",
+    "en": "Using chopsticks",
+    "region": "中国",
+    "theme": "文化习俗",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "筷子别直插在饭碗里，也别用筷子敲碗，这些在老一辈看来不吉利。夹菜用公筷、给人递筷子也有讲究。各家各地说法不一，注意观察主人怎么做就行。",
+    "briefEn": "Don't stick chopsticks upright in a bowl of rice or tap them on the bowl; older people often see that as bad luck. Using shared chopsticks for serving and how you hand chopsticks to someone also have their own rules. Habits differ by family and region, so watch what your host does.",
+    "questions": [
+      {
+        "cn": "你们家用筷子有什么忌讳？",
+        "en": "Are there things you avoid doing with chopsticks in your family?"
+      },
+      {
+        "cn": "你会用筷子夹菜给别人吗？",
+        "en": "Do you use your chopsticks to serve food to other people?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://reader.gmw.cn/2023-03/06/content_36410389.htm",
+      "https://www.chinahighlights.com/travelguide/chinese-food/chopsticks.htm"
+    ],
+    "sourceNote": "光明网《筷子里的中国故事》与 China Highlights 筷子用法与忌讳，2026-11-10 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "culture-queue-seat",
+    "cn": "排队与让座",
+    "en": "Queuing and giving up a seat",
+    "region": "中国",
+    "theme": "文化习俗",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "坐公交地铁给老人、孕妇让座很常见，排队也讲先来后到。城市大小、场合不同，做法会有差别，有人赶时间会比较急。别把个别行为当成所有人的习惯。",
+    "briefEn": "Giving up a seat to an elderly person or a pregnant woman on public transport is common, and queues generally go first come, first served. Practice differs between big cities, small towns and different situations, and some people are simply in a hurry. Don't treat one person's behaviour as everyone's habit.",
+    "questions": [
+      {
+        "cn": "在公交上你会主动让座吗？",
+        "en": "Do you usually give up your seat on public transport?"
+      },
+      {
+        "cn": "你们那边排队插队常见吗？",
+        "en": "Is cutting in line common where you're from?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "http://opinion.people.com.cn/n1/2016/0505/c1003-28328280.html",
+      "https://www.chinanews.com.cn/sh/2011/10-15/3391071.shtml"
+    ],
+    "sourceNote": "人民网评论《让座美德应提倡，“道德绑架”已“越位”！》与中新网《老人大声要求孩子让座 公交礼让美德遭遇尴尬事》，2026-11-10 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "culture-punctuality",
+    "cn": "时间观念与迟到",
+    "en": "Punctuality and being late",
+    "region": "中国",
+    "theme": "文化习俗",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "上班开会一般讲究准时，朋友聚会常宽松些，迟到几分钟不算大事。重要场合最好提前到，私人邀约可以先问清楚。各地节奏不同，别默认对方也一样。",
+    "briefEn": "Work and meetings usually call for being on time, while casual meetups with friends can be looser and a few minutes late is often no big deal. For anything important, arrive early, and when you're unsure about a personal invitation, just ask. Pace varies between places and social circles, so don't assume.",
+    "questions": [
+      {
+        "cn": "朋友聚会迟到多久你会介意？",
+        "en": "How late can a friend be before it bothers you?"
+      },
+      {
+        "cn": "你上班或上学一般提前到吗？",
+        "en": "Do you usually arrive early for work or class?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "http://opinion.people.com.cn/n1/2016/0705/c1003-28525182.html",
+      "https://www.chinahighlights.com/travelguide/guidebook/etiquette.htm"
+    ],
+    "sourceNote": "人民网《人民日报金台视线：守时，人际交往最基本的教养》与 China Highlights 中国礼仪指南，2026-11-10 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "culture-polite-refusal",
+    "cn": "婉拒与客气话",
+    "en": "Saying no politely",
+    "region": "中国",
+    "theme": "文化习俗",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "很多场合不直接说“不”，而用“再看看”“下次吧”这类客气话，听懂话外音很重要。请客时主人也常先推辞一下。各地表达不同，拿不准就直接问清楚。",
+    "briefEn": "In many situations people don't say no directly; they use softer phrases like 'let me think about it' or 'maybe next time', so reading between the lines matters. Hosts may also decline once before accepting. Ways of being polite differ across regions, so when it's unclear, just ask.",
+    "questions": [
+      {
+        "cn": "你会怎么委婉地拒绝别人的邀请？",
+        "en": "How do you politely turn down an invitation?"
+      },
+      {
+        "cn": "你们那边请客时，主人会先客气推辞吗？",
+        "en": "Where you're from, does the host first decline politely before accepting?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.chinahighlights.com/travelguide/guidebook/etiquette.htm"
+    ],
+    "sourceNote": "China Highlights 中国礼仪指南（含面子、委婉表达与拒绝方式），2026-11-10 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  }
+]

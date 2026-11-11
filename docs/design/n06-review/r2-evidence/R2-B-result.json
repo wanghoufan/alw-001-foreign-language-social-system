@@ -1,0 +1,1027 @@
+{
+  "script": "n06-review/r2-evidence/r2-measure.mjs",
+  "startedAt": "2026-11-09T13:14:28.832Z",
+  "target": "/Users/zzymima0000/Developer/coding/1.Active/alw-001-外语社交系统/docs/design/prototype/n06/standalone-test/standalone.html",
+  "targetBytes": 10139113,
+  "chromeVersion": "Chrome/156.0.8078.81",
+  "viewport": {
+    "width": 393,
+    "height": 852,
+    "dpr": 2
+  },
+  "isolation": "--headless=new + mkdtemp 临时 user-data-dir + file:// 直开，未占用用户 profile",
+  "checks": [
+    {
+      "id": "env-headless-file",
+      "name": "无头 Chrome + file:// 直开 + 临时 profile",
+      "ok": true,
+      "detail": "Chrome/156.0.8078.81 · file:///Users/zzymima0000/Developer/coding/1.Active/alw-001-%E5%A4%96%E8%AF%AD%E7%A4%BE%E4%BA%A4%E7%B3%BB%E7%BB%9F/docs/design/prototype/n06/standalone-test/standalone.html#hainan/3",
+      "shots": []
+    },
+    {
+      "id": "A1-detail-open",
+      "name": "海南详情打开：骑楼老街、3 张图、上一张/下一张按钮",
+      "ok": true,
+      "detail": "{\"h2\":\"骑楼老街\",\"en\":\"Qilou Old Street\",\"slides\":3,\"count\":\"1 / 3\",\"dotsOn\":0,\"hasPrev\":true,\"hasNext\":true,\"loaded\":3,\"hash\":\"#hainan/3\"}",
+      "shots": []
+    },
+    {
+      "id": "A2-gallery-next",
+      "name": "画廊「下一张」按钮：计数与圆点移到第 2 张",
+      "ok": true,
+      "detail": "{\"count\":\"2 / 3\",\"dotsOn\":1,\"scrollLeft\":298}",
+      "shots": [
+        "r2-02-gallery-next-393.png"
+      ]
+    },
+    {
+      "id": "A3-gallery-prev",
+      "name": "画廊「上一张」按钮：计数与圆点回到第 1 张",
+      "ok": true,
+      "detail": "{\"count\":\"1 / 3\",\"dotsOn\":0}",
+      "shots": [
+        "r2-03-gallery-prev-393.png"
+      ]
+    },
+    {
+      "id": "A4-lightbox-open",
+      "name": "全屏看图：打开 1 / 3，图片已解码，hash 带 full",
+      "ok": true,
+      "detail": "{\"on\":true,\"count\":\"1 / 3\",\"hint\":\"骑楼老街 · 可用 3 张 · 其余待核实\",\"imgLoaded\":true,\"hash\":\"#hainan/3/full/1\"}",
+      "shots": []
+    },
+    {
+      "id": "A5-lightbox-next",
+      "name": "全屏「下一张」：1 / 3 → 2 / 3，图片已解码",
+      "ok": true,
+      "detail": "{\"on\":true,\"count\":\"2 / 3\",\"imgLoaded\":true,\"hash\":\"#hainan/3/full/2\"}",
+      "shots": [
+        "r2-05-lightbox-next-393.png"
+      ]
+    },
+    {
+      "id": "A6-lightbox-exit",
+      "name": "全屏退出：lightbox 关闭、body 恢复滚动、hash 回到详情",
+      "ok": true,
+      "detail": "{\"on\":false,\"overflow\":\"\",\"hash\":\"#hainan/3\"}",
+      "shots": []
+    },
+    {
+      "id": "A7-seg-default",
+      "name": "详情默认第 1 段：3 段分段条、标题与唯一英文对应",
+      "ok": true,
+      "detail": "{\"buttons\":[\"第 1 段\",\"第 2 段\",\"第 3 段\"],\"on\":0,\"title\":\"第一次带朋友走骑楼\",\"expCount\":2}",
+      "shots": []
+    },
+    {
+      "id": "A8-seg-switch",
+      "name": "段落切换到第 2 段：标题、唯一英文、默认 2 条表达同步更新",
+      "ok": true,
+      "detail": "{\"on\":1,\"title\":\"傍晚再走一次\",\"en\":\"I went back in the evening when the shop lights were on and the walls looked warmer than in daylight. There were fewer people, so we walked even more slowly. My friend said he wanted to try local noodles, so I made a note of the shop to visit next time.\",\"expCount\":2,\"segLabel\":\"第 2 段\"}",
+      "shots": [
+        "r2-06-seg-switch-393.png"
+      ]
+    },
+    {
+      "id": "A9-expand-all",
+      "name": "展开全部表达：默认 2 条 → 3 条，按钮变「收起表达」",
+      "ok": true,
+      "detail": "{\"before\":{\"exp\":2,\"btn\":\"展开全部 3 条表达\"},\"after\":{\"exp\":3,\"btn\":\"收起表达\"}}",
+      "shots": [
+        "r2-07-expand-all-393.png"
+      ]
+    },
+    {
+      "id": "A10-import-panel",
+      "name": "「粘贴到本段」弹层打开：单段模式选中、确认按钮初始禁用",
+      "ok": true,
+      "detail": "{\"on\":true,\"title\":\"粘贴到本段\",\"singleOn\":true,\"confirmDisabled\":true,\"hash\":\"#hainan/3\"}",
+      "shots": []
+    },
+    {
+      "id": "A11-import-preview",
+      "name": "单段粘贴识别预览：1 段 / 3 条表达，确认按钮启用",
+      "ok": true,
+      "detail": "{\"ok\":\"识别到 1 段 / 3 条表达，可确认导入。\",\"blocks\":1,\"confirmDisabled\":false,\"typedLen\":383}",
+      "shots": [
+        "r2-08-import-single-preview-393.png"
+      ]
+    },
+    {
+      "id": "A12-import-merge",
+      "name": "确认后合并到当前段（第 2 段）：弹层关闭、表达 3→6 条、中文段替换",
+      "ok": true,
+      "detail": "{\"modalOn\":false,\"toast\":\"已合并到当前段（原型临时）\",\"on\":1,\"title\":\"傍晚再走一次\",\"cn\":\"我们从钟楼那边走进来，沿着骑楼慢慢走，最后在一家小店坐下。没有赶景点，反而聊了很久。\",\"exp\":6,\"expandBtn\":\"收起表达\",\"hash\":\"#hainan/3\"} · 说明：A9 的展开状态在导入后沿用，故直接可见 6 条",
+      "shots": [
+        "r2-09-import-single-merged-393.png"
+      ]
+    },
+    {
+      "id": "B1-more-panel",
+      "name": "顶部「更多」面板：主题分段 3 项、范围与边界、版本、可关闭",
+      "ok": true,
+      "detail": "{\"on\":true,\"title\":\"更多 · 原型设置\",\"themes\":[\"浅色（默认）\",\"深色\",\"跟随系统\"],\"themeOn\":\"浅色（默认）\",\"hasScope\":true,\"version\":\"原型默认浅色；选择会保存在本机浏览器。\",\"hasClose\":true}",
+      "shots": [
+        "r2-10-more-panel-393.png"
+      ]
+    },
+    {
+      "id": "B2-more-close",
+      "name": "「更多」面板可关闭",
+      "ok": true,
+      "detail": "false",
+      "shots": []
+    },
+    {
+      "id": "C1-works-list",
+      "name": "我的作品：11 条、全部/A/B/C 分类 chip 存在",
+      "ok": true,
+      "detail": "{\"count\":\"11 个作品\",\"cards\":11,\"chips\":[\"全部\",\"A 类\",\"B 类\",\"C 类\"]}",
+      "shots": []
+    },
+    {
+      "id": "C2-works-B",
+      "name": "B 类筛选有数据：1 条 DEMO-B1 且标为分类示范补充",
+      "ok": true,
+      "detail": "{\"count\":\"1 个作品\",\"cards\":1,\"ids\":[\"DEMO-B1\"],\"head\":\"单词卡片 · Word Cards\",\"demo\":\"DEMO-B1 · B 类 · 分类示范补充\"}",
+      "shots": [
+        "r2-11-works-b-393.png"
+      ]
+    },
+    {
+      "id": "C3-works-C",
+      "name": "C 类筛选有数据：1 条 DEMO-C1 社区活动板",
+      "ok": true,
+      "detail": "{\"count\":\"1 个作品\",\"cards\":1,\"ids\":[\"DEMO-C1\"],\"head\":\"社区活动板 · Community Board\"}",
+      "shots": [
+        "r2-12-works-c-393.png"
+      ]
+    },
+    {
+      "id": "C4-work-share",
+      "name": "作品详情「分享作品」入口可点，弹层含系统分享/复制与中英预览",
+      "ok": true,
+      "detail": "{\"btn\":{\"exists\":true,\"text\":\"分享作品\"},\"panel\":{\"title\":\"分享作品 · 单词卡片 · Word Cards\",\"hasNative\":true,\"cnLen\":75,\"enLen\":263}}",
+      "shots": [
+        "r2-13-work-share-panel-393.png"
+      ]
+    },
+    {
+      "id": "D1-chat-default",
+      "name": "聊天默认：存在「分享 / 换题」、3 位人物、接话/追问、3 个标签",
+      "ok": true,
+      "detail": "{\"shareBtn\":\"分享 / 换题\",\"person\":\"oliver\",\"tags\":[\"⌖地点 · 骑楼老街\",\"◷节日 · 选一个最近话题\",\"♧人物 · Oliver Reed\"],\"msgCount\":3,\"follow\":\"That sounds like the right call. How did\"}",
+      "shots": [
+        "r2-14-chat-default-393.png"
+      ]
+    },
+    {
+      "id": "D2-chat-share-panel",
+      "name": "聊天「分享 / 换题」面板：2 个固定话题、分享预览与系统分享入口",
+      "ok": true,
+      "detail": "{\"title\":\"分享 / 换题\",\"topics\":[\"训练与轻松跑 · 当前\",\"周末骑行\"],\"previewLen\":18}",
+      "shots": [
+        "r2-15-chat-share-panel-393.png"
+      ]
+    },
+    {
+      "id": "D3-chat-topic-switch",
+      "name": "换题后：弹层关闭、话题/接话/追问同步换成周末骑行样本",
+      "ok": true,
+      "detail": "{\"modalOn\":false,\"pill\":\"固定示例 · 话题：周末骑行\",\"followEn\":\"Keeping it flat before a training week makes sense.\",\"probeEn\":\"How long do you usually ride when you keep it easy?\"}",
+      "shots": [
+        "r2-16-chat-topic-switched-393.png"
+      ]
+    },
+    {
+      "id": "D4-chat-person-switch",
+      "name": "切换人物到 Maya：接话/追问换样本、人物标签变 Maya、地点标签保留骑楼老街",
+      "ok": true,
+      "detail": "{\"selected\":\"maya\",\"follow\":\"Hand-drawn posters must stand out in a small venue\",\"tags\":[\"⌖地点 · 骑楼老街\",\"◷节日 · 选一个最近话题\",\"♧人物 · Maya Torres\"],\"pill\":\"固定示例 · 话题：海报与演出\"}",
+      "shots": [
+        "r2-17-chat-person-maya-393.png"
+      ]
+    },
+    {
+      "id": "D5-chat-tag-variation",
+      "name": "切换人物后标签变化范围：人物变、地点/节日文案不变（数据 placeId 相同、节日为固定入口）",
+      "ok": true,
+      "detail": "{\"tagPlace\":\"⌖地点 · 骑楼老街\",\"tagFest\":\"◷节日 · 选一个最近话题\",\"tagPerson\":\"♧人物 · Maya Torres\",\"note\":\"地点标签由 demo.tags.placeId=3 决定，三位人物共用；节日标签是固定入口文案\"}",
+      "shots": []
+    },
+    {
+      "id": "D6-chat-tag-place",
+      "name": "地点标签：打开「关联地点 · 骑楼老街」，含问句与复制",
+      "ok": true,
+      "detail": "{\"on\":true,\"title\":\"关联地点 · 骑楼老街\",\"qcn\":\"你所在的城市也有这种带走廊的老街吗？\",\"hasCopy\":true}",
+      "shots": [
+        "r2-18-chat-tag-place-393.png"
+      ]
+    },
+    {
+      "id": "D7-chat-tag-festival",
+      "name": "节日标签：打开最近节日候选，含「不按国籍推断」说明与问句",
+      "ok": true,
+      "detail": "{\"title\":\"节日 · 选一个最近话题\",\"cards\":4}",
+      "shots": [
+        "r2-19-chat-tag-festival-393.png"
+      ]
+    },
+    {
+      "id": "D8-chat-tag-person",
+      "name": "人物标签：弹层标题为 Maya Torres，含已确认事实问句",
+      "ok": true,
+      "detail": "{\"on\":true,\"title\":\"人物 · Maya Torres\",\"qcn\":\"最近有为本地乐队做新海报吗？\"}",
+      "shots": [
+        "r2-20-chat-tag-person-393.png"
+      ]
+    },
+    {
+      "id": "D9-chat-tag-festival-after-switch",
+      "name": "切回 Oliver 后节日标签仍可打开并给出候选",
+      "ok": true,
+      "detail": "{\"on\":true,\"titles\":[\"阵亡将士纪念日\",\"双十一\",\"七五三\",\"国际大学生节\"],\"regions\":[\"英国\",\"中国\",\"日本\",\"国际\"],\"note\":\"未来 14 天内的示范样本；不推断对方是否庆祝，也不按国籍推断。\"}",
+      "shots": [
+        "r2-20b-chat-tag-festival-oliver-393.png"
+      ]
+    },
+    {
+      "id": "E1-self-page",
+      "name": "关于我：5 条、搜索框、分类 chip、中英同时可见",
+      "ok": true,
+      "detail": "{\"count\":\"5 条\",\"cards\":5,\"cats\":[\"全部\",\"生活\",\"经历\",\"兴趣\"],\"hasSearch\":true,\"enVisible\":true}",
+      "shots": []
+    },
+    {
+      "id": "E2-self-search",
+      "name": "关于我搜索「城市」：5 → 1 条，命中「我待过的城市」",
+      "ok": true,
+      "detail": "{\"count\":\"1 条\",\"cards\":1,\"title\":\"我待过的城市\"}",
+      "shots": [
+        "r2-22-self-search-393.png"
+      ]
+    },
+    {
+      "id": "E3-self-category",
+      "name": "关于我分类「兴趣」：3 条，chip 选中且搜索已清空",
+      "ok": true,
+      "detail": "{\"count\":\"3 条\",\"cards\":3,\"titles\":[\"喜欢自己做软件\",\"健身和锻炼\",\"咖啡\"],\"on\":\"兴趣\",\"q\":\"\"}",
+      "shots": [
+        "r2-23-self-cat-interest-393.png"
+      ]
+    },
+    {
+      "id": "F-hainan-list",
+      "name": "海南列表 在 375/393/430/520 无横向溢出",
+      "ok": true,
+      "detail": "375: doc=375 body=375 off=0 | 393: doc=393 body=393 off=0 | 430: doc=430 body=430 off=0 | 520: doc=520 body=520 off=0",
+      "shots": []
+    },
+    {
+      "id": "F-hainan-detail",
+      "name": "海南详情 在 375/393/430/520 无横向溢出",
+      "ok": true,
+      "detail": "375: doc=375 body=375 off=0 | 393: doc=393 body=393 off=0 | 430: doc=430 body=430 off=0 | 520: doc=520 body=520 off=0",
+      "shots": []
+    },
+    {
+      "id": "F-lightbox",
+      "name": "全屏 在 375/393/430/520 无横向溢出",
+      "ok": true,
+      "detail": "375: doc=375 body=375 off=0 | 393: doc=393 body=393 off=0 | 430: doc=430 body=430 off=0 | 520: doc=520 body=520 off=0",
+      "shots": []
+    },
+    {
+      "id": "F-import-modal",
+      "name": "导入弹层 在 375/393/430/520 无横向溢出",
+      "ok": true,
+      "detail": "375: doc=375 body=375 off=0 | 393: doc=393 body=393 off=0 | 430: doc=430 body=430 off=0 | 520: doc=520 body=520 off=0",
+      "shots": []
+    },
+    {
+      "id": "F-self",
+      "name": "关于我 在 375/393/430/520 无横向溢出",
+      "ok": true,
+      "detail": "375: doc=375 body=375 off=0 | 393: doc=393 body=393 off=0 | 430: doc=430 body=430 off=0 | 520: doc=520 body=520 off=0",
+      "shots": []
+    },
+    {
+      "id": "F-total",
+      "name": "5 类页面 × 4 宽度整体无横向溢出",
+      "ok": true,
+      "detail": "见 F-* 各项",
+      "shots": []
+    },
+    {
+      "id": "F-375-shot",
+      "name": "375 宽度详情页补证截图（布局未断裂）",
+      "ok": true,
+      "detail": "r2-24-width-375-detail.png",
+      "shots": [
+        "r2-24-width-375-detail.png"
+      ]
+    },
+    {
+      "id": "F-520-shot",
+      "name": "520 宽度关于我补证截图（布局未断裂）",
+      "ok": true,
+      "detail": "r2-25-width-520-self.png",
+      "shots": [
+        "r2-25-width-520-self.png"
+      ]
+    },
+    {
+      "id": "G-topics-festival",
+      "name": "话题/节日 字号抽查：最小 14px，无 <14px",
+      "ok": true,
+      "detail": "总数 84 · <14=0 · 14–18=74 · >=19=10 · 正文min=14 · 卡片min=14 · 按钮min=15",
+      "shots": []
+    },
+    {
+      "id": "G-hainan-list",
+      "name": "海南列表 字号抽查：最小 14px，无 <14px",
+      "ok": true,
+      "detail": "总数 108 · <14=0 · 14–18=89 · >=19=19 · 正文min=14 · 卡片min=14 · 按钮min=15",
+      "shots": []
+    },
+    {
+      "id": "G-hainan-detail",
+      "name": "海南详情 字号抽查：最小 14px，无 <14px",
+      "ok": true,
+      "detail": "总数 86 · <14=0 · 14–18=73 · >=19=13 · 正文min=14 · 卡片min=- · 按钮min=15",
+      "shots": []
+    },
+    {
+      "id": "G-chat",
+      "name": "聊天 字号抽查：最小 14px，无 <14px",
+      "ok": true,
+      "detail": "总数 61 · <14=0 · 14–18=56 · >=19=5 · 正文min=14 · 卡片min=- · 按钮min=15",
+      "shots": []
+    },
+    {
+      "id": "G-self",
+      "name": "关于我 字号抽查：最小 14px，无 <14px",
+      "ok": true,
+      "detail": "总数 56 · <14=0 · 14–18=44 · >=19=12 · 正文min=14 · 卡片min=14 · 按钮min=15",
+      "shots": []
+    },
+    {
+      "id": "G-total",
+      "name": "5 个页面均无小于 14px 的可见文本",
+      "ok": true,
+      "detail": "分布见 G-* 各项",
+      "shots": []
+    }
+  ],
+  "blocked": [
+    {
+      "id": "H1-gallery-swipe-touch",
+      "name": "轮播触摸滑动手势",
+      "reason": "本轮按任务要求只测「上一张/下一张」按钮；CDP 合成触摸滑动与 scroll-snap 吸附判定无法在无头环境给出可信结论，未测。"
+    },
+    {
+      "id": "H2-real-device",
+      "name": "真机 / OPPO 密度 / 系统分享面板",
+      "reason": "本轮限定无头 Chromium(file://)；系统分享、真机密度与厂商浏览器不在本任务范围。"
+    }
+  ],
+  "observations": [
+    {
+      "id": "D9-festival-not-person-aware",
+      "note": "Maya 与 Oliver 下节日候选完全一致：Maya=阵亡将士纪念日、双十一、七五三、国际大学生节；Oliver=阵亡将士纪念日、双十一、七五三、国际大学生节；地区=英国、中国、日本、国际。候选来自全局 festivalList，未按人物地区或上下文过滤。"
+    },
+    {
+      "id": "A12-expanded-state-kept",
+      "note": "A9 展开第 2 段后，单段合并导入仍保留展开状态，导入后直接显示 6 条表达（折叠按钮为「收起表达」）；属交互状态保留，非缺陷。"
+    },
+    {
+      "id": "D5-place-tag-shared",
+      "note": "三位人物 chatDemo.tags.placeId 均为 3（骑楼老街），切换人物不更换地点标签；节日标签是固定入口文案。"
+    }
+  ],
+  "screenshots": [
+    "r2-01-hainan-detail-393.png",
+    "r2-02-gallery-next-393.png",
+    "r2-03-gallery-prev-393.png",
+    "r2-04-lightbox-first-393.png",
+    "r2-05-lightbox-next-393.png",
+    "r2-06-seg-switch-393.png",
+    "r2-07-expand-all-393.png",
+    "r2-08-import-single-preview-393.png",
+    "r2-09-import-single-merged-393.png",
+    "r2-10-more-panel-393.png",
+    "r2-11-works-b-393.png",
+    "r2-12-works-c-393.png",
+    "r2-13-work-share-panel-393.png",
+    "r2-14-chat-default-393.png",
+    "r2-15-chat-share-panel-393.png",
+    "r2-16-chat-topic-switched-393.png",
+    "r2-17-chat-person-maya-393.png",
+    "r2-18-chat-tag-place-393.png",
+    "r2-19-chat-tag-festival-393.png",
+    "r2-20-chat-tag-person-393.png",
+    "r2-20b-chat-tag-festival-oliver-393.png",
+    "r2-21-self-fullpage-393.png",
+    "r2-22-self-search-393.png",
+    "r2-23-self-cat-interest-393.png",
+    "r2-24-width-375-detail.png",
+    "r2-25-width-520-self.png"
+  ],
+  "errors": [],
+  "widthAudit": [
+    {
+      "page": "hainan-list",
+      "name": "海南列表",
+      "rows": [
+        {
+          "width": 375,
+          "ok": true,
+          "docW": 375,
+          "bodyW": 375,
+          "offenders": []
+        },
+        {
+          "width": 393,
+          "ok": true,
+          "docW": 393,
+          "bodyW": 393,
+          "offenders": []
+        },
+        {
+          "width": 430,
+          "ok": true,
+          "docW": 430,
+          "bodyW": 430,
+          "offenders": []
+        },
+        {
+          "width": 520,
+          "ok": true,
+          "docW": 520,
+          "bodyW": 520,
+          "offenders": []
+        }
+      ]
+    },
+    {
+      "page": "hainan-detail",
+      "name": "海南详情",
+      "rows": [
+        {
+          "width": 375,
+          "ok": true,
+          "docW": 375,
+          "bodyW": 375,
+          "offenders": []
+        },
+        {
+          "width": 393,
+          "ok": true,
+          "docW": 393,
+          "bodyW": 393,
+          "offenders": []
+        },
+        {
+          "width": 430,
+          "ok": true,
+          "docW": 430,
+          "bodyW": 430,
+          "offenders": []
+        },
+        {
+          "width": 520,
+          "ok": true,
+          "docW": 520,
+          "bodyW": 520,
+          "offenders": []
+        }
+      ]
+    },
+    {
+      "page": "lightbox",
+      "name": "全屏",
+      "rows": [
+        {
+          "width": 375,
+          "ok": true,
+          "docW": 375,
+          "bodyW": 375,
+          "offenders": []
+        },
+        {
+          "width": 393,
+          "ok": true,
+          "docW": 393,
+          "bodyW": 393,
+          "offenders": []
+        },
+        {
+          "width": 430,
+          "ok": true,
+          "docW": 430,
+          "bodyW": 430,
+          "offenders": []
+        },
+        {
+          "width": 520,
+          "ok": true,
+          "docW": 520,
+          "bodyW": 520,
+          "offenders": []
+        }
+      ]
+    },
+    {
+      "page": "import-modal",
+      "name": "导入弹层",
+      "rows": [
+        {
+          "width": 375,
+          "ok": true,
+          "docW": 375,
+          "bodyW": 375,
+          "offenders": []
+        },
+        {
+          "width": 393,
+          "ok": true,
+          "docW": 393,
+          "bodyW": 393,
+          "offenders": []
+        },
+        {
+          "width": 430,
+          "ok": true,
+          "docW": 430,
+          "bodyW": 430,
+          "offenders": []
+        },
+        {
+          "width": 520,
+          "ok": true,
+          "docW": 520,
+          "bodyW": 520,
+          "offenders": []
+        }
+      ]
+    },
+    {
+      "page": "self",
+      "name": "关于我",
+      "rows": [
+        {
+          "width": 375,
+          "ok": true,
+          "docW": 375,
+          "bodyW": 375,
+          "offenders": []
+        },
+        {
+          "width": 393,
+          "ok": true,
+          "docW": 393,
+          "bodyW": 393,
+          "offenders": []
+        },
+        {
+          "width": 430,
+          "ok": true,
+          "docW": 430,
+          "bodyW": 430,
+          "offenders": []
+        },
+        {
+          "width": 520,
+          "ok": true,
+          "docW": 520,
+          "bodyW": 520,
+          "offenders": []
+        }
+      ]
+    }
+  ],
+  "fontAudit": [
+    {
+      "page": "topics-festival",
+      "name": "话题/节日",
+      "total": 84,
+      "lt14": 0,
+      "mid1418": 74,
+      "ge19": 10,
+      "min": {
+        "px": 14,
+        "cat": "正文",
+        "tag": "span",
+        "cls": "kicker",
+        "text": "话题 · 示范"
+      },
+      "byCat": {
+        "正文": {
+          "count": 20,
+          "min": {
+            "px": 14,
+            "cat": "正文",
+            "tag": "span",
+            "cls": "kicker",
+            "text": "话题 · 示范"
+          }
+        },
+        "卡片": {
+          "count": 40,
+          "min": {
+            "px": 14,
+            "cat": "卡片",
+            "tag": "span",
+            "cls": "pill line",
+            "text": "纪念 / 观察日"
+          }
+        },
+        "按钮": {
+          "count": 23,
+          "min": {
+            "px": 15,
+            "cat": "按钮",
+            "tag": "button",
+            "cls": "chip on",
+            "text": "节日"
+          }
+        }
+      },
+      "lt14Samples": [],
+      "smallSamples": [
+        {
+          "px": 14,
+          "cat": "正文",
+          "tag": "span",
+          "cls": "kicker",
+          "text": "话题 · 示范"
+        },
+        {
+          "px": 14,
+          "cat": "正文",
+          "tag": "span",
+          "cls": "demo-pill",
+          "text": "示范"
+        },
+        {
+          "px": 15,
+          "cat": "按钮",
+          "tag": "button",
+          "cls": "chip on",
+          "text": "节日"
+        },
+        {
+          "px": 15,
+          "cat": "按钮",
+          "tag": "button",
+          "cls": "chip ",
+          "text": "日常生活"
+        },
+        {
+          "px": 15,
+          "cat": "按钮",
+          "tag": "button",
+          "cls": "chip ",
+          "text": "文化习俗"
+        }
+      ]
+    },
+    {
+      "page": "hainan-list",
+      "name": "海南列表",
+      "total": 108,
+      "lt14": 0,
+      "mid1418": 89,
+      "ge19": 19,
+      "min": {
+        "px": 14,
+        "cat": "正文",
+        "tag": "span",
+        "cls": "kicker",
+        "text": "海南 · 示范图库"
+      },
+      "byCat": {
+        "正文": {
+          "count": 21,
+          "min": {
+            "px": 14,
+            "cat": "正文",
+            "tag": "span",
+            "cls": "kicker",
+            "text": "海南 · 示范图库"
+          }
+        },
+        "卡片": {
+          "count": 69,
+          "min": {
+            "px": 14,
+            "cat": "卡片",
+            "tag": "span",
+            "cls": "photo-count",
+            "text": "3 图"
+          }
+        },
+        "按钮": {
+          "count": 17,
+          "min": {
+            "px": 15,
+            "cat": "按钮",
+            "tag": "button",
+            "cls": "chip on",
+            "text": "全部"
+          }
+        }
+      },
+      "lt14Samples": [],
+      "smallSamples": [
+        {
+          "px": 14,
+          "cat": "正文",
+          "tag": "span",
+          "cls": "kicker",
+          "text": "海南 · 示范图库"
+        },
+        {
+          "px": 14,
+          "cat": "正文",
+          "tag": "span",
+          "cls": "demo-pill",
+          "text": "示范"
+        },
+        {
+          "px": 14,
+          "cat": "正文",
+          "tag": "div",
+          "cls": "",
+          "text": "示范原型 · 封面与详情共用同一批归档图：清"
+        },
+        {
+          "px": 14,
+          "cat": "正文",
+          "tag": "b",
+          "cls": "",
+          "text": "示范原型"
+        },
+        {
+          "px": 18,
+          "cat": "正文",
+          "tag": "span",
+          "cls": "ico",
+          "text": "⌕"
+        }
+      ]
+    },
+    {
+      "page": "hainan-detail",
+      "name": "海南详情",
+      "total": 86,
+      "lt14": 0,
+      "mid1418": 73,
+      "ge19": 13,
+      "min": {
+        "px": 14,
+        "cat": "正文",
+        "tag": "span",
+        "cls": "kicker",
+        "text": "海南 · 海口"
+      },
+      "byCat": {
+        "正文": {
+          "count": 60,
+          "min": {
+            "px": 14,
+            "cat": "正文",
+            "tag": "span",
+            "cls": "kicker",
+            "text": "海南 · 海口"
+          }
+        },
+        "卡片": {
+          "count": 0,
+          "min": null
+        },
+        "按钮": {
+          "count": 25,
+          "min": {
+            "px": 15,
+            "cat": "按钮",
+            "tag": "button",
+            "cls": "btn small",
+            "text": "‹"
+          }
+        }
+      },
+      "lt14Samples": [],
+      "smallSamples": [
+        {
+          "px": 14,
+          "cat": "正文",
+          "tag": "span",
+          "cls": "kicker",
+          "text": "海南 · 海口"
+        },
+        {
+          "px": 14,
+          "cat": "正文",
+          "tag": "span",
+          "cls": "demo-pill",
+          "text": "示范"
+        },
+        {
+          "px": 14,
+          "cat": "正文",
+          "tag": "span",
+          "cls": "zoomhint",
+          "text": "点击全屏"
+        },
+        {
+          "px": 14,
+          "cat": "正文",
+          "tag": "span",
+          "cls": "zoomhint",
+          "text": "点击全屏"
+        },
+        {
+          "px": 14,
+          "cat": "正文",
+          "tag": "span",
+          "cls": "zoomhint",
+          "text": "点击全屏"
+        }
+      ]
+    },
+    {
+      "page": "chat",
+      "name": "聊天",
+      "total": 61,
+      "lt14": 0,
+      "mid1418": 56,
+      "ge19": 5,
+      "min": {
+        "px": 14,
+        "cat": "正文",
+        "tag": "span",
+        "cls": "kicker",
+        "text": "聊天 · 固定示例"
+      },
+      "byCat": {
+        "正文": {
+          "count": 38,
+          "min": {
+            "px": 14,
+            "cat": "正文",
+            "tag": "span",
+            "cls": "kicker",
+            "text": "聊天 · 固定示例"
+          }
+        },
+        "卡片": {
+          "count": 0,
+          "min": null
+        },
+        "按钮": {
+          "count": 19,
+          "min": {
+            "px": 15,
+            "cat": "按钮",
+            "tag": "button",
+            "cls": "btn small soft",
+            "text": "分享 / 换题"
+          }
+        }
+      },
+      "lt14Samples": [],
+      "smallSamples": [
+        {
+          "px": 14,
+          "cat": "正文",
+          "tag": "span",
+          "cls": "kicker",
+          "text": "聊天 · 固定示例"
+        },
+        {
+          "px": 14,
+          "cat": "正文",
+          "tag": "span",
+          "cls": "demo-pill",
+          "text": "示范"
+        },
+        {
+          "px": 16,
+          "cat": "按钮",
+          "tag": "button",
+          "cls": "btn primary",
+          "text": "开始"
+        },
+        {
+          "px": 15,
+          "cat": "正文",
+          "tag": "div",
+          "cls": "chat-live",
+          "text": "未开始 · 点「开始」演示字幕条（不采集麦克"
+        },
+        {
+          "px": 14,
+          "cat": "正文",
+          "tag": "span",
+          "cls": "pill",
+          "text": "固定示例 · 话题：训练与轻松跑"
+        }
+      ]
+    },
+    {
+      "page": "self",
+      "name": "关于我",
+      "total": 56,
+      "lt14": 0,
+      "mid1418": 44,
+      "ge19": 12,
+      "min": {
+        "px": 14,
+        "cat": "正文",
+        "tag": "span",
+        "cls": "kicker",
+        "text": "关于我"
+      },
+      "byCat": {
+        "正文": {
+          "count": 20,
+          "min": {
+            "px": 14,
+            "cat": "正文",
+            "tag": "span",
+            "cls": "kicker",
+            "text": "关于我"
+          }
+        },
+        "卡片": {
+          "count": 15,
+          "min": {
+            "px": 14,
+            "cat": "卡片",
+            "tag": "span",
+            "cls": "pill",
+            "text": "兴趣"
+          }
+        },
+        "按钮": {
+          "count": 20,
+          "min": {
+            "px": 15,
+            "cat": "按钮",
+            "tag": "button",
+            "cls": "chip ",
+            "text": "全部"
+          }
+        }
+      },
+      "lt14Samples": [],
+      "smallSamples": [
+        {
+          "px": 14,
+          "cat": "正文",
+          "tag": "span",
+          "cls": "kicker",
+          "text": "关于我"
+        },
+        {
+          "px": 14,
+          "cat": "正文",
+          "tag": "span",
+          "cls": "demo-pill",
+          "text": "示范"
+        },
+        {
+          "px": 14,
+          "cat": "正文",
+          "tag": "div",
+          "cls": "",
+          "text": "示范原型 · 关于我保持中英直接可见；搜索框"
+        },
+        {
+          "px": 14,
+          "cat": "正文",
+          "tag": "b",
+          "cls": "",
+          "text": "示范原型"
+        },
+        {
+          "px": 18,
+          "cat": "正文",
+          "tag": "span",
+          "cls": "ico",
+          "text": "⌕"
+        }
+      ]
+    }
+  ],
+  "totals": {
+    "checks": 45,
+    "pass": 45,
+    "fail": 0,
+    "blocked": 2,
+    "observations": 3,
+    "screenshots": 26
+  },
+  "finishedAt": "2026-11-09T13:15:25.712Z"
+}

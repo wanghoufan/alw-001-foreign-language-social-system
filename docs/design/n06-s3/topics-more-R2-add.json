@@ -1,0 +1,418 @@
+[
+  {
+    "id": "more-weekend-trip",
+    "cn": "周末短途旅行",
+    "en": "Weekend getaways",
+    "region": "国际",
+    "theme": "更多",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "周末两天不想走太远，又想换个环境。可以聊目的地怎么选、开车还是坐车、住一晚还是当天回，以及回来后累不累。",
+    "briefEn": "A weekend away does not need to be far. People talk about how they pick a place, whether they drive or take the train, staying one night or coming back the same day, and whether they feel rested afterwards. The best short trips are usually the ones with the least planning.",
+    "questions": [
+      {
+        "cn": "你周末更喜欢出去玩还是在家待着？",
+        "en": "On weekends, do you prefer going out or staying home?"
+      },
+      {
+        "cn": "你最近一次短途旅行去了哪里？",
+        "en": "Where did you go on your last short trip?"
+      },
+      {
+        "cn": "你会当天来回还是住一晚？",
+        "en": "Do you go for the day or stay overnight?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.lonelyplanet.com/articles/perfect-weekend-prague",
+      "https://www.lonelyplanet.com/articles"
+    ],
+    "sourceNote": "Lonely Planet「Perfect weekend in Prague」周末行程文章与文章频道页，2026-11-10 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "more-city-walking",
+    "cn": "城市里的步行体验",
+    "en": "Walking around a city",
+    "region": "国际",
+    "theme": "更多",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "走路是认识一座城市最慢也最直接的方式。可以聊常走的路线、人行道好不好走、晚上散步安不安全，以及走路时会不会留意街边小店。",
+    "briefEn": "Walking is the slowest and most direct way to know a city. People talk about the routes they take, whether the pavements are easy to walk on, how safe evening walks feel, and whether they notice small shops along the way. Some walk mainly to get somewhere and others just to look around.",
+    "questions": [
+      {
+        "cn": "你在城市里一般走路还是坐车？",
+        "en": "Do you usually walk or take transport around your city?"
+      },
+      {
+        "cn": "你常走的那条路好走吗？",
+        "en": "Is the route you usually take easy to walk?"
+      },
+      {
+        "cn": "你晚上会在城市里散步吗？",
+        "en": "Do you take evening walks in your city?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.pps.org/",
+      "https://www.who.int/news-room/fact-sheets/detail/physical-activity"
+    ],
+    "sourceNote": "Project for Public Spaces 公共空间机构官网、世界卫生组织身体活动事实清单页，2026-11-10 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "more-street-food",
+    "cn": "街头小吃与夜市",
+    "en": "Street food and night markets",
+    "region": "国际",
+    "theme": "更多",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "夜市和小吃摊是城市最有烟火气的部分。可以聊常吃的小吃、摊位排队值不值、卫生怎么判断，以及各自城市夜市开到几点。",
+    "briefEn": "Night markets and street stalls are where a city feels most alive. Good topics are the snacks people always order, whether a queue is worth joining, how they judge hygiene, and how late markets stay open. Street food is also an easy way to explain local habits to someone from another country.",
+    "questions": [
+      {
+        "cn": "你那边有夜市吗？",
+        "en": "Are there night markets where you live?"
+      },
+      {
+        "cn": "你最常买的小吃是什么？",
+        "en": "What snack do you buy most often?"
+      },
+      {
+        "cn": "你会为了排队等一家摊子吗？",
+        "en": "Will you queue for a popular stall?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.unesco.org/en/creative-cities"
+    ],
+    "sourceNote": "UNESCO 创意城市网络（含美食之都）官方页，2026-11-10 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "more-sports-watching",
+    "cn": "运动观赛",
+    "en": "Watching sport",
+    "region": "国际",
+    "theme": "更多",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "看比赛可以是周末的固定安排，也可以是和朋友的借口。可以聊支持的球队、去现场还是在家看、看球时的习惯，以及输了之后的反应。",
+    "briefEn": "Watching sport can be a fixed weekend routine or just an excuse to meet friends. People talk about the teams they follow, watching at the stadium or at home, their match-day habits, and how they react when their side loses. Even people who rarely watch a full game have one team they care about.",
+    "questions": [
+      {
+        "cn": "你看什么比赛？",
+        "en": "What sports do you watch?"
+      },
+      {
+        "cn": "你更喜欢去现场还是在家看？",
+        "en": "Do you prefer watching live or at home?"
+      },
+      {
+        "cn": "你看球时有什么固定习惯？",
+        "en": "Do you have any habits when you watch a match?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.fifa.com/en/tournaments",
+      "https://www.fifa.com/"
+    ],
+    "sourceNote": "国际足联 FIFA 赛事频道页与官网首页，2026-11-10 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "more-online-gaming-friends",
+    "cn": "电子游戏与线上朋友",
+    "en": "Games and online friends",
+    "region": "国际",
+    "theme": "更多",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "一起打游戏的人都来自很远的地方，却几乎天天见面。可以聊怎么组队、语音里聊什么、时差怎么凑，以及游戏里的朋友和现实朋友有什么不同。",
+    "briefEn": "Many people now play with friends they have never met in person. Good topics are how they find a squad, what they talk about on voice chat, how they deal with time zones, and how game friends differ from the ones nearby. Some of these friendships outlast the game itself.",
+    "questions": [
+      {
+        "cn": "你会和网友一起打游戏吗？",
+        "en": "Do you play games with people you met online?"
+      },
+      {
+        "cn": "你们在语音里一般聊什么？",
+        "en": "What do you usually talk about on voice chat?"
+      },
+      {
+        "cn": "游戏里的朋友和现实朋友像吗？",
+        "en": "Are game friends like friends in real life?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.theesa.com/"
+    ],
+    "sourceNote": "美国娱乐软件协会 ESA 官网，2026-11-10 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "more-podcasts",
+    "cn": "播客与有声内容",
+    "en": "Podcasts and audio",
+    "region": "国际",
+    "theme": "更多",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "通勤、做饭、走路时，耳朵一直没有闲着。可以聊常听的节目、一次听多久、喜欢访谈还是讲故事，以及有没有因为播客改变过想法。",
+    "briefEn": "Podcasts fill the time when people commute, cook or walk. They like talking about the shows they follow, how long they listen in one go, whether they prefer interviews or stories, and anything that changed their mind. Listening together with someone is also a good way to start a conversation.",
+    "questions": [
+      {
+        "cn": "你平时听播客吗？",
+        "en": "Do you listen to podcasts?"
+      },
+      {
+        "cn": "你一般在什么时候听？",
+        "en": "When do you usually listen?"
+      },
+      {
+        "cn": "你更喜欢访谈还是讲故事？",
+        "en": "Do you prefer interviews or storytelling?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.npr.org/podcasts/",
+      "https://www.npr.org/podcasts/510313/how-i-built-this"
+    ],
+    "sourceNote": "NPR 播客总目录页与《How I Built This》节目页，2026-11-10 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "more-social-media-boundaries",
+    "cn": "社交媒体使用边界",
+    "en": "Social media boundaries",
+    "region": "国际",
+    "theme": "更多",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "很多人都有过刷太久之后的疲惫感。可以聊每天用多久、会不会发生活细节、怎么处理不想看到的内容，以及有没有试过关掉一段时间。",
+    "briefEn": "Many people feel tired after scrolling for too long. Good topics are daily usage, what they share about their own lives, how they handle content they would rather not see, and whether they have ever taken a break. Everyone draws the line somewhere different, and that is worth comparing.",
+    "questions": [
+      {
+        "cn": "你每天用多久社交媒体？",
+        "en": "How long do you spend on social media each day?"
+      },
+      {
+        "cn": "你会发自己的生活细节吗？",
+        "en": "Do you post details about your daily life?"
+      },
+      {
+        "cn": "你有试过关掉一段时间吗？",
+        "en": "Have you ever taken a break from it?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.apa.org/topics/social-media-internet"
+    ],
+    "sourceNote": "美国心理学会 APA 社交媒体与互联网专题页，2026-11-10 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "more-online-shopping",
+    "cn": "网购与快递习惯",
+    "en": "Online shopping and deliveries",
+    "region": "国际",
+    "theme": "更多",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "网购改变了很多人的购物习惯。可以聊买之前怎么比价、多久收到一次快递、快递柜还是送上门，以及买回来不合心意怎么处理。",
+    "briefEn": "Online shopping has changed how many people buy things. People talk about comparing prices before they order, how often parcels arrive, whether they prefer a locker or delivery to the door, and what they do when something is not right. Waiting for a parcel is a small daily pleasure for some and an annoyance for others.",
+    "questions": [
+      {
+        "cn": "你常在网上买东西吗？",
+        "en": "Do you shop online often?"
+      },
+      {
+        "cn": "你买之前会比价吗？",
+        "en": "Do you compare prices before you buy?"
+      },
+      {
+        "cn": "你更喜欢送上门还是放快递柜？",
+        "en": "Do you prefer delivery to the door or a locker?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.usps.com/ship/",
+      "https://www.usps.com/"
+    ],
+    "sourceNote": "美国邮政 USPS 寄件服务页与官网首页，2026-11-10 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "more-saving-money",
+    "cn": "存钱与消费计划",
+    "en": "Saving and spending plans",
+    "region": "国际",
+    "theme": "更多",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "存钱的方式和花钱的习惯往往是一起出现的。可以聊有没有固定存一部分、记账管不管用、大件怎么决定，以及计划之外的花销怎么办。",
+    "briefEn": "Saving and spending habits usually show up together. People like talking about whether they set aside a fixed amount, whether budgeting apps help, how they decide on big purchases, and what they do about unexpected costs. Small everyday choices often matter more than one big decision.",
+    "questions": [
+      {
+        "cn": "你会固定存一部分钱吗？",
+        "en": "Do you set aside a fixed amount each month?"
+      },
+      {
+        "cn": "你觉得记账有用吗？",
+        "en": "Does tracking your spending help?"
+      },
+      {
+        "cn": "买大件东西时你会怎么决定？",
+        "en": "How do you decide on a big purchase?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://americasaves.org/"
+    ],
+    "sourceNote": "America Saves（美国消费者联合会储蓄推广项目）官网，2026-11-10 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "more-new-skill",
+    "cn": "学一门新技能",
+    "en": "Learning a new skill",
+    "region": "国际",
+    "theme": "更多",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "成年之后学新东西，动力和时间都要自己安排。可以聊想学什么、为什么开始、卡在哪一步，以及有没有把学到的东西用在生活里。",
+    "briefEn": "Learning something new as an adult means finding both the reason and the time. People talk about what they want to learn, why they started, where they got stuck, and whether they have used it in daily life. Starting is easy and keeping going is usually the hard part.",
+    "questions": [
+      {
+        "cn": "你最近想学什么？",
+        "en": "What would you like to learn next?"
+      },
+      {
+        "cn": "你学新东西一般卡在哪一步？",
+        "en": "Where do you usually get stuck when learning something new?"
+      },
+      {
+        "cn": "你学过的东西用上了吗？",
+        "en": "Have you actually used what you learned?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://ocw.mit.edu/",
+      "https://www.edx.org/learn"
+    ],
+    "sourceNote": "MIT OpenCourseWare 公开课官网、edX 课程页，2026-11-10 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "more-volunteering",
+    "cn": "志愿服务与社区参与",
+    "en": "Volunteering and community",
+    "region": "国际",
+    "theme": "更多",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "社区里的参与可以是固定值班，也可以是一次帮忙。可以聊做过什么、为什么开始、遇到什么样的人，以及这类活动的成就感从哪来。",
+    "briefEn": "Getting involved in a community can mean a regular shift or a one-off helping hand. People talk about what they have done, why they started, who they met, and where the sense of meaning comes from. Sometimes the smallest task turns into the most memorable part of the week.",
+    "questions": [
+      {
+        "cn": "你做过志愿服务吗？",
+        "en": "Have you ever volunteered?"
+      },
+      {
+        "cn": "你当时为什么开始做？",
+        "en": "What made you start?"
+      },
+      {
+        "cn": "你觉得做这类事最难的是什么？",
+        "en": "What is the hardest part of it for you?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.unv.org/",
+      "https://www.un.org/en/observances/volunteer-day"
+    ],
+    "sourceNote": "联合国志愿人员组织 UNV 官网、联合国国际志愿者日页面，2026-11-10 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "more-elder-care",
+    "cn": "养老与陪伴长辈",
+    "en": "Time with older family members",
+    "region": "国际",
+    "theme": "更多",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "和长辈相处的日常里有很多细节可以聊。可以聊多久联系一次、要不要住在一起、陪伴时做什么，以及看到他们状态变化时怎么应对。",
+    "briefEn": "Time with older family members is full of small everyday details. People talk about how often they call or visit, whether they live together, what they actually do together, and how they respond when they notice changes. Every family works out its own arrangement.",
+    "questions": [
+      {
+        "cn": "你多久和长辈联系一次？",
+        "en": "How often do you talk to older family members?"
+      },
+      {
+        "cn": "你们在一起一般做什么？",
+        "en": "What do you usually do together?"
+      },
+      {
+        "cn": "你觉得和长辈住一起怎么样？",
+        "en": "How do you feel about living with older family members?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.nia.nih.gov/health/healthy-aging",
+      "https://www.who.int/news-room/fact-sheets/detail/ageing-and-health"
+    ],
+    "sourceNote": "美国国家老龄研究所 NIA 健康老龄页、世界卫生组织老龄与健康事实清单页，2026-11-10 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  }
+]

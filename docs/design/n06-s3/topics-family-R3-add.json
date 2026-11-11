@@ -1,0 +1,573 @@
+[
+  {
+    "id": "family-first-date",
+    "cn": "第一次约会",
+    "en": "First dates",
+    "region": "国际",
+    "theme": "更多",
+    "subtheme": "家庭与关系",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "第一次见面的安排能看出一个人的习惯：吃饭、散步还是喝咖啡，谁定时间，迟到怎么处理。不同地方对谁买单、第一次聊多深，默契也不太一样。",
+    "briefEn": "First dates are mostly logistics and small signals: a meal, a walk, or just coffee, who suggests the time, and what happens when someone is ten minutes late. Places also differ on who picks up the bill and how personal the first conversation is expected to get.",
+    "questions": [
+      {
+        "cn": "第一次约会你更习惯谁买单？",
+        "en": "On a first date, who usually pays where you're from?"
+      },
+      {
+        "cn": "你会选吃饭、散步，还是喝咖啡这种轻松的安排？",
+        "en": "Would you go for a meal, a walk, or something low-key like coffee?"
+      },
+      {
+        "cn": "第一次见面聊多深算合适？",
+        "en": "How personal do people usually get on a first date?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://pmc.ncbi.nlm.nih.gov/articles/PMC11332061/",
+      "https://www.betterhealth.vic.gov.au/health/healthyliving/relationships-creating-intimacy"
+    ],
+    "sourceNote": "PMC 开放全文《Social and nonsocial synchrony are interrelated and romantically attractive》(2024) 与澳大利亚维多利亚州政府 Better Health Channel「Relationships - creating intimacy」页，2026-11-10 实抓均 HTTP 200。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "family-meet-through-friends",
+    "cn": "朋友介绍认识",
+    "en": "Meeting through friends",
+    "region": "国际",
+    "theme": "更多",
+    "subtheme": "家庭与关系",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "有人靠朋友牵线认识伴侣，有人完全排斥被安排。可以聊介绍人是谁、第一次见面朋友在不在场、被介绍和别人自然认识，感觉差在哪里。",
+    "briefEn": "Some people meet partners through friends, others refuse to be set up at all. You can ask who did the introducing, whether the friend stayed for the first meeting, and how a planned setup feels different from meeting by accident at a party.",
+    "questions": [
+      {
+        "cn": "你身边有人是被朋友介绍认识伴侣的吗？",
+        "en": "Do you know anyone who met their partner through a friend?"
+      },
+      {
+        "cn": "如果朋友要给你介绍，你会答应吗？",
+        "en": "If a friend offered to introduce you to someone, would you say yes?"
+      },
+      {
+        "cn": "介绍人在场会让气氛更轻松，还是更尴尬？",
+        "en": "Does having the friend there make it easier or more awkward?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://pmc.ncbi.nlm.nih.gov/articles/PMC2831261/",
+      "https://www.betterhealth.vic.gov.au/health/healthyliving/relationships-creating-intimacy"
+    ],
+    "sourceNote": "PMC 开放全文《Birds of a Feather, or Friend of a Friend?》(2011，青少年同伴网络中的伴侣选择) 与 Better Health Channel「Relationships - creating intimacy」页，2026-11-10 实抓均 HTTP 200。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "family-long-distance",
+    "cn": "异地相处",
+    "en": "Long-distance relationships",
+    "region": "国际",
+    "theme": "更多",
+    "subtheme": "家庭与关系",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "异地怎么维持，各家差别很大：多久见一次、每天视频还是各忙各的、谁飞过去、节假日怎么分。也有人试过之后发现不适合自己，这很正常。",
+    "briefEn": "Long distance looks different for every couple: how often you visit, whether you video call daily or just text, who travels, and how holidays get split. Some people also try it and decide it is not for them, which is just as worth talking about.",
+    "questions": [
+      {
+        "cn": "异地的话，你觉得多久见一次才够？",
+        "en": "If you were long distance, how often would you need to see each other?"
+      },
+      {
+        "cn": "每天视频和偶尔联系，你更能接受哪种？",
+        "en": "Would you rather call every day or just check in now and then?"
+      },
+      {
+        "cn": "异地你最担心的是什么？",
+        "en": "What would worry you most about long distance?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://pmc.ncbi.nlm.nih.gov/articles/PMC8669216/",
+      "https://www.betterhealth.vic.gov.au/health/healthyliving/relationships-creating-intimacy"
+    ],
+    "sourceNote": "PMC 开放全文《Long-distance texting: Text messaging is linked with higher relationship satisfaction in long-distance relationships》(2021) 与 Better Health Channel 关系主题页，2026-11-10 实抓均 HTTP 200。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "family-meet-parents",
+    "cn": "见对方家长",
+    "en": "Meeting the parents",
+    "region": "国际",
+    "theme": "更多",
+    "subtheme": "家庭与关系",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "第一次见对方父母，紧张点常常不在礼节，而在节奏：什么时候去、带不带东西、待多久、要不要帮忙洗碗。有人家很随意，有人家规矩多。",
+    "briefEn": "Meeting someone's parents is less about etiquette than timing: when you go, whether you bring something, how long you stay, and whether you help in the kitchen. Some families keep it casual, others have a lot of small rules nobody explains.",
+    "questions": [
+      {
+        "cn": "第一次见对方父母，你觉得该带点东西吗？",
+        "en": "Should you bring something the first time you meet someone's parents?"
+      },
+      {
+        "cn": "第一次上门，待多久算合适？",
+        "en": "How long is a normal first visit?"
+      },
+      {
+        "cn": "你会在对方家里帮忙做家务吗？",
+        "en": "Would you help out with chores at their place?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://pmc.ncbi.nlm.nih.gov/articles/PMC10480833/",
+      "https://www.psychologytoday.com/us/basics/marriage"
+    ],
+    "sourceNote": "PMC 开放全文《Do as We Wish: Parental Tactics of Mate Choice Manipulation》(2013，父母对子女择偶的影响) 与 Psychology Today「Marriage」基础页，2026-11-10 实抓均 HTTP 200。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "family-date-money",
+    "cn": "约会花钱方式",
+    "en": "Who pays when dating",
+    "region": "国际",
+    "theme": "更多",
+    "subtheme": "家庭与关系",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "谁买单、AA 还是轮流，是约会里最容易尴尬的一段。可以聊第一次谁付、长期怎么分、收入差很多时怎么办，也能聊直接谈钱会不会破坏气氛。",
+    "briefEn": "Who pays is one of the more awkward parts of dating: split every time, take turns, or one person always covers it. You can ask what happens when incomes differ a lot, and whether talking about money out loud ruins the mood or actually helps.",
+    "questions": [
+      {
+        "cn": "约会时你们怎么分账？",
+        "en": "How do you split costs when you go out?"
+      },
+      {
+        "cn": "收入差很多的话，付钱方式要调整吗？",
+        "en": "If one person earns much more, should the paying change?"
+      },
+      {
+        "cn": "直接聊钱会让你觉得尴尬吗？",
+        "en": "Does talking about money make things awkward for you?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://pmc.ncbi.nlm.nih.gov/articles/PMC10632137/",
+      "https://www.betterhealth.vic.gov.au/health/healthyliving/relationships-creating-intimacy"
+    ],
+    "sourceNote": "PMC 开放全文《When couples fight about money, what do they fight about?》(2023) 与 Better Health Channel「Relationships - creating intimacy」页，2026-11-10 实抓均 HTTP 200。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "family-chores",
+    "cn": "同居分担家务",
+    "en": "Sharing chores at home",
+    "region": "国际",
+    "theme": "更多",
+    "subtheme": "家庭与关系",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "同居后家务怎么分，往往比想象中更花时间商量：谁做饭、谁洗碗、谁记得买纸、多久打扫一次。有人按清单分，有人凭感觉，也有人一直在磨合。",
+    "briefEn": "Once you live together, chores take more negotiation than people expect: who cooks, who does dishes, who remembers to buy toilet paper, and how often anyone cleans. Some couples split by list, some by feel, and plenty are still working it out.",
+    "questions": [
+      {
+        "cn": "同居后家务你们怎么分？",
+        "en": "How do you divide chores when you live together?"
+      },
+      {
+        "cn": "家里谁负责记着要买什么？",
+        "en": "Who keeps track of what needs buying?"
+      },
+      {
+        "cn": "觉得分配不公，你会直接说出来吗？",
+        "en": "If the split felt unfair, would you say it out loud?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.ons.gov.uk/peoplepopulationandcommunity/householdcharacteristics",
+      "https://pmc.ncbi.nlm.nih.gov/articles/PMC10343096/"
+    ],
+    "sourceNote": "英国国家统计局 Household characteristics 主题页与 PMC 开放全文《The management of cognitive labour in same-gender couples》(2023，家务与心力的分工)，2026-11-10 实抓均 HTTP 200。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "family-marriage-timing",
+    "cn": "结婚节奏",
+    "en": "Timing of marriage",
+    "region": "国际",
+    "theme": "更多",
+    "subtheme": "家庭与关系",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "什么时候结婚、要不要结婚，节奏因人而异：有人恋爱很久才定，有人很快决定，也有人一直不结。可以聊身边人的时间表，和家里催不催。",
+    "briefEn": "When to marry, or whether to marry at all, varies a lot: some couples wait years, some decide fast, and some never do either. It is easy to compare the timelines around you, and to talk about whether family members push for a date.",
+    "questions": [
+      {
+        "cn": "你身边人一般恋爱多久结婚？",
+        "en": "How long do couples around you usually date before marrying?"
+      },
+      {
+        "cn": "家里会催婚吗？",
+        "en": "Does your family push you about marriage?"
+      },
+      {
+        "cn": "一直不结婚只在一起生活，你怎么看？",
+        "en": "How do you see long-term partners who never marry?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.ons.gov.uk/peoplepopulationandcommunity/birthsdeathsandmarriages/marriagecohabitationandcivilpartnerships"
+    ],
+    "sourceNote": "英国国家统计局 Marriage, cohabitation and civil partnerships 主题页（含平均结婚年龄与同居数据），2026-11-10 实抓 HTTP 200，页面标题 Marriage, cohabitation and civil partnerships - Office for National Statistics。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "family-wedding-size",
+    "cn": "婚礼规模",
+    "en": "Wedding size",
+    "region": "国际",
+    "theme": "更多",
+    "subtheme": "家庭与关系",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "婚礼办多大，是很多人第一次真正要谈拢的事：几十人的小型仪式还是几百人的大场面，请不请远房亲戚、同事，钱花在场地还是酒席。",
+    "briefEn": "Wedding size is often the first thing couples really have to agree on: a small ceremony with thirty people or a big party with three hundred, whether distant relatives and coworkers get invited, and whether the budget goes to the venue or the food.",
+    "questions": [
+      {
+        "cn": "你理想中的婚礼大概是多少人？",
+        "en": "What size wedding would you want?"
+      },
+      {
+        "cn": "远房亲戚和同事，你会请吗？",
+        "en": "Would you invite distant relatives and coworkers?"
+      },
+      {
+        "cn": "小而简单和大场面，你更倾向哪个？",
+        "en": "Small and simple, or big and loud?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.ons.gov.uk/peoplepopulationandcommunity/birthsdeathsandmarriages/marriagecohabitationandcivilpartnerships",
+      "https://www.psychologytoday.com/us/basics/marriage"
+    ],
+    "sourceNote": "英国国家统计局婚姻与同居主题页（含年度婚礼数量统计）与 Psychology Today「Marriage」基础页，2026-11-10 实抓均 HTTP 200。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "family-kids-or-not",
+    "cn": "要不要孩子",
+    "en": "Whether to have children",
+    "region": "国际",
+    "theme": "更多",
+    "subtheme": "家庭与关系",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "要不要孩子是很个人的决定，身边选择也越来越不一样：有人很早就想清楚，有人一直没答案，也有人确定不要。可以聊这些想法怎么变的，不评判。",
+    "briefEn": "Whether to have kids is a personal decision, and the people around you probably disagree: some knew early, some still have no answer, and some are sure they do not want any. You can talk about how those views changed over time without judging where anyone landed.",
+    "questions": [
+      {
+        "cn": "你身边人大多想要孩子吗？",
+        "en": "Do most people around you want kids?"
+      },
+      {
+        "cn": "这个想法会随着年龄变吗？",
+        "en": "Has that view changed as you got older?"
+      },
+      {
+        "cn": "有人明确说不要孩子，你会怎么回应？",
+        "en": "How would you respond if someone said they definitely do not want kids?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.ons.gov.uk/peoplepopulationandcommunity/birthsdeathsandmarriages/livebirths"
+    ],
+    "sourceNote": "英国国家统计局 Live births 主题页（含生育率与生育年龄统计），2026-11-10 实抓 HTTP 200，页面标题 Live births - Office for National Statistics。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "family-daily-childcare",
+    "cn": "带孩子的日常",
+    "en": "A day with kids",
+    "region": "国际",
+    "theme": "更多",
+    "subtheme": "家庭与关系",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "有孩子之后，一天基本被切成小块：几点起、谁送、谁接、晚饭怎么解决、周末去哪消耗精力。没孩子的人也能聊自己小时候被怎么带大。",
+    "briefEn": "With kids, the day gets cut into small blocks: who is up first, who does drop-off and pickup, how dinner happens, and where the weekend energy goes. Even without kids, people can compare how they were raised themselves.",
+    "questions": [
+      {
+        "cn": "有孩子的一天大概是怎么安排的？",
+        "en": "What does a normal day with kids look like?"
+      },
+      {
+        "cn": "接送孩子一般谁负责？",
+        "en": "Who usually handles drop-off and pickup?"
+      },
+      {
+        "cn": "你小时候的周末是怎么过的？",
+        "en": "How did your weekends look as a kid?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.unicef.org/parenting"
+    ],
+    "sourceNote": "UNICEF Parenting 官方育儿主题页（含日常照护与亲子互动内容），2026-11-10 实抓 HTTP 200，页面标题 UNICEF Parenting。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "family-grandparent-help",
+    "cn": "祖辈帮忙带孩子",
+    "en": "Grandparents helping with kids",
+    "region": "国际",
+    "theme": "更多",
+    "subtheme": "家庭与关系",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "祖辈帮不帮忙带孩子，各家差别很大：有人天天接送，有人只偶尔照看，也有人住得远只能视频。可以聊这份帮忙怎么谈、累不累、要不要给钱。",
+    "briefEn": "Grandparent help ranges widely: some do daily pickup, some babysit now and then, and some live too far for anything but video calls. You can ask how that help gets arranged, whether it wears them out, and whether anyone offers to pay for it.",
+    "questions": [
+      {
+        "cn": "在你家，祖辈会帮忙带孩子吗？",
+        "en": "Do grandparents help with childcare where you're from?"
+      },
+      {
+        "cn": "这种帮忙是他们主动提的，还是要开口请？",
+        "en": "Do they offer, or do you have to ask?"
+      },
+      {
+        "cn": "长期帮忙要不要给钱或补贴？",
+        "en": "Should families pay grandparents for regular help?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://pmc.ncbi.nlm.nih.gov/articles/PMC9424377/",
+      "https://www.who.int/news-room/fact-sheets/detail/ageing-and-health"
+    ],
+    "sourceNote": "PMC 开放综述《Grandparenting, health, and well-being: a systematic literature review》(2022) 与 WHO「Ageing and health」事实清单，2026-11-10 实抓均 HTTP 200。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "family-near-parents",
+    "cn": "和父母住得远近",
+    "en": "Living near your parents",
+    "region": "国际",
+    "theme": "更多",
+    "subtheme": "家庭与关系",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "成年后住得离父母多近，是个很实际的题：同城、隔壁小区还是隔几个时区。可以聊方便照应和想要独立之间的取舍，也有人是被工作或房租推着走。",
+    "briefEn": "How close you live to your parents as an adult is a very practical question: same city, a few streets away, or several time zones apart. People trade off easy help against independence, and sometimes work or rent makes the choice for them.",
+    "questions": [
+      {
+        "cn": "你现在住得离父母多远？",
+        "en": "How far do you live from your parents now?"
+      },
+      {
+        "cn": "离得近方便照应，你觉得值得吗？",
+        "en": "Is being close enough to help out worth it?"
+      },
+      {
+        "cn": "住太近会不会少了点自己的空间？",
+        "en": "Can living too close cost you your own space?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.ons.gov.uk/peoplepopulationandcommunity/birthsdeathsandmarriages/families",
+      "https://ec.europa.eu/eurostat/web/population-demography"
+    ],
+    "sourceNote": "英国国家统计局 Families 主题页（含成年子女与父母同住、家庭结构数据）与 Eurostat 人口与人口统计主题页，2026-11-10 实抓均 HTTP 200。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "family-siblings",
+    "cn": "兄弟姐妹关系",
+    "en": "Siblings",
+    "region": "国际",
+    "theme": "更多",
+    "subtheme": "家庭与关系",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "有兄弟姐妹的人，关系形状差别很大：小时候打闹、长大后疏远、或者反而更亲。独生子女也能聊表亲、发小，或想象有手足会是什么样。",
+    "briefEn": "Siblings can end up very different: fighting as kids and drifting as adults, or growing closer once they moved out. People without siblings can talk about cousins, childhood friends, or what they imagine having a brother or sister would be like.",
+    "questions": [
+      {
+        "cn": "你和兄弟姐妹现在联系多吗？",
+        "en": "How often do you talk to your siblings now?"
+      },
+      {
+        "cn": "长大以后关系变近了还是变远了？",
+        "en": "Did you get closer or drift apart as adults?"
+      },
+      {
+        "cn": "没有兄弟姐妹的人，会羡慕有手足吗？",
+        "en": "Do people without siblings ever wish they had one?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://pmc.ncbi.nlm.nih.gov/articles/PMC10955783/"
+    ],
+    "sourceNote": "PMC 开放全文《'People don't realise how much their past experiences affect them in adulthood': A qualitative study》(2024，成年期兄弟姐妹关系的质性研究)，2026-11-10 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "family-caregiving",
+    "cn": "照护生病家人",
+    "en": "Caring for a sick family member",
+    "region": "国际",
+    "theme": "更多",
+    "subtheme": "家庭与关系",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "家里有人生病，照护怎么排常常是临时拼出来的：谁请假、谁陪夜、请不请护工、异地的那位怎么参与。可以聊这些安排有多累，也可以聊怎么轮换。",
+    "briefEn": "When someone in the family gets sick, care often gets pieced together in a hurry: who takes leave, who stays overnight, whether to hire help, and how the relative living far away pitches in. It is worth talking about how tiring that is, and how people trade shifts.",
+    "questions": [
+      {
+        "cn": "家里人生病时，一般谁来照护？",
+        "en": "When someone in the family is ill, who usually provides care?"
+      },
+      {
+        "cn": "轮流照护和一个人扛，你们会怎么选？",
+        "en": "Would you rotate shifts or have one person carry it?"
+      },
+      {
+        "cn": "请护工这件事，家里人容易谈拢吗？",
+        "en": "Is hiring a caregiver something families agree on easily?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.nhs.uk/conditions/social-care-and-support-guide/",
+      "https://www.carersuk.org/"
+    ],
+    "sourceNote": "NHS「Social care and support guide」（照护与支持指南）与英国照护者慈善机构 Carers UK 官网，2026-11-10 实抓均 HTTP 200。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "family-group-chat",
+    "cn": "家庭群沟通",
+    "en": "The family group chat",
+    "region": "国际",
+    "theme": "更多",
+    "subtheme": "家庭与关系",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "很多家庭都有一个群：每天转发、只报平安、或者几乎没人说话。可以聊群里发什么、回不回、长辈发长语音怎么办，也能聊谁被拉进群、谁退过群。",
+    "briefEn": "Most families have a group chat that runs in one of a few ways: constant forwards, a quick daily check-in, or almost total silence. You can ask what gets posted there, whether people reply, how long voice messages get handled, and who quietly left the group.",
+    "questions": [
+      {
+        "cn": "你家有家庭群吗？平时都发些什么？",
+        "en": "Does your family have a group chat? What gets posted?"
+      },
+      {
+        "cn": "长辈发很长的语音，你会听完吗？",
+        "en": "Do you listen to the long voice messages from older relatives?"
+      },
+      {
+        "cn": "有人退群或从不说话，正常吗？",
+        "en": "Is it normal for someone to leave or never reply?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://pmc.ncbi.nlm.nih.gov/articles/PMC8074847/",
+      "https://www.ons.gov.uk/peoplepopulationandcommunity/householdcharacteristics/homeinternetandsocialmediausage"
+    ],
+    "sourceNote": "PMC 开放全文《Association of Mobile Instant Messaging Chat Group Participation With Family Functioning and Well-Being》(2021) 与英国国家统计局 Home internet and social media usage 主题页，2026-11-10 实抓均 HTTP 200。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "family-travel",
+    "cn": "家庭旅行",
+    "en": "Family trips",
+    "region": "国际",
+    "theme": "更多",
+    "subtheme": "家庭与关系",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "一家人旅行，行程怎么定最能看出默契：谁做攻略、住酒店还是民宿、一天排几个点、累了谁先说回去。有人觉得旅行最亲近，也有人觉得比上班还累。",
+    "briefEn": "Family trips show a lot about how a group works: who plans, hotel or rented flat, how many stops in a day, and who calls it early when everyone is tired. Some people find travel brings them closer, others find it more exhausting than work.",
+    "questions": [
+      {
+        "cn": "一家人旅行，谁负责做攻略？",
+        "en": "Who plans the itinerary on family trips?"
+      },
+      {
+        "cn": "一天排满行程，还是留时间随便逛？",
+        "en": "Do you pack the day or leave room to wander?"
+      },
+      {
+        "cn": "旅行会让家人更亲近，还是更容易吵？",
+        "en": "Do trips bring your family closer or cause more friction?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.ons.gov.uk/peoplepopulationandcommunity/leisureandtourism"
+    ],
+    "sourceNote": "英国国家统计局 Leisure and tourism 主题页（含家庭出游与旅游消费统计），2026-11-10 实抓 HTTP 200，页面标题 Leisure and tourism - Office for National Statistics。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  }
+]

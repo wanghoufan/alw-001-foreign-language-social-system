@@ -1,0 +1,268 @@
+[
+  {
+    "id": "culture-family-contact",
+    "cn": "和家人联系",
+    "en": "Staying in touch with family",
+    "region": "中国",
+    "theme": "文化习俗",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "有人每天给父母打电话，有人一周一次；家里建个群报平安、发照片也很常见。工作忙时可能只在周末或节日联系。各家习惯差别很大，别默认对方家也这样。",
+    "briefEn": "Some people call their parents every day, others once a week, and many families keep a group chat for quick updates and photos. When work gets busy, contact may shrink to weekends or holidays. Every family is different, so don't assume yours is the norm.",
+    "questions": [
+      {
+        "cn": "你多久会和家里人通一次电话？",
+        "en": "How often do you call your family?"
+      },
+      {
+        "cn": "你们家有固定的家庭群吗？",
+        "en": "Does your family have a group chat?"
+      },
+      {
+        "cn": "忙起来的时候，你会怎么跟父母报平安？",
+        "en": "When you're busy, how do you let your parents know you're okay?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.chinanews.com.cn/sh/2013/09-18/5299891.shtml",
+      "https://www.chinanews.com.cn/sh/2023/04-30/9999944.shtml"
+    ],
+    "sourceNote": "中新网《常回家看看父母入法后 甘肃中秋节探亲人并不多》与《因分享无人回应，爸爸退了家庭群！你的家庭群还热闹吗？》，2026-11-10 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "culture-neighbours",
+    "cn": "邻里关系与社区活动",
+    "en": "Neighbours and community life",
+    "region": "中国",
+    "theme": "文化习俗",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "老小区里邻居常互相照应，借工具、收快递也顺手；新小区可能住几年还不熟。社区会办邻里节、志愿活动，帮大家认识彼此。各地差别很大，别默认对方和邻居很熟。",
+    "briefEn": "In older neighbourhoods, neighbours often help each other out with tools or deliveries, while in newer buildings people may live side by side for years without speaking. Many communities run festivals and volunteer events to get residents talking. It varies a lot, so don't assume how close someone is with their neighbours.",
+    "questions": [
+      {
+        "cn": "你和邻居熟吗？会互相帮忙吗？",
+        "en": "Are you close with your neighbours? Do you help each other out?"
+      },
+      {
+        "cn": "你们社区有邻里节之类的活动吗？",
+        "en": "Does your community hold events like a neighbours' festival?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.chinanews.com.cn/sh/2020/09-11/9288931.shtml",
+      "https://www.chinanews.com.cn/gn/2021/12-15/9629898.shtml"
+    ],
+    "sourceNote": "中新网《北京启动“社区邻里节”系列活动 聚焦社区抗疫、冬奥等内容》与《社区志愿服务 邻里贴心互助》，2026-11-10 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "culture-visiting-sick",
+    "cn": "探病与慰问",
+    "en": "Visiting someone who is sick",
+    "region": "中国",
+    "theme": "文化习俗",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "住院探视常有时段、人数和登记规定，去之前先问清楚；带水果、炖汤或给点心意都常见。有人不爱听“加油”，更想被安静陪着。各家各地差别很大，别默认对方愿意被探望。",
+    "briefEn": "Hospitals often limit visiting hours and the number of visitors, and may ask you to sign in, so check the rules first. People commonly bring fruit, a home-made soup or a little money to help out. Some patients dislike being told to 'stay strong' and would rather have quiet company. Customs vary a lot, so ask rather than assume.",
+    "questions": [
+      {
+        "cn": "去看病人，你一般会带什么？",
+        "en": "What do you usually bring when you visit someone in hospital?"
+      },
+      {
+        "cn": "安慰生病的朋友，你会怎么说？",
+        "en": "What do you say to comfort a friend who is ill?"
+      },
+      {
+        "cn": "你们那边探病有时间或人数限制吗？",
+        "en": "Where you're from, are there limits on visiting hours or how many people can come?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.chinanews.com.cn/gn/news/2010/06-08/2329822.shtml",
+      "https://www.chinanews.com.cn/sh/2013/12-04/5580982.shtml",
+      "https://www.chinanews.com.cn/hr/2018/07-14/8566940.shtml"
+    ],
+    "sourceNote": "中新网《江苏探视住院病人“限时”新规引发社会热议》《医院设门禁刷卡探视 回应称为保障安全和康复环境》与《广东侨乡台山有一款爱心鸡汤叫“炖鸡汁”》，2026-11-10 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "culture-moving-house",
+    "cn": "搬家与乔迁",
+    "en": "Moving into a new home",
+    "region": "中国",
+    "theme": "文化习俗",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "搬新家有的地方会挑日子、请亲友吃乔迁宴，也有的先搬锅碗进门，图个好意头。现在不少地方提倡简办，放鞭炮怕扰邻也会收敛。各地讲究差别很大，别默认对方一定要办。",
+    "briefEn": "Moving into a new home may involve picking an auspicious date, hosting a housewarming meal for relatives, or carrying the rice pot in first for good luck. Firecrackers used to be common but are now often dropped to avoid annoying neighbours, and many places encourage simpler celebrations. Customs differ widely, so don't assume everyone holds a big housewarming.",
+    "questions": [
+      {
+        "cn": "搬新家，你们那边会办乔迁宴吗？",
+        "en": "Where you're from, do people hold a housewarming party when they move?"
+      },
+      {
+        "cn": "搬家会挑日子或者放鞭炮吗？",
+        "en": "Do people pick a date or set off firecrackers when they move?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.chinanews.com.cn/sh/2014/07-01/6336749.shtml",
+      "https://www.chinanews.com.cn/sh/2021/02-10/9409646.shtml"
+    ],
+    "sourceNote": "中新网《业主半夜搬家放鞭炮 乔迁旧俗惹众怒》与《拒绝“人情变成债” 江苏宿迁大力践行文明新风“宿9条”》，2026-11-10 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "culture-borrowing",
+    "cn": "借东西与还人情",
+    "en": "Borrowing things and returning favours",
+    "region": "中国",
+    "theme": "文化习俗",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "邻居之间借个工具、葱姜蒜很随意，还的时候常顺手带点东西；朋友借钱则容易尴尬。有人觉得人情要记着还，有人更愿意算清楚。各家做法差别很大，别默认对方不在意。",
+    "briefEn": "Neighbours borrow tools, spring onions or a bit of soy sauce without much fuss, and often hand something small back as a thank-you. Lending money to friends is more sensitive: some people keep a mental account of favours, others prefer to keep things even. Habits differ from family to family, so don't assume.",
+    "questions": [
+      {
+        "cn": "你会向邻居借东西吗？还的时候会带点什么吗？",
+        "en": "Do you borrow things from neighbours? Do you give something back as thanks?"
+      },
+      {
+        "cn": "朋友向你借钱，你一般怎么处理？",
+        "en": "How do you usually handle it when a friend asks to borrow money?"
+      },
+      {
+        "cn": "欠了人情，你会想着尽快还上吗？",
+        "en": "If someone does you a favour, do you try to return it soon?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.chinanews.com.cn/sh/2017/05-10/8220583.shtml",
+      "https://www.chinanews.com.cn/sh/2017/02-21/8155098.shtml",
+      "https://www.chinanews.com.cn/sh/2013/06-08/4911176.shtml"
+    ],
+    "sourceNote": "中新网《成都一社区搭建闲置物共享平台 邻里关系更亲密》《调查显示56.4％受访者感觉私人之间借钱难》与《评论：莫把“人情往来”变成了“人情消费”》，2026-11-10 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "culture-office-address",
+    "cn": "上班怎么称呼人",
+    "en": "What to call people at work",
+    "region": "中国",
+    "theme": "文化习俗",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "公司里常用姓加职务，比如“王经理”；对不熟的前辈叫“老师”也很普遍，互联网公司直呼名字的更多。新人常为怎么开口发愁。各地各行业差别很大，别默认对方喜欢某种叫法。",
+    "briefEn": "At work people often use a surname plus a job title, like 'Manager Wang', and calling a senior colleague 'teacher' is common in many fields, while tech companies are more relaxed. New hires often worry about how to address people. Practice varies a lot, so don't assume one form is always right.",
+    "questions": [
+      {
+        "cn": "你们公司怎么称呼同事和领导？",
+        "en": "How do people address colleagues and managers at your company?"
+      },
+      {
+        "cn": "第一次上班，你会怎么称呼前辈？",
+        "en": "On your first job, how did you address senior colleagues?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.chinanews.com.cn/life/2024/05-11/10215092.shtml",
+      "https://www.chinanews.com.cn/sh/2017/08-04/8295738.shtml"
+    ],
+    "sourceNote": "中新网《叫谁都叫“老师”？合适的职场称呼怎么选》与《九成职场菜鸟都遇“开口难” 职场称呼也需磨合》，2026-11-10 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "culture-phone-speaker",
+    "cn": "公共场所外放声音",
+    "en": "Phone speaker volume in public",
+    "region": "中国",
+    "theme": "文化习俗",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "地铁、公交上外放视频或打电话声音大，常被当成不礼貌；上海、广州等地已明文禁止外放。戴耳机、把音量调低是更稳妥的做法。各地规定和风气不一样，别默认哪边都一样。",
+    "briefEn": "Playing videos or taking calls on speaker in a crowded subway is widely seen as rude, and cities like Shanghai and Guangzhou have made it an official rule. Headphones or a lower volume are the safer move. Rules and everyday habits vary, so don't assume everyone shares the same expectation.",
+    "questions": [
+      {
+        "cn": "在地铁上有人外放视频，你会怎么办？",
+        "en": "What do you do when someone plays videos out loud on the subway?"
+      },
+      {
+        "cn": "你们那儿公共场所对外放有规定吗？",
+        "en": "Are there rules about phone speaker volume in public where you're from?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.chinanews.com.cn/sh/2020/12-01/9351988.shtml",
+      "https://www.chinanews.com.cn/sh/2019/10-30/8993947.shtml"
+    ],
+    "sourceNote": "中新网《上海地铁1日起禁止手机外放声音，能管得住吗？》与《车内进食、手机外放上了“黑名单” 地铁新规为文明出行“导航”》，2026-11-10 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "culture-family-meals",
+    "cn": "一家人多久吃一次饭",
+    "en": "How often families eat together",
+    "region": "中国",
+    "theme": "文化习俗",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "有人天天回家吃晚饭，有人周末才凑齐；加班多时，一家人同桌并不容易。有人觉得一起吃饭是必需，有人更看重各自安排。各家节奏差别很大，别默认对方家天天开饭。",
+    "briefEn": "Some families sit down for dinner every night, while others only manage a shared meal at weekends; late hours make it hard for everyone to gather. Some people see eating together as essential, others are fine with separate schedules. Every household runs differently, so don't assume how often another family eats together.",
+    "questions": [
+      {
+        "cn": "你们家多久会一起坐下来吃顿饭？",
+        "en": "How often does your family sit down to eat together?"
+      },
+      {
+        "cn": "平时工作忙，你们会各吃各的吗？",
+        "en": "When work is busy, do people in your family eat separately?"
+      },
+      {
+        "cn": "一起吃饭对你们家重要吗？",
+        "en": "Is eating together important in your family?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.chinanews.com.cn/life/2017/07-18/8280841.shtml",
+      "https://www.chinanews.com.cn/sh/2015/07-30/7436148.shtml"
+    ],
+    "sourceNote": "中新网《“回家吃饭日”倡导关注家人 近四成网友看重卫生健康》与《调查显示：北上广深仅不到一半人准时回家吃饭》，2026-11-10 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  }
+]

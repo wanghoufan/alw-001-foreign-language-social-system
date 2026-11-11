@@ -1,0 +1,578 @@
+[
+  {
+    "id": "work-job-interview",
+    "cn": "面试经历",
+    "en": "Job interviews",
+    "region": "国际",
+    "theme": "更多",
+    "subtheme": "工作学习",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "面试轮次和形式因公司而异，有人一轮就定，有人要过好几关。可以聊最怕被问到的问题、自我介绍怎么准备，以及线上和现场面试的不同感受。",
+    "briefEn": "Interviews look very different from one company to the next. Some people get an offer after one conversation, others sit through five rounds. It is worth talking about the questions you dread, how you prepare your introduction, and whether video interviews feel easier or harder than meeting in person.",
+    "questions": [
+      {
+        "cn": "你面试时最怕被问什么？",
+        "en": "What question do you dread most in an interview?"
+      },
+      {
+        "cn": "你们那边面试一般几轮？",
+        "en": "How many rounds of interviews are typical where you are?"
+      },
+      {
+        "cn": "线上和现场面试，你觉得哪个更难？",
+        "en": "Which feels harder, a video interview or one in person?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://hbr.org/topic/subject/job-interviews",
+      "https://www.cnbc.com/make-it/2026/11/03/employer-ghosting-job-interviews.html"
+    ],
+    "sourceNote": "Harvard Business Review「Job Interviews」主题页与 CNBC Make It《Employers are ghosting job candidates in the hiring process》，2026-11-10 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "work-overtime-boundary",
+    "cn": "加班与下班边界",
+    "en": "Overtime and switching off",
+    "region": "国际",
+    "theme": "更多",
+    "subtheme": "工作学习",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "下班后还回不回工作消息，公司和地区差别很大。可以聊加班频率、领导会不会在晚上找人，以及自己怎么把工作和休息分开。",
+    "briefEn": "Whether people answer work messages after hours varies a lot by company and country. Some teams expect it, others treat it as a red flag. It is easy to compare how often overtime happens, whether managers contact people in the evening, and what each person does to leave work behind.",
+    "questions": [
+      {
+        "cn": "你们下班后还会回工作消息吗？",
+        "en": "Do you reply to work messages after hours?"
+      },
+      {
+        "cn": "你多久加一次班？",
+        "en": "How often do you work overtime?"
+      },
+      {
+        "cn": "你怎么让自己下班后不再想工作？",
+        "en": "How do you switch off after work?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.gov.uk/maximum-weekly-working-hours",
+      "https://www.acas.org.uk/working-hours"
+    ],
+    "sourceNote": "GOV.UK《Maximum weekly working hours》与 Acas《Working time and rest》官方页面，2026-11-10 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "work-meeting-speak",
+    "cn": "开会发言",
+    "en": "Speaking up in meetings",
+    "region": "国际",
+    "theme": "更多",
+    "subtheme": "工作学习",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "会上谁先说话、能不能打断、要不要提前准备，各地习惯不同。可以聊自己开会时的紧张感、怎么表达不同意见，以及线上会议发言更难还是更容易。",
+    "briefEn": "Meeting habits differ from place to place. In some rooms people jump in freely, in others you wait to be invited. People can compare how nervous they feel speaking up, how they disagree without sounding rude, and whether it is harder to get a word in during video calls.",
+    "questions": [
+      {
+        "cn": "开会时你会主动发言吗？",
+        "en": "Do you speak up in meetings?"
+      },
+      {
+        "cn": "你怎么在会上表达不同意见？",
+        "en": "How do you disagree with someone in a meeting?"
+      },
+      {
+        "cn": "线上会议比线下更容易发言吗？",
+        "en": "Is it easier to speak in online meetings?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://hbr.org/topic/subject/meetings",
+      "https://www.atlassian.com/blog/productivity"
+    ],
+    "sourceNote": "Harvard Business Review「Meeting Management」主题页与 Atlassian 官方博客首页，2026-11-10 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "work-colleagues",
+    "cn": "同事关系",
+    "en": "Getting along with colleagues",
+    "region": "国际",
+    "theme": "更多",
+    "subtheme": "工作学习",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "同事之间是只谈工作，还是也会一起吃饭、聊天，差别很大。可以聊怎么和不太熟的同事相处、遇到分歧怎么办，以及离职后还会不会联系。",
+    "briefEn": "Some workplaces keep things strictly professional, while others turn colleagues into close friends. People talk about how they break the ice with people they do not know well, what they do when a disagreement comes up, and whether they stay in touch with former colleagues.",
+    "questions": [
+      {
+        "cn": "你和同事会一起吃饭吗？",
+        "en": "Do you eat with your colleagues?"
+      },
+      {
+        "cn": "和同事有分歧时，你一般怎么处理？",
+        "en": "How do you handle disagreement with a colleague?"
+      },
+      {
+        "cn": "离职后你还会和前同事联系吗？",
+        "en": "Do you keep in touch with former colleagues?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://hbr.org/topic/subject/collaboration",
+      "https://www.gallup.com/workplace/349484/social-proof-friends-at-work.aspx"
+    ],
+    "sourceNote": "Harvard Business Review「Collaboration and Teams」主题页与 Gallup《State of the Global Workplace 2026》职场关系数据页，2026-11-10 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "work-hybrid-remote",
+    "cn": "远程办公与混合办公",
+    "en": "Remote and hybrid work",
+    "region": "国际",
+    "theme": "更多",
+    "subtheme": "工作学习",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "一周去几天办公室、能不能完全远程，各公司规定不同。可以聊在家工作的效率、通勤省下来的时间怎么用，以及远程时团队怎么保持联系。",
+    "briefEn": "Remote and hybrid arrangements vary widely. Some people go in every day, some twice a week, and some never. People compare focus at home, what they do with the saved commute, and how their team stays connected when everyone is in a different place.",
+    "questions": [
+      {
+        "cn": "你更想完全远程还是去办公室？",
+        "en": "Would you rather work fully remote or go into the office?"
+      },
+      {
+        "cn": "在家工作效率更高还是更低？",
+        "en": "Are you more productive at home?"
+      },
+      {
+        "cn": "你们团队怎么保持联系？",
+        "en": "How does your team stay in touch?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.microsoft.com/en-us/worklab/work-trend-index",
+      "https://wfhresearch.com/"
+    ],
+    "sourceNote": "Microsoft WorkLab《Work Trend Index》与 WFH Research《Survey of Working Arrangements and Attitudes》，2026-11-10 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "work-job-change",
+    "cn": "跳槽与职业规划",
+    "en": "Changing jobs and career plans",
+    "region": "国际",
+    "theme": "更多",
+    "subtheme": "工作学习",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "有人几年换一次工作，有人在一个地方待很久，没有统一标准。可以聊换工作的原因、怎么判断机会好不好，以及未来几年想做什么。",
+    "briefEn": "Some people move jobs every few years, others stay put for a long time, and neither path is unusual. People can talk about why they changed jobs, how they judge whether an offer is worth it, and what they hope to be doing in a few years.",
+    "questions": [
+      {
+        "cn": "你换过几次工作？",
+        "en": "How many times have you changed jobs?"
+      },
+      {
+        "cn": "什么情况会让你考虑跳槽？",
+        "en": "What would make you consider changing jobs?"
+      },
+      {
+        "cn": "你未来几年想做什么？",
+        "en": "What do you hope to be doing in a few years?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://hbr.org/topic/subject/career-planning",
+      "https://www.linkedin.com/business/talent/blog/talent-acquisition"
+    ],
+    "sourceNote": "Harvard Business Review「Career Planning」主题页与 LinkedIn Talent Blog 招聘栏目，2026-11-10 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "work-first-job",
+    "cn": "第一份工作",
+    "en": "Your first job",
+    "region": "国际",
+    "theme": "更多",
+    "subtheme": "工作学习",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "第一份工作常让人紧张：不会做的事很多，又不好意思问。可以聊刚入职时闹过什么笑话、怎么学会开口求助，以及带自己的人给了哪些帮助。",
+    "briefEn": "A first job is often nerve-racking. There is a lot you do not know and asking feels awkward. People enjoy talking about early mistakes, how they learned to ask for help, and what the person who showed them around did that actually made a difference.",
+    "questions": [
+      {
+        "cn": "你还记得第一份工作第一天吗？",
+        "en": "Do you remember your first day at your first job?"
+      },
+      {
+        "cn": "刚工作时你最大的困难是什么？",
+        "en": "What was hardest when you started working?"
+      },
+      {
+        "cn": "你会不会不好意思问问题？",
+        "en": "Do you feel awkward asking questions?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.shrm.org/topics-tools/topics/onboarding",
+      "https://www.gallup.com/workplace/247076/onboarding-new-hires.aspx"
+    ],
+    "sourceNote": "SHRM《Complete Employee Onboarding Guide》与 Gallup 新员工留存指标页（页面标题 Global Indicator: Employee Retention & Attraction），2026-11-10 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "work-office-address",
+    "cn": "职场称呼与礼貌",
+    "en": "Names and manners at work",
+    "region": "国际",
+    "theme": "更多",
+    "subtheme": "工作学习",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "叫名字、叫老师还是叫职位，各地各公司差别很大。可以聊刚入职时怎么称呼前辈、邮件开头怎么写，以及哪些小习惯在自己那边算失礼。",
+    "briefEn": "How people address each other at work changes with company and country. Some teams use first names from day one, others expect titles or family names. People can talk about what they called senior colleagues when they started, how they open an email, and which small habits count as rude.",
+    "questions": [
+      {
+        "cn": "你们上班怎么称呼领导？",
+        "en": "How do you address your manager at work?"
+      },
+      {
+        "cn": "新人第一天该叫名字还是叫职位？",
+        "en": "Should a new hire use first names or titles?"
+      },
+      {
+        "cn": "你觉得哪些职场礼貌最重要？",
+        "en": "Which workplace manners matter most to you?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.shrm.org/topics-tools/topics/civility",
+      "https://hbr.org/topic/subject/office-politics"
+    ],
+    "sourceNote": "SHRM《Civility at Work - Civility Index Research》与 Harvard Business Review「Office Politics」主题页，2026-11-10 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "work-leave",
+    "cn": "请假与休假",
+    "en": "Taking time off",
+    "region": "国际",
+    "theme": "更多",
+    "subtheme": "工作学习",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "请假好不好批、休多久算正常，公司和地区差别很大。可以聊请假前怎么跟同事交代、休假时会不会看工作消息，以及长假一般怎么安排。",
+    "briefEn": "How easy it is to take leave, and how much is normal, varies a lot. People compare how they hand over work before a break, whether they check messages while away, and how they plan a longer holiday. Some feel guilty asking, others do not think twice.",
+    "questions": [
+      {
+        "cn": "你请假容易吗？",
+        "en": "Is it easy for you to take time off?"
+      },
+      {
+        "cn": "休假时你会看工作消息吗？",
+        "en": "Do you check work messages while on holiday?"
+      },
+      {
+        "cn": "你更喜欢短假还是长假？",
+        "en": "Do you prefer short breaks or a long holiday?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.gov.uk/holiday-entitlement-rights",
+      "https://www.acas.org.uk/holidays"
+    ],
+    "sourceNote": "GOV.UK《Holiday entitlement: Entitlement》与 Acas《How much holiday someone gets》官方页面，2026-11-10 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "work-exam-prep",
+    "cn": "考试与备考",
+    "en": "Exams and preparing for them",
+    "region": "国际",
+    "theme": "更多",
+    "subtheme": "工作学习",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "有人提前几个月复习，有人最后两周才冲刺。可以聊自己怎么安排时间、压力大时怎么办，以及考完最后一科那一刻的感受。",
+    "briefEn": "Some people revise for months, others cram in the last two weeks, and both approaches have their defenders. People talk about how they plan their time, what they do when stress builds up, and how it feels the moment the exam is finally over.",
+    "questions": [
+      {
+        "cn": "你一般是提前复习还是最后冲刺？",
+        "en": "Do you prepare early or cram at the end?"
+      },
+      {
+        "cn": "备考时压力大，你会怎么调整？",
+        "en": "How do you cope with stress before an exam?"
+      },
+      {
+        "cn": "考完最后一科你是什么感觉？",
+        "en": "How did you feel after your last exam?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.ets.org/toefl.html",
+      "https://www.neea.edu.cn/"
+    ],
+    "sourceNote": "ETS《TOEFL English Language Test》官方页与中国教育考试网首页，2026-11-10 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "work-university-class",
+    "cn": "大学课堂",
+    "en": "University classes",
+    "region": "国际",
+    "theme": "更多",
+    "subtheme": "工作学习",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "大课、小班讨论、必修和选修，各学校安排不同。可以聊课上敢不敢提问、小组作业怎么分工，以及怎么看待上课点名这件事。",
+    "briefEn": "University classes come in many shapes: huge lectures, small seminars, required courses and electives. People compare whether they ask questions in class, how group projects get divided up, and how they feel about attendance being checked.",
+    "questions": [
+      {
+        "cn": "你上课会主动提问吗？",
+        "en": "Do you ask questions in class?"
+      },
+      {
+        "cn": "小组作业你们怎么分工？",
+        "en": "How do you divide work in group projects?"
+      },
+      {
+        "cn": "你怎么看上课点名？",
+        "en": "What do you think about attendance checks?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.unesco.org/en/education",
+      "https://www.aacu.org/"
+    ],
+    "sourceNote": "UNESCO《Education transforms lives》教育主题页与 AAC&U 美国大学协会官网，2026-11-10 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "work-study-abroad",
+    "cn": "留学与交换",
+    "en": "Studying abroad",
+    "region": "国际",
+    "theme": "更多",
+    "subtheme": "工作学习",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "留学或交换要适应课堂、住宿和日常生活的不同。可以聊刚到时最不习惯什么、怎么交到当地朋友，以及想家时一般怎么办。",
+    "briefEn": "Studying abroad or on an exchange means adjusting to a new classroom, a new home and a new daily routine. People talk about what felt strangest at first, how they made local friends, and what they did when they felt homesick.",
+    "questions": [
+      {
+        "cn": "你会考虑去别的国家读书吗？",
+        "en": "Would you consider studying in another country?"
+      },
+      {
+        "cn": "刚到一个新地方，你最不习惯什么？",
+        "en": "What was hardest to get used to in a new place?"
+      },
+      {
+        "cn": "想家的时候你会怎么做？",
+        "en": "What do you do when you feel homesick?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.iie.org/research-and-insights/",
+      "https://www.unesco.org/en/education"
+    ],
+    "sourceNote": "IIE《Research》国际教育研究页与 UNESCO 教育主题页，2026-11-10 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "work-online-course",
+    "cn": "线上课程与自学",
+    "en": "Online courses and self-study",
+    "region": "国际",
+    "theme": "更多",
+    "subtheme": "工作学习",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "线上课程时间灵活，但坚持下来不容易。可以聊自己报过什么课、真正看完的有多少，以及怎么安排学习时间不被打断。",
+    "briefEn": "Online courses are flexible, but finishing them is another matter. People talk about the courses they signed up for, how many they actually completed, and how they protect time for study when messages and chores keep interrupting.",
+    "questions": [
+      {
+        "cn": "你报过线上课程吗？学完了吗？",
+        "en": "Have you taken an online course? Did you finish it?"
+      },
+      {
+        "cn": "自学时你最容易分心的是什么？",
+        "en": "What distracts you most when you study alone?"
+      },
+      {
+        "cn": "你一般什么时候学习？",
+        "en": "When do you usually study?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.coursera.org/",
+      "https://www.edx.org/"
+    ],
+    "sourceNote": "Coursera 官网首页与 edX 官网首页，2026-11-10 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "work-new-skill",
+    "cn": "学一门技能",
+    "en": "Learning a new skill",
+    "region": "国际",
+    "theme": "更多",
+    "subtheme": "工作学习",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "学做菜、学编程、学乐器，起点和目标都不一样。可以聊为什么想学、跟谁学，以及练了很久没进步时怎么坚持下来。",
+    "briefEn": "Learning a new skill can mean cooking, coding, a musical instrument or something else entirely. People talk about why they started, whether they learn alone or with others, and what keeps them going when progress stalls for weeks.",
+    "questions": [
+      {
+        "cn": "你最近想学什么新技能？",
+        "en": "What new skill would you like to learn?"
+      },
+      {
+        "cn": "你更喜欢自己学还是上课？",
+        "en": "Do you prefer learning alone or taking a class?"
+      },
+      {
+        "cn": "没进步的时候你怎么坚持？",
+        "en": "How do you keep going when you stop improving?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.shrm.org/topics-tools/topics/learning-development",
+      "https://www.linkedin.com/business/talent/blog/learning-and-development"
+    ],
+    "sourceNote": "SHRM《Learning & Development》主题页与 LinkedIn Talent Blog 学习发展栏目，2026-11-10 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "work-library-study",
+    "cn": "图书馆与自习",
+    "en": "Libraries and study spaces",
+    "region": "国际",
+    "theme": "更多",
+    "subtheme": "工作学习",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "有人非图书馆学不进去，有人在家更自在。可以聊常去的自习地点、座位好不好找，以及图书馆除了借书还能做些什么。",
+    "briefEn": "Some people can only concentrate in a library, others work better at home. People compare their usual study spots, how crowded they get, whether seats are saved with bags, and what else the local library offers besides books.",
+    "questions": [
+      {
+        "cn": "你更喜欢在图书馆还是在家学习？",
+        "en": "Do you prefer studying in a library or at home?"
+      },
+      {
+        "cn": "你们图书馆好找座位吗？",
+        "en": "Is it easy to find a seat in your library?"
+      },
+      {
+        "cn": "你去图书馆只借书吗？",
+        "en": "Do you only go to the library for books?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.ala.org/tools/libfactsheets/alalibraryfactsheet06",
+      "https://www.ala.org/news"
+    ],
+    "sourceNote": "American Library Association《Public Library Use》事实清单页与 ALA News 新闻中心，2026-11-10 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "work-teacher-mentor",
+    "cn": "老师和导师",
+    "en": "Teachers and mentors",
+    "region": "国际",
+    "theme": "更多",
+    "subtheme": "工作学习",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "好老师可能改变一个人对整门课的看法。可以聊印象最深的老师、他们怎么帮到自己，以及工作后有没有遇到过愿意带自己的人。",
+    "briefEn": "A good teacher can change how someone feels about a whole subject. People talk about the teacher they remember most, what that person did that helped, and whether they have found someone at work who is willing to show them the ropes.",
+    "questions": [
+      {
+        "cn": "你印象最深的老师是谁？",
+        "en": "Which teacher do you remember most?"
+      },
+      {
+        "cn": "好老师身上最重要的是什么？",
+        "en": "What matters most in a good teacher?"
+      },
+      {
+        "cn": "工作后有人带过你吗？",
+        "en": "Has anyone mentored you at work?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.unesco.org/en/teachers",
+      "https://hbr.org/topic/subject/mentoring"
+    ],
+    "sourceNote": "UNESCO《Teachers》主题页与 Harvard Business Review「Mentoring」主题页，2026-11-10 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  }
+]

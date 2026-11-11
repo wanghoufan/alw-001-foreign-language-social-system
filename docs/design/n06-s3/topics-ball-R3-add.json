@@ -1,0 +1,570 @@
+[
+  {
+    "id": "ball-table-tennis",
+    "cn": "乒乓球",
+    "en": "Table tennis",
+    "region": "国际",
+    "theme": "健身运动",
+    "subtheme": "球类",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "一张桌子、两只拍子就能开局，社区中心、学校和公司休息室都很常见。发球每两分轮换，球拍胶皮差别很大，聊起来门槛低、谁都能接话。",
+    "briefEn": "Table tennis needs only a table, two paddles and a small ball, so you find it in community halls, schools and office break rooms. Games go to eleven points and the serve changes every two points. Racket rubbers vary a lot, which gives you plenty to compare.",
+    "questions": [
+      {
+        "cn": "你平时打乒乓球吗？",
+        "en": "Do you play table tennis very often?"
+      },
+      {
+        "cn": "你更喜欢单打还是双打？",
+        "en": "Do you prefer singles or doubles?"
+      },
+      {
+        "cn": "你们的球拍是随便拿的还是自己配的？",
+        "en": "Do you just use whatever racket is there, or do you put your own together?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.tabletennisengland.co.uk/",
+      "https://www.usatt.org/"
+    ],
+    "sourceNote": "Table Tennis England 首页（标题 Home - Table Tennis England）与 USA Table Tennis 首页（标题 USA Table Tennis Home），2026-11-10 实抓均 HTTP 200。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "ball-tennis",
+    "cn": "网球",
+    "en": "Tennis",
+    "region": "国际",
+    "theme": "健身运动",
+    "subtheme": "球类",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "硬地、红土、草地打起来手感完全不同，单打和双打的节奏也不一样。计分从十五开始有点特别，约场地、找球友、聊装备都容易开场。",
+    "briefEn": "Tennis is played on hard, clay or grass courts, and singles feels very different from doubles. The scoring starts at fifteen, which surprises newcomers. People love comparing where they learned, how often they book a court, and how much string tension they like.",
+    "questions": [
+      {
+        "cn": "你打网球多久了？",
+        "en": "How long have you been playing tennis?"
+      },
+      {
+        "cn": "你常在哪里打球？红土、硬地还是草地？",
+        "en": "Where do you usually play — clay, hard court or grass?"
+      },
+      {
+        "cn": "你打单打多还是双打多？",
+        "en": "Do you play more singles or doubles?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.itftennis.com/en/",
+      "https://www.wimbledon.com/"
+    ],
+    "sourceNote": "国际网球联合会官网 ITF Tennis 英文首页与温布尔登锦标赛官网（标题 The Championships, Wimbledon - Official Website by IBM），2026-11-10 实抓均 HTTP 200。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "ball-pickleball",
+    "cn": "匹克球",
+    "en": "Pickleball",
+    "region": "国际",
+    "theme": "健身运动",
+    "subtheme": "球类",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "场地比网球小，球是带孔的塑料球，球拍像加大版乒乓球拍。上手快、双打多，公园和社区球场常能见到，最近聊这项运动的人越来越多。",
+    "briefEn": "Pickleball uses a small court, a perforated plastic ball and a paddle that looks like a bigger table tennis bat. It borrows from tennis, badminton and table tennis, and doubles is the usual format. It is easy to learn, and the no-volley zone near the net keeps games tactical.",
+    "questions": [
+      {
+        "cn": "你玩过匹克球吗？",
+        "en": "Have you tried pickleball yet?"
+      },
+      {
+        "cn": "你们那边球场好订吗？",
+        "en": "Is it easy to get a court where you live?"
+      },
+      {
+        "cn": "你觉得它上手快吗？",
+        "en": "Did you find it quick to pick up?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.pickleballcanada.org/",
+      "https://www.pickleballengland.org/"
+    ],
+    "sourceNote": "Pickleball Canada 官网（标题 Pickleball Canada – Advancing Pickleball for All, for Life!）与 Pickleball England 官网（标题 HOME - Pickleball England），2026-11-10 实抓均 HTTP 200。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "ball-badminton",
+    "cn": "羽毛球",
+    "en": "Badminton",
+    "region": "国际",
+    "theme": "健身运动",
+    "subtheme": "球类",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "室内居多，球是羽毛或塑料做的，轻但掉得快。二十一分制、每球得分，杀球和网前小球差别明显，约球和聊器材都很好接。",
+    "briefEn": "Badminton is mostly played indoors with a feathered or plastic shuttle. Games go to twenty-one points on a rally system, and a hard smash feels completely different from a soft drop shot. Plenty of people play in clubs, and others just hit around in a park or backyard.",
+    "questions": [
+      {
+        "cn": "你平时打羽毛球吗？",
+        "en": "Do you play badminton regularly?"
+      },
+      {
+        "cn": "你打单打还是双打？",
+        "en": "Do you play singles or doubles?"
+      },
+      {
+        "cn": "你们那边室内球场多吗？",
+        "en": "Are there many indoor courts near you?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://corporate.bwfbadminton.com/",
+      "https://www.badmintonengland.co.uk/"
+    ],
+    "sourceNote": "世界羽毛球联合会企业官网（标题 BWF Corporate）与 Badminton England 官网，2026-11-10 实抓均 HTTP 200。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "ball-volleyball",
+    "cn": "排球",
+    "en": "Volleyball",
+    "region": "国际",
+    "theme": "健身运动",
+    "subtheme": "球类",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "六人一队隔网对打，轮转发球，二传和自由人分工不同。学校体育课和社区球场都很常见，室内排球和沙滩排球规则差别也不小。",
+    "briefEn": "Volleyball has six players a side, a net in the middle and rotating positions. Setters, hitters and a libero do different jobs, and games usually go to twenty-five points. You can find it in school gyms and community courts, and indoor rules differ from the beach version.",
+    "questions": [
+      {
+        "cn": "你打过排球吗？",
+        "en": "Have you played volleyball before?"
+      },
+      {
+        "cn": "你喜欢室内还是沙滩？",
+        "en": "Do you prefer indoor or beach volleyball?"
+      },
+      {
+        "cn": "你一般打什么位置？",
+        "en": "Which position do you usually play?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.fivb.com/"
+    ],
+    "sourceNote": "国际排球联合会官网首页（标题 FIVB - Fédération Internationale de Volleyball），2026-11-10 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "ball-beach-volleyball",
+    "cn": "沙滩排球",
+    "en": "Beach volleyball",
+    "region": "国际",
+    "theme": "健身运动",
+    "subtheme": "球类",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "两人一队，在沙地上打，场地更小、没有固定换位。夏天海边和城市沙场很热闹，节奏快、回合短，聊度假和周末活动很自然。",
+    "briefEn": "Beach volleyball is two against two on sand, with a smaller court and no fixed positions. Points are short and the pace is quick, so games move fast. Summer beaches and city sand courts get busy, which makes it an easy topic for holiday and weekend plans.",
+    "questions": [
+      {
+        "cn": "你在海边打过沙滩排球吗？",
+        "en": "Have you played beach volleyball by the sea?"
+      },
+      {
+        "cn": "两人一队和六人制，你更喜欢哪个？",
+        "en": "Do you prefer two-a-side or the six-a-side game?"
+      },
+      {
+        "cn": "夏天你们那边沙场人多吗？",
+        "en": "Are the sand courts busy in summer where you are?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.fivb.com/en/beachvolleyball"
+    ],
+    "sourceNote": "国际排联沙滩排球官方栏目页（标题 Beach Volleyball – FIVB），2026-11-10 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "ball-baseball",
+    "cn": "棒球",
+    "en": "Baseball",
+    "region": "国际",
+    "theme": "健身运动",
+    "subtheme": "球类",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "投手对打者，跑垒得分，打满九局。北美、东亚和加勒比地区都很流行，节奏慢但细节多，聊位置、聊数据都能聊很久。",
+    "briefEn": "Baseball is pitcher against batter, with runners moving around four bases over nine innings. It is big in North America, East Asia and the Caribbean. The pace is slow but the details are rich, so people happily talk about positions, favourite teams and stats for hours.",
+    "questions": [
+      {
+        "cn": "你看棒球吗？",
+        "en": "Do you follow baseball at all?"
+      },
+      {
+        "cn": "你打过吗？打什么位置？",
+        "en": "Have you played? Which position?"
+      },
+      {
+        "cn": "你更爱看现场还是看转播？",
+        "en": "Do you prefer watching in the stadium or on TV?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.wbsc.org/"
+    ],
+    "sourceNote": "世界棒垒球联合会官网首页（标题 World Baseball Softball Confederation - wbsc.org），2026-11-10 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "ball-softball",
+    "cn": "垒球",
+    "en": "Softball",
+    "region": "国际",
+    "theme": "健身运动",
+    "subtheme": "球类",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "球比棒球大，投球是下手投，常见七局制。有快投和慢投两种玩法，慢投更休闲，公司联赛和社区活动里很常见。",
+    "briefEn": "Softball uses a bigger ball than baseball and the pitch comes underhand. Games often run seven innings, and there are fastpitch and slowpitch versions. Slowpitch is the casual one you see in company leagues, community games and weekend tournaments.",
+    "questions": [
+      {
+        "cn": "你打过垒球吗？",
+        "en": "Have you played softball?"
+      },
+      {
+        "cn": "你们那边有公司联赛吗？",
+        "en": "Are there company or community leagues near you?"
+      },
+      {
+        "cn": "慢投和快投，你玩过哪种？",
+        "en": "Have you tried slowpitch or fastpitch?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.wbsc.org/",
+      "https://www.usasoftball.com/"
+    ],
+    "sourceNote": "世界棒垒球联合会官网首页与 USA Softball 官网首页（标题 Homepage - USA Softball），2026-11-10 实抓均 HTTP 200。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "ball-cricket",
+    "cn": "板球",
+    "en": "Cricket",
+    "region": "国际",
+    "theme": "健身运动",
+    "subtheme": "球类",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "用板击球、跑分，投球以轮次计算，有 T20、一日赛和测试赛三种节奏。英联邦国家、南亚和澳洲更常见，聊赛制就能聊开。",
+    "briefEn": "Cricket is played with a bat and wickets, and overs set the rhythm. T20 is short and loud, one-day games sit in the middle, and Test matches can run five days. It is huge in South Asia, Australia, England and other Commonwealth countries, so asking which format someone follows gets a conversation going.",
+    "questions": [
+      {
+        "cn": "你看板球吗？",
+        "en": "Do you watch cricket?"
+      },
+      {
+        "cn": "你更喜欢 T20 还是长赛制？",
+        "en": "Do you prefer T20 or the longer formats?"
+      },
+      {
+        "cn": "你们那边有可以打的场地吗？",
+        "en": "Is there a ground to play on near you?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.icc-cricket.com/"
+    ],
+    "sourceNote": "国际板球理事会官网首页（标题 Home | ICC），2026-11-10 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "ball-rugby",
+    "cn": "橄榄球",
+    "en": "Rugby",
+    "region": "国际",
+    "theme": "健身运动",
+    "subtheme": "球类",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "美式橄榄球戴头盔护具、按档推进；英式橄榄球不戴护具、比赛更连续。球都是椭圆形，北美、英伦和南太平洋地区更常见。",
+    "briefEn": "Rugby covers two main codes. American football uses helmets and pads and moves in downs, while rugby union has no helmets and flows continuously. Both use an oval ball. You see them in North America, Britain, Ireland, France, Australia, New Zealand and the Pacific islands.",
+    "questions": [
+      {
+        "cn": "你平时看橄榄球吗？",
+        "en": "Do you watch rugby at all?"
+      },
+      {
+        "cn": "你更熟悉美式还是英式？",
+        "en": "Are you more familiar with the American game or rugby union?"
+      },
+      {
+        "cn": "你打过吗？",
+        "en": "Have you ever played?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.nfl.com/",
+      "https://www.world.rugby/"
+    ],
+    "sourceNote": "NFL 官网国际首页（标题 NFL International Homepage）与 World Rugby 官网（标题 World Rugby），2026-11-10 实抓均 HTTP 200。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "ball-golf",
+    "cn": "高尔夫",
+    "en": "Golf",
+    "region": "国际",
+    "theme": "健身运动",
+    "subtheme": "球类",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "十八洞、不同球杆，差点决定让杆。练习场和球场是两种体验，讲究安静和礼让，聊入门课、聊球场都挺自然。",
+    "briefEn": "Golf is eighteen holes with a set of different clubs, and a handicap lets players of different levels compete. Driving ranges and full courses feel like two different worlds. Etiquette matters, so people often talk about lessons, favourite courses and how they started.",
+    "questions": [
+      {
+        "cn": "你打高尔夫吗？",
+        "en": "Do you play golf?"
+      },
+      {
+        "cn": "你是从练习场开始的吗？",
+        "en": "Did you start at a driving range?"
+      },
+      {
+        "cn": "你们那边球场好订吗？",
+        "en": "Is it easy to book a course where you live?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.randa.org/"
+    ],
+    "sourceNote": "R&A 官网首页（标题 The R&A，负责高尔夫规则与公开锦标赛），2026-11-10 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "ball-billiards-snooker",
+    "cn": "台球/斯诺克",
+    "en": "Billiards and snooker",
+    "region": "国际",
+    "theme": "健身运动",
+    "subtheme": "球类",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "台球和斯诺克都用球杆击球，但球台大小、袋口和球数不同。斯诺克红球加彩球计分，酒吧和球房都能玩，聊规则差异很有意思。",
+    "briefEn": "Billiards and snooker both use a cue and a table, but the table size, pockets and number of balls differ. Snooker uses reds plus colours with a points system, while pool is more common on pub tables. Comparing the two is an easy way into the topic.",
+    "questions": [
+      {
+        "cn": "你平时打台球还是斯诺克？",
+        "en": "Do you usually play pool or snooker?"
+      },
+      {
+        "cn": "你更常去酒吧台还是球房？",
+        "en": "Do you play more on pub tables or in a proper club?"
+      },
+      {
+        "cn": "你打得怎么样？",
+        "en": "How good are you at it?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://wpbsa.com/"
+    ],
+    "sourceNote": "世界职业比利与斯诺克协会官网首页（标题 WPBSA | Official World Governing Body of Snooker and Billiards），2026-11-10 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "ball-bowling",
+    "cn": "保龄球",
+    "en": "Bowling",
+    "region": "国际",
+    "theme": "健身运动",
+    "subtheme": "球类",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "把球滚向十条球瓶，全中和小补的算法不一样。球馆提供公用球，也有人自带定制球，联赛和家庭聚会都很常见。",
+    "briefEn": "Bowling is ten pins at the end of a lane, and strikes and spares are scored differently. Alleys lend house balls, while regulars bring their own drilled ball. League nights and family birthdays both happen there, which makes it a relaxed thing to chat about.",
+    "questions": [
+      {
+        "cn": "你多久打一次保龄球？",
+        "en": "How often do you go bowling?"
+      },
+      {
+        "cn": "你有自己的球吗？",
+        "en": "Do you have your own ball?"
+      },
+      {
+        "cn": "你们那边有联赛吗？",
+        "en": "Are there leagues where you live?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.bowl.com/",
+      "https://www.bowl.com/About/"
+    ],
+    "sourceNote": "美国保龄球协会 USBC 官网首页（标题 BOWL.com | Home）与 About Us 页（标题 BOWL.com | About Us），2026-11-10 实抓均 HTTP 200。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "ball-frisbee",
+    "cn": "飞盘",
+    "en": "Frisbee and disc sports",
+    "region": "国际",
+    "theme": "健身运动",
+    "subtheme": "球类",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "飞盘不只用来看，极限飞盘七人一队、自己判罚，讲究公平竞赛。公园、校园和沙滩都能玩，还有飞盘高尔夫这种玩法。",
+    "briefEn": "Frisbee is not just catching on a beach. Ultimate is seven against seven, self-refereed, and built around spirit of the game. You also find disc golf and casual park games. The 175-gram disc is the standard, and pickup games are easy to join.",
+    "questions": [
+      {
+        "cn": "你玩过极限飞盘吗？",
+        "en": "Have you played Ultimate?"
+      },
+      {
+        "cn": "你更喜欢正式比赛还是公园随便扔？",
+        "en": "Do you prefer a proper game or just throwing in the park?"
+      },
+      {
+        "cn": "你们那边周末有固定的局吗？",
+        "en": "Is there a regular weekend game near you?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://usaultimate.org/",
+      "https://usaultimate.org/about/"
+    ],
+    "sourceNote": "USA Ultimate 官网首页（标题 USA Ultimate | Learn. Play. Compete.）与 About 页，2026-11-10 实抓均 HTTP 200。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "ball-squash",
+    "cn": "壁球",
+    "en": "Squash",
+    "region": "国际",
+    "theme": "健身运动",
+    "subtheme": "球类",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "四面墙的场地，球小、拍子也小，热身之后弹性会变。一个人也能对着墙练，节奏快、出汗多，约场地和聊体能都好接。",
+    "briefEn": "Squash is played in a room with four walls, a small racket and a small ball that bounces more once it warms up. You can play alone against the wall or with a partner. Games are fast and sweaty, so people talk about fitness, court booking and glass courts.",
+    "questions": [
+      {
+        "cn": "你打过壁球吗？",
+        "en": "Have you played squash?"
+      },
+      {
+        "cn": "你喜欢一个人练还是两个人打？",
+        "en": "Do you prefer practising alone or playing a partner?"
+      },
+      {
+        "cn": "你们那边订场方便吗？",
+        "en": "Is it easy to book a court near you?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://worldsquash.org/"
+    ],
+    "sourceNote": "世界壁球联合会官网首页（标题 Home - World Squash），2026-11-10 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "ball-handball",
+    "cn": "手球",
+    "en": "Handball",
+    "region": "国际",
+    "theme": "健身运动",
+    "subtheme": "球类",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "七人一队，用手传球和射门，不是用脚踢。室内场地、三步上篮式进攻，欧洲联赛很热闹，节奏快、对抗强。",
+    "briefEn": "Handball is seven a side and played with the hands, not the feet. Players pass and shoot on an indoor court, and three steps are allowed before passing or shooting. It is fast and physical, with strong leagues in Europe and a growing presence elsewhere.",
+    "questions": [
+      {
+        "cn": "你看手球吗？",
+        "en": "Do you watch handball?"
+      },
+      {
+        "cn": "你上学时打过吗？",
+        "en": "Did you play it at school?"
+      },
+      {
+        "cn": "你们那边有手球俱乐部吗？",
+        "en": "Are there handball clubs near you?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.ihf.info/"
+    ],
+    "sourceNote": "国际手球联合会官网首页（标题 IHF），2026-11-10 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  }
+]

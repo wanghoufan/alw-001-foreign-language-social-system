@@ -1,0 +1,686 @@
+[
+  {
+    "id": "fitness-running",
+    "cn": "跑步习惯",
+    "en": "Running habits",
+    "region": "国际",
+    "theme": "健身运动",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "跑步是最容易开始的运动之一。有人喜欢清晨空旷的街道，有人更享受夜跑后的放松。可以聊配速、路线、跑鞋，也可以聊当初为什么开始跑。",
+    "briefEn": "Running is one of the easiest ways to start moving. Some people love empty streets at dawn, while others prefer the calm of a night run. You can talk about pace, favourite routes, shoes, or what first got them started.",
+    "questions": [
+      {
+        "cn": "你一般一周跑几次？",
+        "en": "How often do you run in a normal week?"
+      },
+      {
+        "cn": "你更喜欢晨跑还是夜跑？",
+        "en": "Do you prefer running in the morning or at night?"
+      },
+      {
+        "cn": "你是怎么开始跑步的？",
+        "en": "What made you start running?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.nhs.uk/live-well/exercise/knee-pain-and-other-running-injuries/",
+      "https://worldathletics.org/news"
+    ],
+    "sourceNote": "NHS 跑步损伤科普页与 World Athletics 新闻页，2026-11-09 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-09",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "fitness-weekly-activity",
+    "cn": "每周运动量",
+    "en": "Weekly activity targets",
+    "region": "国际",
+    "theme": "健身运动",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "世界卫生组织建议成年人每周 150 至 300 分钟中等强度有氧活动，并在一周里至少两天做力量练习。可以聊各自怎么把这些时间拆进忙碌的一周。",
+    "briefEn": "The WHO suggests adults get 150 to 300 minutes of moderate aerobic activity a week, plus muscle-strengthening work on at least two days. A good chat is how people fit that into a busy week, and what actually counts.",
+    "questions": [
+      {
+        "cn": "你一周大概有多少时间在运动？",
+        "en": "About how much time do you spend exercising in a week?"
+      },
+      {
+        "cn": "你觉得每周的目标好完成吗？",
+        "en": "Is a weekly target easy for you to hit?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.who.int/news-room/fact-sheets/detail/physical-activity",
+      "https://www.nhs.uk/live-well/exercise/physical-activity-guidelines-for-adults-aged-19-to-64/"
+    ],
+    "sourceNote": "WHO 身体活动实况报道与 NHS 19–64 岁成人活动指南，2026-11-09 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-09",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "fitness-gym-strength",
+    "cn": "健身房力量训练",
+    "en": "Strength training at the gym",
+    "region": "国际",
+    "theme": "健身运动",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "力量训练不只是练大块肌肉，也帮助日常搬东西和保持骨骼健康。可以聊训练计划、器械和自由重量，以及第一次进健身房的紧张感。",
+    "briefEn": "Strength training is not just about big muscles. It also helps with everyday lifting and bone health. People enjoy talking about their routines, machines versus free weights, and how nervous they felt on their first gym visit.",
+    "questions": [
+      {
+        "cn": "你在健身房主要练什么？",
+        "en": "What do you usually work on at the gym?"
+      },
+      {
+        "cn": "你更喜欢器械还是自由重量？",
+        "en": "Do you prefer machines or free weights?"
+      },
+      {
+        "cn": "第一次去健身房紧张吗？",
+        "en": "Were you nervous the first time you went to a gym?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.nhs.uk/live-well/exercise/strength-and-resistance/",
+      "https://www.nhs.uk/live-well/exercise/how-to-improve-strength-flexibility/"
+    ],
+    "sourceNote": "NHS 力量与抗阻训练视频页、力量柔韧改善指南，2026-11-09 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-09",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "fitness-swimming",
+    "cn": "游泳",
+    "en": "Swimming",
+    "region": "国际",
+    "theme": "健身运动",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "游泳对关节友好，也是少数能同时练到全身的运动。可以聊泳姿、泳池和开放水域的差别，以及小时候是怎么学会的。",
+    "briefEn": "Swimming is gentle on the joints and works the whole body at once. Good topics are stroke styles, the difference between a pool and open water, and how people learned to swim as kids. It is also a good way to switch off after a long day at work.",
+    "questions": [
+      {
+        "cn": "你会游哪种泳姿？",
+        "en": "Which swimming stroke can you do?"
+      },
+      {
+        "cn": "你更喜欢泳池还是开放水域？",
+        "en": "Do you prefer a pool or open water?"
+      },
+      {
+        "cn": "你是什么时候学会游泳的？",
+        "en": "When did you learn to swim?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.worldaquatics.com/news",
+      "https://www.usaswimming.org/news"
+    ],
+    "sourceNote": "World Aquatics 与 USA Swimming 官方新闻页，2026-11-09 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-09",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "fitness-football",
+    "cn": "足球",
+    "en": "Football",
+    "region": "国际",
+    "theme": "健身运动",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "足球既是运动也是共同语言。可以聊周末踢球、支持哪支球队、看球的习惯，也可以聊规则差异和第一次上场的感受。",
+    "briefEn": "Football is both a sport and a shared language. You can talk about weekend games, which team someone supports, how they watch matches, or how the rules differ where they grew up. Many people also follow leagues in other countries.",
+    "questions": [
+      {
+        "cn": "你平时会踢球吗？",
+        "en": "Do you play football yourself?"
+      },
+      {
+        "cn": "你有支持的球队吗？",
+        "en": "Do you support a particular team?"
+      },
+      {
+        "cn": "你更愿意踢球还是看球？",
+        "en": "Do you prefer playing or watching?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.premierleague.com/news"
+    ],
+    "sourceNote": "Premier League 官方新闻页，2026-11-09 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-09",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "fitness-basketball",
+    "cn": "篮球",
+    "en": "Basketball",
+    "region": "国际",
+    "theme": "健身运动",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "篮球节奏快、场地多，很容易变成朋友间的固定活动。可以聊三对三、投篮练习、喜欢的球员，也可以聊看比赛时的气氛。",
+    "briefEn": "Basketball is fast and easy to find a court for, so it often becomes a regular thing among friends. People like talking about three-on-three games, shooting practice, favourite players, and the atmosphere at live matches.",
+    "questions": [
+      {
+        "cn": "你打过三对三吗？",
+        "en": "Have you played three-on-three basketball?"
+      },
+      {
+        "cn": "你更喜欢打球还是看比赛？",
+        "en": "Do you rather play or watch basketball?"
+      },
+      {
+        "cn": "你最喜欢的球员是谁？",
+        "en": "Who is your favourite player?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.fiba.basketball/news"
+    ],
+    "sourceNote": "FIBA 官方新闻页，2026-11-09 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-09",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "fitness-hiking",
+    "cn": "徒步",
+    "en": "Hiking",
+    "region": "国际",
+    "theme": "健身运动",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "徒步的乐趣一半在路线，一半在同行的人。可以聊周末短途、长线穿越、装备和天气，也可以聊路上遇到过的意外风景。",
+    "briefEn": "Half the fun of hiking is the route and half is the company. Good things to ask about are weekend walks, long-distance trails, gear, weather, and the unexpected views people found along the way. Some go alone and others join a group.",
+    "questions": [
+      {
+        "cn": "你最近一次徒步去了哪里？",
+        "en": "Where did you last go hiking?"
+      },
+      {
+        "cn": "你更喜欢一天的短途还是多天的路线？",
+        "en": "Do you prefer a day hike or a multi-day trail?"
+      },
+      {
+        "cn": "徒步时你最难忘的风景是什么？",
+        "en": "What is the most memorable view you have seen while hiking?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.ramblers.org.uk/"
+    ],
+    "sourceNote": "英国徒步慈善机构 Ramblers 官网，2026-11-09 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-09",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "fitness-cycling",
+    "cn": "骑行",
+    "en": "Cycling",
+    "region": "国际",
+    "theme": "健身运动",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "骑行可以是通勤、锻炼，也可以是周末探索城市外的方式。可以聊路线、爬坡、通勤安全，以及自行车在各自城市里的地位。",
+    "briefEn": "Cycling can be a commute, a workout, or a way to explore outside the city at weekends. People enjoy talking about routes, climbing hills, safety on the road, and how bikes fit into daily life where they live.",
+    "questions": [
+      {
+        "cn": "你骑车主要是为了什么？",
+        "en": "What do you mainly use a bike for?"
+      },
+      {
+        "cn": "你更喜欢平路还是爬坡？",
+        "en": "Do you prefer flat roads or hill climbs?"
+      },
+      {
+        "cn": "你住的地方骑车方便吗？",
+        "en": "Is cycling easy where you live?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.sustrans.org.uk/",
+      "https://www.uci.org/news"
+    ],
+    "sourceNote": "英国步行骑行慈善机构 Sustrans 官网、国际自行车联盟 UCI 新闻页，2026-11-09 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-09",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "fitness-yoga",
+    "cn": "瑜伽",
+    "en": "Yoga",
+    "region": "国际",
+    "theme": "健身运动",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "瑜伽把呼吸、平衡和力量放在一起，适合不同基础的人。可以聊喜欢的流派、在家练还是去课室，以及练完之后身体和心情的变化。",
+    "briefEn": "Yoga brings breathing, balance and strength together, and it works for very different levels. Nice topics are favourite styles, practising at home or in a studio, and how people feel after a session. Beginners often worry about not being flexible enough.",
+    "questions": [
+      {
+        "cn": "你练过瑜伽吗？",
+        "en": "Have you tried yoga?"
+      },
+      {
+        "cn": "你更喜欢在家练还是去上课？",
+        "en": "Do you prefer practising at home or in a class?"
+      },
+      {
+        "cn": "练完瑜伽后你有什么感觉？",
+        "en": "How do you feel after yoga?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.nhs.uk/live-well/exercise/pilates-and-yoga/"
+    ],
+    "sourceNote": "NHS 普拉提与瑜伽练习视频页，2026-11-09 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-09",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "fitness-stretching",
+    "cn": "拉伸",
+    "en": "Stretching",
+    "region": "国际",
+    "theme": "健身运动",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "拉伸不需要器械，几分钟就能做。可以聊运动后的放松、久坐后的肩颈，以及哪些动作对各自最有效。注意缓慢进入，不要弹振。",
+    "briefEn": "Stretching needs no equipment and only a few minutes. People talk about post-workout cool-downs, tight shoulders after sitting, and which moves help them most. The key is to move in slowly rather than bounce. A few minutes after a walk already helps.",
+    "questions": [
+      {
+        "cn": "你平时会拉伸吗？",
+        "en": "Do you stretch regularly?"
+      },
+      {
+        "cn": "你哪个部位最容易紧张？",
+        "en": "Which part of your body gets tight most often?"
+      },
+      {
+        "cn": "你更喜欢运动前还是运动后拉伸？",
+        "en": "Do you prefer stretching before or after exercise?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.nhs.uk/live-well/exercise/how-to-stretch-after-exercising/"
+    ],
+    "sourceNote": "NHS 运动后拉伸指南，2026-11-09 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-09",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "fitness-warmup",
+    "cn": "热身",
+    "en": "Warming up",
+    "region": "国际",
+    "theme": "健身运动",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "热身能让身体逐步进入状态。一般从几分钟轻度活动开始，再做和当天运动相关的动态动作。可以聊聊各自的热身习惯和曾经忽略热身吃的亏。",
+    "briefEn": "A warm-up helps the body ease into exercise. It usually starts with a few minutes of light movement, then some dynamic moves related to what you are about to do. People can share their routines and times they skipped it.",
+    "questions": [
+      {
+        "cn": "你运动前一般怎么热身？",
+        "en": "How do you usually warm up before exercise?"
+      },
+      {
+        "cn": "热身要花多长时间？",
+        "en": "How long does your warm-up take?"
+      },
+      {
+        "cn": "你有没有因为没热身而吃过亏？",
+        "en": "Have you ever regretted skipping a warm-up?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.nhs.uk/live-well/exercise/how-to-warm-up-before-exercising/"
+    ],
+    "sourceNote": "NHS 运动前热身指南，2026-11-09 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-09",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "fitness-injury-prevention",
+    "cn": "运动损伤预防",
+    "en": "Preventing sports injuries",
+    "region": "国际",
+    "theme": "健身运动",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "多数运动损伤和突然加量、动作变形、恢复不足有关。可以聊循序渐进、交叉训练和休息日。持续疼痛应找专业教练或医生，而不是硬扛。",
+    "briefEn": "Many sports injuries come from sudden jumps in training, poor form, or too little recovery. Good topics are building up gradually, cross-training, and rest days. If pain continues, the sensible move is to see a coach or doctor rather than push through.",
+    "questions": [
+      {
+        "cn": "你受过什么运动伤？",
+        "en": "Have you ever had a sports injury?"
+      },
+      {
+        "cn": "你会安排休息日吗？",
+        "en": "Do you plan rest days?"
+      },
+      {
+        "cn": "你是怎么避免重复受伤的？",
+        "en": "How do you avoid getting the same injury again?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.nhs.uk/conditions/sprains-and-strains/",
+      "https://www.nhs.uk/live-well/exercise/knee-pain-and-other-running-injuries/"
+    ],
+    "sourceNote": "NHS 扭伤与拉伤说明页、跑步膝痛与损伤页，2026-11-09 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-09",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "fitness-sitting",
+    "cn": "久坐与活动",
+    "en": "Sitting less",
+    "region": "国际",
+    "theme": "健身运动",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "久坐对身体的负担常常被低估。把长时间坐着切成几段、每小时起身活动一下，是很实用的办法。可以聊各自的工作姿势和小动作。",
+    "briefEn": "Sitting for long stretches is easy to underestimate. Breaking it up and standing every hour is a simple fix. People can compare their desk setups and the small movements they do during the day. Short walk breaks often count more than people expect.",
+    "questions": [
+      {
+        "cn": "你一天大概坐多久？",
+        "en": "About how long do you sit each day?"
+      },
+      {
+        "cn": "你会不会每小时起来活动一下？",
+        "en": "Do you get up and move every hour?"
+      },
+      {
+        "cn": "你有什么在办公桌边做的小动作？",
+        "en": "What small exercises do you do at your desk?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.nhs.uk/live-well/exercise/why-sitting-too-much-is-bad-for-us/",
+      "https://www.nhs.uk/live-well/exercise/sitting-exercises/"
+    ],
+    "sourceNote": "NHS 久坐影响页与坐姿练习页，2026-11-09 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-09",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "fitness-aerobic",
+    "cn": "有氧运动",
+    "en": "Cardio",
+    "region": "国际",
+    "theme": "健身运动",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "快走、慢跑、游泳、跳舞都算有氧。判断强度的一个简单办法是能说话但唱不了歌。可以聊各自喜欢的有氧方式和坚持下来的窍门。",
+    "briefEn": "Brisk walking, jogging, swimming and dancing all count as aerobic exercise. A simple way to judge the effort is that you can talk but not sing. People like sharing what they enjoy and how they keep it going.",
+    "questions": [
+      {
+        "cn": "你最喜欢哪种有氧运动？",
+        "en": "What kind of aerobic exercise do you enjoy most?"
+      },
+      {
+        "cn": "你怎么判断强度够不够？",
+        "en": "How do you know if the effort is hard enough?"
+      },
+      {
+        "cn": "你一般在哪里做有氧？",
+        "en": "Where do you usually do your cardio?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.nhs.uk/live-well/exercise/aerobic-exercises/"
+    ],
+    "sourceNote": "NHS 有氧运动视频页，2026-11-09 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-09",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "fitness-walking",
+    "cn": "步行",
+    "en": "Walking",
+    "region": "国际",
+    "theme": "健身运动",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "步行门槛低，也容易变成每天的固定时间。可以聊通勤步行、饭后散步、计步目标，以及走路时听什么、看什么。",
+    "briefEn": "Walking is easy to start and easy to make part of a daily routine. Good topics are walking to work, after-dinner strolls, step goals, and what people listen to or notice on the way. It is also an easy way to spend time with someone.",
+    "questions": [
+      {
+        "cn": "你每天大概走多少步？",
+        "en": "About how many steps do you walk a day?"
+      },
+      {
+        "cn": "你喜欢一个人走还是和朋友一起？",
+        "en": "Do you prefer walking alone or with friends?"
+      },
+      {
+        "cn": "你走路时会听什么吗？",
+        "en": "Do you listen to anything while you walk?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.nhs.uk/live-well/exercise/walking-for-health/"
+    ],
+    "sourceNote": "NHS 步行与健康指南，2026-11-09 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-09",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "fitness-watching-sports",
+    "cn": "观赛",
+    "en": "Watching live sport",
+    "region": "国际",
+    "theme": "健身运动",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "看比赛是很多人共同的周末安排。可以聊支持的队伍、看球的地方、解说风格，也可以聊第一次现场看比赛的记忆。",
+    "briefEn": "Watching sport is a weekend ritual for many people. You can talk about teams, where they watch, how commentary sounds, and the first time they saw a match live. Some follow several leagues at once, and others only watch big events.",
+    "questions": [
+      {
+        "cn": "你平时看什么比赛？",
+        "en": "What sports do you watch?"
+      },
+      {
+        "cn": "你更喜欢在家看还是去现场？",
+        "en": "Do you prefer watching at home or at the venue?"
+      },
+      {
+        "cn": "你第一次现场看比赛是什么感觉？",
+        "en": "What was your first live match like?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://worldathletics.org/news",
+      "https://www.premierleague.com/news"
+    ],
+    "sourceNote": "World Athletics 新闻页、Premier League 官方新闻页，2026-11-09 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-09",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "fitness-race-events",
+    "cn": "路跑赛事",
+    "en": "Road races",
+    "region": "国际",
+    "theme": "健身运动",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "路跑赛事把训练、城市路线和人群气氛放在一起。可以聊五公里、十公里、半马的准备，也可以聊赛道补给和终点线的心情。",
+    "briefEn": "Road races combine training, city routes and crowd energy. People enjoy talking about preparing for a 5K, a 10K or a half marathon, what is handed out on the course, and how the finish line feels.",
+    "questions": [
+      {
+        "cn": "你跑过比赛吗？",
+        "en": "Have you ever run a race?"
+      },
+      {
+        "cn": "你更想挑战十公里还是半马？",
+        "en": "Would you rather take on a 10K or a half marathon?"
+      },
+      {
+        "cn": "比赛当天你最紧张的是什么？",
+        "en": "What makes you most nervous on race day?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://worldathletics.org/news"
+    ],
+    "sourceNote": "World Athletics 官方新闻页，2026-11-09 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-09",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "fitness-water-safety",
+    "cn": "游泳安全",
+    "en": "Water safety",
+    "region": "国际",
+    "theme": "健身运动",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "游泳安全比速度更重要。结伴下水、留意水域标志和救生员位置，是很多地方反复强调的常识。可以聊各自水域的习惯和规则。",
+    "briefEn": "Water safety matters more than speed. Swimming with someone else, checking signs and knowing where the lifeguards are is basic advice in many places. People can compare local rules and habits. It is a topic where small details really matter.",
+    "questions": [
+      {
+        "cn": "你去开放水域会做哪些准备？",
+        "en": "What do you check before swimming in open water?"
+      },
+      {
+        "cn": "你更放心有救生员的泳池吗？",
+        "en": "Do you feel safer in a pool with lifeguards?"
+      },
+      {
+        "cn": "你那边有哪些游泳安全规则？",
+        "en": "What water safety rules apply where you swim?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.worldaquatics.com/news"
+    ],
+    "sourceNote": "World Aquatics 官方新闻页，2026-11-09 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-09",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "fitness-flexibility",
+    "cn": "柔韧训练",
+    "en": "Flexibility training",
+    "region": "国际",
+    "theme": "健身运动",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "柔韧不是越软越好，而是关节在需要的时候能舒服地活动。可以聊日常活动范围、久坐后的紧绷，以及力量与柔韧怎么一起练。",
+    "briefEn": "Flexibility is not about being as bendy as possible. It is about joints moving comfortably when you need them. People can talk about everyday range of motion, tightness after sitting, and training strength and mobility together.",
+    "questions": [
+      {
+        "cn": "你觉得自己身体柔韧吗？",
+        "en": "Do you consider yourself flexible?"
+      },
+      {
+        "cn": "你哪个动作做起来最吃力？",
+        "en": "Which movement is hardest for you?"
+      },
+      {
+        "cn": "你会专门练柔韧吗？",
+        "en": "Do you train flexibility on purpose?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.nhs.uk/live-well/exercise/how-to-improve-strength-flexibility/"
+    ],
+    "sourceNote": "NHS 力量与柔韧改善指南，2026-11-09 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-09",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "fitness-exercise-mood",
+    "cn": "运动与情绪",
+    "en": "Exercise and mood",
+    "region": "国际",
+    "theme": "健身运动",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "很多人运动后会感觉心情更稳、睡得更踏实。原因不只是体力消耗，也和规律、社交与户外时间有关。可以聊各自运动后的真实感受。",
+    "briefEn": "Many people feel steadier and sleep better after exercise. It is not only about burning energy; routine, company and time outdoors matter too. A good chat is what exercise actually changes in someone's day. Some notice the effect right away and others over weeks.",
+    "questions": [
+      {
+        "cn": "运动之后你的心情会变好吗？",
+        "en": "Does your mood change after exercise?"
+      },
+      {
+        "cn": "你运动是为了身体还是心情？",
+        "en": "Do you exercise more for your body or your mood?"
+      },
+      {
+        "cn": "哪天没运动你会觉得不舒服吗？",
+        "en": "Do you feel off on days you do not move?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.nhs.uk/live-well/exercise/exercise-health-benefits/"
+    ],
+    "sourceNote": "NHS 运动健康益处页，2026-11-09 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-09",
+    "relatedPlaceIds": []
+  }
+]

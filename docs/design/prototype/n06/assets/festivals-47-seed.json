@@ -1,0 +1,1487 @@
+[
+  {
+    "id": "spring-festival",
+    "cn": "春节",
+    "en": "Chinese New Year",
+    "country_region": "中国",
+    "theme": "家庭",
+    "date_rule": "农历正月初一（待确认）",
+    "dates_2026_2027": [
+      "2026-02-17",
+      "2027-02-06"
+    ],
+    "status": "pending",
+    "holiday_type": "public_holiday",
+    "cn_brief": "中国最重要的家庭节日之一。常见元素是团圆饭、红包和走亲访友，但每个家庭的具体过法差别很大。",
+    "en_brief": "One of the most important family holidays in China. Reunion meals, red envelopes, and visiting relatives are common, but every family does it differently.",
+    "questions": [
+      {
+        "cn": "你家里过年最看重的是一顿饭还是团聚本身？",
+        "en": "At New Year, is the meal or the time together more important in your family?"
+      },
+      {
+        "cn": "你们有发红包或交换小礼物的习惯吗？",
+        "en": "Do you have a tradition of giving red envelopes or small gifts?"
+      }
+    ],
+    "related_place_ids": [
+      3,
+      43
+    ],
+    "source_urls": [
+      "https://date.nager.at/api/v3/PublicHolidays/2026/CN",
+      "https://date.nager.at/api/v3/PublicHolidays/2027/CN"
+    ],
+    "verified_at": "2026-11-09"
+  },
+  {
+    "id": "lantern",
+    "cn": "元宵节",
+    "en": "Lantern Festival",
+    "country_region": "中国",
+    "theme": "家庭",
+    "date_rule": "农历正月十五（待确认）",
+    "dates_2026_2027": [
+      "2026-03-03",
+      "2027-02-20"
+    ],
+    "status": "pending",
+    "holiday_type": "festival_day",
+    "cn_brief": "农历新年的收尾，常见看花灯、猜灯谜和吃汤圆。城市里的活动规模差别很大。",
+    "en_brief": "The close of the Lunar New Year period, often marked with lanterns, riddles, and sweet rice balls. Public events vary a lot by city.",
+    "questions": [
+      {
+        "cn": "你见过猜灯谜或放花灯吗？",
+        "en": "Have you ever seen lantern riddles or floating lanterns?"
+      },
+      {
+        "cn": "你更喜欢甜馅还是咸馅的汤圆？",
+        "en": "Do you prefer sweet or savoury rice balls?"
+      }
+    ],
+    "related_place_ids": [
+      3,
+      1
+    ],
+    "source_urls": [
+      "https://date.nager.at/api/v3/PublicHolidays/2026/CN"
+    ],
+    "verified_at": "2026-11-09"
+  },
+  {
+    "id": "qingming",
+    "cn": "清明节",
+    "en": "Qingming Festival",
+    "country_region": "中国",
+    "theme": "纪念",
+    "date_rule": "公历 4 月 4–5 日前后（待确认）",
+    "dates_2026_2027": [
+      "2026-04-05",
+      "2027-04-05"
+    ],
+    "status": "pending",
+    "holiday_type": "festival_day",
+    "cn_brief": "扫墓和踏青的日子，既有纪念先人的部分，也有春天出门走走的意味。问的时候要留出空间，不必追问细节。",
+    "en_brief": "A day for visiting family graves and for spring outings. It carries both remembrance and a sense of going outdoors; leave room for the other person not to share details.",
+    "questions": [
+      {
+        "cn": "你们那里春天有固定的踏青习惯吗？",
+        "en": "Is there a spring outing tradition where you are from?"
+      },
+      {
+        "cn": "你会和家人一起做清明相关的安排吗？",
+        "en": "Do you usually spend this time with family?"
+      }
+    ],
+    "related_place_ids": [
+      9,
+      115
+    ],
+    "source_urls": [],
+    "verified_at": "2026-11-09"
+  },
+  {
+    "id": "dragon-boat",
+    "cn": "端午节",
+    "en": "Dragon Boat Festival",
+    "country_region": "中国",
+    "theme": "饮食",
+    "date_rule": "农历五月初五（待确认）",
+    "dates_2026_2027": [
+      "2026-06-19",
+      "2027-06-09"
+    ],
+    "status": "pending",
+    "holiday_type": "festival_day",
+    "cn_brief": "常见元素是粽子、赛龙舟和门口挂艾草。不同地区的粽子和活动差别很大。",
+    "en_brief": "Common elements are zongzi, dragon-boat races, and hanging herbs by the door. The food and events differ a lot between regions.",
+    "questions": [
+      {
+        "cn": "你吃过粽子吗？甜的还是咸的？",
+        "en": "Have you ever tried zongzi? Sweet or savoury?"
+      },
+      {
+        "cn": "你现场看过龙舟比赛吗？",
+        "en": "Have you ever watched a dragon-boat race in person?"
+      }
+    ],
+    "related_place_ids": [
+      71,
+      88
+    ],
+    "source_urls": [
+      "https://date.nager.at/api/v3/PublicHolidays/2026/CN",
+      "https://date.nager.at/api/v3/PublicHolidays/2027/CN"
+    ],
+    "verified_at": "2026-11-09"
+  },
+  {
+    "id": "qixi",
+    "cn": "七夕",
+    "en": "Qixi Festival",
+    "country_region": "中国",
+    "theme": "爱情",
+    "date_rule": "农历七月初七（2026/2027 公历日期待确认）",
+    "dates_2026_2027": [
+      null,
+      null
+    ],
+    "status": "pending",
+    "holiday_type": "festival_day",
+    "cn_brief": "七夕来自牛郎织女的故事，常被称作中国的情人节。有人约会送礼，也有人只把它当作普通日子，问的时候不要默认。",
+    "en_brief": "Qixi comes from the Cowherd and Weaver Girl legend and is often called Chinese Valentine's Day. Some people go on dates or give gifts, while others treat it as an ordinary day, so do not assume.",
+    "questions": [
+      {
+        "cn": "你们有关于星星或传说的节日吗？",
+        "en": "Does your culture have a festival linked to stars or a legend?"
+      },
+      {
+        "cn": "你会为这类节日特意安排约会吗？",
+        "en": "Would you plan a date for a festival like this?"
+      }
+    ],
+    "related_place_ids": [
+      78,
+      4
+    ],
+    "source_urls": [
+      "https://en.wikipedia.org/wiki/Qixi_Festival"
+    ],
+    "verified_at": "2026-11-09"
+  },
+  {
+    "id": "mid-autumn",
+    "cn": "中秋节",
+    "en": "Mid-Autumn Festival",
+    "country_region": "中国",
+    "theme": "家庭",
+    "date_rule": "农历八月十五（待确认）",
+    "dates_2026_2027": [
+      "2026-09-25",
+      "2027-09-15"
+    ],
+    "status": "pending",
+    "holiday_type": "festival_day",
+    "cn_brief": "看月亮、吃月饼和一家人聚在一起的日子。月饼口味很多，送礼习惯也各不相同。",
+    "en_brief": "A time for moon watching, mooncakes, and family gatherings. Mooncake flavours and gifting habits vary widely.",
+    "questions": [
+      {
+        "cn": "你家里中秋会一起吃饭吗？",
+        "en": "Does your family have a meal together at Mid-Autumn?"
+      },
+      {
+        "cn": "你更喜欢传统月饼还是新口味？",
+        "en": "Do you prefer traditional mooncakes or newer flavours?"
+      }
+    ],
+    "related_place_ids": [
+      99,
+      43
+    ],
+    "source_urls": [
+      "https://date.nager.at/api/v3/PublicHolidays/2026/CN",
+      "https://date.nager.at/api/v3/PublicHolidays/2027/CN"
+    ],
+    "verified_at": "2026-11-09"
+  },
+  {
+    "id": "chongyang",
+    "cn": "重阳节",
+    "en": "Double Ninth Festival",
+    "country_region": "中国",
+    "theme": "敬老",
+    "date_rule": "农历九月初九（待确认）",
+    "dates_2026_2027": [
+      "2026-10-18",
+      "2027-10-08"
+    ],
+    "status": "pending",
+    "holiday_type": "festival_day",
+    "cn_brief": "重阳在农历九月初九，传统上登高、赏菊，也被视为敬老的日子。各地做法不同，有人把它过成家庭日。",
+    "en_brief": "Double Ninth falls on the ninth day of the ninth lunar month. Climbing hills and admiring chrysanthemums are traditional, and it is also treated as a day to respect older people. Practice varies.",
+    "questions": [
+      {
+        "cn": "你们有专门看望长辈的日子吗？",
+        "en": "Is there a day when people especially visit older relatives?"
+      },
+      {
+        "cn": "你最近一次陪长辈出门是什么时候？",
+        "en": "When did you last go out with an older relative?"
+      }
+    ],
+    "related_place_ids": [
+      9,
+      115
+    ],
+    "source_urls": [
+      "https://en.wikipedia.org/wiki/Double_Ninth_Festival"
+    ],
+    "verified_at": "2026-11-09"
+  },
+  {
+    "id": "national-day",
+    "cn": "国庆节",
+    "en": "National Day",
+    "country_region": "中国",
+    "theme": "假期",
+    "date_rule": "固定公历 10 月 1 日；连休与调休上班日按当年国务院办公厅通知",
+    "dates_2026_2027": [
+      "2026-10-01",
+      "2027-10-01"
+    ],
+    "status": "fixed",
+    "holiday_type": "public_holiday",
+    "cn_brief": "10 月 1 日是节日本日，具体连休与调休上班日（makeup workday）每年由官方通知确定。很多人会出行或回家。",
+    "en_brief": "1 October is the festival day itself; the actual days off and any make-up workdays are set by the official notice each year. Many people travel or go home.",
+    "questions": [
+      {
+        "cn": "长假你会出行还是留在家里？",
+        "en": "On a long holiday, do you travel or stay home?"
+      },
+      {
+        "cn": "你更喜欢错峰出门还是和大家一起放假？",
+        "en": "Do you prefer travelling off-peak or taking the same holiday as everyone else?"
+      }
+    ],
+    "related_place_ids": [
+      99,
+      43,
+      97
+    ],
+    "source_urls": [
+      "https://date.nager.at/api/v3/PublicHolidays/2026/CN",
+      "https://date.nager.at/api/v3/PublicHolidays/2027/CN"
+    ],
+    "verified_at": "2026-11-09"
+  },
+  {
+    "id": "hainan-junpo",
+    "cn": "军坡节（公期）",
+    "en": "Junpo Festival (Gongqi)",
+    "country_region": "中国·海南",
+    "theme": "民俗",
+    "date_rule": "农历二月，各村择日举行（具体日期待确认）",
+    "dates_2026_2027": [
+      null,
+      null
+    ],
+    "status": "pending",
+    "holiday_type": "festival_day",
+    "cn_brief": "海南各地村镇的军坡节也叫公期，以祭祀、游神、舞狮和宴客为主。不同村落日期与做法差别很大，外来者要尊重当地安排。",
+    "en_brief": "Junpo, also called Gongqi, is a village temple festival in Hainan with processions, lion dance, and shared meals. Dates and customs differ from village to village, so visitors should follow local arrangements respectfully.",
+    "questions": [
+      {
+        "cn": "你们家乡有以村镇为单位的庙会吗？",
+        "en": "Does your hometown have a village-level temple fair like this?"
+      },
+      {
+        "cn": "参加别人的地方祭祀时，你会先问什么规矩？",
+        "en": "When you join a local ceremony, what rules do you ask about first?"
+      }
+    ],
+    "related_place_ids": [
+      71,
+      3
+    ],
+    "source_urls": [],
+    "verified_at": "2026-11-09"
+  },
+  {
+    "id": "hainan-huanhua",
+    "cn": "海南换花节",
+    "en": "Hainan Flower Exchange Festival",
+    "country_region": "中国·海南",
+    "theme": "民俗",
+    "date_rule": "农历正月十五前后（与元宵同期，活动日期待确认）",
+    "dates_2026_2027": [
+      "2026-03-03",
+      "2027-02-20"
+    ],
+    "status": "pending",
+    "holiday_type": "festival_day",
+    "cn_brief": "海口府城的换花节在元宵前后举行，人们以换花代替旧俗，互道祝福，也有花灯与游园。具体活动日期每年以当地公告为准。",
+    "en_brief": "The Flower Exchange Festival in Fucheng, Haikou, takes place around the Lantern Festival. People exchange flowers as a blessing and join lantern and park events. Exact dates follow local announcements each year.",
+    "questions": [
+      {
+        "cn": "你们那里元宵会用花或灯表达祝福吗？",
+        "en": "Where you are from, do people use flowers or lanterns to give blessings at the Lantern Festival?"
+      },
+      {
+        "cn": "如果能换到一枝花，你会送给谁？",
+        "en": "If you could exchange for one flower, who would you give it to?"
+      }
+    ],
+    "related_place_ids": [
+      3,
+      1
+    ],
+    "source_urls": [
+      "https://date.nager.at/api/v3/PublicHolidays/2026/CN"
+    ],
+    "verified_at": "2026-11-09"
+  },
+  {
+    "id": "hainan-sanyuesan",
+    "cn": "三月三（黎族苗族）",
+    "en": "Sanyuesan Festival",
+    "country_region": "中国·海南",
+    "theme": "民族",
+    "date_rule": "农历三月初三（2026/2027 公历日期待确认）",
+    "dates_2026_2027": [
+      null,
+      null
+    ],
+    "status": "pending",
+    "holiday_type": "festival_day",
+    "cn_brief": "三月三是海南黎族、苗族的传统节日，常见对歌、竹竿舞、传统服饰和长桌宴。不同市县与村寨安排不同，参与前先了解当地习俗。",
+    "en_brief": "Sanyuesan is a traditional festival for the Li and Miao peoples of Hainan, often marked with antiphonal singing, bamboo dance, traditional dress, and long-table meals. Arrangements differ by county and village, so learn the local customs first.",
+    "questions": [
+      {
+        "cn": "你们有以对歌或舞蹈为主的节日吗？",
+        "en": "Does your culture have a festival built around singing or dance?"
+      },
+      {
+        "cn": "参加民族节日时，你最想先了解什么？",
+        "en": "At a cultural festival, what would you want to understand first?"
+      }
+    ],
+    "related_place_ids": [
+      88,
+      78
+    ],
+    "source_urls": [],
+    "verified_at": "2026-11-09"
+  },
+  {
+    "id": "hainan-carnival",
+    "cn": "海南国际旅游岛欢乐节",
+    "en": "Hainan International Tourism Island Carnival",
+    "country_region": "中国·海南",
+    "theme": "文旅",
+    "date_rule": "通常在年末举办，具体时间与主会场按当年公告",
+    "dates_2026_2027": [
+      null,
+      null
+    ],
+    "status": "pending",
+    "holiday_type": "festival_day",
+    "cn_brief": "海南国际旅游岛欢乐节通常在年末举办，全省多地有演出、美食与市集。举办时间和主会场每年由主办方公布，出发前先查当年安排。",
+    "en_brief": "The Hainan International Tourism Island Carnival is usually held near the end of the year, with performances, food, and markets across the province. Dates and main venues are announced each year, so check before you go.",
+    "questions": [
+      {
+        "cn": "你们有全城或全省联动的节庆吗？",
+        "en": "Does your region have a festival across many cities?"
+      },
+      {
+        "cn": "节庆里你更喜欢美食还是演出？",
+        "en": "At a festival, do you prefer the food or the performances?"
+      }
+    ],
+    "related_place_ids": [
+      99,
+      43
+    ],
+    "source_urls": [],
+    "verified_at": "2026-11-09"
+  },
+  {
+    "id": "st-patrick",
+    "cn": "圣帕特里克节",
+    "en": "St Patrick's Day",
+    "country_region": "爱尔兰",
+    "theme": "文化",
+    "date_rule": "固定公历 3 月 17 日",
+    "dates_2026_2027": [
+      "2026-03-17",
+      "2027-03-17"
+    ],
+    "status": "fixed",
+    "holiday_type": "public_holiday",
+    "cn_brief": "爱尔兰的国庆日，海外爱尔兰社群也常举行游行和音乐活动。不是所有爱尔兰人都会庆祝，问的时候不要默认。",
+    "en_brief": "Ireland's national day, also marked by parades and music in Irish communities abroad. Not every Irish person celebrates it, so do not assume.",
+    "questions": [
+      {
+        "cn": "你们那里这天会有游行或音乐活动吗？",
+        "en": "Are there parades or music events where you are from?"
+      },
+      {
+        "cn": "你更喜欢参加大型活动还是和朋友小聚？",
+        "en": "Would you rather join a big event or meet a few friends?"
+      }
+    ],
+    "related_place_ids": [],
+    "source_urls": [
+      "https://date.nager.at/api/v3/PublicHolidays/2026/IE",
+      "https://date.nager.at/api/v3/PublicHolidays/2027/IE"
+    ],
+    "verified_at": "2026-11-09"
+  },
+  {
+    "id": "bonfire",
+    "cn": "篝火之夜",
+    "en": "Bonfire Night",
+    "country_region": "英国",
+    "theme": "文化",
+    "date_rule": "固定公历 11 月 5 日",
+    "dates_2026_2027": [
+      "2026-11-05",
+      "2027-11-05"
+    ],
+    "status": "fixed",
+    "holiday_type": "festival_day",
+    "cn_brief": "英国部分地区用烟花和篝火纪念历史事件。不是全英每个家庭都会过，城市活动规模也不同。",
+    "en_brief": "Fireworks and bonfires mark a historical event in parts of the UK. Not every family celebrates, and city events vary in size.",
+    "questions": [
+      {
+        "cn": "你那里十一月会有烟花活动吗？",
+        "en": "Are there firework events in November where you are from?"
+      },
+      {
+        "cn": "你喜欢看烟花还是觉得太吵？",
+        "en": "Do you enjoy fireworks or find them too noisy?"
+      }
+    ],
+    "related_place_ids": [],
+    "source_urls": [
+      "https://date.nager.at/api/v3/PublicHolidays/2026/GB",
+      "https://date.nager.at/api/v3/PublicHolidays/2027/GB"
+    ],
+    "verified_at": "2026-11-09"
+  },
+  {
+    "id": "boxing-day",
+    "cn": "节礼日",
+    "en": "Boxing Day",
+    "country_region": "英国",
+    "theme": "家庭",
+    "date_rule": "固定公历 12 月 26 日；若落在周末，法定补休顺延",
+    "dates_2026_2027": [
+      "2026-12-26",
+      "2027-12-26"
+    ],
+    "status": "fixed",
+    "holiday_type": "public_holiday",
+    "cn_brief": "节礼日是圣诞节次日，英国与部分英联邦地区放假。常见安排是家庭聚餐、走亲访友或看体育比赛；若落在周末，法定补休会顺延。",
+    "en_brief": "Boxing Day falls the day after Christmas and is a public holiday in the UK and parts of the Commonwealth. Family meals, visits, and sport are common; when it lands on a weekend, the statutory day off moves.",
+    "questions": [
+      {
+        "cn": "你们圣诞节后还有一天专门休息吗？",
+        "en": "Do you have a second day off right after Christmas?"
+      },
+      {
+        "cn": "节日里你更愿意出门还是待在家？",
+        "en": "During the holidays, would you rather go out or stay in?"
+      }
+    ],
+    "related_place_ids": [],
+    "source_urls": [
+      "https://date.nager.at/api/v3/PublicHolidays/2026/GB",
+      "https://date.nager.at/api/v3/PublicHolidays/2027/GB"
+    ],
+    "verified_at": "2026-11-09"
+  },
+  {
+    "id": "easter-sunday",
+    "cn": "复活节",
+    "en": "Easter Sunday",
+    "country_region": "英国",
+    "theme": "宗教",
+    "date_rule": "春分后首个满月之后的星期日（日期待确认）",
+    "dates_2026_2027": [
+      "2026-04-05",
+      "2027-03-28"
+    ],
+    "status": "pending",
+    "holiday_type": "observance",
+    "cn_brief": "复活节日期按春分后首个满月后的星期日计算，每年不同。英国当天多有家庭聚餐，但法定假日通常是耶稣受难日与复活节星期一。",
+    "en_brief": "Easter Sunday is dated by the first Sunday after the first full moon following the spring equinox, so it moves each year. In the UK it is often a family day, while the bank holidays fall on Good Friday and Easter Monday.",
+    "questions": [
+      {
+        "cn": "你们家复活节会聚餐还是去教堂？",
+        "en": "Does your family have a meal or go to church at Easter?"
+      },
+      {
+        "cn": "你喜欢有固定日期的节日还是每年变动的？",
+        "en": "Do you prefer holidays with a fixed date or ones that move each year?"
+      }
+    ],
+    "related_place_ids": [],
+    "source_urls": [
+      "https://date.nager.at/api/v3/PublicHolidays/2026/GB",
+      "https://date.nager.at/api/v3/PublicHolidays/2027/GB"
+    ],
+    "verified_at": "2026-11-09"
+  },
+  {
+    "id": "st-andrews-day",
+    "cn": "圣安德鲁日",
+    "en": "St Andrew's Day",
+    "country_region": "英国·苏格兰",
+    "theme": "文化",
+    "date_rule": "固定公历 11 月 30 日",
+    "dates_2026_2027": [
+      "2026-11-30",
+      "2027-11-30"
+    ],
+    "status": "fixed",
+    "holiday_type": "public_holiday",
+    "cn_brief": "圣安德鲁日是苏格兰的国庆日，11 月 30 日。苏格兰有银行假日，但并非所有单位都休息，活动以本地社区和音乐为主。",
+    "en_brief": "St Andrew's Day on 30 November marks Scotland's national day. It is a bank holiday in Scotland, though not every workplace closes; local events often focus on community and music.",
+    "questions": [
+      {
+        "cn": "你们有地区性的国庆日吗？",
+        "en": "Does your region have its own national day?"
+      },
+      {
+        "cn": "这一天你们会穿传统服饰吗？",
+        "en": "Do people wear traditional clothes on this day?"
+      }
+    ],
+    "related_place_ids": [],
+    "source_urls": [
+      "https://date.nager.at/api/v3/PublicHolidays/2026/GB",
+      "https://date.nager.at/api/v3/PublicHolidays/2027/GB"
+    ],
+    "verified_at": "2026-11-09"
+  },
+  {
+    "id": "remembrance-day",
+    "cn": "阵亡将士纪念日",
+    "en": "Remembrance Day",
+    "country_region": "英国",
+    "theme": "纪念",
+    "date_rule": "固定公历 11 月 11 日",
+    "dates_2026_2027": [
+      "2026-11-11",
+      "2027-11-11"
+    ],
+    "status": "fixed",
+    "holiday_type": "observance",
+    "cn_brief": "英国的阵亡将士纪念日在 11 月 11 日，常见佩戴红色虞美人花和默哀。它更接近纪念日而非放假节日，问的时候要留出空间。",
+    "en_brief": "Remembrance Day in the UK is on 11 November, often marked with red poppies and a two-minute silence. It is a commemoration rather than a day off, so leave room for people who may not wish to talk.",
+    "questions": [
+      {
+        "cn": "你们有佩戴某种标志纪念的日子吗？",
+        "en": "Is there a day when people wear a symbol to remember?"
+      },
+      {
+        "cn": "遇到这类纪念日，你会主动聊起吗？",
+        "en": "On days like this, would you bring it up in conversation?"
+      }
+    ],
+    "related_place_ids": [],
+    "source_urls": [
+      "https://date.nager.at/api/v3/PublicHolidays/2026/GB",
+      "https://date.nager.at/api/v3/PublicHolidays/2027/GB"
+    ],
+    "verified_at": "2026-11-09"
+  },
+  {
+    "id": "thanksgiving",
+    "cn": "感恩节",
+    "en": "Thanksgiving",
+    "country_region": "美国",
+    "theme": "家庭",
+    "date_rule": "美国 11 月第四个星期四（计算值，待复核）",
+    "dates_2026_2027": [
+      "2026-11-26",
+      "2027-11-25"
+    ],
+    "status": "pending",
+    "holiday_type": "public_holiday",
+    "cn_brief": "美国家庭聚餐和表达感谢的日子，常和火鸡、南瓜派联系在一起。加拿大感恩节在 10 月，日期不同。",
+    "en_brief": "A US family meal and a day for giving thanks, often linked to turkey and pumpkin pie. Canada's Thanksgiving is in October and follows a different date.",
+    "questions": [
+      {
+        "cn": "你们家有固定聚餐的节日吗？",
+        "en": "Does your family have a fixed holiday for a big meal?"
+      },
+      {
+        "cn": "你会在这天给谁发消息说谢谢？",
+        "en": "Is there someone you would message to say thank you?"
+      }
+    ],
+    "related_place_ids": [],
+    "source_urls": [
+      "https://date.nager.at/api/v3/PublicHolidays/2026/US"
+    ],
+    "verified_at": "2026-11-09"
+  },
+  {
+    "id": "halloween",
+    "cn": "万圣节",
+    "en": "Halloween",
+    "country_region": "美国",
+    "theme": "文化",
+    "date_rule": "固定公历 10 月 31 日",
+    "dates_2026_2027": [
+      "2026-10-31",
+      "2027-10-31"
+    ],
+    "status": "fixed",
+    "holiday_type": "observance",
+    "cn_brief": "打扮、南瓜灯和要糖果的夜晚，在美国和部分英国地区更常见。成年人怎么过差别很大。",
+    "en_brief": "A night of costumes, pumpkins, and trick-or-treating, more common in the US and parts of the UK. How adults mark it varies a lot.",
+    "questions": [
+      {
+        "cn": "你小时候会去要糖果吗？",
+        "en": "Did you go trick-or-treating as a child?"
+      },
+      {
+        "cn": "你现在还会为万圣节打扮吗？",
+        "en": "Do you still dress up for Halloween?"
+      }
+    ],
+    "related_place_ids": [],
+    "source_urls": [],
+    "source_note": "公历固定日期；来源待补",
+    "verified_at": "2026-11-09"
+  },
+  {
+    "id": "independence-day",
+    "cn": "美国独立日",
+    "en": "Independence Day",
+    "country_region": "美国",
+    "theme": "国家",
+    "date_rule": "固定公历 7 月 4 日",
+    "dates_2026_2027": [
+      "2026-07-04",
+      "2027-07-04"
+    ],
+    "status": "fixed",
+    "holiday_type": "public_holiday",
+    "cn_brief": "美国独立日在 7 月 4 日。常见烟花、烧烤和家庭聚会，也有人只当作夏日假期。不是每个家庭都会大办。",
+    "en_brief": "US Independence Day on 4 July is often marked with fireworks, barbecues, and family gatherings, though some people simply enjoy a summer day off. Not every household celebrates in a big way.",
+    "questions": [
+      {
+        "cn": "你们国庆会放烟花吗？",
+        "en": "Do people set off fireworks on your national day?"
+      },
+      {
+        "cn": "你会参加社区活动还是和家人待在一起？",
+        "en": "Do you join community events or stay with family?"
+      }
+    ],
+    "related_place_ids": [],
+    "source_urls": [
+      "https://date.nager.at/api/v3/PublicHolidays/2026/US"
+    ],
+    "verified_at": "2026-11-09"
+  },
+  {
+    "id": "mlk-day",
+    "cn": "马丁·路德·金纪念日",
+    "en": "Martin Luther King Jr. Day",
+    "country_region": "美国",
+    "theme": "纪念",
+    "date_rule": "1 月第三个星期一（计算值，待复核）",
+    "dates_2026_2027": [
+      "2026-01-19",
+      "2027-01-18"
+    ],
+    "status": "pending",
+    "holiday_type": "public_holiday",
+    "cn_brief": "美国纪念马丁·路德·金的联邦假日，定在 1 月第三个星期一。学校与机构常有纪念活动，也有人把它当作长周末。",
+    "en_brief": "Martin Luther King Jr. Day is a US federal holiday on the third Monday of January. Schools and organisations often hold commemorations, while others treat it as a long weekend.",
+    "questions": [
+      {
+        "cn": "你们有专门纪念某位人物的公共假日吗？",
+        "en": "Does your country have a public holiday honouring a particular person?"
+      },
+      {
+        "cn": "这样的日子你更愿意参加活动还是安静度过？",
+        "en": "On a day like this, would you join events or keep it quiet?"
+      }
+    ],
+    "related_place_ids": [],
+    "source_urls": [
+      "https://date.nager.at/api/v3/PublicHolidays/2026/US"
+    ],
+    "verified_at": "2026-11-09"
+  },
+  {
+    "id": "memorial-day",
+    "cn": "美国阵亡将士纪念日",
+    "en": "Memorial Day",
+    "country_region": "美国",
+    "theme": "纪念",
+    "date_rule": "5 月最后一个星期一（计算值，待复核）",
+    "dates_2026_2027": [
+      "2026-05-25",
+      "2027-05-31"
+    ],
+    "status": "pending",
+    "holiday_type": "public_holiday",
+    "cn_brief": "美国阵亡将士纪念日在 5 月最后一个星期一，常被视为夏季开始。有人扫墓纪念，也有人去海边或烧烤。",
+    "en_brief": "US Memorial Day falls on the last Monday of May and often marks the start of summer. Some people visit graves and honour the fallen, while others head to the beach or a barbecue.",
+    "questions": [
+      {
+        "cn": "你们有纪念阵亡者的日子吗？",
+        "en": "Does your country have a day to remember the fallen?"
+      },
+      {
+        "cn": "这个周末你更想去海边还是待在家？",
+        "en": "On this long weekend, would you rather go to the coast or stay home?"
+      }
+    ],
+    "related_place_ids": [],
+    "source_urls": [
+      "https://date.nager.at/api/v3/PublicHolidays/2026/US"
+    ],
+    "verified_at": "2026-11-09"
+  },
+  {
+    "id": "juneteenth",
+    "cn": "六月节",
+    "en": "Juneteenth",
+    "country_region": "美国",
+    "theme": "纪念",
+    "date_rule": "固定公历 6 月 19 日",
+    "dates_2026_2027": [
+      "2026-06-19",
+      "2027-06-19"
+    ],
+    "status": "fixed",
+    "holiday_type": "public_holiday",
+    "cn_brief": "美国六月节在 6 月 19 日，纪念奴隶制结束。近年成为联邦假日，各地有游行、音乐和家庭聚会，参与程度不一。",
+    "en_brief": "Juneteenth on 19 June marks the end of slavery in the US. It became a federal holiday recently, with parades, music, and family gatherings in many places, though participation varies.",
+    "questions": [
+      {
+        "cn": "你们有纪念历史转折的节日吗？",
+        "en": "Does your country have a holiday marking a turning point in history?"
+      },
+      {
+        "cn": "你会通过什么方式了解这段历史？",
+        "en": "How do you usually learn about history like this?"
+      }
+    ],
+    "related_place_ids": [],
+    "source_urls": [
+      "https://date.nager.at/api/v3/PublicHolidays/2026/US"
+    ],
+    "verified_at": "2026-11-09"
+  },
+  {
+    "id": "shichi-go-san",
+    "cn": "七五三",
+    "en": "Shichi-Go-San",
+    "country_region": "日本",
+    "theme": "家庭",
+    "date_rule": "固定公历 11 月 15 日（地区习俗待确认）",
+    "dates_2026_2027": [
+      "2026-11-15",
+      "2027-11-15"
+    ],
+    "status": "pending",
+    "holiday_type": "festival_day",
+    "cn_brief": "日本为三岁、五岁、七岁孩子祈福的日子，常见穿传统服装去神社。家庭做法差别很大。",
+    "en_brief": "A Japanese day for children aged three, five, and seven, often marked with traditional clothes and a shrine visit. Family practice varies.",
+    "questions": [
+      {
+        "cn": "你们小时候有类似的成长仪式吗？",
+        "en": "Did you have a coming-of-age ceremony as a child?"
+      },
+      {
+        "cn": "你家里会保留小时候的照片吗？",
+        "en": "Does your family keep childhood photos?"
+      }
+    ],
+    "related_place_ids": [],
+    "source_urls": [],
+    "verified_at": "2026-11-09"
+  },
+  {
+    "id": "japan-childrens-day",
+    "cn": "儿童节（こどもの日）",
+    "en": "Children's Day",
+    "country_region": "日本",
+    "theme": "家庭",
+    "date_rule": "固定公历 5 月 5 日",
+    "dates_2026_2027": [
+      "2026-05-05",
+      "2027-05-05"
+    ],
+    "status": "fixed",
+    "holiday_type": "public_holiday",
+    "cn_brief": "日本儿童节在 5 月 5 日，是国定假日。常见挂鲤鱼旗、摆盔甲装饰，祝愿孩子健康长大；家庭做法差别很大。",
+    "en_brief": "Japan's Children's Day on 5 May is a national holiday. Families often hang carp streamers and display samurai helmets to wish children good health, though family practice and decorations differ.",
+    "questions": [
+      {
+        "cn": "你们有专门为孩子设的节日吗？",
+        "en": "Does your country have a holiday just for children?"
+      },
+      {
+        "cn": "你小时候家里会为节日做什么装饰？",
+        "en": "Did your family decorate for festivals when you were a child?"
+      }
+    ],
+    "related_place_ids": [],
+    "source_urls": [
+      "https://date.nager.at/api/v3/PublicHolidays/2026/JP",
+      "https://date.nager.at/api/v3/PublicHolidays/2027/JP"
+    ],
+    "verified_at": "2026-11-09"
+  },
+  {
+    "id": "japan-culture-day",
+    "cn": "文化日",
+    "en": "Culture Day",
+    "country_region": "日本",
+    "theme": "文化",
+    "date_rule": "固定公历 11 月 3 日",
+    "dates_2026_2027": [
+      "2026-11-03",
+      "2027-11-03"
+    ],
+    "status": "fixed",
+    "holiday_type": "public_holiday",
+    "cn_brief": "日本文化日在 11 月 3 日，是国定假日。常见展览、演出与文化活动，部分博物馆免费开放，学校也会举办作品展。",
+    "en_brief": "Culture Day in Japan falls on 3 November as a national holiday. Exhibitions, performances, and cultural events are common, some museums open free, and schools may hold displays of student work.",
+    "questions": [
+      {
+        "cn": "你们有专门展示文化的节日吗？",
+        "en": "Does your country have a day to showcase culture?"
+      },
+      {
+        "cn": "你会去看展览还是待在家里？",
+        "en": "Would you visit an exhibition or stay home?"
+      }
+    ],
+    "related_place_ids": [],
+    "source_urls": [
+      "https://date.nager.at/api/v3/PublicHolidays/2026/JP",
+      "https://date.nager.at/api/v3/PublicHolidays/2027/JP"
+    ],
+    "verified_at": "2026-11-09"
+  },
+  {
+    "id": "japan-obon",
+    "cn": "盂兰盆节",
+    "en": "Obon",
+    "country_region": "日本",
+    "theme": "家庭",
+    "date_rule": "8 月 13–16 日前后（非国定假日，地区日期不同，待确认）",
+    "dates_2026_2027": [
+      "2026-08-13",
+      "2027-08-13"
+    ],
+    "status": "pending",
+    "holiday_type": "observance",
+    "cn_brief": "日本的盂兰盆节在 8 月中旬，不是国定假日，各地日期不同。常见返乡扫墓与家庭聚会，类似中国的清明与团聚。",
+    "en_brief": "Obon in Japan falls in mid-August. It is not a national holiday and dates differ by region; many people return home, visit family graves, and gather with relatives for meals.",
+    "questions": [
+      {
+        "cn": "你们有必须回老家扫墓的时节吗？",
+        "en": "Is there a season when people go home to visit family graves?"
+      },
+      {
+        "cn": "长途回家对你来说是负担还是期待？",
+        "en": "Is travelling home for this something you look forward to or find tiring?"
+      }
+    ],
+    "related_place_ids": [],
+    "source_urls": [],
+    "verified_at": "2026-11-09"
+  },
+  {
+    "id": "chuseok",
+    "cn": "秋夕",
+    "en": "Chuseok",
+    "country_region": "韩国",
+    "theme": "家庭",
+    "date_rule": "农历八月十五（待确认）",
+    "dates_2026_2027": [
+      "2026-09-25",
+      "2027-09-15"
+    ],
+    "status": "pending",
+    "holiday_type": "public_holiday",
+    "cn_brief": "韩国的秋收与家庭节日，常与返乡、祭祖和分享食物有关。交通和家庭安排差别很大。",
+    "en_brief": "A Korean harvest and family holiday, often linked to travelling home, remembrance, and sharing food. Travel and family arrangements vary.",
+    "questions": [
+      {
+        "cn": "你们有必须回老家的节日吗？",
+        "en": "Is there a holiday when you are expected to go back home?"
+      },
+      {
+        "cn": "节日食物里你最期待哪一道？",
+        "en": "Which festival food do you look forward to most?"
+      }
+    ],
+    "related_place_ids": [],
+    "source_urls": [
+      "https://date.nager.at/api/v3/PublicHolidays/2026/KR",
+      "https://date.nager.at/api/v3/PublicHolidays/2027/KR"
+    ],
+    "verified_at": "2026-11-09"
+  },
+  {
+    "id": "seollal",
+    "cn": "春节（설날）",
+    "en": "Seollal",
+    "country_region": "韩国",
+    "theme": "家庭",
+    "date_rule": "农历正月初一（待确认；官方假期通常含前后各一天）",
+    "dates_2026_2027": [
+      "2026-02-17",
+      "2027-02-06"
+    ],
+    "status": "pending",
+    "holiday_type": "public_holiday",
+    "cn_brief": "韩国的春节称설날，农历正月初一，通常连休前后各一天。常见返乡、祭祖和吃年糕汤，交通会很拥挤。",
+    "en_brief": "Seollal is the Korean Lunar New Year on the first day of the first lunar month, usually with a three-day break. People travel home, honour ancestors, and eat rice-cake soup; roads get busy.",
+    "questions": [
+      {
+        "cn": "你们过年也会返乡吗？",
+        "en": "Do people travel home for the new year where you are from?"
+      },
+      {
+        "cn": "过年必吃的一道菜是什么？",
+        "en": "What dish is a must at your new year?"
+      }
+    ],
+    "related_place_ids": [],
+    "source_urls": [
+      "https://date.nager.at/api/v3/PublicHolidays/2026/KR",
+      "https://date.nager.at/api/v3/PublicHolidays/2027/KR"
+    ],
+    "verified_at": "2026-11-09"
+  },
+  {
+    "id": "hangul-day",
+    "cn": "韩文节",
+    "en": "Hangul Day",
+    "country_region": "韩国",
+    "theme": "文化",
+    "date_rule": "固定公历 10 月 9 日",
+    "dates_2026_2027": [
+      "2026-10-09",
+      "2027-10-09"
+    ],
+    "status": "fixed",
+    "holiday_type": "public_holiday",
+    "cn_brief": "韩文节在 10 月 9 日，纪念韩文字母的创制，是国定假日。学校与机构会有相关活动，也有人只当作休息日。",
+    "en_brief": "Hangul Day on 9 October marks the creation of the Korean alphabet and is a national holiday. Schools and organisations hold events, though some people simply enjoy the day off.",
+    "questions": [
+      {
+        "cn": "你们的文字有专门的纪念日吗？",
+        "en": "Does your writing system have its own day?"
+      },
+      {
+        "cn": "你觉得学一门新文字最难的是什么？",
+        "en": "What is the hardest part of learning a new script for you?"
+      }
+    ],
+    "related_place_ids": [],
+    "source_urls": [
+      "https://date.nager.at/api/v3/PublicHolidays/2026/KR",
+      "https://date.nager.at/api/v3/PublicHolidays/2027/KR"
+    ],
+    "verified_at": "2026-11-09"
+  },
+  {
+    "id": "songkran",
+    "cn": "宋干节",
+    "en": "Songkran",
+    "country_region": "泰国",
+    "theme": "新年",
+    "date_rule": "公历 4 月 13–15 日前后（待确认）",
+    "dates_2026_2027": [
+      "2026-04-13",
+      "2027-04-13"
+    ],
+    "status": "pending",
+    "holiday_type": "public_holiday",
+    "cn_brief": "泰国的新年节日，常见泼水、去寺庙和家庭团聚。各地活动与放假安排不同。",
+    "en_brief": "The Thai New Year, commonly associated with water pouring, temple visits, and family time. Local events and public holidays differ by region.",
+    "questions": [
+      {
+        "cn": "你经历过泼水节吗？",
+        "en": "Have you ever experienced Songkran?"
+      },
+      {
+        "cn": "你们新年会先去寺庙还是先和家人吃饭？",
+        "en": "At New Year, do you visit a temple first or have a family meal first?"
+      }
+    ],
+    "related_place_ids": [],
+    "source_urls": [],
+    "verified_at": "2026-11-09"
+  },
+  {
+    "id": "loy-krathong",
+    "cn": "水灯节",
+    "en": "Loy Krathong",
+    "country_region": "泰国",
+    "theme": "文化",
+    "date_rule": "泰历十二月满月（待确认）",
+    "dates_2026_2027": [
+      "2026-11-24",
+      "2027-11-13"
+    ],
+    "status": "pending",
+    "holiday_type": "festival_day",
+    "cn_brief": "泰国水灯节在泰历十二月满月，公历多在 11 月。人们把装饰过的水灯放入河中许愿，清迈同期还有天灯活动。",
+    "en_brief": "Loy Krathong falls on the full moon of the twelfth Thai month, usually in November. People float decorated baskets on rivers to make wishes, and Chiang Mai adds sky lanterns at the same time.",
+    "questions": [
+      {
+        "cn": "你放过水灯或天灯吗？",
+        "en": "Have you ever floated a water lantern or sky lantern?"
+      },
+      {
+        "cn": "如果许一个愿，你会许什么？",
+        "en": "If you made one wish, what would it be?"
+      }
+    ],
+    "related_place_ids": [],
+    "source_urls": [
+      "https://en.wikipedia.org/wiki/Loy_Krathong"
+    ],
+    "verified_at": "2026-11-09"
+  },
+  {
+    "id": "visakha-bucha",
+    "cn": "卫塞节",
+    "en": "Visakha Bucha",
+    "country_region": "泰国",
+    "theme": "宗教",
+    "date_rule": "泰历六月满月（2026/2027 公历日期待确认）",
+    "dates_2026_2027": [
+      null,
+      null
+    ],
+    "status": "pending",
+    "holiday_type": "public_holiday",
+    "cn_brief": "泰国的卫塞节在泰历六月满月，纪念佛陀诞生、成道与涅槃，是佛教重要日子，部分场所不售酒。日期每年浮动，以官方公告为准。",
+    "en_brief": "Visakha Bucha in Thailand falls on the full moon of the sixth Thai month and marks the Buddha's birth, enlightenment, and passing. It is a major Buddhist day, and some places restrict alcohol sales.",
+    "questions": [
+      {
+        "cn": "你们有纪念宗教人物的日子吗？",
+        "en": "Does your country have days marking religious figures?"
+      },
+      {
+        "cn": "这类日子你会去寺庙还是待在家？",
+        "en": "On days like this, do you visit a temple or stay home?"
+      }
+    ],
+    "related_place_ids": [],
+    "source_urls": [],
+    "verified_at": "2026-11-09"
+  },
+  {
+    "id": "diwali",
+    "cn": "排灯节",
+    "en": "Diwali",
+    "country_region": "印度",
+    "theme": "家庭",
+    "date_rule": "印度历节日（2026/2027 日期待核实）",
+    "dates_2026_2027": [
+      "2026-11-08",
+      "2027-10-29"
+    ],
+    "status": "pending",
+    "holiday_type": "festival_day",
+    "cn_brief": "印度的灯光节，常见点灯、家庭聚会和互赠甜点。不同地区与社群的过法差异很大，不要假设每个人都庆祝。",
+    "en_brief": "The Indian festival of lights, often marked with lamps, family gatherings, and sweets. Practice varies widely by region and community; do not assume everyone celebrates.",
+    "questions": [
+      {
+        "cn": "你家乡有类似的灯光节日吗？",
+        "en": "Is there a festival of lights where you are from?"
+      },
+      {
+        "cn": "节日里你更喜欢在家还是出门？",
+        "en": "During festivals, do you prefer staying home or going out?"
+      }
+    ],
+    "related_place_ids": [],
+    "source_urls": [],
+    "verified_at": "2026-11-09"
+  },
+  {
+    "id": "holi",
+    "cn": "洒红节",
+    "en": "Holi",
+    "country_region": "印度",
+    "theme": "文化",
+    "date_rule": "印度历春季节日（2026/2027 公历日期待确认）",
+    "dates_2026_2027": [
+      null,
+      null
+    ],
+    "status": "pending",
+    "holiday_type": "festival_day",
+    "cn_brief": "印度的洒红节在春天，人们互相泼洒彩粉和水，象征色彩与新生。日期按印度历计算，各地不同，也有人不参加。",
+    "en_brief": "Holi is a spring festival in India where people throw coloured powder and water, celebrating colour and renewal. The date follows the Hindu calendar and varies by region; some people do not take part.",
+    "questions": [
+      {
+        "cn": "你参加过泼彩粉的节日吗？",
+        "en": "Have you joined a festival where people throw coloured powder?"
+      },
+      {
+        "cn": "节日里你更喜欢热闹还是安静？",
+        "en": "At festivals, do you prefer lively crowds or a quiet time?"
+      }
+    ],
+    "related_place_ids": [],
+    "source_urls": [
+      "https://en.wikipedia.org/wiki/Holi"
+    ],
+    "verified_at": "2026-11-09"
+  },
+  {
+    "id": "republic-day",
+    "cn": "共和国日",
+    "en": "Republic Day",
+    "country_region": "印度",
+    "theme": "国家",
+    "date_rule": "固定公历 1 月 26 日",
+    "dates_2026_2027": [
+      "2026-01-26",
+      "2027-01-26"
+    ],
+    "status": "fixed",
+    "holiday_type": "public_holiday",
+    "cn_brief": "印度共和国日在 1 月 26 日，是国定假日。首都举行阅兵与游行，学校也有活动；各地庆祝规模不一样。",
+    "en_brief": "Republic Day in India is on 26 January and is a national holiday. The capital holds a parade and schools often mark it, though the scale of celebrations varies by place.",
+    "questions": [
+      {
+        "cn": "你们的国庆会阅兵或游行吗？",
+        "en": "Does your national day include a parade?"
+      },
+      {
+        "cn": "你会去现场还是在家看电视？",
+        "en": "Would you go in person or watch it at home?"
+      }
+    ],
+    "related_place_ids": [],
+    "source_urls": [],
+    "source_note": "公历固定日期；来源待补",
+    "verified_at": "2026-11-09"
+  },
+  {
+    "id": "gandhi-jayanti",
+    "cn": "甘地诞辰日",
+    "en": "Gandhi Jayanti",
+    "country_region": "印度",
+    "theme": "纪念",
+    "date_rule": "固定公历 10 月 2 日",
+    "dates_2026_2027": [
+      "2026-10-02",
+      "2027-10-02"
+    ],
+    "status": "fixed",
+    "holiday_type": "public_holiday",
+    "cn_brief": "甘地诞辰日是印度国定假日，10 月 2 日。常见纪念活动与献花，部分场所会有限制；不是每个人都以同样方式过。",
+    "en_brief": "Gandhi Jayanti on 2 October is a national holiday in India, marked with commemorations and flower offerings. Some venues have restrictions, and not everyone observes it in the same way.",
+    "questions": [
+      {
+        "cn": "你们有纪念重要人物的日子吗？",
+        "en": "Does your country have a day honouring an important figure?"
+      },
+      {
+        "cn": "你了解这个人的哪一面？",
+        "en": "Which side of that person do you know best?"
+      }
+    ],
+    "related_place_ids": [],
+    "source_urls": [],
+    "source_note": "公历固定日期；来源待补",
+    "verified_at": "2026-11-09"
+  },
+  {
+    "id": "singapore-nd",
+    "cn": "新加坡国庆日",
+    "en": "National Day",
+    "country_region": "新加坡",
+    "theme": "国家",
+    "date_rule": "固定公历 8 月 9 日",
+    "dates_2026_2027": [
+      "2026-08-09",
+      "2027-08-09"
+    ],
+    "status": "fixed",
+    "holiday_type": "public_holiday",
+    "cn_brief": "新加坡的国庆公共假期，常见庆典、烟花和社区活动。具体安排以当年官方公告为准。",
+    "en_brief": "Singapore's national day public holiday, often marked with celebrations, fireworks, and community events. Check the official programme each year.",
+    "questions": [
+      {
+        "cn": "你们国庆会看庆典还是和朋友聚？",
+        "en": "On your national day, do you watch the celebrations or meet friends?"
+      },
+      {
+        "cn": "你会为国庆专门出门吗？",
+        "en": "Do you go out specially for national day?"
+      }
+    ],
+    "related_place_ids": [],
+    "source_urls": [
+      "https://www.mom.gov.sg/employment-practices/public-holidays"
+    ],
+    "verified_at": "2026-11-09"
+  },
+  {
+    "id": "vesak-day",
+    "cn": "卫塞节（新加坡）",
+    "en": "Vesak Day",
+    "country_region": "新加坡",
+    "theme": "宗教",
+    "date_rule": "农历四月十五（待确认）",
+    "dates_2026_2027": [
+      "2026-05-31",
+      "2027-05-20"
+    ],
+    "status": "pending",
+    "holiday_type": "public_holiday",
+    "cn_brief": "新加坡的卫塞节纪念佛陀诞生、成道与涅槃，是公共假期。常见到寺庙祈福、浴佛与布施，日期按农历计算。",
+    "en_brief": "Vesak Day in Singapore marks the Buddha's birth, enlightenment, and passing, and is a public holiday. Temple visits, bathing the Buddha, and charity are common; the date follows the lunar calendar.",
+    "questions": [
+      {
+        "cn": "你们有佛教节日吗？",
+        "en": "Does your country have Buddhist holidays?"
+      },
+      {
+        "cn": "节日你会去寺庙还是和家人吃饭？",
+        "en": "On this day, do you visit a temple or have a family meal?"
+      }
+    ],
+    "related_place_ids": [],
+    "source_urls": [
+      "https://www.mom.gov.sg/employment-practices/public-holidays"
+    ],
+    "verified_at": "2026-11-09"
+  },
+  {
+    "id": "hari-raya-puasa",
+    "cn": "开斋节（新加坡）",
+    "en": "Hari Raya Puasa",
+    "country_region": "新加坡",
+    "theme": "宗教",
+    "date_rule": "伊斯兰历十月一日（待确认）",
+    "dates_2026_2027": [
+      "2026-03-21",
+      "2027-03-10"
+    ],
+    "status": "pending",
+    "holiday_type": "public_holiday",
+    "cn_brief": "新加坡的开斋节是公共假期，标志斋月结束。常见家庭团聚、互道祝福与准备节日食物，日期按伊斯兰历。",
+    "en_brief": "Hari Raya Puasa in Singapore is a public holiday that marks the end of Ramadan. Family gatherings, greetings, and festive food are common, and the date follows the Islamic calendar.",
+    "questions": [
+      {
+        "cn": "你们有斋戒或开斋的习俗吗？",
+        "en": "Do you have a fasting or fast-breaking tradition?"
+      },
+      {
+        "cn": "节日里你会去谁家做客？",
+        "en": "Whose home would you visit during this festival?"
+      }
+    ],
+    "related_place_ids": [],
+    "source_urls": [
+      "https://www.mom.gov.sg/employment-practices/public-holidays"
+    ],
+    "verified_at": "2026-11-09"
+  },
+  {
+    "id": "new-year",
+    "cn": "元旦",
+    "en": "New Year's Day",
+    "country_region": "国际",
+    "theme": "新年",
+    "date_rule": "固定公历 1 月 1 日",
+    "dates_2026_2027": [
+      "2026-01-01",
+      "2027-01-01"
+    ],
+    "status": "fixed",
+    "holiday_type": "public_holiday",
+    "cn_brief": "公历新年的第一天。不同地方有倒计时、烟花或家庭聚餐，也有人只把它当成一个普通休息日。",
+    "en_brief": "The first day of the calendar year. Some places have countdowns, fireworks, or family meals; others treat it as a quiet day off.",
+    "questions": [
+      {
+        "cn": "你们那里跨年有什么固定习惯吗？",
+        "en": "Is there a fixed way people mark the new year where you are from?"
+      },
+      {
+        "cn": "你更喜欢热闹倒数还是安静待在家？",
+        "en": "Would you rather join a big countdown or stay in quietly?"
+      }
+    ],
+    "related_place_ids": [],
+    "source_urls": [],
+    "source_note": "公历固定日期；来源待补",
+    "verified_at": "2026-11-09"
+  },
+  {
+    "id": "womens-day",
+    "cn": "国际妇女节",
+    "en": "International Women's Day",
+    "country_region": "国际",
+    "theme": "纪念",
+    "date_rule": "固定公历 3 月 8 日",
+    "dates_2026_2027": [
+      "2026-03-08",
+      "2027-03-08"
+    ],
+    "status": "fixed",
+    "holiday_type": "observance",
+    "cn_brief": "关注女性权益与贡献的国际纪念日。不同国家有不同做法，有的是公共假期，有的只是纪念活动。",
+    "en_brief": "An international day recognising women's rights and contributions. Practice differs by country: some have a public holiday, others only events.",
+    "questions": [
+      {
+        "cn": "你们那里这天会给女性送花吗？",
+        "en": "Do people give flowers to women on this day where you are from?"
+      },
+      {
+        "cn": "你觉得这类纪念日更像庆祝还是提醒？",
+        "en": "Do you see this day more as a celebration or a reminder?"
+      }
+    ],
+    "related_place_ids": [],
+    "source_urls": [],
+    "source_note": "公历固定日期；来源待补",
+    "verified_at": "2026-11-09"
+  },
+  {
+    "id": "students-day",
+    "cn": "国际大学生节",
+    "en": "International Students' Day",
+    "country_region": "国际",
+    "theme": "青年",
+    "date_rule": "固定公历 11 月 17 日",
+    "dates_2026_2027": [
+      "2026-11-17",
+      "2027-11-17"
+    ],
+    "status": "fixed",
+    "holiday_type": "observance",
+    "cn_brief": "纪念学生运动的国际纪念日，不同学校会有讲座或活动。它更像纪念日，不是普遍放假的节日。",
+    "en_brief": "An international commemoration linked to a student movement. Some schools hold talks or events; it is a remembrance day rather than a universal holiday.",
+    "questions": [
+      {
+        "cn": "你读书时学校会办这类纪念活动吗？",
+        "en": "Did your school hold events like this when you were a student?"
+      },
+      {
+        "cn": "你大学时最难忘的活动是什么？",
+        "en": "What was the most memorable event from your university years?"
+      }
+    ],
+    "related_place_ids": [],
+    "source_urls": [],
+    "source_note": "公历固定日期；来源待补",
+    "verified_at": "2026-11-09"
+  },
+  {
+    "id": "christmas",
+    "cn": "圣诞节",
+    "en": "Christmas",
+    "country_region": "国际",
+    "theme": "家庭",
+    "date_rule": "固定公历 12 月 25 日",
+    "dates_2026_2027": [
+      "2026-12-25",
+      "2027-12-25"
+    ],
+    "status": "fixed",
+    "holiday_type": "public_holiday",
+    "cn_brief": "在许多国家是家庭聚会和交换礼物的日子，也有人只当作年末假期。宗教与家庭习惯差异很大。",
+    "en_brief": "In many countries a time for family gatherings and gifts; for others it is simply a year-end break. Religious and family practices vary widely.",
+    "questions": [
+      {
+        "cn": "你们家圣诞节会交换礼物吗？",
+        "en": "Does your family exchange gifts at Christmas?"
+      },
+      {
+        "cn": "你更喜欢节日聚餐还是安静休息？",
+        "en": "Do you prefer a festive meal or a quiet rest?"
+      }
+    ],
+    "related_place_ids": [],
+    "source_urls": [],
+    "source_note": "公历固定日期；来源待补",
+    "verified_at": "2026-11-09"
+  },
+  {
+    "id": "singles-day",
+    "cn": "双十一",
+    "en": "Singles' Day",
+    "country_region": "中国",
+    "theme": "购物",
+    "date_rule": "固定公历 11 月 11 日（商业节日，非公共假期）",
+    "dates_2026_2027": [
+      "2026-11-11",
+      "2027-11-11"
+    ],
+    "status": "fixed",
+    "holiday_type": "observance",
+    "cn_brief": "原本是校园里的“光棍节”，后来变成大型网购促销日。它不是传统节日，也不放假。",
+    "en_brief": "Originally a campus joke about being single, now a major online shopping day. It is not a traditional festival and not a public holiday.",
+    "questions": [
+      {
+        "cn": "你会在双十一买东西吗？",
+        "en": "Do you shop on Singles' Day?"
+      },
+      {
+        "cn": "你更喜欢提前计划购物还是看到合适才买？",
+        "en": "Do you plan purchases in advance or buy when you see something good?"
+      }
+    ],
+    "related_place_ids": [],
+    "source_urls": [],
+    "source_note": "公历固定日期；来源待补",
+    "verified_at": "2026-11-09"
+  },
+  {
+    "id": "earth-day",
+    "cn": "世界地球日",
+    "en": "Earth Day",
+    "country_region": "国际",
+    "theme": "环保",
+    "date_rule": "固定公历 4 月 22 日",
+    "dates_2026_2027": [
+      "2026-04-22",
+      "2027-04-22"
+    ],
+    "status": "fixed",
+    "holiday_type": "observance",
+    "cn_brief": "世界地球日在 4 月 22 日，关注环境保护。各地有植树、清洁与宣传活动，它不是普遍放假的节日。",
+    "en_brief": "Earth Day on 22 April focuses on environmental protection. Tree planting, clean-ups, and awareness events take place in many places, but it is not a widely observed day off at all.",
+    "questions": [
+      {
+        "cn": "你们那里有环保主题的活动吗？",
+        "en": "Are there environmental events where you are from?"
+      },
+      {
+        "cn": "旅行时你会注意减少垃圾吗？",
+        "en": "Do you try to reduce waste when you travel?"
+      }
+    ],
+    "related_place_ids": [
+      115,
+      9
+    ],
+    "source_urls": [],
+    "source_note": "公历固定日期；来源待补",
+    "verified_at": "2026-11-09"
+  }
+]

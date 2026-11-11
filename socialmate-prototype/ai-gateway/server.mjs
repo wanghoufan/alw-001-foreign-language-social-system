@@ -547,7 +547,7 @@ export function createHandler(options={}){
       try{
         const response=await fetch(cfg.url,{method:"POST",signal:controller.signal,
           headers:{"Content-Type":"application/json",Authorization:"Bearer "+secret},
-          body:JSON.stringify({model:cfg.model,max_tokens:300,stream:false,
+          body:JSON.stringify({model:cfg.model,max_tokens:520,stream:false,
             response_format:{type:"json_object"},thinking:{type:"disabled"},
             messages:[{role:"system",content:"Translate the user's English sentence into natural, concise Simplified Chinese. Output exactly one JSON object {\"zh\":\"中文翻译\"}. Keep names, places and numbers accurate. Do not add explanations, pinyin, or the original English."},
               {role:"user",content:text}]})});
@@ -571,6 +571,65 @@ export function createHandler(options={}){
           latencyMs:Date.now()-startedAt,usage:data.usage||null,budget:budgetStatus()});
       }catch(error){
         if(error?.name==="AbortError")return json(res,504,{ok:false,code:"PROVIDER_TIMEOUT",error:"翻译超时"});
+        return json(res,502,{ok:false,code:"PROVIDER_NETWORK",error:"请求模型 API 失败"});
+      }finally{clearTimeout(timer);activeRequest=false;}
+    }
+    // 按需术语查询：只在用户主动点某个英文词时调用，只送该词与当前句子。
+    if(url.pathname==="/api/ai/term"&&req.method==="POST"){
+      const body=await readPayload(req,20000);
+      if(body?.consent!==true)
+        return json(res,403,{ok:false,code:"CONSENT_REQUIRED",error:"查询术语前需要明确同意"});
+      const term=String(body?.term||"").trim().slice(0,80);
+      const context=String(body?.context||"").trim().slice(0,400);
+      if(!term)return json(res,400,{ok:false,code:"INVALID_INPUT",error:"缺少要查询的英文词"});
+      if(!/[A-Za-z]/.test(term))return json(res,400,{ok:false,code:"INVALID_INPUT",error:"只能查询英文词或短语"});
+      const cfg=PROVIDERS.deepseek;
+      const secret=String(process.env[cfg.keyEnv]||"").trim();
+      if(!secret)return json(res,503,{ok:false,code:"PROVIDER_NOT_CONFIGURED",error:"服务端未配置 "+cfg.keyEnv});
+      if(budgetStatus().remainingCny<=RESERVE_CNY)
+        return json(res,402,{ok:false,code:"BUDGET_EXHAUSTED",
+          error:"DeepSeek 授权额度已用尽（上限 "+BUDGET_LIMIT+" 元）",budget:budgetStatus()});
+      if(activeRequest||Date.now()-lastRequestAt<1200)
+        return json(res,429,{ok:false,code:"AI_BUSY",error:"上一轮 AI 尚未结束或请求过于频繁，请稍候"});
+      activeRequest=true;lastRequestAt=Date.now();
+      const startedAt=Date.now();
+      const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),9500);
+      try{
+        const response=await fetch(cfg.url,{method:"POST",signal:controller.signal,
+          headers:{"Content-Type":"application/json",Authorization:"Bearer "+secret},
+          body:JSON.stringify({model:cfg.model,max_tokens:300,stream:false,
+            response_format:{type:"json_object"},thinking:{type:"disabled"},
+            messages:[{role:"system",content:"You explain one English word or phrase for a Chinese speaker in the middle of a live conversation. The term came from the other speaker, so never ask whether they have heard of it or whether they know it. Output exactly one JSON object {\"zh\":\"1-2 short Chinese sentences explaining the term as used in the given sentence\",\"en\":\"the same explanation in 1-2 short plain-English sentences, B1 level, natural spoken English\",\"asks\":[{\"kind\":\"like\",\"zh\":\"...\",\"en\":\"...\"},{\"kind\":\"compare\",\"zh\":\"...\",\"en\":\"...\"},{\"kind\":\"experience\",\"zh\":\"...\",\"en\":\"...\"},{\"kind\":\"benefit\",\"zh\":\"...\",\"en\":\"...\"}]}. Rules: exactly four asks in the order like, compare, experience, benefit; each asks about the other person's own view or experience, under 12 words in English, natural spoken English; like = what they enjoy most, compare = how it differs from something they know, experience = what it is like to do it, benefit = what they get from it; if the term is food, place, instrument, custom or activity, adapt the wording to taste, atmosphere, how it is done or etiquette; never invent facts; if the term is a name or has no useful meaning, say so briefly in zh and en."},
+              {role:"user",content:"Word: "+term+(context?"\nSentence: "+context:"")}]})});
+        if(!response.ok){
+          const code=response.status===429?"PROVIDER_LIMIT":response.status===401||response.status===403?"PROVIDER_AUTH":"PROVIDER_ERROR";
+          return json(res,response.status===429?503:502,{ok:false,code,error:"上游 API 返回 HTTP "+response.status});
+        }
+        const data=await response.json();
+        const content=data?.choices?.[0]?.message?.content||"";
+        let parsed=null;
+        try{parsed=JSON.parse(content);}catch{
+          const fenced=content.replace(/^```(?:json)?\s*/i,"").replace(/\s*```$/,"").trim();
+          const match=fenced.match(/\{[\s\S]*\}/);
+          try{parsed=JSON.parse(fenced);}catch{try{parsed=match?JSON.parse(match[0]):null;}catch{parsed=null;}}
+        }
+        const zh=String(parsed?.zh||"").trim().slice(0,600);
+        const en=String(parsed?.en||"").trim().slice(0,900);
+        if(!zh||!en)return json(res,502,{ok:false,code:"INVALID_AI_OUTPUT",error:"上游未返回中英解释"});
+        const ASK_KINDS=["like","compare","experience","benefit"];
+        const DEFAULT_ASKS={like:{zh:"你最喜欢它哪一点？",en:"What do you like most about it?"},compare:{zh:"它和你熟悉的其他做法有什么不同？",en:"How is it different from what you're used to?"},experience:{zh:"做起来或玩起来是什么感觉？",en:"What's it like to actually do it?"},benefit:{zh:"你觉得它给你带来什么？",en:"What do you get out of it?"}};
+        const rawAsks=Array.isArray(parsed?.asks)?parsed.asks:[];
+        const asks=ASK_KINDS.map((kind,i)=>{
+          const item=rawAsks.find(x=>x&&String(x.kind||"").toLowerCase()===kind)||rawAsks[i]||{};
+          return {kind,zh:String(item.zh||"").trim().slice(0,200)||DEFAULT_ASKS[kind].zh,
+            en:String(item.en||"").trim().slice(0,200)||DEFAULT_ASKS[kind].en};
+        });
+        try{await recordDeepSeekUsage(data.usage);}
+        catch(error){console.error("[socialmate-ai] budget ledger write failed:",error.message);}
+        return json(res,200,{ok:true,term,zh,en,asks,askZh:asks[0].zh,askEn:asks[0].en,provider:"deepseek",model:cfg.model,mode:"real-ai",
+          latencyMs:Date.now()-startedAt,usage:data.usage||null,budget:budgetStatus()});
+      }catch(error){
+        if(error?.name==="AbortError")return json(res,504,{ok:false,code:"PROVIDER_TIMEOUT",error:"术语查询超时"});
         return json(res,502,{ok:false,code:"PROVIDER_NETWORK",error:"请求模型 API 失败"});
       }finally{clearTimeout(timer);activeRequest=false;}
     }

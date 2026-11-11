@@ -1,0 +1,428 @@
+{
+  "startedAt": "2026-11-09T13:48:03.208Z",
+  "checks": [
+    {
+      "name": "默认主题为跟随系统（SYSTEM）",
+      "ok": true,
+      "detail": "system"
+    },
+    {
+      "name": "底部恰好五个 Tab 且顺序正确",
+      "ok": true,
+      "detail": "话题｜海南｜聊天｜关于我｜人物"
+    },
+    {
+      "name": "file:// 独立打开：样式与本地数据脚本均已加载",
+      "ok": true,
+      "detail": "{\"proto\":\"file:\",\"sheets\":1,\"scripts\":[\"\",\"repo-data.js\",\"data.js\",\"app.js\"]}"
+    },
+    {
+      "name": "三个虚构人物的待确认事项都不在已确认事实里",
+      "ok": true,
+      "detail": "[{\"slug\":\"oliver\",\"pendingInConfirmed\":false,\"topics\":2,\"staticNote\":true},{\"slug\":\"maya\",\"pendingInConfirmed\":false,\"topics\":2,\"staticNote\":true},{\"slug\":\"jieun\",\"pendingInConfirmed\":false,\"topics\":2,\"staticNote\":true}]"
+    },
+    {
+      "name": "每个虚构人物都有至少 2 个固定聊天示例并标注不调用云端 AI",
+      "ok": true,
+      "detail": "[{\"slug\":\"oliver\",\"topics\":2,\"staticNote\":true},{\"slug\":\"maya\",\"topics\":2,\"staticNote\":true},{\"slug\":\"jieun\",\"topics\":2,\"staticNote\":true}]"
+    },
+    {
+      "name": "作品含 A 类现有样本与 B/C 分类示范补充",
+      "ok": true,
+      "detail": "{\"a\":9,\"b\":[{\"id\":\"DEMO-B1\",\"demoAdded\":true}],\"c\":[{\"id\":\"DEMO-C1\",\"demoAdded\":true}],\"total\":11}"
+    },
+    {
+      "name": "节日默认「未来 14 天」有候选卡片",
+      "ok": true,
+      "detail": "卡片 4 个"
+    },
+    {
+      "name": "「今天」无匹配时显示空态而不是假倒计时",
+      "ok": true
+    },
+    {
+      "name": "「全部」展示全部 47 个候选节日",
+      "ok": true,
+      "detail": "卡片 47 个"
+    },
+    {
+      "name": "海南列表 9 个封面出图且全部加载成功",
+      "ok": true,
+      "detail": "9/9"
+    },
+    {
+      "name": "4 个无可用照片地点显示待核实提示",
+      "ok": true,
+      "detail": "#62 #71 #115 #1"
+    },
+    {
+      "name": "骑楼老街详情加载 3 张真实图片",
+      "ok": true,
+      "detail": "1600px | 1600px | 1600px"
+    },
+    {
+      "name": "图片路径为 file:// 下真实存在的归档 webp",
+      "ok": true,
+      "detail": "Haikou/003/01.webp | Haikou/003/02.webp | Haikou/003/03.webp"
+    },
+    {
+      "name": "详情缺图提示全部隐藏（不遮挡照片）",
+      "ok": true,
+      "detail": "#0:none #1:none #2:none"
+    },
+    {
+      "name": "详情图片可见，首图 elementFromPoint 命中 IMG（首屏）",
+      "ok": true,
+      "detail": "[{\"i\":0,\"shown\":true,\"hit\":\"IMG\"},{\"i\":1,\"shown\":true,\"hit\":null},{\"i\":2,\"shown\":true,\"hit\":null}]"
+    },
+    {
+      "name": "页面上没有任何可见缺图提示压在照片上方",
+      "ok": true,
+      "detail": "0 处"
+    },
+    {
+      "name": "地点中文介绍达到 90–150 字量级",
+      "ok": true,
+      "detail": "115 字"
+    },
+    {
+      "name": "地点英文介绍达到 60–95 词量级",
+      "ok": true,
+      "detail": "76 词"
+    },
+    {
+      "name": "详情首图实际绘制出照片像素（非纯色缺图板）",
+      "ok": true,
+      "detail": "{\"w\":628,\"h\":470,\"mean\":118,\"sd\":82,\"bg\":0,\"colors\":2215}"
+    },
+    {
+      "name": "点击大图进入全屏并显示 1 / 3",
+      "ok": true,
+      "detail": "{\"on\":true,\"count\":\"1 / 3\",\"img\":true}"
+    },
+    {
+      "name": "全屏照片可见且缺图提示隐藏/不在最上层",
+      "ok": true,
+      "detail": "{\"nw\":1600,\"shown\":true,\"fbHidden\":true,\"fbDisplay\":\"none\",\"hit\":\"IMG\"}"
+    },
+    {
+      "name": "全屏下一张切到 2 / 3",
+      "ok": true,
+      "detail": "2 / 3"
+    },
+    {
+      "name": "全屏可退出",
+      "ok": true
+    },
+    {
+      "name": "画廊「下一张」切到 2 / 3 且确实滚动",
+      "ok": true,
+      "detail": "{\"count\":\"2 / 3\",\"left\":298,\"active\":1}"
+    },
+    {
+      "name": "画廊连续「下一张」切到 3 / 3",
+      "ok": true,
+      "detail": "{\"count\":\"3 / 3\",\"left\":597}"
+    },
+    {
+      "name": "画廊「上一张」退回 2 / 3",
+      "ok": true,
+      "detail": "{\"count\":\"2 / 3\",\"left\":298}"
+    },
+    {
+      "name": "更多按钮打开原型设置与范围说明",
+      "ok": true,
+      "detail": "更多 · 原型设置✕浅色深色跟随系统（默认）默认跟随系统；浅色/深色/跟随系统三档可手选，选择会保存在本机浏览器。\n      \n      范围与边界\n      独立 HTML"
+    },
+    {
+      "name": "段落切换：点第 2 段后选中态与标题同步",
+      "ok": true,
+      "detail": "{\"before\":{\"active\":\"第 1 段\",\"title\":\"第一次带朋友走骑楼\"},\"after\":{\"active\":\"第 2 段\",\"title\":\"傍晚再走一次\",\"exps\":2}}"
+    },
+    {
+      "name": "段落切换：可退回第 1 段",
+      "ok": true,
+      "detail": "{\"active\":\"第 1 段\",\"title\":\"第一次带朋友走骑楼\"}"
+    },
+    {
+      "name": "单段粘贴识别为 1 段 / 2 条表达且可确认",
+      "ok": true,
+      "detail": "识别到 1 段 / 2 条表达，可确认导入。第 1 段2 条表达傍晚又走了一遍，店铺陆续亮灯，我们顺着骑楼慢慢走回钟楼，没有赶时间。We walked the "
+    },
+    {
+      "name": "单段确认后段数不变、当前段表达 4 → 6 且写入历史",
+      "ok": true,
+      "detail": "{\"segs\":3,\"more\":\"展开全部 6 条表达\",\"title\":\"第一次带朋友走骑楼\",\"modal\":false}"
+    },
+    {
+      "name": "展开全部后当前段显示 6 条表达",
+      "ok": true,
+      "detail": "6 条"
+    },
+    {
+      "name": "整篇粘贴识别为 2 段 / 6 条表达",
+      "ok": true,
+      "detail": "识别到 2 段 / 6 条表达，可确认导入。第 1 段3 条表达我们从钟楼那边走进来，沿着骑楼慢慢走，最后在一家小店坐下。没有赶景点，反而聊了很久。We wal"
+    },
+    {
+      "name": "确认导入后新增 2 段（原 2 段 → 4 段）",
+      "ok": true,
+      "detail": "3 → 5"
+    },
+    {
+      "name": "导入后弹窗关闭",
+      "ok": true
+    },
+    {
+      "name": "格式模糊时拒绝猜测并禁用导入",
+      "ok": true,
+      "detail": "第 1 段：没有识别到足够的中文整理段（至少 15 字）。"
+    },
+    {
+      "name": "龙兴路：0 张可用图 + 3 处可见提示",
+      "ok": true,
+      "detail": "{\"imgs\":0,\"loadedImgs\":0,\"missingSlides\":3,\"visibleFallbacks\":3,\"hiddenFallbacks\":0,\"texts\":[\"第 1 张已排除（待核实）PHOTO_MANIFEST.csv 无此文件记录，来源与许可均未登记，无法确认是否龙兴路（待重新采集，不用与地点不符的图片冒充）\",\"第 2 张缺失（待补图）不用其他地点图片冒充\",\"第 3 张缺失（待补图）不用其他地点图片冒充\"]}"
+    },
+    {
+      "name": "龙兴路第 1 张标“已排除待核实”，其余标“待补图”",
+      "ok": true,
+      "detail": "第 1 张已排除（待核实）PHOTO_MANIFEST.csv 无此文件记录，来源与许可均未登记，无法确认是否龙兴路（待重新采集，不用与地点不符的图片冒充） | 第 2 张缺失（待补图）不用其他地点图片冒充 | 第 3 张缺失（待补图）不用其他地点图片冒充"
+    },
+    {
+      "name": "地点 62 的 3 张错配图全部排除并出提示",
+      "ok": true,
+      "detail": "{\"imgs\":0,\"prompts\":3}"
+    },
+    {
+      "name": "地点 71 的 3 张错配图全部排除并出提示",
+      "ok": true,
+      "detail": "{\"imgs\":0,\"prompts\":3}"
+    },
+    {
+      "name": "地点 115 的 3 张错配图全部排除并出提示",
+      "ok": true,
+      "detail": "{\"imgs\":0,\"prompts\":3}"
+    },
+    {
+      "name": "西岛（97）保留 2 张可用图 + 1 张已排除提示",
+      "ok": true,
+      "detail": "{\"imgs\":2,\"prompts\":1}"
+    },
+    {
+      "name": "西岛来源按实际槽位写：02、03 可用，第 1 张已排除",
+      "ok": true,
+      "detail": "来源：现有归档 02.webp、03.webp；第 1 张按清单记录排除。 未排除的图片仅有 PHOTO_MANIFEST.csv 记录，未逐张重开来源页核验（待核实）。"
+    },
+    {
+      "name": "龙兴路来源写明第 1 张排除、第 2–3 张无归档",
+      "ok": true,
+      "detail": "来源：第 1 张按清单记录排除；第 2–3 张无归档；本页没有可用照片，待重新采集。"
+    },
+    {
+      "name": "石头公园来源写明 3 张全部排除、无可用照片",
+      "ok": true,
+      "detail": "来源：第 1–3 张按清单记录排除；本页没有可用照片，待重新采集。"
+    },
+    {
+      "name": "亚龙湾来源列出实际 01–03 并单列第 3 张主题待核实",
+      "ok": true,
+      "detail": "来源：现有归档 01.webp、02.webp、03.webp；第 3 张主题待核实。 未排除的图片仅有 PHOTO_MANIFEST.csv 记录，未逐张重开来源页核验（待核实）。"
+    },
+    {
+      "name": "图片状态分为 pending / failed / ok，加载中不判失败",
+      "ok": true,
+      "detail": "{\"pending\":\"pending\",\"failed\":\"failed\",\"ok\":\"ok\"}"
+    },
+    {
+      "name": "加载 3.6 秒仍在等待：只出“加载较慢”，不隐藏图片、不误报缺图",
+      "ok": true,
+      "detail": "{\"fbHidden\":true,\"slowHidden\":false,\"display\":\"\"}"
+    },
+    {
+      "name": "确认解码失败后才隐藏图片并亮出缺图提示",
+      "ok": true,
+      "detail": "{\"fbHidden\":false,\"slowHidden\":true,\"display\":\"none\",\"state\":\"failed\"}"
+    },
+    {
+      "name": "骑楼老街图库 3 张仍完整可见",
+      "ok": true,
+      "detail": "{\"imgs\":3,\"prompts\":0}"
+    },
+    {
+      "name": "聊天页明确标注固定示例，不声称 AI 实时理解",
+      "ok": true,
+      "detail": "固定示例 · 话题：训练与轻松跑"
+    },
+    {
+      "name": "Oliver 页不出现美国感恩节固定建议",
+      "ok": true,
+      "detail": "0 处"
+    },
+    {
+      "name": "接话与追问和当前对话一致并各自给出依据",
+      "ok": true,
+      "detail": "依据：承接对方刚说的轻松跑与引体向上 | 依据：来自已确认事实：正在练第一个严格引体向上"
+    },
+    {
+      "name": "聊天底部有地点、节日、人物小标签",
+      "ok": true,
+      "detail": "⌖地点 · 骑楼老街 | ◷节日 · 选一个最近话题 | ♧人物 · Oliver Reed"
+    },
+    {
+      "name": "节日标签给出可选话题并声明不推断对方是否庆祝",
+      "ok": true,
+      "detail": "{\"cards\":4}"
+    },
+    {
+      "name": "切换人物后对话、话题与接话都换成该人物样本",
+      "ok": true,
+      "detail": "{\"topic\":\"固定示例 · 话题：海报与演出\"}"
+    },
+    {
+      "name": "切换人物后不再残留 Oliver 的训练建议",
+      "ok": true,
+      "detail": "0 处残留"
+    },
+    {
+      "name": "聊天页有「分享 / 换题」控件和至少 2 个固定话题",
+      "ok": true,
+      "detail": "{\"topics\":2}"
+    },
+    {
+      "name": "换题后话题、对话与接话同步切换且弹层关闭",
+      "ok": true,
+      "detail": "{\"topic\":\"固定示例 · 话题：海口行程\",\"sheet\":false}"
+    },
+    {
+      "name": "我的作品搜索可过滤",
+      "ok": true,
+      "detail": "11 → 1"
+    },
+    {
+      "name": "B 类筛选不是死路：至少 1 条并标为分类示范补充",
+      "ok": true,
+      "detail": "{\"n\":1,\"label\":\"DEMO-B1 · B 类 · 分类示范补充\"}"
+    },
+    {
+      "name": "C 类筛选不是死路：至少 1 条并标为分类示范补充",
+      "ok": true,
+      "detail": "{\"n\":1,\"label\":\"DEMO-C1 · C 类 · 分类示范补充\"}"
+    },
+    {
+      "name": "A 类仍保留 9 条现有演示样本",
+      "ok": true,
+      "detail": "9 条"
+    },
+    {
+      "name": "「全部」恢复 11 条作品",
+      "ok": true
+    },
+    {
+      "name": "作品详情有分享作品入口",
+      "ok": true,
+      "detail": "分享作品 · 人生物种测试 · Personality Quiz✕P002 · A 类 · 现有演示数据样本\n      原型内分享：系统分享不可用时改为复制中"
+    },
+    {
+      "name": "作品分享调用系统分享并带中英介绍",
+      "ok": true,
+      "detail": "{\"stubbed\":true,\"title\":\"人生物种测试 · Personality Quiz\"}"
+    },
+    {
+      "name": "关于我搜索保留且可用",
+      "ok": true,
+      "detail": "5 → 1"
+    },
+    {
+      "name": "关于我中英同时可见",
+      "ok": true
+    },
+    {
+      "name": "关于我清空搜索后恢复 5 条并保留分类标签",
+      "ok": true,
+      "detail": "{\"n\":5,\"cats\":4,\"kicker\":\"关于我\"}"
+    },
+    {
+      "name": "人物页确认事实与待确认分开",
+      "ok": true,
+      "detail": "{\"facts\":3,\"pending\":1}"
+    },
+    {
+      "name": "人物页有中英续聊问句与历史",
+      "ok": true,
+      "detail": "{\"q\":4,\"sessions\":3}"
+    },
+    {
+      "name": "人物页待确认内容没有重复已确认事实",
+      "ok": true,
+      "detail": "Oliver's target finish time for the Dece"
+    },
+    {
+      "name": "人物页示范问句明确为静态样本，不再写 AI 话题建议",
+      "ok": true,
+      "detail": "已改标"
+    },
+    {
+      "name": "主题可切到深色",
+      "ok": true
+    },
+    {
+      "name": "深色主题刷新后保持",
+      "ok": true,
+      "detail": "dark"
+    },
+    {
+      "name": "375/393/430/520 六个页面无横向溢出",
+      "ok": true,
+      "detail": "6 页 × 4 宽度"
+    },
+    {
+      "name": "正文字号 ≥19px，页面标题 ≥23px",
+      "ok": true,
+      "detail": "{\"body\":19,\"h1\":23}"
+    },
+    {
+      "name": "没有小于 14px 的可见文本",
+      "ok": true,
+      "detail": "{\"min\":14,\"body\":19,\"h1\":23,\"small\":[]}"
+    },
+    {
+      "name": "无 JS 异常",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "无图片/资源加载失败",
+      "ok": true,
+      "detail": ""
+    }
+  ],
+  "shots": [
+    "01_topics_festival_393.png",
+    "02b_hainan_detail_photo_proof_393.png",
+    "02_hainan_detail_393.png",
+    "03_fullscreen_393.png",
+    "11_gallery_next_393.png",
+    "12_more_sheet_393.png",
+    "13_segments_393.png",
+    "14_single_paste_preview_393.png",
+    "04_hainan_questions_393.png",
+    "05_import_preview_393.png",
+    "10_missing_photo_393.png",
+    "06_chat_393.png",
+    "06b_chat_tags_393.png",
+    "06c_chat_maya_393.png",
+    "17_chat_share_393.png",
+    "15_works_cat_b_393.png",
+    "07_works_393.png",
+    "16_work_share_393.png",
+    "18_self_393.png",
+    "08_people_393.png",
+    "08b_people_questions_393.png",
+    "09_dark_place_393.png"
+  ],
+  "errors": [],
+  "failedRequests": [],
+  "console": [],
+  "finishedAt": "2026-11-09T13:49:03.192Z",
+  "result": "PASS"
+}

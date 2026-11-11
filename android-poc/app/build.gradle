@@ -43,8 +43,8 @@ android {
         minSdk 26
         targetSdk 35
         // V1.7：本机页面 + SQLite 本地真源。
-        versionCode 80
-        versionName '0.9.12'
+        versionCode 96
+        versionName '0.9.28'
     }
     sourceSets {
         main {

@@ -145,6 +145,82 @@ public final class DirectCloud {
         return result;
     }
 
+    /**
+     * 按需术语查询：只送被点中的英文词与当前句子，不扫描整段字幕。
+     */
+    public JSONObject term(JSONObject body) throws Exception {
+        String term = body.optString("term", "").trim();
+        if (term.isEmpty()) throw new LocalHttpException(400, "INVALID_INPUT", "缺少要查询的英文词");
+        if (term.length() > 80) throw new LocalHttpException(400, "TEXT_TOO_LARGE", "术语超过 80 字上限");
+        if (!term.matches(".*[A-Za-z].*")) {
+            throw new LocalHttpException(400, "INVALID_INPUT", "只能查询英文词或短语");
+        }
+        String context = body.optString("context", "").trim();
+        if (context.length() > 400) context = context.substring(0, 400);
+        JSONArray messages = new JSONArray()
+                .put(new JSONObject().put("role", "system")
+                        .put("content", "You explain one English word or phrase for a Chinese speaker in a live conversation. "
+                                + "The term came from the other speaker, so never ask whether they have heard of it or know it. "
+                                + "Reply with exactly one JSON object: "
+                                + "{\"zh\":\"1-2 short Chinese sentences explaining the term as used in the given sentence\","
+                                + "\"en\":\"the same explanation in 1-2 short plain-English sentences, B1 level, natural spoken English\","
+                                + "\"asks\":[{\"kind\":\"like\",\"zh\":\"...\",\"en\":\"...\"},{\"kind\":\"compare\",\"zh\":\"...\",\"en\":\"...\"},"
+                                + "{\"kind\":\"experience\",\"zh\":\"...\",\"en\":\"...\"},{\"kind\":\"benefit\",\"zh\":\"...\",\"en\":\"...\"}]}. "
+                                + "Rules: exactly four asks in the order like, compare, experience, benefit; each asks about the other person's own view or experience, under 12 words in English, natural spoken English; "
+                                + "like = what they enjoy most, compare = how it differs from something they know, experience = what it is like to do it, benefit = what they get from it; "
+                                + "if the term is food, place, instrument, custom or activity, adapt the wording to taste, atmosphere, how it is done or etiquette; "
+                                + "never invent facts; if the term is a name or has no useful meaning, say so briefly in zh and en."))
+                .put(new JSONObject().put("role", "user")
+                        .put("content", "Word: " + term + (context.isEmpty() ? "" : "\nSentence: " + context)));
+        String raw = chat(messages, 620, "ai:term", estimateDeepSeekChars(term.length() + context.length(), 620));
+        JSONObject parsed;
+        try {
+            parsed = new JSONObject(extractJson(raw));
+        } catch (Exception e) {
+            throw new LocalHttpException(502, "INVALID_AI_OUTPUT", "AI 返回不是合法 JSON");
+        }
+        String zh = parsed.optString("zh", "").trim();
+        String en = parsed.optString("en", "").trim();
+        if (zh.isEmpty() || en.isEmpty()) {
+            throw new LocalHttpException(502, "INVALID_AI_OUTPUT", "AI 没有返回中英解释");
+        }
+        String[] kinds = {"like", "compare", "experience", "benefit"};
+        String[][] defaults = {
+                {"你最喜欢它哪一点？", "What do you like most about it?"},
+                {"它和你熟悉的其他做法有什么不同？", "How is it different from what you're used to?"},
+                {"做起来或玩起来是什么感觉？", "What's it like to actually do it?"},
+                {"你觉得它给你带来什么？", "What do you get out of it?"}
+        };
+        JSONArray rawAsks = parsed.optJSONArray("asks");
+        JSONArray asks = new JSONArray();
+        for (int i = 0; i < kinds.length; i++) {
+            JSONObject picked = null;
+            if (rawAsks != null) {
+                for (int j = 0; j < rawAsks.length(); j++) {
+                    JSONObject item = rawAsks.optJSONObject(j);
+                    if (item == null) continue;
+                    if (kinds[i].equalsIgnoreCase(item.optString("kind", ""))) {
+                        picked = item;
+                        break;
+                    }
+                }
+                if (picked == null) picked = rawAsks.optJSONObject(i);
+            }
+            String askZh = picked == null ? "" : picked.optString("zh", "").trim();
+            String askEn = picked == null ? "" : picked.optString("en", "").trim();
+            if (askZh.isEmpty()) askZh = defaults[i][0];
+            if (askEn.isEmpty()) askEn = defaults[i][1];
+            asks.put(new JSONObject().put("kind", kinds[i]).put("zh", askZh).put("en", askEn));
+        }
+        JSONObject first = asks.optJSONObject(0);
+        JSONObject result = new JSONObject().put("ok", true).put("term", term).put("zh", zh).put("en", en).put("asks", asks)
+                .put("askZh", first == null ? "" : first.optString("zh", ""))
+                .put("askEn", first == null ? "" : first.optString("en", ""))
+                .put("mode", "direct").put("provider", "deepseek");
+        result.put("billing", new JSONObject().put("costCny", lastCostCny));
+        return result;
+    }
+
     private volatile double lastCostCny = 0;
 
     private synchronized String chat(JSONArray messages, int maxTokens, String kind, long estimateMicros) throws Exception {

@@ -1,0 +1,688 @@
+{
+  "generatedAt": "2026-11-09T13:47:54.255Z",
+  "output": "standalone-test/standalone.html",
+  "outputBytes": 10140121,
+  "outputSha256": "4fc4654e6cca0b71df9353018042dcb4989c2f31a41e0abf1a1272bc2019a4e3",
+  "source": {
+    "index": "index.html",
+    "css": "assets/app.css",
+    "data": [
+      "assets/repo-data.js",
+      "assets/data.js",
+      "assets/app.js"
+    ]
+  },
+  "placeCount": 13,
+  "places": [
+    {
+      "placeId": 3,
+      "place": "骑楼老街",
+      "declaredPhotos": 3,
+      "usableSlots": [
+        1,
+        2,
+        3
+      ],
+      "excludedSlots": [],
+      "photoCaveats": null
+    },
+    {
+      "placeId": 4,
+      "place": "云洞图书馆",
+      "declaredPhotos": 3,
+      "usableSlots": [
+        1,
+        2,
+        3
+      ],
+      "excludedSlots": [],
+      "photoCaveats": null
+    },
+    {
+      "placeId": 9,
+      "place": "雷琼火山口地质公园",
+      "declaredPhotos": 3,
+      "usableSlots": [
+        1,
+        2,
+        3
+      ],
+      "excludedSlots": [],
+      "photoCaveats": null
+    },
+    {
+      "placeId": 43,
+      "place": "假日海滩",
+      "declaredPhotos": 3,
+      "usableSlots": [
+        1,
+        2,
+        3
+      ],
+      "excludedSlots": [],
+      "photoCaveats": null
+    },
+    {
+      "placeId": 62,
+      "place": "石头公园",
+      "declaredPhotos": 3,
+      "usableSlots": [],
+      "excludedSlots": [
+        1,
+        2,
+        3
+      ],
+      "photoCaveats": null
+    },
+    {
+      "placeId": 63,
+      "place": "东郊椰林",
+      "declaredPhotos": 3,
+      "usableSlots": [
+        1,
+        2,
+        3
+      ],
+      "excludedSlots": [],
+      "photoCaveats": null
+    },
+    {
+      "placeId": 71,
+      "place": "潭门渔港",
+      "declaredPhotos": 3,
+      "usableSlots": [],
+      "excludedSlots": [
+        1,
+        2,
+        3
+      ],
+      "photoCaveats": null
+    },
+    {
+      "placeId": 78,
+      "place": "日月湾",
+      "declaredPhotos": 3,
+      "usableSlots": [
+        1,
+        2,
+        3
+      ],
+      "excludedSlots": [],
+      "photoCaveats": null
+    },
+    {
+      "placeId": 88,
+      "place": "分界洲岛",
+      "declaredPhotos": 3,
+      "usableSlots": [
+        1,
+        2,
+        3
+      ],
+      "excludedSlots": [],
+      "photoCaveats": null
+    },
+    {
+      "placeId": 97,
+      "place": "西岛",
+      "declaredPhotos": 3,
+      "usableSlots": [
+        2,
+        3
+      ],
+      "excludedSlots": [
+        1
+      ],
+      "photoCaveats": null
+    },
+    {
+      "placeId": 99,
+      "place": "亚龙湾",
+      "declaredPhotos": 3,
+      "usableSlots": [
+        1,
+        2,
+        3
+      ],
+      "excludedSlots": [],
+      "photoCaveats": {
+        "3": "清单标题为“三亚废弃酒店 1999”，与亚龙湾海滩主题不完全一致；因来源地点仍在三亚，本轮不排除，标待核实"
+      }
+    },
+    {
+      "placeId": 115,
+      "place": "儋州峨蔓火山海岸",
+      "declaredPhotos": 3,
+      "usableSlots": [],
+      "excludedSlots": [
+        1,
+        2,
+        3
+      ],
+      "photoCaveats": null
+    },
+    {
+      "placeId": 1,
+      "place": "龙兴路",
+      "declaredPhotos": 3,
+      "usableSlots": [],
+      "excludedSlots": [
+        1
+      ],
+      "photoCaveats": null
+    }
+  ],
+  "imageCount": 26,
+  "totalImageBytes": 7424232,
+  "excludedImageCount": 11,
+  "images": [
+    {
+      "placeId": 3,
+      "place": "骑楼老街",
+      "slot": 1,
+      "path": "Haikou/003/01.webp",
+      "bytes": 275054,
+      "sha256": "0d0bbd93bf18dff4f5fa0a816493c50b3dbe34045941ccd9f8878db68032577b",
+      "licenseRecord": {
+        "license": "CC BY 3.0",
+        "creator": "rheins",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:海口骑楼老街_-_Haikou_Arcaded_Streets_-_2016.01_-_panoramio.jpg",
+        "status": "approved",
+        "manifest": "docs/成果整理/Hainan-Travel-Guide/data/PHOTO_MANIFEST.csv"
+      }
+    },
+    {
+      "placeId": 3,
+      "place": "骑楼老街",
+      "slot": 2,
+      "path": "Haikou/003/02.webp",
+      "bytes": 254892,
+      "sha256": "fc4075a1717626269be679d01612510819c7934ad2d331dcaf2c5caf1c3bd7d2",
+      "licenseRecord": {
+        "license": "CC BY 3.0",
+        "creator": "rheins",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:海口骑楼老街_-_Haikou_Arcaded_Streets_-_2016.01_-_panoramio_(1).jpg",
+        "status": "approved",
+        "manifest": "docs/成果整理/Hainan-Travel-Guide/data/PHOTO_MANIFEST.csv"
+      }
+    },
+    {
+      "placeId": 3,
+      "place": "骑楼老街",
+      "slot": 3,
+      "path": "Haikou/003/03.webp",
+      "bytes": 279632,
+      "sha256": "07febb1f256d53022fe18d6319ee5f036b46a0396beda5796e590f4f3c0214ed",
+      "licenseRecord": {
+        "license": "CC0",
+        "creator": "Anna Frodesiak",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Restoration_of_Zhongshan_Road_buildings_in_Bo'ai_Road_area_-_07.jpg",
+        "status": "approved",
+        "manifest": "docs/成果整理/Hainan-Travel-Guide/data/PHOTO_MANIFEST.csv"
+      }
+    },
+    {
+      "placeId": 4,
+      "place": "云洞图书馆",
+      "slot": 1,
+      "path": "Haikou/004/01.webp",
+      "bytes": 287110,
+      "sha256": "c73b33cafae0f30ff46cf64a734a09a067e4d9b245e7ce6a30df02f94f3a0608",
+      "licenseRecord": {
+        "license": "CC BY-SA 4.0",
+        "creator": "STW932",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:WormholeLibrary03.jpg",
+        "status": "approved",
+        "manifest": "docs/成果整理/Hainan-Travel-Guide/data/PHOTO_MANIFEST.csv"
+      }
+    },
+    {
+      "placeId": 4,
+      "place": "云洞图书馆",
+      "slot": 2,
+      "path": "Haikou/004/02.webp",
+      "bytes": 169396,
+      "sha256": "9528e467bc9e48c1dec8a112f400aab49e8c6cc1865c706e2a8da5c12f6d1759",
+      "licenseRecord": {
+        "license": "CC BY-SA 4.0",
+        "creator": "STW932",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:WormholeLibrary01.jpg",
+        "status": "approved",
+        "manifest": "docs/成果整理/Hainan-Travel-Guide/data/PHOTO_MANIFEST.csv"
+      }
+    },
+    {
+      "placeId": 4,
+      "place": "云洞图书馆",
+      "slot": 3,
+      "path": "Haikou/004/03.webp",
+      "bytes": 122664,
+      "sha256": "4eea613022ab1f38fbe6faf313ef5ea8839a0e39509c485592519584273d5aaa",
+      "licenseRecord": {
+        "license": "CC BY-SA 4.0",
+        "creator": "STW932",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:WormholeLibrary02.jpg",
+        "status": "approved",
+        "manifest": "docs/成果整理/Hainan-Travel-Guide/data/PHOTO_MANIFEST.csv"
+      }
+    },
+    {
+      "placeId": 9,
+      "place": "雷琼火山口地质公园",
+      "slot": 1,
+      "path": "Haikou/009/01.webp",
+      "bytes": 418414,
+      "sha256": "461077baa7c5580f471fca044de8eef6afaecc2a978a7117470daf7fbdefa488",
+      "licenseRecord": {
+        "license": "CC BY 3.0",
+        "creator": "川号子",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:海南国际旅游岛——海口.世界火山地质公园火山口景观（宽幅）（西南向）_-_panoramio.jpg",
+        "status": "approved",
+        "manifest": "docs/成果整理/Hainan-Travel-Guide/data/PHOTO_MANIFEST.csv"
+      }
+    },
+    {
+      "placeId": 9,
+      "place": "雷琼火山口地质公园",
+      "slot": 2,
+      "path": "Haikou/009/02.webp",
+      "bytes": 376916,
+      "sha256": "770d27fdb3291e6f24c7318ce255584dff2e56611f8c712c0c4eb62e10f641a2",
+      "licenseRecord": {
+        "license": "CC BY 3.0",
+        "creator": "川号子",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:海南国际旅游岛——海口.世界火山地质公园景观（宽幅）（东南向）_-_panoramio_(1).jpg",
+        "status": "approved",
+        "manifest": "docs/成果整理/Hainan-Travel-Guide/data/PHOTO_MANIFEST.csv"
+      }
+    },
+    {
+      "placeId": 9,
+      "place": "雷琼火山口地质公园",
+      "slot": 3,
+      "path": "Haikou/009/03.webp",
+      "bytes": 213954,
+      "sha256": "eb8a811912fa4df0a240607e9c9b596f9fe141b1d8acb564ec4282ecd976a23e",
+      "licenseRecord": {
+        "license": "CC BY 3.0",
+        "creator": "川号子",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:海南国际旅游岛——海口.世界火山地质公园火山科普馆展厅（宽幅）（室内）_-_panoramio.jpg",
+        "status": "approved",
+        "manifest": "docs/成果整理/Hainan-Travel-Guide/data/PHOTO_MANIFEST.csv"
+      }
+    },
+    {
+      "placeId": 43,
+      "place": "假日海滩",
+      "slot": 1,
+      "path": "Haikou/043/01.webp",
+      "bytes": 172200,
+      "sha256": "d74ca9b99485436e51a1a79d94ef97d7e1622fcb7cd20a5f2c1ddb4a6a697894",
+      "licenseRecord": {
+        "license": "CC BY 3.0",
+        "creator": "川号子",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:海南国际旅游岛——海口西海岸假日海滩旅游区景观（宽幅）（西北向）_-_panoramio_(1).jpg",
+        "status": "approved",
+        "manifest": "docs/成果整理/Hainan-Travel-Guide/data/PHOTO_MANIFEST.csv"
+      }
+    },
+    {
+      "placeId": 43,
+      "place": "假日海滩",
+      "slot": 2,
+      "path": "Haikou/043/02.webp",
+      "bytes": 150304,
+      "sha256": "dd644bec2641eb5a2cb68453f1fc20c0c9f387a1b24b7fa417bbf25d78ad8c49",
+      "licenseRecord": {
+        "license": "CC BY 3.0",
+        "creator": "川号子",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:海南国际旅游岛——海口西海岸景观（北向）_-_panoramio_(1).jpg",
+        "status": "approved",
+        "manifest": "docs/成果整理/Hainan-Travel-Guide/data/PHOTO_MANIFEST.csv"
+      }
+    },
+    {
+      "placeId": 43,
+      "place": "假日海滩",
+      "slot": 3,
+      "path": "Haikou/043/03.webp",
+      "bytes": 191494,
+      "sha256": "061e7dd465a0dc8fcd8da009399f8bc93a0545cd33de6752dea8b5e2582eafc2",
+      "licenseRecord": {
+        "license": "CC0",
+        "creator": "Anna Frodesiak",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Holiday_Beach,_Haikou_looking_west_-_01.jpg",
+        "status": "approved",
+        "manifest": "docs/成果整理/Hainan-Travel-Guide/data/PHOTO_MANIFEST.csv"
+      }
+    },
+    {
+      "placeId": 63,
+      "place": "东郊椰林",
+      "slot": 1,
+      "path": "Wenchang/063/01.webp",
+      "bytes": 636858,
+      "sha256": "e404c14b2284f73487be56d8c6a4e91b86ee35deb89299c77ce93d0f5cd21fc5",
+      "licenseRecord": {
+        "license": "CC BY-SA 3.0",
+        "creator": "Zhangmoon618",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Dongjiao_Coconut_Forest_in_Wenchang.jpg",
+        "status": "approved",
+        "manifest": "docs/成果整理/Hainan-Travel-Guide/data/PHOTO_MANIFEST.csv"
+      }
+    },
+    {
+      "placeId": 63,
+      "place": "东郊椰林",
+      "slot": 2,
+      "path": "Wenchang/063/02.webp",
+      "bytes": 559436,
+      "sha256": "56db3f241af868a959258f0b7c97471b7e81cb5d0b87b12d642bb8059ec01b2f",
+      "licenseRecord": {
+        "license": "CC BY 3.0",
+        "creator": "川号子",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:海南国际旅游岛——东郊椰林椰乡皇后.宋氏三姐妹塑像（东南向）_-_panoramio.jpg",
+        "status": "approved",
+        "manifest": "docs/成果整理/Hainan-Travel-Guide/data/PHOTO_MANIFEST.csv"
+      }
+    },
+    {
+      "placeId": 63,
+      "place": "东郊椰林",
+      "slot": 3,
+      "path": "Wenchang/063/03.webp",
+      "bytes": 272186,
+      "sha256": "b551325fa35f3c3c921a837433ea66bc50953cd2fc55b442e97aaf7b5656f804",
+      "licenseRecord": {
+        "license": "CC BY 3.0",
+        "creator": "川号子",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:海南国际旅游岛——东郊椰林景观（东北向）_-_panoramio.jpg",
+        "status": "approved",
+        "manifest": "docs/成果整理/Hainan-Travel-Guide/data/PHOTO_MANIFEST.csv"
+      }
+    },
+    {
+      "placeId": 78,
+      "place": "日月湾",
+      "slot": 1,
+      "path": "Wanning/078/01.webp",
+      "bytes": 196188,
+      "sha256": "a150a8e1cf55186000e9fa7fdeb2c11e8de39ae149ac1a660720f8f1542a57a2",
+      "licenseRecord": {
+        "license": "CC BY-SA 3.0",
+        "creator": "Zhangmoon618",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Riyue_Bay_in_Wanning.jpg",
+        "status": "approved",
+        "manifest": "docs/成果整理/Hainan-Travel-Guide/data/PHOTO_MANIFEST.csv"
+      }
+    },
+    {
+      "placeId": 78,
+      "place": "日月湾",
+      "slot": 2,
+      "path": "Wanning/078/02.webp",
+      "bytes": 312614,
+      "sha256": "971e2dfdd7837f4b555d67308ba3b6e4f4d8b75ec25f74d4ecf6e045a26a70e0",
+      "licenseRecord": {
+        "license": "CC BY-SA 3.0",
+        "creator": "Nyx Ning",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:海口-万宁市-日月湾_-_panoramio.jpg",
+        "status": "approved",
+        "manifest": "docs/成果整理/Hainan-Travel-Guide/data/PHOTO_MANIFEST.csv"
+      }
+    },
+    {
+      "placeId": 78,
+      "place": "日月湾",
+      "slot": 3,
+      "path": "Wanning/078/03.webp",
+      "bytes": 169048,
+      "sha256": "77ab21b52cc1e79bad2ad529be6d1746912a8f88c68d7f3653bf2a5184c55c69",
+      "licenseRecord": {
+        "license": "CC BY-SA 3.0",
+        "creator": "Nyx Ning",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:海口-日月湾-风云突变_-_panoramio.jpg",
+        "status": "approved",
+        "manifest": "docs/成果整理/Hainan-Travel-Guide/data/PHOTO_MANIFEST.csv"
+      }
+    },
+    {
+      "placeId": 88,
+      "place": "分界洲岛",
+      "slot": 1,
+      "path": "Lingshui/088/01.webp",
+      "bytes": 293782,
+      "sha256": "49b200922c46be2d8693d153e2a0f03db4f1c6b9c804436af179f9ad6fb68b92",
+      "licenseRecord": {
+        "license": "CC BY 3.0",
+        "creator": "江上清风1961",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:分界洲岛风光_-_panoramio.jpg",
+        "status": "approved",
+        "manifest": "docs/成果整理/Hainan-Travel-Guide/data/PHOTO_MANIFEST.csv"
+      }
+    },
+    {
+      "placeId": 88,
+      "place": "分界洲岛",
+      "slot": 2,
+      "path": "Lingshui/088/02.webp",
+      "bytes": 157578,
+      "sha256": "8ad0d122b0a22e2b1f8284701a7e3d83a8172b85b92b53c2f6448f0630b1bb32",
+      "licenseRecord": {
+        "license": "CC BY-SA 3.0",
+        "creator": "Zhangmoon618",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Fenjiezhou_in_Lingshui.jpg",
+        "status": "approved",
+        "manifest": "docs/成果整理/Hainan-Travel-Guide/data/PHOTO_MANIFEST.csv"
+      }
+    },
+    {
+      "placeId": 88,
+      "place": "分界洲岛",
+      "slot": 3,
+      "path": "Lingshui/088/03.webp",
+      "bytes": 147850,
+      "sha256": "52f9f1258a24dd5795f070798c604bd85c7898e93a92acde920d79b47151d8d7",
+      "licenseRecord": {
+        "license": "CC BY-SA 3.0",
+        "creator": "Nyx Ning",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:海南_分界洲岛海滨_-_panoramio.jpg",
+        "status": "approved",
+        "manifest": "docs/成果整理/Hainan-Travel-Guide/data/PHOTO_MANIFEST.csv"
+      }
+    },
+    {
+      "placeId": 97,
+      "place": "西岛",
+      "slot": 2,
+      "path": "Sanya/097/02.webp",
+      "bytes": 418326,
+      "sha256": "a4ebfbd8a381be701b6998ed030d69087e35a5352adc851a79e44288378c16df",
+      "licenseRecord": {
+        "license": "CC BY 3.0",
+        "creator": "Tanya Dedyukhina",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Sanya_Xidao_Island_Pier_-_panoramio.jpg",
+        "status": "approved",
+        "manifest": "docs/成果整理/Hainan-Travel-Guide/data/PHOTO_MANIFEST.csv"
+      }
+    },
+    {
+      "placeId": 97,
+      "place": "西岛",
+      "slot": 3,
+      "path": "Sanya/097/03.webp",
+      "bytes": 262112,
+      "sha256": "a9a11be979116a707a5aa11ab72f40babec7fe2ca30adda20b85e1f6232c1ef4",
+      "licenseRecord": {
+        "license": "CC BY 3.0",
+        "creator": "Tanya Dedyukhina",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Sanya_Xidao_Island_Pier_-_panoramio_(1).jpg",
+        "status": "approved",
+        "manifest": "docs/成果整理/Hainan-Travel-Guide/data/PHOTO_MANIFEST.csv"
+      }
+    },
+    {
+      "placeId": 99,
+      "place": "亚龙湾",
+      "slot": 1,
+      "path": "Sanya/099/01.webp",
+      "bytes": 407862,
+      "sha256": "892bb420656a6975c5d7f408a741717e7a3d430da84883d1e363d4bf63d23acb",
+      "licenseRecord": {
+        "license": "CC BY-SA 4.0",
+        "creator": "Steven Sun",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:三亚太阳湾公路旁海滩_20260115.jpg",
+        "status": "approved",
+        "manifest": "docs/成果整理/Hainan-Travel-Guide/data/PHOTO_MANIFEST.csv"
+      }
+    },
+    {
+      "placeId": 99,
+      "place": "亚龙湾",
+      "slot": 2,
+      "path": "Sanya/099/02.webp",
+      "bytes": 341302,
+      "sha256": "0db1ae9b65f7fbff762f2de5080fd7274c1a9a62125f64d16e038ad53472c0c3",
+      "licenseRecord": {
+        "license": "CC BY 3.0",
+        "creator": "Tanya Dedyukhina",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Yalong_bay_-_panoramio_(3).jpg",
+        "status": "approved",
+        "manifest": "docs/成果整理/Hainan-Travel-Guide/data/PHOTO_MANIFEST.csv"
+      }
+    },
+    {
+      "placeId": 99,
+      "place": "亚龙湾",
+      "slot": 3,
+      "path": "Sanya/099/03.webp",
+      "bytes": 337060,
+      "sha256": "bb2287ad01ec764e5baf670cec75583659ac550096365bdca3bc7c9f538622b8",
+      "licenseRecord": {
+        "license": "CC BY-SA 3.0",
+        "creator": "Dounai",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Abandoned_hotel_Sanya_Hainan_1999.jpg",
+        "status": "approved",
+        "manifest": "docs/成果整理/Hainan-Travel-Guide/data/PHOTO_MANIFEST.csv"
+      }
+    }
+  ],
+  "excludedPhotos": [
+    {
+      "placeId": 62,
+      "place": "石头公园",
+      "slot": 1,
+      "path": "Wenchang/062/01.webp",
+      "source": "https://commons.wikimedia.org/wiki/File:Stone_Park,_Ashland_MA.jpg",
+      "reason": "清单记录为美国马萨诸塞州 Stone Park（John Phelan），不是文昌石头公园",
+      "archiveFileStillPresent": true
+    },
+    {
+      "placeId": 62,
+      "place": "石头公园",
+      "slot": 2,
+      "path": "Wenchang/062/02.webp",
+      "source": "https://commons.wikimedia.org/wiki/File:Jeju_Stone_Park_14.jpg",
+      "reason": "清单记录为韩国济州 Stone Park（Bernard Gagnon），不是文昌石头公园",
+      "archiveFileStillPresent": true
+    },
+    {
+      "placeId": 62,
+      "place": "石头公园",
+      "slot": 3,
+      "path": "Wenchang/062/03.webp",
+      "source": "https://commons.wikimedia.org/wiki/File:Latte_Stones_in_Latte_Stone_Park,_Guam.jpg",
+      "reason": "清单记录为关岛 Latte Stone Park（Lance Vanlewen），不是文昌石头公园",
+      "archiveFileStillPresent": true
+    },
+    {
+      "placeId": 71,
+      "place": "潭门渔港",
+      "slot": 1,
+      "path": "Qionghai/071/01.webp",
+      "source": "https://commons.wikimedia.org/wiki/File:Tan-men_noodle_(46539335051).jpg",
+      "reason": "清单记录为日本坦面（Tan-men noodle），不是潭门渔港",
+      "archiveFileStillPresent": true
+    },
+    {
+      "placeId": 71,
+      "place": "潭门渔港",
+      "slot": 2,
+      "path": "Qionghai/071/02.webp",
+      "source": "https://commons.wikimedia.org/wiki/File:Tanmen_Yamitsuki_20190121.jpg",
+      "reason": "清单记录为名古屋的日式坦面店（円周率３パーセント），不是潭门渔港",
+      "archiveFileStillPresent": true
+    },
+    {
+      "placeId": 71,
+      "place": "潭门渔港",
+      "slot": 3,
+      "path": "Qionghai/071/03.webp",
+      "source": "https://commons.wikimedia.org/wiki/File:Gifu_Tanmen_Age_Tanmen_20190306.jpg",
+      "reason": "清单记录为岐阜坦面（円周率３パーセント），不是潭门渔港",
+      "archiveFileStillPresent": true
+    },
+    {
+      "placeId": 97,
+      "place": "西岛",
+      "slot": 1,
+      "path": "Sanya/097/01.webp",
+      "source": "https://commons.wikimedia.org/wiki/File:West_Island_(South_Australia).JPG",
+      "reason": "清单记录为澳大利亚南澳 West Island（Danimations），不是三亚西岛",
+      "archiveFileStillPresent": true
+    },
+    {
+      "placeId": 115,
+      "place": "儋州峨蔓火山海岸",
+      "slot": 1,
+      "path": "Other_Hainan/115/01.webp",
+      "source": "https://commons.wikimedia.org/wiki/File:Eman_Košpo_25072026_(3).jpg",
+      "reason": "清单记录为足球运动员 Eman Košpo 热身照（Timmy96），不是儋州海岸",
+      "archiveFileStillPresent": true
+    },
+    {
+      "placeId": 115,
+      "place": "儋州峨蔓火山海岸",
+      "slot": 2,
+      "path": "Other_Hainan/115/02.webp",
+      "source": "https://commons.wikimedia.org/wiki/File:YT1D0492_-_Eman_Kellam.jpg",
+      "reason": "清单记录为人物 Eman Kellam（PlanetSketchy），不是儋州海岸",
+      "archiveFileStillPresent": true
+    },
+    {
+      "placeId": 115,
+      "place": "儋州峨蔓火山海岸",
+      "slot": 3,
+      "path": "Other_Hainan/115/03.webp",
+      "source": "https://commons.wikimedia.org/wiki/File:Eman_bei_Bodafors.jpg",
+      "reason": "清单记录为瑞典 Emån 河（Olaf Meister），不是儋州海岸",
+      "archiveFileStillPresent": true
+    },
+    {
+      "placeId": 1,
+      "place": "龙兴路",
+      "slot": 1,
+      "path": "Haikou/001/01.webp",
+      "source": "",
+      "reason": "PHOTO_MANIFEST.csv 无此文件记录，来源与许可均未登记，无法确认是否龙兴路",
+      "archiveFileStillPresent": true
+    }
+  ],
+  "missingPhotos": [
+    {
+      "placeId": 1,
+      "place": "龙兴路",
+      "slot": 2,
+      "path": null,
+      "reason": "现有数据没有可用图，保留页面缺图提示"
+    },
+    {
+      "placeId": 1,
+      "place": "龙兴路",
+      "slot": 3,
+      "path": null,
+      "reason": "现有数据没有可用图，保留页面缺图提示"
+    }
+  ],
+  "note": "图片只复用现有仓库归档，未下载、未重新编码；已核实错配或来源未登记的图片列在 excludedPhotos，不进入单文件，原图仍在仓库。未排除的图片仅有 PHOTO_MANIFEST.csv 记录，未逐张重新核验来源页面，按待核实处理。"
+}

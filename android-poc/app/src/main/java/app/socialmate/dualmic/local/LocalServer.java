@@ -264,6 +264,7 @@ public final class LocalServer {
                 if (path.equals("/api/ai/translate")) result = direct.translate(req);
                 else if (path.equals("/api/ai/draft-en")) result = direct.draftEn(req);
                 else if (path.equals("/api/ai/analyze")) result = direct.analyze(req);
+                else if (path.equals("/api/ai/term")) result = direct.term(req);
                 else throw new LocalHttpException(404, "AI_PATH_UNKNOWN", "未知 AI 路径");
                 writeJson(out, 200, result);
                 return;

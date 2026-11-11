@@ -1,0 +1,776 @@
+{
+  "startedAt": "2026-11-09T13:49:18.233Z",
+  "target": "standalone-test/standalone.html",
+  "targetBytes": 10140121,
+  "targetSha256": "4fc4654e6cca0b71df9353018042dcb4989c2f31a41e0abf1a1272bc2019a4e3",
+  "checks": [
+    {
+      "name": "测试目录内只有单文件",
+      "ok": true,
+      "detail": "standalone.html"
+    },
+    {
+      "name": "HTML 无外部 script / stylesheet 引用",
+      "ok": true
+    },
+    {
+      "name": "HTML 未引用 assets/ 目录",
+      "ok": true
+    },
+    {
+      "name": "内嵌图片数等于构建清单（26 张可用素材）",
+      "ok": true,
+      "detail": "26 张"
+    },
+    {
+      "name": "单文件 SHA-256 与构建记录一致",
+      "ok": true,
+      "detail": "4fc4654e6cca0b71df9353018042dcb4989c2f31a41e0abf1a1272bc2019a4e3"
+    },
+    {
+      "name": "单文件字节数与构建记录一致",
+      "ok": true,
+      "detail": "10140121 bytes"
+    },
+    {
+      "name": "内嵌图片与原归档逐字节一致",
+      "ok": true,
+      "detail": "26/26 SHA-256 相同"
+    },
+    {
+      "name": "11 张已排除图片均未内嵌（路径）",
+      "ok": true,
+      "detail": "11 张均不在映射中"
+    },
+    {
+      "name": "已排除图片哈希不在单文件中",
+      "ok": true,
+      "detail": "0 个哈希命中"
+    },
+    {
+      "name": "默认主题为跟随系统（SYSTEM）",
+      "ok": true,
+      "detail": "system"
+    },
+    {
+      "name": "底部恰好五个 Tab 且顺序正确",
+      "ok": true,
+      "detail": "话题｜海南｜聊天｜关于我｜人物"
+    },
+    {
+      "name": "三个虚构人物的待确认事项都不在已确认事实里",
+      "ok": true,
+      "detail": "[{\"slug\":\"oliver\",\"pendingInConfirmed\":false,\"topics\":2,\"staticNote\":true},{\"slug\":\"maya\",\"pendingInConfirmed\":false,\"topics\":2,\"staticNote\":true},{\"slug\":\"jieun\",\"pendingInConfirmed\":false,\"topics\":2,\"staticNote\":true}]"
+    },
+    {
+      "name": "每个虚构人物都有至少 2 个固定聊天示例并标注不调用云端 AI",
+      "ok": true,
+      "detail": "[\"oliver:2\",\"maya:2\",\"jieun:2\"]"
+    },
+    {
+      "name": "作品含 9 条 A 类样本与 B/C 分类示范补充",
+      "ok": true,
+      "detail": "{\"people\":[{\"slug\":\"oliver\",\"pendingInConfirmed\":false,\"topics\":2,\"staticNote\":true},{\"slug\":\"maya\",\"pendingInConfirmed\":false,\"topics\":2,\"staticNote\":true},{\"slug\":\"jieun\",\"pendingInConfirmed\":false,\"topics\":2,\"staticNote\":true}],\"total\":11,\"a\":9,\"b\":1,\"c\":1,\"festivals\":{\"total\":47,\"fixed\":21,\"pending\":26,\"hainan\":[\"hainan-junpo\",\"hainan-huanhua\",\"hainan-sanyuesan\",\"hainan-carnival\"],\"holidayTypes\":[\"public_holiday\",\"festival_day\",\"observance\"],\"missing\":[],\"noDate\":6,\"noSource\":[],\"badPlaceIds\":[]}}"
+    },
+    {
+      "name": "47 个节日候选、字段完整且来源/核实日期/关联地点齐全",
+      "ok": true,
+      "detail": "{\"total\":47,\"fixed\":21,\"pending\":26,\"hainan\":[\"hainan-junpo\",\"hainan-huanhua\",\"hainan-sanyuesan\",\"hainan-carnival\"],\"holidayTypes\":[\"public_holiday\",\"festival_day\",\"observance\"],\"missing\":[],\"noDate\":6,\"noSource\":[],\"badPlaceIds\":[]}"
+    },
+    {
+      "name": "节日区分节日本日与公共假期/纪念日",
+      "ok": true,
+      "detail": "public_holiday / festival_day / observance"
+    },
+    {
+      "name": "包含至少 3 个海南本地节日",
+      "ok": true,
+      "detail": "hainan-junpo, hainan-huanhua, hainan-sanyuesan, hainan-carnival"
+    },
+    {
+      "name": "待确认节日不写精确倒计时（无日期或标 pending）",
+      "ok": true,
+      "detail": "fixed 21 / pending 26"
+    },
+    {
+      "name": "file:// 直开且 CSS/JS 全部内联",
+      "ok": true,
+      "detail": "{\"proto\":\"file:\",\"sheets\":1,\"srcs\":[null,null,null,null,null]}"
+    },
+    {
+      "name": "内嵌图片映射键数与构建清单一致",
+      "ok": true,
+      "detail": "26 键"
+    },
+    {
+      "name": "节日默认「未来 14 天」有候选卡片",
+      "ok": true,
+      "detail": "卡片 4 个"
+    },
+    {
+      "name": "「今天」无匹配时显示空态",
+      "ok": true
+    },
+    {
+      "name": "「全部」展示全部 47 个候选节日",
+      "ok": true,
+      "detail": "卡片 47 个"
+    },
+    {
+      "name": "节日卡片标出节日类型与来源核实信息",
+      "ok": true,
+      "detail": "{\"pills\":[\"纪念 / 观察日\",\"日期已核对\"],\"summary\":\"看 2 条话题句与来源\",\"src\":\"核实日期：2026-11-09 · 关联地点 id：无https://date.nager.at/api/v3/PublicHolidays/2026/GBhttps://date.nager.at"
+    },
+    {
+      "name": "13 个封面中 9 个出图且全部加载成功",
+      "ok": true,
+      "detail": "9/9 张封面"
+    },
+    {
+      "name": "无可用照片的 4 个地点显示待核实提示",
+      "ok": true,
+      "detail": "#62:暂无可用照片来源待核实 | #71:暂无可用照片来源待核实 | #115:暂无可用照片来源待核实 | #1:暂无可用照片来源待核实"
+    },
+    {
+      "name": "骑楼老街详情 3 张可用图片加载",
+      "ok": true,
+      "detail": "1600×1200 | 1600×1200 | 1600×1200"
+    },
+    {
+      "name": "详情图片全部为内嵌 data:image/webp",
+      "ok": true,
+      "detail": "3/3"
+    },
+    {
+      "name": "详情缺图提示全部隐藏",
+      "ok": true,
+      "detail": "#0:none #1:none #2:none"
+    },
+    {
+      "name": "详情图片可见，首图 elementFromPoint 命中 IMG（首屏）",
+      "ok": true,
+      "detail": "[{\"i\":0,\"shown\":true,\"hit\":\"IMG\"},{\"i\":1,\"shown\":true,\"hit\":null},{\"i\":2,\"shown\":true,\"hit\":null}]"
+    },
+    {
+      "name": "没有可见缺图提示压在照片上",
+      "ok": true,
+      "detail": "0 处"
+    },
+    {
+      "name": "中文介绍 90–150 字量级",
+      "ok": true,
+      "detail": "115 字"
+    },
+    {
+      "name": "英文介绍 60–95 词量级",
+      "ok": true,
+      "detail": "76 词"
+    },
+    {
+      "name": "首图绘制出照片像素（非纯色板）",
+      "ok": true,
+      "detail": "{\"w\":628,\"h\":470,\"mean\":118,\"sd\":82,\"bg\":0,\"colors\":2215}"
+    },
+    {
+      "name": "全屏进入显示 1 / 3 且为内嵌图",
+      "ok": true,
+      "detail": "{\"on\":true,\"count\":\"1 / 3\",\"img\":true}"
+    },
+    {
+      "name": "全屏照片可见、提示隐藏且命中 IMG",
+      "ok": true,
+      "detail": "{\"nw\":1600,\"shown\":true,\"fbHidden\":true,\"fbDisplay\":\"none\",\"hit\":\"IMG\"}"
+    },
+    {
+      "name": "全屏下一张切到 2 / 3",
+      "ok": true,
+      "detail": "2 / 3"
+    },
+    {
+      "name": "全屏可退出",
+      "ok": true
+    },
+    {
+      "name": "画廊「下一张」切到 2 / 3 且确实滚动",
+      "ok": true,
+      "detail": "{\"count\":\"2 / 3\",\"left\":298}"
+    },
+    {
+      "name": "画廊连续「下一张」切到 3 / 3",
+      "ok": true,
+      "detail": "{\"count\":\"3 / 3\",\"left\":597}"
+    },
+    {
+      "name": "画廊「上一张」退回 2 / 3",
+      "ok": true
+    },
+    {
+      "name": "更多按钮打开原型设置与范围说明",
+      "ok": true,
+      "detail": "更多 · 原型设置✕浅色深色跟随系统（默认）默认跟随系统；浅色/深色/跟随系统三档可手选，选择会保存在本机浏览器。\n      \n      范围与边界\n   "
+    },
+    {
+      "name": "段落切换：第 2 段选中且标题同步",
+      "ok": true,
+      "detail": "{\"before\":{\"active\":\"第 1 段\",\"title\":\"第一次带朋友走骑楼\"},\"after\":{\"active\":\"第 2 段\",\"title\":\"傍晚再走一次\"}}"
+    },
+    {
+      "name": "段落切换：可退回第 1 段",
+      "ok": true
+    },
+    {
+      "name": "旧格式记录保留 recordId / sourceSpan / 练习日志",
+      "ok": true,
+      "detail": "{\"title\":\"旧格式记录\",\"meta\":\"2026-10-20 · 旧格式历史兼容\"}"
+    },
+    {
+      "name": "旧英文 B 版本默认折叠隐藏，不覆盖唯一英文正文",
+      "ok": true,
+      "detail": "{\"bOpen\":false}"
+    },
+    {
+      "name": "展开后才显示旧 B 版本并标明仅历史兼容",
+      "ok": true,
+      "detail": "旧英文 B 版本 1 条（默认隐藏）We came in the evening and the street lights were coming on one after another.旧英文 "
+    },
+    {
+      "name": "单段粘贴识别为 1 段 / 2 条表达",
+      "ok": true,
+      "detail": "识别到 1 段 / 2 条表达，可确认导入。第 1 段2 条表达傍晚又走了一遍，店铺陆续亮灯，我们顺着骑楼慢慢走回钟楼，没有赶时间。We w"
+    },
+    {
+      "name": "单段确认后段数不变、当前段表达 4 → 6 且写入历史",
+      "ok": true,
+      "detail": "{\"segs\":3,\"more\":\"展开全部 6 条表达\"}"
+    },
+    {
+      "name": "展开全部后当前段显示 6 条表达",
+      "ok": true,
+      "detail": "6 条"
+    },
+    {
+      "name": "整篇粘贴识别为 2 段 / 6 条表达",
+      "ok": true,
+      "detail": "识别到 2 段 / 6 条表达，可确认导入。第 1 段3 条表达我们从钟楼那边走进来，沿着骑楼慢慢走，最后在一家小店坐下。没有赶景点，反而聊了很久。We wal"
+    },
+    {
+      "name": "确认导入后新增 2 段",
+      "ok": true,
+      "detail": "3 → 5"
+    },
+    {
+      "name": "导入后弹窗关闭",
+      "ok": true
+    },
+    {
+      "name": "格式模糊时拒绝猜测并禁用导入",
+      "ok": true,
+      "detail": "第 1 段：没有识别到足够的中文整理段（至少 15 字）。"
+    },
+    {
+      "name": "13 个地点逐页共加载 26 张可用图片",
+      "ok": true,
+      "detail": "13 页 · 26 张"
+    },
+    {
+      "name": "每页可用槽位数与构建清单一致",
+      "ok": true,
+      "detail": "3:3/3 4:3/3 9:3/3 43:3/3 62:0/3 63:3/3 71:0/3 78:3/3 88:3/3 97:2/3 99:3/3 115:0/3 1:0/3"
+    },
+    {
+      "name": "每页有图时宽度 ≥600px",
+      "ok": true,
+      "detail": "3:1600px 4:1600px 9:1600px 43:1600px 63:1600px 78:1600px 88:1600px 97:1600px 99:1600px"
+    },
+    {
+      "name": "每页图片互不重复（无跨地冒充）",
+      "ok": true,
+      "detail": "3:3/3 4:3/3 9:3/3 43:3/3 62:0/0 63:3/3 71:0/0 78:3/3 88:3/3 97:2/2 99:3/3 115:0/0 1:0/0"
+    },
+    {
+      "name": "排除槽位全部显示“已排除（待核实）”提示",
+      "ok": true,
+      "detail": "#62→1,2,3 #71→1,2,3 #97→1 #115→1,2,3 #1→1"
+    },
+    {
+      "name": "62/71/115/1 四个地点 0 张可用图且全部出提示",
+      "ok": true,
+      "detail": "62:0/3 71:0/3 115:0/3 1:0/3"
+    },
+    {
+      "name": "西岛（97）保留 2 张可用图 + 1 张已排除提示",
+      "ok": true,
+      "detail": "2 图 / 1 提示"
+    },
+    {
+      "name": "骑楼老街（3）3 张图库仍完整可见",
+      "ok": true,
+      "detail": "3 图 · 最小宽 1600px"
+    },
+    {
+      "name": "西岛来源按实际槽位写：02、03 可用，第 1 张已排除",
+      "ok": true,
+      "detail": "来源：现有归档 02.webp、03.webp；第 1 张按清单记录排除。 未排除的图片仅有 PHOTO_MANIFEST.csv 记录，未逐张重开来源页核验（待核实）。"
+    },
+    {
+      "name": "龙兴路来源写明第 1 张排除、第 2–3 张无归档",
+      "ok": true,
+      "detail": "来源：第 1 张按清单记录排除；第 2–3 张无归档；本页没有可用照片，待重新采集。"
+    },
+    {
+      "name": "石头公园来源写明 3 张全部排除、无可用照片",
+      "ok": true,
+      "detail": "来源：第 1–3 张按清单记录排除；本页没有可用照片，待重新采集。"
+    },
+    {
+      "name": "来源明细收进默认折叠的「照片来源说明」",
+      "ok": true,
+      "detail": "{\"open\":false,\"summary\":\"照片来源说明（文件、清单记录与许可待核实项）\"}"
+    },
+    {
+      "name": "折叠内保留 PHOTO_MANIFEST.csv、逐张归档文件名与待核实说明",
+      "ok": true,
+      "detail": " 照片来源说明（文件、清单记录与许可待核实项） 来源：现有归档 01.webp、02.webp、03.webp。 未排除的图片仅有 PHOTO_MANIFEST.csv 记录，未逐张重开来源页核验（待核实）。 介绍为原型示范改写，开放店铺与"
+    },
+    {
+      "name": "中文介绍排在照片来源折叠之前（紧随图库与地点信息）",
+      "ok": true,
+      "detail": "{\"introBefore\":true,\"firstMetaIsSource\":true}"
+    },
+    {
+      "name": "展开后可看到完整来源明细（证据可查，不是被删除）",
+      "ok": true,
+      "detail": "{\"open\":true,\"h\":219,\"visible\":true}"
+    },
+    {
+      "name": "图片状态分为 pending / failed / ok，加载中不判失败",
+      "ok": true,
+      "detail": "{\"pending\":\"pending\",\"failed\":\"failed\",\"ok\":\"ok\"}"
+    },
+    {
+      "name": "加载 3.6 秒仍在等待：只出“加载较慢”，不隐藏图片、不误报缺图",
+      "ok": true,
+      "detail": "{\"fbHidden\":true,\"slowHidden\":false,\"display\":\"\"}"
+    },
+    {
+      "name": "确认解码失败后才隐藏图片并亮出缺图提示",
+      "ok": true,
+      "detail": "{\"fbHidden\":false,\"slowHidden\":true,\"display\":\"none\",\"state\":\"failed\"}"
+    },
+    {
+      "name": "龙兴路：0 张可用图 + 3 处可见提示",
+      "ok": true,
+      "detail": "{\"imgs\":0,\"prompts\":3}"
+    },
+    {
+      "name": "龙兴路第 1 张标“已排除待核实”，其余标“待补图”",
+      "ok": true,
+      "detail": "第 1 张已排除（待核实）PHOTO_MANIFEST.csv 无此文件记录，来源与许可均未登记，无法确认是否龙兴路（待重新采集，不用与地点不符的图片冒充） | 第 2 张缺失（待补图）不用其他地点图片冒充 | 第 3 张缺失（待补图）不用其他地点图片冒充"
+    },
+    {
+      "name": "聊天页明确标注固定示例，不声称 AI 实时理解",
+      "ok": true,
+      "detail": "固定示例 · 话题：训练与轻松跑"
+    },
+    {
+      "name": "Oliver 页不出现美国感恩节固定建议",
+      "ok": true,
+      "detail": "0 处"
+    },
+    {
+      "name": "接话与追问和当前对话一致并各自给出依据",
+      "ok": true,
+      "detail": "依据：承接对方刚说的轻松跑与引体向上 | 依据：来自已确认事实：正在练第一个严格引体向上"
+    },
+    {
+      "name": "聊天底部有地点、节日、人物三个小标签",
+      "ok": true,
+      "detail": "⌖地点 · 骑楼老街 | ◷节日 · 选一个最近话题 | ♧人物 · Oliver Reed"
+    },
+    {
+      "name": "节日标签给出可选话题并声明不推断对方是否庆祝",
+      "ok": true,
+      "detail": "{\"cards\":4}"
+    },
+    {
+      "name": "切换人物后对话、话题与接话都换成该人物样本",
+      "ok": true,
+      "detail": "{\"topic\":\"固定示例 · 话题：海报与演出\"}"
+    },
+    {
+      "name": "切换人物后不再残留 Oliver 的训练建议",
+      "ok": true,
+      "detail": "0 处残留"
+    },
+    {
+      "name": "聊天页有「分享 / 换题」控件和至少 2 个固定话题",
+      "ok": true,
+      "detail": "{\"topics\":2}"
+    },
+    {
+      "name": "换题后话题、对话与接话同步切换且弹层关闭",
+      "ok": true,
+      "detail": "{\"topic\":\"固定示例 · 话题：海口行程\"}"
+    },
+    {
+      "name": "我的作品搜索可过滤",
+      "ok": true,
+      "detail": "11 → 1"
+    },
+    {
+      "name": "B 类筛选不是死路且标为分类示范补充",
+      "ok": true,
+      "detail": "{\"n\":1,\"label\":\"DEMO-B1 · B 类 · 分类示范补充\"}"
+    },
+    {
+      "name": "C 类筛选不是死路且标为分类示范补充",
+      "ok": true,
+      "detail": "{\"n\":1,\"label\":\"DEMO-C1 · C 类 · 分类示范补充\"}"
+    },
+    {
+      "name": "作品详情有分享作品入口",
+      "ok": true,
+      "detail": "分享作品 · 人生物种测试 · Personality Quiz✕P002 · A 类 · 现有演示数据样本\n      原型内分享：系统分"
+    },
+    {
+      "name": "作品分享调用系统分享并带中英介绍",
+      "ok": true,
+      "detail": "{\"stubbed\":true}"
+    },
+    {
+      "name": "关于我搜索保留且可用",
+      "ok": true,
+      "detail": "5 → 1"
+    },
+    {
+      "name": "关于我中英同时可见",
+      "ok": true
+    },
+    {
+      "name": "关于我清空搜索后恢复 5 条",
+      "ok": true
+    },
+    {
+      "name": "人物页确认事实与待确认分开",
+      "ok": true,
+      "detail": "{\"facts\":3,\"pending\":1}"
+    },
+    {
+      "name": "人物页待确认内容没有重复已确认事实",
+      "ok": true,
+      "detail": "Oliver's target finish time for the Dece"
+    },
+    {
+      "name": "人物页有中英续聊问句与历史",
+      "ok": true,
+      "detail": "{\"q\":4}"
+    },
+    {
+      "name": "人物页示范问句明确为静态样本，不再写 AI 话题建议",
+      "ok": true,
+      "detail": "已改标"
+    },
+    {
+      "name": "主题可切到深色",
+      "ok": true,
+      "detail": "dark"
+    },
+    {
+      "name": "深色主题刷新后保持",
+      "ok": true
+    },
+    {
+      "name": "375/393/430/520 六页无横向溢出",
+      "ok": true,
+      "detail": "6 页 × 4 宽度"
+    },
+    {
+      "name": "六页正文字号 ≥19px，标题 ≥23px",
+      "ok": true,
+      "detail": "[\"#topics/festival:19/23\",\"#hainan/3:19/23\",\"#chat:19/23\",\"#self:19/23\",\"#people/oliver:19/23\",\"#topics/works:19/23\"]"
+    },
+    {
+      "name": "六页没有小于 14px 的可见文本",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "运行期没有任何外部网络请求",
+      "ok": true,
+      "detail": "0 个"
+    },
+    {
+      "name": "运行期没有读取仓库其他文件",
+      "ok": true,
+      "detail": "0 个"
+    },
+    {
+      "name": "无 JS 异常",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "无图片/资源加载失败",
+      "ok": true,
+      "detail": ""
+    }
+  ],
+  "shots": [
+    "s01_topics_festival_393.png",
+    "s02b_hainan_detail_photo_proof_393.png",
+    "s02_hainan_detail_393.png",
+    "s03_fullscreen_393.png",
+    "s11_gallery_next_393.png",
+    "s12_more_sheet_393.png",
+    "s13_segments_393.png",
+    "s14_single_paste_preview_393.png",
+    "s04_import_preview_393.png",
+    "s02b_hainan_source_details_393.png",
+    "s05_missing_photo_393.png",
+    "s06_chat_393.png",
+    "s06c_chat_maya_393.png",
+    "s17_chat_share_393.png",
+    "s15_works_cat_b_393.png",
+    "s07_works_393.png",
+    "s16_work_share_393.png",
+    "s18_self_393.png",
+    "s08_people_393.png",
+    "s09_dark_place_393.png"
+  ],
+  "photoMatrix": [
+    {
+      "placeId": 3,
+      "name": "骑楼老街",
+      "declaredSlides": 3,
+      "usableSlots": [
+        1,
+        2,
+        3
+      ],
+      "excludedSlots": [],
+      "realPhotos": 3,
+      "minWidth": 1600,
+      "promptSlides": 0,
+      "promptTexts": [],
+      "distinctSrc": 3
+    },
+    {
+      "placeId": 4,
+      "name": "云洞图书馆",
+      "declaredSlides": 3,
+      "usableSlots": [
+        1,
+        2,
+        3
+      ],
+      "excludedSlots": [],
+      "realPhotos": 3,
+      "minWidth": 1600,
+      "promptSlides": 0,
+      "promptTexts": [],
+      "distinctSrc": 3
+    },
+    {
+      "placeId": 9,
+      "name": "雷琼火山口地质公园",
+      "declaredSlides": 3,
+      "usableSlots": [
+        1,
+        2,
+        3
+      ],
+      "excludedSlots": [],
+      "realPhotos": 3,
+      "minWidth": 1600,
+      "promptSlides": 0,
+      "promptTexts": [],
+      "distinctSrc": 3
+    },
+    {
+      "placeId": 43,
+      "name": "假日海滩",
+      "declaredSlides": 3,
+      "usableSlots": [
+        1,
+        2,
+        3
+      ],
+      "excludedSlots": [],
+      "realPhotos": 3,
+      "minWidth": 1600,
+      "promptSlides": 0,
+      "promptTexts": [],
+      "distinctSrc": 3
+    },
+    {
+      "placeId": 62,
+      "name": "石头公园",
+      "declaredSlides": 3,
+      "usableSlots": [],
+      "excludedSlots": [
+        1,
+        2,
+        3
+      ],
+      "realPhotos": 0,
+      "minWidth": 0,
+      "promptSlides": 3,
+      "promptTexts": [
+        "第 1 张已排除（待核实）清单记录为美国马萨诸塞州 Stone Park（Joh",
+        "第 2 张已排除（待核实）清单记录为韩国济州 Stone Park（Bernar",
+        "第 3 张已排除（待核实）清单记录为关岛 Latte Stone Park（La"
+      ],
+      "distinctSrc": 0
+    },
+    {
+      "placeId": 63,
+      "name": "东郊椰林",
+      "declaredSlides": 3,
+      "usableSlots": [
+        1,
+        2,
+        3
+      ],
+      "excludedSlots": [],
+      "realPhotos": 3,
+      "minWidth": 1600,
+      "promptSlides": 0,
+      "promptTexts": [],
+      "distinctSrc": 3
+    },
+    {
+      "placeId": 71,
+      "name": "潭门渔港",
+      "declaredSlides": 3,
+      "usableSlots": [],
+      "excludedSlots": [
+        1,
+        2,
+        3
+      ],
+      "realPhotos": 0,
+      "minWidth": 0,
+      "promptSlides": 3,
+      "promptTexts": [
+        "第 1 张已排除（待核实）清单记录为日本坦面（Tan-men noodle），不",
+        "第 2 张已排除（待核实）清单记录为名古屋的日式坦面店（円周率３パーセント），不",
+        "第 3 张已排除（待核实）清单记录为岐阜坦面（円周率３パーセント），不是潭门渔港"
+      ],
+      "distinctSrc": 0
+    },
+    {
+      "placeId": 78,
+      "name": "日月湾",
+      "declaredSlides": 3,
+      "usableSlots": [
+        1,
+        2,
+        3
+      ],
+      "excludedSlots": [],
+      "realPhotos": 3,
+      "minWidth": 1600,
+      "promptSlides": 0,
+      "promptTexts": [],
+      "distinctSrc": 3
+    },
+    {
+      "placeId": 88,
+      "name": "分界洲岛",
+      "declaredSlides": 3,
+      "usableSlots": [
+        1,
+        2,
+        3
+      ],
+      "excludedSlots": [],
+      "realPhotos": 3,
+      "minWidth": 1600,
+      "promptSlides": 0,
+      "promptTexts": [],
+      "distinctSrc": 3
+    },
+    {
+      "placeId": 97,
+      "name": "西岛",
+      "declaredSlides": 3,
+      "usableSlots": [
+        2,
+        3
+      ],
+      "excludedSlots": [
+        1
+      ],
+      "realPhotos": 2,
+      "minWidth": 1600,
+      "promptSlides": 1,
+      "promptTexts": [
+        "第 1 张已排除（待核实）清单记录为澳大利亚南澳 West Island（Dan"
+      ],
+      "distinctSrc": 2
+    },
+    {
+      "placeId": 99,
+      "name": "亚龙湾",
+      "declaredSlides": 3,
+      "usableSlots": [
+        1,
+        2,
+        3
+      ],
+      "excludedSlots": [],
+      "realPhotos": 3,
+      "minWidth": 1600,
+      "promptSlides": 0,
+      "promptTexts": [],
+      "distinctSrc": 3
+    },
+    {
+      "placeId": 115,
+      "name": "儋州峨蔓火山海岸",
+      "declaredSlides": 3,
+      "usableSlots": [],
+      "excludedSlots": [
+        1,
+        2,
+        3
+      ],
+      "realPhotos": 0,
+      "minWidth": 0,
+      "promptSlides": 3,
+      "promptTexts": [
+        "第 1 张已排除（待核实）清单记录为足球运动员 Eman Košpo 热身照（T",
+        "第 2 张已排除（待核实）清单记录为人物 Eman Kellam（PlanetS",
+        "第 3 张已排除（待核实）清单记录为瑞典 Emån 河（Olaf Meister"
+      ],
+      "distinctSrc": 0
+    },
+    {
+      "placeId": 1,
+      "name": "龙兴路",
+      "declaredSlides": 3,
+      "usableSlots": [],
+      "excludedSlots": [
+        1
+      ],
+      "realPhotos": 0,
+      "minWidth": 0,
+      "promptSlides": 3,
+      "promptTexts": [
+        "第 1 张已排除（待核实）PHOTO_MANIFEST.csv 无此文件记录，来",
+        "第 2 张缺失（待补图）不用其他地点图片冒充",
+        "第 3 张缺失（待补图）不用其他地点图片冒充"
+      ],
+      "distinctSrc": 0
+    }
+  ],
+  "errors": [],
+  "failedRequests": [],
+  "requests": [
+    "file:///Users/zzymima0000/Developer/coding/1.Active/alw-001-%E5%A4%96%E8%AF%AD%E7%A4%BE%E4%BA%A4%E7%B3%BB%E7%BB%9F/docs/design/prototype/n06/standalone-test/standalone.html",
+    "file:///Users/zzymima0000/Developer/coding/1.Active/alw-001-%E5%A4%96%E8%AF%AD%E7%A4%BE%E4%BA%A4%E7%B3%BB%E7%BB%9F/docs/design/prototype/n06/standalone-test/standalone.html",
+    "file:///Users/zzymima0000/Developer/coding/1.Active/alw-001-%E5%A4%96%E8%AF%AD%E7%A4%BE%E4%BA%A4%E7%B3%BB%E7%BB%9F/docs/design/prototype/n06/standalone-test/standalone.html"
+  ],
+  "finishedAt": "2026-11-09T13:50:30.030Z",
+  "result": "PASS"
+}

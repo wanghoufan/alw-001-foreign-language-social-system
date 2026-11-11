@@ -1,0 +1,684 @@
+[
+  {
+    "id": "daily-commute",
+    "cn": "通勤日常",
+    "en": "Commuting",
+    "region": "国际",
+    "theme": "日常生活",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "每天怎么去上班上学，是很多人一天最固定的时段。可以聊单程多久、路上做什么、挤公共交通或开车的体验，也能聊住得远近和城市节奏的取舍。",
+    "briefEn": "How people get to work or school is one of the most predictable parts of the day. You can ask about commute times, what they do on the way, and whether they take transit, drive, bike, or walk. It also opens up bigger questions about where they live and how they balance time.",
+    "questions": [
+      {
+        "cn": "你每天通勤要多久？",
+        "en": "How long is your commute each day?"
+      },
+      {
+        "cn": "路上你一般做什么？",
+        "en": "What do you usually do on your commute?"
+      },
+      {
+        "cn": "你会为了住得近一点多花钱吗？",
+        "en": "Would you pay more to live closer to work?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.gov.uk/government/statistics/national-travel-survey-2023"
+    ],
+    "sourceNote": "GOV.UK 交通部 National Travel Survey 2023 统计页，2026-11-10 实抓 HTTP 200，标题 National Travel Survey: 2023，正文含通勤出行数据。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "daily-cooking-takeout",
+    "cn": "做饭与外卖",
+    "en": "Cooking and takeout",
+    "region": "国际",
+    "theme": "日常生活",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "自己做饭还是点外卖，往往取决于时间、预算和心情。可以聊一周做几次饭、最拿手的菜、外卖常点什么，也能聊到“做饭算放松还是负担”这种真实差别。",
+    "briefEn": "Cooking at home or ordering takeout usually comes down to time, budget, and energy. Ask how often they cook, what they can make without a recipe, and what they order when they cannot be bothered. It is also worth asking whether cooking feels relaxing or like another chore.",
+    "questions": [
+      {
+        "cn": "你一周大概做几次饭？",
+        "en": "How often do you cook in a typical week?"
+      },
+      {
+        "cn": "忙的时候你一般点什么外卖？",
+        "en": "What do you usually order when you are too busy to cook?"
+      },
+      {
+        "cn": "你觉得做饭是放松还是负担？",
+        "en": "Does cooking feel relaxing to you, or more like a chore?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.nhs.uk/live-well/eat-well/"
+    ],
+    "sourceNote": "NHS 健康饮食指南页，2026-11-10 实抓 HTTP 200，标题 Eat well - NHS。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "daily-grocery-shopping",
+    "cn": "超市购物",
+    "en": "Grocery shopping",
+    "region": "国际",
+    "theme": "日常生活",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "买菜能看出不少生活细节：一周采购一次还是天天买、会不会看标签比价、是否容易被货架摆放带着多买。聊这些比问“喜欢吃什么”更容易聊开。",
+    "briefEn": "Grocery shopping says a lot about daily life: whether someone shops weekly or picks things up day by day, checks labels and prices, or ends up buying more because of how the store is laid out. These small habits are easier to talk about than asking what food they like.",
+    "questions": [
+      {
+        "cn": "你一般一周采购一次，还是路过就买？",
+        "en": "Do you do one big shop each week, or pick things up as you go?"
+      },
+      {
+        "cn": "你会比较价格和看营养标签吗？",
+        "en": "Do you compare prices or check nutrition labels?"
+      },
+      {
+        "cn": "你有没有本来只想买一样，结果拎了一大袋出来？",
+        "en": "Have you ever gone in for one thing and come out with a full bag?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.nhs.uk/live-well/eat-well/how-to-read-food-labels/"
+    ],
+    "sourceNote": "NHS 食品标签解读页，2026-11-10 实抓 HTTP 200，标题 Food labels - NHS，正文讲如何看营养与价格相关信息。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "daily-weekend-plans",
+    "cn": "周末安排",
+    "en": "Weekend plans",
+    "region": "国际",
+    "theme": "日常生活",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "周末怎么过很能看出节奏：有人排满活动，有人只想躺着。可以聊睡到几点、有没有固定安排、家务和休息怎么分，也常聊到“周末过完更累”。",
+    "briefEn": "Weekends reveal a lot about how someone recharges. Some people pack them with plans, while others just want to stay home. Ask about sleeping in, regular routines, chores, and whether they feel rested or even more tired by Sunday night.",
+    "questions": [
+      {
+        "cn": "你理想的周末是什么样的？",
+        "en": "What does an ideal weekend look like for you?"
+      },
+      {
+        "cn": "周末你会睡到很晚吗？",
+        "en": "Do you sleep in on weekends?"
+      },
+      {
+        "cn": "你的周末有没有什么固定安排？",
+        "en": "Do you have any regular weekend routines?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.ons.gov.uk/peoplepopulationandcommunity/leisureandtourism"
+    ],
+    "sourceNote": "英国国家统计局 ONS 休闲与旅游主题页，2026-11-10 实抓 HTTP 200，标题 Leisure and tourism。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "daily-sleep-routine",
+    "cn": "睡眠作息",
+    "en": "Sleep routines",
+    "region": "国际",
+    "theme": "日常生活",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "几点睡、睡多久、睡前做什么，最容易聊也最容易有共鸣。可以聊熬夜的原因、闹钟响几次、周末补觉有没有用，也能带出“睡眠习惯很难改”。",
+    "briefEn": "When someone goes to bed, how long they sleep, and what they do before that is easy to talk about and easy to relate to. Ask why they stay up late, how many times they hit snooze, and whether weekend catch-up sleep actually helps. Most people have strong opinions about this.",
+    "questions": [
+      {
+        "cn": "你一般几点上床睡觉？",
+        "en": "What time do you usually go to bed?"
+      },
+      {
+        "cn": "你睡前会看手机吗？",
+        "en": "Do you look at your phone before bed?"
+      },
+      {
+        "cn": "你周末会补觉吗？",
+        "en": "Do you try to catch up on sleep on weekends?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.nhs.uk/live-well/sleep-and-tiredness/how-to-get-to-sleep/"
+    ],
+    "sourceNote": "NHS 睡眠与疲劳指南页，2026-11-10 实抓 HTTP 200，标题 Sleep and tiredness - NHS，含入睡建议。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "daily-renting",
+    "cn": "租房与居住",
+    "en": "Renting a home",
+    "region": "国际",
+    "theme": "日常生活",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "租房的人大多有一两个故事：合租还是独住、房租和通勤怎么权衡、房东修东西快不快。可以聊住过几处、最看重什么，也能聊搬家的麻烦和押金。",
+    "briefEn": "Most renters have a story or two: living alone versus with roommates, balancing rent against commute time, or waiting on a landlord to fix something. Ask how many places they have lived in, what they look for first, and what moving and deposits are really like.",
+    "questions": [
+      {
+        "cn": "你现在是合租还是自己住？",
+        "en": "Do you live alone or with roommates right now?"
+      },
+      {
+        "cn": "找房子时你最看重什么？",
+        "en": "What matters most to you when you are looking for a place?"
+      },
+      {
+        "cn": "你遇到过最难沟通的房东问题是什么？",
+        "en": "What is the hardest thing you have had to sort out with a landlord?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.gov.uk/private-renting"
+    ],
+    "sourceNote": "GOV.UK 私人租房指南页，2026-11-10 实抓 HTTP 200，标题 Private renting: Tenancy types，含租约与押金说明。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "daily-neighbours",
+    "cn": "邻里关系",
+    "en": "Neighbours",
+    "region": "国际",
+    "theme": "日常生活",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "和邻居的关系微妙：见面打不打招呼、晚上几点后算吵、公共区域怎么用。各地对“保持距离”和“互相照应”的期待差别大，聊具体小事更易聊出真实态度。",
+    "briefEn": "Neighbour relationships are a careful balance: whether people say hello, what counts as too much noise at night, and how shared spaces get used. Expectations vary a lot between places, so concrete examples work better than asking whether they get along with neighbours in general.",
+    "questions": [
+      {
+        "cn": "你和邻居平时会打招呼吗？",
+        "en": "Do you say hello to your neighbours?"
+      },
+      {
+        "cn": "你遇到过噪音问题吗？怎么处理的？",
+        "en": "Have you ever dealt with a noise problem? How did you handle it?"
+      },
+      {
+        "cn": "你觉得邻居之间应该保持距离，还是互相照应？",
+        "en": "Should neighbours keep to themselves, or look out for each other?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.citizensadvice.org.uk/housing/problems-with-neighbours/"
+    ],
+    "sourceNote": "Citizens Advice 邻里纠纷指南页，2026-11-10 实抓 HTTP 200，标题 Problems with neighbours。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "daily-smartphone",
+    "cn": "手机使用",
+    "en": "Smartphone habits",
+    "region": "国际",
+    "theme": "日常生活",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "手机几乎跟着人一整天。可以聊每天屏幕时间多少、起床先看还是睡前最后看、吃饭时放不放桌上。这些细节很容易聊出“离不开但又想少用”的矛盾感。",
+    "briefEn": "Phones are with us all day, so the details are easy to compare: daily screen time, whether they check it first thing in the morning or last thing at night, and whether it sits on the table during meals. Most people have a love-hate relationship with theirs.",
+    "questions": [
+      {
+        "cn": "你每天大概花多少时间在手机上？",
+        "en": "How much time do you spend on your phone each day?"
+      },
+      {
+        "cn": "你早上醒来第一件事是看手机吗？",
+        "en": "Is checking your phone the first thing you do when you wake up?"
+      },
+      {
+        "cn": "吃饭的时候你会把手机放桌上吗？",
+        "en": "Do you keep your phone on the table during meals?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.ons.gov.uk/businessindustryandtrade/itandinternetindustry"
+    ],
+    "sourceNote": "ONS 数字经济主题页，2026-11-10 实抓 HTTP 200，标题 Digital economy，含上网与设备使用统计入口。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "daily-social-media",
+    "cn": "社交媒体",
+    "en": "Social media",
+    "region": "国际",
+    "theme": "日常生活",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "用哪些平台、发什么、看什么，差别很大。有人只看不发，有人习惯记录日常。可以聊会不会因别人的动态感到压力、会不会定期清理关注。",
+    "briefEn": "How people use social media varies a lot. Some post constantly, others only watch. Ask which platforms they actually use, whether other people's updates ever make them feel behind, and if they ever clean up who they follow. It is also a natural way into talking about staying in touch online versus in person.",
+    "questions": [
+      {
+        "cn": "你最常用哪个社交平台？",
+        "en": "Which social platform do you use most?"
+      },
+      {
+        "cn": "你更常发内容还是只看？",
+        "en": "Do you post more, or mostly just scroll?"
+      },
+      {
+        "cn": "看到别人的动态，你会不会有比较的压力？",
+        "en": "Do other people's posts ever make you feel like you are falling behind?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.ons.gov.uk/peoplepopulationandcommunity/householdcharacteristics/homeinternetandsocialmediausage"
+    ],
+    "sourceNote": "ONS 家庭上网与社交媒体使用主题页，2026-11-10 实抓 HTTP 200，标题 Home internet and social media usage。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "daily-tv-series",
+    "cn": "追剧",
+    "en": "TV series",
+    "region": "国际",
+    "theme": "日常生活",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "看剧是最省力的共同话题：最近在追什么、一次看几集、会不会快进或边看边刷手机。“一口气看完”和“一周一集”差别很大，很容易聊出各自偏好。",
+    "briefEn": "TV is one of the easiest things to talk about. Ask what they are watching now, whether they binge several episodes at once, and if they skip ahead or scroll while watching. Some people finish a whole season in a weekend; others prefer one episode a week.",
+    "questions": [
+      {
+        "cn": "你最近在追什么剧？",
+        "en": "What are you watching right now?"
+      },
+      {
+        "cn": "你会一口气看完，还是一周看一集？",
+        "en": "Do you binge a whole season, or watch one episode a week?"
+      },
+      {
+        "cn": "你看剧的时候会刷手机吗？",
+        "en": "Do you scroll on your phone while watching?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.barb.co.uk/viewing-data/"
+    ],
+    "sourceNote": "BARB 英国电视观众测量机构收视数据页，2026-11-10 实抓 HTTP 200，标题 Viewing data Barb。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "daily-reading",
+    "cn": "阅读习惯",
+    "en": "Reading habits",
+    "region": "国际",
+    "theme": "日常生活",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "读什么、什么时候读、纸质还是电子，都能聊。有人通勤读几页，有人书买了不少却没翻。聊聊最近放下的书，看不下去会不会硬撑，也能聊“没时间读”。",
+    "briefEn": "Reading habits are easy to compare: what they read, when they squeeze it in, and whether they prefer paper or a screen. Some people get through a few pages on the commute; others buy books they never open. Ask about the last book they gave up on and whether they force themselves to finish.",
+    "questions": [
+      {
+        "cn": "你最近在读什么？",
+        "en": "What are you reading at the moment?"
+      },
+      {
+        "cn": "你更喜欢纸质书还是电子书？",
+        "en": "Do you prefer paper books or e-books?"
+      },
+      {
+        "cn": "一本书看不下去，你会硬着头皮读完吗？",
+        "en": "If a book is not working for you, do you push through or stop?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://literacytrust.org.uk/research/"
+    ],
+    "sourceNote": "National Literacy Trust 阅读研究报告页，2026-11-10 实抓 HTTP 200，标题 Research reports。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "daily-pets",
+    "cn": "养宠物",
+    "en": "Pets",
+    "region": "国际",
+    "theme": "日常生活",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "养宠物的人通常很愿意聊：猫还是狗、每天遛几次、出门谁来照顾。也能聊花销、掉毛、租房能不能养。没养过的可聊小时候家里有没有宠物，话题也接得上。",
+    "briefEn": "Pet owners usually love talking about this: cats or dogs, how often they walk them, and who looks after them when they travel. It is also a good way to get into the practical side — cost, shedding, and whether rentals even allow pets. If they have never had one, ask about pets growing up.",
+    "questions": [
+      {
+        "cn": "你养过宠物吗？",
+        "en": "Have you ever had a pet?"
+      },
+      {
+        "cn": "养宠物最麻烦的部分是什么？",
+        "en": "What is the most annoying part of having a pet?"
+      },
+      {
+        "cn": "你会为了宠物改变居住或出行安排吗？",
+        "en": "Would you change where you live or how you travel for a pet?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.rspca.org.uk/adviceandwelfare/pets"
+    ],
+    "sourceNote": "RSPCA 宠物饲养建议页，2026-11-10 实抓 HTTP 200，标题 Pet Advice & Tips - RSPCA。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "daily-decluttering",
+    "cn": "收纳整理",
+    "en": "Decluttering",
+    "region": "国际",
+    "theme": "日常生活",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "整理房间是很多人反复开始又放弃的事。可以聊多久清理一次、有没有“舍不得扔”的东西、收纳让家变舒服还是变成新负担，也能聊搬家时才发现东西太多。",
+    "briefEn": "Decluttering is something many people start and then abandon. Ask how often they clear things out, what they cannot bring themselves to throw away, and whether organising makes their home feel better or just adds another task. Moving house is a common moment when everyone realises how much they own.",
+    "questions": [
+      {
+        "cn": "你多久整理一次房间或衣柜？",
+        "en": "How often do you sort out your room or wardrobe?"
+      },
+      {
+        "cn": "你有没有明明不用却舍不得扔的东西？",
+        "en": "Is there anything you keep even though you never use it?"
+      },
+      {
+        "cn": "整理完你会觉得轻松，还是更累？",
+        "en": "Does decluttering leave you feeling lighter or more tired?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.nhs.uk/mental-health/conditions/hoarding-disorder/"
+    ],
+    "sourceNote": "NHS 囤积障碍科普页，2026-11-10 实抓 HTTP 200，标题 Hoarding disorder - NHS，涉及杂物堆积与清理困难。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "daily-weather-seasons",
+    "cn": "天气与季节",
+    "en": "Weather and seasons",
+    "region": "国际",
+    "theme": "日常生活",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "天气是最实用的开场话题。可以聊四季明不明显、最受不了哪种天气、下雨天怎么通勤。各地冷热标准差别很大，聊具体温度比说“今天天气不错”更有内容。",
+    "briefEn": "Weather is the safest small-talk topic for a reason. Ask whether the place they live has clear seasons, which weather they cannot stand, and how they get around when it rains. Ideas of cold and hot vary hugely, so talking about actual temperatures is more interesting than nice weather today.",
+    "questions": [
+      {
+        "cn": "你住的地方四季明显吗？",
+        "en": "Does the place you live have distinct seasons?"
+      },
+      {
+        "cn": "你最受不了哪种天气？",
+        "en": "Which kind of weather do you really dislike?"
+      },
+      {
+        "cn": "下雨天你还会照常出门吗？",
+        "en": "Do you still go out as usual when it rains?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.metoffice.gov.uk/weather/learn-about/weather/seasons"
+    ],
+    "sourceNote": "英国气象局 Met Office 四季成因科普页，2026-11-10 实抓 HTTP 200，标题 The four seasons。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "daily-family-check-ins",
+    "cn": "家庭联系",
+    "en": "Family check-ins",
+    "region": "国际",
+    "theme": "日常生活",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "怎么和家人联系很能看出生活节奏：多久通一次电话、视频还是发消息、会不会专门问候。有人每天，有人每月，没有哪种更好，聊具体做法更容易聊开。",
+    "briefEn": "How people keep in touch with family says a lot about their daily rhythm. Ask how often they call, whether they use video or just messages, and if they check in on ordinary days rather than only holidays. Some talk every day, others once a month — neither is automatically better.",
+    "questions": [
+      {
+        "cn": "你一般多久和家人联系一次？",
+        "en": "How often do you keep in touch with your family?"
+      },
+      {
+        "cn": "你更喜欢打电话、视频还是发消息？",
+        "en": "Do you prefer calls, video, or messages?"
+      },
+      {
+        "cn": "你们会聊日常小事，还是只在有事时联系？",
+        "en": "Do you talk about everyday things, or mostly when something comes up?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.ons.gov.uk/peoplepopulationandcommunity/birthsdeathsandmarriages/families"
+    ],
+    "sourceNote": "ONS 家庭统计主题页，2026-11-10 实抓 HTTP 200，标题 Families，含家庭结构与联系相关统计入口。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "daily-recycling",
+    "cn": "垃圾分类",
+    "en": "Recycling and waste sorting",
+    "region": "国际",
+    "theme": "日常生活",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "垃圾分类规则各地差别很大：分几类、哪天收、瓶子要不要洗。可以聊是否搞得清、有没有被提醒过。聊具体规则比评价环保态度更自然，也不易变成说教。",
+    "briefEn": "Recycling rules differ a lot from place to place: how many bins, which day they are collected, and whether containers need rinsing. Ask if they find it confusing and whether a neighbour or landlord has ever corrected them. Concrete rules make a safer conversation than judging anyone's environmental values.",
+    "questions": [
+      {
+        "cn": "你住的地方垃圾分类严格吗？",
+        "en": "Is recycling strict where you live?"
+      },
+      {
+        "cn": "你有没有因为分错被提醒过？",
+        "en": "Has anyone ever told you off for sorting something wrong?"
+      },
+      {
+        "cn": "你觉得哪些规则最麻烦？",
+        "en": "Which rules do you find most confusing?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.epa.gov/recycle"
+    ],
+    "sourceNote": "美国环保署 EPA 减量、重复使用与回收指南页，2026-11-10 实抓 HTTP 200，标题 Reduce, Reuse, Recycle。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "daily-queuing",
+    "cn": "排队习惯",
+    "en": "Queuing habits",
+    "region": "国际",
+    "theme": "日常生活",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "排队最容易看出礼貌差异：会不会自觉排、能不能帮人占位、前面的人慢怎么办。各地对“插队”和“保持距离”的敏感度不同，聊具体经历比泛泛评价安全。",
+    "briefEn": "Queues are a small window into manners: whether people line up without being told, if it is okay to hold a spot for a friend, and what everyone does when the person ahead is slow. Tolerance for cutting in and personal space varies, so a specific story works better than generalising.",
+    "questions": [
+      {
+        "cn": "你排队时最受不了什么？",
+        "en": "What bothers you most when you are waiting in a queue?"
+      },
+      {
+        "cn": "你会帮朋友占位吗？",
+        "en": "Would you hold a place in line for a friend?"
+      },
+      {
+        "cn": "有人插队你会说吗？",
+        "en": "Would you say something if someone cut in?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.caa.co.uk/passengers/",
+      "https://www.postoffice.co.uk/"
+    ],
+    "sourceNote": "英国民航局旅客服务页与英国邮局服务页，2026-11-10 实抓均为 HTTP 200；两个页面分别覆盖机场安检与邮局柜台办理的等待场景。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "daily-tipping",
+    "cn": "小费",
+    "en": "Tipping",
+    "region": "国际",
+    "theme": "日常生活",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "小费最容易踩坑：给不给、给多少、服务费有没有算进账单。各地差别很大，有的必须给，有的已包含。聊聊自己怎么判断，以及刚到陌生地方的尴尬经历。",
+    "briefEn": "Tipping is one of the easiest things to get wrong: whether to tip, how much, and whether service is already on the bill. Norms vary a lot, from expected to included. Ask how they decide, and whether they have ever misread the rules somewhere new.",
+    "questions": [
+      {
+        "cn": "你一般会给多少小费？",
+        "en": "How much do you usually tip?"
+      },
+      {
+        "cn": "结账前你会先看服务费有没有算进去吗？",
+        "en": "Do you check whether service is already included?"
+      },
+      {
+        "cn": "你有没有在别的国家因为小费搞错过？",
+        "en": "Have you ever got tipping wrong in another country?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://emilypost.com/advice/general-tipping-guide"
+    ],
+    "sourceNote": "Emily Post Institute 小费礼仪指南页，2026-11-10 实抓 HTTP 200，标题 Tipping Etiquette 101。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "daily-coffee-tea",
+    "cn": "咖啡与茶",
+    "en": "Coffee and tea",
+    "region": "国际",
+    "theme": "日常生活",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "咖啡还是茶，几乎是每个地方都有的日常仪式。可以聊早上第一杯、在家做还是买、加不加奶糖，也能聊“喝茶的人怎么看咖啡”。聊一天喝几杯最不易冷场。",
+    "briefEn": "Coffee or tea is a daily ritual almost everywhere. Ask about the first cup of the day, whether they make it at home or buy it out, and how they take it. The mild disagreement between tea people and coffee people is usually good for a laugh. Talking about how many cups they have keeps it concrete.",
+    "questions": [
+      {
+        "cn": "你每天的第一杯是咖啡还是茶？",
+        "en": "Is your first drink of the day coffee or tea?"
+      },
+      {
+        "cn": "你在家做还是习惯在外面买？",
+        "en": "Do you make it at home or buy it out?"
+      },
+      {
+        "cn": "你能接受不加奶不加糖吗？",
+        "en": "Can you drink it without milk or sugar?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.hsph.harvard.edu/nutritionsource/food-features/coffee/",
+      "https://www.hsph.harvard.edu/nutritionsource/food-features/tea/"
+    ],
+    "sourceNote": "哈佛大学陈曾熙公共卫生学院 The Nutrition Source 的咖啡与茶专题页，2026-11-10 实抓均为 HTTP 200，标题分别为 Coffee 与 Tea。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "daily-walking",
+    "cn": "日常散步",
+    "en": "Everyday walks",
+    "region": "国际",
+    "theme": "日常生活",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "不为了健身、只是出门走走的习惯，比想象中更能聊：饭后散步、遛狗顺路走一圈、住的地方适不适合走，也能聊“边走边聊”比坐着更容易开口。",
+    "briefEn": "Walking that is not a workout is surprisingly good to talk about: an after-dinner stroll, a loop around the block with the dog, or whether their area is even walkable. Many people also find it easier to talk honestly while walking side by side rather than sitting face to face.",
+    "questions": [
+      {
+        "cn": "你平时会专门出门散步吗？",
+        "en": "Do you go for walks just to walk?"
+      },
+      {
+        "cn": "你住的地方适合走路吗？",
+        "en": "Is the area you live in walkable?"
+      },
+      {
+        "cn": "你更喜欢一个人走，还是有人一起？",
+        "en": "Do you prefer walking alone or with someone?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.nhs.uk/live-well/exercise/walking-for-health/"
+    ],
+    "sourceNote": "NHS 步行与健康指南页，2026-11-10 实抓 HTTP 200，标题 Walking for health - NHS。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  }
+]

@@ -1,0 +1,822 @@
+[
+  {
+    "id": "more-travel-style",
+    "cn": "旅行方式",
+    "en": "Travel styles",
+    "region": "国际",
+    "theme": "更多",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "有人喜欢把行程排满，有人只订一张车票就出发。可以聊自由行、跟团、慢旅行和短途周末的差别，以及各自最舒服的节奏。",
+    "briefEn": "Some people plan every hour, while others just book a ticket and go. You can compare independent travel, group tours, slow travel and weekend trips, and talk about the pace that suits each person best.",
+    "questions": [
+      {
+        "cn": "你更喜欢自由行还是跟团？",
+        "en": "Do you prefer travelling independently or with a tour?"
+      },
+      {
+        "cn": "你旅行时会把行程排满吗？",
+        "en": "Do you plan every hour when you travel?"
+      },
+      {
+        "cn": "你理想的一次旅行有多长？",
+        "en": "How long would your ideal trip be?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.lonelyplanet.com/",
+      "https://www.lonelyplanet.com/articles/guide-to-trip-planning"
+    ],
+    "sourceNote": "Lonely Planet 首页与行程规划指南，2026-11-09 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-09",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "more-travel-packing",
+    "cn": "旅行打包",
+    "en": "Packing for a trip",
+    "region": "国际",
+    "theme": "更多",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "打包能看出一个人的旅行习惯。有人只带随身行李，有人箱子永远塞满。可以聊必带的东西、忘带的经历和轻装出行的技巧。",
+    "briefEn": "Packing says a lot about how someone travels. Some people live out of a carry-on, while others always fill a big suitcase. Good topics are essentials, things people forgot, and tips for packing light. Everyone seems to have one item they never leave behind.",
+    "questions": [
+      {
+        "cn": "你旅行一般带多大的箱子？",
+        "en": "What size bag do you usually take?"
+      },
+      {
+        "cn": "你有什么必带的东西？",
+        "en": "What is one thing you always pack?"
+      },
+      {
+        "cn": "你有没有忘带过很重要的东西？",
+        "en": "Have you ever forgotten something important?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.lonelyplanet.com/articles/how-to-pack-light-for-a-long-trip"
+    ],
+    "sourceNote": "Lonely Planet 轻装长途旅行打包指南，2026-11-09 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-09",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "more-solo-travel",
+    "cn": "独自旅行",
+    "en": "Travelling solo",
+    "region": "国际",
+    "theme": "更多",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "独自旅行自由度高，也考验安排和应变。可以聊一个人的路线、吃饭和安全感，也可以聊路上认识新朋友的方式。",
+    "briefEn": "Travelling alone brings freedom but also asks you to plan and adapt. People talk about routes, eating alone, feeling safe, and the easy ways they meet new people on the road. Some love it from the first day and others need a few days to settle in.",
+    "questions": [
+      {
+        "cn": "你一个人旅行过吗？",
+        "en": "Have you ever travelled alone?"
+      },
+      {
+        "cn": "独自旅行最吸引你的是什么？",
+        "en": "What appeals to you about travelling alone?"
+      },
+      {
+        "cn": "一个人吃饭会觉得别扭吗？",
+        "en": "Does eating alone feel awkward to you?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.lonelyplanet.com/articles/where-to-go-solo-travel"
+    ],
+    "sourceNote": "Lonely Planet 独自旅行目的地指南，2026-11-09 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-09",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "more-travel-food",
+    "cn": "旅行中的当地美食",
+    "en": "Local food while travelling",
+    "region": "国际",
+    "theme": "更多",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "很多旅行记忆是围绕吃展开的。可以聊市场、街边摊、家常菜馆，也可以聊口味差异和不敢尝试的食物。重点不是评价高低，而是各自的经验。",
+    "briefEn": "Many travel memories centre on food. People love talking about markets, street stalls, family restaurants, different flavours, and dishes they were nervous to try. It is less about ranking food and more about sharing the experience.",
+    "questions": [
+      {
+        "cn": "你旅行时会专门找当地市场吗？",
+        "en": "Do you seek out local markets when you travel?"
+      },
+      {
+        "cn": "你吃过最难忘的一道当地菜是什么？",
+        "en": "What local dish do you remember most?"
+      },
+      {
+        "cn": "你有什么不敢尝试的食物吗？",
+        "en": "Is there any food you avoid trying?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.lonelyplanet.com/articles/what-to-eat-and-drink-in-thailand",
+      "https://www.unesco.org/en/creative-cities"
+    ],
+    "sourceNote": "Lonely Planet 泰国饮食指南、UNESCO 创意城市网络（美食之都）页，2026-11-09 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-09",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "more-home-cooking",
+    "cn": "家常做饭",
+    "en": "Home cooking",
+    "region": "国际",
+    "theme": "更多",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "家常菜最能看出一个人的生活节奏。有人每天做，有人只在周末下厨。可以聊拿手菜、常做的快手菜和厨房里的失败经历。",
+    "briefEn": "Home cooking shows how someone's week actually works. Some cook every day, others only at weekends. Good topics are signature dishes, quick meals, and the kitchen failures everyone remembers. It is also a nice way to talk about family recipes.",
+    "questions": [
+      {
+        "cn": "你平时自己做饭吗？",
+        "en": "Do you cook for yourself often?"
+      },
+      {
+        "cn": "你的拿手菜是什么？",
+        "en": "What is your signature dish?"
+      },
+      {
+        "cn": "你最常做的快手菜是什么？",
+        "en": "What is your go-to quick meal?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.bbcgoodfood.com/"
+    ],
+    "sourceNote": "BBC Good Food 官网，2026-11-09 实抓 HTTP 200；站内子页对爬虫返回 406，故只引用首页。",
+    "verifiedAt": "2026-11-09",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "more-coffee",
+    "cn": "咖啡",
+    "en": "Coffee",
+    "region": "国际",
+    "theme": "更多",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "咖啡在不同城市有不同的日常角色。可以聊手冲和意式、加不加奶、在家做还是买，以及一天里第一杯咖啡的时间习惯。",
+    "briefEn": "Coffee plays a different daily role in different cities. People enjoy talking about filter versus espresso, milk or no milk, making it at home or buying it, and when they have their first cup. Some drink it to wake up and others mainly for the taste.",
+    "questions": [
+      {
+        "cn": "你每天喝咖啡吗？",
+        "en": "Do you drink coffee every day?"
+      },
+      {
+        "cn": "你更喜欢手冲还是意式？",
+        "en": "Do you prefer filter coffee or espresso?"
+      },
+      {
+        "cn": "你在家做咖啡吗？",
+        "en": "Do you make coffee at home?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://ico.org/what-we-do/about-us/"
+    ],
+    "sourceNote": "国际咖啡组织 ICO 官方介绍页，2026-11-09 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-09",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "more-tea",
+    "cn": "茶",
+    "en": "Tea",
+    "region": "国际",
+    "theme": "更多",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "茶可以是早晨的一杯，也可以是招待朋友的仪式。可以聊绿茶、红茶、花草茶，以及加奶、加糖或清饮的不同习惯。",
+    "briefEn": "Tea can be a quick morning cup or something you share with guests. People like talking about green, black and herbal teas, and whether they take it with milk, sugar or nothing at all. Serving tea is also a small everyday ritual in many homes.",
+    "questions": [
+      {
+        "cn": "你平时喝什么茶？",
+        "en": "What kind of tea do you usually drink?"
+      },
+      {
+        "cn": "你喝茶会加奶或糖吗？",
+        "en": "Do you take milk or sugar in your tea?"
+      },
+      {
+        "cn": "你那边有特别的喝茶习惯吗？",
+        "en": "Are there any special tea habits where you are from?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.tea.co.uk/tea-facts"
+    ],
+    "sourceNote": "英国茶与花草茶协会 Tea Facts 页面，2026-11-09 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-09",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "more-music",
+    "cn": "听什么音乐",
+    "en": "Music taste",
+    "region": "国际",
+    "theme": "更多",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "音乐口味比语言更容易拉近距离。可以聊最近循环的歌、通勤时的歌单、喜欢的现场，也可以聊各自家里长辈听的音乐。",
+    "briefEn": "Music taste can connect people faster than language. Good topics are songs on repeat, commute playlists, favourite live shows, and the music older family members had on at home. A single song can bring back a whole year for someone.",
+    "questions": [
+      {
+        "cn": "你最近在循环哪首歌？",
+        "en": "What song have you had on repeat lately?"
+      },
+      {
+        "cn": "你通勤时听什么？",
+        "en": "What do you listen to on your commute?"
+      },
+      {
+        "cn": "你会听你父母那代的音乐吗？",
+        "en": "Do you listen to music from your parents' generation?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.billboard.com/c/music/"
+    ],
+    "sourceNote": "Billboard 音乐频道页，2026-11-09 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-09",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "more-live-music",
+    "cn": "现场演出",
+    "en": "Live music",
+    "region": "国际",
+    "theme": "更多",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "现场演出的魅力在于气氛和不可复制。可以聊第一次看的演出、喜欢的场地，以及音乐节和小场地演出的差别。",
+    "briefEn": "Live music is about atmosphere and the fact that nothing repeats. People enjoy talking about their first show, favourite venues, and how festivals differ from small club gigs. Some go for the band and others mainly for the night out with friends.",
+    "questions": [
+      {
+        "cn": "你看过现场演出吗？",
+        "en": "Have you been to a live show?"
+      },
+      {
+        "cn": "你更喜欢音乐节还是小场地？",
+        "en": "Do you prefer festivals or small venues?"
+      },
+      {
+        "cn": "你最近想看谁的演出？",
+        "en": "Who would you like to see live?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.npr.org/music/"
+    ],
+    "sourceNote": "NPR Music 频道页，2026-11-09 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-09",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "more-movies",
+    "cn": "电影",
+    "en": "Movies",
+    "region": "国际",
+    "theme": "更多",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "电影是很好的聊天入口，因为每个人都有自己的片单。可以聊最近看的片子、喜欢的类型、去影院还是在家看，以及字幕和配音的偏好。",
+    "briefEn": "Films are an easy way into conversation because everyone has their own list. People talk about what they saw recently, favourite genres, cinema versus home viewing, and subtitles versus dubbing. A film someone loved as a teenager often says a lot about them.",
+    "questions": [
+      {
+        "cn": "你最近看了什么电影？",
+        "en": "What film did you watch recently?"
+      },
+      {
+        "cn": "你更喜欢去影院还是在家看？",
+        "en": "Do you prefer the cinema or watching at home?"
+      },
+      {
+        "cn": "你看外语片会看字幕吗？",
+        "en": "Do you use subtitles for foreign films?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.bfi.org.uk/features"
+    ],
+    "sourceNote": "英国电影协会 BFI 影评专题页，2026-11-09 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-09",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "more-books",
+    "cn": "阅读",
+    "en": "Reading habits",
+    "region": "国际",
+    "theme": "更多",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "阅读习惯差异很大，有人每天读几页，有人一年读几十本。可以聊最近在读的书、纸质和电子书，以及怎么找到下一本。",
+    "briefEn": "Reading habits vary a lot. Some read a few pages a day, others finish dozens of books a year. Good topics are what someone is reading now, paper versus e-books, and how they choose the next book.",
+    "questions": [
+      {
+        "cn": "你最近在读什么书？",
+        "en": "What are you reading at the moment?"
+      },
+      {
+        "cn": "你更喜欢纸质书还是电子书？",
+        "en": "Do you prefer paper books or e-books?"
+      },
+      {
+        "cn": "你怎么找到下一本想读的书？",
+        "en": "How do you find your next book?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.npr.org/books/"
+    ],
+    "sourceNote": "NPR Books 书评与作者访谈频道页，2026-11-09 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-09",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "more-games",
+    "cn": "电子游戏",
+    "en": "Video games",
+    "region": "国际",
+    "theme": "更多",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "游戏已经是很多人的主要娱乐方式。可以聊手游和主机、单机和联机、玩多久，也可以聊小时候最早玩的游戏。",
+    "briefEn": "Games are a main form of entertainment for many people. You can talk about mobile versus console, single-player versus online, how long they play, and the first game they remember. Some play to relax alone and others mainly to keep up with friends.",
+    "questions": [
+      {
+        "cn": "你平时玩什么游戏？",
+        "en": "What games do you play?"
+      },
+      {
+        "cn": "你更喜欢单机还是联机？",
+        "en": "Do you prefer single-player or online games?"
+      },
+      {
+        "cn": "你小时候最早玩的游戏是什么？",
+        "en": "What was the first game you played?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.theesa.com/"
+    ],
+    "sourceNote": "美国娱乐软件协会 ESA 官网，2026-11-09 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-09",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "more-learning-language",
+    "cn": "学外语",
+    "en": "Learning a language",
+    "region": "国际",
+    "theme": "更多",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "学语言的方法因人而异。有人靠课堂，有人靠看剧和聊天。可以聊现在在学什么、最难的部分，以及有没有在真实场景里用上。",
+    "briefEn": "Language learning looks different for everyone. Some rely on classes, others on shows and conversation. People can talk about what they are learning, the hardest part, and times they used it for real. Making mistakes in front of someone is often the turning point.",
+    "questions": [
+      {
+        "cn": "你在学什么语言？",
+        "en": "What language are you learning?"
+      },
+      {
+        "cn": "你觉得听说读写哪项最难？",
+        "en": "Which is hardest for you: listening, speaking, reading or writing?"
+      },
+      {
+        "cn": "你用过什么方法练口语？",
+        "en": "What have you tried to practise speaking?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://blog.duolingo.com/hub/language/"
+    ],
+    "sourceNote": "Duolingo 官方博客语言学习栏目，2026-11-09 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-09",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "more-online-courses",
+    "cn": "在线课程",
+    "en": "Online courses",
+    "region": "国际",
+    "theme": "更多",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "在线课程让人可以按自己的时间学新东西。可以聊学过的课、完成的证书、半途而废的经历，以及线上和线下课堂的差别。",
+    "briefEn": "Online courses let people learn on their own schedule. Good topics are courses they finished, certificates they earned, ones they dropped, and how online classes compare with being in a room. Finishing a course often matters more than the certificate itself.",
+    "questions": [
+      {
+        "cn": "你上过在线课程吗？",
+        "en": "Have you taken an online course?"
+      },
+      {
+        "cn": "你学完了吗？",
+        "en": "Did you finish it?"
+      },
+      {
+        "cn": "你更喜欢线上还是线下上课？",
+        "en": "Do you prefer learning online or in person?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.coursera.org/",
+      "https://www.edx.org/"
+    ],
+    "sourceNote": "Coursera 与 edX 官网，2026-11-09 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-09",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "more-remote-work",
+    "cn": "远程办公",
+    "en": "Remote work",
+    "region": "国际",
+    "theme": "更多",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "远程办公改变了工作和生活的边界。可以聊在家工作的效率、视频会议、通勤时间怎么用，以及团队怎么保持联系。",
+    "briefEn": "Remote work has changed where the line between job and life sits. People talk about focus at home, video calls, what they do with the saved commute, and how teams stay in touch. Some love the quiet and others miss the office more than expected.",
+    "questions": [
+      {
+        "cn": "你能接受远程办公吗？",
+        "en": "Would remote work suit you?"
+      },
+      {
+        "cn": "在家工作效率更高还是更低？",
+        "en": "Are you more or less productive at home?"
+      },
+      {
+        "cn": "你们团队怎么保持联系？",
+        "en": "How does your team stay in touch?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.gallup.com/workplace/"
+    ],
+    "sourceNote": "Gallup 职场研究栏目，2026-11-09 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-09",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "more-city-parks",
+    "cn": "城市公园",
+    "en": "City parks",
+    "region": "国际",
+    "theme": "更多",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "公园是城市里最容易到达的放松空间。可以聊晨练、野餐、遛狗和带孩子，也可以聊各自城市里最喜欢的公园和它的变化。",
+    "briefEn": "Parks are the easiest escape in a city. People talk about morning exercise, picnics, dog walks, time with kids, and the park they like most in their city and how it has changed. A good park often becomes part of someone's weekly routine.",
+    "questions": [
+      {
+        "cn": "你城市里最喜欢的公园是哪个？",
+        "en": "Which park do you like most in your city?"
+      },
+      {
+        "cn": "你一般去公园做什么？",
+        "en": "What do you usually do in a park?"
+      },
+      {
+        "cn": "你觉得公园够用吗？",
+        "en": "Do you think your city has enough green space?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.unhabitat.org/"
+    ],
+    "sourceNote": "联合国人居署 UN-Habitat 官网，2026-11-09 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-09",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "more-public-transport",
+    "cn": "公共交通",
+    "en": "Public transport",
+    "region": "国际",
+    "theme": "更多",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "公共交通决定了一座城市的生活半径。可以聊地铁、公交、骑行接驳，也可以聊通勤时间和换乘体验，比较的是便利度而不是票价。",
+    "briefEn": "Public transport shapes how far a city feels. People can talk about metro lines, buses, bike connections, commute times and transfers. The interesting part is convenience and daily experience, not ticket prices. Some prefer a longer ride if it means no changes.",
+    "questions": [
+      {
+        "cn": "你平时坐地铁还是公交？",
+        "en": "Do you usually take the metro or the bus?"
+      },
+      {
+        "cn": "你通勤要多久？",
+        "en": "How long is your commute?"
+      },
+      {
+        "cn": "你住的地方换乘方便吗？",
+        "en": "Are transfers easy where you live?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.worldbank.org/en/topic/urbandevelopment"
+    ],
+    "sourceNote": "世界银行城市发展专题页，2026-11-09 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-09",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "more-museums",
+    "cn": "博物馆",
+    "en": "Museums",
+    "region": "国际",
+    "theme": "更多",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "博物馆是了解一座城市最安静的方式。可以聊最近看的展、喜欢的类型，以及逛博物馆时喜欢听讲解还是自己慢慢看。",
+    "briefEn": "Museums are a quiet way into a city's story. Good topics are recent exhibitions, favourite kinds of museums, and whether someone likes guided explanations or wandering on their own. Many people remember one object from a visit years later.",
+    "questions": [
+      {
+        "cn": "你最近去过博物馆吗？",
+        "en": "Have you been to a museum recently?"
+      },
+      {
+        "cn": "你喜欢哪类博物馆？",
+        "en": "What kind of museum do you like?"
+      },
+      {
+        "cn": "你逛展喜欢听讲解吗？",
+        "en": "Do you like audio guides in museums?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.louvre.fr/en"
+    ],
+    "sourceNote": "卢浮宫官网英文页，2026-11-09 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-09",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "more-recycling",
+    "cn": "垃圾分类",
+    "en": "Recycling at home",
+    "region": "国际",
+    "theme": "更多",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "垃圾分类的规则各地差别很大。可以聊家里怎么分、哪些东西最难处理，以及刚开始时的困惑。比较规则本身，不评价谁更先进。",
+    "briefEn": "Recycling rules differ a lot from place to place. People talk about how they sort at home, which items are hardest to deal with, and what confused them at first. It is interesting to compare systems, not to rank them.",
+    "questions": [
+      {
+        "cn": "你家里的垃圾怎么分类？",
+        "en": "How do you sort rubbish at home?"
+      },
+      {
+        "cn": "你觉得哪类垃圾最难处理？",
+        "en": "Which kind of waste is hardest to deal with?"
+      },
+      {
+        "cn": "你刚开始分类时困惑吗？",
+        "en": "Did sorting confuse you at first?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.epa.gov/recycle",
+      "https://www.un.org/en/actnow"
+    ],
+    "sourceNote": "美国环保署 EPA 减量复用回收专题页、联合国 Act Now 行动页，2026-11-09 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-09",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "more-sustainable-life",
+    "cn": "可持续生活",
+    "en": "Sustainable living",
+    "region": "国际",
+    "theme": "更多",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "可持续生活不是一次做到完美，而是日常里的小选择。可以聊自带杯、二手物品、少浪费，以及哪些改变真正坚持下来了。",
+    "briefEn": "Sustainable living is less about being perfect and more about small daily choices. People talk about bringing their own cup, buying second-hand, wasting less, and which changes actually stuck. The habits that last are usually the ones that save time or money too.",
+    "questions": [
+      {
+        "cn": "你生活里有哪些环保小习惯？",
+        "en": "What small green habits do you have?"
+      },
+      {
+        "cn": "你会买二手物品吗？",
+        "en": "Do you buy second-hand things?"
+      },
+      {
+        "cn": "你觉得哪种改变最容易坚持？",
+        "en": "Which change is easiest to keep up?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.un.org/en/climatechange/science/climate-issues"
+    ],
+    "sourceNote": "联合国气候变化议题科普页，2026-11-09 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-09",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "more-pets-dogs",
+    "cn": "养狗",
+    "en": "Living with a dog",
+    "region": "国际",
+    "theme": "更多",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "养狗是长期的陪伴和责任。可以聊遛狗路线、训练方式、掉毛和看兽医，也可以聊当初为什么决定养一只狗。",
+    "briefEn": "Having a dog is long-term company and responsibility. People enjoy talking about walking routes, training, shedding, vet visits, and why they decided to get a dog in the first place. Dogs also make it much easier to start conversations in a neighbourhood.",
+    "questions": [
+      {
+        "cn": "你养狗吗？",
+        "en": "Do you have a dog?"
+      },
+      {
+        "cn": "你每天遛狗多久？",
+        "en": "How long do you walk your dog each day?"
+      },
+      {
+        "cn": "你觉得养狗最麻烦的是什么？",
+        "en": "What is the hardest part of having a dog?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.aspca.org/pet-care/dog-care"
+    ],
+    "sourceNote": "ASPCA 官方犬类护理页面，2026-11-09 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-09",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "more-pets-cats",
+    "cn": "养猫",
+    "en": "Living with a cat",
+    "region": "国际",
+    "theme": "更多",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "猫的相处方式更像合租室友。可以聊猫的性格、室内饲养、抓家具和夜里跑动，也可以聊怎么让猫适应新环境。",
+    "briefEn": "Living with a cat is a bit like sharing a flat with a roommate. People talk about personality, indoor life, scratched furniture, midnight running, and how a cat settles into a new home. Some cats are social from day one and others take weeks.",
+    "questions": [
+      {
+        "cn": "你养猫吗？",
+        "en": "Do you have a cat?"
+      },
+      {
+        "cn": "你的猫是什么性格？",
+        "en": "What is your cat's personality like?"
+      },
+      {
+        "cn": "猫晚上会闹腾吗？",
+        "en": "Does your cat get active at night?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.aspca.org/pet-care/cat-care"
+    ],
+    "sourceNote": "ASPCA 官方猫类护理页面，2026-11-09 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-09",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "more-photography",
+    "cn": "手机摄影",
+    "en": "Phone photography",
+    "region": "国际",
+    "theme": "更多",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "手机让拍照变成日常记录。可以聊常拍什么、构图习惯、修不修图，以及旅行时更愿意拍人还是拍景。",
+    "briefEn": "Phones have made photography part of everyday life. Good topics are what people shoot, how they frame a picture, whether they edit, and whether they prefer people or scenery when travelling. Most people have one photo they keep coming back to.",
+    "questions": [
+      {
+        "cn": "你平时喜欢拍什么？",
+        "en": "What do you like to photograph?"
+      },
+      {
+        "cn": "你会修图吗？",
+        "en": "Do you edit your photos?"
+      },
+      {
+        "cn": "旅行时你更爱拍人还是拍景？",
+        "en": "When travelling, do you shoot people or scenery?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.dpreview.com/"
+    ],
+    "sourceNote": "摄影器材与资讯网站 DPReview 官网，2026-11-09 实抓 HTTP 200；站内文章页对爬虫返回 403，故只引用首页。",
+    "verifiedAt": "2026-11-09",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "more-screen-time",
+    "cn": "屏幕时间与数字生活",
+    "en": "Screen time",
+    "region": "国际",
+    "theme": "更多",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "手机让很多事更方便，也让休息时间被切碎。可以聊每天屏幕用时、睡前刷手机的习惯，以及有没有主动关掉通知。",
+    "briefEn": "Phones make many things easier but also chop up rest time. People talk about daily screen hours, scrolling before bed, and whether they have turned notifications off on purpose. The interesting part is which apps feel useful and which ones just eat time.",
+    "questions": [
+      {
+        "cn": "你每天大概看多久手机？",
+        "en": "About how long do you look at your phone each day?"
+      },
+      {
+        "cn": "你睡前会刷手机吗？",
+        "en": "Do you scroll on your phone before bed?"
+      },
+      {
+        "cn": "你会主动关掉通知吗？",
+        "en": "Do you turn notifications off?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.itu.int/en/ITU-D/Statistics/Pages/facts/default.aspx"
+    ],
+    "sourceNote": "国际电信联盟 ITU 数字化发展事实与数据报告页，2026-11-09 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-09",
+    "relatedPlaceIds": []
+  }
+]

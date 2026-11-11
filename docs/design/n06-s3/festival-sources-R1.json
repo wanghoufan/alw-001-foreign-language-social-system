@@ -1,0 +1,643 @@
+[
+  {
+    "id": "spring-festival",
+    "cn": "春节",
+    "y2026": "2026-02-17",
+    "y2027": "2027-02-06",
+    "status": "fixed",
+    "dateRule": "农历正月初一",
+    "sourceUrls": [
+      "https://www.hko.gov.hk/tc/gts/time/calendar/text/files/T2026c.txt",
+      "https://www.hko.gov.hk/tc/gts/time/calendar/text/files/T2027c.txt"
+    ],
+    "verifiedAt": "2026-11-09",
+    "note": "香港天文台农历表 2026-02-17、2027-02-06 为农历正月初一；Nager.Date 与香港政府公众假期公告一致。"
+  },
+  {
+    "id": "lantern",
+    "cn": "元宵节",
+    "y2026": "2026-03-03",
+    "y2027": "2027-02-20",
+    "status": "fixed",
+    "dateRule": "农历正月十五",
+    "sourceUrls": [
+      "https://www.hko.gov.hk/tc/gts/time/calendar/text/files/T2026c.txt",
+      "https://www.hko.gov.hk/tc/gts/time/calendar/text/files/T2027c.txt"
+    ],
+    "verifiedAt": "2026-11-09",
+    "note": "香港天文台农历表显示 2026-03-03、2027-02-20 为农历正月十五。"
+  },
+  {
+    "id": "qingming",
+    "cn": "清明节",
+    "y2026": "2026-04-05",
+    "y2027": "2027-04-05",
+    "status": "fixed",
+    "dateRule": "节气清明（通常在公历 4 月 4–5 日）",
+    "sourceUrls": [
+      "https://www.hko.gov.hk/tc/gts/time/calendar/text/files/T2026c.txt",
+      "https://www.hko.gov.hk/tc/gts/time/calendar/text/files/T2027c.txt"
+    ],
+    "verifiedAt": "2026-11-09",
+    "note": "香港天文台把 2026-04-05、2027-04-05 标注为节气清明；香港政府 2026 年清明为 4 月 5 日（翌日补假）。"
+  },
+  {
+    "id": "dragon-boat",
+    "cn": "端午节",
+    "y2026": "2026-06-19",
+    "y2027": "2027-06-09",
+    "status": "fixed",
+    "dateRule": "农历五月初五",
+    "sourceUrls": [
+      "https://www.hko.gov.hk/tc/gts/time/calendar/text/files/T2026c.txt",
+      "https://www.hko.gov.hk/tc/gts/time/calendar/text/files/T2027c.txt"
+    ],
+    "verifiedAt": "2026-11-09",
+    "note": "香港天文台农历表 2026-06-19、2027-06-09 为农历五月初五；Nager.Date CN 与香港政府公告一致。"
+  },
+  {
+    "id": "qixi",
+    "cn": "七夕",
+    "y2026": "2026-08-19",
+    "y2027": "2027-08-08",
+    "status": "fixed",
+    "dateRule": "农历七月初七",
+    "sourceUrls": [
+      "https://www.hko.gov.hk/tc/gts/time/calendar/text/files/T2026c.txt",
+      "https://www.hko.gov.hk/tc/gts/time/calendar/text/files/T2027c.txt"
+    ],
+    "verifiedAt": "2026-11-09",
+    "note": "按香港天文台农历表七月推算：2026-08-19、2027-08-08 均为当月初七。"
+  },
+  {
+    "id": "mid-autumn",
+    "cn": "中秋节",
+    "y2026": "2026-09-25",
+    "y2027": "2027-09-15",
+    "status": "fixed",
+    "dateRule": "农历八月十五",
+    "sourceUrls": [
+      "https://www.hko.gov.hk/tc/gts/time/calendar/text/files/T2026c.txt",
+      "https://www.hko.gov.hk/tc/gts/time/calendar/text/files/T2027c.txt"
+    ],
+    "verifiedAt": "2026-11-09",
+    "note": "香港天文台农历表 2026-09-25、2027-09-15 为农历八月十五；Nager.Date CN 一致。"
+  },
+  {
+    "id": "chongyang",
+    "cn": "重阳节",
+    "y2026": "2026-10-18",
+    "y2027": "2027-10-08",
+    "status": "fixed",
+    "dateRule": "农历九月初九",
+    "sourceUrls": [
+      "https://www.hko.gov.hk/tc/gts/time/calendar/text/files/T2026c.txt",
+      "https://www.hko.gov.hk/tc/gts/time/calendar/text/files/T2027c.txt"
+    ],
+    "verifiedAt": "2026-11-09",
+    "note": "香港天文台农历表 2026-10-18、2027-10-08 为农历九月初九；香港政府 2027 年重阳为 10 月 8 日。"
+  },
+  {
+    "id": "national-day",
+    "cn": "国庆节",
+    "y2026": "2026-10-01",
+    "y2027": "2027-10-01",
+    "status": "fixed",
+    "dateRule": "",
+    "sourceUrls": [
+      "https://date.nager.at/api/v3/PublicHolidays/2026/CN",
+      "https://date.nager.at/api/v3/PublicHolidays/2027/CN"
+    ],
+    "verifiedAt": "2026-11-09",
+    "note": "Nager.Date 中国公共假期列出 10 月 1 日国庆节；连休与调休上班日以当年国务院办公厅通知为准。"
+  },
+  {
+    "id": "hainan-junpo",
+    "cn": "军坡节（公期）",
+    "y2026": null,
+    "y2027": null,
+    "status": "pending",
+    "dateRule": "农历二月，各村择日举行",
+    "sourceUrls": [],
+    "verifiedAt": "2026-11-09",
+    "note": "军坡节（公期）由各村按自身习俗择日，无统一日期，本轮未找到可核实的官方年份公告。"
+  },
+  {
+    "id": "hainan-huanhua",
+    "cn": "海南换花节",
+    "y2026": "2026-03-03",
+    "y2027": "2027-02-20",
+    "status": "pending",
+    "dateRule": "农历正月十五前后，活动日期以当年公告为准",
+    "sourceUrls": [
+      "https://www.hko.gov.hk/tc/gts/time/calendar/text/files/T2026c.txt",
+      "https://www.hko.gov.hk/tc/gts/time/calendar/text/files/T2027c.txt"
+    ],
+    "verifiedAt": "2026-11-09",
+    "note": "换花节在元宵（正月十五）前后举行；天文台可确认元宵日期，但地方活动具体日程未见官方公告。"
+  },
+  {
+    "id": "hainan-sanyuesan",
+    "cn": "三月三（黎族苗族）",
+    "y2026": "2026-04-19",
+    "y2027": "2027-04-09",
+    "status": "fixed",
+    "dateRule": "农历三月初三",
+    "sourceUrls": [
+      "https://www.hko.gov.hk/tc/gts/time/calendar/text/files/T2026c.txt",
+      "https://www.hko.gov.hk/tc/gts/time/calendar/text/files/T2027c.txt"
+    ],
+    "verifiedAt": "2026-11-09",
+    "note": "香港天文台农历表 2026-04-19、2027-04-09 为农历三月初三；海南三月三按农历三月初三计算，未见本轮可抓取的海南官方公告。"
+  },
+  {
+    "id": "hainan-carnival",
+    "cn": "海南国际旅游岛欢乐节",
+    "y2026": null,
+    "y2027": null,
+    "status": "pending",
+    "dateRule": "",
+    "sourceUrls": [],
+    "verifiedAt": "2026-11-09",
+    "note": "欢乐节通常在年末举办，主会场与具体日期按当年海南省公告，本轮未取得可核实公告。"
+  },
+  {
+    "id": "st-patrick",
+    "cn": "圣帕特里克节",
+    "y2026": "2026-03-17",
+    "y2027": "2027-03-17",
+    "status": "fixed",
+    "dateRule": "",
+    "sourceUrls": [
+      "https://date.nager.at/api/v3/PublicHolidays/2026/IE",
+      "https://date.nager.at/api/v3/PublicHolidays/2027/IE"
+    ],
+    "verifiedAt": "2026-11-09",
+    "note": "Nager.Date 爱尔兰/英国公共假期均为 3 月 17 日圣帕特里克节。"
+  },
+  {
+    "id": "bonfire",
+    "cn": "篝火之夜",
+    "y2026": "2026-11-05",
+    "y2027": "2027-11-05",
+    "status": "fixed",
+    "dateRule": "",
+    "sourceUrls": [
+      "https://en.wikipedia.org/wiki/Guy_Fawkes_Night"
+    ],
+    "verifiedAt": "2026-11-09",
+    "note": "公历固定日期 11 月 5 日，非英国公共假期；维基页面确认日期，无需农历来源。"
+  },
+  {
+    "id": "boxing-day",
+    "cn": "节礼日",
+    "y2026": "2026-12-26",
+    "y2027": "2027-12-26",
+    "status": "fixed",
+    "dateRule": "",
+    "sourceUrls": [
+      "https://date.nager.at/api/v3/PublicHolidays/2026/GB",
+      "https://date.nager.at/api/v3/PublicHolidays/2027/GB"
+    ],
+    "verifiedAt": "2026-11-09",
+    "note": "节日本日为 12 月 26 日；Nager.Date 显示 2026 年补休至 12 月 28 日、2027 年至 12 月 27 日。"
+  },
+  {
+    "id": "easter-sunday",
+    "cn": "复活节",
+    "y2026": "2026-04-05",
+    "y2027": "2027-03-28",
+    "status": "fixed",
+    "dateRule": "春分后首个满月之后的星期日",
+    "sourceUrls": [
+      "https://date.nager.at/api/v3/PublicHolidays/2026/GB",
+      "https://date.nager.at/api/v3/PublicHolidays/2027/GB"
+    ],
+    "verifiedAt": "2026-11-09",
+    "note": "Nager.Date 英国耶稣受难日为 2026-04-03、2027-03-26，复活节星期日为其后两天，与历法规则一致。"
+  },
+  {
+    "id": "st-andrews-day",
+    "cn": "圣安德鲁日",
+    "y2026": "2026-11-30",
+    "y2027": "2027-11-30",
+    "status": "fixed",
+    "dateRule": "",
+    "sourceUrls": [
+      "https://date.nager.at/api/v3/PublicHolidays/2026/GB",
+      "https://date.nager.at/api/v3/PublicHolidays/2027/GB"
+    ],
+    "verifiedAt": "2026-11-09",
+    "note": "Nager.Date 英国公共假期列为 11 月 30 日圣安德鲁日。"
+  },
+  {
+    "id": "remembrance-day",
+    "cn": "阵亡将士纪念日",
+    "y2026": "2026-11-11",
+    "y2027": "2027-11-11",
+    "status": "fixed",
+    "dateRule": "",
+    "sourceUrls": [
+      "https://en.wikipedia.org/wiki/Remembrance_Day"
+    ],
+    "verifiedAt": "2026-11-09",
+    "note": "公历固定日期 11 月 11 日（国殇纪念日），维基页面确认，无需农历来源。"
+  },
+  {
+    "id": "thanksgiving",
+    "cn": "感恩节",
+    "y2026": "2026-11-26",
+    "y2027": "2027-11-25",
+    "status": "fixed",
+    "dateRule": "美国 11 月第四个星期四",
+    "sourceUrls": [
+      "https://date.nager.at/api/v3/PublicHolidays/2026/US",
+      "https://date.nager.at/api/v3/PublicHolidays/2027/US"
+    ],
+    "verifiedAt": "2026-11-09",
+    "note": "Nager.Date 美国公共假期为 2026-11-26、2027-11-25，符合 11 月第四个星期四规则。"
+  },
+  {
+    "id": "halloween",
+    "cn": "万圣节",
+    "y2026": "2026-10-31",
+    "y2027": "2027-10-31",
+    "status": "fixed",
+    "dateRule": "",
+    "sourceUrls": [
+      "https://en.wikipedia.org/wiki/Halloween"
+    ],
+    "verifiedAt": "2026-11-09",
+    "note": "公历固定日期 10 月 31 日，维基页面确认，无需农历来源。"
+  },
+  {
+    "id": "independence-day",
+    "cn": "美国独立日",
+    "y2026": "2026-07-04",
+    "y2027": "2027-07-04",
+    "status": "fixed",
+    "dateRule": "",
+    "sourceUrls": [
+      "https://date.nager.at/api/v3/PublicHolidays/2026/US",
+      "https://date.nager.at/api/v3/PublicHolidays/2027/US"
+    ],
+    "verifiedAt": "2026-11-09",
+    "note": "节日本日为 7 月 4 日；Nager.Date 显示 2026 年观测日为 7 月 3 日、2027 年为 7 月 5 日（周末补休）。"
+  },
+  {
+    "id": "mlk-day",
+    "cn": "马丁·路德·金纪念日",
+    "y2026": "2026-01-19",
+    "y2027": "2027-01-18",
+    "status": "fixed",
+    "dateRule": "美国 1 月第三个星期一",
+    "sourceUrls": [
+      "https://date.nager.at/api/v3/PublicHolidays/2026/US",
+      "https://date.nager.at/api/v3/PublicHolidays/2027/US"
+    ],
+    "verifiedAt": "2026-11-09",
+    "note": "Nager.Date 美国公共假期为 2026-01-19、2027-01-18，符合 1 月第三个星期一规则。"
+  },
+  {
+    "id": "memorial-day",
+    "cn": "美国阵亡将士纪念日",
+    "y2026": "2026-05-25",
+    "y2027": "2027-05-31",
+    "status": "fixed",
+    "dateRule": "美国 5 月最后一个星期一",
+    "sourceUrls": [
+      "https://date.nager.at/api/v3/PublicHolidays/2026/US",
+      "https://date.nager.at/api/v3/PublicHolidays/2027/US"
+    ],
+    "verifiedAt": "2026-11-09",
+    "note": "Nager.Date 美国公共假期为 2026-05-25、2027-05-31，符合 5 月最后一个星期一规则。"
+  },
+  {
+    "id": "juneteenth",
+    "cn": "六月节",
+    "y2026": "2026-06-19",
+    "y2027": "2027-06-19",
+    "status": "fixed",
+    "dateRule": "",
+    "sourceUrls": [
+      "https://date.nager.at/api/v3/PublicHolidays/2026/US",
+      "https://date.nager.at/api/v3/PublicHolidays/2027/US"
+    ],
+    "verifiedAt": "2026-11-09",
+    "note": "节日本日为 6 月 19 日；Nager.Date 显示 2027 年因周六提前至 6 月 18 日观测。"
+  },
+  {
+    "id": "shichi-go-san",
+    "cn": "七五三",
+    "y2026": "2026-11-15",
+    "y2027": "2027-11-15",
+    "status": "fixed",
+    "dateRule": "固定公历 11 月 15 日（习俗日，非公共假期）",
+    "sourceUrls": [
+      "https://en.wikipedia.org/wiki/Shichi-Go-San"
+    ],
+    "verifiedAt": "2026-11-09",
+    "note": "七五三为固定习俗日 11 月 15 日，维基页面确认，无需农历来源。"
+  },
+  {
+    "id": "japan-childrens-day",
+    "cn": "儿童节（こどもの日）",
+    "y2026": "2026-05-05",
+    "y2027": "2027-05-05",
+    "status": "fixed",
+    "dateRule": "",
+    "sourceUrls": [
+      "https://date.nager.at/api/v3/PublicHolidays/2026/JP",
+      "https://date.nager.at/api/v3/PublicHolidays/2027/JP"
+    ],
+    "verifiedAt": "2026-11-09",
+    "note": "Nager.Date 日本公共假期列为 5 月 5 日儿童节。"
+  },
+  {
+    "id": "japan-culture-day",
+    "cn": "文化日",
+    "y2026": "2026-11-03",
+    "y2027": "2027-11-03",
+    "status": "fixed",
+    "dateRule": "",
+    "sourceUrls": [
+      "https://date.nager.at/api/v3/PublicHolidays/2026/JP",
+      "https://date.nager.at/api/v3/PublicHolidays/2027/JP"
+    ],
+    "verifiedAt": "2026-11-09",
+    "note": "Nager.Date 日本公共假期列为 11 月 3 日文化日。"
+  },
+  {
+    "id": "japan-obon",
+    "cn": "盂兰盆节",
+    "y2026": "2026-08-15",
+    "y2027": "2027-08-15",
+    "status": "fixed",
+    "dateRule": "8 月 15 日为主日（部分地区 7 月 15 日或按农历七月十五）",
+    "sourceUrls": [
+      "https://en.wikipedia.org/wiki/Obon"
+    ],
+    "verifiedAt": "2026-11-09",
+    "note": "盂兰盆正日为 8 月 15 日（部分地区 7 月 15 日或农历七月十五）；原数据 8 月 13 日是迎魂火起始日，非正日。"
+  },
+  {
+    "id": "chuseok",
+    "cn": "秋夕",
+    "y2026": "2026-09-25",
+    "y2027": "2027-09-15",
+    "status": "fixed",
+    "dateRule": "农历八月十五",
+    "sourceUrls": [
+      "https://date.nager.at/api/v3/PublicHolidays/2026/KR",
+      "https://date.nager.at/api/v3/PublicHolidays/2027/KR"
+    ],
+    "verifiedAt": "2026-11-09",
+    "note": "Nager.Date 韩国官方假期为 2026-09-24 至 26、2027-09-14 至 16，正日为 9 月 25 日与 9 月 15 日。"
+  },
+  {
+    "id": "seollal",
+    "cn": "春节（설날）",
+    "y2026": "2026-02-17",
+    "y2027": "2027-02-06",
+    "status": "fixed",
+    "dateRule": "农历正月初一（官方假期含前后各一天）",
+    "sourceUrls": [
+      "https://date.nager.at/api/v3/PublicHolidays/2026/KR",
+      "https://date.nager.at/api/v3/PublicHolidays/2027/KR"
+    ],
+    "verifiedAt": "2026-11-09",
+    "note": "Nager.Date 韩国官方假期为 2026-02-16 至 18、2027-02-06 至 08，正日为 2 月 17 日与 2 月 6 日。"
+  },
+  {
+    "id": "hangul-day",
+    "cn": "韩文节",
+    "y2026": "2026-10-09",
+    "y2027": "2027-10-09",
+    "status": "fixed",
+    "dateRule": "",
+    "sourceUrls": [
+      "https://date.nager.at/api/v3/PublicHolidays/2026/KR",
+      "https://date.nager.at/api/v3/PublicHolidays/2027/KR"
+    ],
+    "verifiedAt": "2026-11-09",
+    "note": "Nager.Date 韩国公共假期列为 10 月 9 日韩文节；2027 年因周六补休至 10 月 11 日。"
+  },
+  {
+    "id": "songkran",
+    "cn": "宋干节",
+    "y2026": "2026-04-13",
+    "y2027": "2027-04-13",
+    "status": "fixed",
+    "dateRule": "固定公历 4 月 13 日（泰国新年；官方假期 4/13–4/15）",
+    "sourceUrls": [
+      "https://www.officeholidays.com/countries/thailand/2026",
+      "https://www.officeholidays.com/countries/thailand/2027"
+    ],
+    "verifiedAt": "2026-11-09",
+    "note": "Office Holidays 泰国公共假期为 2026、2027 年 4 月 13 至 15 日，节日首日为 4 月 13 日。"
+  },
+  {
+    "id": "loy-krathong",
+    "cn": "水灯节",
+    "y2026": "2026-11-24",
+    "y2027": "2027-11-13",
+    "status": "fixed",
+    "dateRule": "泰历十二月满月（通常在 11 月）",
+    "sourceUrls": [
+      "https://en.wikipedia.org/wiki/Loy_Krathong",
+      "https://www.holidayscalendar.com/event/loy-krathong/"
+    ],
+    "verifiedAt": "2026-11-09",
+    "note": "维基年份表给出 2026-11-24、2027-11-13；第二源仅确认泰历十二月满月规则，未获泰国官方公告。"
+  },
+  {
+    "id": "visakha-bucha",
+    "cn": "卫塞节",
+    "y2026": "2026-05-31",
+    "y2027": "2027-05-20",
+    "status": "fixed",
+    "dateRule": "泰历六月满月（对应农历四月十五）",
+    "sourceUrls": [
+      "https://www.officeholidays.com/countries/thailand/2026",
+      "https://www.officeholidays.com/countries/thailand/2027"
+    ],
+    "verifiedAt": "2026-11-09",
+    "note": "Office Holidays 泰国卫塞节为 2026-05-31、2027-05-20，与新加坡 MOM 官方日期及农历四月十五一致。"
+  },
+  {
+    "id": "diwali",
+    "cn": "排灯节",
+    "y2026": "2026-11-08",
+    "y2027": "2027-10-29",
+    "status": "fixed",
+    "dateRule": "印度历 Kartika 月（通常在 10–11 月）",
+    "sourceUrls": [
+      "https://www.officeholidays.com/countries/india/2026",
+      "https://www.officeholidays.com/countries/india/2027"
+    ],
+    "verifiedAt": "2026-11-09",
+    "note": "Office Holidays 印度多数地区排灯节为 2026-11-08、2027-10-29；新加坡官方 Deepavali 2027 为 10-28，属地区观月差异。"
+  },
+  {
+    "id": "holi",
+    "cn": "洒红节",
+    "y2026": "2026-03-04",
+    "y2027": "2027-03-22",
+    "status": "fixed",
+    "dateRule": "Phalguna 月满月次日",
+    "sourceUrls": [
+      "https://www.officeholidays.com/countries/india/2026",
+      "https://www.officeholidays.com/countries/india/2027"
+    ],
+    "verifiedAt": "2026-11-09",
+    "note": "Office Holidays 印度多数地区洒红节主日为 2026-03-04、2027-03-22；部分地区日期相差一天（2026 年有地区为 03-03、2027 年有地区为 03-23）。"
+  },
+  {
+    "id": "republic-day",
+    "cn": "共和国日",
+    "y2026": "2026-01-26",
+    "y2027": "2027-01-26",
+    "status": "fixed",
+    "dateRule": "",
+    "sourceUrls": [
+      "https://www.officeholidays.com/countries/india/2026",
+      "https://www.officeholidays.com/countries/india/2027"
+    ],
+    "verifiedAt": "2026-11-09",
+    "note": "Office Holidays 印度公共假期列为 1 月 26 日共和国日。"
+  },
+  {
+    "id": "gandhi-jayanti",
+    "cn": "甘地诞辰日",
+    "y2026": "2026-10-02",
+    "y2027": "2027-10-02",
+    "status": "fixed",
+    "dateRule": "",
+    "sourceUrls": [
+      "https://www.officeholidays.com/countries/india/2026",
+      "https://www.officeholidays.com/countries/india/2027"
+    ],
+    "verifiedAt": "2026-11-09",
+    "note": "Office Holidays 印度公共假期列为 10 月 2 日甘地诞辰日。"
+  },
+  {
+    "id": "singapore-nd",
+    "cn": "新加坡国庆日",
+    "y2026": "2026-08-09",
+    "y2027": "2027-08-09",
+    "status": "fixed",
+    "dateRule": "",
+    "sourceUrls": [
+      "https://www.mom.gov.sg/employment-practices/public-holidays"
+    ],
+    "verifiedAt": "2026-11-09",
+    "note": "新加坡 MOM 官方公共假期页列为 2026-08-09、2027-08-09。"
+  },
+  {
+    "id": "vesak-day",
+    "cn": "卫塞节（新加坡）",
+    "y2026": "2026-05-31",
+    "y2027": "2027-05-20",
+    "status": "fixed",
+    "dateRule": "农历四月十五",
+    "sourceUrls": [
+      "https://www.mom.gov.sg/employment-practices/public-holidays",
+      "https://www.hko.gov.hk/tc/gts/time/calendar/text/files/T2026c.txt"
+    ],
+    "verifiedAt": "2026-11-09",
+    "note": "新加坡 MOM 官方页列为 2026-05-31、2027-05-20；天文台农历表对应农历四月十五。"
+  },
+  {
+    "id": "hari-raya-puasa",
+    "cn": "开斋节（新加坡）",
+    "y2026": "2026-03-21",
+    "y2027": "2027-03-10",
+    "status": "fixed",
+    "dateRule": "伊斯兰历十月一日（开斋节）",
+    "sourceUrls": [
+      "https://www.mom.gov.sg/employment-practices/public-holidays"
+    ],
+    "verifiedAt": "2026-11-09",
+    "note": "新加坡 MOM 官方公共假期页列为 2026-03-21、2027-03-10 Hari Raya Puasa。"
+  },
+  {
+    "id": "new-year",
+    "cn": "元旦",
+    "y2026": "2026-01-01",
+    "y2027": "2027-01-01",
+    "status": "fixed",
+    "dateRule": "",
+    "sourceUrls": [
+      "https://date.nager.at/api/v3/PublicHolidays/2026/CN",
+      "https://date.nager.at/api/v3/PublicHolidays/2027/CN"
+    ],
+    "verifiedAt": "2026-11-09",
+    "note": "公历固定日期 1 月 1 日；Nager.Date 中国公共假期列示。"
+  },
+  {
+    "id": "womens-day",
+    "cn": "国际妇女节",
+    "y2026": "2026-03-08",
+    "y2027": "2027-03-08",
+    "status": "fixed",
+    "dateRule": "",
+    "sourceUrls": [
+      "https://www.un.org/en/observances/womens-day"
+    ],
+    "verifiedAt": "2026-11-09",
+    "note": "联合国官方国际妇女节页面确认 3 月 8 日；公历固定日期。"
+  },
+  {
+    "id": "students-day",
+    "cn": "国际大学生节",
+    "y2026": "2026-11-17",
+    "y2027": "2027-11-17",
+    "status": "fixed",
+    "dateRule": "",
+    "sourceUrls": [
+      "https://en.wikipedia.org/wiki/International_Students_Day"
+    ],
+    "verifiedAt": "2026-11-09",
+    "note": "国际大学生节为固定公历 11 月 17 日，维基页面确认，无需农历来源。"
+  },
+  {
+    "id": "christmas",
+    "cn": "圣诞节",
+    "y2026": "2026-12-25",
+    "y2027": "2027-12-25",
+    "status": "fixed",
+    "dateRule": "",
+    "sourceUrls": [
+      "https://date.nager.at/api/v3/PublicHolidays/2026/GB",
+      "https://date.nager.at/api/v3/PublicHolidays/2027/GB"
+    ],
+    "verifiedAt": "2026-11-09",
+    "note": "公历固定日期 12 月 25 日；Nager.Date 英国公共假期列示。"
+  },
+  {
+    "id": "singles-day",
+    "cn": "双十一",
+    "y2026": "2026-11-11",
+    "y2027": "2027-11-11",
+    "status": "fixed",
+    "dateRule": "",
+    "sourceUrls": [
+      "https://en.wikipedia.org/wiki/Singles_Day"
+    ],
+    "verifiedAt": "2026-11-09",
+    "note": "双十一为固定公历 11 月 11 日的商业节日，非公共假期；维基页面确认。"
+  },
+  {
+    "id": "earth-day",
+    "cn": "世界地球日",
+    "y2026": "2026-04-22",
+    "y2027": "2027-04-22",
+    "status": "fixed",
+    "dateRule": "",
+    "sourceUrls": [
+      "https://en.wikipedia.org/wiki/Earth_Day"
+    ],
+    "verifiedAt": "2026-11-09",
+    "note": "世界地球日为固定公历 4 月 22 日，维基页面确认，无需农历来源。"
+  }
+]

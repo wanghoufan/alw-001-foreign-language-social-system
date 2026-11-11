@@ -1,0 +1,189 @@
+{
+  "startedAt": "2026-11-10T00:58:53.871Z",
+  "target": "http://127.0.0.1:8791/v12/?v=1794272333871",
+  "chromeVersion": "Chrome/156.0.8078.81",
+  "checks": [
+    {
+      "name": "聊天页渲染出可点英文字幕",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "默认不出现解释卡",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "默认不给字幕逐词标注或下划线",
+      "ok": true,
+      "detail": "{\"marks\":0,\"underline\":\"none\"}"
+    },
+    {
+      "name": "能定位到字幕里的英文词坐标",
+      "ok": true,
+      "detail": "{\"x\":257.8984375,\"y\":145}"
+    },
+    {
+      "name": "点英文词后出现解释卡",
+      "ok": true,
+      "detail": "1"
+    },
+    {
+      "name": "解释卡显示中文解释与英文解释",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "解释卡给出四条顺势问，且不问“你听过吗”",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "点词只发一次查询，且只送被点的词与原句",
+      "ok": true,
+      "detail": "{\"term\":\"capoeira\",\"context\":\"I've started doing capoeira. It's a Brazilian martial art with dance and music!\",\"consent\":true}"
+    },
+    {
+      "name": "查询不改变字幕原文、条数与识别状态",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "解释卡可关闭",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "相同词再点命中本地缓存，不重复计费调用",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "无需任何勾选：旧会话态为 false 时点词也直接查询",
+      "ok": true,
+      "detail": "calls=2"
+    },
+    {
+      "name": "页面不再有任何 AI 同意复选框或费用确认弹窗",
+      "ok": true,
+      "detail": "{\"inputs\":0,\"confirmTts\":false,\"confirmTranslate\":false}"
+    },
+    {
+      "name": "点翻译按钮不再弹确认，直接请求并显示中文",
+      "ok": true,
+      "detail": "{\"calls\":1,\"zh\":\"我正在练卡波耶拉。\",\"state\":\"ready\"}"
+    },
+    {
+      "name": "可在卡内改查另一个词",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "话题「daily」有 20 条可聊卡片与复制问句",
+      "ok": true,
+      "detail": "{\"n\":20,\"btns\":60}"
+    },
+    {
+      "name": "话题「culture」有 20 条可聊卡片与复制问句",
+      "ok": true,
+      "detail": "{\"n\":20,\"btns\":45}"
+    },
+    {
+      "name": "话题「fitness」有 46 条可聊卡片与复制问句",
+      "ok": true,
+      "detail": "{\"n\":46,\"btns\":137}"
+    },
+    {
+      "name": "话题「more」有 84 条可聊卡片与复制问句",
+      "ok": true,
+      "detail": "{\"n\":84,\"btns\":252}"
+    },
+    {
+      "name": "自动接话无需同意，直接请求且不出现 [object Object]",
+      "ok": true,
+      "detail": "{\"calls\":1,\"state\":\"ready\",\"obj\":false,\"text\":\"接话\\n2 条\\n\\nThat sounds like a great mix of movement and music!\\n\\n中文\\n☆\\n\\nMusic changes the mood of a whole room, doesn't it?\\n\\n中文\\n☆\\n追问\\n2 条\\n\\nHow long have you been prac\"}"
+    },
+    {
+      "name": "健身页按「球类 / 板类与户外 / 体能与日常 / 观赛与赛事」分组",
+      "ok": true,
+      "detail": "健身运动｜球类｜板类与户外｜体能与日常｜观赛与赛事"
+    },
+    {
+      "name": "球类含乒乓球、匹克球、网球、羽毛球",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "更多页按工作学习/家庭与关系/金钱健康科技等分组",
+      "ok": true,
+      "detail": "更多｜旅行与美食｜影音与游戏｜城市与环保｜宠物与摄影｜工作学习｜家庭与关系｜金钱健康科技"
+    },
+    {
+      "name": "节日仍为 47 条，待确认只剩 3 条",
+      "ok": true,
+      "detail": "{\"all\":47,\"pending\":3,\"ok\":44}"
+    },
+    {
+      "name": "375px 无横向溢出",
+      "ok": true,
+      "detail": "{\"sw\":375,\"iw\":375}"
+    },
+    {
+      "name": "393px 无横向溢出",
+      "ok": true,
+      "detail": "{\"sw\":393,\"iw\":393}"
+    },
+    {
+      "name": "430px 无横向溢出",
+      "ok": true,
+      "detail": "{\"sw\":430,\"iw\":430}"
+    },
+    {
+      "name": "520px 无横向溢出",
+      "ok": true,
+      "detail": "{\"sw\":520,\"iw\":520}"
+    },
+    {
+      "name": "本次验证无 JS 异常",
+      "ok": true,
+      "detail": ""
+    }
+  ],
+  "shots": [
+    "s3-01-chat-clean.png",
+    "s3-02-term-card.png",
+    "s3-03-no-consent.png",
+    "s3-08-translate-direct.png",
+    "s3-06-fitness-balls.png",
+    "s3-07-more-groups.png",
+    "s3-04-topics-daily.png",
+    "s3-05-festival-verified.png"
+  ],
+  "jsErrors": [],
+  "widths": [
+    {
+      "w": 375,
+      "sw": 375,
+      "iw": 375
+    },
+    {
+      "w": 393,
+      "sw": 393,
+      "iw": 393
+    },
+    {
+      "w": 430,
+      "sw": 430,
+      "iw": 430
+    },
+    {
+      "w": 520,
+      "sw": 520,
+      "iw": 520
+    }
+  ],
+  "favicon404": true,
+  "finishedAt": "2026-11-10T00:59:11.055Z",
+  "pass": 29,
+  "total": 29
+}

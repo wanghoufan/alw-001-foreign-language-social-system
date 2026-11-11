@@ -1,0 +1,569 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f6f8f5">
+<title>SocialMate · V6｜同传主动点词查询原型</title>
+<style>
+:root{color-scheme:light;--bg:#f6f8f5;--paper:#fff;--paper2:#f1f6f2;--ink:#233d49;--secondary:#6e8187;--line:#e2eae6;--strongline:#cddfd8;--green:#137c6d;--green2:#e5f3ed;--greenText:#086f60;--quiet:#f5f7f5;--warn:#a56920;--shadow:0 6px 28px rgba(23,56,55,.07);--top:54px;--bottom:62px;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft Yahei",Arial,sans-serif}
+[data-theme="dark"]{color-scheme:dark;--bg:#111e23;--paper:#192b30;--paper2:#20363b;--ink:#eaf4f2;--secondary:#a1b5b5;--line:#32484d;--strongline:#416461;--green:#77dcc4;--green2:#254c46;--greenText:#9debd3;--quiet:#213439;--warn:#f0b76b;--shadow:0 12px 40px rgba(0,0,0,.23)}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--ink)}body{font-size:15px;-webkit-tap-highlight-color:transparent}button,input,textarea,select{font:inherit}button{cursor:pointer;color:inherit}button:disabled{opacity:.45;cursor:not-allowed}button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px solid var(--green);outline-offset:2px}svg{width:1.1em;height:1.1em;flex:none;vertical-align:-.14em;stroke-width:1.9}h1,h2,h3,p{margin:0}small{font-size:12px}.hide{display:none!important}
+.shell{height:100dvh;max-width:520px;margin:auto;background:var(--paper);position:relative;overflow:hidden;box-shadow:var(--shadow);isolation:isolate}
+@media(min-width:650px){body{display:grid;place-items:center;min-height:100vh;padding:18px}.shell{height:min(910px,calc(100dvh - 36px));width:440px;border:1px solid var(--line);border-radius:24px}}
+.topbar{position:absolute;inset:0 0 auto;z-index:30;height:calc(var(--top) + env(safe-area-inset-top));padding:env(safe-area-inset-top) 12px 0;background:var(--paper);border-bottom:1px solid var(--line);display:flex;gap:8px;align-items:center;justify-content:space-between}
+.top-left,.top-right,.row{display:flex;align-items:center;gap:7px;min-width:0}.top-right{flex:none}.top-left{flex:1}.logo{height:30px;width:30px;border-radius:10px;background:var(--green);color:var(--paper);font-size:18px;font-weight:800;letter-spacing:-2px;display:grid;place-items:center}.brandname{font-size:15px;font-weight:800;letter-spacing:.1px}.context-title{font-size:15px;font-weight:800;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.icon-btn{border:none;background:transparent;height:36px;min-width:36px;border-radius:11px;display:grid;place-items:center;padding:0;font-size:20px}.icon-btn:hover,.mini-btn:hover{background:var(--quiet)}.icon-btn.strong{color:var(--green)}.back{margin-left:-5px}
+.view{position:absolute;top:calc(var(--top) + env(safe-area-inset-top));bottom:calc(var(--bottom) + env(safe-area-inset-bottom));width:100%;overflow:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:var(--strongline) transparent;padding:0 14px 14px}.view:focus{outline:0}
+.bottomnav{height:calc(var(--bottom) + env(safe-area-inset-bottom));padding:4px 5px env(safe-area-inset-bottom);position:absolute;bottom:0;left:0;right:0;z-index:25;background:var(--paper);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(5,1fr);gap:1px}.tab{border:0;background:none;padding:3px 1px 1px;border-radius:12px;color:var(--secondary);display:flex;flex-direction:column;justify-content:center;align-items:center;gap:1px;font-size:11px;font-weight:650;min-width:0}.tab svg{font-size:21px;margin-bottom:2px}.tab.on{color:var(--greenText);background:var(--green2)}
+.searchwrap{padding:10px 0 3px}.search{display:flex;align-items:center;gap:8px;height:40px;background:var(--quiet);border:1px solid var(--line);border-radius:12px;padding:0 12px;color:var(--secondary)}.search input{min-width:0;flex:1;border:0;outline:0;background:transparent;color:var(--ink);font-size:14px}.search input::placeholder{color:var(--secondary)}
+.slimline{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:10px 0 8px;font-size:12px;color:var(--secondary)}.slimline strong{font-size:13px;color:var(--ink)}.section-meta{font-weight:650;color:var(--secondary);font-size:12px}.pillrow{display:flex;gap:6px;overflow:auto;scrollbar-width:none;padding:6px 0 8px;margin-right:-14px;padding-right:14px}.pillrow::-webkit-scrollbar{display:none}.pill{border:1px solid var(--line);background:var(--paper);white-space:nowrap;border-radius:100px;padding:7px 12px;font-size:12px;color:var(--secondary);font-weight:600;min-height:32px}.pill.active{background:var(--green2);border-color:#9dcbbd;color:var(--greenText)}
+.self-pills{padding:5px 0 7px;margin-top:0;align-items:center}.self-count{font-size:11px;color:var(--secondary);white-space:nowrap;margin-left:auto;padding-right:14px}.self-list{gap:7px}.self-list .item{padding:11px 12px}.self-list .cn-preview{margin-top:7px}.self-list .en-preview{margin-top:5px}.list{display:grid;gap:8px}.item{padding:12px 12px;background:var(--paper);border:1px solid var(--line);border-radius:14px;cursor:pointer;box-shadow:0 1px 2px rgba(0,0,0,.02)}.item:hover{border-color:var(--strongline)}.itemhead{display:flex;justify-content:space-between;gap:8px;align-items:center}.item-title{font-size:15px;line-height:1.35;font-weight:780}.dim{color:var(--secondary);font-size:12px}.item-en-title{font-size:12px;color:var(--greenText);margin-top:2px;font-weight:550}.cn-preview{font-size:14px;line-height:1.65;color:var(--ink);margin-top:8px}.en-preview{font-size:13px;line-height:1.58;color:var(--secondary);margin-top:4px}.clamp2{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}.clamp3{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;overflow:hidden}.chip{font-size:11px;border-radius:6px;padding:3px 6px;background:var(--paper2);color:var(--secondary);white-space:nowrap}.thumb{height:70px;width:78px;border-radius:10px;flex:none;display:flex;align-items:center;justify-content:center;font-size:29px;overflow:hidden}.sea{background:linear-gradient(170deg,#a6c9cc 0%,#d6ede6 55%,#9ac7c7 55%,#b9dfd2 100%)}.street{background:linear-gradient(135deg,#eed8bf 0%,#fad9c7 46%,#b4c6b7 100%)}.park{background:linear-gradient(145deg,#c3e2bb 0%,#8cc3b9 57%,#cedabc 100%)}.night{background:linear-gradient(140deg,#cbbca6 0%,#787d91 56%,#b7a4a0 100%)}.locationitem{display:flex;gap:10px;padding:10px;align-items:flex-start}.place-info{flex:1;min-width:0}.linkhint{color:var(--greenText);font-weight:650;font-size:12px;margin-top:5px}
+.subhead{display:flex;justify-content:space-between;gap:8px;align-items:center;margin:12px 0 10px}.subhead strong{font-size:14px}.counter{font-size:12px;color:var(--secondary)}.micro-action{color:var(--greenText);border:0;background:none;font-size:12px;font-weight:700;padding:5px}
+.minibar{display:flex;align-items:center;gap:6px;margin:0 -14px 0;padding:7px 14px;background:var(--paper);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:12;min-height:53px}.play-big{background:var(--green);color:#fff;display:flex;gap:5px;align-items:center;justify-content:center;padding:0 10px;height:36px;border:none;border-radius:10px;font-size:12px;font-weight:750;white-space:nowrap}.mini-btn{height:34px;min-width:32px;padding:0 7px;border:1px solid var(--line);border-radius:9px;background:var(--paper);display:grid;place-items:center;font-size:14px}.minibar .mini-btn[data-action="loopToggle"]{min-width:44px;display:flex;align-items:center;justify-content:center;gap:2px;white-space:nowrap}.smallselect{min-width:50px;max-width:70px;height:34px;border:1px solid var(--line);border-radius:9px;color:var(--ink);background:var(--paper);padding:0 5px;font-size:12px}.spacer{flex:1}.statusdot{width:6px;height:6px;background:#a9b5b7;border-radius:50%;display:inline-block;margin-right:4px}.statusdot.on{background:var(--green)}
+.record-head{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px 0 7px}.record-head strong{font-size:14px}.record-sub{font-size:12px;color:var(--secondary)}.blocknav{display:flex;gap:8px;align-items:center;margin:6px 0 9px}.blockstep{font-size:12px;color:var(--greenText);font-weight:800;background:none;border:none;padding:0 3px 0 0;display:flex;align-items:center;gap:3px;white-space:nowrap}.progress{flex:1;display:flex;gap:3px}.progress span{height:4px;flex:1;background:var(--line);border-radius:50px}.progress span.done{background:var(--green)}.blockcard{padding:15px 13px 13px;border:1px solid var(--strongline);border-radius:15px;background:var(--paper)}.langline{font-size:11px;font-weight:780;letter-spacing:1px;color:var(--greenText);margin-bottom:4px}.langcn{font-size:17px;font-weight:580;line-height:1.75;letter-spacing:.1px}.langen{font-size:16px;font-weight:500;line-height:1.7;letter-spacing:.01em}.langsep{height:1px;background:var(--line);margin:11px 0}.compact-pairs{margin-bottom:3px}.compact-pairs .pair{padding:3px 0;font-size:12px}.exprtitle{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:12px}.exprtitle strong{font-size:12px}.pairs{display:grid;grid-template-columns:1fr;gap:1px;margin-top:5px}.pair{display:flex;gap:9px;align-items:baseline;padding:5px 0;border-bottom:1px dashed var(--line);font-size:13px}.pair span:first-child{color:var(--ink);flex:1}.pair span:last-child{color:var(--greenText);flex:1;font-weight:650}.pair:last-child{border:0}.inline-actions{display:flex;gap:8px;margin-top:10px;align-items:center;flex-wrap:wrap}.textbutton{height:30px;border:0;background:var(--green2);color:var(--greenText);border-radius:8px;padding:0 10px;font-size:12px;font-weight:700}.textbutton.ghost{background:var(--quiet);color:var(--secondary)}.plainlink{border:0;background:none;color:var(--greenText);font-size:12px;font-weight:700;padding:5px 2px}.secondaryrow{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 3px;border-bottom:1px solid var(--line);font-size:13px;font-weight:650}.secondaryrow .dim{font-weight:500}.reportone{margin:8px 0 0;padding:10px;border-radius:10px;background:var(--paper2);font-size:13px;line-height:1.5}.moremeta{font-size:11px;color:var(--secondary);padding-top:5px}
+.cover{height:120px;border-radius:12px;margin-top:12px;position:relative;display:flex;align-items:flex-end;overflow:hidden}.cover:before{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(12,61,57,.35),transparent)}.cover b{z-index:1;position:relative;color:white;font-size:20px;padding:12px;text-shadow:0 1px 3px rgba(0,0,0,.25)}.segrow{display:flex;gap:6px;margin:10px 0;border-bottom:1px solid var(--line)}.seg{border:0;border-bottom:2px solid transparent;background:none;color:var(--secondary);font-weight:700;font-size:13px;padding:9px 13px}.seg.on{color:var(--greenText);border-color:var(--green)}.description{font-size:14px;line-height:1.76;margin:10px 0}.description.english{font-size:13px;color:var(--secondary)}
+.primary{border:0;background:var(--green);color:#fff;padding:11px 14px;border-radius:10px;font-size:13px;font-weight:750}.secondary{border:1px solid var(--strongline);background:var(--paper);padding:10px 13px;border-radius:10px;font-size:13px;font-weight:700}.full{width:100%}.empty{padding:26px 15px;color:var(--secondary);text-align:center;line-height:1.8;font-size:14px}.banner{border:1px solid var(--strongline);background:var(--green2);color:var(--greenText);border-radius:12px;padding:11px 12px;font-size:13px;line-height:1.6}
+.speechbox{display:flex;align-items:center;gap:8px;position:sticky;bottom:-14px;margin:8px -14px -14px;padding:10px 14px 16px;background:var(--paper);border-top:1px solid var(--line)}.speechbox input{flex:1;min-width:0;background:var(--quiet);border:1px solid var(--line);border-radius:12px;height:42px;padding:0 12px;color:var(--ink);font-size:13px}.message{max-width:93%;border:1px solid var(--line);padding:10px 12px;border-radius:12px;margin:8px 0;line-height:1.55;font-size:14px}.message.me{margin-left:auto;background:var(--green2);border-color:var(--green2)}.message.other{background:var(--paper2)}.chatcaption{font-size:11px;color:var(--secondary);margin-bottom:4px;font-weight:700}
+.popover{position:absolute;right:11px;top:calc(var(--top) + 4px + env(safe-area-inset-top));z-index:65;width:206px;border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);background:var(--paper);padding:5px}.popitem{border:0;background:none;width:100%;padding:11px 12px;text-align:left;border-radius:9px;display:flex;gap:10px;align-items:center;font-size:13px;font-weight:620}.popitem:hover{background:var(--quiet)}.popover .separator{height:1px;background:var(--line);margin:4px}
+.scrim{position:absolute;inset:0;z-index:55;background:rgba(19,37,38,.32)}.modal{position:absolute;z-index:60;left:0;right:0;bottom:0;max-height:91%;overflow:auto;background:var(--paper);border-radius:20px 20px 0 0;box-shadow:0 -10px 36px rgba(0,0,0,.13);padding:14px 14px calc(18px + env(safe-area-inset-bottom));scrollbar-width:thin}.modal-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}.modal-h b{font-size:17px}.fieldlabel{display:block;font-size:12px;color:var(--secondary);font-weight:700;margin:11px 0 5px}.field{width:100%;border:1px solid var(--strongline);background:var(--paper);color:var(--ink);border-radius:10px;padding:9px 11px;font-size:14px;line-height:1.5;outline:0}.field:focus{border-color:var(--green)}textarea.field{resize:vertical;min-height:70px}.field.tall{min-height:130px}.modal-foot{display:flex;gap:8px;justify-content:flex-end;margin-top:13px;padding-top:9px;border-top:1px solid var(--line);position:sticky;bottom:-14px;background:var(--paper);padding-bottom:5px}.importmode{margin:0 0 7px}.import-summary{border-top:1px solid var(--line);padding:9px 0}.import-summary:first-of-type{border-top:0}.import-summary p{line-height:1.55}.minihelp{font-size:12px;line-height:1.6;color:var(--secondary);margin:6px 0}.parsepreview{margin-top:10px;border:1px solid var(--strongline);border-radius:11px;background:var(--paper2);padding:10px}.parsepreview .pairs{margin:0}.notice{color:var(--warn);font-size:12px}.toaster{position:absolute;left:10%;right:10%;bottom:calc(var(--bottom) + 18px + env(safe-area-inset-bottom));z-index:80;pointer-events:none;text-align:center;background:rgba(24,45,50,.93);color:#fff;padding:10px 13px;border-radius:11px;font-size:13px;line-height:1.5;box-shadow:0 8px 35px rgba(0,0,0,.15);opacity:0;transform:translateY(10px);transition:opacity .18s,transform .18s}.toaster.show{opacity:1;transform:translateY(0)}
+
+/* V4: dense utility header with no brand or duplicate tab name */
+.topbar{height:calc(48px + env(safe-area-inset-top));padding-left:10px;padding-right:10px;gap:7px}
+:root{--top:48px}
+.top-action{height:34px;border:1px solid var(--strongline);background:var(--paper);border-radius:9px;padding:0 11px;display:inline-flex;align-items:center;justify-content:center;gap:5px;font-size:13px;font-weight:750;white-space:nowrap}
+.top-action.chat-start{background:var(--green);border-color:var(--green);color:white;min-width:72px}
+.top-action.ghost{border-color:var(--line);background:var(--quiet);color:var(--secondary)}
+.top-left{gap:6px}.top-right{gap:3px}
+/* Restore the *existing* chat information hierarchy: dialogue above, suggestions below, reference chips at the bottom. */
+.view.chat-view{overflow:hidden;padding:0 10px 0}
+.chat-workspace{height:100%;min-height:0;display:flex;flex-direction:column;gap:0}
+.chat-transcript{flex:1.05 1 51%;min-height:0;display:flex;flex-direction:column;border-bottom:1px solid var(--line);padding:6px 0 5px}
+.chat-zone-head{flex:none;display:flex;justify-content:space-between;gap:6px;align-items:center;padding:2px 3px 7px}
+.chat-zone-head strong{font-size:13px;font-weight:800}
+.chat-zone-head .dim{font-size:10px;white-space:nowrap}
+.chat-lines{flex:1;min-height:0;overflow:auto;scrollbar-width:thin;padding:0 2px 4px}
+.chat-turn{max-width:94%;padding:8px 10px;margin:4px 0 8px;border-radius:11px;background:var(--paper2);font-size:13px;line-height:1.58}
+.chat-turn.mine{margin-left:auto;background:var(--green2)}
+.chat-speaker{font-size:11px;font-weight:800;color:var(--greenText);margin-bottom:3px}
+.chat-speaker span{font-weight:500;color:var(--secondary);margin-left:3px}
+.chat-turn p{margin:0}
+.chat-trans{font-size:12px;color:var(--secondary);margin-top:4px!important}
+.chat-inputrow{flex:none;display:flex;gap:6px;align-items:center;padding:5px 3px 1px}
+.chat-mic{border:1px solid var(--line);background:var(--paper2);border-radius:9px;height:34px;width:35px;display:grid;place-items:center;color:var(--greenText)}
+.chat-inputrow input{flex:1;min-width:0;height:34px;padding:0 9px;background:var(--paper);border:1px solid var(--line);border-radius:9px;color:var(--ink);font-size:12px}
+.chat-send{border:0;border-radius:9px;background:var(--green);color:#fff;font-size:12px;font-weight:750;height:34px;padding:0 11px}
+.chat-assist{flex:.9 1 43%;min-height:0;display:flex;flex-direction:column;padding-top:7px}
+.chat-assist-tabs{display:flex;gap:5px;border-bottom:1px solid var(--line);padding:0 2px 6px;flex:none}
+.chat-assist-tab{flex:1;white-space:nowrap;min-height:31px;border:1px solid transparent;background:transparent;border-radius:9px;color:var(--secondary);font-size:12px;font-weight:700}
+.chat-assist-tab.active{background:var(--green2);border-color:var(--strongline);color:var(--greenText)}
+.chat-hints{flex:1;min-height:0;overflow:auto;padding:5px 0;scrollbar-width:thin}
+.chat-hint{border:1px solid var(--line);border-radius:10px;margin-bottom:5px;background:var(--paper)}
+.chat-hint.selected{border-color:var(--green)}
+.chat-hint-main{background:none;text-align:left;width:100%;border:0;padding:8px 10px;display:flex;flex-direction:column;align-items:flex-start;gap:3px}
+.chat-hint-title{font-size:11px;color:var(--secondary)}
+.chat-hint-en{font-size:13px;line-height:1.48;font-weight:580}
+.chat-hint-zh{font-size:12px;line-height:1.46;color:var(--greenText)}
+.chat-hint-actions{display:flex;gap:5px;padding:0 8px 7px}
+.chat-hint-actions button{display:inline-flex;align-items:center;gap:4px;border:1px solid var(--line);background:var(--quiet);border-radius:7px;padding:5px 8px;font-size:11px}
+.chat-references{flex:none;display:flex;gap:6px;align-items:center;padding:7px 2px 6px;border-top:1px solid var(--line);min-height:39px}
+.chat-references-label{font-size:10px;color:var(--secondary);font-weight:700;white-space:nowrap}
+.chat-chiprow{display:flex;gap:5px;overflow:auto;white-space:nowrap;min-width:0;scrollbar-width:none}
+.chat-chiprow::-webkit-scrollbar{display:none}
+.chat-refchip{border:1px solid var(--strongline);background:var(--green2);color:var(--greenText);border-radius:30px;padding:5px 8px;font-size:11px;font-weight:600;white-space:nowrap}
+@media(max-width:355px){.chat-zone-head .dim{display:none}.chat-inputrow input{font-size:11px}}
+/* V5: 人物详情，真实档案的结构与中文/英文接话优先；其它四个 Tab 保留 V4。 */
+.person-page{padding:8px 0 30px;display:grid;gap:10px}
+.person-summary{display:flex;align-items:center;gap:11px;padding:8px 3px 9px;border-bottom:1px solid var(--line)}
+.person-avatar{height:45px;width:45px;min-width:45px;border-radius:14px;background:var(--green2);color:var(--greenText);display:grid;place-items:center;font-weight:800;font-size:24px}
+.person-primary{font-size:14px;line-height:1.5;font-weight:650}
+.person-recent{font-size:12px;color:var(--secondary);line-height:1.5;margin-top:2px}
+.person-sheet{background:var(--paper);border:1px solid var(--line);border-radius:13px;padding:10px 12px}
+.person-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:9px}
+.person-head h2{font-size:14px;line-height:1.35;font-weight:800}
+.person-head .counter{font-size:11px}
+.person-facts{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.person-fact{padding:8px 10px;border-radius:9px;background:var(--quiet);min-width:0;line-height:1.4}
+.person-fact .person-label{display:block;font-size:11px;color:var(--secondary);margin-bottom:2px}
+.person-fact strong{display:block;font-size:14px;font-weight:700;overflow-wrap:anywhere}
+.person-fact .person-value-en{display:block;font-size:12px;color:var(--greenText);margin-top:2px;overflow-wrap:anywhere}
+.person-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px}
+.person-tag{font-size:12px;padding:6px 9px;border-radius:50px;background:var(--green2);color:var(--greenText);font-weight:630;line-height:1.4}
+.person-tag em{font-style:normal;font-weight:500;color:var(--secondary);margin-left:3px}
+.person-question-list{display:grid;gap:7px}
+.person-question{padding:10px 11px;border:1px solid var(--strongline);border-radius:11px;background:var(--paper);line-height:1.55}
+.person-question-label{font-size:11px;color:var(--secondary);margin-bottom:5px;font-weight:650}
+.person-question-cn{font-size:13px;color:var(--ink);line-height:1.65}
+.person-question-en{font-size:15px;line-height:1.55;color:var(--greenText);font-weight:600;margin-top:3px;overflow-wrap:anywhere}
+.person-question-actions{display:flex;gap:6px;align-items:center;margin-top:8px;flex-wrap:wrap}
+.person-question-actions button{min-height:28px;font-size:11px}
+.person-timeline{display:grid;gap:9px}
+.person-event{position:relative;padding:0 0 0 11px;border-left:2px solid var(--line)}
+.person-event .person-event-label{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-size:12px;font-weight:750}
+.person-event .person-event-label small{font-weight:400;color:var(--secondary)}
+.person-event p{font-size:13px;line-height:1.6;margin-top:4px}
+.person-event .person-event-en{font-size:12px;line-height:1.55;color:var(--greenText)}
+.person-muted{font-size:12px;color:var(--secondary);line-height:1.6}
+.person-editlinks{display:flex;gap:5px;align-items:center}
+.person-editlinks button{border:0;background:transparent;color:var(--greenText);font-weight:700;font-size:12px;padding:3px}
+.person-editlinks button:focus-visible{outline:2px solid var(--green)}
+.person-quick{display:flex;gap:6px;flex-wrap:wrap}
+.person-quick .textbutton{height:32px}
+.person-dimline{font-size:11px;line-height:1.5;color:var(--secondary)}
+@media(min-width:480px){.person-question-en{font-size:16px}}
+
+/* V6: 仅用户主动点击英文字幕才出现术语卡，零默认划词/高亮/词典浮层 */
+.chat-transcript{position:relative}
+.chat-english{cursor:text;user-select:text;-webkit-user-select:text;touch-action:pan-y}
+.term-panel{position:absolute;z-index:22;left:3px;right:3px;bottom:46px;border-radius:13px;border:1px solid var(--strongline);background:var(--paper);box-shadow:0 10px 38px rgba(15,44,40,.24);padding:11px 12px 10px;max-height:min(72%,240px);overflow:auto}
+.term-panel.hide{display:none}
+.term-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:7px}
+.term-title{font-size:16px;font-weight:800;color:var(--ink);line-height:1.3;min-width:0;overflow-wrap:anywhere}
+.term-close{flex:none;background:var(--quiet);border:0;width:27px;height:27px;border-radius:8px;display:grid;place-items:center;font-size:19px}
+.term-meaning{font-size:13px;line-height:1.55;color:var(--ink);margin:0 0 7px}
+.term-context{font-size:11px;line-height:1.45;color:var(--secondary);border-left:2px solid var(--strongline);padding-left:7px;margin:0 0 8px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.term-ask{background:var(--quiet);border-radius:9px;padding:8px 10px;margin-top:7px}
+.term-ask .term-label{font-size:10px;color:var(--secondary);font-weight:700;margin-bottom:3px}
+.term-ask p{margin:2px 0;line-height:1.45;font-size:12px}
+.term-ask .term-en{font-size:13px;font-weight:650;color:var(--greenText)}
+.term-actions{margin-top:8px;display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.term-actions button{font-size:12px;min-height:30px;padding:5px 9px;border-radius:8px;border:1px solid var(--strongline);background:var(--paper);color:var(--greenText);font-weight:700}
+.term-actions .term-primary{background:var(--green2)}
+.term-empty{font-size:12px;color:var(--secondary);line-height:1.5}
+.term-extra{font-size:11px;margin-top:5px;color:var(--secondary)}
+.term-extra summary{cursor:pointer;color:var(--secondary);padding:3px 0;list-style:none}
+.term-extra summary::after{content:" ▾"}
+.term-extra[open] summary::after{content:" ▴"}
+.term-extra .term-context{margin:7px 0}
+.term-inputbar{display:flex;align-items:center;gap:5px;margin:0 0 8px}
+.term-inputbar input{flex:1;min-width:0;height:32px;border:1px solid var(--line);border-radius:8px;background:var(--paper);color:var(--ink);padding:0 8px;font-size:13px}
+.term-inputbar button{height:32px;border:0;border-radius:8px;background:var(--green);color:#fff;padding:0 10px;font-size:12px}
+@media (max-height:600px){.term-panel{max-height:70%;bottom:40px}}
+</style>
+</head>
+<body>
+<div class="shell" id="shell" data-theme="light">
+<header class="topbar"><div class="top-left" id="topLeft"></div><div class="top-right" id="topRight"></div></header>
+<main class="view" id="view" tabindex="-1" aria-live="polite"></main>
+<nav class="bottomnav" id="bottomnav" aria-label="主导航"></nav>
+<div class="popover hide" id="popover"></div>
+<div class="scrim hide" id="scrim"></div><div class="modal hide" id="modal"></div>
+<div class="toaster" id="toast" role="status"></div>
+</div>
+<script>
+(()=>{'use strict';
+const icons={plus:'<path d="M12 5v14M5 12h14"/>',dots:'<circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/>',left:'<path d="m15 18-6-6 6-6"/>',right:'<path d="m9 18 6-6-6-6"/>',play:'<path d="m8 5 11 7-11 7z"/>',pause:'<path d="M8 5v14M16 5v14"/>',stop:'<rect x="6" y="6" width="12" height="12" rx="1"/>',search:'<circle cx="11" cy="11" r="7"/><path d="m16 16 5 5"/>',software:'<rect x="3" y="3" width="8" height="8" rx="1"/><rect x="13" y="3" width="8" height="8" rx="1"/><rect x="3" y="13" width="8" height="8" rx="1"/><rect x="13" y="13" width="8" height="8" rx="1"/>',hainan:'<path d="M12 21s7-6.1 7-12a7 7 0 0 0-14 0c0 5.9 7 12 7 12z"/><circle cx="12" cy="9" r="2"/>',chat:'<path d="M21 11a8 8 0 0 1-8 8 9 9 0 0 1-4-.9L3 21l1.9-5A8 8 0 1 1 21 11z"/>',self:'<circle cx="12" cy="7" r="4"/><path d="M4 21v-3a8 8 0 0 1 16 0v3"/>',people:'<circle cx="9" cy="8" r="3"/><path d="M3 21v-3a6 6 0 0 1 12 0v3M17 5a3 3 0 0 1 0 6M20 21v-3a6 6 0 0 0-4-5.7"/>',close:'<path d="M5 5 19 19M19 5 5 19"/>',edit:'<path d="M12 20h9M16.5 3.5a2 2 0 0 1 3 3L8.5 17.5 4 19l1.5-4.5z"/>',copy:'<rect x="7" y="7" width="13" height="13" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h2"/>',trash:'<path d="M3 6h18M8 6V4h8v2M6 6l1 15h10l1-15M10 10v7M14 10v7"/>',sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.4 1.4M17.67 17.67l1.4 1.4M2 12h2M20 12h2M4.93 19.07l1.4-1.4M17.67 6.33l1.4-1.4"/>',moon:'<path d="M20.7 14.4A9 9 0 0 1 9.6 3.3 9 9 0 1 0 20.7 14.4z"/>',check:'<path d="m4 12 5 5 11-11"/>',volume:'<path d="M11 5 6 9H3v6h3l5 4V5zM15 9a5 5 0 0 1 0 6M18 6a9 9 0 0 1 0 12"/>',repeat:'<path d="M17 1l4 4-4 4M3 11V8a3 3 0 0 1 3-3h15M7 23l-4-4 4-4M21 13v3a3 3 0 0 1-3 3H3"/>',bookmark:'<path d="M6 3h12v18l-6-4-6 4z"/>',file:'<path d="M6 3h9l4 4v14H6zM15 3v5h4M9 13h7M9 17h7"/>',download:'<path d="M12 3v12m-4-4 4 4 4-4M4 17v4h16v-4"/>',upload:'<path d="M12 16V4m-4 4 4-4 4 4M4 17v4h16v-4"/>',mic:'<rect x="9" y="2" width="6" height="13" rx="3"/><path d="M5 10v2a7 7 0 0 0 14 0v-2M12 19v3M8 22h8"/>',settings:'<path d="M4 7h16M4 17h16"/><circle cx="9" cy="7" r="2"/><circle cx="16" cy="17" r="2"/>',circle:'<circle cx="12" cy="12" r="8"/>',chevron:'<path d="m6 9 6 6 6-6"/>'};
+const ico=(n,size=19)=>`<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${icons[n]||icons.circle}</svg>`;
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const sample={
+ software:[{id:'P043',name:'成片集',en:'Photo Delivery',type:'APP / PWA',cn:'拍完照片后，让客户直接在手机上挑选、购买并领取原图，不用一张张发送。',english:'After a photo shoot, clients can pick their favorite shots, pay, and get the full-resolution photos right on their phones.'},{id:'P059',name:'双屏提词器',en:'Dual-Screen Teleprompter',type:'APP / PWA',cn:'拍视频时，一台设备显示提词稿，另一台负责控制翻页和速度。',english:'It helps me read a script naturally while filming, with another screen to control the pace.'},{id:'P067',name:'上一次',en:'Last Time Tracker',type:'APP / PWA',cn:'记录上一次做某件事是什么时候，打开就能看到已经过去多少天。',english:'I use it to remember the last time I did something and see how many days have passed.'},{id:'P040',name:'才艺展示厅',en:'Talent Showcase',type:'APP / PWA',cn:'把唱歌、跳舞的学习内容和作品整理在一起，方便练习，也方便展示给朋友。',english:'It keeps my music and dance practice in one place, so I can learn and share what I do.'},{id:'P056',name:'筋形 LAB',en:'Fitness Lab',type:'APP / PWA',cn:'用来帮助分析健身训练的重点，让自己的训练更有针对性。',english:'It helps me figure out which areas I should focus on during my workouts.'},{id:'P048',name:'Source Router',en:'Source Router',type:'网页工具',cn:'快速整理网页和资料来源，减少重复搜索。',english:'A small tool that helps me organize sources without searching for the same thing over and over.'}],
+ places:[{id:'hongcheng',name:'红城湖公园',en:'Hongcheng Lake Park',address:'海口 · 琼山区',kind:'公园散步',palette:'park',emoji:'🌿',cn:'晚上在湖边散步很舒服，有微风，天气凉爽。适合慢跑、散步，也适合带朋友来随便聊聊天。',english:'Hongcheng Lake is a lovely spot for an evening walk. There’s usually a nice breeze, and it’s a great place to jog or just hang out with friends.'},{id:'longxing',name:'龙兴路',en:'Longxing Road',address:'海口 · 龙华区',kind:'城市街拍',palette:'street',emoji:'☕',cn:'有咖啡馆、小店和适合街拍的角落。下午来坐一坐、看看街景，和朋友聊天挺舒服。',english:'Longxing Road has little cafés and shops, plus some great corners for street photos. It’s a nice place to hang out in the afternoon.'},{id:'bay',name:'海口湾滨海步道',en:'Haikou Bay Promenade',address:'海口 · 龙华区',kind:'海边散步',palette:'sea',emoji:'🌊',cn:'沿海散步可以看到海面和城市夜景。晚风比较舒服，适合跑步和跟朋友散步聊天。',english:'You can walk along the water and enjoy the skyline. The evening breeze makes it great for a run or a relaxed chat.'},{id:'qilou',name:'骑楼老街',en:'Qilou Old Street',address:'海口 · 龙华区',kind:'文化体验',palette:'street',emoji:'🏘️',cn:'这里有南洋风格的骑楼建筑，边走边吃海南粉和传统小吃，挺适合带外国朋友逛。',english:'It’s a historic neighborhood with old arcade buildings, local food and plenty to explore on foot.'},{id:'wanlv',name:'万绿园',en:'Evergreen Park',address:'海口 · 龙华区',kind:'运动社交',palette:'park',emoji:'🌳',cn:'公园空间很大，草坪、跑道和海风都很舒服，适合散步、跑步和跟朋友野餐。',english:'It’s a spacious park with big lawns and walking paths. Great for jogging, picnics, and relaxing with friends.'}],
+ self:[{id:'s1',category:'家乡生活',title:'我的家乡',cn:'我在海口长大。小时候经常去万绿园跑步、放风筝，运动完就去吃一碗清补凉。',en:'I grew up in Haikou. As a kid, I often went to Evergreen Park to run and fly kites, and we’d grab some qingbuliang afterward.'},{id:'s2',category:'运动健身',title:'为什么开始健身',cn:'我喜欢运动和健身。我通常会把训练安排好，平时也尽量多走路。',en:'I’m really into working out. I like having a routine, and I try to stay active throughout the day.'},{id:'s3',category:'社交兴趣',title:'我喜欢的社交方式',cn:'比起特别吵的酒吧，我更喜欢散步、喝咖啡，或者找一个能好好聊天的地方。',en:'I’d rather go for a walk or grab coffee somewhere we can actually talk, instead of going to a really loud bar.'}],
+ people:[{id:'p1',name:'Emma',area:'英国',note:'喜欢散步与咖啡',last:'聊过海口的咖啡馆',fav:'quiet cafés'},{id:'p2',name:'Daniel',area:'澳大利亚',note:'喜欢徒步、跑步',last:'聊过周末去哪儿玩',fav:'weekend hikes'},{id:'p3',name:'Anna',area:'加拿大',note:'喜欢旅行、摄影',last:'聊过骑楼老街',fav:'street photography'}],
+ records:{hongcheng:[{id:'hc-01',date:'11月3日 · 07:20',title:'湖边散步',raw:'晚上在红城湖湖边散散步，还是非常愉悦的。有微风，很凉爽。',blocks:[{cn:'晚上在红城湖边散步很舒服。吹着微风，天气凉爽，整个人都放松了。',en:'It feels great to walk around Hongcheng Lake in the evening. There’s a nice breeze, and it’s cool and relaxing.',expressions:[['很舒服','feels great'],['微风','a nice breeze'],['很放松','relaxing']],reports:[{date:'11月3日',result:'已练习',note:'记住 a nice breeze 这个说法。'},{date:'11月3日',result:'需复习',note:'注意 in the evening 的位置。'}]},{cn:'我经常绕着湖边跑步，累了就慢慢走一会儿。',en:'I often go for a run around the lake, and when I get tired, I just slow down and walk for a bit.',expressions:[['绕着湖跑步','go for a run around the lake'],['慢慢走一会儿','walk for a bit']],reports:[]},{cn:'晚上湖边的灯亮起来，特别适合跟朋友散步聊天。',en:'Once the lights come on at night, it’s a really nice place to take a walk and catch up with friends.',expressions:[['灯亮起来','the lights come on'],['跟朋友聊聊天','catch up with friends']],reports:[]}]}],longxing:[{id:'lx-01',date:'11月8日 · 18:14',title:'街边音乐与跳舞',raw:'我跟着他们跳过好几次，反正很开心，没有什么烦恼，就是跟着跳就对了，又简单又不会累。',blocks:[{cn:'我跟着他们跳过好几次，反正很开心，没什么烦恼，跟着跳就对了，又简单又不会累。跳半个小时就感觉挺有趣，不烦躁。',en:"I've danced along with them a bunch of times — it's just plain fun, no worries, you just follow the moves, it's easy and doesn't wear you out. Half an hour in, it's actually pretty fun and not annoying at all.",expressions:[['很嗨的酒吧','super hyped'],['很嗨的酒吧','lit bar'],['喊麦','hyping up the crowd'],['喊麦','MCing'],['带劲','go hard'],['带劲','really bring it']],reports:[]}]}]}
+};
+/* V5 样例人物：演示数据，不代表任何现实人物的新增事实。
+   若载入已有 V4 localStorage，仅为缺失字段补上展示示例；真实应用接后端人物主档。 */
+const PERSON_DEMOS={
+ p1:{cnName:'艾玛',where:'未记录',job:'未记录',language:'英语',known:'未记录',
+   interests:[['散步','going for walks'],['咖啡','coffee'],['安静的咖啡馆','quiet cafés']],
+   talked:[{id:'e1',title:'海口的咖啡馆',time:'上次聊天',zh:'我们聊过海口有哪些适合坐下来聊天的咖啡馆。',en:'We talked about places to grab coffee and chat in Haikou.'},{id:'e2',title:'散步',time:'之前聊过',zh:'她提过喜欢散步。',en:'She mentioned that she enjoys going for walks.'}],
+   questions:[{id:'eq1',topic:'接着上次的咖啡话题',zh:'上次我们聊到海口的咖啡馆，你后来有发现喜欢的店吗？',en:'We talked about cafés in Haikou last time. Have you found any good ones lately?'},{id:'eq2',topic:'了解她的偏好',zh:'你平时喜欢安静的小咖啡馆，还是海边的咖啡馆？',en:'Do you usually prefer quiet little cafés or places by the sea?'},{id:'eq3',topic:'自然地提出邀约',zh:'哪天想不想一起喝杯咖啡，顺便散散步？',en:'Would you be up for grabbing a coffee and going for a walk sometime?'}]},
+ p2:{cnName:'丹尼尔',where:'未记录',job:'未记录',language:'英语',known:'未记录',
+   interests:[['徒步','hiking'],['跑步','running'],['周末户外活动','weekend adventures']],
+   talked:[{id:'d1',title:'周末去哪儿玩',time:'上次聊天',zh:'我们聊过周末去哪里玩，他喜欢徒步和户外运动。',en:'We talked about weekend plans and hiking.'}],
+   questions:[{id:'dq1',topic:'接着周末话题',zh:'你这个周末有去徒步吗？',en:'Did you manage to go hiking this weekend?'},{id:'dq2',topic:'运动',zh:'你通常喜欢早上跑步，还是晚上跑步？',en:'Do you usually prefer running in the morning or in the evening?'},{id:'dq3',topic:'海南地点',zh:'你在海口发现什么不错的户外路线了吗？',en:'Have you found any good outdoor routes around Haikou?'}]},
+ p3:{cnName:'安娜',where:'未记录',job:'未记录',language:'英语',known:'未记录',
+   interests:[['旅行','traveling'],['摄影','photography'],['街拍','street photography']],
+   talked:[{id:'a1',title:'骑楼老街',time:'上次聊天',zh:'我们聊过骑楼老街和街头摄影。',en:'We talked about Qilou Old Street and taking street photos.'}],
+   questions:[{id:'aq1',topic:'接着上次的地点',zh:'你后来又去过骑楼老街吗？',en:'Have you been back to Qilou Old Street since we last talked?'},{id:'aq2',topic:'摄影偏好',zh:'你更喜欢拍街景，还是给朋友拍人像？',en:'Do you prefer street photography or taking portraits of friends?'},{id:'aq3',topic:'下次出游',zh:'海南还有什么地方是你特别想去拍照的？',en:'Is there anywhere else in Hainan you’d love to photograph?'}]}
+};
+function personData(obj){
+ if(!obj.detail){const template=PERSON_DEMOS[obj.id];obj.detail=template?structuredClone(template):{cnName:'',where:'未记录',job:'未记录',language:'未记录',known:'未记录',interests:[],talked:[],questions:[]};}
+ const d=obj.detail;
+ if(!Array.isArray(d.interests))d.interests=[];
+ if(!Array.isArray(d.talked))d.talked=[];
+ if(!Array.isArray(d.questions))d.questions=[];
+ return d;
+}
+const STORE='socialmate_redesign_demo_v3';function loadData(){try{const x=JSON.parse(localStorage.getItem(STORE));if(x&&x.software&&x.places&&x.records)return x}catch{}return structuredClone(sample)}
+let data=loadData();const app=document.getElementById('shell'), view=document.getElementById('view');
+const state={tab:'chat',chatActive:false,chatAssistTab:'reply',chatSelected:-1,chatTopic:'海口湾',chatRounds:1,screen:'main',placeId:null,recordId:null,block:0,detailTab:'records',search:'',searchOn:false,filter:'全部',theme:(()=>{try{return localStorage.getItem(STORE+'_theme')||'light'}catch{return'light'}})(),more:false,modal:'',exprOpen:false,reportsOpen:false,inlineEdit:false,playing:false,ttsRate:'1',ttsLoop:1,phrase:null,importMode:'single'};
+app.dataset.theme=state.theme;
+const tabs=[['software','软件','software'],['hainan','海南','hainan'],['chat','聊天','chat'],['self','关于我','self'],['people','人物','people']];
+function save(){try{localStorage.setItem(STORE,JSON.stringify(data))}catch{toast('当前浏览器限制本地保存；建议用浏览器直接打开或导出原型数据')}}let toTimer;function toast(msg){const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');clearTimeout(toTimer);toTimer=setTimeout(()=>el.classList.remove('show'),2600)}
+function getPlace(){return data.places.find(x=>x.id===state.placeId)||data.places[0]}function getRec(){return(data.records[state.placeId]||[]).find(x=>x.id===state.recordId)||null}
+function currentBlock(){const rec=getRec();return rec?.blocks?.[state.block]||null}
+function iconButton(name,action,aria,extra=''){return `<button class="icon-btn ${extra}" type="button" data-action="${action}" aria-label="${esc(aria)}" title="${esc(aria)}">${ico(name)}</button>`}
+function renderTop(){
+ const nested=state.screen!=='main';
+  const personKey=state.screen==='detail'&&String(state.detailKey||'').startsWith('people:');
+  const current=personKey?(data.people.find(x=>x.id===state.detailKey.split(':')[1])?.name||'人物'):state.screen==='place'?getPlace().name:state.screen==='record'?'游玩记录':state.screen==='detail'?'详情':'';
+ const left=document.getElementById('topLeft');
+ const right=document.getElementById('topRight');
+  if(nested){left.innerHTML=`${iconButton('left','back','返回','back')}<span class="context-title">${esc(current)}</span>`;right.innerHTML=personKey?`${iconButton('plus','personAddMemory','补充聊天记录')}${iconButton('dots','more','更多操作')}`:iconButton('dots','more','更多操作');return}
+ // 全部一级 Tab 取消左上角品牌名、大标题。顶部用于真实操作，一级导航只在底部。
+ if(state.tab==='chat'){
+  left.innerHTML=`<button class="top-action chat-start" data-action="chatStart">${ico(state.chatActive?'stop':'play',15)} ${state.chatActive?'结束':'开始'}</button>`;
+  right.innerHTML=iconButton('dots','more','更多操作');
+ }else{
+  left.innerHTML=`<button class="top-action" data-action="add">${ico('plus',15)} 新建</button><button class="top-action ghost" data-action="trashModal">回收站</button>`;
+  right.innerHTML=(state.tab==='self'?'':iconButton('search','searchToggle','搜索'))+iconButton('dots','more','更多操作');
+ }
+}
+function renderNav(){document.getElementById('bottomnav').innerHTML=tabs.map(([key,label,ic])=>`<button type="button" class="tab ${state.tab===key?'on':''}" data-tab="${key}" aria-current="${state.tab===key?'page':'false'}">${ico(ic)}<span>${label}</span></button>`).join('')}
+function searchField(placeholder){return (state.searchOn||(state.tab==='self'&&state.screen==='main'))?`<div class="searchwrap"><label class="search">${ico('search')}<input id="searchInput" type="search" value="${esc(state.search)}" placeholder="${esc(placeholder)}" autocomplete="off" aria-label="搜索内容"></label></div>`:''}
+function inSearch(obj){return !state.search||Object.values(obj).some(v=>typeof v==='string'&&v.toLowerCase().includes(state.search.toLowerCase()))}
+function renderMain(){view.classList.toggle('chat-view',state.screen==='main'&&state.tab==='chat');let html='';if(state.screen==='place')html=renderPlace();else if(state.screen==='record')html=renderRecord();else if(state.screen==='detail')html=renderDetail();else if(state.tab==='software')html=renderSoftware();else if(state.tab==='hainan')html=renderHainan();else if(state.tab==='chat')html=renderChat();else if(state.tab==='self')html=renderSelf();else if(state.tab==='people')html=renderPeople();view.innerHTML=html}
+function render(){renderTop();renderNav();renderMain();document.getElementById('popover').classList.add('hide');state.more=false}
+function renderSoftware(){const filtered=data.software.filter(x=>inSearch(x)&& (state.filter==='全部'||(state.filter==='APP/PWA'?x.type==='APP / PWA':x.type!=='APP / PWA')));return `${searchField('搜索软件名、编号、英文')}<div class="pillrow"><button class="pill ${state.filter==='全部'?'active':''}" data-filter="全部">全部</button><button class="pill ${state.filter==='APP/PWA'?'active':''}" data-filter="APP/PWA">APP / PWA</button><button class="pill ${state.filter==='网页'?'active':''}" data-filter="网页">网页工具</button></div><div class="slimline"><strong>${state.filter==='全部'?'作品':state.filter}</strong><span>${filtered.length} 款</span></div><div class="list">${filtered.map(x=>`<article class="item" data-detail="software:${esc(x.id)}"><div class="itemhead"><span class="item-title">${esc(x.id)} · ${esc(x.name)}</span><span class="chip">${esc(x.type)}</span></div><div class="item-en-title">${esc(x.en)}</div><p class="cn-preview clamp2">${esc(x.cn)}</p><p class="en-preview clamp2">${esc(x.english)}</p></article>`).join('')||'<div class="empty">未找到匹配的作品</div>'}</div>`}
+function renderHainan(){const filtered=data.places.filter(inSearch);return `${searchField('搜索地点、区域、体验')}<div class="pillrow">${['全部','公园散步','城市街拍','海边散步','运动社交'].map(f=>`<button class="pill ${state.filter===f?'active':''}" data-filter="${f}">${f}</button>`).join('')}</div><div class="slimline"><strong>附近值得去的地方</strong><span>${filtered.filter(x=>state.filter==='全部'||x.kind===state.filter).length} 处</span></div><div class="list">${filtered.filter(x=>state.filter==='全部'||x.kind===state.filter).map(x=>`<article class="item locationitem" data-place="${esc(x.id)}"><div class="thumb ${esc(x.palette)}">${x.emoji}</div><div class="place-info"><div class="item-title">${esc(x.name)}</div><div class="item-en-title">${esc(x.en)}</div><div class="dim" style="margin-top:4px">${esc(x.address)} · ${esc(x.kind)}</div><div class="linkhint">游玩记录 ${(data.records[x.id]||[]).length} 则 ${ico('right',13)}</div></div></article>`).join('')||'<div class="empty">未找到匹配地点</div>'}</div>`}
+const SELF_CATS=['全部','家乡生活','运动健身','社交兴趣','其他'];
+function selfCategory(x){if(SELF_CATS.includes(x.category)&&x.category!=='全部')return x.category;
+  // V2 原型已保存的数据原本没有分类：只补默认显示归类，不篡改旧内容。
+  const mapping={s1:'家乡生活',s2:'运动健身',s3:'社交兴趣'};
+  return mapping[x.id]||'其他';
+}
+function renderSelf(){
+  const filtered=data.self.filter(x=>inSearch(x)&&(state.filter==='全部'||selfCategory(x)===state.filter));
+  return `${searchField('搜索标题、中文或英文内容')}
+    <div class="pillrow self-pills" aria-label="关于我分类筛选">${SELF_CATS.map(f=>`<button type="button" class="pill ${state.filter===f?'active':''}" data-filter="${f}" aria-pressed="${state.filter===f}">${f}</button>`).join('')}<span class="self-count">${filtered.length} 条</span></div>
+    <div class="list self-list">${filtered.map(x=>`<article class="item" data-detail="self:${esc(x.id)}"><div class="itemhead"><b class="item-title">${esc(x.title)}</b><span class="dim">${ico('right',16)}</span></div><p class="cn-preview">${esc(x.cn)}</p><p class="en-preview" style="color:var(--greenText)">${esc(x.en)}</p></article>`).join('')||'<div class="empty">没有找到符合条件的内容</div>'}</div>`;
+}
+function renderPeople(){const filtered=data.people.filter(inSearch);return `${searchField('搜索名字、国家、喜好')}<div class="slimline"><strong>认识的朋友</strong><span>${filtered.length} 位</span></div><div class="list">${filtered.map(x=>`<article class="item" data-detail="people:${esc(x.id)}"><div class="row" style="gap:11px"><div style="width:42px;height:42px;background:var(--green2);border-radius:12px;display:grid;place-items:center;color:var(--greenText);font-weight:800">${esc(x.name.slice(0,1))}</div><div style="flex:1"><div class="item-title">${esc(x.name)} <span class="dim" style="font-weight:400">· ${esc(x.area)}</span></div><p class="cn-preview" style="margin-top:2px">${esc(x.note)}</p><div class="dim">${esc(x.last)}</div></div>${ico('right',16)}</div></article>`).join('')||'<div class="empty">还没有匹配的人物</div>'}</div>`}
+const CHAT_HINTS={
+ reply:[
+  {title:'回应他的周末安排',en:"That sounds nice! I like spending time outdoors too.",zh:'听起来不错！我也喜欢去户外走走。'},
+  {title:'说说自己的运动习惯',en:"I usually go for a walk along Haikou Bay, and I hit the gym sometimes.",zh:'我经常去海口湾散步，偶尔也会去健身。'},
+  {title:'自然接着聊',en:"That sounds fun. I might give it a try this weekend.",zh:'听起来挺有意思，周末我也许会试试。'}
+ ],
+ followup:[
+  {title:'问他周末去哪里',en:"Where do you usually hang out on weekends?",zh:'你周末一般喜欢去哪里玩？'},
+  {title:'聊运动',en:"Are you into running or working out?",zh:'你喜欢跑步或者健身吗？'},
+  {title:'邀请一起走走',en:"Would you be up for a walk along the bay sometime?",zh:'哪天要不要一起去海口湾走走？'}
+ ],
+ share:[
+  {title:'分享海口湾',en:"There’s a lovely waterfront path along Haikou Bay. It’s perfect for an evening stroll.",zh:'海口湾有条挺舒服的滨海步道，傍晚散步很合适。'},
+  {title:'分享万绿园',en:"Evergreen Park is a great place to walk, run, or just chill.",zh:'万绿园很适合散步、跑步，或者坐着放松。'}
+ ]
+};
+function renderChat(){
+ const hints=CHAT_HINTS[state.chatAssistTab]||CHAT_HINTS.reply;
+ return `<div class="chat-workspace">
+ <section class="chat-transcript" aria-label="实时对话区域">
+  <div class="chat-zone-head"><strong>对话</strong><span class="dim"><span class="statusdot ${state.chatActive?'on':''}"></span>${state.chatActive?'正在进行':'待开始'}</span></div>
+  <div class="chat-lines">
+   <div class="chat-turn"><div class="chat-speaker">朋友 <span>EN</span></div><p class="chat-english" data-english-subtitle>What do you usually do on weekends?</p><p class="chat-trans">你周末一般做些什么？</p></div>
+   <div class="chat-turn mine"><div class="chat-speaker">我 <span>中文</span></div><p>我一般沿着海口湾散步，有时候也去健身房。</p></div>
+   <div class="chat-turn"><div class="chat-speaker">朋友 <span>EN</span></div><p class="chat-english" data-english-subtitle>I've started doing capoeira. It's a Brazilian martial art with dance and music!</p><p class="chat-trans">我最近开始练卡波耶拉，一种融合舞蹈和音乐的巴西武术。</p></div>
+  </div>
+  <aside id="termPanel" class="term-panel hide" aria-label="按需查询英文术语"></aside>
+  <div class="chat-inputrow"><button class="chat-mic" data-action="micDemo" title="麦克风演示" aria-label="麦克风演示">${ico('mic',18)}</button><input id="chatInput" placeholder="输入一句话…" aria-label="输入一句话"><button class="chat-send" data-action="chatSend">发送</button></div>
+ </section>
+ <section class="chat-assist" aria-label="AI 接话和追问提示">
+  <div class="chat-zone-head"><strong>接话与追问</strong></div>
+  <div class="chat-assist-tabs"><button class="chat-assist-tab ${state.chatAssistTab==='reply'?'active':''}" data-action="chatReplies">接话</button><button class="chat-assist-tab ${state.chatAssistTab==='followup'?'active':''}" data-action="chatFollowups">追问</button><button class="chat-assist-tab ${state.chatAssistTab==='share'?'active':''}" data-action="chatShares">分享 / 换题</button></div>
+  <div class="chat-hints">${hints.map((h,i)=>`<article class="chat-hint ${state.chatSelected===i?'selected':''}"><button class="chat-hint-main" data-chat-hint="${i}"><span class="chat-hint-title">${esc(h.title)}</span><span class="chat-hint-en">${esc(h.en)}</span>${state.chatSelected===i?`<span class="chat-hint-zh">${esc(h.zh)}</span>`:''}</button>${state.chatSelected===i?`<div class="chat-hint-actions"><button data-action="chatCopyHint">${ico('copy',13)} 复制英文</button><button data-action="chatSayHint">${ico('volume',13)} 朗读</button></div>`:''}</article>`).join('')}</div>
+ </section>
+ <section class="chat-references" aria-label="关联资料小标签"><span class="chat-references-label">关联</span><div class="chat-chiprow"><button class="chat-refchip" data-action="chatRefBay">海口湾滨海步道</button><button class="chat-refchip" data-action="chatRefPark">万绿园</button><button class="chat-refchip" data-action="chatRefSelf">我的健身习惯</button></div></section>
+ </div>`;
+}
+function renderPlace(){const p=getPlace();return `<div class="cover ${esc(p.palette)}"><b>${esc(p.name)}</b></div><div class="dim" style="margin-top:8px">${ico('hainan',15)} ${esc(p.address)} · ${esc(p.kind)}</div><div class="segrow"><button class="seg ${state.detailTab==='records'?'on':''}" data-detailtab="records">游玩记录</button><button class="seg ${state.detailTab==='about'?'on':''}" data-detailtab="about">地点介绍</button></div>${state.detailTab==='about'?`<p class="description">${esc(p.cn)}</p><p class="description english">${esc(p.english)}</p><button class="secondary" data-action="newRecord">${ico('plus',15)} 写一则游玩记录</button>`:`<div class="row" style="justify-content:space-between;margin:10px 0"><span class="section-meta">${(data.records[p.id]||[]).length} 则记录</span><div class="row" style="gap:5px"><button class="textbutton ghost" data-action="importWhole">${ico('upload',13)} 整篇导入</button><button class="textbutton" data-action="newRecord">${ico('plus',14)} 新记录</button></div></div><div class="list">${(data.records[p.id]||[]).map(rec=>`<article class="item" data-record="${esc(rec.id)}"><div class="itemhead"><b class="item-title">${esc(rec.title||'游玩随记')}</b><span class="dim">${esc(rec.date)}</span></div><div class="dim" style="margin-top:5px">${rec.blocks.length} 段 · 中文＋单一英文</div><p class="cn-preview clamp2">${esc(rec.blocks[0]?.cn||'')}</p><p class="en-preview clamp2">${esc(rec.blocks[0]?.en||'')}</p></article>`).join('')||'<div class="empty">还没有游玩记录，点「新记录」添加</div>'}</div>`}`}
+function renderRecord(){const rec=getRec();if(!rec)return '<div class="empty">记录未找到</div>';const blk=currentBlock();const n=rec.blocks.length;return `<div class="record-head"><div><strong>${esc(rec.title)}</strong><div class="record-sub">${esc(rec.date)} · ${n} 段</div></div><button class="mini-btn" data-action="recordMenu" aria-label="记录管理">${ico('dots')}</button></div><div class="minibar"><button class="play-big" data-action="togglePlay">${ico(state.playing?'pause':'play',16)} ${state.playing?'暂停':'听本段'}</button><button class="mini-btn" data-action="stopAudio" title="停止">${ico('stop',15)}</button><select id="rateSel" class="smallselect" title="语速"><option value="0.75" ${state.ttsRate==='0.75'?'selected':''}>0.75×</option><option value="1" ${state.ttsRate==='1'?'selected':''}>1×</option><option value="1.25" ${state.ttsRate==='1.25'?'selected':''}>1.25×</option></select><button class="mini-btn" data-action="loopToggle" title="循环次数">${ico('repeat',15)} ${state.ttsLoop}</button><span class="spacer"></span><button class="mini-btn" data-action="prevBlock" title="上一段" ${state.block===0?'disabled':''}>${ico('left',17)}</button><button class="mini-btn" data-action="nextBlock" title="下一段" ${state.block===n-1?'disabled':''}>${ico('right',17)}</button></div><div class="blocknav"><button class="blockstep" data-action="blockPicker" title="直接跳到任意段">${state.block+1} / ${n} ${ico('chevron',12)}</button><div class="progress">${rec.blocks.map((x,i)=>`<span class="${i<=state.block?'done':''}"></span>`).join('')}</div><span class="dim">${state.playing?'朗读中':'阅读'}</span></div><article class="blockcard">${blk.expressions?.length?`<div class="exprtitle" style="margin-top:0"><strong>常见表达 · ${blk.expressions.length}</strong>${blk.expressions.length>2?`<button class="plainlink" data-action="exprToggle">${state.exprOpen?'收起':'查看全部'} ${ico(state.exprOpen?'chevron':'right',13)}</button>`:''}</div><div class="pairs compact-pairs">${(state.exprOpen?blk.expressions:blk.expressions.slice(0,2)).map(([cn,en])=>`<div class="pair"><span>${esc(cn)}</span><span>${esc(en)}</span></div>`).join('')}</div><div class="langsep"></div>`:''}<div class="langline">整理中文</div><p class="langcn">${esc(blk.cn)}</p><div class="langsep"></div><div class="langline">ENGLISH · 唯一译文</div><p class="langen">${esc(blk.en||'还未填入英文，点「粘贴译文」即可添加。')}</p><div class="inline-actions"><button class="textbutton" data-action="pasteOpen">${ico('upload',14)} 粘贴译文</button><button class="textbutton ghost" data-action="editBlock">${ico('edit',14)} 编辑</button><button class="textbutton ghost" data-action="copyBlock">${ico('copy',14)} 复制</button></div></article><div class="secondaryrow" data-action="reportToggle" style="cursor:pointer"><div>练习复盘 <span class="dim">${blk.reports?.length||0} 条</span></div><span class="dim">${state.reportsOpen?'收起':'查看'} ${ico('chevron',14)}</span></div>${state.reportsOpen?`<div>${blk.reports?.length?blk.reports.map(r=>`<div class="reportone"><div class="dim">${esc(r.date)} · ${esc(r.result)}</div><div style="margin-top:4px">${esc(r.note)}</div></div>`).join(''):'<p class="minihelp">还没有练习复盘。已有复盘可以在这里查看。</p>'}<button class="plainlink" data-action="addReport">${ico('plus',13)} 记一次复盘</button></div>`:''}<div class="secondaryrow" data-action="rawToggle" style="cursor:pointer"><div>完整原文及历史版本</div><span class="dim">按需查看 ${ico('right',14)}</span></div><div class="moremeta">本页只展示当前段落；技术编号、原文时间戳及历史版本不再占据正文空间。</div>`}
+function renderPersonDetail(obj){
+ const d=personData(obj);
+ const facts=[
+   {label:'来自',cn:obj.area||'未记录',en:obj.area==='英国'?'the UK':obj.area==='澳大利亚'?'Australia':obj.area==='加拿大'?'Canada':''},
+   {label:'目前所在',cn:d.where||'未记录',en:''},
+   {label:'工作 / 学习',cn:d.job||'未记录',en:''},
+   {label:'常用语言',cn:d.language||'未记录',en:''},
+   {label:'认识时间 / 场合',cn:d.known||'未记录',en:''}
+ ];
+ const interests=d.interests.length?d.interests:[['喜好',obj.note||'待补充']];
+ const questions=d.questions;
+ const talked=d.talked;
+ return `<div class="person-page">
+   <div class="person-summary"><div class="person-avatar" aria-hidden="true">${esc(obj.name.slice(0,1).toUpperCase())}</div><div style="min-width:0;flex:1"><div class="person-primary">${esc(d.cnName?`${obj.name} · ${d.cnName}`:obj.name)} <span class="chip">${esc(obj.area||'未记录')}</span></div><div class="person-recent">${esc(obj.note||'兴趣待补充')}</div></div><button class="textbutton ghost" data-action="personEdit" aria-label="编辑人物档案">${ico('edit',13)} 编辑</button></div>
+   <section class="person-sheet"><div class="person-head"><h2>基本情况</h2><div class="person-editlinks"><button data-action="personEdit">补充</button></div></div>
+     <div class="person-facts">${facts.map(f=>`<div class="person-fact"><span class="person-label">${esc(f.label)}</span><strong>${esc(f.cn)}</strong>${f.en?`<span class="person-value-en">${esc(f.en)}</span>`:''}</div>`).join('')}</div>
+     <div class="person-tags">${interests.map(pair=>`<span class="person-tag">${esc(pair[0])}${pair[1]?` <em>${esc(pair[1])}</em>`:''}</span>`).join('')}</div>
+   </section>
+   <section class="person-sheet"><div class="person-head"><h2>下次可以这样聊</h2><div class="person-editlinks"><button data-action="personAddQuestion">＋ 加一句</button><span class="counter">${questions.length} 句</span></div></div>
+     <div class="person-question-list">${questions.map((q,i)=>`<article class="person-question"><div class="person-question-label">${esc(q.topic||'继续聊')} · ${i+1}</div><p class="person-question-cn">${esc(q.zh)}</p><p class="person-question-en">${esc(q.en)}</p><div class="person-question-actions"><button class="textbutton" data-person-copy="${esc(q.id)}">${ico('copy',12)} 复制英文</button><button class="textbutton ghost" data-person-say="${esc(q.id)}">${ico('volume',13)} 听英文</button></div></article>`).join('')||'<p class="person-muted">还没有接续话题，可以点「加一句」补充你下次想问的问题。</p>'}</div>
+   </section>
+   <section class="person-sheet"><div class="person-head"><h2>我们聊过</h2><div class="person-editlinks"><button data-action="personAddMemory">＋ 补充记录</button></div></div>
+    <div class="person-timeline">${talked.map(t=>`<article class="person-event"><div class="person-event-label">${esc(t.title)} <small>${esc(t.time||'')}</small></div><p>${esc(t.zh||'')}</p>${t.en?`<p class="person-event-en">${esc(t.en)}</p>`:''}</article>`).join('')||'<p class="person-muted">还没有聊天记录，聊完可以随手记下一点，方便下次接着聊。</p>'}</div>
+   </section>
+   <div class="person-quick"><button class="textbutton" data-action="personAddMemory">${ico('plus',13)} 记下今天聊到的</button><button class="textbutton ghost" data-action="personCopySummary">${ico('copy',13)} 复制人物资料</button></div>
+ </div>`;
+}
+function renderDetail(){const [typ,id]=state.detailKey.split(':');let obj=null;if(typ==='software')obj=data.software.find(x=>x.id===id);if(typ==='self')obj=data.self.find(x=>x.id===id);if(typ==='people')obj=data.people.find(x=>x.id===id);if(!obj)return '<div class="empty">内容未找到</div>';if(typ==='people')return renderPersonDetail(obj);return `<div style="padding-top:14px"><div class="itemhead"><strong class="item-title">${esc(obj.title||obj.name)}</strong><span class="chip">${esc(obj.id||'')}</span></div><div class="langsep"></div><div class="langline">中文</div><p class="langcn">${esc(obj.cn)}</p><div class="langsep"></div><div class="langline">ENGLISH</div><p class="langen">${esc(obj.en&&typ==='self'?obj.en:obj.english)}</p><div class="inline-actions"><button class="textbutton" data-action="editDetail">${ico('edit',14)} 编辑</button><button class="textbutton ghost" data-action="copyDetail">${ico('copy',14)} 复制</button></div></div>`}
+
+function setTab(tab){stopVoice();state.tab=tab;state.screen='main';state.search='';state.searchOn=false;state.filter='全部';state.placeId=null;state.recordId=null;state.reportsOpen=false;render();view.scrollTop=0}
+function openPlace(id){state.placeId=id;state.screen='place';state.detailTab='records';state.searchOn=false;state.search='';render();view.scrollTop=0}
+function openRec(id){state.recordId=id;state.screen='record';state.block=0;state.reportsOpen=false;state.exprOpen=false;render();view.scrollTop=0}
+function openDetail(key){state.detailKey=key;state.screen='detail';render();view.scrollTop=0}
+function back(){stopVoice();if(state.screen==='record'){state.screen='place';render()}else if(state.screen==='place'||state.screen==='detail'){state.screen='main';render()}else setTab(state.tab);view.scrollTop=0}
+function moreMenu(){state.more=!state.more;const pop=document.getElementById('popover');if(!state.more){pop.classList.add('hide');return}const options=[];if(state.screen==='main'&&state.tab==='chat'){options.push(['play','开始新一轮','chatStart'],['people','选择聊天人物','chatPerson'],['file','本轮记录','chatHistory'])}else if(state.screen==='record'){options.push(['file','查看完整原文','rawToggle'],['upload','整篇追加译文','pasteBatch'],['edit','管理段落','manageRecord'],['file','练习复盘','reportToggle'])}else if(state.screen==='detail'&&String(state.detailKey||'').startsWith('people:')){options.push(['edit','编辑人物档案','personEdit'],['plus','补充聊天记录','personAddMemory'],['plus','添加接续话题','personAddQuestion'],['copy','复制人物资料','personCopySummary'])}else{options.push(['plus','新建','add'],['trash','回收站','trashModal'],['download','导出原型数据','exportDemo'])}options.push(['moon',state.theme==='light'?'切换深色模式':'切换浅色模式','themeToggle']);options.push(['settings','原型使用说明','helpModal']);pop.innerHTML=options.map(([ic,t,act])=>`<button class="popitem" data-action="${act}">${ico(ic,16)}${esc(t)}</button>`).join('');pop.classList.remove('hide')}
+function closePop(){state.more=false;document.getElementById('popover').classList.add('hide')}
+function toggleTheme(){state.theme=state.theme==='light'?'dark':'light';app.dataset.theme=state.theme;try{localStorage.setItem(STORE+'_theme',state.theme)}catch{}closePop();render()}
+function showModal(name,body){closePop();state.modal=name;document.getElementById('modal').innerHTML=`<div class="modal-h"><b>${name}</b><button class="icon-btn" data-action="closeModal" aria-label="关闭">${ico('close')}</button></div>`+body;document.getElementById('scrim').classList.remove('hide');document.getElementById('modal').classList.remove('hide')}
+function closeModal(){state.modal='';document.getElementById('scrim').classList.add('hide');document.getElementById('modal').classList.add('hide');document.getElementById('modal').innerHTML=''}
+const footer=(ok='保存',act='saveModal')=>`<div class="modal-foot"><button class="secondary" data-action="closeModal">取消</button><button class="primary" data-action="${act}">${esc(ok)}</button></div>`;
+function pasteModal(mode='single',preserved=''){
+  state.importMode=mode;
+  const isNew=mode==='new',isBatch=mode==='batch'||isNew;
+  showModal(isNew?'整篇粘贴 · 新建记录':'粘贴译文',`
+    ${!isNew?`<div class="segrow importmode"><button class="seg ${!isBatch?'on':''}" data-action="pasteSingle">逐段粘贴</button><button class="seg ${isBatch?'on':''}" data-action="pasteBatch">整篇批量</button></div>`:''}
+    ${isNew?`<label class="fieldlabel">记录标题</label><input id="pasteTitle" class="field" value="游玩随记" placeholder="例如：红城湖 · 游玩随记">`:''}
+    <p class="minihelp">顺序固定：常见表达（可多条） → 整理后的中文 → 唯一英文。直接粘贴 AI 原文，<strong>不用手动拆成三个输入框</strong>。</p>
+    <label class="fieldlabel">${isBatch?'粘贴整篇（可重复多段）':'粘贴这一段'}</label>
+    <textarea id="pasteRaw" class="field tall" style="min-height:210px" placeholder="顺其自然 go with the flow\n看心情吧 depends on my mood\n\n顺其自然就行，看心情吧。\n\nJust go with the flow — see how I feel.">${esc(preserved)}</textarea>
+    ${isBatch?'<p class="minihelp">按这种顺序重复多段即可自动拆分；如果段落难以辨认，可在两段之间单独加一行 <code>---</code>，也支持“第 1 段”等标题。</p>':'<p class="minihelp">仅填入当前段，不会新增或删除其它段落。</p>'}
+    <div class="row" style="justify-content:space-between;margin-top:7px"><button class="plainlink" data-action="fillExample">${isBatch?'填入两段示例':'填入单段示例'}</button><button class="textbutton ghost" data-action="parsePaste">${ico('check',13)} 识别并预览</button></div>
+    <div id="parsePreview" class="hide"></div>
+    ${footer(isNew?'创建整篇记录':isBatch?'追加全部识别段落':'填入当前段','savePaste')}`);
+}
+const examplePaste=`顺其自然 go with the flow
+顺其自然 play it by ear
+看心情吧 see how I feel
+看心情吧 depends on my mood
+
+顺其自然就行，看心情吧，如果过一会儿状态好了再说。
+
+Just go with the flow — see how I feel. If I'm in a better mood later, then we'll see.`;
+const examplePaste2=`耳夹式耳机 clip-on earbuds
+耳夹式耳机 open-ear clip earbuds
+入耳式 in-ear
+入耳式 in-ear
+完全没有感觉 feels like nothing
+完全没有感觉 you barely feel them
+
+这种是耳夹式耳机，戴起来完全没有感觉。不像入耳式的，所以健身的时候戴感觉非常好，而且听音乐效果也很棒。
+
+These are clip-on earbuds — you barely feel them when you wear them, unlike in-ear ones, so they're great for working out, and the sound quality is awesome too.`;
+/* AI 文本分段协议：每段 0~N 行中英词组对 → 中文段落 → 英文段落；下段出现词组/中文时自动关闭上一段。
+   空行仅为排版，不是段落边界。整篇亦可用独占一行的 --- 显式分隔。 */
+function parsePair(line){
+  const m=String(line).match(/^([\u3400-\u9fff][\u3400-\u9fff\s，、！？!?·（）()“”‘’—-]{0,27}?)\s+([A-Za-z][^\u3400-\u9fff]{0,180})$/);
+  if(!m)return null;
+  const zh=m[1].trim(),en=m[2].trim();
+  if(!zh||!en||/[。；：]/.test(zh)||/[.!?]\s+[A-Z]/.test(en))return null;
+  return [zh,en];
+}
+function parseTranslatedArticle(raw){
+  const lines=String(raw||'').replace(/\r/g,'').split('\n').map(x=>x.trim());
+  let cur={pairs:[],cn:[],en:[]},phase='pairs',blocks=[],warnings=[];
+  function finish(){
+    if(!cur.pairs.length&&!cur.cn.length&&!cur.en.length)return;
+    const zh=cur.cn.join(''),en=cur.en.join(' ').replace(/\s+/g,' ').trim();
+    if(!zh||!en){warnings.push('有一段缺少完整中文或英文，未导入。请检查段落边界。');}
+    else blocks.push({cn:zh,en,pairs:cur.pairs,numberedTime:/\b\d{1,2}[:：]\d{2}\b/.test(en)});
+    cur={pairs:[],cn:[],en:[]};phase='pairs';
+  }
+  for(let rawLine of lines){
+    if(!rawLine)continue;
+    if(/^(?:-{3,}|—{3,}|第\s*[0-9一二三四五六七八九十]+\s*段\s*[:：]?|段落\s*\d+\s*[:：]?)$/.test(rawLine)){finish();continue;}
+    let line=rawLine;
+    if(/^(?:常见表达|常用表达|关键词组)(?:\s*[:：])?$/.test(line))continue;
+    line=line.replace(/^(?:整理后的中文|整理中文|翻译后的英文|英文翻译|唯一英文)(?:\s*[:：]\s*|\s*$)/,'').trim();
+    if(!line)continue;
+    const pair=parsePair(line);
+    if(pair){
+      if(phase==='en')finish();
+      if(phase==='cn')warnings.push('某段中文之后出现词组，建议检查格式或加 --- 分段。');
+      cur.pairs.push(pair);phase='pairs';continue;
+    }
+    if(/[\u3400-\u9fff]/.test(line)){
+      if(phase==='en')finish();
+      cur.cn.push(line);phase='cn';continue;
+    }
+    if(/[A-Za-z]/.test(line)){
+      if(phase==='pairs'){warnings.push('中文正文之前发现单独英文：'+line.slice(0,26));continue;}
+      cur.en.push(line);phase='en';continue;
+    }
+    warnings.push('无法识别的内容：'+line.slice(0,26));
+  }
+  finish();
+  return blocks.length?{ok:true,blocks,warnings}:{ok:false,blocks:[],warnings,error:'没有识别到完整段落。每段需要「表达中英对照（可选） → 中文正文 → 英文正文」。'};
+}
+function parsedArticlePreview(){
+  const txt=document.getElementById('pasteRaw')?.value||'';
+  const r=parseTranslatedArticle(txt),el=document.getElementById('parsePreview');
+  if(!el)return r;
+  el.classList.remove('hide');
+  if(!r.ok){el.innerHTML=`<div class="notice">${esc(r.error)}</div>`;return r;}
+  const isSingle=state.importMode==='single';
+  const multiWarning=isSingle&&r.blocks.length>1;
+  el.innerHTML=`<div class="parsepreview"><div class="row" style="justify-content:space-between;align-items:center"><strong>识别到 ${r.blocks.length} 段</strong><span class="chip">${r.blocks.reduce((a,b)=>a+b.pairs.length,0)} 条表达</span></div>
+  ${multiWarning?'<p class="notice" style="margin:8px 0">检测到多段内容。请切换「整篇批量」，防止覆盖当前段。</p>':''}
+  ${r.blocks.map((b,i)=>`<div class="import-summary"><div class="section-meta" style="font-weight:800">第 ${i+1} 段 · ${b.pairs.length} 条表达</div>${b.pairs.length?`<div class="pairs compact-pairs">${b.pairs.slice(0,3).map(([c,e])=>`<div class="pair"><span>${esc(c)}</span><span>${esc(e)}</span></div>`).join('')}${b.pairs.length>3?`<div class="dim">其余 ${b.pairs.length-3} 条已识别，保存后可展开查看</div>`:''}</div>`:''}<div class="langline" style="margin-top:8px">整理中文</div><p class="cn-preview">${esc(b.cn)}</p><div class="langline" style="margin-top:8px">唯一英文</div><p class="en-preview">${esc(b.en)}</p>${b.numberedTime?'<p class="notice">英文仍有数字时间，请先改为英文单词。</p>':''}</div>`).join('')}
+  ${r.warnings.length?`<p class="notice">${r.warnings.map(esc).join('；')}</p>`:''}</div>`;
+  return r;
+}
+function parsePreview(){return parsedArticlePreview();}
+function savePaste(){
+  const r=parsedArticlePreview();if(!r.ok||r.warnings.length){toast('请先检查识别提示，修正后再保存');return;}
+  if(state.importMode==='single'){
+    if(r.blocks.length!==1){toast('检测到多段，请切换整篇批量');return;}
+    const blk=currentBlock();if(!blk){toast('请先打开某一段');return;}
+    blk.cn=r.blocks[0].cn;blk.en=r.blocks[0].en;blk.expressions=r.blocks[0].pairs;
+    save();closeModal();state.exprOpen=false;renderMain();toast('已填入这一段：表达、中文与唯一英文');return;
+  }
+  const blocks=r.blocks.map(b=>({cn:b.cn,en:b.en,expressions:b.pairs,reports:[]}));
+  if(state.importMode==='new'){
+    const title=document.getElementById('pasteTitle')?.value.trim()||'游玩随记';
+    const pid=state.placeId||data.places[0].id;
+    const rec={id:'rec-'+Date.now(),title,date:new Date().toLocaleDateString('zh-CN',{month:'long',day:'numeric'}),raw:document.getElementById('pasteRaw')?.value||'',blocks};
+    data.records[pid]??=[];data.records[pid].unshift(rec);state.placeId=pid;
+    save();closeModal();openRec(rec.id);toast('整篇导入成功：'+blocks.length+' 段');return;
+  }
+  const rec=getRec();if(!rec){toast('请先打开游玩记录');return;}
+  const initial=rec.blocks.length;
+  // 仅占位空白段可被首段自动替换；绝不覆盖已有实际中文/英文数据。
+  const blank=initial===1&&(!rec.blocks[0].en||!rec.blocks[0].en.trim())&&(!rec.blocks[0].cn||/^等待填入|^未填入/.test(rec.blocks[0].cn));
+  if(blank)rec.blocks=blocks;else rec.blocks.push(...blocks);
+  state.block=blank?0:initial;
+  save();closeModal();state.exprOpen=false;renderMain();toast('已追加 '+blocks.length+' 段，原有记录保留');
+}
+function switchPasteMode(mode){
+  const preserved=document.getElementById('pasteRaw')?.value||'';
+  pasteModal(mode,preserved);
+}
+function editBlock(){const b=currentBlock();if(!b)return;showModal('编辑本段',`<label class="fieldlabel">整理后的中文</label><textarea id="editCn" class="field">${esc(b.cn)}</textarea><label class="fieldlabel">唯一英文 · 日常口语</label><textarea id="editEn" class="field" style="min-height:110px">${esc(b.en)}</textarea><label class="fieldlabel">常见表达（每行「中文表达 | 英文表达」）</label><textarea id="editPairs" class="field">${esc((b.expressions||[]).map(x=>x.join(' | ')).join('\n'))}</textarea><p class="minihelp">旧数据的第二种英文说法不会在这里自动删除；阅读界面只呈现一种主表达。</p>`+footer('保存本段','saveBlock'))}
+function saveBlock(){const b=currentBlock();b.cn=document.getElementById('editCn').value.trim();b.en=document.getElementById('editEn').value.trim();b.expressions=document.getElementById('editPairs').value.split('\n').map(x=>x.split('|').map(y=>y.trim())).filter(x=>x.length===2&&x.every(Boolean));save();closeModal();renderMain();toast('已保存本段')}
+function rawModal(){const r=getRec();showModal('原文与历史',`<p class="minihelp">默认阅读时隐藏，只有需要核对原始录音整理、版本或段落时再来这里。</p><label class="fieldlabel">原始内容</label><div class="parsepreview" style="line-height:1.7;font-size:14px">${esc(r?.raw||'未保存原始内容')}</div><div class="secondaryrow"><span>旧版本与英文 B</span><span class="dim">只在真实旧数据中保留</span></div><p class="minihelp">新记录统一只有一个主要英文表达，不再要求 A/B 两份。</p>`)}
+function manageRecord(){showModal('段落管理',`<div class="list"><button class="secondary full" data-action="pasteOpen">${ico('upload',15)} 逐段粘贴</button><button class="secondary full" data-action="pasteBatch">${ico('upload',15)} 整篇批量追加</button><button class="secondary full" data-action="editBlock">${ico('edit',15)} 修改当前段</button><button class="secondary full" data-action="addBlock">${ico('plus',15)} 新增一段</button><button class="secondary full" data-action="rawToggle">${ico('file',15)} 查看原始内容与版本</button></div><p class="minihelp">拆分、合并和旧版管理属于低频操作；正式版放在这里，不再一段一段占据正文。</p>`)}
+function blockPicker(){const rec=getRec();if(!rec)return;showModal('快速跳到某一段',`<div class="list">${rec.blocks.map((b,i)=>`<button class="secondary full" style="text-align:left;display:flex;gap:9px;align-items:center;" data-jump="${i}"><span class="chip">${i+1}</span><span style="font-size:13px;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(b.cn||'未填入正文')}</span>${ico('right',14)}</button>`).join('')}</div>`)}
+function newRecordModal(){showModal('新游玩记录',`<label class="fieldlabel">记录标题</label><input id="newTitle" class="field" placeholder="例如：湖边的一个晚上"><label class="fieldlabel">原始中文（可以随后粘贴整理结果）</label><textarea id="newRaw" class="field tall" placeholder="把你说的话粘贴在这里，先保存也可以"></textarea><p class="minihelp">也可以返回地点页直接点「整篇导入」，一次粘贴多段，无需先新建空白段。</p>`+footer('创建记录','createRecord'))}
+function createRecord(){const title=document.getElementById('newTitle').value.trim()||'随手记录';const raw=document.getElementById('newRaw').value.trim();const pid=state.placeId||data.places[0].id;const record={id:'rec-'+Date.now(),title,date:new Date().toLocaleDateString('zh-CN',{month:'long',day:'numeric'}),raw,blocks:[{cn:raw||'等待填入整理后的中文',en:'',expressions:[],reports:[]}]};data.records[pid]??=[];data.records[pid].unshift(record);state.placeId=pid;save();closeModal();openRec(record.id);toast('记录已创建，下一步可直接粘贴译文')}
+function addBlock(){const rec=getRec();rec.blocks.push({cn:'',en:'',expressions:[],reports:[]});state.block=rec.blocks.length-1;save();closeModal();renderMain();toast('新增一段，请粘贴译文')}
+function newGeneral(){if(state.screen==='record'){addBlock();return}if(state.tab==='hainan'){if(state.screen==='place')newRecordModal();else showModal('新建地点',`<label class="fieldlabel">地点名称</label><input id="newName" class="field" placeholder="地点中文名"><label class="fieldlabel">英文名称</label><input id="newEn" class="field" placeholder="English place name"><label class="fieldlabel">所在位置</label><input id="newExtra" class="field" placeholder="海口 · 区/道路">`+footer('创建地点','saveGeneral'));return}const label=state.tab==='software'?'软件作品':state.tab==='self'?'关于我':state.tab==='people'?'人物':'笔记';showModal('新建'+label,`<label class="fieldlabel">${state.tab==='people'?'姓名':'名称 / 标题'}</label><input id="newName" class="field" placeholder="输入名称"><label class="fieldlabel">中文介绍</label><textarea id="newCn" class="field" placeholder="一句话就够"></textarea><label class="fieldlabel">英文介绍</label><textarea id="newEn" class="field" placeholder="自然口语，一种表达"></textarea>${state.tab==='self'?`<label class="fieldlabel">分类</label><select id="newSelfCategory" class="field">${SELF_CATS.filter(x=>x!=='全部').map(x=>`<option value="${x}" ${x===(state.filter!=='全部'&&SELF_CATS.includes(state.filter)?state.filter:'家乡生活')?'selected':''}>${x}</option>`).join('')}</select>`:''}`+footer('保存','saveGeneral'))}
+function saveGeneral(){const name=document.getElementById('newName')?.value.trim();if(!name){toast('请先输入名称');return}const cn=document.getElementById('newCn')?.value.trim()||'';const en=document.getElementById('newEn')?.value.trim()||'';if(state.tab==='hainan')data.places.unshift({id:'place-'+Date.now(),name,en:en||name,address:document.getElementById('newExtra')?.value||'海口',kind:'自建地点',palette:'park',emoji:'📍',cn:'',english:''});if(state.tab==='software')data.software.unshift({id:'PNEW',name,en:'New App',type:'APP / PWA',cn,english:en});if(state.tab==='self')data.self.unshift({id:'s-'+Date.now(),title:name,cn,en,category:document.getElementById('newSelfCategory')?.value||'其他'});if(state.tab==='people')data.people.unshift({id:'p-'+Date.now(),name,area:'',note:cn,last:'刚刚创建',fav:en});save();closeModal();renderMain();toast('已创建')}
+function showHelp(){showModal('原型使用说明',`<p class="description">这里是可点击的<strong>手机 HTML 设计预览</strong>，并非当前 OPPO 已安装的正式 APP。</p><p class="minihelp">底部五个 Tab 可切换；顶部「＋」负责新建，「···」收纳回收站和设置；海南 → 红城湖 → 游玩记录，可看到紧凑播放栏、唯一英文与粘贴导入。</p><p class="minihelp">游玩记录支持逐段粘贴与整篇批量：每段的顺序为中英表达行、中文正文、唯一英文；重复多段可自动识别，也可加 --- 作为明确分隔符。预览后再保存，整篇追加不会覆盖已保存内容。</p><p class="minihelp">所有编辑只保存在此浏览器本地的演示数据中。语音按钮仅调用浏览器自带的示范朗读，不连接豆包、腾讯或 DeepSeek；若浏览器不支持，会明确提示。</p><button class="secondary full" data-action="resetDemo">恢复原型示例数据</button>`)}
+function trashModal(){showModal('回收站',`<p class="minihelp">回收站保留在顶部「更多」，而不是在每个页面放一个大按钮。</p><div class="empty" style="padding:15px">当前预览没有删除的记录</div>`)}
+function addReport(){showModal('回贴练习复盘',`<label class="fieldlabel">本次练习总结</label><textarea class="field tall" id="reportText" placeholder="记下发音、弱项或下次练习重点"></textarea>`+footer('保存复盘','saveReport'))}
+function saveReport(){const txt=document.getElementById('reportText').value.trim();if(!txt)return toast('请输入内容');const b=currentBlock();b.reports??=[];b.reports.unshift({date:new Date().toLocaleDateString('zh-CN',{month:'long',day:'numeric'}),result:'已保存',note:txt});save();closeModal();state.reportsOpen=true;renderMain();toast('练习复盘已保存，正文阅读不受影响')}
+function activePerson(){if(!String(state.detailKey||'').startsWith('people:'))return null;return data.people.find(x=>x.id===state.detailKey.split(':')[1])||null}
+function personEdit(){const p=activePerson();if(!p)return;const d=personData(p);showModal('编辑人物档案',`
+ <label class="fieldlabel">英文名</label><input class="field" id="pName" value="${esc(p.name)}">
+ <label class="fieldlabel">中文称呼（可空）</label><input class="field" id="pCnName" value="${esc(d.cnName||'')}">
+ <label class="fieldlabel">来自哪里</label><input class="field" id="pArea" value="${esc(p.area||'')}">
+ <label class="fieldlabel">目前在哪座城市</label><input class="field" id="pWhere" value="${esc(d.where||'')}">
+ <label class="fieldlabel">工作 / 学习</label><input class="field" id="pJob" value="${esc(d.job||'')}">
+ <label class="fieldlabel">常用语言</label><input class="field" id="pLang" value="${esc(d.language||'')}">
+ <label class="fieldlabel">认识时间 / 场合</label><input class="field" id="pKnown" value="${esc(d.known||'')}">
+ <label class="fieldlabel">兴趣概览</label><input class="field" id="pNote" value="${esc(p.note||'')}">
+ <label class="fieldlabel">兴趣词组（每行 中文 | 英文）</label><textarea class="field" id="pInterests">${esc(d.interests.map(pair=>pair.join(' | ')).join('\n'))}</textarea>
+ ${footer('保存档案','personSave')}`)}
+function personSave(){const p=activePerson();if(!p)return;const d=personData(p);const val=id=>document.getElementById(id)?.value.trim()||'';
+ p.name=val('pName')||p.name;d.cnName=val('pCnName');p.area=val('pArea')||'未记录';d.where=val('pWhere')||'未记录';d.job=val('pJob')||'未记录';d.language=val('pLang')||'未记录';d.known=val('pKnown')||'未记录';p.note=val('pNote');d.interests=val('pInterests').split('\n').map(t=>t.split('|').map(v=>v.trim())).filter(pair=>pair[0]);save();closeModal();render();toast('人物档案已保存')}
+function personAddMemory(){if(!activePerson())return;showModal('补充聊天记录',`
+ <label class="fieldlabel">这次聊了什么</label><input class="field" id="pmTitle" placeholder="例如：周末徒步路线">
+ <label class="fieldlabel">记下中文要点</label><textarea class="field" id="pmZh" placeholder="只记录对方真正说过的内容，不要推测"></textarea>
+ <label class="fieldlabel">英文（可选）</label><textarea class="field" id="pmEn" placeholder="We talked about... "></textarea>
+ ${footer('保存记录','personSaveMemory')}`)}
+function personSaveMemory(){const p=activePerson();if(!p)return;const title=document.getElementById('pmTitle')?.value.trim()||'';const zh=document.getElementById('pmZh')?.value.trim()||'';const en=document.getElementById('pmEn')?.value.trim()||'';if(!title||!zh)return toast('请填写话题和中文要点');const d=personData(p);d.talked.unshift({id:'talk-'+Date.now().toString(36),title,time:new Date().toLocaleDateString('zh-CN'),zh,en});p.last='聊过'+title;save();closeModal();renderMain();toast('已补充聊天记录')}
+function personAddQuestion(){if(!activePerson())return;showModal('添加接续话题',`
+ <label class="fieldlabel">话题</label><input class="field" id="pqTopic" placeholder="例如：接着聊上次的咖啡馆">
+ <label class="fieldlabel">中文：我可以这样问</label><textarea class="field" id="pqZh" placeholder="你后来有没有找到不错的店？"></textarea>
+ <label class="fieldlabel">英文：我可以直接问</label><textarea class="field" id="pqEn" placeholder="Have you found any good cafés lately?"></textarea>
+ ${footer('保存话题','personSaveQuestion')}`)}
+function personSaveQuestion(){const p=activePerson();if(!p)return;const topic=document.getElementById('pqTopic')?.value.trim()||'继续聊';const zh=document.getElementById('pqZh')?.value.trim()||'';const en=document.getElementById('pqEn')?.value.trim()||'';if(!zh||!en)return toast('中文和英文都要填写，才方便直接跟朋友说');personData(p).questions.unshift({id:'q-'+Date.now().toString(36),topic,zh,en});save();closeModal();renderMain();toast('接续话题已保存')}
+function personCopySummary(){const p=activePerson();if(!p)return;const d=personData(p);return copyText([p.name+' '+(d.cnName||''),p.area+' · '+(p.note||''),d.talked.map(t=>'聊过：'+t.title+'\n'+t.zh+'\n'+(t.en||'')).join('\n'),d.questions.map(q=>q.zh+'\n'+q.en).join('\n\n')].join('\n\n'))}
+function personQuestionById(id){const p=activePerson();return p?personData(p).questions.find(q=>q.id===id):null}
+function personSayQuestion(id){const q=personQuestionById(id);if(!q)return;if(!('speechSynthesis'in window))return toast('浏览器不支持语音演示');window.speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(q.en);u.lang='en-US';window.speechSynthesis.speak(u);toast('浏览器语音演示；正式 APP 仍用现有豆包朗读')}
+function editDetail(){const [typ,id]=state.detailKey.split(':');if(typ==='people')return personEdit();const obj=data[typ==='software'?'software':typ==='self'?'self':'people'].find(x=>x.id===id);if(!obj)return;showModal('编辑内容',`<label class="fieldlabel">中文</label><textarea class="field" id="detailCn">${esc(obj.cn||obj.note||'')}</textarea><label class="fieldlabel">英文</label><textarea class="field" id="detailEn">${esc(obj.english||obj.en||'')}</textarea>${typ==='self'?`<label class="fieldlabel">分类</label><select id="editSelfCategory" class="field">${SELF_CATS.filter(x=>x!=='全部').map(x=>`<option value="${x}" ${selfCategory(obj)===x?'selected':''}>${x}</option>`).join('')}</select>`:''}`+footer('保存','saveDetail'))}
+function saveDetail(){const [typ,id]=state.detailKey.split(':');const obj=data[typ==='software'?'software':typ==='self'?'self':'people'].find(x=>x.id===id);if(typ==='people'){obj.note=document.getElementById('detailCn').value;obj.fav=document.getElementById('detailEn').value}else{obj.cn=document.getElementById('detailCn').value;obj[typ==='software'?'english':'en']=document.getElementById('detailEn').value;if(typ==='self')obj.category=document.getElementById('editSelfCategory')?.value||selfCategory(obj)}save();closeModal();renderMain();toast('已保存')}
+function copyText(text){if(navigator.clipboard?.writeText){navigator.clipboard.writeText(text).then(()=>toast('已复制')).catch(()=>fallbackCopy(text))}else fallbackCopy(text)}function fallbackCopy(text){const e=document.createElement('textarea');e.value=text;e.style.cssText='position:fixed;left:-9999px';document.body.appendChild(e);e.select();try{document.execCommand('copy');toast('已复制')}catch{toast('浏览器未允许复制')}e.remove()}
+let speech=null;function stopVoice(){if('speechSynthesis'in window)window.speechSynthesis.cancel();state.playing=false;speech=null}
+function speakBlock(){const b=currentBlock();if(!b)return;if(state.playing){stopVoice();renderMain();toast('已暂停');return}if(!('speechSynthesis'in window)){toast('浏览器不支持示范朗读；正式 APP 使用豆包');return}const phrase=b.en||b.cn;if(!phrase||phrase.startsWith('还未'))return toast('请先填入英文');stopVoice();let loops=state.ttsLoop;speech={loops};function once(){if(!speech||speech.loops<=0){state.playing=false;renderMain();return}const utterance=new SpeechSynthesisUtterance(phrase);utterance.lang=b.en?'en-US':'zh-CN';utterance.rate=Number(state.ttsRate);utterance.onend=()=>{if(!speech)return;speech.loops--;if(speech.loops>0)once();else{speech=null;state.playing=false;renderMain()}};utterance.onerror=()=>{speech=null;state.playing=false;renderMain();toast('浏览器示范朗读不可用，正式 APP 需测试豆包')};window.speechSynthesis.speak(utterance)}state.playing=true;renderMain();toast('正在使用浏览器语音示范，并非豆包');once()}
+function goBlock(delta){const rec=getRec();if(!rec)return;stopVoice();state.block=Math.max(0,Math.min(rec.blocks.length-1,state.block+delta));state.exprOpen=false;state.reportsOpen=false;renderMain();view.scrollTop=0}
+function exportData(){const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='socialmate-ui-preview-data.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);toast('已导出原型演示数据')}
+
+/* V6 主动点词查询：仅 final 英文字幕可点击；不标注/扫描全部字幕，卡片不触发录音停止。 */
+const TERM_DEMO={
+ capoeira:{zh:'卡波耶拉，也常称巴西战舞。',desc:'源自巴西、融合武术、舞蹈、节奏与音乐的传统运动文化。',askZh:'你练这个多久了？',askEn:'How long have you been doing capoeira?'},
+ jiujitsu:{zh:'柔术。',desc:'强调控制、缠斗和地面技术的格斗运动；巴西柔术常称 Brazilian jiu-jitsu。',askZh:'你是从什么时候开始练柔术的？',askEn:'When did you start training jiu-jitsu?'},
+ berimbau:{zh:'巴西单弦弓形乐器。',desc:'卡波耶拉表演和练习中常用来引导节奏的一种乐器。',askZh:'你们练习的时候也会用这种乐器吗？',askEn:'Do you use a berimbau when you practice?'},
+ pickleball:{zh:'匹克球。',desc:'一种使用球拍和有孔塑料球的运动，结合了网球、羽毛球和乒乓球的某些特点。',askZh:'你平时会去打匹克球吗？',askEn:'Do you play pickleball very often?'},
+ martial:{zh:'武术；格斗相关的。',desc:'martial arts 通常指各种武术或格斗项目。',askZh:'你更喜欢哪一种格斗运动？',askEn:'What kind of martial arts are you into?'}
+};
+let termContext='',termSelected='';
+function termClean(x){return String(x||'').replace(/^[\s.,!?():;\u201c\u201d\u2018\u2019]+|[\s.,!?():;\u201c\u201d\u2018\u2019]+$/g,'').slice(0,90)}
+function termKey(x){return String(x||'').toLowerCase().replace(/[^a-z]/g,'')}
+function pickedEnglishWord(el,event){
+ // 长按选择多词时优先采用真实选区；否则计算本次点击光标所在词。
+ const selection=window.getSelection?.();
+ const highlighted=selection?.toString()?.trim()||'';
+ if(highlighted && selection && el.contains(selection.anchorNode))return termClean(highlighted);
+ let range=null;
+ try{
+  if(document.caretRangeFromPoint)range=document.caretRangeFromPoint(event.clientX,event.clientY);
+  else if(document.caretPositionFromPoint){const pos=document.caretPositionFromPoint(event.clientX,event.clientY);if(pos){range=document.createRange();range.setStart(pos.offsetNode,pos.offset);range.collapse(true)}}
+ }catch{}
+ if(range && el.contains(range.startContainer) && range.startContainer.nodeType===3){
+  const txt=range.startContainer.textContent||'';let pos=Math.min(txt.length,range.startOffset);
+  const letter=c=>/[a-zA-Z\u00c0-\u017f'-]/.test(c||'');
+  if(!letter(txt[pos]) && pos>0 && letter(txt[pos-1]))pos--;
+  let l=pos,r=pos;while(l>0&&letter(txt[l-1]))l--;while(r<txt.length&&letter(txt[r]))r++;
+  const value=termClean(txt.slice(l,r));if(value)return value;
+ }
+ // 不猜测用户想查询哪个词：点到了空白时请用选词输入框自行调整。
+ return '';
+}
+function termLookup(query,context){
+ const panel=document.getElementById('termPanel');if(!panel)return;
+ const q=termClean(query);if(!q)return;
+ termSelected=q;termContext=String(context||termContext||'').slice(0,400);
+ const known=TERM_DEMO[termKey(q)];
+ const ask=known?`<div class="term-ask"><div class="term-label">可以顺势问</div><p>${esc(known.askZh)}</p><p class="term-en">${esc(known.askEn)}</p></div>`:'';
+ panel.innerHTML=`<div class="term-head"><span class="term-title">${esc(q)}</span><button class="term-close" data-action="termClose" title="关闭解释" aria-label="关闭解释">×</button></div>
+ ${known?`<div class="term-meaning"><b>${esc(known.zh)}</b> ${esc(known.desc)}</div>`:`<div class="term-empty">这是交互原型，未连接 AI。正式 APP 仅在你主动查询时，通过现有 DeepSeek 结合当前句子解释这个词。</div>`}
+ ${ask}<div class="term-actions">${known?`<button class="term-primary" data-action="termCopyAsk">复制英文问句</button>`:''}<button data-action="termCopyWord">复制术语</button></div>
+ <details class="term-extra"><summary>修改查询词 / 查看原句</summary><div class="term-inputbar"><input id="termInput" value="${esc(q)}" aria-label="要查的英文词或短语" spellcheck="false"><button type="button" data-action="termSearch">查询</button></div>${termContext?`<div class="term-context">原句：${esc(termContext)}</div>`:''}</details>`;
+ panel.classList.remove('hide');
+}
+function termClose(){const panel=document.getElementById('termPanel');if(panel)panel.classList.add('hide');if(window.getSelection)window.getSelection().removeAllRanges()}
+function termClick(event,el){
+ const selection=window.getSelection?.();
+ const word=pickedEnglishWord(el,event);
+ if(word)termLookup(word,el.textContent?.trim()||'');
+ if(selection && selection.toString())selection.removeAllRanges();
+}
+function doAction(a){
+ if(a==='termClose')return termClose();
+ if(a==='termSearch')return termLookup(document.getElementById('termInput')?.value||'',termContext);
+ if(a==='termCopyAsk'){const known=TERM_DEMO[termKey(termSelected)];if(known)return copyText(known.askEn);return}
+ if(a==='termCopyWord')return copyText(termSelected);
+ if(a==='chatStart'){
+  closePop();state.chatActive=!state.chatActive;
+  if(state.chatActive){state.chatRounds+=1;toast('界面演示已开始；真实麦克风需在 OPPO 正式 APP 中使用')}
+  else toast('演示对话已结束');
+  render();return;
+ }
+ if(a==='chatReplies'||a==='chatFollowups'||a==='chatShares'){
+  state.chatAssistTab=a==='chatReplies'?'reply':a==='chatFollowups'?'followup':'share';state.chatSelected=-1;renderMain();return;
+ }
+ if(a==='chatCopyHint'||a==='chatSayHint'){
+  const hint=(CHAT_HINTS[state.chatAssistTab]||[])[state.chatSelected];if(!hint)return toast('请先选择一条建议');
+  if(a==='chatCopyHint')return copyText(hint.en);
+  if('speechSynthesis'in window){window.speechSynthesis.cancel();const utterance=new SpeechSynthesisUtterance(hint.en);utterance.lang='en-US';window.speechSynthesis.speak(utterance);return toast('浏览器语音演示，不是豆包')};return toast('当前浏览器不支持朗读');
+ }
+ if(a==='chatRefBay')return openPlace('bay');
+ if(a==='chatRefPark')return openPlace('wanlv');
+ if(a==='chatRefSelf')return openDetail('self:s2');
+ if(a==='chatPerson')return showModal('选择聊天人物','<p class="minihelp">正式 APP 延用现有人物关联界面；本原型不修改人物关系或 AI 逻辑。</p>'+footer('关闭','closeModal'));
+ if(a==='chatHistory')return showModal('本轮记录','<p class="minihelp">正式 APP 保留历史原文与复盘；本原型仅展示布局，不写入真实会话。</p>'+footer('关闭','closeModal'));
+  if(a==='personEdit')return personEdit();if(a==='personSave')return personSave();if(a==='personAddMemory')return personAddMemory();if(a==='personSaveMemory')return personSaveMemory();if(a==='personAddQuestion')return personAddQuestion();if(a==='personSaveQuestion')return personSaveQuestion();if(a==='personCopySummary')return personCopySummary();
+ if(a==='back')return back();if(a==='more'||a==='recordMenu')return moreMenu();if(a==='searchToggle'){if(state.tab==='self'&&state.screen==='main'){view.querySelector('#searchInput')?.focus();return}state.searchOn=!state.searchOn;state.search='';renderMain();if(state.searchOn)view.querySelector('#searchInput')?.focus();return}if(a==='add')return newGeneral();if(a==='themeToggle')return toggleTheme();if(a==='trashModal')return trashModal();if(a==='exportDemo')return exportData();if(a==='helpModal')return showHelp();if(a==='resetDemo'){data=structuredClone(sample);save();closeModal();setTab('hainan');return toast('原型示例已恢复')}if(a==='closeModal')return closeModal();if(a==='newRecord')return newRecordModal();if(a==='createRecord')return createRecord();if(a==='saveGeneral')return saveGeneral();if(a==='pasteOpen')return pasteModal('single');if(a==='pasteSingle')return switchPasteMode('single');if(a==='pasteBatch')return switchPasteMode('batch');if(a==='importWhole')return pasteModal('new');if(a==='fillExample'){const el=document.getElementById('pasteRaw');if(el){el.value=state.importMode==='single'?examplePaste:(examplePaste+'\n\n---\n\n'+examplePaste2);parsePreview()}return}if(a==='parsePaste')return parsePreview();if(a==='savePaste')return savePaste();if(a==='editBlock')return editBlock();if(a==='saveBlock')return saveBlock();if(a==='addBlock')return addBlock();if(a==='manageRecord')return manageRecord();if(a==='copyBlock'){const b=currentBlock();return copyText((b?.cn||'')+'\n'+(b?.en||''))}if(a==='exprToggle'){state.exprOpen=!state.exprOpen;renderMain();return}if(a==='reportToggle'){closePop();state.reportsOpen=!state.reportsOpen;renderMain();return}if(a==='rawToggle')return rawModal();if(a==='addReport')return addReport();if(a==='saveReport')return saveReport();if(a==='togglePlay')return speakBlock();if(a==='stopAudio'){stopVoice();renderMain();return toast('朗读已停止')}if(a==='loopToggle'){state.ttsLoop=state.ttsLoop===1?2:state.ttsLoop===2?4:1;renderMain();return}if(a==='blockPicker')return blockPicker();if(a==='prevBlock')return goBlock(-1);if(a==='nextBlock')return goBlock(1);if(a==='editDetail')return editDetail();if(a==='saveDetail')return saveDetail();if(a==='copyDetail'){const [typ,id]=state.detailKey.split(':');if(typ==='people')return personCopySummary();const x=data[typ==='software'?'software':typ==='self'?'self':'people'].find(v=>v.id===id);return copyText((x?.cn||x?.note||'')+'\n'+(x?.english||x?.en||''))}if(a==='copyChat')return copyText('I like going for walks along Haikou Bay, and I work out sometimes, too.');if(a==='sayChat'){if('speechSynthesis'in window){window.speechSynthesis.cancel();const u=new SpeechSynthesisUtterance('I like going for walks along Haikou Bay, and I work out sometimes, too.');u.lang='en-US';window.speechSynthesis.speak(u);return toast('浏览器语音示范，不是豆包')}return toast('浏览器不支持朗读')}if(a==='micDemo')return toast('这是界面原型：真实录音和 ASR 在正式 OPPO APP 中验证');if(a==='chatSend'){const input=document.getElementById('chatInput');const msg=input?.value.trim();if(!msg)return toast('请输入一句话');return showModal('已输入的文字',`<div class="parsepreview">${esc(msg)}</div><p class="minihelp">演示原型不调用云端 AI；正式 APP 走你已配置的 DeepSeek。</p><button class="secondary full" data-action="closeModal">关闭</button>`)} }
+app.addEventListener('pointerup',e=>{if(e.pointerType!=='touch')return;const subtitle=e.target.closest('[data-english-subtitle]');if(!subtitle)return;const sel=window.getSelection?.();if(sel && sel.toString().trim() && subtitle.contains(sel.anchorNode)){const picked=termClean(sel.toString());if(picked)termLookup(picked,subtitle.textContent?.trim()||'')}});
+app.addEventListener('click',e=>{if(e.target.id==='scrim')return closeModal();const subtitle=e.target.closest('[data-english-subtitle]');if(subtitle){termClick(e,subtitle);return}const hint=e.target.closest('[data-chat-hint]');if(hint){const n=Number(hint.dataset.chatHint);state.chatSelected=state.chatSelected===n?-1:n;renderMain();return}const jump=e.target.closest('[data-jump]');if(jump){closeModal();state.block=Number(jump.dataset.jump)||0;state.exprOpen=false;state.reportsOpen=false;stopVoice();renderMain();view.scrollTop=0;return}const pc=e.target.closest('[data-person-copy]');if(pc){const q=personQuestionById(pc.dataset.personCopy);if(q)copyText(q.en);return}const ps=e.target.closest('[data-person-say]');if(ps){personSayQuestion(ps.dataset.personSay);return}const button=e.target.closest('[data-action]');if(button){e.preventDefault();doAction(button.dataset.action);return}const tab=e.target.closest('[data-tab]');if(tab)return setTab(tab.dataset.tab);const place=e.target.closest('[data-place]');if(place)return openPlace(place.dataset.place);const rec=e.target.closest('[data-record]');if(rec)return openRec(rec.dataset.record);const detail=e.target.closest('[data-detail]');if(detail)return openDetail(detail.dataset.detail);const filter=e.target.closest('[data-filter]');if(filter){state.filter=filter.dataset.filter;return renderMain()}const dtab=e.target.closest('[data-detailtab]');if(dtab){state.detailTab=dtab.dataset.detailtab;return renderMain()}});
+app.addEventListener('input',e=>{if(e.target.id==='searchInput'){state.search=e.target.value;const scroll=view.scrollTop;renderMain();view.scrollTop=scroll;const inp=document.getElementById('searchInput');inp?.focus();inp?.setSelectionRange?.(state.search.length,state.search.length)}});
+app.addEventListener('change',e=>{if(e.target.id==='rateSel')state.ttsRate=e.target.value});
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.id==='termInput'){e.preventDefault();termLookup(e.target.value,termContext);return}if(e.key==='Escape'){if(state.modal)closeModal();else if(state.more)closePop();else if(document.getElementById('termPanel')&&!document.getElementById('termPanel').classList.contains('hide'))termClose();else if(state.screen!=='main')back()}});
+render();
+})();
+</script>
+</body>
+</html>

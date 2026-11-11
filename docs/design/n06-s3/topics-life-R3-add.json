@@ -1,0 +1,569 @@
+[
+  {
+    "id": "life-salary-saving",
+    "cn": "工资与存钱习惯",
+    "en": "Salary and saving habits",
+    "region": "国际",
+    "theme": "更多",
+    "subtheme": "金钱健康科技",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "工资到账后怎么分，是最早的财务习惯之一。可以聊先存还是先花、有没有单独账户、意外支出会不会打乱计划，也能聊各家对“该存多少”的看法差很远。",
+    "briefEn": "What happens right after payday says a lot about someone. You can ask whether they save first or spend first, whether they keep a separate savings account, and how an unexpected bill messes up the plan. People also disagree a lot about how much is enough to put away.",
+    "questions": [
+      {
+        "cn": "工资到账后，你会先存一部分吗？",
+        "en": "When your paycheck comes in, do you save part of it first?"
+      },
+      {
+        "cn": "你有专门的储蓄账户吗？",
+        "en": "Do you keep a separate account for savings?"
+      },
+      {
+        "cn": "遇到意外支出，你的存钱计划会乱吗？",
+        "en": "Does an unexpected expense throw off your saving plan?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.federalreserve.gov/publications/report-economic-well-being-us-households.htm",
+      "https://www.ons.gov.uk/peoplepopulationandcommunity/personalandhouseholdfinances/incomeandwealth"
+    ],
+    "sourceNote": "美联储《Economic Well-Being of U.S. Households (SHED)》报告页（含储蓄与应急资金调查）与英国国家统计局 Income and wealth 主题页，2026-11-10 实抓均 HTTP 200。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "life-budget-tracking",
+    "cn": "记账与预算",
+    "en": "Budgeting and tracking spending",
+    "region": "国际",
+    "theme": "更多",
+    "subtheme": "金钱健康科技",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "有人每笔都记，有人只看月底余额。可以聊用 App 还是表格、记了会不会真的少花、预算超了怎么调整，也能聊“大致心里有数”到底靠不靠谱。",
+    "briefEn": "Some people log every purchase, others just check the balance at the end of the month. You can ask whether they use an app or a spreadsheet, whether tracking actually changes their spending, and what they do when the budget is blown. It is a low-stakes way to compare very different money habits.",
+    "questions": [
+      {
+        "cn": "你会记账吗？用 App 还是表格？",
+        "en": "Do you track your spending? With an app or a spreadsheet?"
+      },
+      {
+        "cn": "记账之后，你花的钱变少了吗？",
+        "en": "Has tracking your spending actually changed how much you spend?"
+      },
+      {
+        "cn": "预算超了，你会怎么调整？",
+        "en": "What do you do when you go over budget?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.citizensadvice.org.uk/debt-and-money/budgeting/budgeting/",
+      "https://www.ons.gov.uk/peoplepopulationandcommunity/personalandhouseholdfinances/expenditure"
+    ],
+    "sourceNote": "Citizens Advice 的 Budgeting 指南页与英国国家统计局 Expenditure 主题页，2026-11-10 实抓均 HTTP 200，页面标题分别为 Budgeting - Citizens Advice、Expenditure - Office for National Statistics。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "life-big-purchase",
+    "cn": "大额消费决策",
+    "en": "Making big purchases",
+    "region": "国际",
+    "theme": "更多",
+    "subtheme": "金钱健康科技",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "买车、换家电、买大件设备，决定过程很能看出一个人的性格。可以聊会比价多久、听朋友还是看评测、买新的还是二手的，也能聊买完会不会后悔。",
+    "briefEn": "Big purchases bring out very different decision styles. You can ask how long someone compares options, whether they trust friends or reviews, and whether they go new or used. The follow-up question almost always works: do they regret it afterwards?",
+    "questions": [
+      {
+        "cn": "买大件前，你会研究多久？",
+        "en": "How long do you research before buying something expensive?"
+      },
+      {
+        "cn": "你更信朋友推荐还是专业评测？",
+        "en": "Do you trust friends' recommendations or professional reviews more?"
+      },
+      {
+        "cn": "买完大件后，你后悔过吗？",
+        "en": "Have you ever regretted a big purchase?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.which.co.uk/reviews/cars"
+    ],
+    "sourceNote": "英国消费者组织 Which? 的汽车评测与对比页（New and used car Reviews），2026-11-10 实抓 HTTP 200，正文含选购对比内容。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "life-cards-payments",
+    "cn": "信用卡与移动支付",
+    "en": "Cards and mobile payments",
+    "region": "国际",
+    "theme": "更多",
+    "subtheme": "金钱健康科技",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "刷卡、扫码、付现金，各地习惯差别很大。可以聊出门还带不带现金、用不用手机付款、信用卡是每月还清还是分期，也能聊小店只收现金时的尴尬。",
+    "briefEn": "How people pay for things varies a lot by country and by person. You can ask whether they still carry cash, whether they pay by phone, and whether they clear the card every month or carry a balance. The awkward moment at a cash-only shop is a reliable conversation starter.",
+    "questions": [
+      {
+        "cn": "你出门还带现金吗？",
+        "en": "Do you still carry cash when you go out?"
+      },
+      {
+        "cn": "你平时更常用手机还是实体卡付款？",
+        "en": "Do you usually pay with your phone or a physical card?"
+      },
+      {
+        "cn": "信用卡账单你会一次还清吗？",
+        "en": "Do you pay off your credit card balance in full each month?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.federalreserve.gov/paymentsystems/fr-payments-study.htm"
+    ],
+    "sourceNote": "美联储《Federal Reserve Payments Study (FRPS)》官方页面，2026-11-10 实抓 HTTP 200，内容为各类支付方式使用情况。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "life-used-phone-repair",
+    "cn": "二手机与维修",
+    "en": "Used phones and repairs",
+    "region": "国际",
+    "theme": "更多",
+    "subtheme": "金钱健康科技",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "手机坏了是修还是换，很多人有自己的算法。可以聊换过几次电池和屏幕、会不会自己动手修、买二手最担心什么，也能聊维修报价和换新机的取舍。",
+    "briefEn": "Repair or replace is a decision people feel strongly about. You can ask how many batteries or screens they have swapped, whether they fix things themselves, and what worries them about buying used. The comparison between a repair quote and a new device usually gets a real answer.",
+    "questions": [
+      {
+        "cn": "手机坏了，你会先修还是直接换？",
+        "en": "When your phone breaks, do you repair it first or just replace it?"
+      },
+      {
+        "cn": "你买过二手手机或二手电子产品吗？",
+        "en": "Have you bought a used phone or other second-hand electronics?"
+      },
+      {
+        "cn": "你会自己动手修东西吗？",
+        "en": "Do you try to fix things yourself?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.ifixit.com/News",
+      "https://www.ifixit.com/"
+    ],
+    "sourceNote": "iFixit 官方维修新闻博客（The Official iFixit Blog: Tech Repair News）与 iFixit 主站，2026-11-10 实抓均 HTTP 200，内容为设备维修与可维修性话题。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "life-subscriptions",
+    "cn": "订阅服务与会员",
+    "en": "Subscriptions and memberships",
+    "region": "国际",
+    "theme": "更多",
+    "subtheme": "金钱健康科技",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "视频、音乐、云存储、健身会员，订阅越开越多。可以聊每月到底订了几项、有没有忘了取消的、自动续费踩过什么坑，也能聊哪些服务真的天天在用。",
+    "briefEn": "Streaming, music, cloud storage, gym memberships: the list keeps growing. You can ask how many subscriptions someone actually has, whether they forgot to cancel one, and what happened with auto-renewal. Then compare which services they genuinely use every week.",
+    "questions": [
+      {
+        "cn": "你现在一共订了几项服务？",
+        "en": "How many subscription services do you have right now?"
+      },
+      {
+        "cn": "你有过忘了取消、被自动续费的时候吗？",
+        "en": "Have you ever been charged because you forgot to cancel?"
+      },
+      {
+        "cn": "哪项订阅你觉得最值？",
+        "en": "Which subscription feels most worth the money to you?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.gov.uk/cma-cases?keywords=subscription"
+    ],
+    "sourceNote": "英国竞争与市场管理局（CMA）官网按 subscription 关键词筛选的案件与项目列表，2026-11-10 实抓 HTTP 200，页面列出订阅相关调查项目。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "life-doctor-visit",
+    "cn": "就医与挂号体验",
+    "en": "Seeing a doctor",
+    "region": "国际",
+    "theme": "更多",
+    "subtheme": "金钱健康科技",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "看医生这件事，各地流程差别特别大。可以聊怎么预约、等多久、能不能线上问诊，也能聊小病会不会拖着不去、看完有没有听懂医生说的话。",
+    "briefEn": "How you get to see a doctor varies hugely from place to place. You can ask about booking, waiting times, and whether video appointments are common. It also opens up honest talk about putting off small problems and leaving the clinic unsure what the doctor actually said.",
+    "questions": [
+      {
+        "cn": "你那边看医生一般怎么预约？",
+        "en": "How do you usually book a doctor's appointment where you live?"
+      },
+      {
+        "cn": "看一次医生通常要等多久？",
+        "en": "How long do you usually wait to see a doctor?"
+      },
+      {
+        "cn": "小毛病你会先拖着，还是马上去看？",
+        "en": "Do you wait out minor problems or go straight to a doctor?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.nhs.uk/nhs-services/gps/",
+      "https://www.nhs.uk/nhs-services/gps/how-to-register-with-a-gp-surgery/"
+    ],
+    "sourceNote": "英国 NHS 的 GP services 与 Register with a GP surgery 页面，2026-11-10 实抓均 HTTP 200，内容为预约与注册家庭医生的实际流程。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "life-sleep-schedule",
+    "cn": "作息与睡眠质量",
+    "en": "Sleep schedules and rest",
+    "region": "国际",
+    "theme": "更多",
+    "subtheme": "金钱健康科技",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "工作日和周末的作息常常是两套。可以聊两边差几个小时、早上醒来是什么状态、换季或加班后怎么调回来，也能聊“睡够了”到底怎么判断。",
+    "briefEn": "Many people run two different schedules: one for workdays and one for days off. You can ask how far apart they are, how they feel when they wake up, and how they reset after a late week. The tricky part is defining what actually counts as enough sleep.",
+    "questions": [
+      {
+        "cn": "你工作日和周末的作息差多少？",
+        "en": "How different are your weekday and weekend schedules?"
+      },
+      {
+        "cn": "你早上醒来通常是什么状态？",
+        "en": "How do you usually feel when you wake up?"
+      },
+      {
+        "cn": "熬夜之后，你怎么把作息调回来？",
+        "en": "How do you get your sleep schedule back on track after a late night?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.nhs.uk/conditions/insomnia/",
+      "https://www.nhs.uk/live-well/sleep-and-tiredness/"
+    ],
+    "sourceNote": "英国 NHS 的 Insomnia 与 Sleep and tiredness 页面，2026-11-10 实抓均 HTTP 200，提供一般性睡眠卫生与作息信息，仅作生活经验交流。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "life-stress-relief",
+    "cn": "压力与放松方式",
+    "en": "Stress and winding down",
+    "region": "国际",
+    "theme": "更多",
+    "subtheme": "金钱健康科技",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "每个人减压的方式都不一样。可以聊压力大时做什么、散步还是躺着刷手机、和朋友聊有没有用，也能聊工作忙起来最先放弃的是什么。",
+    "briefEn": "Everyone winds down differently, and most people are happy to explain their method. You can ask what they do when stress builds up, whether they walk it off or scroll in bed, and whether talking to a friend helps. It also leads to what they drop first when work gets busy.",
+    "questions": [
+      {
+        "cn": "压力大的时候，你会做什么？",
+        "en": "What do you do when you are really stressed?"
+      },
+      {
+        "cn": "散步、运动、刷手机，哪个对你最管用？",
+        "en": "Which helps you most: walking, exercise, or scrolling on your phone?"
+      },
+      {
+        "cn": "和朋友聊一聊，会让你好受些吗？",
+        "en": "Does talking to a friend actually make you feel better?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.who.int/news-room/questions-and-answers/item/stress",
+      "https://www.nhs.uk/mental-health/self-help/guides-tools-and-activities/tips-to-reduce-stress/"
+    ],
+    "sourceNote": "世界卫生组织 Stress 问答页与英国 NHS「10 stress busters」页面，2026-11-10 实抓均 HTTP 200，内容为一般性压力应对建议。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "life-therapy-counseling",
+    "cn": "看心理医生或咨询",
+    "en": "Therapy and counselling",
+    "region": "国际",
+    "theme": "更多",
+    "subtheme": "金钱健康科技",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "心理咨询在不同地方接受度差别很大。可以聊身边人愿不愿意谈、第一次去紧不紧张、线上咨询和面对面哪个更自在，也能聊怎么判断一个咨询师合不合适。",
+    "briefEn": "Attitudes to therapy differ a lot between places and families. You can ask whether people around them talk about it openly, how nervous they were the first time, and whether online sessions feel easier than face-to-face. Deciding whether a therapist is the right fit is another good thread.",
+    "questions": [
+      {
+        "cn": "你身边的人会公开聊心理咨询吗？",
+        "en": "Do people around you talk openly about therapy?"
+      },
+      {
+        "cn": "第一次去咨询，你会紧张吗？",
+        "en": "Were you nervous the first time you tried counselling?"
+      },
+      {
+        "cn": "线上咨询和面对面，你更习惯哪种？",
+        "en": "Do you prefer online sessions or meeting in person?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.nhs.uk/mental-health/talking-therapies-medicine-treatments/talking-therapies-and-counselling/nhs-talking-therapies/"
+    ],
+    "sourceNote": "英国 NHS 的 Talking therapies 官方页面，2026-11-10 实抓 HTTP 200，介绍谈话治疗与转介流程，仅作生活经验交流。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "life-health-checkup",
+    "cn": "体检与健康检查",
+    "en": "Health checks",
+    "region": "国际",
+    "theme": "更多",
+    "subtheme": "金钱健康科技",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "多久做一次体检，各地做法很不一样。可以聊公司有没有安排、自己会不会主动去、报告出来先看哪几项，也能聊看到异常指标时的心态。",
+    "briefEn": "Routine health checks are handled very differently depending on where you live and who you work for. You can ask whether their employer offers one, whether they book it themselves, and which numbers they look at first. How people react to one odd result is often the most interesting part.",
+    "questions": [
+      {
+        "cn": "你多久做一次体检？",
+        "en": "How often do you get a health check?"
+      },
+      {
+        "cn": "公司会安排体检，还是你自己去？",
+        "en": "Does your employer arrange it, or do you book it yourself?"
+      },
+      {
+        "cn": "拿到报告，你最先看哪几项？",
+        "en": "Which results do you look at first in your report?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.nhs.uk/conditions/nhs-health-check/"
+    ],
+    "sourceNote": "英国 NHS 的 NHS Health Check 页面，2026-11-10 实抓 HTTP 200，介绍常规健康检查内容，仅作一般信息与生活交流。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "life-diet-weight",
+    "cn": "饮食与体重管理",
+    "en": "Eating habits and weight",
+    "region": "国际",
+    "theme": "更多",
+    "subtheme": "金钱健康科技",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "吃什么、要不要控制体重，是很多人常想到的事。可以聊有没有试过改变饮食习惯、饿的时候怎么扛、外食怎么选，也能聊各地对体重的看法和压力差很多。",
+    "briefEn": "Food and weight come up in daily conversation almost everywhere. You can ask whether someone has tried changing their eating habits, how they handle hunger, and how they choose when eating out. The social pressure around weight is also very different from place to place, which makes it worth comparing.",
+    "questions": [
+      {
+        "cn": "你试过刻意改变饮食习惯吗？",
+        "en": "Have you ever tried to change your eating habits on purpose?"
+      },
+      {
+        "cn": "在外吃饭时，你会怎么选？",
+        "en": "How do you choose what to eat when you eat out?"
+      },
+      {
+        "cn": "你会因为体重焦虑吗？",
+        "en": "Do you ever feel anxious about your weight?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.who.int/news-room/fact-sheets/detail/healthy-diet"
+    ],
+    "sourceNote": "世界卫生组织 Healthy diet 实况报道页，2026-11-10 实抓 HTTP 200，内容为一般性健康饮食建议，不作为医疗或减重指导。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "life-phone-privacy",
+    "cn": "手机隐私与权限",
+    "en": "Phone privacy and permissions",
+    "region": "国际",
+    "theme": "更多",
+    "subtheme": "金钱健康科技",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "装 App 时那一串权限请求，很多人直接点同意。可以聊会不会逐个看、定位和麦克风权限给不给、多久清理一次授权，也能聊广告为什么像在偷听。",
+    "briefEn": "Most people tap through permission prompts without reading them. You can ask whether they check each one, whether they allow location or microphone access, and how often they review what apps can do. The feeling that ads are listening is a familiar and funny angle to start from.",
+    "questions": [
+      {
+        "cn": "装新 App 时，你会看权限说明吗？",
+        "en": "Do you read the permission list when you install a new app?"
+      },
+      {
+        "cn": "定位和麦克风权限，你一般会给吗？",
+        "en": "Do you usually allow location and microphone access?"
+      },
+      {
+        "cn": "你会定期清理 App 的权限吗？",
+        "en": "Do you go back and review app permissions from time to time?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.ncsc.gov.uk/collection/mobile-device-guidance"
+    ],
+    "sourceNote": "英国国家网络安全中心（NCSC）的 Device security guidance 页面，2026-11-10 实抓 HTTP 200，内容为移动设备安全与权限管理的一般建议。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "life-ai-tools",
+    "cn": "AI 工具的使用",
+    "en": "Using AI tools",
+    "region": "国际",
+    "theme": "更多",
+    "subtheme": "金钱健康科技",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "AI 已经进了很多人的工作和学习。可以聊平时用哪类工具、拿来写东西还是查资料、会不会担心答案不准，也能聊哪些活交给它反而更慢。",
+    "briefEn": "AI tools have slipped into plenty of daily workflows already. You can ask which ones someone uses, whether they write or just look things up with them, and whether they worry about wrong answers. It is also fun to compare which tasks actually get slower when you hand them over.",
+    "questions": [
+      {
+        "cn": "你平时会用 AI 工具做什么？",
+        "en": "What do you use AI tools for?"
+      },
+      {
+        "cn": "AI 给的结果，你会再核对吗？",
+        "en": "Do you double-check what an AI tool gives you?"
+      },
+      {
+        "cn": "有没有哪件事，你觉得交给 AI 反而更慢？",
+        "en": "Is there anything that gets slower when you hand it to AI?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://hai.stanford.edu/ai-index/2025-ai-index-report"
+    ],
+    "sourceNote": "斯坦福大学人类中心人工智能研究院（Stanford HAI）《2025 AI Index Report》报告页，2026-11-10 实抓 HTTP 200，含 AI 采用与使用趋势数据。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "life-misinformation",
+    "cn": "网络信息真假判断",
+    "en": "Spotting false information online",
+    "region": "国际",
+    "theme": "更多",
+    "subtheme": "金钱健康科技",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "群里的截图、短视频里的说法，真假很难一眼看出。可以聊看到惊人消息先做什么、会不会自己搜一下出处、家里长辈转发时怎么处理，也能聊踩过哪些坑。",
+    "briefEn": "Screenshots and short videos are hard to judge at a glance. You can ask what someone does when they see a shocking claim, whether they search for the source, and how they handle relatives forwarding questionable posts. Most people also have a story about getting fooled once.",
+    "questions": [
+      {
+        "cn": "看到一条惊人消息，你会先做什么？",
+        "en": "What do you do first when you see a shocking claim online?"
+      },
+      {
+        "cn": "你会去找原始出处吗？",
+        "en": "Do you try to find the original source?"
+      },
+      {
+        "cn": "家里人转发可疑消息，你会怎么处理？",
+        "en": "What do you do when a family member forwards something doubtful?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://digital-strategy.ec.europa.eu/en/policies/online-disinformation"
+    ],
+    "sourceNote": "欧盟委员会数字战略官网的 Tackling online disinformation 政策页，2026-11-10 实抓 HTTP 200，内容为网络虚假信息的识别与应对。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "life-online-learning-focus",
+    "cn": "线上学习与注意力",
+    "en": "Online learning and focus",
+    "region": "国际",
+    "theme": "更多",
+    "subtheme": "金钱健康科技",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "网课方便，但很难一直专注。可以聊能连续看多久、会不会开倍速、边看边刷别的页面吗，也能聊记笔记和线下上课有什么不同。",
+    "briefEn": "Online courses are convenient, but staying focused is the hard part. You can ask how long someone can watch before drifting, whether they speed up the video, and whether other tabs stay open. Comparing notes with a classroom setting usually brings out clear preferences.",
+    "questions": [
+      {
+        "cn": "看网课时，你能专心多久？",
+        "en": "How long can you stay focused during an online class?"
+      },
+      {
+        "cn": "你会开倍速看课程吗？",
+        "en": "Do you watch course videos at a faster speed?"
+      },
+      {
+        "cn": "线上学习和线下上课，你更容易走神的是哪个？",
+        "en": "Do you lose focus more easily online or in a classroom?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://ocw.mit.edu/",
+      "https://www.insidehighered.com/"
+    ],
+    "sourceNote": "MIT OpenCourseWare 官方开放课程站与 Inside Higher Ed 高等教育新闻站，2026-11-10 实抓均 HTTP 200，可用于线上学习形式与注意力管理话题。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  }
+]

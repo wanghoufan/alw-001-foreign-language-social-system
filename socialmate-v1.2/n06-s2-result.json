@@ -1,0 +1,216 @@
+{
+  "startedAt": "2026-11-09T17:03:17.219Z",
+  "target": "http://127.0.0.1:8791/v12/",
+  "chromeVersion": "Chrome/156.0.8078.81",
+  "checks": [
+    {
+      "name": "底部恰好五个 Tab：话题｜海南｜聊天｜关于我｜人物",
+      "ok": true,
+      "detail": "话题｜海南｜聊天｜关于我｜人物"
+    },
+    {
+      "name": "顶栏不重复显示「话题」页名",
+      "ok": true,
+      "detail": "{\"hasPageTitle\":false,\"topText\":\"⌕\\n新建\\n回收站\\n◐\\n⚙\",\"chipH\":35,\"chipFont\":\"15px\",\"gap\":\"6px\"}"
+    },
+    {
+      "name": "子标签高度 ≤ 36px 且间距 ≤ 8px",
+      "ok": true,
+      "detail": "h=35 gap=6px font=15px"
+    },
+    {
+      "name": "默认进入话题页且 6 个子标签齐全",
+      "ok": true,
+      "detail": "节日｜日常生活｜文化习俗｜健身运动｜我的作品｜更多"
+    },
+    {
+      "name": "默认子页为我的作品且作品入口可用",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "节日默认未来 14 天有候选卡片",
+      "ok": true,
+      "detail": "5"
+    },
+    {
+      "name": "「全部」展示 47 个候选节日",
+      "ok": true,
+      "detail": "47"
+    },
+    {
+      "name": "未核实日期标「日期待确认」而不是倒计时",
+      "ok": true,
+      "detail": "3"
+    },
+    {
+      "name": "每条话题提供可复制的英文问句",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "我的作品搜索可用且结果收窄",
+      "ok": true,
+      "detail": "26 → 1"
+    },
+    {
+      "name": "关于我搜索与新建/回收站已上移到顶栏",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "人物页搜索已上移到顶栏",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "默认主题为跟随系统（SYSTEM）",
+      "ok": true,
+      "detail": "system"
+    },
+    {
+      "name": "海南页搜索/新建/回收站/介绍语言已上移到顶栏",
+      "ok": true,
+      "detail": "{\"search\":true,\"lang\":true,\"fresh\":true,\"trash\":true}"
+    },
+    {
+      "name": "海南列表展示 115 个公开地点",
+      "ok": true,
+      "detail": "115"
+    },
+    {
+      "name": "骑楼老街详情显示 3 张可用图片与 1 / 3 计数",
+      "ok": true,
+      "detail": "{\"imgs\":3,\"count\":\"1 / 3\"}"
+    },
+    {
+      "name": "点图进入全屏并显示 1 / 3",
+      "ok": true,
+      "detail": "{\"open\":true,\"count\":\"1 / 3\"}"
+    },
+    {
+      "name": "全屏「下一张」切到 2 / 3",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "全屏可关闭",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "龙兴路显示真实缺图提示，不用其他地点图片替代",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "聊天底部出现节日关联小标签",
+      "ok": true,
+      "detail": "阵亡将士纪念日"
+    },
+    {
+      "name": "点节日标签给出中英问句与复制入口",
+      "ok": true,
+      "detail": "阵亡将士纪念日"
+    },
+    {
+      "name": "游玩记录编辑器含「识别预览」入口",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "整篇粘贴解析为 2 段 / 3 条表达",
+      "ok": true,
+      "detail": "{\"blocks\":2,\"expressions\":3}"
+    },
+    {
+      "name": "格式不完整时拒绝猜测并给出错误",
+      "ok": true,
+      "detail": "第 1 段：没有识别到「中文 + English」表达行。"
+    },
+    {
+      "name": "软件内版本号与构建配置一致",
+      "ok": true,
+      "detail": "0.9.17 / vc85"
+    },
+    {
+      "name": "375px 无横向溢出",
+      "ok": true,
+      "detail": "{\"w\":375,\"sw\":375,\"body\":375}"
+    },
+    {
+      "name": "393px 无横向溢出",
+      "ok": true,
+      "detail": "{\"w\":393,\"sw\":393,\"body\":393}"
+    },
+    {
+      "name": "430px 无横向溢出",
+      "ok": true,
+      "detail": "{\"w\":430,\"sw\":430,\"body\":430}"
+    },
+    {
+      "name": "520px 无横向溢出",
+      "ok": true,
+      "detail": "{\"w\":520,\"sw\":520,\"body\":520}"
+    },
+    {
+      "name": "页面运行无 JS 异常",
+      "ok": true,
+      "detail": ""
+    }
+  ],
+  "observations": [
+    {
+      "id": "record-ui",
+      "note": "浏览器直连 8791 时 /v12/api/places/:id 返回 401（无 UI token），记录编辑入口需真机 LocalServer 鉴权；本轮只验证解析器与模板入口。"
+    }
+  ],
+  "shots": [
+    "s2-01-topics-works.png",
+    "s2-02-festival-all.png",
+    "s2-03b-self-list.png",
+    "s2-03a-hainan-list.png",
+    "s2-03-hainan-gallery.png",
+    "s2-04-lightbox.png",
+    "s2-05-chat-festival.png"
+  ],
+  "jsErrors": [],
+  "logErrors": [
+    "Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+    "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+  ],
+  "netFailures": [],
+  "widths": [
+    {
+      "width": 375,
+      "w": 375,
+      "sw": 375,
+      "body": 375
+    },
+    {
+      "width": 393,
+      "w": 393,
+      "sw": 393,
+      "body": 393
+    },
+    {
+      "width": 430,
+      "w": 430,
+      "sw": 430,
+      "body": 430
+    },
+    {
+      "width": 520,
+      "w": 520,
+      "sw": 520,
+      "body": 520
+    }
+  ],
+  "finishedAt": "2026-11-09T17:03:31.648Z",
+  "totals": {
+    "pass": 31,
+    "fail": 0,
+    "shots": 7
+  }
+}

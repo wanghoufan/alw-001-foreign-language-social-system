@@ -1,0 +1,356 @@
+[
+  {
+    "id": "board-skateboarding",
+    "cn": "滑板",
+    "en": "Skateboarding",
+    "region": "国际",
+    "theme": "健身运动",
+    "subtheme": "板类与户外",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "在街头、广场或滑板场练动作，从推板、豚跳开始，摔跤是常态。很多人小时候玩过，聊第一块板、本地滑板场和喜欢的滑手都容易接上话。",
+    "briefEn": "Skateboarding happens on streets, plazas or in skate parks, starting with pushing and ollies, and falling is just part of it. It is easy to talk about because a lot of people had a board as kids, so asking about their first one, local spots and favorite skaters usually gets a conversation going.",
+    "questions": [
+      {
+        "cn": "你是从什么时候开始玩滑板的？",
+        "en": "When did you start skateboarding?"
+      },
+      {
+        "cn": "你们那边有专门的滑板场吗？",
+        "en": "Are there skate parks near where you live?"
+      },
+      {
+        "cn": "你以前会自己组装板吗？",
+        "en": "Did you use to put your own board together?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.worldskate.org/skateboarding.html"
+    ],
+    "sourceNote": "World Skate 官方 Skateboarding 项目页（世界轮滑与滑板运动管理机构），2026-11-10 实抓 HTTP 200，页面标题含 Skateboarding。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "board-surfing",
+    "cn": "冲浪",
+    "en": "Surfing",
+    "region": "国际",
+    "theme": "健身运动",
+    "subtheme": "板类与户外",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "冲浪要看浪况选时间，清晨的浪常常最好。沙滩浪和礁石浪不同，长板稳、短板灵活，入门先学追浪和起乘。聊本地浪点和最难忘的一次下海都很自然。",
+    "briefEn": "Surfing depends on the swell, so people watch the forecast and often go early in the morning when the waves are cleaner. Beach breaks and reef breaks feel different, longboards are stable and shortboards turn fast, and beginners usually learn by paddling for waves first. Ask about their local break and best session.",
+    "questions": [
+      {
+        "cn": "你一般多久下一次海？",
+        "en": "How often do you get out in the water?"
+      },
+      {
+        "cn": "你那边有固定的浪点吗？",
+        "en": "Do you have a spot you always surf at?"
+      },
+      {
+        "cn": "你玩长板还是短板？",
+        "en": "Do you ride a longboard or a shortboard?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.worldsurfleague.com/",
+      "https://beachsafe.org.au/"
+    ],
+    "sourceNote": "World Surf League 官网首页（职业冲浪国际赛事与浪况报道）与澳大利亚 Beachsafe 官方海滩安全信息平台，2026-11-10 实抓均 HTTP 200。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "board-snowboarding",
+    "cn": "单板滑雪",
+    "en": "Snowboarding",
+    "region": "国际",
+    "theme": "健身运动",
+    "subtheme": "板类与户外",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "单板滑雪双脚固定在同一块板上，侧身顺坡滑，雪场分道内和公园道具。第一季几乎都在摔，因此很好聊：第一次摔得多惨、常去哪个雪场。",
+    "briefEn": "On a snowboard both feet are locked onto one board and you ride sideways down the slope. Resorts have groomed runs plus terrain parks with jumps and rails. Almost everyone spends the first season falling, which makes it easy to talk about how rough day one was and which mountain they keep going back to.",
+    "questions": [
+      {
+        "cn": "你第一次上雪是不是摔得很惨？",
+        "en": "Was your first day on a board a total disaster?"
+      },
+      {
+        "cn": "你更喜欢道内还是公园？",
+        "en": "Do you prefer the groomed runs or the park?"
+      },
+      {
+        "cn": "你常去的是哪个雪场？",
+        "en": "Which mountain do you usually go to?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.fis-ski.com/snowboard-alpine",
+      "https://www.worldsnowboardfederation.org/"
+    ],
+    "sourceNote": "国际雪联 FIS 官方 Snowboard Alpine Hub 页与世界单板滑雪联合会官网首页，2026-11-10 实抓均 HTTP 200。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "board-alpine-skiing",
+    "cn": "双板滑雪",
+    "en": "Alpine skiing",
+    "region": "国际",
+    "theme": "健身运动",
+    "subtheme": "板类与户外",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "双板滑雪两只脚各踩一块板，面对山下顺坡滑，入门比单板快。雪场从缓坡到黑道分级清楚，欧洲不少人从小滑到大。聊雪季、常去的山都自然。",
+    "briefEn": "In alpine skiing you have a ski on each foot and face downhill, which most people find easier to pick up than snowboarding. Resorts grade runs from gentle slopes to steep blacks, and in Europe a lot of people started as kids and never stopped. Good topics are the season and the mountain they always return to.",
+    "questions": [
+      {
+        "cn": "你几岁开始学滑雪的？",
+        "en": "How old were you when you learned to ski?"
+      },
+      {
+        "cn": "你一般滑什么难度的雪道？",
+        "en": "What kind of runs do you usually ski?"
+      },
+      {
+        "cn": "你们那边滑雪季大概多长？",
+        "en": "How long is the ski season where you live?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.fis-ski.com/alpine-skiing"
+    ],
+    "sourceNote": "国际雪联 FIS 官方 Alpine Skiing Hub 页（高山滑雪项目与赛事信息），2026-11-10 实抓 HTTP 200，页面标题为 FIS | Alpine Skiing Hub。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "board-sup",
+    "cn": "桨板（SUP）",
+    "en": "Stand-up paddleboarding",
+    "region": "国际",
+    "theme": "健身运动",
+    "subtheme": "板类与户外",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "桨板是充气或硬板加一支桨，常在湖面、河湾和平静海面站着划。风浪大时很难站稳，出门习惯看天气。有休闲慢划也有竞速，聊第一次站起来的经历很好接。",
+    "briefEn": "Stand-up paddleboarding is a board plus a single paddle, and most people do it standing on lakes, calm rivers or sheltered sea. Wind and chop make balance hard, so checking the forecast becomes a habit. Some paddle casually, some race, and asking about the first time they actually stood up always gets a laugh.",
+    "questions": [
+      {
+        "cn": "你第一次站上桨板是不是马上就掉水里了？",
+        "en": "Did you fall in the first time you stood up on a board?"
+      },
+      {
+        "cn": "你一般在湖上划还是去海边？",
+        "en": "Do you usually paddle on a lake or out on the sea?"
+      },
+      {
+        "cn": "你玩的是充气板还是硬板？",
+        "en": "Do you use an inflatable board or a hard one?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.canoeicf.com/disciplines/stand-up-paddling"
+    ],
+    "sourceNote": "国际皮划艇联合会 ICF 官方 Stand Up Paddling 项目页（规则、板型与竞速说明），2026-11-10 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "board-roller-skating",
+    "cn": "轮滑/滑冰",
+    "en": "Roller skating and ice skating",
+    "region": "国际",
+    "theme": "健身运动",
+    "subtheme": "板类与户外",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "轮滑和滑冰一个是轮子一个是冰刀，感觉相近。轮滑多在广场和公园路面，滑冰在室内冰场，头盔护具都要戴。聊小时候玩不玩、现在还滑不滑很容易接。",
+    "briefEn": "Roller skating and ice skating feel similar even though one runs on wheels and the other on blades. Roller skating usually happens on plazas and paved park paths, while ice skating is indoors at a rink, and helmets and pads are standard. Asking whether they skated as a kid and still do now opens people up fast.",
+    "questions": [
+      {
+        "cn": "你小时候玩过轮滑吗？",
+        "en": "Did you roller skate when you were a kid?"
+      },
+      {
+        "cn": "你那边滑冰场好找吗？",
+        "en": "Is it easy to find an ice rink where you live?"
+      },
+      {
+        "cn": "你现在还会去滑吗？",
+        "en": "Do you still go skating these days?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.worldskate.org/roller-freestyle.html"
+    ],
+    "sourceNote": "World Skate 官方 Roller Freestyle 项目页（世界轮滑运动管理机构），2026-11-10 实抓 HTTP 200，页面标题含 Roller Freestyle。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "board-indoor-climbing",
+    "cn": "室内攀岩",
+    "en": "Indoor climbing",
+    "region": "国际",
+    "theme": "健身运动",
+    "subtheme": "板类与户外",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "室内攀岩分抱石和上绳，抱石墙矮、下面铺厚垫子，上绳要系绳保护。馆里用颜色标难度，从易到难。聊第一次爬和手上的茧子，气氛通常很轻松。",
+    "briefEn": "Indoor climbing comes in two main forms. Bouldering is short walls over thick mats with no rope, while top-rope and lead climbing use a harness and a belay partner. Gyms mark difficulty with colours and set routes that change often. Asking about their first session and the calluses on their hands is an easy, relaxed opener.",
+    "questions": [
+      {
+        "cn": "你第一次去攀岩馆是什么感觉？",
+        "en": "What was your first time at a climbing gym like?"
+      },
+      {
+        "cn": "你更喜欢抱石还是上绳？",
+        "en": "Do you prefer bouldering or climbing on a rope?"
+      },
+      {
+        "cn": "你现在的难度大概到哪一级？",
+        "en": "What grade are you climbing at now?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.ifsc-climbing.org/index.php/disciplines"
+    ],
+    "sourceNote": "国际攀岩联合会 IFSC 官方项目页（抱石、难度、速度三个分项说明），2026-11-10 实抓 HTTP 200。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "board-trail-running",
+    "cn": "越野跑",
+    "en": "Trail running",
+    "region": "国际",
+    "theme": "健身运动",
+    "subtheme": "板类与户外",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "越野跑在山径和土路上跑，上下坡多、路面不平，和公路跑很不一样。距离长短都有，更看重抓地鞋和水袋。聊常跑的路线和路上遇到的风景最容易接。",
+    "briefEn": "Trail running happens on dirt paths and mountain tracks, with plenty of climbs, descents and uneven ground, so it feels very different from road running. Distances range from a few kilometres to ultras, and gear matters more, especially grippy shoes and a hydration pack. Asking about their regular route and the scenery usually gets people talking.",
+    "questions": [
+      {
+        "cn": "你常跑的是哪条线路？",
+        "en": "Which trail do you usually run?"
+      },
+      {
+        "cn": "你跑过最长的距离是多少？",
+        "en": "What is the longest distance you have run?"
+      },
+      {
+        "cn": "跑山的时候你会带多少装备？",
+        "en": "How much gear do you carry on a trail run?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://worldathletics.org/disciplines/trail-running"
+    ],
+    "sourceNote": "世界田联 World Athletics 官方 Trail Running 项目页，2026-11-10 实抓 HTTP 200，页面标题为 Trail Running。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "board-mountain-biking",
+    "cn": "山地骑行",
+    "en": "Mountain biking",
+    "region": "国际",
+    "theme": "健身运动",
+    "subtheme": "板类与户外",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "山地骑行走土路和林道，有缓坡也有陡的速降道，车带避震、轮胎粗，护具也比公路车多。聊第一次摔车、常去的山和平时怎么修车都很好接。",
+    "briefEn": "Mountain biking means riding dirt roads and forest trails, from gentle cross-country loops to steep downhill tracks. Bikes have suspension and wide knobby tyres, and riders wear more protection than road cyclists do. Asking about their first crash, the hills they ride and how they keep the bike running is an easy way in.",
+    "questions": [
+      {
+        "cn": "你第一次骑山地车摔过吗？",
+        "en": "Did you crash on your first mountain bike ride?"
+      },
+      {
+        "cn": "你那边有可以骑的山道吗？",
+        "en": "Are there trails you can ride near where you live?"
+      },
+      {
+        "cn": "车是你自己保养吗？",
+        "en": "Do you do your own bike maintenance?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.uci.org/disciplines/all/2tLnZMo6WrUBplRXDxyEi7",
+      "https://www.uci.org/news/mountain-bike/7kanRwIStdaXG6Ee0LT3bS"
+    ],
+    "sourceNote": "国际自行车联盟 UCI 官方项目总览页（含 Mountain Bike 分项）与 UCI 山地车项目新闻页，2026-11-10 实抓均 HTTP 200，页面正文均含 Mountain Bike。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  },
+  {
+    "id": "board-camping",
+    "cn": "露营",
+    "en": "Camping",
+    "region": "国际",
+    "theme": "健身运动",
+    "subtheme": "板类与户外",
+    "dateRule": "",
+    "y2026": null,
+    "y2027": null,
+    "status": "evergreen",
+    "briefCn": "露营就是带帐篷或开房车，在营地过夜，做饭、生火、看星星是标配。营地多在国家公园和湖边，提前订位、收好食物。聊第一次露营和装备踩过的坑很好接。",
+    "briefEn": "Camping usually means a tent or an RV and a night at a campground, with cooking, a small fire and a sky full of stars as the standard package. Many sites sit inside national parks or beside lakes, so booking ahead and storing food properly matter. Asking about their first camping trip and gear they regret buying works every time.",
+    "questions": [
+      {
+        "cn": "你第一次露营是什么时候？",
+        "en": "When was your first camping trip?"
+      },
+      {
+        "cn": "你更喜欢帐篷还是房车？",
+        "en": "Do you prefer a tent or an RV?"
+      },
+      {
+        "cn": "你们那边营地要提前订吗？",
+        "en": "Do you have to book campsites ahead where you live?"
+      }
+    ],
+    "holidayType": "topic",
+    "sourceUrls": [
+      "https://www.nps.gov/subjects/camping/index.htm",
+      "https://www.recreation.gov/"
+    ],
+    "sourceNote": "美国国家公园管理局 NPS 官方 Camping 主题页（营地类型、预订与安全须知）与 Recreation.gov 官方营地预订平台，2026-11-10 实抓均 HTTP 200。",
+    "verifiedAt": "2026-11-10",
+    "relatedPlaceIds": []
+  }
+]

@@ -58,3 +58,32 @@
 - 2026-11-08 · OPPO 原生朗读 · 学习页「听本段」无声，`TTS_INITIALIZING` · 原生队列 provider 默认 `system`，OPPO `tts_default_synth=null` 无系统 TTS · 有豆包 Key 默认 `remote`，系统 TTS 只回退。`建议进用户级`
 - 2026-11-08 · 原生朗读 · `RejectedExecutionException`，队列 `TTS_INTERNAL_ERROR` · 线程池 `release()` 后仍被复用 · 改为按需重建（`isShutdown` 时新建）。`建议进用户级`
 - 2026-11-08 · 字号放大 · 卡片被撑到 463px、人物卡左侧字母头像占位 · 字号放大使 3 行截断失效；`.avatar` 占 40×40 · 恢复 `-webkit-line-clamp`、隐藏 `.person .avatar`；卡片 463→296px、人物卡 117→76px。`建议进用户级`
+
+## 2026-11-09 N06 原型 / 浏览器 QA 通道（用户立规）
+
+- 2026-11-09 · 页面/真机 QA 通道 · 直接用 `open` 或前台 Chrome 会弹出窗口、占用用户 profile 并抢焦点 · 本机默认 https 处理程序是 Google Chrome，裸 `open` 必然弹 Chrome · 浏览器 QA 统一走后端 MCP Neo：复用已登录旧标签，每轮最多新开 2 个测试页，结束关闭自开标签；MCP 不可用时退回无头 Chromium（Playwright 自带运行时），禁止碰用户主 Chrome。`建议进用户级`
+- 2026-11-09 · 并行子代理 · 反复权限确认会阻塞并行开发 · 子代理默认走自动审批模式，继承当前模型与主智能体自己的 Task 通道，不得绕到 orca 子代理通道；按文件/目录分轨，禁止多代理同改一文件。`建议进用户级`
+## 2026-11-09 N06 阶段 2 真机（本轮新增）
+
+- 2026-11-09 · 真机所有图片都不解码 · 海南列表封面与详情画廊 `complete=false`、`naturalWidth=0`，页面内 `fetch('/v12/img/...')` 挂起超时 · 一次挂起的图片请求堵住 LocalServer 串行处理，后续请求全部排队；`curl` 带正确 Host/Origin 直测图片 200/24ms · 先 `force-stop` + 重启 App 恢复，再取证；不要先改前端或判图片 404。`建议进用户级`
+- 2026-11-09 · 真机 CDP 点击导致误入记录详情 · `[data-open=place][data-id=3]` 未限定 `#results` 时命中画布外残留节点 · 选择器要限定可见列表容器（`#results …`），点后回读 drawer 标题再继续截图。
+
+## 2026-11-10 N06 阶段 3（本轮新增）
+
+- 2026-11-10 · 子代理内容收集 · 两次返回「还在努力学习」空话，文件未生成 · 任务范围过大/触发兜底 · 拆成单文件、限定 12–20 条、明确「只写文件 + 每条实抓来源」后成功；主代理回源抽检（香港天文台、Nager）再接入。`建议进用户级`
+- 2026-11-10 · 页面取词 · 点字幕词取不到词 · 只用 `textContent` 无法定位字符 · 用 `caretRangeFromPoint` 取光标词，优先长按选区；合成 click 需带真实 clientX/clientY。`建议进用户级`
+- 2026-11-10 · APK 内 AI 直连 · 页面新接口 401 `TOKEN_INVALID` · `LocalServer` 对 `/api/ai/*` 要求 `x-archive-token`，页面直连 fetch 不带 · 新接口显式带 `uiToken()`；旧 translate/analyze 同样风险待核。`建议进用户级`
+- 2026-11-10 · 无头验证 · 「0 JS 异常」被 favicon 404 判红 · 浏览器自动请求 `/favicon.ico`，服务未提供 · 资源 404 与业务异常分开记录，不断言为代码缺陷。
+- 2026-11-10 · 数据合并 · 手改单行 JSON 风险高 · N06_FEST 是 89KB 单行字面量 · 用 Node 脚本读取子代理 JSON、按 id 合并、再 `node --check` 验证内联脚本。`建议进用户级`
+- 2026-11-10 · 真机 CDP · 安装后 forward 9223 指向旧 socket · 进程 PID 变化，旧映射失效 · 按新 PID 重建 forward，收尾移除自己条目，不动他人 9461/9462。
+- 2026-11-10 · 内容二次扩充 · 同一天两版（0.9.16 → 0.9.17） · 首批 76 条后用户要求继续收集 · 补文化习俗 8 条、更多 12 条后共 96 条，必须 bump vc85 重新出包并覆盖安装；文档里的版本/SHA/条数同批改，不能只改一处。`建议进用户级`
+- 2026-11-10 · 分类维度 · 用户指出只有生活/文化/健身太少 · 96 条内容压在「更多」大杂烩 · 补球类 18、板类与户外 14、工作学习 20、家庭与关系 17、金钱健康科技 18，共 170 条；一级标签不增，页内按 `subtheme` 分组渲染，避免顶部标签继续膨胀。`建议进用户级`
+- 2026-11-10 · 球类内容 · 外国朋友爱打球，原有仅足球/篮球 · 缺乒乓球、网球、匹克球等 · 按项目一条，来源用国际单项联合会（ITTF/Wimbledon/Pickleball Canada/BWF/FIVB/WBSC/ICC/World Rugby/R&A/WPBSA/USBC/World Squash/IHF），便于后续按兴趣扩展。
+
+## 2026-11-10 体验修正（0.9.21）
+- 2026-11-10 · 点词提示勾选 · 页面根本没有该复选框，`cloudConsentChecked()` 恒 false，自动接话也从未触发 · 改版删了 UI 但门禁代码残留 · 取消门禁代码而不是把复选框加回来；移除前先 grep 所有 `cloudConsent/translateConsent/ttsConsent/aiConsent`。`建议进用户级`
+- 2026-11-10 · 翻译/接话 401 · APK 内 `/api/ai/*` 要求 `x-archive-token`，页面直连 fetch 未带 · 之前被 consent 门禁挡住没暴露 · 所有 `/api/ai/*` 页面请求统一带 `uiToken()`，并用真机回读验证。`建议进用户级`
+- 2026-11-10 · 接话显示 `[object Object]` · 真实 AI `reply` 是对象，渲染按字符串拼接 · 门禁取消后 AI 首次真正触发 · 新增 `aiReplyParts()` 兼容字符串/对象，网页断言检查无 `[object Object]`。`建议进用户级`
+- 2026-11-10 · 点词卡字号被放大 · 卡片内 p 继承全局 `p{font-size:19px!important}`，四问每条 134px、整卡 961px · 全局字号下限规则优先级最高 · 卡片作用域加 `!important` 覆盖；改完用 CDP 量 scrollHeight，目标 ≤ 视口。`建议进用户级`
+- 2026-11-10 · 复制提示受浏览器限制 · JS 合成 click 无用户手势，`execCommand('copy')` 与 clipboard 都被拒 · 真机验证不能用 `element.click()` 判剪贴板 · 用 CDP `Input.dispatchMouseEvent` 派发真实输入再读 toast；真实手指点击可正常复制。`建议进用户级`
+- 2026-11-10 · 英文问句断行难看 · 复制按钮与问句同行挤占 232px 宽 · 长英文在窄栏被挤成「it?」 · 按钮移到中文行右侧，英文独占整行；先量宽再调布局。`建议进用户级`
