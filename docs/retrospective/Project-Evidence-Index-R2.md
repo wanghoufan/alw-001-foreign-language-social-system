@@ -41,7 +41,7 @@
 ## 四、可复现命令
 
 ```bash
-cd "/Users/zzymima0000/Developer/coding/1.Active/alw-001-外语社交系统"
+cd "<工作区>/alw-001-外语社交系统"
 git rev-parse --short HEAD; git rev-list --count HEAD
 git rev-list --count bf1ceb4..HEAD
 git log --format='%h %ad %s' --date=short bf1ceb4..HEAD

@@ -21,7 +21,7 @@
 
 - **主张 A（V1.0 §8 A4）**：把「用户机器的绝对路径（会被写进提示词）」列为 **A 类硬阻塞**，理由是「目前硬编码在前端提示词里」。
 - **主张 B（V1.0）**：未单列此项。
-- **原始证据**：`public/index.html:104-105` 硬编码 `/Users/zzymima0000/Developer/coding/1.Active/alw-001-外语社交系统`；而 `server.mjs:46` 的 `/api/health` **已经返回 `dataDir` 字段**（`send(res,200,{ok:true,host:HOST,dataDir:DATA_DIR})`）。
+- **原始证据**：`public/index.html:104-105` 硬编码 `<工作区>/alw-001-外语社交系统`；而 `server.mjs:46` 的 `/api/health` **已经返回 `dataDir` 字段**（`send(res,200,{ok:true,host:HOST,dataDir:DATA_DIR})`）。
 - **判定**：**应降级为 B 类（开发者自办）**。理由：路径不需要用户「提供」，服务自己就知道；开发者应当在渲染提示词时从 `/api/health` 取 `dataDir` 注入，而不是问用户要。**把它列为 A 类会让「问用户」变成掩盖实现缺陷的借口。** A 的 §6「V1 必须有」第 14 条（A V1.1 §4）已经把它改成「不写死 / 运行时注入」，与本判定一致。
 - **仍不确定**：注入后提示词是否还需要在别处出现项目根路径——`index.html:106` 还引用了 `SocialMate-Data/00-README.md` 的相对路径，可由 `dataDir` 推导，**无阻塞**。
 

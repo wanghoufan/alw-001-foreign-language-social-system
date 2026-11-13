@@ -1,7 +1,7 @@
 # B 路 · 差距与返工根因 · V1.0
 
 - 项目：alw-001-外语社交系统（SocialMate）
-- 项目根：`/Users/zzymima0000/Developer/coding/1.Active/alw-001-外语社交系统`
+- 项目根：`<工作区>/alw-001-外语社交系统`
 - 执行标识：CB-Agent-R2（并发批次 R2-②）
 - 取证时间：2026-10-31
 - HEAD：`a9cc03251f9be900b36c3bc66c4ba98eb55b564b`（`a9cc032`），提交数 12，分支 `main`
@@ -52,7 +52,7 @@
 | G6 | 口语练习产物规范 | §9.4 只要 7 条文字复盘 | `994fa56` 补完整产物链（文件名/YAML/8 章节/禁补造） | 已定型并写入 README、模板、测试 | `index.html:194-218`；`test:49-54` |
 | G7 | 部署方式 | §15 未提 Docker；§2.2 只说绑 127.0.0.1 | `994fa56` 上 Docker（只读根/cap_drop/非 root） | 已部署运行 | `Dockerfile:1-18`；`compose.yaml` |
 | G8 | 数据规范真源 | §12 要求生成 `00-README.md` 写清规范 | 生成器版本与手改版本**已分叉**（手改版多一章） | 未处理 | `initialize-data.mjs:6` vs `SocialMate-Data/00-README.md` |
-| G9 | 机器相关路径 | 未提 | 前端提示词硬编码 `/Users/zzymima0000/...` | 未处理 | `index.html:104-105` |
+| G9 | 机器相关路径 | 未提 | 前端提示词硬编码 `~/...` | 未处理 | `index.html:104-105` |
 | G10 | 静态资源可达性 | 未提 | `server.mjs` 只白名单 `/` 与 `/styles.css`；favicon 404 | 记 HANDOFF 小瑕疵，未处理 | `server.mjs:104-111`；HANDOFF.md:22 |
 | G11 | 验收命令与 UI 测试 | §13 定义 Test A–G | 后端 7/7（实测通过）；UI 零自动化；README 写的命令带目录参数会失败 | 部分达标 | `test/acceptance.test.mjs`；README.md:60 |
 | G12 | 变更可追溯性 | §17 要求「完成后一次性汇报」 | `CHANGELOG.md` 只有 2026-10-06 一条；`f2e4dbc`/`00aec27`/`262ac05` 提交说明体为空 | 未达标 | `CHANGELOG.md:1-7`；`git log` body |
@@ -177,7 +177,7 @@
 
 | 编号 | 七问浓缩 | 责任区 | 返工分类 |
 |---|---|---|---|
-| G9 | 前端提示词硬编码 `/Users/zzymima0000/Developer/coding/1.Active/alw-001-外语社交系统`（`index.html:104-105`）。原：未提。现：写死。差：换机器即失效且把个人路径带进版本库。应为：改成运行时注入或从 `/api/health` 的 `dataDir` 取（该接口已返回 `dataDir`，`server.mjs:46`）。 | 开发者负责解决 | Agent/流程失误 |
+| G9 | 前端提示词硬编码 `<工作区>/alw-001-外语社交系统`（`index.html:104-105`）。原：未提。现：写死。差：换机器即失效且把个人路径带进版本库。应为：改成运行时注入或从 `/api/health` 的 `dataDir` 取（该接口已返回 `dataDir`，`server.mjs:46`）。 | 开发者负责解决 | Agent/流程失误 |
 | G10 | 静态白名单只服务 `/` 与 `/styles.css`（`server.mjs:104-111`），`assets/*.png` 不在服务范围、favicon 404（HANDOFF.md:22）。原：未提。差：README 里 3 张截图是仓库相对路径，浏览器永远取不到。 | 开发者负责解决 | 可预防（若 Day1 定义了「README 截图 vs 站点资源」的区别） |
 | G11 | 验收：后端 7/7 实测通过；UI 零自动化，仅 HANDOFF.md:15 人工记录；README.md:60 写的 `node --test` 在带目录参数时报 `MODULE_NOT_FOUND`。原 §13 定义了 Test A–G。差：验收命令没固化、UI 无回归。 | 计划者应主动发现 + 开发者负责解决 | 可预防 |
 | G12 | 变更可追溯性：`CHANGELOG.md` 仅 2026-10-06 一条；`f2e4dbc`/`00aec27`/`262ac05` 的提交说明体为空（只有标题行），「为什么改」无记录；HANDOFF.md 是未提交的工作树文件。 | 开发者负责解决 | Agent/流程失误 |
@@ -288,7 +288,7 @@
 
 后果在 2026-10-11 集中爆发：`b8b78df`（13:32）一口气 +515 行做三主题与一堆交互优化；3 分钟后 `f2e4dbc` 把切换器从下拉菜单改成分段按钮；50 分钟后 `00aec27` 删掉「跟随系统」并把默认改成晨光；58 分钟后 `262ac05` 把顶栏 tabs 整体换成左侧边栏。四次提交，三次是推翻刚做完的东西，而这三个答案——主题几套、切换器长什么样、导航放左边还是上边——全都是用户第一次开口就能回答的。更刺眼的是 `docs/handoff/HANDOFF.md` 写于 14:14，8 分钟后就被 `00aec27` 推翻，16 分钟后被 `262ac05` 再次推翻，而这份交接文档至今未提交（`git status --porcelain` = `?? docs/`），意味着仓库里连一份「当时认可的是什么」都留不下来。
 
-第二个根因是「真源可以不止一个」这件事没有被当成纪律。数据规范 `00-README.md` 同时存在于 `scripts/initialize-data.mjs:6` 的模板和被手改的磁盘文件里，前者没有「口语练习学习材料」那一章，后者有；因为初始化用 `flag:'wx'` 永不覆盖（`initialize-data.mjs:23`），这个差异会永久保留，并在换机器重新初始化时静默降级。同一类问题出现在部署侧：代码副本与 HEAD 逐字节一致（实测 diff 0 行，这点做对了），但数据副本 `~/DockerData/alw-001-foreign-language-social-system/` 的 mtime 停在 2026-10-05 11:10~11:11，与项目内数据目录不构成可验证的同一份。再加前端提示词里硬编码的 `/Users/zzymima0000/Developer/coding/1.Active/alw-001-外语社交系统`（`index.html:104-105`），结论是：**这个项目目前只在这台机器的这个路径下成立**。
+第二个根因是「真源可以不止一个」这件事没有被当成纪律。数据规范 `00-README.md` 同时存在于 `scripts/initialize-data.mjs:6` 的模板和被手改的磁盘文件里，前者没有「口语练习学习材料」那一章，后者有；因为初始化用 `flag:'wx'` 永不覆盖（`initialize-data.mjs:23`），这个差异会永久保留，并在换机器重新初始化时静默降级。同一类问题出现在部署侧：代码副本与 HEAD 逐字节一致（实测 diff 0 行，这点做对了），但数据副本 `~/DockerData/alw-001-foreign-language-social-system/` 的 mtime 停在 2026-10-05 11:10~11:11，与项目内数据目录不构成可验证的同一份。再加前端提示词里硬编码的 `<工作区>/alw-001-外语社交系统`（`index.html:104-105`），结论是：**这个项目目前只在这台机器的这个路径下成立**。
 
 第三个根因是质量验证的两头不均衡。后端很强：`test/acceptance.test.mjs` 的 7 个用例本次实测 7/7 通过，连「预览后文件被并发修改 → apply 返回 409」「`../README.md` → 400」这类边界都测到了。前端为零：没有 UI 自动化，界面正确性只靠 HANDOFF.md:15 一句人工记录；而 `test:51-54` 用「HTML 字符串包含」来断言前端，导致改一句中文文案就会让测试变红——这是脆弱测试，不是真回归。验收命令也没固化：README.md:60 写 `node --test`，实测带目录参数会报 `MODULE_NOT_FOUND`。
 
