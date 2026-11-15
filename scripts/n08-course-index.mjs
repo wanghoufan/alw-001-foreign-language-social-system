@@ -540,6 +540,9 @@ function normalizeSentence(s) {
 }
 
 /** 选 1–3 条原句：纯英文对话段优先，同一行最多 2 条，按行号稳定排序。 */
+// 按课程实际内容取，不硬凑也不硬砍；上限只防极端长课刷屏
+const MAX_PER_COURSE = 999;
+
 function pickSentences(candidates) {
   const repRank = (c) => (c.zhHint ? 0 : 2) + (c.pureEnglish ? 0 : 1);
   const groups = new Map();
@@ -558,7 +561,7 @@ function pickSentences(candidates) {
   const picked = [];
   const perLine = new Map();
   for (const it of sorted) {
-    if (picked.length >= 3) break;
+    if (picked.length >= MAX_PER_COURSE) break;
     const n = perLine.get(it.sourceLine) || 0;
     if (n >= 2) continue;
     perLine.set(it.sourceLine, n + 1);
@@ -688,7 +691,7 @@ function main() {
     let picked = pickSentences(p.candidates);
     let fallbackUsed = false;
     if (!picked.length && Array.isArray(p.lines) && p.lines.length) {
-      const fb = phraseCandidates(p.lines).slice(0, 3);
+      const fb = phraseCandidates(p.lines).slice(0, MAX_PER_COURSE);
       if (fb.length) { picked = fb; fallbackUsed = true; }
     }
     const items = picked.map((it) => ({

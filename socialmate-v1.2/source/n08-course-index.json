@@ -13,8 +13,8 @@
   "gapNote": "差额未经核实：只读扫描全部 .md 后仍差 5 节，源目录未发现其它存放位置，不补齐、不生成不存在的课程。见 missing（编号空洞，verified=false）与 unreadable（读不到的文件）。",
   "chapterSumOfRanges": 105,
   "chapterCount": 7,
-  "sentenceTotal": 280,
-  "zhHintCount": 11,
+  "sentenceTotal": 669,
+  "zhHintCount": 30,
   "coursesWithoutEnglishSentence": [
     "4第四章：购物与消费/56.Daniel趣味分享.md"
   ],
@@ -221,7 +221,18 @@
       "sentences": [
         "I have three siblings in my family",
         "How many siblings do you have",
-        "I don't have any siblings"
+        "I don't have any siblings",
+        "I dont have any siblings",
+        "enjoy reading books",
+        "I love traveling",
+        "but at the moment he lives in China",
+        "but at the moment he lives in",
+        "The United States of America",
+        "I'm from Hong Kong, China",
+        "I am an only child",
+        "The United Kingdom",
+        "He's from the USA",
+        "I'm an only child"
       ],
       "zhHint": "",
       "keywords": [
@@ -253,6 +264,94 @@
             "I don't have any siblings"
           ],
           "sourceLine": 39
+        },
+        {
+          "text": "I dont have any siblings",
+          "zhHint": "",
+          "keywords": [
+            "I dont have any siblings"
+          ],
+          "sourceLine": 13
+        },
+        {
+          "text": "enjoy reading books",
+          "zhHint": "",
+          "keywords": [
+            "enjoy reading books"
+          ],
+          "sourceLine": 33
+        },
+        {
+          "text": "I love traveling",
+          "zhHint": "",
+          "keywords": [
+            "I love traveling"
+          ],
+          "sourceLine": 33
+        },
+        {
+          "text": "but at the moment he lives in China",
+          "zhHint": "",
+          "keywords": [
+            "but at the moment he lives in China"
+          ],
+          "sourceLine": 29
+        },
+        {
+          "text": "but at the moment he lives in",
+          "zhHint": "",
+          "keywords": [
+            "but at the moment he lives in"
+          ],
+          "sourceLine": 9
+        },
+        {
+          "text": "The United States of America",
+          "zhHint": "",
+          "keywords": [
+            "The United States of America"
+          ],
+          "sourceLine": 29
+        },
+        {
+          "text": "I'm from Hong Kong, China",
+          "zhHint": "",
+          "keywords": [
+            "I'm from Hong Kong, China"
+          ],
+          "sourceLine": 47
+        },
+        {
+          "text": "I am an only child",
+          "zhHint": "",
+          "keywords": [
+            "I am an only child"
+          ],
+          "sourceLine": 13
+        },
+        {
+          "text": "The United Kingdom",
+          "zhHint": "",
+          "keywords": [
+            "The United Kingdom"
+          ],
+          "sourceLine": 29
+        },
+        {
+          "text": "He's from the USA",
+          "zhHint": "",
+          "keywords": [
+            "He's from the USA"
+          ],
+          "sourceLine": 27
+        },
+        {
+          "text": "I'm an only child",
+          "zhHint": "",
+          "keywords": [
+            "I'm an only child"
+          ],
+          "sourceLine": 43
         }
       ]
     },
@@ -266,7 +365,12 @@
       "sentences": [
         "How do you describe a family vacation?",
         "There are many fun activities we can enjoy as a family, and having a movie night is one of them.",
-        "We have a movie night as a family every Friday."
+        "We have a movie night as a family every Friday.",
+        "What kind of movies do you like?",
+        "What kind of sports do you like?",
+        "What's this action movie like?",
+        "What kind of action movie do you like?",
+        "Do you usually go on vacation with your family?"
       ],
       "zhHint": "",
       "keywords": [
@@ -299,6 +403,46 @@
             "have a movie"
           ],
           "sourceLine": 48
+        },
+        {
+          "text": "What kind of movies do you like?",
+          "zhHint": "你喜欢看什么类型的电影？",
+          "keywords": [
+            "movies do"
+          ],
+          "sourceLine": 62
+        },
+        {
+          "text": "What kind of sports do you like?",
+          "zhHint": "",
+          "keywords": [
+            "sports do"
+          ],
+          "sourceLine": 62
+        },
+        {
+          "text": "What's this action movie like?",
+          "zhHint": "",
+          "keywords": [
+            "action movie"
+          ],
+          "sourceLine": 64
+        },
+        {
+          "text": "What kind of action movie do you like?",
+          "zhHint": "",
+          "keywords": [
+            "action movie"
+          ],
+          "sourceLine": 64
+        },
+        {
+          "text": "Do you usually go on vacation with your family?",
+          "zhHint": "",
+          "keywords": [
+            "go on vacation"
+          ],
+          "sourceLine": 66
         }
       ]
     },
@@ -398,7 +542,8 @@
       "sentences": [
         "I need to feed my dog twice a day.",
         "I have a dog named Buddy.",
-        "I have a cat named Whiskers."
+        "I have a cat named Whiskers.",
+        "I have a pet cat."
       ],
       "zhHint": "",
       "keywords": [
@@ -432,6 +577,14 @@
             "cat named Whiskers"
           ],
           "sourceLine": 31
+        },
+        {
+          "text": "I have a pet cat.",
+          "zhHint": "",
+          "keywords": [
+            "have a pet"
+          ],
+          "sourceLine": 35
         }
       ]
     },
@@ -445,7 +598,8 @@
       "sentences": [
         "I love playing with my pet in the park.",
         "We play fetch or run around with my pet.",
-        "I love playing with my pet."
+        "I love playing with my pet.",
+        "Normally, keeping your pet clean is important."
       ],
       "zhHint": "",
       "keywords": [
@@ -478,6 +632,14 @@
             "love playing"
           ],
           "sourceLine": 43
+        },
+        {
+          "text": "Normally, keeping your pet clean is important.",
+          "zhHint": "",
+          "keywords": [
+            "pet clean"
+          ],
+          "sourceLine": 43
         }
       ]
     },
@@ -491,7 +653,8 @@
       "sentences": [
         "I have a lot of friends, we often get together, and to spend time with friends is always very good.",
         "I'm excited to invite you to a birthday party.",
-        "I'm hosting a party for my daughter at 7pm this Saturday at my house."
+        "I'm hosting a party for my daughter at 7pm this Saturday at my house.",
+        "I am excited to invite you to a birthday party."
       ],
       "zhHint": "",
       "keywords": [
@@ -524,6 +687,15 @@
             "hosting a party"
           ],
           "sourceLine": 40
+        },
+        {
+          "text": "I am excited to invite you to a birthday party.",
+          "zhHint": "",
+          "keywords": [
+            "excited to invite",
+            "birthday party"
+          ],
+          "sourceLine": 42
         }
       ]
     },
@@ -536,8 +708,14 @@
       "title": "9.朋友聚会（下）",
       "sentences": [
         "What do you usually do with your old friends?",
+        "Spending time with friends is important.",
+        "Sometimes, we just meet up to catch up on each other's lives.",
         "I have prior commitments that I can't cancel.",
-        "So I won't be able to make it this time."
+        "So I won't be able to make it this time.",
+        "Thank you so much for inviting me to get together this Saturday.",
+        "I really appreciate the invitation.",
+        "Unfortunately, I have prior commitments.",
+        "I hope you have a wonderful time."
       ],
       "zhHint": "",
       "keywords": [
@@ -555,6 +733,22 @@
           "sourceLine": 27
         },
         {
+          "text": "Spending time with friends is important.",
+          "zhHint": "",
+          "keywords": [
+            "time with friends"
+          ],
+          "sourceLine": 31
+        },
+        {
+          "text": "Sometimes, we just meet up to catch up on each other's lives.",
+          "zhHint": "",
+          "keywords": [
+            "other's lives"
+          ],
+          "sourceLine": 31
+        },
+        {
           "text": "I have prior commitments that I can't cancel.",
           "zhHint": "",
           "keywords": [
@@ -570,6 +764,38 @@
             "able to make"
           ],
           "sourceLine": 45
+        },
+        {
+          "text": "Thank you so much for inviting me to get together this Saturday.",
+          "zhHint": "",
+          "keywords": [
+            "together this"
+          ],
+          "sourceLine": 49
+        },
+        {
+          "text": "I really appreciate the invitation.",
+          "zhHint": "",
+          "keywords": [
+            "appreciate the invitation"
+          ],
+          "sourceLine": 49
+        },
+        {
+          "text": "Unfortunately, I have prior commitments.",
+          "zhHint": "我已经答应了别人了。",
+          "keywords": [
+            "have prior commitments"
+          ],
+          "sourceLine": 53
+        },
+        {
+          "text": "I hope you have a wonderful time.",
+          "zhHint": "",
+          "keywords": [
+            "have a wonderful"
+          ],
+          "sourceLine": 53
         }
       ]
     },
@@ -583,7 +809,15 @@
       "sentences": [
         "Hi, we are going to get you.",
         "What do you have for the beer?",
-        "What can I get you?"
+        "What can I get you?",
+        "Hi, what can I get you?",
+        "I've changed my mind, I'll have a whisky on the rocks, please.",
+        "What's your last name?",
+        "Can I start a tab?",
+        "Yo baby, what do you think?",
+        "Hey man, you're wasted!",
+        "I can't drink anymore?",
+        "I'll have a whiskey on the rocks please."
       ],
       "zhHint": "",
       "keywords": [
@@ -613,6 +847,66 @@
           "zhHint": "",
           "keywords": [],
           "sourceLine": 29
+        },
+        {
+          "text": "Hi, what can I get you?",
+          "zhHint": "",
+          "keywords": [],
+          "sourceLine": 29
+        },
+        {
+          "text": "I've changed my mind, I'll have a whisky on the rocks, please.",
+          "zhHint": "",
+          "keywords": [
+            "have a whisky"
+          ],
+          "sourceLine": 39
+        },
+        {
+          "text": "What's your last name?",
+          "zhHint": "",
+          "keywords": [
+            "last name"
+          ],
+          "sourceLine": 53
+        },
+        {
+          "text": "Can I start a tab?",
+          "zhHint": "",
+          "keywords": [
+            "start a tab"
+          ],
+          "sourceLine": 55
+        },
+        {
+          "text": "Yo baby, what do you think?",
+          "zhHint": "",
+          "keywords": [
+            "Yo baby"
+          ],
+          "sourceLine": 61
+        },
+        {
+          "text": "Hey man, you're wasted!",
+          "zhHint": "",
+          "keywords": [],
+          "sourceLine": 61
+        },
+        {
+          "text": "I can't drink anymore?",
+          "zhHint": "",
+          "keywords": [
+            "can't drink anymore"
+          ],
+          "sourceLine": 63
+        },
+        {
+          "text": "I'll have a whiskey on the rocks please.",
+          "zhHint": "",
+          "keywords": [
+            "have a whiskey"
+          ],
+          "sourceLine": 67
         }
       ]
     },
@@ -625,8 +919,13 @@
       "title": "11.情侣关系（上）",
       "sentences": [
         "A good relationship relies on trust and communication.",
+        "Trust is the foundation of a strong relationship.",
+        "Trust is the foundation.",
+        "We have a strong relationship.",
+        "Communication is key to a healthy relationship.",
         "Compromise is important in any relationship.",
-        "We work together to find a middle ground when we disagree."
+        "We work together to find a middle ground when we disagree.",
+        "I love this word."
       ],
       "zhHint": "",
       "keywords": [
@@ -644,6 +943,38 @@
           "sourceLine": 31
         },
         {
+          "text": "Trust is the foundation of a strong relationship.",
+          "zhHint": "",
+          "keywords": [
+            "strong relationship"
+          ],
+          "sourceLine": 41
+        },
+        {
+          "text": "Trust is the foundation.",
+          "zhHint": "",
+          "keywords": [
+            "the foundation"
+          ],
+          "sourceLine": 41
+        },
+        {
+          "text": "We have a strong relationship.",
+          "zhHint": "",
+          "keywords": [
+            "have a strong"
+          ],
+          "sourceLine": 45
+        },
+        {
+          "text": "Communication is key to a healthy relationship.",
+          "zhHint": "",
+          "keywords": [
+            "healthy relationship"
+          ],
+          "sourceLine": 49
+        },
+        {
           "text": "Compromise is important in any relationship.",
           "zhHint": "",
           "keywords": [
@@ -659,6 +990,14 @@
             "middle ground"
           ],
           "sourceLine": 57
+        },
+        {
+          "text": "I love this word.",
+          "zhHint": "",
+          "keywords": [
+            "love this"
+          ],
+          "sourceLine": 61
         }
       ]
     },
@@ -671,8 +1010,14 @@
       "title": "12.情侣关系（下）",
       "sentences": [
         "In this class, we'll discuss the different ways to maintain a high quality relationship with your loved one.",
+        "We need to spend more quality time together.",
+        "I spend time reading every day.",
+        "I spend time playing every day.",
+        "Quality time means focusing on each other's needs without distractions.",
+        "What does quality time mean?",
         "A good partner also provides love, intimacy, support, and commitment.",
-        "These emotional aspects are key to maintaining a happy relationship."
+        "These emotional aspects are key to maintaining a happy relationship.",
+        "I will support her no matter what."
       ],
       "zhHint": "",
       "keywords": [
@@ -694,6 +1039,48 @@
           "sourceLine": 23
         },
         {
+          "text": "We need to spend more quality time together.",
+          "zhHint": "",
+          "keywords": [
+            "need to spend",
+            "quality time together"
+          ],
+          "sourceLine": 31
+        },
+        {
+          "text": "I spend time reading every day.",
+          "zhHint": "",
+          "keywords": [
+            "spend time"
+          ],
+          "sourceLine": 33
+        },
+        {
+          "text": "I spend time playing every day.",
+          "zhHint": "",
+          "keywords": [
+            "spend time"
+          ],
+          "sourceLine": 33
+        },
+        {
+          "text": "Quality time means focusing on each other's needs without distractions.",
+          "zhHint": "",
+          "keywords": [
+            "time means focusing",
+            "needs without distractions"
+          ],
+          "sourceLine": 35
+        },
+        {
+          "text": "What does quality time mean?",
+          "zhHint": "",
+          "keywords": [
+            "quality time mean"
+          ],
+          "sourceLine": 39
+        },
+        {
           "text": "A good partner also provides love, intimacy, support, and commitment.",
           "zhHint": "",
           "keywords": [
@@ -710,6 +1097,14 @@
             "maintaining a happy"
           ],
           "sourceLine": 41
+        },
+        {
+          "text": "I will support her no matter what.",
+          "zhHint": "",
+          "keywords": [
+            "support her"
+          ],
+          "sourceLine": 53
         }
       ]
     },
@@ -723,7 +1118,8 @@
       "sentences": [
         "Doesn't that sound terrible?",
         "It means good luck to you.",
-        "So don't get angry when someone says this to you."
+        "So don't get angry when someone says this to you.",
+        "Instead, you should smile and say a big thank you."
       ],
       "zhHint": "",
       "keywords": [
@@ -755,6 +1151,14 @@
             "angry when"
           ],
           "sourceLine": 30
+        },
+        {
+          "text": "Instead, you should smile and say a big thank you.",
+          "zhHint": "",
+          "keywords": [
+            "say a big"
+          ],
+          "sourceLine": 30
         }
       ]
     },
@@ -766,17 +1170,56 @@
       "file": "2第二章：旅行和旅游/14.机票预定（上）.md",
       "title": "14.机票预定（上）",
       "sentences": [
+        "Review and confirm and finally make payment.",
+        "Could you please check the availability of flights to Los Angeles?",
+        "What is your preferred departure date?",
+        "Can you confirm my flight booking?",
         "What can you say if you want to book a flight?",
         "\"How much baggage allowance do I have?",
+        "Could you check if there are any seats available on the flight from New York to Washington DC on September 10th?",
+        "If there are any seats available on the flight from New York to Washington DC on September 10th.",
         "What can you say to inquire your baggage allowance?"
       ],
       "zhHint": "",
       "keywords": [
-        "book a flight"
+        "finally make payment"
       ],
-      "sourceLine": 50,
+      "sourceLine": 24,
       "extract": "sentence",
       "items": [
+        {
+          "text": "Review and confirm and finally make payment.",
+          "zhHint": "",
+          "keywords": [
+            "finally make payment"
+          ],
+          "sourceLine": 24
+        },
+        {
+          "text": "Could you please check the availability of flights to Los Angeles?",
+          "zhHint": "",
+          "keywords": [
+            "availability of flights",
+            "Los Angeles"
+          ],
+          "sourceLine": 34
+        },
+        {
+          "text": "What is your preferred departure date?",
+          "zhHint": "",
+          "keywords": [
+            "preferred departure date"
+          ],
+          "sourceLine": 40
+        },
+        {
+          "text": "Can you confirm my flight booking?",
+          "zhHint": "",
+          "keywords": [
+            "flight booking"
+          ],
+          "sourceLine": 44
+        },
         {
           "text": "What can you say if you want to book a flight?",
           "zhHint": "",
@@ -792,6 +1235,26 @@
             "baggage allowance"
           ],
           "sourceLine": 54
+        },
+        {
+          "text": "Could you check if there are any seats available on the flight from New York to Washington DC on September 10th?",
+          "zhHint": "",
+          "keywords": [
+            "seats available",
+            "New York",
+            "DC on September"
+          ],
+          "sourceLine": 56
+        },
+        {
+          "text": "If there are any seats available on the flight from New York to Washington DC on September 10th.",
+          "zhHint": "",
+          "keywords": [
+            "seats available",
+            "New York",
+            "DC on September"
+          ],
+          "sourceLine": 60
         },
         {
           "text": "What can you say to inquire your baggage allowance?",
@@ -813,8 +1276,19 @@
       "title": "16.Y飞机点餐",
       "sentences": [
         "Would you like the beef or the chicken?",
+        "I'll have the chicken please.",
+        "I'll have the pasta please.",
+        "I'll have the bread roll please.",
+        "What would you like to drink?",
+        "I'd like some apple juice if you have it.",
+        "Do you guys have a child meal?",
         "Yes, we have pasta and mashed potatoes.",
-        "Which one would you prefer?"
+        "Which one would you prefer?",
+        "Do you guys have a baby meal?",
+        "Do you guys have a chair?",
+        "Sorry, I'm still hungry.",
+        "Can I have an extra sandwich?",
+        "How can I help you?"
       ],
       "zhHint": "",
       "keywords": [
@@ -832,6 +1306,52 @@
           "sourceLine": 31
         },
         {
+          "text": "I'll have the chicken please.",
+          "zhHint": "",
+          "keywords": [
+            "have the chicken"
+          ],
+          "sourceLine": 31
+        },
+        {
+          "text": "I'll have the pasta please.",
+          "zhHint": "",
+          "keywords": [
+            "have the pasta"
+          ],
+          "sourceLine": 41
+        },
+        {
+          "text": "I'll have the bread roll please.",
+          "zhHint": "",
+          "keywords": [
+            "have the bread"
+          ],
+          "sourceLine": 41
+        },
+        {
+          "text": "What would you like to drink?",
+          "zhHint": "",
+          "keywords": [],
+          "sourceLine": 53
+        },
+        {
+          "text": "I'd like some apple juice if you have it.",
+          "zhHint": "",
+          "keywords": [
+            "apple juice"
+          ],
+          "sourceLine": 53
+        },
+        {
+          "text": "Do you guys have a child meal?",
+          "zhHint": "你们有儿童餐吗？",
+          "keywords": [
+            "have a child"
+          ],
+          "sourceLine": 69
+        },
+        {
           "text": "Yes, we have pasta and mashed potatoes.",
           "zhHint": "",
           "keywords": [
@@ -847,6 +1367,44 @@
             "Which one"
           ],
           "sourceLine": 71
+        },
+        {
+          "text": "Do you guys have a baby meal?",
+          "zhHint": "",
+          "keywords": [
+            "have a baby"
+          ],
+          "sourceLine": 77
+        },
+        {
+          "text": "Do you guys have a chair?",
+          "zhHint": "",
+          "keywords": [
+            "have a chair"
+          ],
+          "sourceLine": 77
+        },
+        {
+          "text": "Sorry, I'm still hungry.",
+          "zhHint": "",
+          "keywords": [],
+          "sourceLine": 85
+        },
+        {
+          "text": "Can I have an extra sandwich?",
+          "zhHint": "",
+          "keywords": [
+            "have an extra"
+          ],
+          "sourceLine": 85
+        },
+        {
+          "text": "How can I help you?",
+          "zhHint": "",
+          "keywords": [
+            "help you"
+          ],
+          "sourceLine": 87
         }
       ]
     },
@@ -860,7 +1418,26 @@
       "sentences": [
         "Sure, I would love to.",
         "Could you help me find a place for my bike?",
-        "Could you help me find a place for my backpack?"
+        "Could you help me find a place for my backpack?",
+        "Could you help me find a place for my bag?",
+        "Excuse me, it's really chilly here.",
+        "Can I have a blanket?",
+        "It's really chilly here.",
+        "Can I have a glass of water?",
+        "Can I have a glass of wine?",
+        "Can I have a coffee?",
+        "Can I have a snack?",
+        "Hi, can I have a blanket?",
+        "I see that there are some empty seats.",
+        "Can I take the window seat over there?",
+        "Can I take the aisle seat over there?",
+        "Can I take the middle seat over there?",
+        "It's a long journey.",
+        "We still have six hours left.",
+        "How long will it take to reach New York?",
+        "How long is the flight?",
+        "How long will it take to reach Canada?",
+        "How long will it take to arrive in New York?"
       ],
       "zhHint": "",
       "keywords": [
@@ -892,6 +1469,160 @@
             "find a place"
           ],
           "sourceLine": 34
+        },
+        {
+          "text": "Could you help me find a place for my bag?",
+          "zhHint": "打喷嚏……又不打。",
+          "keywords": [
+            "find a place"
+          ],
+          "sourceLine": 36
+        },
+        {
+          "text": "Excuse me, it's really chilly here.",
+          "zhHint": "",
+          "keywords": [
+            "chilly here"
+          ],
+          "sourceLine": 40
+        },
+        {
+          "text": "Can I have a blanket?",
+          "zhHint": "",
+          "keywords": [
+            "have a blanket"
+          ],
+          "sourceLine": 40
+        },
+        {
+          "text": "It's really chilly here.",
+          "zhHint": "",
+          "keywords": [
+            "chilly here"
+          ],
+          "sourceLine": 42
+        },
+        {
+          "text": "Can I have a glass of water?",
+          "zhHint": "",
+          "keywords": [
+            "glass of water"
+          ],
+          "sourceLine": 46
+        },
+        {
+          "text": "Can I have a glass of wine?",
+          "zhHint": "",
+          "keywords": [
+            "glass of wine"
+          ],
+          "sourceLine": 46
+        },
+        {
+          "text": "Can I have a coffee?",
+          "zhHint": "",
+          "keywords": [
+            "have a coffee"
+          ],
+          "sourceLine": 48
+        },
+        {
+          "text": "Can I have a snack?",
+          "zhHint": "",
+          "keywords": [
+            "have a snack"
+          ],
+          "sourceLine": 48
+        },
+        {
+          "text": "Hi, can I have a blanket?",
+          "zhHint": "",
+          "keywords": [
+            "have a blanket"
+          ],
+          "sourceLine": 50
+        },
+        {
+          "text": "I see that there are some empty seats.",
+          "zhHint": "",
+          "keywords": [
+            "empty seats"
+          ],
+          "sourceLine": 56
+        },
+        {
+          "text": "Can I take the window seat over there?",
+          "zhHint": "",
+          "keywords": [
+            "take the window"
+          ],
+          "sourceLine": 56
+        },
+        {
+          "text": "Can I take the aisle seat over there?",
+          "zhHint": "",
+          "keywords": [
+            "take the aisle"
+          ],
+          "sourceLine": 58
+        },
+        {
+          "text": "Can I take the middle seat over there?",
+          "zhHint": "",
+          "keywords": [
+            "take the middle"
+          ],
+          "sourceLine": 60
+        },
+        {
+          "text": "It's a long journey.",
+          "zhHint": "",
+          "keywords": [
+            "long journey"
+          ],
+          "sourceLine": 66
+        },
+        {
+          "text": "We still have six hours left.",
+          "zhHint": "",
+          "keywords": [
+            "have six hours"
+          ],
+          "sourceLine": 66
+        },
+        {
+          "text": "How long will it take to reach New York?",
+          "zhHint": "到纽约要多久？",
+          "keywords": [
+            "take to reach",
+            "New York"
+          ],
+          "sourceLine": 68
+        },
+        {
+          "text": "How long is the flight?",
+          "zhHint": "",
+          "keywords": [
+            "the flight"
+          ],
+          "sourceLine": 68
+        },
+        {
+          "text": "How long will it take to reach Canada?",
+          "zhHint": "",
+          "keywords": [
+            "take to reach"
+          ],
+          "sourceLine": 70
+        },
+        {
+          "text": "How long will it take to arrive in New York?",
+          "zhHint": "",
+          "keywords": [
+            "take to arrive",
+            "New York"
+          ],
+          "sourceLine": 74
         }
       ]
     },
@@ -905,7 +1636,19 @@
       "sentences": [
         "Would you like some water?",
         "Can I get another sick bag?",
-        "Can I get another?"
+        "Can I get another?",
+        "Can I get another glass of water?",
+        "I'm really not feeling comfortable here.",
+        "I'm afraid I can't do this, sir.",
+        "Can I have an upgrade?",
+        "Me no money but buy.",
+        "I'm sorry, I don't understand.",
+        "Do you sell tax free goods on the flight?",
+        "Do you sell hamburgers on the flight?",
+        "Could you help me with the arrival card?",
+        "Let me help you with it.",
+        "Could you help me with the landing card?",
+        "Could you help me with the baby?"
       ],
       "zhHint": "",
       "keywords": [],
@@ -931,6 +1674,102 @@
           "zhHint": "",
           "keywords": [],
           "sourceLine": 32
+        },
+        {
+          "text": "Can I get another glass of water?",
+          "zhHint": "",
+          "keywords": [
+            "glass of water"
+          ],
+          "sourceLine": 34
+        },
+        {
+          "text": "I'm really not feeling comfortable here.",
+          "zhHint": "",
+          "keywords": [
+            "feeling comfortable"
+          ],
+          "sourceLine": 38
+        },
+        {
+          "text": "I'm afraid I can't do this, sir.",
+          "zhHint": "",
+          "keywords": [
+            "afraid I"
+          ],
+          "sourceLine": 38
+        },
+        {
+          "text": "Can I have an upgrade?",
+          "zhHint": "我可以升级吗？",
+          "keywords": [
+            "have an upgrade"
+          ],
+          "sourceLine": 44
+        },
+        {
+          "text": "Me no money but buy.",
+          "zhHint": "",
+          "keywords": [
+            "money but"
+          ],
+          "sourceLine": 48
+        },
+        {
+          "text": "I'm sorry, I don't understand.",
+          "zhHint": "",
+          "keywords": [
+            "don't understand"
+          ],
+          "sourceLine": 48
+        },
+        {
+          "text": "Do you sell tax free goods on the flight?",
+          "zhHint": "",
+          "keywords": [
+            "tax free goods"
+          ],
+          "sourceLine": 54
+        },
+        {
+          "text": "Do you sell hamburgers on the flight?",
+          "zhHint": "",
+          "keywords": [
+            "sell hamburgers"
+          ],
+          "sourceLine": 54
+        },
+        {
+          "text": "Could you help me with the arrival card?",
+          "zhHint": "",
+          "keywords": [
+            "arrival card"
+          ],
+          "sourceLine": 58
+        },
+        {
+          "text": "Let me help you with it.",
+          "zhHint": "",
+          "keywords": [
+            "help you"
+          ],
+          "sourceLine": 58
+        },
+        {
+          "text": "Could you help me with the landing card?",
+          "zhHint": "",
+          "keywords": [
+            "landing card"
+          ],
+          "sourceLine": 66
+        },
+        {
+          "text": "Could you help me with the baby?",
+          "zhHint": "",
+          "keywords": [
+            "the baby"
+          ],
+          "sourceLine": 66
         }
       ]
     },
@@ -944,7 +1783,11 @@
       "sentences": [
         "All right, booking a hotel involves some key questions and steps.",
         "I'd like to make a hotel reservation.",
-        "I'd like to book a room."
+        "I'd like to book a room.",
+        "Do you have any rooms available?",
+        "Do you have any rooms available for September 10th?",
+        "Do you have any rooms available for this Friday night?",
+        "What are the check-in and check-out times?"
       ],
       "zhHint": "",
       "keywords": [
@@ -978,6 +1821,39 @@
             "book a room"
           ],
           "sourceLine": 30
+        },
+        {
+          "text": "Do you have any rooms available?",
+          "zhHint": "",
+          "keywords": [
+            "rooms available"
+          ],
+          "sourceLine": 38
+        },
+        {
+          "text": "Do you have any rooms available for September 10th?",
+          "zhHint": "",
+          "keywords": [
+            "available for September"
+          ],
+          "sourceLine": 42
+        },
+        {
+          "text": "Do you have any rooms available for this Friday night?",
+          "zhHint": "",
+          "keywords": [
+            "rooms available",
+            "Friday night"
+          ],
+          "sourceLine": 44
+        },
+        {
+          "text": "What are the check-in and check-out times?",
+          "zhHint": "",
+          "keywords": [
+            "check-out times"
+          ],
+          "sourceLine": 52
         }
       ]
     },
@@ -991,7 +1867,19 @@
       "sentences": [
         "Do you have a reservation?",
         "Yes, I've booked a room online.",
-        "Yes, I've booked a room."
+        "Yes, I've booked a room.",
+        "It's under the name Peter Yang.",
+        "I've booked a room online.",
+        "May I see your passport please?",
+        "May I see your ID please?",
+        "May I see your passport?",
+        "I can see your reservation here.",
+        "So a single room, right?",
+        "I can see your reservation.",
+        "What is the checkout time?",
+        "It's 1pm, but we'll call you in advance to confirm though.",
+        "Can I have a late check-out?",
+        "What is the check-in time?"
       ],
       "zhHint": "",
       "keywords": [
@@ -1023,6 +1911,103 @@
             "booked a room"
           ],
           "sourceLine": 30
+        },
+        {
+          "text": "It's under the name Peter Yang.",
+          "zhHint": "",
+          "keywords": [
+            "under the name",
+            "Peter Yang"
+          ],
+          "sourceLine": 30
+        },
+        {
+          "text": "I've booked a room online.",
+          "zhHint": "",
+          "keywords": [
+            "booked a room"
+          ],
+          "sourceLine": 34
+        },
+        {
+          "text": "May I see your passport please?",
+          "zhHint": "",
+          "keywords": [
+            "passport please"
+          ],
+          "sourceLine": 38
+        },
+        {
+          "text": "May I see your ID please?",
+          "zhHint": "",
+          "keywords": [
+            "see your"
+          ],
+          "sourceLine": 40
+        },
+        {
+          "text": "May I see your passport?",
+          "zhHint": "",
+          "keywords": [
+            "see your"
+          ],
+          "sourceLine": 42
+        },
+        {
+          "text": "I can see your reservation here.",
+          "zhHint": "",
+          "keywords": [
+            "reservation here"
+          ],
+          "sourceLine": 46
+        },
+        {
+          "text": "So a single room, right?",
+          "zhHint": "",
+          "keywords": [
+            "single room"
+          ],
+          "sourceLine": 46
+        },
+        {
+          "text": "I can see your reservation.",
+          "zhHint": "",
+          "keywords": [
+            "see your"
+          ],
+          "sourceLine": 48
+        },
+        {
+          "text": "What is the checkout time?",
+          "zhHint": "",
+          "keywords": [
+            "checkout time"
+          ],
+          "sourceLine": 54
+        },
+        {
+          "text": "It's 1pm, but we'll call you in advance to confirm though.",
+          "zhHint": "",
+          "keywords": [
+            "advance to confirm"
+          ],
+          "sourceLine": 54
+        },
+        {
+          "text": "Can I have a late check-out?",
+          "zhHint": "",
+          "keywords": [
+            "have a late"
+          ],
+          "sourceLine": 56
+        },
+        {
+          "text": "What is the check-in time?",
+          "zhHint": "",
+          "keywords": [
+            "check-in time"
+          ],
+          "sourceLine": 60
         }
       ]
     },
@@ -1036,7 +2021,17 @@
       "sentences": [
         "Hello, this is Adam.",
         "How can I help you?",
-        "Is the address on the platform accurate, is the address accurate?"
+        "Is the address on the platform accurate, is the address accurate?",
+        "Is there a cleaning fee?",
+        "But it's already included in a nightly rate which you've paid for.",
+        "How do I get to the nearest subway station?",
+        "It's only a five-minute walk.",
+        "How do I get to the nearest hospital?",
+        "How do I get to the subway station?",
+        "It's only five minutes walk.",
+        "Are there any good restaurants in the area?",
+        "I highly recommend the one around the corner.",
+        "Are there any good book stores in the area?"
       ],
       "zhHint": "",
       "keywords": [],
@@ -1065,6 +2060,89 @@
             "address accurate"
           ],
           "sourceLine": 41
+        },
+        {
+          "text": "Is there a cleaning fee?",
+          "zhHint": "",
+          "keywords": [
+            "cleaning fee"
+          ],
+          "sourceLine": 47
+        },
+        {
+          "text": "But it's already included in a nightly rate which you've paid for.",
+          "zhHint": "",
+          "keywords": [
+            "already included",
+            "nightly rate which",
+            "you've paid"
+          ],
+          "sourceLine": 49
+        },
+        {
+          "text": "How do I get to the nearest subway station?",
+          "zhHint": "",
+          "keywords": [
+            "nearest subway station"
+          ],
+          "sourceLine": 55
+        },
+        {
+          "text": "It's only a five-minute walk.",
+          "zhHint": "",
+          "keywords": [
+            "five-minute walk"
+          ],
+          "sourceLine": 55
+        },
+        {
+          "text": "How do I get to the nearest hospital?",
+          "zhHint": "",
+          "keywords": [
+            "nearest hospital"
+          ],
+          "sourceLine": 57
+        },
+        {
+          "text": "How do I get to the subway station?",
+          "zhHint": "",
+          "keywords": [
+            "subway station"
+          ],
+          "sourceLine": 57
+        },
+        {
+          "text": "It's only five minutes walk.",
+          "zhHint": "",
+          "keywords": [
+            "five minutes"
+          ],
+          "sourceLine": 59
+        },
+        {
+          "text": "Are there any good restaurants in the area?",
+          "zhHint": "",
+          "keywords": [
+            "good restaurants"
+          ],
+          "sourceLine": 65
+        },
+        {
+          "text": "I highly recommend the one around the corner.",
+          "zhHint": "",
+          "keywords": [
+            "highly recommend",
+            "around the corner"
+          ],
+          "sourceLine": 65
+        },
+        {
+          "text": "Are there any good book stores in the area?",
+          "zhHint": "",
+          "keywords": [
+            "good book stores"
+          ],
+          "sourceLine": 67
         }
       ]
     },
@@ -1114,7 +2192,8 @@
       "sentences": [
         "Alright, there are so many amazing places to visit.",
         "Last year, I visited the Eiffel Tower in Paris.",
-        "I visited the Great Wall."
+        "I visited the Great Wall.",
+        "The entrance fee was free, which was great."
       ],
       "zhHint": "",
       "keywords": [
@@ -1148,6 +2227,14 @@
             "visited the Great Wall"
           ],
           "sourceLine": 28
+        },
+        {
+          "text": "The entrance fee was free, which was great.",
+          "zhHint": "",
+          "keywords": [
+            "entrance fee"
+          ],
+          "sourceLine": 42
         }
       ]
     },
@@ -1161,7 +2248,18 @@
       "sentences": [
         "Hi, how can I help you?",
         "Oh, I see, students.",
-        "How much is the ticket?"
+        "How much is the ticket?",
+        "One adult ticket, please.",
+        "I like to buy some souvenirs for my friends.",
+        "There are a couple of gift shops inside.",
+        "Are there any gift shops inside?",
+        "Are there any restaurants inside?",
+        "Could you take a picture for me next to the sign?",
+        "Look at the camera.",
+        "Where can I go WC?",
+        "Is there a bathroom nearby?",
+        "Is there a restaurant nearby?",
+        "Is there a restroom nearby?"
       ],
       "zhHint": "",
       "keywords": [
@@ -1191,6 +2289,92 @@
             "the ticket"
           ],
           "sourceLine": 26
+        },
+        {
+          "text": "One adult ticket, please.",
+          "zhHint": "",
+          "keywords": [
+            "One adult ticket"
+          ],
+          "sourceLine": 26
+        },
+        {
+          "text": "I like to buy some souvenirs for my friends.",
+          "zhHint": "",
+          "keywords": [
+            "souvenirs for"
+          ],
+          "sourceLine": 38
+        },
+        {
+          "text": "There are a couple of gift shops inside.",
+          "zhHint": "",
+          "keywords": [
+            "gift shops inside"
+          ],
+          "sourceLine": 38
+        },
+        {
+          "text": "Are there any gift shops inside?",
+          "zhHint": "",
+          "keywords": [
+            "gift shops inside"
+          ],
+          "sourceLine": 44
+        },
+        {
+          "text": "Are there any restaurants inside?",
+          "zhHint": "",
+          "keywords": [
+            "restaurants inside"
+          ],
+          "sourceLine": 44
+        },
+        {
+          "text": "Could you take a picture for me next to the sign?",
+          "zhHint": "",
+          "keywords": [
+            "take a picture"
+          ],
+          "sourceLine": 48
+        },
+        {
+          "text": "Look at the camera.",
+          "zhHint": "",
+          "keywords": [
+            "the camera"
+          ],
+          "sourceLine": 48
+        },
+        {
+          "text": "Where can I go WC?",
+          "zhHint": "",
+          "keywords": [],
+          "sourceLine": 58
+        },
+        {
+          "text": "Is there a bathroom nearby?",
+          "zhHint": "",
+          "keywords": [
+            "bathroom nearby"
+          ],
+          "sourceLine": 58
+        },
+        {
+          "text": "Is there a restaurant nearby?",
+          "zhHint": "有餐厅在附近吗？",
+          "keywords": [
+            "restaurant nearby"
+          ],
+          "sourceLine": 60
+        },
+        {
+          "text": "Is there a restroom nearby?",
+          "zhHint": "",
+          "keywords": [
+            "restroom nearby"
+          ],
+          "sourceLine": 62
         }
       ]
     },
@@ -1204,7 +2388,14 @@
       "sentences": [
         "The tour was visiting the famous landmark, The Grand Palace.",
         "The highlight of the tour was visiting the famous landmark, The Grand Palace.",
-        "Do you think I should hire a guide for the tour?"
+        "What was the highlight of your trip?",
+        "The highlight of the tour was visiting the Grand Palace.",
+        "Are there any must-see places outside the city?",
+        "Do you think I should hire a guide for the tour?",
+        "Yes, a guide will give you more details about the history and culture.",
+        "A guide will give you more details about the history and culture.",
+        "What are the opening hours of the museum?",
+        "Any tips for visiting London Bridge?"
       ],
       "zhHint": "",
       "keywords": [
@@ -1233,12 +2424,68 @@
           "sourceLine": 28
         },
         {
+          "text": "What was the highlight of your trip?",
+          "zhHint": "",
+          "keywords": [
+            "the highlight"
+          ],
+          "sourceLine": 32
+        },
+        {
+          "text": "The highlight of the tour was visiting the Grand Palace.",
+          "zhHint": "",
+          "keywords": [
+            "visiting the Grand Palace"
+          ],
+          "sourceLine": 32
+        },
+        {
+          "text": "Are there any must-see places outside the city?",
+          "zhHint": "",
+          "keywords": [
+            "must-see places outside"
+          ],
+          "sourceLine": 36
+        },
+        {
           "text": "Do you think I should hire a guide for the tour?",
           "zhHint": "",
           "keywords": [
             "hire a guide"
           ],
           "sourceLine": 44
+        },
+        {
+          "text": "Yes, a guide will give you more details about the history and culture.",
+          "zhHint": "",
+          "keywords": [
+            "details about"
+          ],
+          "sourceLine": 44
+        },
+        {
+          "text": "A guide will give you more details about the history and culture.",
+          "zhHint": "",
+          "keywords": [
+            "details about"
+          ],
+          "sourceLine": 46
+        },
+        {
+          "text": "What are the opening hours of the museum?",
+          "zhHint": "",
+          "keywords": [
+            "opening hours"
+          ],
+          "sourceLine": 50
+        },
+        {
+          "text": "Any tips for visiting London Bridge?",
+          "zhHint": "",
+          "keywords": [
+            "visiting London Bridge"
+          ],
+          "sourceLine": 56
         }
       ]
     },
@@ -1252,7 +2499,10 @@
       "sentences": [
         "How do I get a photopass card?",
         "You can get it from any Disney photopass photographer.",
-        "When will there be parades?"
+        "When will there be parades?",
+        "When will there be parade?",
+        "Where to buy the fire chicken leg?",
+        "Where are the turkey leg carts?"
       ],
       "zhHint": "",
       "keywords": [
@@ -1282,6 +2532,28 @@
           "zhHint": "",
           "keywords": [],
           "sourceLine": 43
+        },
+        {
+          "text": "When will there be parade?",
+          "zhHint": "",
+          "keywords": [],
+          "sourceLine": 45
+        },
+        {
+          "text": "Where to buy the fire chicken leg?",
+          "zhHint": "",
+          "keywords": [
+            "fire chicken leg"
+          ],
+          "sourceLine": 49
+        },
+        {
+          "text": "Where are the turkey leg carts?",
+          "zhHint": "",
+          "keywords": [
+            "turkey leg carts"
+          ],
+          "sourceLine": 49
         }
       ]
     },
@@ -1295,7 +2567,9 @@
       "sentences": [
         "I always get travel insurance, just in case anything unexpected happens on the trip.",
         "I usually get travel insurance, just in case.",
-        "What can you say to talk about travel safety habits?"
+        "What can you say to talk about travel safety habits?",
+        "I always give normal.",
+        "What kind of action would you take before a trip?"
       ],
       "zhHint": "",
       "keywords": [
@@ -1330,6 +2604,22 @@
             "travel safety habits"
           ],
           "sourceLine": 56
+        },
+        {
+          "text": "I always give normal.",
+          "zhHint": "",
+          "keywords": [
+            "always give normal"
+          ],
+          "sourceLine": 60
+        },
+        {
+          "text": "What kind of action would you take before a trip?",
+          "zhHint": "",
+          "keywords": [
+            "before a trip"
+          ],
+          "sourceLine": 60
         }
       ]
     },
@@ -1343,7 +2633,25 @@
       "sentences": [
         "Maybe I give you eat where.",
         "Ah, yes, I know one.",
-        "Do you know where the nearest pizza place is?"
+        "Do you know where the nearest pizza place is?",
+        "Do you know where the nearest Chinese restaurant is?",
+        "Here there how long.",
+        "How long does it take to get there on foot?",
+        "How long does it take to get there?",
+        "How long does it take to get there by taxi?",
+        "How long does it take.",
+        "How long does it take to get there by bus, by taxi?",
+        "That sounds a bit far.",
+        "Are there any other ways I can get there?",
+        "Yeah, you can take the bus route 21, go down the street, and you'll see a bus stop around the corner.",
+        "Oh, take the taxi.",
+        "Yeah, take the taxi.",
+        "Oh, go down the street.",
+        "On the opposite corner.",
+        "How many stops would that be?",
+        "Maybe four to five stops.",
+        "How many stops would there be?",
+        "OK, so how many stops?"
       ],
       "zhHint": "",
       "keywords": [
@@ -1375,6 +2683,148 @@
             "nearest pizza place"
           ],
           "sourceLine": 29
+        },
+        {
+          "text": "Do you know where the nearest Chinese restaurant is?",
+          "zhHint": "",
+          "keywords": [
+            "nearest Chinese restaurant"
+          ],
+          "sourceLine": 33
+        },
+        {
+          "text": "Here there how long.",
+          "zhHint": "",
+          "keywords": [],
+          "sourceLine": 47
+        },
+        {
+          "text": "How long does it take to get there on foot?",
+          "zhHint": "",
+          "keywords": [
+            "long does"
+          ],
+          "sourceLine": 47
+        },
+        {
+          "text": "How long does it take to get there?",
+          "zhHint": "",
+          "keywords": [
+            "long does"
+          ],
+          "sourceLine": 49
+        },
+        {
+          "text": "How long does it take to get there by taxi?",
+          "zhHint": "",
+          "keywords": [
+            "long does"
+          ],
+          "sourceLine": 49
+        },
+        {
+          "text": "How long does it take.",
+          "zhHint": "",
+          "keywords": [
+            "long does"
+          ],
+          "sourceLine": 53
+        },
+        {
+          "text": "How long does it take to get there by bus, by taxi?",
+          "zhHint": "",
+          "keywords": [
+            "long does"
+          ],
+          "sourceLine": 53
+        },
+        {
+          "text": "That sounds a bit far.",
+          "zhHint": "",
+          "keywords": [
+            "sounds a bit"
+          ],
+          "sourceLine": 59
+        },
+        {
+          "text": "Are there any other ways I can get there?",
+          "zhHint": "",
+          "keywords": [
+            "ways I"
+          ],
+          "sourceLine": 59
+        },
+        {
+          "text": "Yeah, you can take the bus route 21, go down the street, and you'll see a bus stop around the corner.",
+          "zhHint": "",
+          "keywords": [
+            "bus route",
+            "see a bus",
+            "around the corner"
+          ],
+          "sourceLine": 61
+        },
+        {
+          "text": "Oh, take the taxi.",
+          "zhHint": "",
+          "keywords": [
+            "take the taxi"
+          ],
+          "sourceLine": 61
+        },
+        {
+          "text": "Yeah, take the taxi.",
+          "zhHint": "",
+          "keywords": [
+            "take the taxi"
+          ],
+          "sourceLine": 65
+        },
+        {
+          "text": "Oh, go down the street.",
+          "zhHint": "",
+          "keywords": [
+            "the street"
+          ],
+          "sourceLine": 67
+        },
+        {
+          "text": "On the opposite corner.",
+          "zhHint": "",
+          "keywords": [
+            "opposite corner"
+          ],
+          "sourceLine": 67
+        },
+        {
+          "text": "How many stops would that be?",
+          "zhHint": "",
+          "keywords": [
+            "stops would"
+          ],
+          "sourceLine": 73
+        },
+        {
+          "text": "Maybe four to five stops.",
+          "zhHint": "",
+          "keywords": [
+            "four to five"
+          ],
+          "sourceLine": 73
+        },
+        {
+          "text": "How many stops would there be?",
+          "zhHint": "",
+          "keywords": [
+            "stops would"
+          ],
+          "sourceLine": 75
+        },
+        {
+          "text": "OK, so how many stops?",
+          "zhHint": "",
+          "keywords": [],
+          "sourceLine": 77
         }
       ]
     },
@@ -1388,7 +2838,19 @@
       "sentences": [
         "I am here for tourism from China.",
         "I want to rent a car.",
-        "You need to provide the original passport."
+        "You need to provide the original passport.",
+        "The original driver's license.",
+        "I recommend that you rent a SUV, as it has a large space, and can handle the road conditions in the suburbs.",
+        "Do you have any recommended car models?",
+        "Do you have any recommended dishes?",
+        "Do you have any recommended books?",
+        "How many days would you like to book the car for?",
+        "I plan to rent it for five days.",
+        "I plan to rent it for one week.",
+        "Ask for the price.",
+        "What's the cost of renting a car?",
+        "What's the cost of renting this apartment?",
+        "What's the cost of renting a camera?"
       ],
       "zhHint": "",
       "keywords": [
@@ -1420,6 +2882,107 @@
             "provide the original"
           ],
           "sourceLine": 26
+        },
+        {
+          "text": "The original driver's license.",
+          "zhHint": "",
+          "keywords": [
+            "original driver's license"
+          ],
+          "sourceLine": 26
+        },
+        {
+          "text": "I recommend that you rent a SUV, as it has a large space, and can handle the road conditions in the suburbs.",
+          "zhHint": "建议你租一个越野车。",
+          "keywords": [
+            "rent a SUV",
+            "has a large",
+            "handle the road"
+          ],
+          "sourceLine": 36
+        },
+        {
+          "text": "Do you have any recommended car models?",
+          "zhHint": "",
+          "keywords": [
+            "recommended car models"
+          ],
+          "sourceLine": 36
+        },
+        {
+          "text": "Do you have any recommended dishes?",
+          "zhHint": "",
+          "keywords": [
+            "recommended dishes"
+          ],
+          "sourceLine": 38
+        },
+        {
+          "text": "Do you have any recommended books?",
+          "zhHint": "",
+          "keywords": [
+            "recommended books"
+          ],
+          "sourceLine": 38
+        },
+        {
+          "text": "How many days would you like to book the car for?",
+          "zhHint": "",
+          "keywords": [
+            "book the car"
+          ],
+          "sourceLine": 42
+        },
+        {
+          "text": "I plan to rent it for five days.",
+          "zhHint": "",
+          "keywords": [
+            "plan to rent",
+            "five days"
+          ],
+          "sourceLine": 44
+        },
+        {
+          "text": "I plan to rent it for one week.",
+          "zhHint": "",
+          "keywords": [
+            "plan to rent",
+            "one week"
+          ],
+          "sourceLine": 44
+        },
+        {
+          "text": "Ask for the price.",
+          "zhHint": "",
+          "keywords": [
+            "Ask for"
+          ],
+          "sourceLine": 50
+        },
+        {
+          "text": "What's the cost of renting a car?",
+          "zhHint": "",
+          "keywords": [
+            "cost of renting"
+          ],
+          "sourceLine": 50
+        },
+        {
+          "text": "What's the cost of renting this apartment?",
+          "zhHint": "",
+          "keywords": [
+            "cost of renting"
+          ],
+          "sourceLine": 52
+        },
+        {
+          "text": "What's the cost of renting a camera?",
+          "zhHint": "",
+          "keywords": [
+            "What's the cost",
+            "renting a camera"
+          ],
+          "sourceLine": 52
         }
       ]
     },
@@ -1433,7 +2996,21 @@
       "sentences": [
         "Oh, I just passed it.",
         "I'll be there in around five minutes.",
-        "I'm wearing a black top."
+        "I'm wearing a black top.",
+        "I'm carrying a white suitcase.",
+        "Could you pick me up at the front intersection?",
+        "Could you pick me up at the airport?",
+        "Which route would you prefer?",
+        "We can take the rock street or the freeway.",
+        "You can just follow the recipe.",
+        "You can just follow the tour guide.",
+        "You don't look too good.",
+        "I'm getting car sick.",
+        "Is it okay if I open the window?",
+        "Oh, we're caught up in rush hour.",
+        "I didn't know time.",
+        "It might take longer than I thought.",
+        "Can we take a different route?"
       ],
       "zhHint": "",
       "keywords": [
@@ -1465,6 +3042,118 @@
             "wearing a black"
           ],
           "sourceLine": 33
+        },
+        {
+          "text": "I'm carrying a white suitcase.",
+          "zhHint": "我拿着一个白色的行李箱。",
+          "keywords": [
+            "carrying a white"
+          ],
+          "sourceLine": 33
+        },
+        {
+          "text": "Could you pick me up at the front intersection?",
+          "zhHint": "",
+          "keywords": [
+            "front intersection"
+          ],
+          "sourceLine": 35
+        },
+        {
+          "text": "Could you pick me up at the airport?",
+          "zhHint": "",
+          "keywords": [
+            "the airport"
+          ],
+          "sourceLine": 35
+        },
+        {
+          "text": "Which route would you prefer?",
+          "zhHint": "",
+          "keywords": [
+            "Which route"
+          ],
+          "sourceLine": 41
+        },
+        {
+          "text": "We can take the rock street or the freeway.",
+          "zhHint": "",
+          "keywords": [
+            "take the rock"
+          ],
+          "sourceLine": 41
+        },
+        {
+          "text": "You can just follow the recipe.",
+          "zhHint": "",
+          "keywords": [
+            "follow the recipe"
+          ],
+          "sourceLine": 47
+        },
+        {
+          "text": "You can just follow the tour guide.",
+          "zhHint": "",
+          "keywords": [
+            "follow the tour"
+          ],
+          "sourceLine": 47
+        },
+        {
+          "text": "You don't look too good.",
+          "zhHint": "",
+          "keywords": [
+            "don't look"
+          ],
+          "sourceLine": 51
+        },
+        {
+          "text": "I'm getting car sick.",
+          "zhHint": "",
+          "keywords": [
+            "getting car sick"
+          ],
+          "sourceLine": 51
+        },
+        {
+          "text": "Is it okay if I open the window?",
+          "zhHint": "我能打开窗户吗？",
+          "keywords": [
+            "open the window"
+          ],
+          "sourceLine": 53
+        },
+        {
+          "text": "Oh, we're caught up in rush hour.",
+          "zhHint": "",
+          "keywords": [
+            "rush hour"
+          ],
+          "sourceLine": 59
+        },
+        {
+          "text": "I didn't know time.",
+          "zhHint": "",
+          "keywords": [
+            "didn't know time"
+          ],
+          "sourceLine": 59
+        },
+        {
+          "text": "It might take longer than I thought.",
+          "zhHint": "可能比我想象中更久了。",
+          "keywords": [
+            "take longer"
+          ],
+          "sourceLine": 61
+        },
+        {
+          "text": "Can we take a different route?",
+          "zhHint": "",
+          "keywords": [
+            "take a different"
+          ],
+          "sourceLine": 61
         }
       ]
     },
@@ -1478,7 +3167,14 @@
       "sentences": [
         "What is the best way to get around the city?",
         "Subway is often a convenient choice.",
-        "What is often a convenient choice?"
+        "What is often a convenient choice?",
+        "Where can I buy a subway ticket?",
+        "Where is the ticket machine?",
+        "Where is the ticket counter?",
+        "How much is the bus fare?",
+        "Can you show me the bus route on the map?",
+        "Can you show me the bus route?",
+        "How much is the bus route?"
       ],
       "zhHint": "",
       "keywords": [
@@ -1512,6 +3208,62 @@
             "often a convenient"
           ],
           "sourceLine": 35
+        },
+        {
+          "text": "Where can I buy a subway ticket?",
+          "zhHint": "可以让你减少很多麻烦。",
+          "keywords": [
+            "buy a subway"
+          ],
+          "sourceLine": 41
+        },
+        {
+          "text": "Where is the ticket machine?",
+          "zhHint": "",
+          "keywords": [
+            "ticket machine"
+          ],
+          "sourceLine": 45
+        },
+        {
+          "text": "Where is the ticket counter?",
+          "zhHint": "",
+          "keywords": [
+            "ticket counter"
+          ],
+          "sourceLine": 45
+        },
+        {
+          "text": "How much is the bus fare?",
+          "zhHint": "",
+          "keywords": [
+            "bus fare"
+          ],
+          "sourceLine": 49
+        },
+        {
+          "text": "Can you show me the bus route on the map?",
+          "zhHint": "",
+          "keywords": [
+            "bus route"
+          ],
+          "sourceLine": 53
+        },
+        {
+          "text": "Can you show me the bus route?",
+          "zhHint": "",
+          "keywords": [
+            "bus route"
+          ],
+          "sourceLine": 55
+        },
+        {
+          "text": "How much is the bus route?",
+          "zhHint": "",
+          "keywords": [
+            "bus route"
+          ],
+          "sourceLine": 55
         }
       ]
     },
@@ -1525,7 +3277,16 @@
       "sentences": [
         "Hi Where are you headed?",
         "I go to eat pizza.",
-        "I'm going to Joe's."
+        "I'm going to Joe's.",
+        "Is this the right bus?",
+        "Where are you headed?",
+        "Is this the right taxi?",
+        "Where are you heading to?",
+        "I'm going to the museum.",
+        "Despacito, ok or change to change to change to every day.",
+        "Is this the direct line or do I need to transfer elsewhere?",
+        "You'll have to transfer if you took route 21B by mistake.",
+        "How much is the fare?"
       ],
       "zhHint": "",
       "keywords": [],
@@ -1553,6 +3314,74 @@
             "going to Joe's"
           ],
           "sourceLine": 31
+        },
+        {
+          "text": "Is this the right bus?",
+          "zhHint": "",
+          "keywords": [],
+          "sourceLine": 31
+        },
+        {
+          "text": "Where are you headed?",
+          "zhHint": "",
+          "keywords": [],
+          "sourceLine": 33
+        },
+        {
+          "text": "Is this the right taxi?",
+          "zhHint": "",
+          "keywords": [],
+          "sourceLine": 35
+        },
+        {
+          "text": "Where are you heading to?",
+          "zhHint": "",
+          "keywords": [
+            "heading to"
+          ],
+          "sourceLine": 37
+        },
+        {
+          "text": "I'm going to the museum.",
+          "zhHint": "",
+          "keywords": [
+            "the museum"
+          ],
+          "sourceLine": 37
+        },
+        {
+          "text": "Despacito, ok or change to change to change to every day.",
+          "zhHint": "",
+          "keywords": [
+            "change to change"
+          ],
+          "sourceLine": 43
+        },
+        {
+          "text": "Is this the direct line or do I need to transfer elsewhere?",
+          "zhHint": "",
+          "keywords": [
+            "direct line",
+            "need to transfer"
+          ],
+          "sourceLine": 45
+        },
+        {
+          "text": "You'll have to transfer if you took route 21B by mistake.",
+          "zhHint": "",
+          "keywords": [
+            "have to transfer",
+            "took route"
+          ],
+          "sourceLine": 45
+        },
+        {
+          "text": "How much is the fare?",
+          "zhHint": "",
+          "keywords": [
+            "the fare"
+          ],
+          "sourceLine": 67
         }
       ]
     },
@@ -1566,7 +3395,13 @@
       "sentences": [
         "I have more to share about this topic.",
         "Your English should be at a level where you can travel, you can communicate, and you can have fun with it.",
-        "Does this taxi use a meter?"
+        "Does this taxi use a meter?",
+        "Ride sharing has become quite popular these days.",
+        "Before using it, you can check if it's available in your area by asking: Is ride sharing available in this area?",
+        "Public transport, including subways and buses, usually has a fixed schedule.",
+        "You can look up the schedule online or at a station to know when the next vehicle will come.",
+        "Sometimes you need to buy tickets in advance.",
+        "Can I use a prepaid card for the bus?"
       ],
       "zhHint": "",
       "keywords": [
@@ -1598,6 +3433,60 @@
             "use a meter"
           ],
           "sourceLine": 38
+        },
+        {
+          "text": "Ride sharing has become quite popular these days.",
+          "zhHint": "",
+          "keywords": [
+            "sharing has become"
+          ],
+          "sourceLine": 42
+        },
+        {
+          "text": "Before using it, you can check if it's available in your area by asking: Is ride sharing available in this area?",
+          "zhHint": "",
+          "keywords": [
+            "Before using",
+            "ride sharing available"
+          ],
+          "sourceLine": 42
+        },
+        {
+          "text": "Public transport, including subways and buses, usually has a fixed schedule.",
+          "zhHint": "",
+          "keywords": [
+            "Public transport",
+            "including subways",
+            "has a fixed"
+          ],
+          "sourceLine": 46
+        },
+        {
+          "text": "You can look up the schedule online or at a station to know when the next vehicle will come.",
+          "zhHint": "",
+          "keywords": [
+            "schedule online",
+            "station to know",
+            "next vehicle"
+          ],
+          "sourceLine": 46
+        },
+        {
+          "text": "Sometimes you need to buy tickets in advance.",
+          "zhHint": "",
+          "keywords": [
+            "need to buy",
+            "tickets in advance"
+          ],
+          "sourceLine": 50
+        },
+        {
+          "text": "Can I use a prepaid card for the bus?",
+          "zhHint": "",
+          "keywords": [
+            "use a prepaid"
+          ],
+          "sourceLine": 50
         }
       ]
     },
@@ -1611,7 +3500,18 @@
       "sentences": [
         "Hi, how can I help you?",
         "No good, me I buy the ticket.",
-        "How can I help you?"
+        "How can I help you?",
+        "The vending machines are down.",
+        "Could I get a seven day unlimited pass please?",
+        "Could I get a one-way ticket please?",
+        "I'm going to Central Park, which line should I take?",
+        "You can take line two or line seven to the 5th Avenue.",
+        "I'm going to the supermarket, which line should I take?",
+        "Which exit should I take when I get there?",
+        "You can take exit A.",
+        "Last underground, what time?",
+        "What time is the last train on line 7?",
+        "What time is the first train on line 7?"
       ],
       "zhHint": "",
       "keywords": [
@@ -1643,6 +3543,97 @@
             "help you"
           ],
           "sourceLine": 30
+        },
+        {
+          "text": "The vending machines are down.",
+          "zhHint": "",
+          "keywords": [
+            "vending machines"
+          ],
+          "sourceLine": 30
+        },
+        {
+          "text": "Could I get a seven day unlimited pass please?",
+          "zhHint": "",
+          "keywords": [
+            "seven day unlimited"
+          ],
+          "sourceLine": 38
+        },
+        {
+          "text": "Could I get a one-way ticket please?",
+          "zhHint": "",
+          "keywords": [
+            "one-way ticket"
+          ],
+          "sourceLine": 38
+        },
+        {
+          "text": "I'm going to Central Park, which line should I take?",
+          "zhHint": "",
+          "keywords": [
+            "Central Park",
+            "which line"
+          ],
+          "sourceLine": 44
+        },
+        {
+          "text": "You can take line two or line seven to the 5th Avenue.",
+          "zhHint": "",
+          "keywords": [
+            "take line two",
+            "line seven",
+            "th Avenue"
+          ],
+          "sourceLine": 44
+        },
+        {
+          "text": "I'm going to the supermarket, which line should I take?",
+          "zhHint": "来，如果你要去中央公园，你想问该坐哪条线怎么问？",
+          "keywords": [
+            "which line"
+          ],
+          "sourceLine": 46
+        },
+        {
+          "text": "Which exit should I take when I get there?",
+          "zhHint": "",
+          "keywords": [
+            "Which exit"
+          ],
+          "sourceLine": 52
+        },
+        {
+          "text": "You can take exit A.",
+          "zhHint": "",
+          "keywords": [
+            "take exit"
+          ],
+          "sourceLine": 52
+        },
+        {
+          "text": "Last underground, what time?",
+          "zhHint": "",
+          "keywords": [
+            "Last underground"
+          ],
+          "sourceLine": 58
+        },
+        {
+          "text": "What time is the last train on line 7?",
+          "zhHint": "",
+          "keywords": [
+            "train on line"
+          ],
+          "sourceLine": 60
+        },
+        {
+          "text": "What time is the first train on line 7?",
+          "zhHint": "换成首班车也可以，看到了吗？",
+          "keywords": [
+            "train on line"
+          ],
+          "sourceLine": 62
         }
       ]
     },
@@ -1656,7 +3647,8 @@
       "sentences": [
         "A good cook could cook as many cookies as a good cook who could cook cookies.",
         "Good cook who could cook cookies.",
-        "Do you want to try?"
+        "Do you want to try?",
+        "Awesome, now that's all for today."
       ],
       "zhHint": "",
       "keywords": [
@@ -1692,6 +3684,12 @@
           "keywords": [
             "want to try"
           ],
+          "sourceLine": 30
+        },
+        {
+          "text": "Awesome, now that's all for today.",
+          "zhHint": "",
+          "keywords": [],
           "sourceLine": 30
         }
       ]
@@ -1733,7 +3731,12 @@
       "sentences": [
         "We've been focusing on healthy eating.",
         "And today, we're going to explore more aspects of this vital topic.",
-        "Eating healthy is an essential part of a balanced lifestyle."
+        "Everything is about health.",
+        "Eating healthy is an essential part of a balanced lifestyle.",
+        "I try to limit my intake of processed foods to reduce my risk of health issues.",
+        "I cook at home more often and choose whole foods.",
+        "I used to love gummy bears.",
+        "I used to love potato chips."
       ],
       "zhHint": "",
       "keywords": [
@@ -1760,6 +3763,12 @@
           "sourceLine": 23
         },
         {
+          "text": "Everything is about health.",
+          "zhHint": "",
+          "keywords": [],
+          "sourceLine": 27
+        },
+        {
           "text": "Eating healthy is an essential part of a balanced lifestyle.",
           "zhHint": "",
           "keywords": [
@@ -1768,6 +3777,41 @@
             "balanced lifestyle"
           ],
           "sourceLine": 29
+        },
+        {
+          "text": "I try to limit my intake of processed foods to reduce my risk of health issues.",
+          "zhHint": "",
+          "keywords": [
+            "intake of processed",
+            "foods to reduce",
+            "risk of health"
+          ],
+          "sourceLine": 29
+        },
+        {
+          "text": "I cook at home more often and choose whole foods.",
+          "zhHint": "",
+          "keywords": [
+            "cook at home",
+            "choose whole foods"
+          ],
+          "sourceLine": 33
+        },
+        {
+          "text": "I used to love gummy bears.",
+          "zhHint": "",
+          "keywords": [
+            "love gummy bears"
+          ],
+          "sourceLine": 41
+        },
+        {
+          "text": "I used to love potato chips.",
+          "zhHint": "",
+          "keywords": [
+            "love potato chips"
+          ],
+          "sourceLine": 41
         }
       ]
     },
@@ -1781,7 +3825,8 @@
       "sentences": [
         "Many of us have tried to lose weight, whether for health or specific goals.",
         "I incorporate more cardio exercises into my routine to boost my metabolism.",
-        "Losing weight requires setting clear weight loss goals."
+        "Losing weight requires setting clear weight loss goals.",
+        "I eat less than I burn."
       ],
       "zhHint": "",
       "keywords": [
@@ -1819,6 +3864,14 @@
             "clear weight loss"
           ],
           "sourceLine": 31
+        },
+        {
+          "text": "I eat less than I burn.",
+          "zhHint": "",
+          "keywords": [
+            "eat less"
+          ],
+          "sourceLine": 43
         }
       ]
     },
@@ -1832,7 +3885,12 @@
       "sentences": [
         "High protein diet to help me feel fuller for longer.",
         "Regular physical activity is a must.",
-        "I pay attention to portion sizes to avoid overeating."
+        "I pay attention to portion sizes to avoid overeating.",
+        "I split my meals into smaller portions to feel satisfied with less food.",
+        "I pay attention to my diet.",
+        "I pay attention to eating healthy.",
+        "I split my meals into smaller portions.",
+        "She split the cake into six pieces."
       ],
       "zhHint": "",
       "keywords": [
@@ -1867,6 +3925,49 @@
             "sizes to avoid"
           ],
           "sourceLine": 37
+        },
+        {
+          "text": "I split my meals into smaller portions to feel satisfied with less food.",
+          "zhHint": "",
+          "keywords": [
+            "portions to feel",
+            "satisfied with less"
+          ],
+          "sourceLine": 37
+        },
+        {
+          "text": "I pay attention to my diet.",
+          "zhHint": "",
+          "keywords": [
+            "pay attention"
+          ],
+          "sourceLine": 39
+        },
+        {
+          "text": "I pay attention to eating healthy.",
+          "zhHint": "",
+          "keywords": [
+            "pay attention",
+            "eating healthy"
+          ],
+          "sourceLine": 43
+        },
+        {
+          "text": "I split my meals into smaller portions.",
+          "zhHint": "",
+          "keywords": [
+            "smaller portions"
+          ],
+          "sourceLine": 51
+        },
+        {
+          "text": "She split the cake into six pieces.",
+          "zhHint": "",
+          "keywords": [
+            "split the cake",
+            "six pieces"
+          ],
+          "sourceLine": 51
         }
       ]
     },
@@ -2104,7 +4205,12 @@
       "sentences": [
         "Regular health checkups are essential for a good life.",
         "One day, I noticed that I was feeling more tired than usual, even with my regular workouts and plenty of rest.",
-        "Concerned about my health, I decided it was time to see a doctor."
+        "Concerned about my health, I decided it was time to see a doctor.",
+        "I called up my family doctor to schedule an appointment.",
+        "Hello, I'd like to make an appointment for a health checkup.",
+        "We have an opening next Tuesday at 10am.",
+        "Even with my regular workouts and plenty of rest, I still find myself constantly fatigued and lacking vitality.",
+        "I was feeling more tired than usual."
       ],
       "zhHint": "",
       "keywords": [
@@ -2140,6 +4246,50 @@
             "see a doctor"
           ],
           "sourceLine": 33
+        },
+        {
+          "text": "I called up my family doctor to schedule an appointment.",
+          "zhHint": "",
+          "keywords": [
+            "family doctor",
+            "schedule an appointment"
+          ],
+          "sourceLine": 33
+        },
+        {
+          "text": "Hello, I'd like to make an appointment for a health checkup.",
+          "zhHint": "",
+          "keywords": [
+            "make an appointment",
+            "health checkup"
+          ],
+          "sourceLine": 35
+        },
+        {
+          "text": "We have an opening next Tuesday at 10am.",
+          "zhHint": "",
+          "keywords": [
+            "opening next Tuesday"
+          ],
+          "sourceLine": 35
+        },
+        {
+          "text": "Even with my regular workouts and plenty of rest, I still find myself constantly fatigued and lacking vitality.",
+          "zhHint": "",
+          "keywords": [
+            "regular workouts",
+            "plenty of rest",
+            "myself constantly fatigued"
+          ],
+          "sourceLine": 39
+        },
+        {
+          "text": "I was feeling more tired than usual.",
+          "zhHint": "我感觉比平常更累了。",
+          "keywords": [
+            "feeling more"
+          ],
+          "sourceLine": 41
         }
       ]
     },
@@ -2153,7 +4303,9 @@
       "sentences": [
         "We've been focusing on the doctor's appointments.",
         "And today, we're going to explore more aspects of this vital topic.",
-        "On the day of the appointment, I arrived at the clinic early."
+        "On the day of the appointment, I arrived at the clinic early.",
+        "I filled out some forms, I was called in to see the doctor.",
+        "I shared that I felt good overall, but I wanted to ensure everything was in perfect condition."
       ],
       "zhHint": "",
       "keywords": [
@@ -2186,6 +4338,24 @@
             "clinic early"
           ],
           "sourceLine": 35
+        },
+        {
+          "text": "I filled out some forms, I was called in to see the doctor.",
+          "zhHint": "",
+          "keywords": [
+            "see the doctor"
+          ],
+          "sourceLine": 35
+        },
+        {
+          "text": "I shared that I felt good overall, but I wanted to ensure everything was in perfect condition.",
+          "zhHint": "",
+          "keywords": [
+            "felt good overall",
+            "wanted to ensure",
+            "perfect condition"
+          ],
+          "sourceLine": 37
         }
       ]
     },
@@ -2199,7 +4369,16 @@
       "sentences": [
         "Hi, how may I help you?",
         "I had to give me some medication to eat.",
-        "I'm looking for something to take for my cold."
+        "I'm looking for something to take for my cold.",
+        "What can I take?",
+        "I'm looking for something to take for my fever.",
+        "I like to have this prescription filled.",
+        "I'm looking for something to take for my cold, for my fever, for my asthma, for my blah blah blah blah.",
+        "What are your symptoms?",
+        "I'm having a sore throat and a slight fever.",
+        "I eat this, I will sleep it, I don't sleep it.",
+        "Would it make me sleepy?",
+        "Are there any side effects?"
       ],
       "zhHint": "",
       "keywords": [
@@ -2232,6 +4411,75 @@
             "looking for"
           ],
           "sourceLine": 31
+        },
+        {
+          "text": "What can I take?",
+          "zhHint": "",
+          "keywords": [],
+          "sourceLine": 33
+        },
+        {
+          "text": "I'm looking for something to take for my fever.",
+          "zhHint": "",
+          "keywords": [
+            "looking for"
+          ],
+          "sourceLine": 37
+        },
+        {
+          "text": "I like to have this prescription filled.",
+          "zhHint": "",
+          "keywords": [
+            "prescription filled"
+          ],
+          "sourceLine": 43
+        },
+        {
+          "text": "I'm looking for something to take for my cold, for my fever, for my asthma, for my blah blah blah blah.",
+          "zhHint": "",
+          "keywords": [
+            "blah blah blah"
+          ],
+          "sourceLine": 43
+        },
+        {
+          "text": "What are your symptoms?",
+          "zhHint": "",
+          "keywords": [],
+          "sourceLine": 47
+        },
+        {
+          "text": "I'm having a sore throat and a slight fever.",
+          "zhHint": "",
+          "keywords": [
+            "having a sore",
+            "slight fever"
+          ],
+          "sourceLine": 49
+        },
+        {
+          "text": "I eat this, I will sleep it, I don't sleep it.",
+          "zhHint": "",
+          "keywords": [
+            "don't sleep"
+          ],
+          "sourceLine": 57
+        },
+        {
+          "text": "Would it make me sleepy?",
+          "zhHint": "",
+          "keywords": [
+            "make me"
+          ],
+          "sourceLine": 57
+        },
+        {
+          "text": "Are there any side effects?",
+          "zhHint": "有什么副作用吗？",
+          "keywords": [
+            "side effects"
+          ],
+          "sourceLine": 59
         }
       ]
     },
@@ -2276,7 +4524,8 @@
       "sentences": [
         "I go to this supermarket every week to buy groceries.",
         "I usually make a shopping list before I go.",
-        "I go to the supermarket every week to buy groceries."
+        "I go to the supermarket every week to buy groceries.",
+        "I usually buy fresh vegetables, fruit and milk."
       ],
       "zhHint": "",
       "keywords": [
@@ -2307,6 +4556,14 @@
           "zhHint": "",
           "keywords": [
             "week to buy"
+          ],
+          "sourceLine": 32
+        },
+        {
+          "text": "I usually buy fresh vegetables, fruit and milk.",
+          "zhHint": "",
+          "keywords": [
+            "buy fresh vegetables"
           ],
           "sourceLine": 32
         }
@@ -2349,7 +4606,14 @@
       "sentences": [
         "Is this on sale?",
         "Yes, it's on sale, buy one get one free.",
-        "Can I try this on?"
+        "Can I try this on?",
+        "Fitting rooms right over there.",
+        "Fitting rooms over there.",
+        "What's your shoe size, sir?",
+        "Do you mean European size or US one?",
+        "Do you have US size 10 for this?",
+        "Yes, I'll bring them for you in a sec.",
+        "Do you have this?"
       ],
       "zhHint": "",
       "keywords": [],
@@ -2378,6 +4642,62 @@
             "try this"
           ],
           "sourceLine": 39
+        },
+        {
+          "text": "Fitting rooms right over there.",
+          "zhHint": "",
+          "keywords": [
+            "Fitting rooms"
+          ],
+          "sourceLine": 39
+        },
+        {
+          "text": "Fitting rooms over there.",
+          "zhHint": "",
+          "keywords": [
+            "Fitting rooms"
+          ],
+          "sourceLine": 43
+        },
+        {
+          "text": "What's your shoe size, sir?",
+          "zhHint": "",
+          "keywords": [
+            "shoe size"
+          ],
+          "sourceLine": 49
+        },
+        {
+          "text": "Do you mean European size or US one?",
+          "zhHint": "",
+          "keywords": [
+            "mean European size"
+          ],
+          "sourceLine": 49
+        },
+        {
+          "text": "Do you have US size 10 for this?",
+          "zhHint": "",
+          "keywords": [
+            "have US"
+          ],
+          "sourceLine": 51
+        },
+        {
+          "text": "Yes, I'll bring them for you in a sec.",
+          "zhHint": "",
+          "keywords": [
+            "bring them"
+          ],
+          "sourceLine": 51
+        },
+        {
+          "text": "Do you have this?",
+          "zhHint": "",
+          "keywords": [
+            "have this"
+          ],
+          "sourceLine": 59
         }
       ]
     },
@@ -2438,7 +4758,9 @@
       "sentences": [
         "I'd like to exchange this item.",
         "It's the wrong size.",
-        "Could I exchange this for a different size?"
+        "Could I exchange this for a different size?",
+        "This shirt doesn't fit me.",
+        "These shoes are too tight."
       ],
       "zhHint": "",
       "keywords": [
@@ -2470,6 +4792,22 @@
             "different size"
           ],
           "sourceLine": 36
+        },
+        {
+          "text": "This shirt doesn't fit me.",
+          "zhHint": "",
+          "keywords": [
+            "doesn't fit"
+          ],
+          "sourceLine": 38
+        },
+        {
+          "text": "These shoes are too tight.",
+          "zhHint": "",
+          "keywords": [
+            "shoes are"
+          ],
+          "sourceLine": 38
         }
       ]
     },
@@ -2543,7 +4881,8 @@
       "sentences": [
         "Can we make that work?",
         "I'm looking to spend closer to $40.",
-        "Does that sound reasonable?"
+        "Does that sound reasonable?",
+        "Would that be okay for you?"
       ],
       "zhHint": "",
       "keywords": [
@@ -2574,6 +4913,12 @@
           "keywords": [
             "sound reasonable"
           ],
+          "sourceLine": 38
+        },
+        {
+          "text": "Would that be okay for you?",
+          "zhHint": "",
+          "keywords": [],
           "sourceLine": 38
         }
       ]
@@ -2678,7 +5023,21 @@
       "sentences": [
         "Hi, what can I do for you?",
         "I'm looking for foundation for dry skin.",
-        "What can I do for you?"
+        "What can I do for you?",
+        "I'm looking for a foundation for dry skin.",
+        "I'm looking for primer.",
+        "I'm looking for a primer.",
+        "It's especially designed for a dry skin.",
+        "I'm looking for a foundation for my dry skin.",
+        "I'm looking for a loose powder for my dry skin.",
+        "These are new releases.",
+        "And it's really hard to get them elsewhere.",
+        "I should get my friend a gift.",
+        "Oh, this one can never go wrong.",
+        "Are you a member?",
+        "Of course I'm a man!",
+        "Are you a beauty insider?",
+        "I'm not a member yet."
       ],
       "zhHint": "",
       "keywords": [],
@@ -2705,6 +5064,120 @@
           "zhHint": "",
           "keywords": [],
           "sourceLine": 28
+        },
+        {
+          "text": "I'm looking for a foundation for dry skin.",
+          "zhHint": "我想要一款对于干性皮肤的粉底。",
+          "keywords": [
+            "foundation for dry"
+          ],
+          "sourceLine": 28
+        },
+        {
+          "text": "I'm looking for primer.",
+          "zhHint": "",
+          "keywords": [
+            "looking for primer"
+          ],
+          "sourceLine": 30
+        },
+        {
+          "text": "I'm looking for a primer.",
+          "zhHint": "",
+          "keywords": [
+            "looking for"
+          ],
+          "sourceLine": 30
+        },
+        {
+          "text": "It's especially designed for a dry skin.",
+          "zhHint": "",
+          "keywords": [
+            "especially designed",
+            "dry skin"
+          ],
+          "sourceLine": 34
+        },
+        {
+          "text": "I'm looking for a foundation for my dry skin.",
+          "zhHint": "",
+          "keywords": [
+            "dry skin"
+          ],
+          "sourceLine": 42
+        },
+        {
+          "text": "I'm looking for a loose powder for my dry skin.",
+          "zhHint": "",
+          "keywords": [
+            "loose powder",
+            "dry skin"
+          ],
+          "sourceLine": 42
+        },
+        {
+          "text": "These are new releases.",
+          "zhHint": "",
+          "keywords": [
+            "new releases"
+          ],
+          "sourceLine": 46
+        },
+        {
+          "text": "And it's really hard to get them elsewhere.",
+          "zhHint": "",
+          "keywords": [
+            "hard to"
+          ],
+          "sourceLine": 46
+        },
+        {
+          "text": "I should get my friend a gift.",
+          "zhHint": "",
+          "keywords": [
+            "friend a gift"
+          ],
+          "sourceLine": 50
+        },
+        {
+          "text": "Oh, this one can never go wrong.",
+          "zhHint": "",
+          "keywords": [
+            "never go wrong"
+          ],
+          "sourceLine": 50
+        },
+        {
+          "text": "Are you a member?",
+          "zhHint": "",
+          "keywords": [
+            "a member"
+          ],
+          "sourceLine": 56
+        },
+        {
+          "text": "Of course I'm a man!",
+          "zhHint": "",
+          "keywords": [
+            "course I'm"
+          ],
+          "sourceLine": 56
+        },
+        {
+          "text": "Are you a beauty insider?",
+          "zhHint": "",
+          "keywords": [
+            "beauty insider"
+          ],
+          "sourceLine": 60
+        },
+        {
+          "text": "I'm not a member yet.",
+          "zhHint": "",
+          "keywords": [
+            "member yet"
+          ],
+          "sourceLine": 60
         }
       ]
     },
@@ -2718,7 +5191,9 @@
       "sentences": [
         "Shopping is fun, right?",
         "I'm looking for a pair of jeans.",
-        "I'm looking for a winter coat."
+        "I'm looking for a winter coat.",
+        "Do you have this in other colors?",
+        "Do you have this in black?"
       ],
       "zhHint": "",
       "keywords": [
@@ -2750,6 +5225,22 @@
             "winter coat"
           ],
           "sourceLine": 28
+        },
+        {
+          "text": "Do you have this in other colors?",
+          "zhHint": "",
+          "keywords": [
+            "have this"
+          ],
+          "sourceLine": 32
+        },
+        {
+          "text": "Do you have this in black?",
+          "zhHint": "",
+          "keywords": [
+            "have this"
+          ],
+          "sourceLine": 32
         }
       ]
     },
@@ -2763,7 +5254,10 @@
       "sentences": [
         "What fabric is this made of?",
         "How much is this?",
-        "Do you have any other brands for this style?"
+        "Do you have any other brands for this style?",
+        "Are there similar styles from other brands?",
+        "Is this made of cotton?",
+        "Is this made of wool?"
       ],
       "zhHint": "",
       "keywords": [
@@ -2793,6 +5287,30 @@
             "brands for"
           ],
           "sourceLine": 28
+        },
+        {
+          "text": "Are there similar styles from other brands?",
+          "zhHint": "",
+          "keywords": [
+            "similar styles"
+          ],
+          "sourceLine": 28
+        },
+        {
+          "text": "Is this made of cotton?",
+          "zhHint": "",
+          "keywords": [
+            "made of cotton"
+          ],
+          "sourceLine": 32
+        },
+        {
+          "text": "Is this made of wool?",
+          "zhHint": "",
+          "keywords": [
+            "made of wool"
+          ],
+          "sourceLine": 32
         }
       ]
     },
@@ -2806,7 +5324,24 @@
       "sentences": [
         "Hi, what can I do for you?",
         "The bag I don't see, I don't see.",
-        "I've lost my passport."
+        "I've lost my passport.",
+        "Oh my god, I've lost my bag.",
+        "Ok ok, take it easy.",
+        "What does it look like?",
+        "It's a laptop backpack.",
+        "Pure black without any pattern.",
+        "Take it easy, take it easy.",
+        "It's a laptop backpack, pure black.",
+        "Do you remember where it was seen for the last time?",
+        "You asked me, I asked who?",
+        "I think I've forgotten it on a bench of Central Park.",
+        "I think I've forgotten it on a bench of Central Park, but it's gone when I got back looking for it.",
+        "I think I have forgotten it on a bench of Central Park.",
+        "But it's gone when I got back looking for it.",
+        "I think I have forgotten it on a bench.",
+        "Could you make a list of the items inside?",
+        "Inside I have the money in the small bag.",
+        "Of course, my passport, my wallet with around 600 bucks and a few credit cards."
       ],
       "zhHint": "",
       "keywords": [],
@@ -2835,6 +5370,148 @@
             "lost my"
           ],
           "sourceLine": 30
+        },
+        {
+          "text": "Oh my god, I've lost my bag.",
+          "zhHint": "",
+          "keywords": [
+            "lost my"
+          ],
+          "sourceLine": 34
+        },
+        {
+          "text": "Ok ok, take it easy.",
+          "zhHint": "",
+          "keywords": [
+            "take it"
+          ],
+          "sourceLine": 38
+        },
+        {
+          "text": "What does it look like?",
+          "zhHint": "",
+          "keywords": [
+            "look like"
+          ],
+          "sourceLine": 38
+        },
+        {
+          "text": "It's a laptop backpack.",
+          "zhHint": "",
+          "keywords": [
+            "laptop backpack"
+          ],
+          "sourceLine": 40
+        },
+        {
+          "text": "Pure black without any pattern.",
+          "zhHint": "",
+          "keywords": [
+            "Pure black without"
+          ],
+          "sourceLine": 40
+        },
+        {
+          "text": "Take it easy, take it easy.",
+          "zhHint": "",
+          "keywords": [
+            "Take it"
+          ],
+          "sourceLine": 42
+        },
+        {
+          "text": "It's a laptop backpack, pure black.",
+          "zhHint": "",
+          "keywords": [
+            "laptop backpack",
+            "pure black"
+          ],
+          "sourceLine": 46
+        },
+        {
+          "text": "Do you remember where it was seen for the last time?",
+          "zhHint": "",
+          "keywords": [
+            "last time"
+          ],
+          "sourceLine": 50
+        },
+        {
+          "text": "You asked me, I asked who?",
+          "zhHint": "",
+          "keywords": [
+            "asked who"
+          ],
+          "sourceLine": 50
+        },
+        {
+          "text": "I think I've forgotten it on a bench of Central Park.",
+          "zhHint": "",
+          "keywords": [
+            "Central Park"
+          ],
+          "sourceLine": 52
+        },
+        {
+          "text": "I think I've forgotten it on a bench of Central Park, but it's gone when I got back looking for it.",
+          "zhHint": "",
+          "keywords": [
+            "Central Park",
+            "got back looking"
+          ],
+          "sourceLine": 52
+        },
+        {
+          "text": "I think I have forgotten it on a bench of Central Park.",
+          "zhHint": "",
+          "keywords": [
+            "have forgotten",
+            "Central Park"
+          ],
+          "sourceLine": 54
+        },
+        {
+          "text": "But it's gone when I got back looking for it.",
+          "zhHint": "",
+          "keywords": [
+            "got back looking"
+          ],
+          "sourceLine": 54
+        },
+        {
+          "text": "I think I have forgotten it on a bench.",
+          "zhHint": "",
+          "keywords": [
+            "have forgotten"
+          ],
+          "sourceLine": 56
+        },
+        {
+          "text": "Could you make a list of the items inside?",
+          "zhHint": "",
+          "keywords": [
+            "make a list",
+            "items inside"
+          ],
+          "sourceLine": 60
+        },
+        {
+          "text": "Inside I have the money in the small bag.",
+          "zhHint": "",
+          "keywords": [
+            "have the money",
+            "small bag"
+          ],
+          "sourceLine": 60
+        },
+        {
+          "text": "Of course, my passport, my wallet with around 600 bucks and a few credit cards.",
+          "zhHint": "",
+          "keywords": [
+            "wallet with around",
+            "credit cards"
+          ],
+          "sourceLine": 62
         }
       ]
     },
@@ -2848,7 +5525,8 @@
       "sentences": [
         "English is full of colorful slang and idioms, such as \"think outside the box\".",
         "What do you think \"think outside the box\" means?",
-        "It means don't be trapped by the old framework."
+        "It means don't be trapped by the old framework.",
+        "We need to think about the literal meaning of outside the box, which refers to the physical action of thinking beyond the boundaries of a box."
       ],
       "zhHint": "",
       "keywords": [
@@ -2883,6 +5561,16 @@
             "old framework"
           ],
           "sourceLine": 22
+        },
+        {
+          "text": "We need to think about the literal meaning of outside the box, which refers to the physical action of thinking beyond the boundaries of a box.",
+          "zhHint": "",
+          "keywords": [
+            "meaning of outside",
+            "action of thinking",
+            "beyond the boundaries"
+          ],
+          "sourceLine": 26
         }
       ]
     },
@@ -2896,7 +5584,15 @@
       "sentences": [
         "Do you have a reservation?",
         "Then after we sat down, I asked to see the menu.",
-        "I was having trouble deciding, but finally I told the server, I'd like the grilled chicken please."
+        "I was having trouble deciding, but finally I told the server, I'd like the grilled chicken please.",
+        "I'd like the grilled chicken, please.",
+        "When you enter a restaurant, the server will usually greet you like this.",
+        "If you do have a reservation, you could say, Yes, I have a reservation for two under the name Daniel.",
+        "Yes, I have a reservation for two under the name Daniel.",
+        "We don't have a reservation.",
+        "Do you have a table?",
+        "No, we don't have a reservation.",
+        "Do you have a table for two?"
       ],
       "zhHint": "",
       "keywords": [
@@ -2930,6 +5626,74 @@
             "grilled chicken"
           ],
           "sourceLine": 30
+        },
+        {
+          "text": "I'd like the grilled chicken, please.",
+          "zhHint": "",
+          "keywords": [
+            "grilled chicken"
+          ],
+          "sourceLine": 30
+        },
+        {
+          "text": "When you enter a restaurant, the server will usually greet you like this.",
+          "zhHint": "",
+          "keywords": [
+            "enter a restaurant",
+            "usually greet"
+          ],
+          "sourceLine": 34
+        },
+        {
+          "text": "If you do have a reservation, you could say, Yes, I have a reservation for two under the name Daniel.",
+          "zhHint": "",
+          "keywords": [
+            "have a reservation",
+            "have a reservation",
+            "under the name"
+          ],
+          "sourceLine": 36
+        },
+        {
+          "text": "Yes, I have a reservation for two under the name Daniel.",
+          "zhHint": "",
+          "keywords": [
+            "have a reservation",
+            "under the name"
+          ],
+          "sourceLine": 38
+        },
+        {
+          "text": "We don't have a reservation.",
+          "zhHint": "",
+          "keywords": [
+            "have a reservation"
+          ],
+          "sourceLine": 42
+        },
+        {
+          "text": "Do you have a table?",
+          "zhHint": "",
+          "keywords": [
+            "have a table"
+          ],
+          "sourceLine": 42
+        },
+        {
+          "text": "No, we don't have a reservation.",
+          "zhHint": "",
+          "keywords": [
+            "have a reservation"
+          ],
+          "sourceLine": 50
+        },
+        {
+          "text": "Do you have a table for two?",
+          "zhHint": "",
+          "keywords": [
+            "table for two"
+          ],
+          "sourceLine": 54
         }
       ]
     },
@@ -2943,7 +5707,11 @@
       "sentences": [
         "The server will ask, Would you like something to drink?",
         "And you can reply, Yes, I'll have a glass of water please.",
-        "Would you like something to drink?"
+        "Would you like something to drink?",
+        "Yes, I'll have a glass of water please.",
+        "I'll have a glass of wine.",
+        "Do you have any other drinks?",
+        "I'll take an orange juice."
       ],
       "zhHint": "",
       "keywords": [
@@ -2973,6 +5741,38 @@
           "zhHint": "你需要喝点什么吗？",
           "keywords": [],
           "sourceLine": 26
+        },
+        {
+          "text": "Yes, I'll have a glass of water please.",
+          "zhHint": "",
+          "keywords": [
+            "glass of water"
+          ],
+          "sourceLine": 26
+        },
+        {
+          "text": "I'll have a glass of wine.",
+          "zhHint": "我要一杯葡萄酒。",
+          "keywords": [
+            "glass of wine"
+          ],
+          "sourceLine": 30
+        },
+        {
+          "text": "Do you have any other drinks?",
+          "zhHint": "你们有什么其他饮料的吗？",
+          "keywords": [
+            "have any"
+          ],
+          "sourceLine": 34
+        },
+        {
+          "text": "I'll take an orange juice.",
+          "zhHint": "",
+          "keywords": [
+            "take an orange"
+          ],
+          "sourceLine": 34
         }
       ]
     },
@@ -2986,7 +5786,11 @@
       "sentences": [
         "I'm really excited to continue our English learning journey.",
         "What's your favorite dish?",
-        "My favorite dish is spaghetti with tomato sauce."
+        "My favorite dish is spaghetti with tomato sauce.",
+        "Oh, this dish is so delicious.",
+        "This dish is so delicious.",
+        "This dish is so yummy.",
+        "Oh, this is so good."
       ],
       "zhHint": "",
       "keywords": [
@@ -3021,6 +5825,36 @@
             "spaghetti with tomato"
           ],
           "sourceLine": 34
+        },
+        {
+          "text": "Oh, this dish is so delicious.",
+          "zhHint": "",
+          "keywords": [
+            "dish is"
+          ],
+          "sourceLine": 40
+        },
+        {
+          "text": "This dish is so delicious.",
+          "zhHint": "",
+          "keywords": [
+            "dish is"
+          ],
+          "sourceLine": 40
+        },
+        {
+          "text": "This dish is so yummy.",
+          "zhHint": "",
+          "keywords": [
+            "dish is"
+          ],
+          "sourceLine": 42
+        },
+        {
+          "text": "Oh, this is so good.",
+          "zhHint": "",
+          "keywords": [],
+          "sourceLine": 42
         }
       ]
     },
@@ -3034,7 +5868,8 @@
       "sentences": [
         "After all that, it's time to serve the dish.",
         "I can't wait to taste it.",
-        "OK, first, mix the flour, sugar, eggs, and butter."
+        "OK, first, mix the flour, sugar, eggs, and butter.",
+        "First, mix the flour, sugar, eggs, and butter."
       ],
       "zhHint": "",
       "keywords": [
@@ -3066,6 +5901,14 @@
             "mix the flour"
           ],
           "sourceLine": 41
+        },
+        {
+          "text": "First, mix the flour, sugar, eggs, and butter.",
+          "zhHint": "首先，把面粉、糖、鸡蛋和黄油混合在一起。",
+          "keywords": [
+            "mix the flour"
+          ],
+          "sourceLine": 41
         }
       ]
     },
@@ -3079,7 +5922,18 @@
       "sentences": [
         "Hi, what can I get you?",
         "Sure, they're very healthy.",
-        "What can I get you?"
+        "What can I get you?",
+        "I'd like one loaf of rye bread, please.",
+        "I'd like one loaf of white bread, please.",
+        "Thinly will be great.",
+        "Can you have them sliced, please?",
+        "Can you have them sliced?",
+        "Could you remove the crust for me?",
+        "Our cookies and muffins always come in baker's dozens.",
+        "Would you like some?",
+        "I'll have a dozen chocolate cookies.",
+        "These are a fresh batch, just pop out of the oven.",
+        "I'll have half a dozen chocolate cookies."
       ],
       "zhHint": "",
       "keywords": [],
@@ -3103,6 +5957,94 @@
           "zhHint": "",
           "keywords": [],
           "sourceLine": 34
+        },
+        {
+          "text": "I'd like one loaf of rye bread, please.",
+          "zhHint": "我要一条黑麦面包。",
+          "keywords": [
+            "loaf of rye"
+          ],
+          "sourceLine": 34
+        },
+        {
+          "text": "I'd like one loaf of white bread, please.",
+          "zhHint": "",
+          "keywords": [
+            "loaf of white"
+          ],
+          "sourceLine": 40
+        },
+        {
+          "text": "Thinly will be great.",
+          "zhHint": "",
+          "keywords": [
+            "Thinly will"
+          ],
+          "sourceLine": 44
+        },
+        {
+          "text": "Can you have them sliced, please?",
+          "zhHint": "能帮我切片吗？",
+          "keywords": [
+            "have them"
+          ],
+          "sourceLine": 48
+        },
+        {
+          "text": "Can you have them sliced?",
+          "zhHint": "",
+          "keywords": [
+            "have them"
+          ],
+          "sourceLine": 48
+        },
+        {
+          "text": "Could you remove the crust for me?",
+          "zhHint": "",
+          "keywords": [
+            "remove the crust"
+          ],
+          "sourceLine": 50
+        },
+        {
+          "text": "Our cookies and muffins always come in baker's dozens.",
+          "zhHint": "",
+          "keywords": [
+            "muffins always come",
+            "baker's dozens"
+          ],
+          "sourceLine": 56
+        },
+        {
+          "text": "Would you like some?",
+          "zhHint": "",
+          "keywords": [],
+          "sourceLine": 56
+        },
+        {
+          "text": "I'll have a dozen chocolate cookies.",
+          "zhHint": "",
+          "keywords": [
+            "dozen chocolate cookies"
+          ],
+          "sourceLine": 58
+        },
+        {
+          "text": "These are a fresh batch, just pop out of the oven.",
+          "zhHint": "",
+          "keywords": [
+            "fresh batch"
+          ],
+          "sourceLine": 58
+        },
+        {
+          "text": "I'll have half a dozen chocolate cookies.",
+          "zhHint": "",
+          "keywords": [
+            "have half",
+            "dozen chocolate cookies"
+          ],
+          "sourceLine": 64
         }
       ]
     },
@@ -3116,7 +6058,11 @@
       "sentences": [
         "This means talking about what foods we like, don't like, or choose to eat for health reasons.",
         "Snow loves salads, pasta and vegetable stir fry.",
-        "I really dislike mushrooms."
+        "I really dislike mushrooms.",
+        "What are your dietary preferences?",
+        "Do you have preferred food to keep your body in check?",
+        "If you don't like meat: I'm a vegetarian.",
+        "I don't eat meat, but I eat dairy and eggs."
       ],
       "zhHint": "",
       "keywords": [
@@ -3153,6 +6099,40 @@
             "dislike mushrooms"
           ],
           "sourceLine": 32
+        },
+        {
+          "text": "What are your dietary preferences?",
+          "zhHint": "",
+          "keywords": [
+            "dietary preferences"
+          ],
+          "sourceLine": 38
+        },
+        {
+          "text": "Do you have preferred food to keep your body in check?",
+          "zhHint": "",
+          "keywords": [
+            "have preferred food",
+            "body in check"
+          ],
+          "sourceLine": 38
+        },
+        {
+          "text": "If you don't like meat: I'm a vegetarian.",
+          "zhHint": "",
+          "keywords": [
+            "don't like"
+          ],
+          "sourceLine": 42
+        },
+        {
+          "text": "I don't eat meat, but I eat dairy and eggs.",
+          "zhHint": "",
+          "keywords": [
+            "don't eat meat",
+            "eat dairy"
+          ],
+          "sourceLine": 42
         }
       ]
     },
@@ -3166,7 +6146,10 @@
       "sentences": [
         "I love meat, my favorite is steak, especially when it's medium rare.",
         "I follow a gluten-free diet for health reasons.",
-        "I'm allergic to peanuts, so I avoid foods that might contain them."
+        "I'm allergic to peanuts, so I avoid foods that might contain them.",
+        "I have lactose intolerance, so I drink almond milk instead of regular milk.",
+        "So I avoid foods that might contain them.",
+        "I have lactose intolerance."
       ],
       "zhHint": "",
       "keywords": [
@@ -3202,6 +6185,32 @@
             "avoid foods"
           ],
           "sourceLine": 36
+        },
+        {
+          "text": "I have lactose intolerance, so I drink almond milk instead of regular milk.",
+          "zhHint": "",
+          "keywords": [
+            "have lactose intolerance",
+            "almond milk",
+            "instead of regular"
+          ],
+          "sourceLine": 38
+        },
+        {
+          "text": "So I avoid foods that might contain them.",
+          "zhHint": "",
+          "keywords": [
+            "avoid foods"
+          ],
+          "sourceLine": 44
+        },
+        {
+          "text": "I have lactose intolerance.",
+          "zhHint": "",
+          "keywords": [
+            "have lactose intolerance"
+          ],
+          "sourceLine": 44
         }
       ]
     },
@@ -3215,7 +6224,10 @@
       "sentences": [
         "I love the flavors of Thai food.",
         "It's spicy, savory, and full of herbs.",
-        "I've tried traditional Italian dishes like pasta."
+        "I've tried traditional Italian dishes like pasta.",
+        "Pasta with fresh tomatoes and basil is so delicious.",
+        "What is your favorite international cuisine?",
+        "Do you have a favorite international cuisine?"
       ],
       "zhHint": "",
       "keywords": [
@@ -3249,6 +6261,30 @@
             "traditional Italian dishes"
           ],
           "sourceLine": 32
+        },
+        {
+          "text": "Pasta with fresh tomatoes and basil is so delicious.",
+          "zhHint": "",
+          "keywords": [
+            "Pasta with fresh"
+          ],
+          "sourceLine": 32
+        },
+        {
+          "text": "What is your favorite international cuisine?",
+          "zhHint": "",
+          "keywords": [
+            "favorite international cuisine"
+          ],
+          "sourceLine": 38
+        },
+        {
+          "text": "Do you have a favorite international cuisine?",
+          "zhHint": "",
+          "keywords": [
+            "favorite international cuisine"
+          ],
+          "sourceLine": 38
         }
       ]
     },
@@ -3262,7 +6298,9 @@
       "sentences": [
         "Between sweet dishes and savory dishes, I prefer sweet desserts like French pastries.",
         "I find Chinese cuisine unique.",
-        "This dish is known for its regional spices."
+        "This dish is known for its regional spices.",
+        "Indian cuisine is famous for its strong and flavorful spices.",
+        "Chinese cuisine is famous for its balance of sweet, sour, and savory flavors."
       ],
       "zhHint": "",
       "keywords": [
@@ -3298,6 +6336,25 @@
             "regional spices"
           ],
           "sourceLine": 37
+        },
+        {
+          "text": "Indian cuisine is famous for its strong and flavorful spices.",
+          "zhHint": "印度菜是以它的浓郁和香料而出名的。",
+          "keywords": [
+            "Indian cuisine",
+            "flavorful spices"
+          ],
+          "sourceLine": 43
+        },
+        {
+          "text": "Chinese cuisine is famous for its balance of sweet, sour, and savory flavors.",
+          "zhHint": "中餐以它甜、酸和咸味的平衡而出名的。",
+          "keywords": [
+            "Chinese cuisine",
+            "balance of sweet",
+            "savory flavors"
+          ],
+          "sourceLine": 43
         }
       ]
     },
@@ -3311,7 +6368,14 @@
       "sentences": [
         "Would you like a booth or a table?",
         "A table for one, please.",
-        "A table for two, please."
+        "A table for two, please.",
+        "A booth for one, please.",
+        "Make it medium well, please.",
+        "How would you like your steak cooked?",
+        "Make it medium, please.",
+        "I'll have the crab cakes for appetizers.",
+        "I'll have the bruschetta for appetizers.",
+        "Yes, I'll have the crab cakes for appetizers."
       ],
       "zhHint": "",
       "keywords": [
@@ -3343,6 +6407,64 @@
             "table for two"
           ],
           "sourceLine": 36
+        },
+        {
+          "text": "A booth for one, please.",
+          "zhHint": "",
+          "keywords": [
+            "booth for one"
+          ],
+          "sourceLine": 36
+        },
+        {
+          "text": "Make it medium well, please.",
+          "zhHint": "",
+          "keywords": [
+            "medium well"
+          ],
+          "sourceLine": 40
+        },
+        {
+          "text": "How would you like your steak cooked?",
+          "zhHint": "牛排要几分熟？",
+          "keywords": [
+            "steak cooked"
+          ],
+          "sourceLine": 42
+        },
+        {
+          "text": "Make it medium, please.",
+          "zhHint": "",
+          "keywords": [
+            "Make it"
+          ],
+          "sourceLine": 50
+        },
+        {
+          "text": "I'll have the crab cakes for appetizers.",
+          "zhHint": "前菜要一份蟹饼。",
+          "keywords": [
+            "have the crab",
+            "cakes for appetizers"
+          ],
+          "sourceLine": 56
+        },
+        {
+          "text": "I'll have the bruschetta for appetizers.",
+          "zhHint": "",
+          "keywords": [
+            "bruschetta for appetizers"
+          ],
+          "sourceLine": 62
+        },
+        {
+          "text": "Yes, I'll have the crab cakes for appetizers.",
+          "zhHint": "",
+          "keywords": [
+            "have the crab",
+            "cakes for appetizers"
+          ],
+          "sourceLine": 62
         }
       ]
     },
@@ -3356,7 +6478,8 @@
       "sentences": [
         "What types of tea do you have?",
         "What pastries do you have today?",
-        "Can I get a cup of coffee, please?"
+        "Can I get a cup of coffee, please?",
+        "Can I get a cup of tea, please?"
       ],
       "zhHint": "",
       "keywords": [
@@ -3386,6 +6509,14 @@
           "zhHint": "我可以点一杯咖啡吗？",
           "keywords": [
             "cup of coffee"
+          ],
+          "sourceLine": 42
+        },
+        {
+          "text": "Can I get a cup of tea, please?",
+          "zhHint": "",
+          "keywords": [
+            "cup of tea"
           ],
           "sourceLine": 42
         }
@@ -3448,7 +6579,11 @@
       "sentences": [
         "What can I get you?",
         "I'd like a green tea latte, please.",
-        "Would you like to make it hot or iced?"
+        "Would you like to make it hot or iced?",
+        "Easy on the ice, please.",
+        "What size would you like?",
+        "Tall would be great.",
+        "Short would be great."
       ],
       "zhHint": "需要点些什么？",
       "keywords": [],
@@ -3476,6 +6611,38 @@
             "make it"
           ],
           "sourceLine": 44
+        },
+        {
+          "text": "Easy on the ice, please.",
+          "zhHint": "",
+          "keywords": [
+            "Easy on"
+          ],
+          "sourceLine": 44
+        },
+        {
+          "text": "What size would you like?",
+          "zhHint": "",
+          "keywords": [
+            "size would"
+          ],
+          "sourceLine": 56
+        },
+        {
+          "text": "Tall would be great.",
+          "zhHint": "",
+          "keywords": [
+            "Tall would"
+          ],
+          "sourceLine": 56
+        },
+        {
+          "text": "Short would be great.",
+          "zhHint": "",
+          "keywords": [
+            "Short would"
+          ],
+          "sourceLine": 62
         }
       ]
     },
@@ -3534,7 +6701,8 @@
       "sentences": [
         "English is full of colorful slang and idioms, such as raining cats and dogs.",
         "What does it mean?",
-        "The idiom raining cats and dogs means that it is raining extremely heavily."
+        "The idiom raining cats and dogs means that it is raining extremely heavily.",
+        "The expression uses a metaphor to describe a downpour of rain that is intense and forceful, as if cats and dogs were falling from the sky."
       ],
       "zhHint": "",
       "keywords": [
@@ -3568,6 +6736,16 @@
             "raining extremely heavily"
           ],
           "sourceLine": 25
+        },
+        {
+          "text": "The expression uses a metaphor to describe a downpour of rain that is intense and forceful, as if cats and dogs were falling from the sky.",
+          "zhHint": "",
+          "keywords": [
+            "expression uses",
+            "metaphor to describe",
+            "downpour of rain"
+          ],
+          "sourceLine": 29
         }
       ]
     },
@@ -3581,7 +6759,8 @@
       "sentences": [
         "Who doesn't love a good film or series, right?",
         "I like action movies.",
-        "What is your favorite color?"
+        "What is your favorite color?",
+        "I like romances because they are romantic."
       ],
       "zhHint": "",
       "keywords": [
@@ -3615,6 +6794,14 @@
             "favorite color"
           ],
           "sourceLine": 31
+        },
+        {
+          "text": "I like romances because they are romantic.",
+          "zhHint": "",
+          "keywords": [
+            "romances because"
+          ],
+          "sourceLine": 39
         }
       ]
     },
@@ -3628,7 +6815,10 @@
       "sentences": [
         "Have you seen the latest episode of this show?",
         "The plot of this series is very interesting.",
-        "Do you like watching TV shows?"
+        "Do you like watching TV shows?",
+        "Yes, I love watching series like Friends.",
+        "Do you like eating Chinese food?",
+        "I'm a big fan of Friends."
       ],
       "zhHint": "",
       "keywords": [
@@ -3660,6 +6850,30 @@
             "watching TV shows"
           ],
           "sourceLine": 35
+        },
+        {
+          "text": "Yes, I love watching series like Friends.",
+          "zhHint": "",
+          "keywords": [
+            "love watching series"
+          ],
+          "sourceLine": 35
+        },
+        {
+          "text": "Do you like eating Chinese food?",
+          "zhHint": "你喜欢吃中餐吗？",
+          "keywords": [
+            "eating Chinese food"
+          ],
+          "sourceLine": 39
+        },
+        {
+          "text": "I'm a big fan of Friends.",
+          "zhHint": "",
+          "keywords": [
+            "fan of Friends"
+          ],
+          "sourceLine": 39
         }
       ]
     },
@@ -3673,7 +6887,16 @@
       "sentences": [
         "I'm so excited to be here with you today.",
         "Who doesn't love live music, right?",
-        "I find going to concerts to be a great stress reliever."
+        "OK, Music concerts are such a wonderful experience.",
+        "I find going to concerts to be a great stress reliever.",
+        "It lifts up my spirits.",
+        "Hey, I heard JJ Lin is performing live soon.",
+        "Are you interested in attending the concert with me?",
+        "It's also important to prepare for the concert.",
+        "We should arrive early to grab a good spot.",
+        "It's such an unforgettable experience.",
+        "Have you ever been to a concert before?",
+        "It's an unforgettable experience."
       ],
       "zhHint": "",
       "keywords": [
@@ -3700,6 +6923,15 @@
           "sourceLine": 22
         },
         {
+          "text": "OK, Music concerts are such a wonderful experience.",
+          "zhHint": "",
+          "keywords": [
+            "Music concerts",
+            "wonderful experience"
+          ],
+          "sourceLine": 24
+        },
+        {
           "text": "I find going to concerts to be a great stress reliever.",
           "zhHint": "",
           "keywords": [
@@ -3707,6 +6939,72 @@
             "great stress reliever"
           ],
           "sourceLine": 28
+        },
+        {
+          "text": "It lifts up my spirits.",
+          "zhHint": "",
+          "keywords": [
+            "lifts up"
+          ],
+          "sourceLine": 28
+        },
+        {
+          "text": "Hey, I heard JJ Lin is performing live soon.",
+          "zhHint": "",
+          "keywords": [
+            "heard JJ Lin",
+            "performing live soon"
+          ],
+          "sourceLine": 32
+        },
+        {
+          "text": "Are you interested in attending the concert with me?",
+          "zhHint": "",
+          "keywords": [
+            "interested in attending"
+          ],
+          "sourceLine": 32
+        },
+        {
+          "text": "It's also important to prepare for the concert.",
+          "zhHint": "",
+          "keywords": [
+            "important to prepare"
+          ],
+          "sourceLine": 36
+        },
+        {
+          "text": "We should arrive early to grab a good spot.",
+          "zhHint": "",
+          "keywords": [
+            "early to grab",
+            "good spot"
+          ],
+          "sourceLine": 36
+        },
+        {
+          "text": "It's such an unforgettable experience.",
+          "zhHint": "",
+          "keywords": [
+            "unforgettable experience"
+          ],
+          "sourceLine": 40
+        },
+        {
+          "text": "Have you ever been to a concert before?",
+          "zhHint": "",
+          "keywords": [
+            "concert before"
+          ],
+          "sourceLine": 40
+        },
+        {
+          "text": "It's an unforgettable experience.",
+          "zhHint": "",
+          "keywords": [
+            "unforgettable experience"
+          ],
+          "sourceLine": 44
         }
       ]
     },
@@ -3720,7 +7018,8 @@
       "sentences": [
         "I hope you enjoyed our last lesson about concerts.",
         "The audience was so excited throughout the concert.",
-        "Everyone cheered loudly when the singer came on stage."
+        "Everyone cheered loudly when the singer came on stage.",
+        "The set list included all their best hits."
       ],
       "zhHint": "",
       "keywords": [
@@ -3753,6 +7052,15 @@
             "came on stage"
           ],
           "sourceLine": 27
+        },
+        {
+          "text": "The set list included all their best hits.",
+          "zhHint": "",
+          "keywords": [
+            "set list included",
+            "best hits"
+          ],
+          "sourceLine": 29
         }
       ]
     },
@@ -3766,7 +7074,11 @@
       "sentences": [
         "Sure, I love reading novels.",
         "Right now, I'm reading Dune by Frank Herbert, who is one of my favorite authors.",
-        "It's a sci-fi novel, and I'm really enjoying the story."
+        "It's a sci-fi novel, and I'm really enjoying the story.",
+        "I like all kinds of genres, but science fiction is my favorite.",
+        "I read a great review about this book.",
+        "Can you recommend a good novel?",
+        "Can you suggest a book that has impacted you?"
       ],
       "zhHint": "",
       "keywords": [
@@ -3801,6 +7113,40 @@
             "enjoying the story"
           ],
           "sourceLine": 27
+        },
+        {
+          "text": "I like all kinds of genres, but science fiction is my favorite.",
+          "zhHint": "",
+          "keywords": [
+            "kinds of genres",
+            "science fiction"
+          ],
+          "sourceLine": 27
+        },
+        {
+          "text": "I read a great review about this book.",
+          "zhHint": "",
+          "keywords": [
+            "read a great"
+          ],
+          "sourceLine": 31
+        },
+        {
+          "text": "Can you recommend a good novel?",
+          "zhHint": "",
+          "keywords": [
+            "recommend a good"
+          ],
+          "sourceLine": 31
+        },
+        {
+          "text": "Can you suggest a book that has impacted you?",
+          "zhHint": "",
+          "keywords": [
+            "suggest a book",
+            "has impacted"
+          ],
+          "sourceLine": 35
         }
       ]
     },
@@ -3814,7 +7160,10 @@
       "sentences": [
         "It's a pleasure to have you join me for yet another fascinating lesson.",
         "We reviewed and went over some fundamental texts about books last time.",
-        "The summary of the book intrigued me."
+        "The book has received many positive reviews.",
+        "I highly recommend this book to anyone who loves mysteries.",
+        "The summary of the book intrigued me.",
+        "The book is about a young girl's journey to find herself."
       ],
       "zhHint": "",
       "keywords": [
@@ -3843,10 +7192,37 @@
           "sourceLine": 21
         },
         {
+          "text": "The book has received many positive reviews.",
+          "zhHint": "",
+          "keywords": [
+            "book has received",
+            "positive reviews"
+          ],
+          "sourceLine": 27
+        },
+        {
+          "text": "I highly recommend this book to anyone who loves mysteries.",
+          "zhHint": "",
+          "keywords": [
+            "highly recommend",
+            "loves mysteries"
+          ],
+          "sourceLine": 27
+        },
+        {
           "text": "The summary of the book intrigued me.",
           "zhHint": "",
           "keywords": [
             "book intrigued"
+          ],
+          "sourceLine": 31
+        },
+        {
+          "text": "The book is about a young girl's journey to find herself.",
+          "zhHint": "",
+          "keywords": [
+            "young girl's journey",
+            "find herself"
           ],
           "sourceLine": 31
         }
@@ -3862,7 +7238,8 @@
       "sentences": [
         "Do you like playing games with your family or friends?",
         "This board game is really challenging.",
-        "This game requires strategy to win."
+        "This game requires strategy to win.",
+        "Do you like playing board games?"
       ],
       "zhHint": "",
       "keywords": [
@@ -3894,6 +7271,14 @@
             "game requires strategy"
           ],
           "sourceLine": 27
+        },
+        {
+          "text": "Do you like playing board games?",
+          "zhHint": "",
+          "keywords": [
+            "playing board games"
+          ],
+          "sourceLine": 33
         }
       ]
     },
@@ -3907,7 +7292,11 @@
       "sentences": [
         "Are you a fan of video games?",
         "Have you played any VR games before?",
-        "Do you like playing video games?"
+        "OK, I recently had the wonderful chance to endorse a brand new video game, as you may be aware.",
+        "The experience has been amazing, and I'm looking forward to talking to you more about video games.",
+        "Do you like playing video games?",
+        "I love playing video games.",
+        "It's my favorite way to relax and have fun."
       ],
       "zhHint": "",
       "keywords": [
@@ -3933,12 +7322,50 @@
           "sourceLine": 21
         },
         {
+          "text": "OK, I recently had the wonderful chance to endorse a brand new video game, as you may be aware.",
+          "zhHint": "",
+          "keywords": [
+            "had the wonderful",
+            "chance to endorse",
+            "brand new"
+          ],
+          "sourceLine": 23
+        },
+        {
+          "text": "The experience has been amazing, and I'm looking forward to talking to you more about video games.",
+          "zhHint": "",
+          "keywords": [
+            "experience has",
+            "forward to talking",
+            "video games"
+          ],
+          "sourceLine": 23
+        },
+        {
           "text": "Do you like playing video games?",
           "zhHint": "",
           "keywords": [
             "playing video games"
           ],
           "sourceLine": 27
+        },
+        {
+          "text": "I love playing video games.",
+          "zhHint": "",
+          "keywords": [
+            "love playing",
+            "video games"
+          ],
+          "sourceLine": 27
+        },
+        {
+          "text": "It's my favorite way to relax and have fun.",
+          "zhHint": "",
+          "keywords": [
+            "way to relax",
+            "have fun"
+          ],
+          "sourceLine": 29
         }
       ]
     },
@@ -3951,8 +7378,10 @@
       "title": "09运动和比赛（上）",
       "sentences": [
         "Sports are not only fun, but also a great way to stay healthy.",
+        "Like the most, he's incredible.",
         "My favorite sport is basketball.",
-        "What is your favorite sport?"
+        "What is your favorite sport?",
+        "I like playing table tennis."
       ],
       "zhHint": "",
       "keywords": [
@@ -3972,6 +7401,14 @@
           "sourceLine": 21
         },
         {
+          "text": "Like the most, he's incredible.",
+          "zhHint": "",
+          "keywords": [
+            "he's incredible"
+          ],
+          "sourceLine": 27
+        },
+        {
           "text": "My favorite sport is basketball.",
           "zhHint": "",
           "keywords": [
@@ -3986,6 +7423,14 @@
             "favorite sport"
           ],
           "sourceLine": 31
+        },
+        {
+          "text": "I like playing table tennis.",
+          "zhHint": "我喜欢打乒乓球。",
+          "keywords": [
+            "table tennis"
+          ],
+          "sourceLine": 33
         }
       ]
     },
@@ -3998,8 +7443,10 @@
       "title": "10运动和比赛（下）",
       "sentences": [
         "Have you ever watched a live table tennis match?",
+        "It's an exhilarating experience.",
         "The World Table Tennis Championships is one of the most prestigious events in the sport.",
-        "The World Table Tennis Championships is the most prestigious event in the sport."
+        "The World Table Tennis Championships is the most prestigious event in the sport.",
+        "I can't wait for the next Olympic Games to see the best players compete."
       ],
       "zhHint": "",
       "keywords": [
@@ -4015,6 +7462,14 @@
           "keywords": [
             "watched a live",
             "table tennis"
+          ],
+          "sourceLine": 28
+        },
+        {
+          "text": "It's an exhilarating experience.",
+          "zhHint": "",
+          "keywords": [
+            "exhilarating experience"
           ],
           "sourceLine": 28
         },
@@ -4035,6 +7490,16 @@
             "prestigious event"
           ],
           "sourceLine": 34
+        },
+        {
+          "text": "I can't wait for the next Olympic Games to see the best players compete.",
+          "zhHint": "我迫不及待想看下一届奥运会上顶尖选手的竞争。",
+          "keywords": [
+            "can't wait",
+            "next Olympic Games",
+            "best players compete"
+          ],
+          "sourceLine": 46
         }
       ]
     },
@@ -4209,7 +7674,9 @@
       "sentences": [
         "We all know that interviews are really important for getting a good job.",
         "I prepared my resume for the interview.",
-        "The company is looking for qualified candidates for this position."
+        "The company is looking for qualified candidates for this position.",
+        "I have an interview tomorrow.",
+        "The interview went very well."
       ],
       "zhHint": "",
       "keywords": [
@@ -4243,6 +7710,22 @@
             "looking for qualified"
           ],
           "sourceLine": 29
+        },
+        {
+          "text": "I have an interview tomorrow.",
+          "zhHint": "",
+          "keywords": [
+            "have an interview"
+          ],
+          "sourceLine": 35
+        },
+        {
+          "text": "The interview went very well.",
+          "zhHint": "",
+          "keywords": [
+            "interview went"
+          ],
+          "sourceLine": 37
         }
       ]
     },
@@ -4256,7 +7739,10 @@
       "sentences": [
         "In today's class, we'll continue learning about job interviews.",
         "Ok, knowing that your job interview is coming soon, you might feel both excited and nervous.",
-        "To feel more confident, you should have some interview skills."
+        "To feel more confident, you should have some interview skills.",
+        "In a job interview, talking about your strengths and weaknesses is normal.",
+        "It's important to say them clearly and in a positive way.",
+        "What are your greatest strengths?"
       ],
       "zhHint": "",
       "keywords": [
@@ -4291,6 +7777,31 @@
             "interview skills"
           ],
           "sourceLine": 25
+        },
+        {
+          "text": "In a job interview, talking about your strengths and weaknesses is normal.",
+          "zhHint": "",
+          "keywords": [
+            "job interview"
+          ],
+          "sourceLine": 31
+        },
+        {
+          "text": "It's important to say them clearly and in a positive way.",
+          "zhHint": "",
+          "keywords": [
+            "important to say",
+            "positive way"
+          ],
+          "sourceLine": 31
+        },
+        {
+          "text": "What are your greatest strengths?",
+          "zhHint": "",
+          "keywords": [
+            "greatest strengths"
+          ],
+          "sourceLine": 35
         }
       ]
     },
@@ -4331,7 +7842,8 @@
       "sentences": [
         "Understanding how to describe challenges and pressures in your job is an important skill.",
         "A common issue at work is a tight deadline.",
-        "I sometimes face difficulties when learning new software."
+        "I sometimes face difficulties when learning new software.",
+        "A common issue at work is tight deadlines."
       ],
       "zhHint": "",
       "keywords": [
@@ -4367,6 +7879,15 @@
             "learning new software"
           ],
           "sourceLine": 25
+        },
+        {
+          "text": "A common issue at work is tight deadlines.",
+          "zhHint": "",
+          "keywords": [
+            "issue at work",
+            "tight deadlines"
+          ],
+          "sourceLine": 37
         }
       ]
     },
@@ -4513,7 +8034,8 @@
       "sentences": [
         "What gets wet while drying?",
         "As it dries other things or people, while absorbing water, it gets wetter.",
-        "The towel itself gets wetter when it dries something else."
+        "The towel itself gets wetter when it dries something else.",
+        "If you like it, give me a high five!"
       ],
       "zhHint": "",
       "keywords": [
@@ -4546,6 +8068,14 @@
             "itself gets wetter"
           ],
           "sourceLine": 30
+        },
+        {
+          "text": "If you like it, give me a high five!",
+          "zhHint": "",
+          "keywords": [
+            "high five"
+          ],
+          "sourceLine": 30
         }
       ]
     },
@@ -4559,7 +8089,10 @@
       "sentences": [
         "English is full of colorful slang and idioms.",
         "What does it usually mean to hit the books?",
-        "It means study hard."
+        "It means study hard.",
+        "It means to study, usually in a serious and focused way.",
+        "The phrase might come from the idea of physically hitting or opening a book to begin the process of study.",
+        "When you hit the books, you're making a determined effort to read, learn, and understand the material within the books."
       ],
       "zhHint": "",
       "keywords": [
@@ -4592,6 +8125,35 @@
             "means study hard"
           ],
           "sourceLine": 26
+        },
+        {
+          "text": "It means to study, usually in a serious and focused way.",
+          "zhHint": "",
+          "keywords": [
+            "means to study",
+            "focused way"
+          ],
+          "sourceLine": 26
+        },
+        {
+          "text": "The phrase might come from the idea of physically hitting or opening a book to begin the process of study.",
+          "zhHint": "",
+          "keywords": [
+            "idea of physically",
+            "opening a book",
+            "begin the process"
+          ],
+          "sourceLine": 30
+        },
+        {
+          "text": "When you hit the books, you're making a determined effort to read, learn, and understand the material within the books.",
+          "zhHint": "",
+          "keywords": [
+            "making a determined",
+            "understand the material",
+            "within the books"
+          ],
+          "sourceLine": 30
         }
       ]
     }
