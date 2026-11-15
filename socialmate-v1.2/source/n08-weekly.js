@@ -528,6 +528,27 @@
         rejected.push({ line: line, reason: 'DUPLICATE_ID', message: REASON.DUPLICATE_ID });
         continue;
       }
+      // 两类合法行：
+      //  4 列 = 题号 | 模式一 | 模式二 | 模式三（同一题三种模式一起回贴）
+      //  2 列 = 题号 | 结果（混合模式题包：只给这道题自己的模式计分）
+      var singleMode = 0;
+      if (parts.length === 2) {
+        var ownMode = Number(q.mode) || 0;
+        if (ownMode < 1 || ownMode > 3) {
+          rejected.push({ line: line, reason: 'BAD_COLUMNS', message: REASON.BAD_COLUMNS });
+          continue;
+        }
+        if (RESULT_LITERALS.indexOf(parts[1]) < 0) {
+          rejected.push({ line: line, reason: 'BAD_RESULT', message: REASON.BAD_RESULT + '（收到：' + parts[1] + '）' });
+          continue;
+        }
+        singleMode = ownMode;
+        seenId[id] = true;
+        var src1 = q.source && typeof q.source === 'object' ? q.source : { key: q.id };
+        applied.push({ id: id, mode: singleMode, result: parts[1], key: src1.key || id, source: src1 });
+        scores['m' + singleMode][RESULT_FIELD[parts[1]]] += 1;
+        continue;
+      }
       if (parts.length !== 4) {
         rejected.push({ line: line, reason: 'BAD_COLUMNS', message: REASON.BAD_COLUMNS });
         continue;

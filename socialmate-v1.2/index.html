@@ -767,6 +767,11 @@ body.sm-immersive .chatv15.v152{height:calc(100vh - 12px - 56px - env(safe-area-
 .n08err{color:#b34040;font-size:14px;margin:6px 0 0}
 .n08pack{margin-top:8px}
 .n08ql{margin:6px 0 0;padding-left:22px;font-size:16px;line-height:1.5}
+.n08ans{margin-top:8px;display:flex;flex-direction:column;gap:6px}
+.n08ansrow{display:flex;gap:8px;border:1px solid var(--stroke);border-radius:10px;padding:6px 8px;background:var(--bg)}
+.n08ansid{flex:0 0 auto;font-size:14px;color:var(--muted);font-family:ui-monospace,monospace}
+.n08anszh{font-size:15px;margin:0;color:var(--muted)}
+.n08ansen{font-size:17px;margin:2px 0 0;color:var(--pine);font-weight:600;line-height:1.35}
 .n08chap h3{font-size:17px;margin:10px 0 6px;color:var(--pine)}
 .n08crow{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--stroke);font-size:16px}
 .n08plist{max-height:46vh;overflow:auto;display:flex;flex-direction:column;gap:6px}
@@ -2436,6 +2441,9 @@ function expr(){
      <button type="button" class="n08wk" data-n08="week">本周巩固${st.pack?' · 已生成':''}</button>
      <button type="button" class="n08wk" data-n08="courses">课程 ${learnedN} 已学</button>
    </div>
+   ${st.sheet==='week'?n08WeekSheet():''}
+   ${st.sheet==='place'?n08PlaceSheet():''}
+   ${st.composer?n08Composer(st.composer):''}
    <label class="search n08search"><span>⌕</span><input id="n08q" type="search" placeholder="搜中文、英文或词组" value="${esc(st.q)}" aria-label="搜索表达"></label>
    <div class="filter n08filter">
      ${[['all','全部'],['weak','待复习'],['fav','已收藏'],['place','有地点']].map(a=>`<button type="button" data-n08="filter" data-value="${a[0]}" class="${st.filter===a[0]?'on':''}">${a[1]}</button>`).join('')}
@@ -2444,9 +2452,7 @@ function expr(){
    <div class="n08list">
      ${list.length?list.map(n08ItemHtml).join(''):'<div class="stateempty">还没有表达记录。点上面「说中文」说一句，或用「批量粘贴」导入。</div>'}
    </div>
-   ${st.sheet==='week'?n08WeekSheet():''}
-   ${st.sheet==='place'?n08PlaceSheet():''}
-   ${st.composer?n08Composer(st.composer):''}
+
   </div>`;
 }
 function n08WeekSheet(){
@@ -2463,7 +2469,11 @@ function n08WeekSheet(){
       <p class="n08meta">题库 ${esc(pack.packId)} · ${pack.questions.length} 题</p>
       <ol class="n08ql">${pack.questions.map(q=>`<li><b>模式${q.mode}</b> ${esc(q.promptZh)}</li>`).join('')}</ol>
       <div class="n08row">
-        <button type="button" class="n08btn" data-n08="copy-pack">复制教练提示词</button>
+        <button type="button" class="n08btn ghost" data-n08="answers">${st.showAnswers?'收起参考答案':'看参考答案'}</button>
+        <button type="button" class="n08btn" data-n08="copy-pack">复制完整提示词（含答案）</button>
+      </div>
+      ${st.showAnswers?`<div class="n08ans">${pack.questions.map(q=>`<div class="n08ansrow"><span class="n08ansid">${esc(q.id.slice(-5))}</span><div><p class="n08anszh">${esc(q.promptZh)}</p><p class="n08ansen" lang="en">${esc(q.answerEn||'')}</p></div></div>`).join('')}</div>`:''}
+      <div class="n08row">
         <button type="button" class="n08btn ghost" data-n08="paste-result">回填成绩</button>
       </div>
       ${st.fill?`<textarea id="n08fill" class="n08ta" rows="5" placeholder="ID | 模式一结果 | 模式二结果 | 模式三结果"></textarea>
@@ -2475,16 +2485,31 @@ function n08WeekSheet(){
   </div>`;
 }
 function n08PackPrompt(pack){
-  const lines=pack.questions.map((q,i)=>`${q.id} | 模式${q.mode} | ${q.promptZh}`);
+  const qs=pack.questions||[];
+  const ask=qs.map(q=>`${q.id} | 模式${q.mode} | ${q.promptZh}`).join('\n');
+  const key=qs.map(q=>`${q.id} | ${q.answerEn||''}${q.refZh?(' | 参考中文：'+q.refZh):''}`).join('\n');
   return `你是我的英语口语教练。一次只问一题，只用下面的题库，不要加题、改题或加难度。
-每题先用中文提问；我口头用英文回答。我说「提示」就先给中文情境再必要时给英文首词；说「不会」就直接给答案并带我读一遍；说「暂停」「继续」「重考错题」按我说的做。
-题目前不要朗读英文答案。
+提问顺序按题号，每题先用中文提问；我口头用英文回答。
 
-题库（${pack.packId}）
-${lines.join('\n')}
+【评分标准】
+- 模式1（中文→英文词组）：说对目标词组即「独立答对」；给了中文提示才说对记「提示后答对」。
+- 模式2（中文情境→英文完整句）：只要意思覆盖情境、语法基本正确、口语自然就算对，接受多种自然说法，不要求和参考答案逐字一致。
+- 模式3（中文整句→英文完整句）：看意思是否覆盖、语法、自然度，同样接受多种自然表达。
 
-训练结束后按下面格式回贴，每题一行，结果只能是：独立答对 / 提示后答对 / 不会
-${pack.questions.map(q=>`${q.id} | `).join('\n')}`;
+【纪律】
+- 参考答案只在评分时使用，提问前不要朗读、不要透露、不要给英文首词。
+- 我说「提示」才给中文情境或英文首词；说「不会」就直接给答案并带我读一遍；说「暂停」「继续」「重考错题」按我说的做。
+- 每题答完后，先用一句话指出我的错误或给一个更自然的说法，再给结果。
+
+【题库】
+${ask}
+
+【参考答案（仅供你评分，不要提前朗读）】
+${key}
+
+【回贴格式】
+训练结束后，每题一行，只写题号和结果。结果只能是：独立答对 / 提示后答对 / 不会
+${qs.map(q=>`${q.id} | `).join('\n')}`;
 }
 function n08PlaceSheet(){
   const st=S.n08,places=(D&&D.places)||[];
@@ -2637,7 +2662,8 @@ document.addEventListener('click',function(e){
   if(a==='week'){st.sheet='week';n08Sync();render();return}
   if(a==='close-sheet'){st.sheet=null;st.fill=false;render();return}
   if(a==='gen'){n08GenPack(Number(t.dataset.size));st.sheet='week';return}
-  if(a==='copy-pack'){if(st.pack)copy(n08PackPrompt(st.pack));return}
+  if(a==='answers'){st.showAnswers=!st.showAnswers;render();return}
+  if(a==='copy-pack'){if(st.pack){if(copy(n08PackPrompt(st.pack))!==false)n08Toast('已复制：含题库与参考答案');else n08Toast('复制失败，请长按选择文本')}return}
   if(a==='paste-result'){st.fill=true;render();return}
   if(a==='apply-fill'){n08ApplyFill();return}
   if(a==='voice'){n08VoiceStart();return}
