@@ -501,7 +501,10 @@
         continue;
       }
 
-      var parts = line.split('|');
+      // 容错：模型常把回填块包在 ``` 里，或块外附一句总结；无竖线的行直接忽略，不当成错误。
+      var rawLine = line.replace(/^```[a-zA-Z]*\s*/, '').replace(/```\s*$/, '').trim();
+      if (!rawLine || rawLine.indexOf('|') < 0) continue;
+      var parts = rawLine.split('|');
       for (var pi = 0; pi < parts.length; pi++) parts[pi] = parts[pi].replace(/\u3000/g, ' ').trim();
 
       // 行首的 [packId] / @packId 标记（可与题号同格，也可单独占一格）
