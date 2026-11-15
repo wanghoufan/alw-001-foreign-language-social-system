@@ -2484,6 +2484,10 @@ function n08WeekSheet(){
     <div class="n08row"><button type="button" class="n08btn ghost" data-n08="close-sheet">关闭</button></div>
   </div>`;
 }
+function n08Today(){
+  const d=new Date(),p=n=>String(n).padStart(2,'0');
+  return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate());
+}
 function n08PackPrompt(pack){
   const qs=pack.questions||[];
   const ask=qs.map(q=>`${q.id} | 模式${q.mode} | ${q.promptZh}`).join('\n');
@@ -2499,7 +2503,12 @@ function n08PackPrompt(pack){
 【纪律】
 - 参考答案只在评分时使用，提问前不要朗读、不要透露、不要给英文首词。
 - 我说「提示」才给中文情境或英文首词；说「不会」就直接给答案并带我读一遍；说「暂停」「继续」「重考错题」按我说的做。
-- 每题答完后，先用一句话指出我的错误或给一个更自然的说法，再给结果。
+
+【过程中不要做的事】（很重要，别浪费时间）
+- 不要逐题报结果，全程不要出现「独立答对」「提示后答对」「不会」这些字样，也不要说「这题对了」「满分」「不错」。
+- 我答对了就直接问下一题，最多回一个字「好」；不要复述我的答案、不要夸我、不要点评发音或用词。
+- 只有我答错、或用过提示时，才用一句话给我更自然的说法，然后继续下一题，仍然不要贴结果标签。
+- 所有成绩只在最后一次性整理，过程中不要提前透露。
 
 【题库】
 ${ask}
@@ -2638,8 +2647,9 @@ function n08ApplyFill(){
   const parsed=W.parseResults(ta.value,st.pack.packId,st.pack);
   st.lastRejected=parsed.rejected||[];
   if(!parsed.ok){render();n08Toast('回填被拒：'+(parsed.reason||'格式不对'));return}
-  st.state=W.updatePriority(st.state||{items:{}},parsed,{today:new Date().toISOString().slice(0,10)});
-  st.pack=W.stampSubmit?W.stampSubmit(st.pack,parsed,{today:new Date().toISOString().slice(0,10)}):st.pack;
+  const today=n08Today();
+  st.state=W.updatePriority(st.state||{items:{}},parsed,{today});
+  st.pack=W.stampSubmit?W.stampSubmit(st.pack,parsed,{today}):st.pack;
   st.fill=false;n08Save();render();n08Toast('成绩已记入，下周优先级已更新');
 }
 /* 原生开录会重载页面到 ?live=1，捕获标记用 sessionStorage 跨重载续命 */
