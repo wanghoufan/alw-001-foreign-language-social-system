@@ -15,6 +15,8 @@ tasks.register("copyWebAssets") {
     inputs.file(new File(gatewayRoot, "profile-sync.js"))
     inputs.file(new File(webRoot, "source/places-115.json"))
     if (imagesRoot.exists()) inputs.dir(imagesRoot)
+    def n08CourseIndex = new File(webRoot, "source/n08-course-index.json")
+    if (n08CourseIndex.exists()) inputs.file(n08CourseIndex)
     outputs.dir(generatedAssets)
     doLast {
         def v12 = new File(generatedAssets, "v12")
@@ -27,7 +29,6 @@ tasks.register("copyWebAssets") {
         // N08：课程只读索引由页面 /v12/n08-course-index.json 读取（缺失时不生成假课程）
         def n08Index = new File(webRoot, "source/n08-course-index.json")
         if (n08Index.exists()) {
-            inputs.file(n08Index)
             copy { from n08Index; into v12 }
         }
         // V1.7：公开 115 地点图片离线（约 54MB；构建时复制，APK 会变大）。
@@ -49,8 +50,8 @@ android {
         minSdk 26
         targetSdk 35
         // V1.7：本机页面 + SQLite 本地真源。
-        versionCode 108
-        versionName '0.9.40'
+        versionCode 110
+        versionName '0.9.42'
     }
     sourceSets {
         main {

@@ -830,6 +830,23 @@ public final class LocalStore extends SQLiteOpenHelper {
         return new JSONObject().put("ok", true).put("prefs", current);
     }
 
+    /** N08「表达」页状态：整份 JSON 存 meta 表，单真源、可整体覆盖。 */
+    public synchronized String getN08State() {
+        try (Cursor c = getReadableDatabase().rawQuery("SELECT v FROM meta WHERE k='n08.state' LIMIT 1", null)) {
+            return c.moveToFirst() ? c.getString(0) : "{}";
+        } catch (Exception e) {
+            return "{}";
+        }
+    }
+
+    public synchronized void putN08State(String json) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put("k", "n08.state");
+        cv.put("v", json == null || json.trim().isEmpty() ? "{}" : json);
+        db.insertWithOnConflict("meta", null, cv, SQLiteDatabase.CONFLICT_REPLACE);
+    }
+
     public synchronized JSONObject getProfile() throws Exception {
         try (Cursor c = getReadableDatabase().rawQuery("SELECT json FROM profile WHERE id=1", null)) {
             if (c.moveToNext() && c.getString(0) != null) {

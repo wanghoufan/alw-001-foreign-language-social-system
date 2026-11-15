@@ -50,6 +50,8 @@ public final class LocalServer {
     private static final String TAG = "SocialMateLocal";
     private static final String ASSET_PAGE = "v12/index.html";
     private static final String ASSET_PROFILE_SYNC = "v12/profile-sync.js";
+    private static final String ASSET_N08_INDEX = "v12/n08-course-index.json";
+    private byte[] n08IndexCache;
 
     private final Context appContext;
     private final LocalStore store;
@@ -222,6 +224,10 @@ public final class LocalServer {
             writeBytes(out, 200, "text/html; charset=utf-8", pageBytes(), false);
             return;
         }
+        if ("GET".equals(method) && (path.equals("/v12/n08-course-index.json") || path.equals("/n08-course-index.json"))) {
+            writeBytes(out, 200, "application/json; charset=utf-8", n08IndexBytes(), true);
+            return;
+        }
         if ("GET".equals(method) && path.equals("/profile-sync.js")) {
             writeBytes(out, 200, "application/javascript; charset=utf-8", profileSyncBytes(), true);
             return;
@@ -250,6 +256,22 @@ public final class LocalServer {
         if (path.equals("/api/profile")) {
             if ("GET".equals(method)) { writeJson(out, 200, store.getProfile()); return; }
             if ("PUT".equals(method)) { writeJson(out, 200, store.putProfile(parseJson(body))); return; }
+        }
+        if (path.equals("/v12/api/n08")) {
+            if ("GET".equals(method)) {
+                String raw = store.getN08State();
+                JSONObject st;
+                try { st = new JSONObject(raw); } catch (Exception e) { st = new JSONObject(); }
+                writeJson(out, 200, new JSONObject().put("ok", true).put("state", st));
+                return;
+            }
+            if ("POST".equals(method)) {
+                JSONObject req = parseJson(body);
+                JSONObject state = req.optJSONObject("state");
+                store.putN08State(state != null ? state.toString() : req.toString());
+                writeJson(out, 200, new JSONObject().put("ok", true));
+                return;
+            }
         }
         if (path.equals("/v12/api/prefs")) {
             if ("GET".equals(method)) { writeJson(out, 200, store.getPrefs()); return; }
@@ -685,6 +707,11 @@ public final class LocalServer {
     private byte[] pageBytes() {
         if (pageCache == null) pageCache = readAsset(ASSET_PAGE);
         return pageCache;
+    }
+
+    private byte[] n08IndexBytes() {
+        if (n08IndexCache == null) n08IndexCache = readAsset(ASSET_N08_INDEX);
+        return n08IndexCache;
     }
 
     private byte[] profileSyncBytes() {

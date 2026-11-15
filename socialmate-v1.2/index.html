@@ -2328,10 +2328,36 @@ function n08Ensure(){
   try{const raw=localStorage.getItem(N08_LS);if(raw){const d=JSON.parse(raw);Object.assign(S.n08,{items:d.items||[],pack:d.pack||null,state:d.state||null,learned:d.learned||{}})} }catch(e){}
   return S.n08;
 }
-function n08Save(){
+function n08Save(push){
   const st=S.n08||{};const d={items:st.items||[],pack:st.pack||null,state:st.state||null,learned:st.learned||{}};
   try{localStorage.setItem(N08_LS,JSON.stringify(d))}catch(e){}
-  try{if(window.SocialMateAndroid&&window.SocialMateAndroid.n08Save)window.SocialMateAndroid.n08Save(JSON.stringify(d))}catch(e){}
+  if(push===false)return;
+  clearTimeout(n08Save._t);
+  n08Save._t=setTimeout(function(){
+    try{
+      fetch('/v12/api/n08',{method:'POST',cache:'no-store',headers:{'Content-Type':'application/json','x-archive-token':(typeof uiToken==='function'?uiToken():'')},body:JSON.stringify({state:d})})
+        .then(r=>{if(!r.ok)throw new Error('HTTP '+r.status);return r.json()})
+        .then(()=>{S.n08&&(S.n08.persistErr='')})
+        .catch(e=>{if(S.n08){S.n08.persistErr=String(e.message||e);if(S.tab==='expr'){} }});
+    }catch(e){}
+  },400);
+}
+/* 进入表达页时与服务端 SQLite 对账：服务端条数不少于本地就采服务端（单真源）。 */
+function n08Sync(){
+  fetch('/v12/api/n08',{cache:'no-store',headers:{'x-archive-token':(typeof uiToken==='function'?uiToken():'')}})
+    .then(r=>r.ok?r.json():null)
+    .then(d=>{
+      const st=n08Ensure();
+      if(!d||!d.state)return;
+      const remote=d.state;
+      const rn=(remote.items||[]).length,ln=(st.items||[]).length;
+      if(rn>ln||(rn===ln&&rn>0&&!st.remoteLoaded)){
+        st.items=remote.items||[];st.pack=remote.pack||null;st.state=remote.state||null;st.learned=remote.learned||{};
+        st.remoteLoaded=true;n08Save(false);
+        if(S.tab==='expr')render();
+      }else{st.remoteLoaded=true}
+    })
+    .catch(()=>{});
 }
 function n08Toast(msg){try{tip(String(msg))}catch(e){const t=document.getElementById('toast');if(t){t.textContent=msg;t.style.display='block';setTimeout(()=>{t.style.display='none'},2000)}}}
 function n08Norm(x){return String(x||'').toLowerCase().replace(/\s+/g,' ').trim()}
@@ -2392,6 +2418,7 @@ function n08ItemHtml(x){
 }
 function expr(){
   n08Ensure();
+  if(!S.n08._syncedOnce){S.n08._syncedOnce=true;setTimeout(n08Sync,0)}
   const st=S.n08;
   if(st.view==='courses')return n08CoursesView();
   const list=n08Filtered();
@@ -2547,7 +2574,7 @@ document.addEventListener('click',function(e){
   if(a==='bulk-clear'){st.sel=[];render();return}
   if(a==='bulk-place'){if(!st.sel.length){n08Toast('先选表达');return}st.sheet='place';render();return}
   if(a==='set-place'){(st.sel||[]).forEach(id=>{const it=n08Item(id);if(it)it.placeId=t.dataset.id});st.sheet=null;st.sel=[];n08Save();render();n08Toast('已关联地点');return}
-  if(a==='week'){st.sheet='week';render();return}
+  if(a==='week'){st.sheet='week';n08Sync();render();return}
   if(a==='close-sheet'){st.sheet=null;st.fill=false;render();return}
   if(a==='gen'){n08GenPack(Number(t.dataset.size));st.sheet='week';return}
   if(a==='copy-pack'){if(st.pack)copy(n08PackPrompt(st.pack));return}
