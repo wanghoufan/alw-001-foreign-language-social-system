@@ -79,13 +79,16 @@ public final class DirectCloud {
                     .put("mode", "passthrough").put("provider", "deepseek")
                     .put("billing", new JSONObject().put("costCny", 0));
         }
+        boolean pickBest = body.optBoolean("pickBest", false);
+        String system = pickBest
+                ? "You are helping a Chinese speaker say something in natural spoken English. First silently draft TWO different natural spoken English versions of the user's Chinese text, compare them for naturalness and spoken rhythm, then output ONLY the better one. Keep the meaning and personal details. No quotes, no explanation, no alternatives."
+                : "Write one natural, spoken-style English version of the user's Chinese text. Keep the meaning and personal details. Output only the English sentence, no quotes, no explanation.";
         JSONArray messages = new JSONArray()
-                .put(new JSONObject().put("role", "system")
-                        .put("content", "Write one natural, spoken-style English version of the user's Chinese text. Keep the meaning and personal details. Output only the English sentence, no quotes, no explanation."))
+                .put(new JSONObject().put("role", "system").put("content", system))
                 .put(new JSONObject().put("role", "user").put("content", text));
         String out = chat(messages, 420, "ai:draft-en", estimateDeepSeekChars(text.length(), 420));
         JSONObject result = new JSONObject().put("ok", true).put("en", out.trim()).put("draft", true)
-                .put("mode", "direct").put("provider", "deepseek");
+                .put("mode", "direct").put("provider", "deepseek").put("pickBest", pickBest);
         result.put("billing", new JSONObject().put("costCny", lastCostCny));
         return result;
     }

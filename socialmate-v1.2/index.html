@@ -1940,6 +1940,7 @@ function handleLiveAsrEvent(event){
   // A/B and spk_N are NOT a verified identity mapping. Never label a mixed speaker as "friend".
   const who=event.speaker==='self'?'me':event.speaker==='friend'?'friend':'unknown';
   const source=event.mock===true?'mock':'tencent';
+  if(S.n08&&S.n08.capture){n08VoiceDone(text);return}
   const msg={who,text,time:new Date().toLocaleTimeString('zh-CN'),source,
     speaker:String(event.speaker||'unknown'),sessionId:String(event.sessionId||'')};
   S.session.messages.push(msg);
@@ -2391,6 +2392,8 @@ function n08Composer(kind){
     <h3>${esc(c[0])}</h3>
     <p class="n08hint">${esc(c[1])}</p>
     <textarea id="n08input" class="n08ta" rows="4" placeholder="${esc(c[4])}"></textarea>
+    ${kind==='zh'?`<div class="n08row"><button type="button" class="n08btn ghost" data-n08="voice"${st.listening?' disabled':''}>${st.listening?'正在听…点停止':'按住说中文（语音）'}</button>${st.listening?`<button type="button" class="n08btn ghost" data-n08="voice-stop">停止</button>`:''}</div>`:''}
+    ${st.voiceErr?`<p class="n08err">${esc(st.voiceErr)}</p>`:''}
     ${st.err?`<p class="n08err">${esc(st.err)}</p>`:''}
     <div class="n08row">
       <button type="button" class="n08btn ghost" data-n08="close">取消</button>
@@ -2513,16 +2516,50 @@ function n08LoadCourses(){
     if(S.tab==='expr')render();
   }).catch(()=>{});
 }
-function n08Call(url,text,kind){
+function n08Call(url,text,kind,extra){
   const st=S.n08;st.busy=kind;st.err='';render();
   const done=(msg)=>{st.busy='';if(msg)st.err=msg;render();if(msg)n08Toast(msg)};
-  fetch(url,{method:'POST',cache:'no-store',headers:{'Content-Type':'application/json','x-archive-token':(typeof uiToken==='function'?uiToken():'')},body:JSON.stringify({consent:true,text})})
+  fetch(url,{method:'POST',cache:'no-store',headers:{'Content-Type':'application/json','x-archive-token':(typeof uiToken==='function'?uiToken():'')},body:JSON.stringify(Object.assign({consent:true,text},extra||{}))})
     .then(async r=>{const d=await r.json().catch(()=>({}));if(!r.ok)throw Object.assign(Error(d.error||('HTTP '+r.status)),{code:d.code});return d})
     .then(d=>{
       if(kind==='zh'){n08Add({zh:text,en:String(d.en||'').trim(),source:'user'});st.composer=null;st.busy='';st.err='';n08Save();render();n08Toast('已生成英文并入库')}
       else{n08Add({zh:String(d.zh||'').trim(),en:text,source:'user'});st.composer=null;st.busy='';st.err='';n08Save();render();n08Toast('已查到中文并入库')}
     })
     .catch(e=>done(e&&e.code==='BUDGET_EXHAUSTED'?'今日 AI 额度已用尽':((e&&e.message)||'请求失败，检查网络或 Key')));
+}
+function n08VoiceStart(){
+  const st=n08Ensure();
+  if(!(window.SocialMateAndroid&&window.SocialMateAndroid.requestRecording)){st.voiceErr='当前环境没有原生录音通道';render();return}
+  st.capture=true;st.listening=true;st.voiceErr='';st.composer='zh';
+  st.captureUntil=Date.now()+20000;
+  try{sessionStorage.setItem('sm.n08.capture','1');sessionStorage.setItem('sm.n08.until',String(st.captureUntil))}catch(e){}
+  try{if(typeof ensureSession==='function')ensureSession()}catch(e){}
+  render();
+  try{const r=window.SocialMateAndroid.requestRecording();if(typeof r==='string'&&r.trim()){st.voiceErr=r.trim();st.capture=false;st.listening=false;render();return}}catch(e){st.voiceErr='无法启动录音';st.capture=false;st.listening=false;render();return}
+  clearTimeout(n08VoiceStart._t);
+  n08VoiceStart._t=setTimeout(()=>{if(S.n08&&S.n08.capture)n08VoiceStop('超时没听清，请再说一次')},20000);
+}
+function n08VoiceStop(msg){
+  const st=n08Ensure();
+  st.capture=false;st.listening=false;
+  try{sessionStorage.removeItem('sm.n08.capture');sessionStorage.removeItem('sm.n08.until')}catch(e){}
+  clearTimeout(n08VoiceStart._t);
+  try{if(window.SocialMateAndroid&&window.SocialMateAndroid.stopRecording)window.SocialMateAndroid.stopRecording()}catch(e){}
+  if(msg)st.voiceErr=msg;
+  if(S.tab==='expr')render();
+}
+function n08VoiceDone(text){
+  const st=n08Ensure();
+  const t=String(text||'').trim();
+  if(!t){n08VoiceStop('没有识别到内容，请再说一次');return}
+  st.capture=false;st.listening=false;st.voiceErr='';
+  try{sessionStorage.removeItem('sm.n08.capture');sessionStorage.removeItem('sm.n08.until')}catch(e){}
+  clearTimeout(n08VoiceStart._t);
+  try{if(window.SocialMateAndroid&&window.SocialMateAndroid.stopRecording)window.SocialMateAndroid.stopRecording()}catch(e){}
+  st.composer='zh';
+  if(S.tab!=='expr')setTab('expr');else render();
+  const ta=document.getElementById('n08input');if(ta)ta.value=t;
+  n08Call('/api/ai/draft-en',t,'zh',{pickBest:true});
 }
 function n08Batch(text){
   const st=S.n08;let n=0,bad=0;
@@ -2556,6 +2593,15 @@ function n08ApplyFill(){
   st.pack=W.stampSubmit?W.stampSubmit(st.pack,parsed,{today:new Date().toISOString().slice(0,10)}):st.pack;
   st.fill=false;n08Save();render();n08Toast('成绩已记入，下周优先级已更新');
 }
+/* 原生开录会重载页面到 ?live=1，捕获标记用 sessionStorage 跨重载续命 */
+try{
+  if(sessionStorage.getItem('sm.n08.capture')==='1'){
+    const until=Number(sessionStorage.getItem('sm.n08.until')||0);
+    if(Date.now()<until){
+      setTimeout(function(){var st=n08Ensure();st.capture=true;st.listening=true;if(S.tab==='expr')render();},700);
+    }else{sessionStorage.removeItem('sm.n08.capture');sessionStorage.removeItem('sm.n08.until')}
+  }
+}catch(e){}
 document.addEventListener('click',function(e){
   const t=e.target&&e.target.closest&&e.target.closest('[data-n08]');if(!t)return;
   n08Ensure();const st=S.n08,a=t.dataset.n08;
@@ -2565,7 +2611,7 @@ document.addEventListener('click',function(e){
     const kind=t.dataset.kind;const ta=document.getElementById('n08input');const text=(ta&&ta.value||'').trim();
     if(!text){n08Toast('先输入内容');return}
     if(kind==='batch'){n08Batch(text);return}
-    n08Call(kind==='zh'?'/api/ai/draft-en':'/api/ai/translate',text,kind);return;
+    n08Call(kind==='zh'?'/api/ai/draft-en':'/api/ai/translate',text,kind,kind==='zh'?{pickBest:true}:null);return;
   }
   if(a==='filter'){st.filter=t.dataset.value;render();return}
   if(a==='pick'){const id=t.dataset.id;const i=st.sel.indexOf(id);if(i>=0)st.sel.splice(i,1);else st.sel.push(id);render();return}
@@ -2580,6 +2626,8 @@ document.addEventListener('click',function(e){
   if(a==='copy-pack'){if(st.pack)copy(n08PackPrompt(st.pack));return}
   if(a==='paste-result'){st.fill=true;render();return}
   if(a==='apply-fill'){n08ApplyFill();return}
+  if(a==='voice'){n08VoiceStart();return}
+  if(a==='voice-stop'){n08VoiceStop('');return}
   if(a==='courses'){st.view='courses';n08LoadCourses();render();return}
   if(a==='back'){st.view='list';render();return}
   if(a==='make-card'){const id=t.dataset.id;const c=st.courses&&(st.courses.courses||[]).find(x=>x.courseId===id);if(!c){n08Toast('课程未加载');return}
