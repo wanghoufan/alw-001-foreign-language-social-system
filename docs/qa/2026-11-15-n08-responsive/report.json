@@ -1,0 +1,956 @@
+{
+  "task": "n08-responsive-check",
+  "page": "file:///Users/zzymima0000/Developer/coding/1.Active/alw-001-%E5%A4%96%E8%AF%AD%E7%A4%BE%E4%BA%A4%E7%B3%BB%E7%BB%9F/socialmate-v1.2/index.html",
+  "pageFile": "/Users/zzymima0000/Developer/coding/1.Active/alw-001-外语社交系统/socialmate-v1.2/index.html",
+  "generatedAt": "2026-11-15T23:01:18.562+08:00",
+  "startedAt": "2026-11-15T23:01:10.584+08:00",
+  "engine": "system-chrome-headless-cdp: /Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+  "engineNotes": [
+    "playwright 自带 chromium 不可用：Cannot find package 'playwright' imported from /Users/zzymima0000/Developer/coding/1.Active/alw-001-外语社交系统/scripts/n08-responsive-check.mjs",
+    "⚠️ 缺 playwright，请先 npm i -D playwright（当前回退到系统 Chrome --headless=new 原生 CDP 通道）",
+    "引擎：系统 Chrome --headless=new + 原生 CDP（/Applications/Google Chrome.app/Contents/MacOS/Google Chrome）"
+  ],
+  "playwrightMissing": true,
+  "viewport": {
+    "widths": [
+      375,
+      393,
+      430,
+      520
+    ],
+    "height": 850
+  },
+  "expectTabs": 6,
+  "tabSelector": ".mobilebar button",
+  "strictText": false,
+  "thinViewAllowlist": {
+    "chat": {
+      "floor": 40,
+      "reason": "聊天页空态：未开始录音时只有两行占位说明（实测约 110 字）"
+    },
+    "people": {
+      "floor": 40,
+      "reason": "人物页空态：本机无档案时只有空态文案（实测约 163 字）"
+    },
+    "expr": {
+      "floor": 40,
+      "reason": "表达页空态：还没有表达记录时只有入口与空态文案（实测约 131 字）"
+    }
+  },
+  "brokenTokens": [
+    "undefined",
+    "NaN",
+    "[object Object]"
+  ],
+  "summary": {
+    "widths": 4,
+    "passed": 4,
+    "failed": 0,
+    "failedWidths": [],
+    "failedChecks": [],
+    "ok": true
+  },
+  "results": [
+    {
+      "width": 375,
+      "height": 850,
+      "pass": true,
+      "screenshot": "w375.png",
+      "checks": {
+        "noHorizontalOverflow": {
+          "pass": true,
+          "expect": "document.documentElement.scrollWidth <= innerWidth + 1（并要求 <= 视口宽度 375 + 1）",
+          "actual": {
+            "scrollWidth": 375,
+            "innerWidth": 375,
+            "nominalWidth": 375,
+            "bodyScrollWidth": 375,
+            "layoutViewportExpanded": false
+          },
+          "reason": null
+        },
+        "tabCount": {
+          "pass": true,
+          "expect": ".mobilebar button 数量 === 6",
+          "actual": {
+            "count": 6,
+            "labels": [
+              "▦ 话题",
+              "⌖ 海南",
+              "◉ 聊天",
+              "✎ 表达",
+              "♙ 关于我",
+              "♧ 人物"
+            ],
+            "navKeys": [
+              "topics",
+              "hainan",
+              "chat",
+              "expr",
+              "self",
+              "people"
+            ]
+          },
+          "reason": null
+        },
+        "noBrokenTokens": {
+          "pass": true,
+          "expect": "可见文本不含 undefined / NaN / [object Object]",
+          "actual": {
+            "hitCount": 0,
+            "hits": []
+          },
+          "reason": null
+        },
+        "tabClicks": {
+          "pass": true,
+          "expect": "逐个点击每个 .mobilebar button，点击后 body.innerText.length > 200 且无未捕获异常（薄视图见 thinView 标注）",
+          "actual": [
+            {
+              "index": 1,
+              "navKey": "topics",
+              "label": "▦ 话题",
+              "textLength": 10098,
+              "pass": true,
+              "thinView": false,
+              "thinReason": null,
+              "textHead": "⌕ 新建 回收站 ◐ ⚙ 节日 日常生活 文化习俗 健身运动 我的作品 更多 APP / PWA 优先 手机 / 特殊场景 电脑 / 其他 APP / PWA ",
+              "errors": []
+            },
+            {
+              "index": 2,
+              "navKey": "hainan",
+              "label": "⌖ 海南",
+              "textLength": 858,
+              "pass": true,
+              "thinView": false,
+              "thinReason": null,
+              "textHead": "中 EN ⌕ 新建 回收站 ◐ ⚙ 全部 城市街拍 美食夜生活 海滨日落 自然体验 海南环岛 值得分享的地方 显示 115 / 115 龙 NO. 001 海口",
+              "errors": []
+            },
+            {
+              "index": 3,
+              "navKey": "chat",
+              "label": "◉ 聊天",
+              "textLength": 115,
+              "pass": true,
+              "thinView": true,
+              "thinReason": "聊天页空态：未开始录音时只有两行占位说明（实测约 110 字）",
+              "textHead": "未 未开始 译英 开始 ⋯ 点「开始录音」后，对话原文会实时出现在这里。 说一句之后，这里固定给一条接话和一条追问。 感恩节 ▦ 话题 ⌖ 海南 ◉ 聊天 ✎ ",
+              "errors": []
+            },
+            {
+              "index": 4,
+              "navKey": "expr",
+              "label": "✎ 表达",
+              "textLength": 131,
+              "pass": true,
+              "thinView": true,
+              "thinReason": "表达页空态：还没有表达记录时只有入口与空态文案（实测约 131 字）",
+              "textHead": "◐ ⚙ 说中文 查英文 批量粘贴 本周巩固 课程 0 已学 ⌕ 全部 待复习 已收藏 有地点 还没有表达记录。点上面「说中文」说一句，或用「批量粘贴」导入。 ▦",
+              "errors": []
+            },
+            {
+              "index": 5,
+              "navKey": "self",
+              "label": "♙ 关于我",
+              "textLength": 819,
+              "pass": true,
+              "thinView": false,
+              "thinReason": null,
+              "textHead": "⌕ 新建 回收站 ◐ ⚙ 同步到本机档案 全部 生活 经历 兴趣 我的故事与兴趣 5 项 仅本机草稿 · 待同步 生活 仅本机草稿 我来自海口 我在海口出生和长",
+              "errors": []
+            },
+            {
+              "index": 6,
+              "navKey": "people",
+              "label": "♧ 人物",
+              "textLength": 168,
+              "pass": true,
+              "thinView": true,
+              "thinReason": "人物页空态：本机无档案时只有空态文案（实测约 163 字）",
+              "textHead": "⌕ ＋ 新建 ◐ ⚙ 本机草稿 · 未同步 我的人物 0 位 点一位朋友查看记忆档案；也可以先新建联系人，再慢慢补充信息。 还没有人物档案。新建后可记录对方确认",
+              "errors": []
+            }
+          ],
+          "reason": null
+        }
+      },
+      "diagnostics": {
+        "scrollWidth": 375,
+        "innerWidth": 375,
+        "bodyScrollWidth": 375,
+        "devicePixelRatio": 1,
+        "layoutViewportExpanded": false,
+        "visualViewportWidth": 375,
+        "overflowOffenders": [
+          {
+            "tag": "button",
+            "cls": "on",
+            "right": 427,
+            "width": 84,
+            "position": "static"
+          },
+          {
+            "tag": "button",
+            "cls": "",
+            "right": 487,
+            "width": 54,
+            "position": "static"
+          },
+          {
+            "tag": "button",
+            "cls": "",
+            "right": 379,
+            "width": 96.3,
+            "position": "static"
+          },
+          {
+            "tag": "aside",
+            "cls": "drawer",
+            "right": 765,
+            "width": 375,
+            "position": "fixed"
+          },
+          {
+            "tag": "div",
+            "cls": "drawerhead",
+            "right": 765,
+            "width": 375,
+            "position": "sticky"
+          },
+          {
+            "tag": "span",
+            "cls": "sup",
+            "right": 604.8,
+            "width": 194.8,
+            "position": "static"
+          }
+        ],
+        "screenshotBytes": 94495,
+        "tabLabels": [
+          "▦ 话题",
+          "⌖ 海南",
+          "◉ 聊天",
+          "✎ 表达",
+          "♙ 关于我",
+          "♧ 人物"
+        ],
+        "tabNavKeys": [
+          "topics",
+          "hainan",
+          "chat",
+          "expr",
+          "self",
+          "people"
+        ],
+        "navStyle": {
+          "display": "grid",
+          "gridTemplateColumns": "61.1562px 61.1719px 61.1719px 61.1562px 61.1719px 61.1719px",
+          "position": "fixed"
+        },
+        "innerTextLength": 10098,
+        "thinViews": [
+          {
+            "index": 3,
+            "navKey": "chat",
+            "label": "◉ 聊天",
+            "textLength": 115,
+            "reason": "聊天页空态：未开始录音时只有两行占位说明（实测约 110 字）"
+          },
+          {
+            "index": 4,
+            "navKey": "expr",
+            "label": "✎ 表达",
+            "textLength": 131,
+            "reason": "表达页空态：还没有表达记录时只有入口与空态文案（实测约 131 字）"
+          },
+          {
+            "index": 6,
+            "navKey": "people",
+            "label": "♧ 人物",
+            "textLength": 168,
+            "reason": "人物页空态：本机无档案时只有空态文案（实测约 163 字）"
+          }
+        ],
+        "pageErrors": [],
+        "pageErrorCount": 0,
+        "consoleErrors": []
+      }
+    },
+    {
+      "width": 393,
+      "height": 850,
+      "pass": true,
+      "screenshot": "w393.png",
+      "checks": {
+        "noHorizontalOverflow": {
+          "pass": true,
+          "expect": "document.documentElement.scrollWidth <= innerWidth + 1（并要求 <= 视口宽度 393 + 1）",
+          "actual": {
+            "scrollWidth": 393,
+            "innerWidth": 393,
+            "nominalWidth": 393,
+            "bodyScrollWidth": 393,
+            "layoutViewportExpanded": false
+          },
+          "reason": null
+        },
+        "tabCount": {
+          "pass": true,
+          "expect": ".mobilebar button 数量 === 6",
+          "actual": {
+            "count": 6,
+            "labels": [
+              "▦ 话题",
+              "⌖ 海南",
+              "◉ 聊天",
+              "✎ 表达",
+              "♙ 关于我",
+              "♧ 人物"
+            ],
+            "navKeys": [
+              "topics",
+              "hainan",
+              "chat",
+              "expr",
+              "self",
+              "people"
+            ]
+          },
+          "reason": null
+        },
+        "noBrokenTokens": {
+          "pass": true,
+          "expect": "可见文本不含 undefined / NaN / [object Object]",
+          "actual": {
+            "hitCount": 0,
+            "hits": []
+          },
+          "reason": null
+        },
+        "tabClicks": {
+          "pass": true,
+          "expect": "逐个点击每个 .mobilebar button，点击后 body.innerText.length > 200 且无未捕获异常（薄视图见 thinView 标注）",
+          "actual": [
+            {
+              "index": 1,
+              "navKey": "topics",
+              "label": "▦ 话题",
+              "textLength": 10098,
+              "pass": true,
+              "thinView": false,
+              "thinReason": null,
+              "textHead": "⌕ 新建 回收站 ◐ ⚙ 节日 日常生活 文化习俗 健身运动 我的作品 更多 APP / PWA 优先 手机 / 特殊场景 电脑 / 其他 APP / PWA ",
+              "errors": []
+            },
+            {
+              "index": 2,
+              "navKey": "hainan",
+              "label": "⌖ 海南",
+              "textLength": 858,
+              "pass": true,
+              "thinView": false,
+              "thinReason": null,
+              "textHead": "中 EN ⌕ 新建 回收站 ◐ ⚙ 全部 城市街拍 美食夜生活 海滨日落 自然体验 海南环岛 值得分享的地方 显示 115 / 115 龙 NO. 001 海口",
+              "errors": []
+            },
+            {
+              "index": 3,
+              "navKey": "chat",
+              "label": "◉ 聊天",
+              "textLength": 115,
+              "pass": true,
+              "thinView": true,
+              "thinReason": "聊天页空态：未开始录音时只有两行占位说明（实测约 110 字）",
+              "textHead": "未 未开始 译英 开始 ⋯ 点「开始录音」后，对话原文会实时出现在这里。 说一句之后，这里固定给一条接话和一条追问。 感恩节 ▦ 话题 ⌖ 海南 ◉ 聊天 ✎ ",
+              "errors": []
+            },
+            {
+              "index": 4,
+              "navKey": "expr",
+              "label": "✎ 表达",
+              "textLength": 131,
+              "pass": true,
+              "thinView": true,
+              "thinReason": "表达页空态：还没有表达记录时只有入口与空态文案（实测约 131 字）",
+              "textHead": "◐ ⚙ 说中文 查英文 批量粘贴 本周巩固 课程 0 已学 ⌕ 全部 待复习 已收藏 有地点 还没有表达记录。点上面「说中文」说一句，或用「批量粘贴」导入。 ▦",
+              "errors": []
+            },
+            {
+              "index": 5,
+              "navKey": "self",
+              "label": "♙ 关于我",
+              "textLength": 819,
+              "pass": true,
+              "thinView": false,
+              "thinReason": null,
+              "textHead": "⌕ 新建 回收站 ◐ ⚙ 同步到本机档案 全部 生活 经历 兴趣 我的故事与兴趣 5 项 仅本机草稿 · 待同步 生活 仅本机草稿 我来自海口 我在海口出生和长",
+              "errors": []
+            },
+            {
+              "index": 6,
+              "navKey": "people",
+              "label": "♧ 人物",
+              "textLength": 168,
+              "pass": true,
+              "thinView": true,
+              "thinReason": "人物页空态：本机无档案时只有空态文案（实测约 163 字）",
+              "textHead": "⌕ ＋ 新建 ◐ ⚙ 本机草稿 · 未同步 我的人物 0 位 点一位朋友查看记忆档案；也可以先新建联系人，再慢慢补充信息。 还没有人物档案。新建后可记录对方确认",
+              "errors": []
+            }
+          ],
+          "reason": null
+        }
+      },
+      "diagnostics": {
+        "scrollWidth": 393,
+        "innerWidth": 393,
+        "bodyScrollWidth": 393,
+        "devicePixelRatio": 1,
+        "layoutViewportExpanded": false,
+        "visualViewportWidth": 393,
+        "overflowOffenders": [
+          {
+            "tag": "button",
+            "cls": "on",
+            "right": 427,
+            "width": 84,
+            "position": "static"
+          },
+          {
+            "tag": "button",
+            "cls": "",
+            "right": 487,
+            "width": 54,
+            "position": "static"
+          },
+          {
+            "tag": "aside",
+            "cls": "drawer",
+            "right": 801.7,
+            "width": 393,
+            "position": "fixed"
+          },
+          {
+            "tag": "div",
+            "cls": "drawerhead",
+            "right": 801.7,
+            "width": 393,
+            "position": "sticky"
+          },
+          {
+            "tag": "span",
+            "cls": "sup",
+            "right": 623.5,
+            "width": 194.8,
+            "position": "static"
+          },
+          {
+            "tag": "button",
+            "cls": "iconbutton",
+            "right": 781.7,
+            "width": 39,
+            "position": "static"
+          }
+        ],
+        "screenshotBytes": 101835,
+        "tabLabels": [
+          "▦ 话题",
+          "⌖ 海南",
+          "◉ 聊天",
+          "✎ 表达",
+          "♙ 关于我",
+          "♧ 人物"
+        ],
+        "tabNavKeys": [
+          "topics",
+          "hainan",
+          "chat",
+          "expr",
+          "self",
+          "people"
+        ],
+        "navStyle": {
+          "display": "grid",
+          "gridTemplateColumns": "64.1562px 64.1719px 64.1562px 64.1719px 64.1719px 64.1562px",
+          "position": "fixed"
+        },
+        "innerTextLength": 10098,
+        "thinViews": [
+          {
+            "index": 3,
+            "navKey": "chat",
+            "label": "◉ 聊天",
+            "textLength": 115,
+            "reason": "聊天页空态：未开始录音时只有两行占位说明（实测约 110 字）"
+          },
+          {
+            "index": 4,
+            "navKey": "expr",
+            "label": "✎ 表达",
+            "textLength": 131,
+            "reason": "表达页空态：还没有表达记录时只有入口与空态文案（实测约 131 字）"
+          },
+          {
+            "index": 6,
+            "navKey": "people",
+            "label": "♧ 人物",
+            "textLength": 168,
+            "reason": "人物页空态：本机无档案时只有空态文案（实测约 163 字）"
+          }
+        ],
+        "pageErrors": [],
+        "pageErrorCount": 0,
+        "consoleErrors": []
+      }
+    },
+    {
+      "width": 430,
+      "height": 850,
+      "pass": true,
+      "screenshot": "w430.png",
+      "checks": {
+        "noHorizontalOverflow": {
+          "pass": true,
+          "expect": "document.documentElement.scrollWidth <= innerWidth + 1（并要求 <= 视口宽度 430 + 1）",
+          "actual": {
+            "scrollWidth": 430,
+            "innerWidth": 430,
+            "nominalWidth": 430,
+            "bodyScrollWidth": 430,
+            "layoutViewportExpanded": false
+          },
+          "reason": null
+        },
+        "tabCount": {
+          "pass": true,
+          "expect": ".mobilebar button 数量 === 6",
+          "actual": {
+            "count": 6,
+            "labels": [
+              "▦ 话题",
+              "⌖ 海南",
+              "◉ 聊天",
+              "✎ 表达",
+              "♙ 关于我",
+              "♧ 人物"
+            ],
+            "navKeys": [
+              "topics",
+              "hainan",
+              "chat",
+              "expr",
+              "self",
+              "people"
+            ]
+          },
+          "reason": null
+        },
+        "noBrokenTokens": {
+          "pass": true,
+          "expect": "可见文本不含 undefined / NaN / [object Object]",
+          "actual": {
+            "hitCount": 0,
+            "hits": []
+          },
+          "reason": null
+        },
+        "tabClicks": {
+          "pass": true,
+          "expect": "逐个点击每个 .mobilebar button，点击后 body.innerText.length > 200 且无未捕获异常（薄视图见 thinView 标注）",
+          "actual": [
+            {
+              "index": 1,
+              "navKey": "topics",
+              "label": "▦ 话题",
+              "textLength": 10098,
+              "pass": true,
+              "thinView": false,
+              "thinReason": null,
+              "textHead": "⌕ 新建 回收站 ◐ ⚙ 节日 日常生活 文化习俗 健身运动 我的作品 更多 APP / PWA 优先 手机 / 特殊场景 电脑 / 其他 APP / PWA ",
+              "errors": []
+            },
+            {
+              "index": 2,
+              "navKey": "hainan",
+              "label": "⌖ 海南",
+              "textLength": 858,
+              "pass": true,
+              "thinView": false,
+              "thinReason": null,
+              "textHead": "中 EN ⌕ 新建 回收站 ◐ ⚙ 全部 城市街拍 美食夜生活 海滨日落 自然体验 海南环岛 值得分享的地方 显示 115 / 115 龙 NO. 001 海口",
+              "errors": []
+            },
+            {
+              "index": 3,
+              "navKey": "chat",
+              "label": "◉ 聊天",
+              "textLength": 115,
+              "pass": true,
+              "thinView": true,
+              "thinReason": "聊天页空态：未开始录音时只有两行占位说明（实测约 110 字）",
+              "textHead": "未 未开始 译英 开始 ⋯ 点「开始录音」后，对话原文会实时出现在这里。 说一句之后，这里固定给一条接话和一条追问。 感恩节 ▦ 话题 ⌖ 海南 ◉ 聊天 ✎ ",
+              "errors": []
+            },
+            {
+              "index": 4,
+              "navKey": "expr",
+              "label": "✎ 表达",
+              "textLength": 131,
+              "pass": true,
+              "thinView": true,
+              "thinReason": "表达页空态：还没有表达记录时只有入口与空态文案（实测约 131 字）",
+              "textHead": "◐ ⚙ 说中文 查英文 批量粘贴 本周巩固 课程 0 已学 ⌕ 全部 待复习 已收藏 有地点 还没有表达记录。点上面「说中文」说一句，或用「批量粘贴」导入。 ▦",
+              "errors": []
+            },
+            {
+              "index": 5,
+              "navKey": "self",
+              "label": "♙ 关于我",
+              "textLength": 819,
+              "pass": true,
+              "thinView": false,
+              "thinReason": null,
+              "textHead": "⌕ 新建 回收站 ◐ ⚙ 同步到本机档案 全部 生活 经历 兴趣 我的故事与兴趣 5 项 仅本机草稿 · 待同步 生活 仅本机草稿 我来自海口 我在海口出生和长",
+              "errors": []
+            },
+            {
+              "index": 6,
+              "navKey": "people",
+              "label": "♧ 人物",
+              "textLength": 168,
+              "pass": true,
+              "thinView": true,
+              "thinReason": "人物页空态：本机无档案时只有空态文案（实测约 163 字）",
+              "textHead": "⌕ ＋ 新建 ◐ ⚙ 本机草稿 · 未同步 我的人物 0 位 点一位朋友查看记忆档案；也可以先新建联系人，再慢慢补充信息。 还没有人物档案。新建后可记录对方确认",
+              "errors": []
+            }
+          ],
+          "reason": null
+        }
+      },
+      "diagnostics": {
+        "scrollWidth": 430,
+        "innerWidth": 430,
+        "bodyScrollWidth": 430,
+        "devicePixelRatio": 1,
+        "layoutViewportExpanded": false,
+        "visualViewportWidth": 430,
+        "overflowOffenders": [
+          {
+            "tag": "button",
+            "cls": "",
+            "right": 487,
+            "width": 54,
+            "position": "static"
+          },
+          {
+            "tag": "aside",
+            "cls": "drawer",
+            "right": 877.2,
+            "width": 430,
+            "position": "fixed"
+          },
+          {
+            "tag": "div",
+            "cls": "drawerhead",
+            "right": 877.2,
+            "width": 430,
+            "position": "sticky"
+          },
+          {
+            "tag": "span",
+            "cls": "sup",
+            "right": 662,
+            "width": 194.8,
+            "position": "static"
+          },
+          {
+            "tag": "button",
+            "cls": "iconbutton",
+            "right": 857.2,
+            "width": 39,
+            "position": "static"
+          },
+          {
+            "tag": "div",
+            "cls": "drawerbody",
+            "right": 877.2,
+            "width": 430,
+            "position": "static"
+          }
+        ],
+        "screenshotBytes": 105684,
+        "tabLabels": [
+          "▦ 话题",
+          "⌖ 海南",
+          "◉ 聊天",
+          "✎ 表达",
+          "♙ 关于我",
+          "♧ 人物"
+        ],
+        "tabNavKeys": [
+          "topics",
+          "hainan",
+          "chat",
+          "expr",
+          "self",
+          "people"
+        ],
+        "navStyle": {
+          "display": "grid",
+          "gridTemplateColumns": "70.3281px 70.3281px 70.3438px 70.3281px 70.3281px 70.3438px",
+          "position": "fixed"
+        },
+        "innerTextLength": 10098,
+        "thinViews": [
+          {
+            "index": 3,
+            "navKey": "chat",
+            "label": "◉ 聊天",
+            "textLength": 115,
+            "reason": "聊天页空态：未开始录音时只有两行占位说明（实测约 110 字）"
+          },
+          {
+            "index": 4,
+            "navKey": "expr",
+            "label": "✎ 表达",
+            "textLength": 131,
+            "reason": "表达页空态：还没有表达记录时只有入口与空态文案（实测约 131 字）"
+          },
+          {
+            "index": 6,
+            "navKey": "people",
+            "label": "♧ 人物",
+            "textLength": 168,
+            "reason": "人物页空态：本机无档案时只有空态文案（实测约 163 字）"
+          }
+        ],
+        "pageErrors": [],
+        "pageErrorCount": 0,
+        "consoleErrors": []
+      }
+    },
+    {
+      "width": 520,
+      "height": 850,
+      "pass": true,
+      "screenshot": "w520.png",
+      "checks": {
+        "noHorizontalOverflow": {
+          "pass": true,
+          "expect": "document.documentElement.scrollWidth <= innerWidth + 1（并要求 <= 视口宽度 520 + 1）",
+          "actual": {
+            "scrollWidth": 520,
+            "innerWidth": 520,
+            "nominalWidth": 520,
+            "bodyScrollWidth": 520,
+            "layoutViewportExpanded": false
+          },
+          "reason": null
+        },
+        "tabCount": {
+          "pass": true,
+          "expect": ".mobilebar button 数量 === 6",
+          "actual": {
+            "count": 6,
+            "labels": [
+              "▦ 话题",
+              "⌖ 海南",
+              "◉ 聊天",
+              "✎ 表达",
+              "♙ 关于我",
+              "♧ 人物"
+            ],
+            "navKeys": [
+              "topics",
+              "hainan",
+              "chat",
+              "expr",
+              "self",
+              "people"
+            ]
+          },
+          "reason": null
+        },
+        "noBrokenTokens": {
+          "pass": true,
+          "expect": "可见文本不含 undefined / NaN / [object Object]",
+          "actual": {
+            "hitCount": 0,
+            "hits": []
+          },
+          "reason": null
+        },
+        "tabClicks": {
+          "pass": true,
+          "expect": "逐个点击每个 .mobilebar button，点击后 body.innerText.length > 200 且无未捕获异常（薄视图见 thinView 标注）",
+          "actual": [
+            {
+              "index": 1,
+              "navKey": "topics",
+              "label": "▦ 话题",
+              "textLength": 10098,
+              "pass": true,
+              "thinView": false,
+              "thinReason": null,
+              "textHead": "⌕ 新建 回收站 ◐ ⚙ 节日 日常生活 文化习俗 健身运动 我的作品 更多 APP / PWA 优先 手机 / 特殊场景 电脑 / 其他 APP / PWA ",
+              "errors": []
+            },
+            {
+              "index": 2,
+              "navKey": "hainan",
+              "label": "⌖ 海南",
+              "textLength": 858,
+              "pass": true,
+              "thinView": false,
+              "thinReason": null,
+              "textHead": "中 EN ⌕ 新建 回收站 ◐ ⚙ 全部 城市街拍 美食夜生活 海滨日落 自然体验 海南环岛 值得分享的地方 显示 115 / 115 龙 NO. 001 海口",
+              "errors": []
+            },
+            {
+              "index": 3,
+              "navKey": "chat",
+              "label": "◉ 聊天",
+              "textLength": 119,
+              "pass": true,
+              "thinView": true,
+              "thinReason": "聊天页空态：未开始录音时只有两行占位说明（实测约 110 字）",
+              "textHead": "未 未开始 译英 开始 ⋯ ◐ ⚙ 点「开始录音」后，对话原文会实时出现在这里。 说一句之后，这里固定给一条接话和一条追问。 感恩节 ▦ 话题 ⌖ 海南 ◉ 聊",
+              "errors": []
+            },
+            {
+              "index": 4,
+              "navKey": "expr",
+              "label": "✎ 表达",
+              "textLength": 131,
+              "pass": true,
+              "thinView": true,
+              "thinReason": "表达页空态：还没有表达记录时只有入口与空态文案（实测约 131 字）",
+              "textHead": "◐ ⚙ 说中文 查英文 批量粘贴 本周巩固 课程 0 已学 ⌕ 全部 待复习 已收藏 有地点 还没有表达记录。点上面「说中文」说一句，或用「批量粘贴」导入。 ▦",
+              "errors": []
+            },
+            {
+              "index": 5,
+              "navKey": "self",
+              "label": "♙ 关于我",
+              "textLength": 819,
+              "pass": true,
+              "thinView": false,
+              "thinReason": null,
+              "textHead": "⌕ 新建 回收站 ◐ ⚙ 同步到本机档案 全部 生活 经历 兴趣 我的故事与兴趣 5 项 仅本机草稿 · 待同步 生活 仅本机草稿 我来自海口 我在海口出生和长",
+              "errors": []
+            },
+            {
+              "index": 6,
+              "navKey": "people",
+              "label": "♧ 人物",
+              "textLength": 168,
+              "pass": true,
+              "thinView": true,
+              "thinReason": "人物页空态：本机无档案时只有空态文案（实测约 163 字）",
+              "textHead": "⌕ ＋ 新建 ◐ ⚙ 本机草稿 · 未同步 我的人物 0 位 点一位朋友查看记忆档案；也可以先新建联系人，再慢慢补充信息。 还没有人物档案。新建后可记录对方确认",
+              "errors": []
+            }
+          ],
+          "reason": null
+        }
+      },
+      "diagnostics": {
+        "scrollWidth": 520,
+        "innerWidth": 520,
+        "bodyScrollWidth": 520,
+        "devicePixelRatio": 1,
+        "layoutViewportExpanded": false,
+        "visualViewportWidth": 520,
+        "overflowOffenders": [
+          {
+            "tag": "aside",
+            "cls": "drawer",
+            "right": 1060.8,
+            "width": 520,
+            "position": "fixed"
+          },
+          {
+            "tag": "div",
+            "cls": "drawerhead",
+            "right": 1060.8,
+            "width": 520,
+            "position": "sticky"
+          },
+          {
+            "tag": "span",
+            "cls": "sup",
+            "right": 755.6,
+            "width": 194.8,
+            "position": "static"
+          },
+          {
+            "tag": "button",
+            "cls": "iconbutton",
+            "right": 1040.8,
+            "width": 39,
+            "position": "static"
+          },
+          {
+            "tag": "div",
+            "cls": "drawerbody",
+            "right": 1060.8,
+            "width": 520,
+            "position": "static"
+          }
+        ],
+        "screenshotBytes": 113215,
+        "tabLabels": [
+          "▦ 话题",
+          "⌖ 海南",
+          "◉ 聊天",
+          "✎ 表达",
+          "♙ 关于我",
+          "♧ 人物"
+        ],
+        "tabNavKeys": [
+          "topics",
+          "hainan",
+          "chat",
+          "expr",
+          "self",
+          "people"
+        ],
+        "navStyle": {
+          "display": "grid",
+          "gridTemplateColumns": "85.3281px 85.3281px 85.3438px 85.3281px 85.3281px 85.3438px",
+          "position": "fixed"
+        },
+        "innerTextLength": 10098,
+        "thinViews": [
+          {
+            "index": 3,
+            "navKey": "chat",
+            "label": "◉ 聊天",
+            "textLength": 119,
+            "reason": "聊天页空态：未开始录音时只有两行占位说明（实测约 110 字）"
+          },
+          {
+            "index": 4,
+            "navKey": "expr",
+            "label": "✎ 表达",
+            "textLength": 131,
+            "reason": "表达页空态：还没有表达记录时只有入口与空态文案（实测约 131 字）"
+          },
+          {
+            "index": 6,
+            "navKey": "people",
+            "label": "♧ 人物",
+            "textLength": 168,
+            "reason": "人物页空态：本机无档案时只有空态文案（实测约 163 字）"
+          }
+        ],
+        "pageErrors": [],
+        "pageErrorCount": 0,
+        "consoleErrors": []
+      }
+    }
+  ]
+}

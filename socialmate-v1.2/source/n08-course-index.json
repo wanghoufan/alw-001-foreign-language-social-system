@@ -1,0 +1,4436 @@
+{
+  "schema": "n08-course-index/v1",
+  "generator": "scripts/n08-course-index.mjs",
+  "purpose": "N08「表达」页课程复习题源（只读索引，不含长篇正文）",
+  "readOnlySource": true,
+  "sourceRoot": "/Volumes/三星/H-DL-OB笔记/003祖成英语90天陪练168节课程/3-场景实战课【105节】",
+  "sourceDirLabel": "3-场景实战课【105节】",
+  "declaredCount": 105,
+  "nominalCount": 105,
+  "nominalStrategy": "nominalCount = 源目录名【N节】声明值；各章 nominalRange = 该章课序号 [最小,最大] 连续区间长度",
+  "actualMdCount": 100,
+  "gap": 5,
+  "gapNote": "差额未经核实：只读扫描全部 .md 后仍差 5 节，源目录未发现其它存放位置，不补齐、不生成不存在的课程。见 missing（编号空洞，verified=false）与 unreadable（读不到的文件）。",
+  "chapterSumOfRanges": 105,
+  "chapterCount": 7,
+  "sentenceTotal": 274,
+  "zhHintCount": 11,
+  "coursesWithoutEnglishSentence": [
+    "1第一章：家庭与朋友/2.家庭成员（下）.md",
+    "2第二章：旅行和旅游/23.Bonus Time - Throw in the Towel.md",
+    "4第四章：购物与消费/56.Daniel趣味分享.md",
+    "6第六章：娱乐与消费/12 Daniel趣味分享.md"
+  ],
+  "chapters": [
+    {
+      "chapterNo": 1,
+      "chapter": "家庭与朋友",
+      "dir": "1第一章：家庭与朋友",
+      "mdCount": 13,
+      "nominalRange": {
+        "min": 1,
+        "max": 13,
+        "count": 13
+      },
+      "missingLessonNumbers": []
+    },
+    {
+      "chapterNo": 2,
+      "chapter": "旅行和旅游",
+      "dir": "2第二章：旅行和旅游",
+      "mdCount": 21,
+      "nominalRange": {
+        "min": 14,
+        "max": 37,
+        "count": 24
+      },
+      "missingLessonNumbers": [
+        15,
+        21,
+        30
+      ]
+    },
+    {
+      "chapterNo": 3,
+      "chapter": "健康与健身",
+      "dir": "3第三章：健康与健身",
+      "mdCount": 13,
+      "nominalRange": {
+        "min": 38,
+        "max": 50,
+        "count": 13
+      },
+      "missingLessonNumbers": []
+    },
+    {
+      "chapterNo": 4,
+      "chapter": "购物与消费",
+      "dir": "4第四章：购物与消费",
+      "mdCount": 15,
+      "nominalRange": {
+        "min": 51,
+        "max": 65,
+        "count": 15
+      },
+      "missingLessonNumbers": []
+    },
+    {
+      "chapterNo": 5,
+      "chapter": "餐饮与饮食",
+      "dir": "5第五章：餐饮与饮食",
+      "mdCount": 15,
+      "nominalRange": {
+        "min": 1,
+        "max": 16,
+        "count": 16
+      },
+      "missingLessonNumbers": [
+        3
+      ]
+    },
+    {
+      "chapterNo": 6,
+      "chapter": "娱乐与消费",
+      "dir": "6第六章：娱乐与消费",
+      "mdCount": 12,
+      "nominalRange": {
+        "min": 1,
+        "max": 12,
+        "count": 12
+      },
+      "missingLessonNumbers": []
+    },
+    {
+      "chapterNo": 7,
+      "chapter": "职业与工作",
+      "dir": "7第七章：职业与工作",
+      "mdCount": 11,
+      "nominalRange": {
+        "min": 1,
+        "max": 12,
+        "count": 12
+      },
+      "missingLessonNumbers": [
+        6
+      ]
+    }
+  ],
+  "missing": [
+    {
+      "courseId": "2-15",
+      "chapter": "旅行和旅游",
+      "reason": "源目录中无对应 .md 文件（编号空洞）",
+      "verified": false
+    },
+    {
+      "courseId": "2-21",
+      "chapter": "旅行和旅游",
+      "reason": "源目录中无对应 .md 文件（编号空洞）",
+      "verified": false
+    },
+    {
+      "courseId": "2-30",
+      "chapter": "旅行和旅游",
+      "reason": "源目录中无对应 .md 文件（编号空洞）",
+      "verified": false
+    },
+    {
+      "courseId": "5-03",
+      "chapter": "餐饮与饮食",
+      "reason": "源目录中无对应 .md 文件（编号空洞）",
+      "verified": false
+    },
+    {
+      "courseId": "7-06",
+      "chapter": "职业与工作",
+      "reason": "源目录中无对应 .md 文件（编号空洞）",
+      "verified": false
+    }
+  ],
+  "duplicateTitles": [
+    {
+      "normalizedTitle": "Daniel趣味分享",
+      "titles": [
+        "56.Daniel趣味分享",
+        "65.Daniel趣味分享",
+        "15 Daniel趣味分享",
+        "16 Daniel趣味分享",
+        "11 Daniel趣味分享",
+        "12 Daniel趣味分享",
+        "11 Daniel趣味分享",
+        "12 Daniel趣味分享"
+      ],
+      "courseIds": [
+        "4-56",
+        "4-65",
+        "5-15",
+        "5-16",
+        "6-11",
+        "6-12",
+        "7-11",
+        "7-12"
+      ]
+    },
+    {
+      "normalizedTitle": "家庭时光（上）",
+      "titles": [
+        "1.家庭时光（上）",
+        "3.家庭时光（上）"
+      ],
+      "courseIds": [
+        "1-01",
+        "1-03"
+      ]
+    }
+  ],
+  "unreadable": [],
+  "courses": [
+    {
+      "courseId": "1-01",
+      "chapterNo": 1,
+      "chapter": "家庭与朋友",
+      "lessonNo": 1,
+      "file": "1第一章：家庭与朋友/1.家庭时光（上）.md",
+      "title": "1.家庭时光（上）",
+      "sentences": [
+        "I can't wait to start our English learning journey."
+      ],
+      "zhHint": "",
+      "keywords": [
+        "can't wait",
+        "English learning journey"
+      ],
+      "sourceLine": 21,
+      "items": [
+        {
+          "text": "I can't wait to start our English learning journey.",
+          "zhHint": "",
+          "keywords": [
+            "can't wait",
+            "English learning journey"
+          ],
+          "sourceLine": 21
+        }
+      ]
+    },
+    {
+      "courseId": "1-02",
+      "chapterNo": 1,
+      "chapter": "家庭与朋友",
+      "lessonNo": 2,
+      "file": "1第一章：家庭与朋友/2.家庭成员（下）.md",
+      "title": "2.家庭成员（下）",
+      "sentences": [],
+      "zhHint": "",
+      "keywords": [],
+      "sourceLine": 0,
+      "items": []
+    },
+    {
+      "courseId": "1-03",
+      "chapterNo": 1,
+      "chapter": "家庭与朋友",
+      "lessonNo": 3,
+      "file": "1第一章：家庭与朋友/3.家庭时光（上）.md",
+      "title": "3.家庭时光（上）",
+      "sentences": [
+        "How do you describe a family vacation?",
+        "There are many fun activities we can enjoy as a family, and having a movie night is one of them.",
+        "We have a movie night as a family every Friday."
+      ],
+      "zhHint": "",
+      "keywords": [
+        "describe a family"
+      ],
+      "sourceLine": 44,
+      "items": [
+        {
+          "text": "How do you describe a family vacation?",
+          "zhHint": "",
+          "keywords": [
+            "describe a family"
+          ],
+          "sourceLine": 44
+        },
+        {
+          "text": "There are many fun activities we can enjoy as a family, and having a movie night is one of them.",
+          "zhHint": "",
+          "keywords": [
+            "fun activities",
+            "having a movie"
+          ],
+          "sourceLine": 48
+        },
+        {
+          "text": "We have a movie night as a family every Friday.",
+          "zhHint": "",
+          "keywords": [
+            "have a movie"
+          ],
+          "sourceLine": 48
+        }
+      ]
+    },
+    {
+      "courseId": "1-04",
+      "chapterNo": 1,
+      "chapter": "家庭与朋友",
+      "lessonNo": 4,
+      "file": "1第一章：家庭与朋友/4.家庭时光（下）.md",
+      "title": "4.家庭时光（下）",
+      "sentences": [
+        "I'd love to share more about how we spend time as a family.",
+        "We went on a picnic last Saturday."
+      ],
+      "zhHint": "",
+      "keywords": [
+        "love to share",
+        "spend time"
+      ],
+      "sourceLine": 26,
+      "items": [
+        {
+          "text": "I'd love to share more about how we spend time as a family.",
+          "zhHint": "",
+          "keywords": [
+            "love to share",
+            "spend time"
+          ],
+          "sourceLine": 26
+        },
+        {
+          "text": "We went on a picnic last Saturday.",
+          "zhHint": "",
+          "keywords": [
+            "picnic last Saturday"
+          ],
+          "sourceLine": 26
+        }
+      ]
+    },
+    {
+      "courseId": "1-05",
+      "chapterNo": 1,
+      "chapter": "家庭与朋友",
+      "lessonNo": 5,
+      "file": "1第一章：家庭与朋友/5.Bonus Time - No legs or arms.md",
+      "title": "5.Bonus Time - No legs or arms",
+      "sentences": [
+        "What has a face and two hands, but no arms or legs?",
+        "A clock has a dial, like a face, and an hour and minute hands, like hands, but no arms or legs.",
+        "If you like it, give me a high five!"
+      ],
+      "zhHint": "",
+      "keywords": [
+        "has a face",
+        "two hands"
+      ],
+      "sourceLine": 22,
+      "items": [
+        {
+          "text": "What has a face and two hands, but no arms or legs?",
+          "zhHint": "",
+          "keywords": [
+            "has a face",
+            "two hands"
+          ],
+          "sourceLine": 22
+        },
+        {
+          "text": "A clock has a dial, like a face, and an hour and minute hands, like hands, but no arms or legs.",
+          "zhHint": "",
+          "keywords": [
+            "has a dial",
+            "minute hands"
+          ],
+          "sourceLine": 26
+        },
+        {
+          "text": "If you like it, give me a high five!",
+          "zhHint": "",
+          "keywords": [
+            "high five"
+          ],
+          "sourceLine": 30
+        }
+      ]
+    },
+    {
+      "courseId": "1-06",
+      "chapterNo": 1,
+      "chapter": "家庭与朋友",
+      "lessonNo": 6,
+      "file": "1第一章：家庭与朋友/6.照顾宠物（上）.md",
+      "title": "6.照顾宠物（上）",
+      "sentences": [
+        "I need to feed my dog twice a day.",
+        "I have a dog named Buddy.",
+        "I have a cat named Whiskers."
+      ],
+      "zhHint": "",
+      "keywords": [
+        "need to feed",
+        "twice a day"
+      ],
+      "sourceLine": 29,
+      "items": [
+        {
+          "text": "I need to feed my dog twice a day.",
+          "zhHint": "",
+          "keywords": [
+            "need to feed",
+            "twice a day"
+          ],
+          "sourceLine": 29
+        },
+        {
+          "text": "I have a dog named Buddy.",
+          "zhHint": "",
+          "keywords": [
+            "dog named Buddy"
+          ],
+          "sourceLine": 31
+        },
+        {
+          "text": "I have a cat named Whiskers.",
+          "zhHint": "",
+          "keywords": [
+            "cat named Whiskers"
+          ],
+          "sourceLine": 31
+        }
+      ]
+    },
+    {
+      "courseId": "1-07",
+      "chapterNo": 1,
+      "chapter": "家庭与朋友",
+      "lessonNo": 7,
+      "file": "1第一章：家庭与朋友/7.照顾宠物下.md",
+      "title": "7.照顾宠物下",
+      "sentences": [
+        "I love playing with my pet in the park.",
+        "We play fetch or run around with my pet.",
+        "I love playing with my pet."
+      ],
+      "zhHint": "",
+      "keywords": [
+        "love playing"
+      ],
+      "sourceLine": 39,
+      "items": [
+        {
+          "text": "I love playing with my pet in the park.",
+          "zhHint": "",
+          "keywords": [
+            "love playing"
+          ],
+          "sourceLine": 39
+        },
+        {
+          "text": "We play fetch or run around with my pet.",
+          "zhHint": "",
+          "keywords": [
+            "play fetch",
+            "run around"
+          ],
+          "sourceLine": 39
+        },
+        {
+          "text": "I love playing with my pet.",
+          "zhHint": "",
+          "keywords": [
+            "love playing"
+          ],
+          "sourceLine": 43
+        }
+      ]
+    },
+    {
+      "courseId": "1-08",
+      "chapterNo": 1,
+      "chapter": "家庭与朋友",
+      "lessonNo": 8,
+      "file": "1第一章：家庭与朋友/8朋友聚会（上）.md",
+      "title": "8朋友聚会（上）",
+      "sentences": [
+        "I have a lot of friends, we often get together, and to spend time with friends is always very good.",
+        "I'm excited to invite you to a birthday party.",
+        "I'm hosting a party for my daughter at 7pm this Saturday at my house."
+      ],
+      "zhHint": "",
+      "keywords": [
+        "spend time"
+      ],
+      "sourceLine": 22,
+      "items": [
+        {
+          "text": "I have a lot of friends, we often get together, and to spend time with friends is always very good.",
+          "zhHint": "",
+          "keywords": [
+            "spend time"
+          ],
+          "sourceLine": 22
+        },
+        {
+          "text": "I'm excited to invite you to a birthday party.",
+          "zhHint": "",
+          "keywords": [
+            "excited to invite",
+            "birthday party"
+          ],
+          "sourceLine": 40
+        },
+        {
+          "text": "I'm hosting a party for my daughter at 7pm this Saturday at my house.",
+          "zhHint": "",
+          "keywords": [
+            "hosting a party"
+          ],
+          "sourceLine": 40
+        }
+      ]
+    },
+    {
+      "courseId": "1-09",
+      "chapterNo": 1,
+      "chapter": "家庭与朋友",
+      "lessonNo": 9,
+      "file": "1第一章：家庭与朋友/9.朋友聚会（下）.md",
+      "title": "9.朋友聚会（下）",
+      "sentences": [
+        "What do you usually do with your old friends?",
+        "I have prior commitments that I can't cancel.",
+        "So I won't be able to make it this time."
+      ],
+      "zhHint": "",
+      "keywords": [
+        "old friends"
+      ],
+      "sourceLine": 27,
+      "items": [
+        {
+          "text": "What do you usually do with your old friends?",
+          "zhHint": "",
+          "keywords": [
+            "old friends"
+          ],
+          "sourceLine": 27
+        },
+        {
+          "text": "I have prior commitments that I can't cancel.",
+          "zhHint": "",
+          "keywords": [
+            "have prior commitments",
+            "can't cancel"
+          ],
+          "sourceLine": 45
+        },
+        {
+          "text": "So I won't be able to make it this time.",
+          "zhHint": "",
+          "keywords": [
+            "able to make"
+          ],
+          "sourceLine": 45
+        }
+      ]
+    },
+    {
+      "courseId": "1-10",
+      "chapterNo": 1,
+      "chapter": "家庭与朋友",
+      "lessonNo": 10,
+      "file": "1第一章：家庭与朋友/10.酒吧.md",
+      "title": "10.酒吧",
+      "sentences": [
+        "Hi, we are going to get you.",
+        "What do you have for the beer?",
+        "What can I get you?"
+      ],
+      "zhHint": "",
+      "keywords": [
+        "going to"
+      ],
+      "sourceLine": 27,
+      "items": [
+        {
+          "text": "Hi, we are going to get you.",
+          "zhHint": "",
+          "keywords": [
+            "going to"
+          ],
+          "sourceLine": 27
+        },
+        {
+          "text": "What do you have for the beer?",
+          "zhHint": "",
+          "keywords": [
+            "have for"
+          ],
+          "sourceLine": 27
+        },
+        {
+          "text": "What can I get you?",
+          "zhHint": "",
+          "keywords": [],
+          "sourceLine": 29
+        }
+      ]
+    },
+    {
+      "courseId": "1-11",
+      "chapterNo": 1,
+      "chapter": "家庭与朋友",
+      "lessonNo": 11,
+      "file": "1第一章：家庭与朋友/11.情侣关系（上）.md",
+      "title": "11.情侣关系（上）",
+      "sentences": [
+        "A good relationship relies on trust and communication.",
+        "Compromise is important in any relationship.",
+        "We work together to find a middle ground when we disagree."
+      ],
+      "zhHint": "",
+      "keywords": [
+        "good relationship relies"
+      ],
+      "sourceLine": 31,
+      "items": [
+        {
+          "text": "A good relationship relies on trust and communication.",
+          "zhHint": "",
+          "keywords": [
+            "good relationship relies"
+          ],
+          "sourceLine": 31
+        },
+        {
+          "text": "Compromise is important in any relationship.",
+          "zhHint": "",
+          "keywords": [
+            "Compromise is"
+          ],
+          "sourceLine": 57
+        },
+        {
+          "text": "We work together to find a middle ground when we disagree.",
+          "zhHint": "",
+          "keywords": [
+            "together to find",
+            "middle ground"
+          ],
+          "sourceLine": 57
+        }
+      ]
+    },
+    {
+      "courseId": "1-12",
+      "chapterNo": 1,
+      "chapter": "家庭与朋友",
+      "lessonNo": 12,
+      "file": "1第一章：家庭与朋友/12.情侣关系（下）.md",
+      "title": "12.情侣关系（下）",
+      "sentences": [
+        "In this class, we'll discuss the different ways to maintain a high quality relationship with your loved one.",
+        "A good partner also provides love, intimacy, support, and commitment.",
+        "These emotional aspects are key to maintaining a happy relationship."
+      ],
+      "zhHint": "",
+      "keywords": [
+        "discuss the different",
+        "ways to maintain",
+        "high quality relationship"
+      ],
+      "sourceLine": 23,
+      "items": [
+        {
+          "text": "In this class, we'll discuss the different ways to maintain a high quality relationship with your loved one.",
+          "zhHint": "",
+          "keywords": [
+            "discuss the different",
+            "ways to maintain",
+            "high quality relationship"
+          ],
+          "sourceLine": 23
+        },
+        {
+          "text": "A good partner also provides love, intimacy, support, and commitment.",
+          "zhHint": "",
+          "keywords": [
+            "good partner",
+            "provides love"
+          ],
+          "sourceLine": 41
+        },
+        {
+          "text": "These emotional aspects are key to maintaining a happy relationship.",
+          "zhHint": "",
+          "keywords": [
+            "emotional aspects",
+            "maintaining a happy"
+          ],
+          "sourceLine": 41
+        }
+      ]
+    },
+    {
+      "courseId": "1-13",
+      "chapterNo": 1,
+      "chapter": "家庭与朋友",
+      "lessonNo": 13,
+      "file": "1第一章：家庭与朋友/13.Bonus Time - Break a leg.md",
+      "title": "13.Bonus Time - Break a leg",
+      "sentences": [
+        "Doesn't that sound terrible?",
+        "It means good luck to you.",
+        "So don't get angry when someone says this to you."
+      ],
+      "zhHint": "",
+      "keywords": [
+        "sound terrible"
+      ],
+      "sourceLine": 22,
+      "items": [
+        {
+          "text": "Doesn't that sound terrible?",
+          "zhHint": "",
+          "keywords": [
+            "sound terrible"
+          ],
+          "sourceLine": 22
+        },
+        {
+          "text": "It means good luck to you.",
+          "zhHint": "",
+          "keywords": [
+            "means good luck"
+          ],
+          "sourceLine": 26
+        },
+        {
+          "text": "So don't get angry when someone says this to you.",
+          "zhHint": "",
+          "keywords": [
+            "angry when"
+          ],
+          "sourceLine": 30
+        }
+      ]
+    },
+    {
+      "courseId": "2-14",
+      "chapterNo": 2,
+      "chapter": "旅行和旅游",
+      "lessonNo": 14,
+      "file": "2第二章：旅行和旅游/14.机票预定（上）.md",
+      "title": "14.机票预定（上）",
+      "sentences": [
+        "What can you say if you want to book a flight?",
+        "\"How much baggage allowance do I have?",
+        "What can you say to inquire your baggage allowance?"
+      ],
+      "zhHint": "",
+      "keywords": [
+        "book a flight"
+      ],
+      "sourceLine": 50,
+      "items": [
+        {
+          "text": "What can you say if you want to book a flight?",
+          "zhHint": "",
+          "keywords": [
+            "book a flight"
+          ],
+          "sourceLine": 50
+        },
+        {
+          "text": "\"How much baggage allowance do I have?",
+          "zhHint": "",
+          "keywords": [
+            "baggage allowance"
+          ],
+          "sourceLine": 54
+        },
+        {
+          "text": "What can you say to inquire your baggage allowance?",
+          "zhHint": "",
+          "keywords": [
+            "say to inquire",
+            "baggage allowance"
+          ],
+          "sourceLine": 66
+        }
+      ]
+    },
+    {
+      "courseId": "2-16",
+      "chapterNo": 2,
+      "chapter": "旅行和旅游",
+      "lessonNo": 16,
+      "file": "2第二章：旅行和旅游/16.Y飞机点餐.md",
+      "title": "16.Y飞机点餐",
+      "sentences": [
+        "Would you like the beef or the chicken?",
+        "Yes, we have pasta and mashed potatoes.",
+        "Which one would you prefer?"
+      ],
+      "zhHint": "",
+      "keywords": [
+        "the chicken"
+      ],
+      "sourceLine": 31,
+      "items": [
+        {
+          "text": "Would you like the beef or the chicken?",
+          "zhHint": "",
+          "keywords": [
+            "the chicken"
+          ],
+          "sourceLine": 31
+        },
+        {
+          "text": "Yes, we have pasta and mashed potatoes.",
+          "zhHint": "",
+          "keywords": [
+            "have pasta",
+            "mashed potatoes"
+          ],
+          "sourceLine": 71
+        },
+        {
+          "text": "Which one would you prefer?",
+          "zhHint": "",
+          "keywords": [
+            "Which one"
+          ],
+          "sourceLine": 71
+        }
+      ]
+    },
+    {
+      "courseId": "2-17",
+      "chapterNo": 2,
+      "chapter": "旅行和旅游",
+      "lessonNo": 17,
+      "file": "2第二章：旅行和旅游/17.Y机舱服务1.md",
+      "title": "17.Y机舱服务1",
+      "sentences": [
+        "Sure, I would love to.",
+        "Could you help me find a place for my bike?",
+        "Could you help me find a place for my backpack?"
+      ],
+      "zhHint": "",
+      "keywords": [
+        "love to"
+      ],
+      "sourceLine": 28,
+      "items": [
+        {
+          "text": "Sure, I would love to.",
+          "zhHint": "",
+          "keywords": [
+            "love to"
+          ],
+          "sourceLine": 28
+        },
+        {
+          "text": "Could you help me find a place for my bike?",
+          "zhHint": "",
+          "keywords": [
+            "find a place"
+          ],
+          "sourceLine": 34
+        },
+        {
+          "text": "Could you help me find a place for my backpack?",
+          "zhHint": "",
+          "keywords": [
+            "find a place"
+          ],
+          "sourceLine": 34
+        }
+      ]
+    },
+    {
+      "courseId": "2-18",
+      "chapterNo": 2,
+      "chapter": "旅行和旅游",
+      "lessonNo": 18,
+      "file": "2第二章：旅行和旅游/18.Y机舱服务2.md",
+      "title": "18.Y机舱服务2",
+      "sentences": [
+        "Would you like some water?",
+        "Can I get another sick bag?",
+        "Can I get another?"
+      ],
+      "zhHint": "",
+      "keywords": [],
+      "sourceLine": 28,
+      "items": [
+        {
+          "text": "Would you like some water?",
+          "zhHint": "",
+          "keywords": [],
+          "sourceLine": 28
+        },
+        {
+          "text": "Can I get another sick bag?",
+          "zhHint": "",
+          "keywords": [
+            "sick bag"
+          ],
+          "sourceLine": 28
+        },
+        {
+          "text": "Can I get another?",
+          "zhHint": "",
+          "keywords": [],
+          "sourceLine": 32
+        }
+      ]
+    },
+    {
+      "courseId": "2-19",
+      "chapterNo": 2,
+      "chapter": "旅行和旅游",
+      "lessonNo": 19,
+      "file": "2第二章：旅行和旅游/19.酒店预定（上）.md",
+      "title": "19.酒店预定（上）",
+      "sentences": [
+        "All right, booking a hotel involves some key questions and steps.",
+        "I'd like to make a hotel reservation.",
+        "I'd like to book a room."
+      ],
+      "zhHint": "",
+      "keywords": [
+        "booking a hotel",
+        "key questions"
+      ],
+      "sourceLine": 24,
+      "items": [
+        {
+          "text": "All right, booking a hotel involves some key questions and steps.",
+          "zhHint": "",
+          "keywords": [
+            "booking a hotel",
+            "key questions"
+          ],
+          "sourceLine": 24
+        },
+        {
+          "text": "I'd like to make a hotel reservation.",
+          "zhHint": "",
+          "keywords": [
+            "make a hotel"
+          ],
+          "sourceLine": 24
+        },
+        {
+          "text": "I'd like to book a room.",
+          "zhHint": "",
+          "keywords": [
+            "book a room"
+          ],
+          "sourceLine": 30
+        }
+      ]
+    },
+    {
+      "courseId": "2-20",
+      "chapterNo": 2,
+      "chapter": "旅行和旅游",
+      "lessonNo": 20,
+      "file": "2第二章：旅行和旅游/20.Y酒店.md",
+      "title": "20.Y酒店",
+      "sentences": [
+        "Do you have a reservation?",
+        "Yes, I've booked a room online.",
+        "Yes, I've booked a room."
+      ],
+      "zhHint": "",
+      "keywords": [
+        "have a reservation"
+      ],
+      "sourceLine": 26,
+      "items": [
+        {
+          "text": "Do you have a reservation?",
+          "zhHint": "",
+          "keywords": [
+            "have a reservation"
+          ],
+          "sourceLine": 26
+        },
+        {
+          "text": "Yes, I've booked a room online.",
+          "zhHint": "",
+          "keywords": [
+            "booked a room"
+          ],
+          "sourceLine": 26
+        },
+        {
+          "text": "Yes, I've booked a room.",
+          "zhHint": "",
+          "keywords": [
+            "booked a room"
+          ],
+          "sourceLine": 30
+        }
+      ]
+    },
+    {
+      "courseId": "2-22",
+      "chapterNo": 2,
+      "chapter": "旅行和旅游",
+      "lessonNo": 22,
+      "file": "2第二章：旅行和旅游/22.Y民宿.md",
+      "title": "22.Y民宿",
+      "sentences": [
+        "Hello, this is Adam.",
+        "How can I help you?",
+        "Is the address on the platform accurate, is the address accurate?"
+      ],
+      "zhHint": "",
+      "keywords": [],
+      "sourceLine": 33,
+      "items": [
+        {
+          "text": "Hello, this is Adam.",
+          "zhHint": "",
+          "keywords": [],
+          "sourceLine": 33
+        },
+        {
+          "text": "How can I help you?",
+          "zhHint": "",
+          "keywords": [
+            "help you"
+          ],
+          "sourceLine": 33
+        },
+        {
+          "text": "Is the address on the platform accurate, is the address accurate?",
+          "zhHint": "",
+          "keywords": [
+            "platform accurate",
+            "address accurate"
+          ],
+          "sourceLine": 41
+        }
+      ]
+    },
+    {
+      "courseId": "2-23",
+      "chapterNo": 2,
+      "chapter": "旅行和旅游",
+      "lessonNo": 23,
+      "file": "2第二章：旅行和旅游/23.Bonus Time - Throw in the Towel.md",
+      "title": "23.Bonus Time - Throw in the Towel",
+      "sentences": [],
+      "zhHint": "",
+      "keywords": [],
+      "sourceLine": 0,
+      "items": []
+    },
+    {
+      "courseId": "2-24",
+      "chapterNo": 2,
+      "chapter": "旅行和旅游",
+      "lessonNo": 24,
+      "file": "2第二章：旅行和旅游/24.旅游景点（上）.md",
+      "title": "24.旅游景点（上）",
+      "sentences": [
+        "Alright, there are so many amazing places to visit.",
+        "Last year, I visited the Eiffel Tower in Paris.",
+        "I visited the Great Wall."
+      ],
+      "zhHint": "",
+      "keywords": [
+        "places to visit"
+      ],
+      "sourceLine": 22,
+      "items": [
+        {
+          "text": "Alright, there are so many amazing places to visit.",
+          "zhHint": "",
+          "keywords": [
+            "places to visit"
+          ],
+          "sourceLine": 22
+        },
+        {
+          "text": "Last year, I visited the Eiffel Tower in Paris.",
+          "zhHint": "",
+          "keywords": [
+            "Last year",
+            "visited the Eiffel Tower",
+            "Tower in Paris"
+          ],
+          "sourceLine": 22
+        },
+        {
+          "text": "I visited the Great Wall.",
+          "zhHint": "",
+          "keywords": [
+            "visited the Great Wall"
+          ],
+          "sourceLine": 28
+        }
+      ]
+    },
+    {
+      "courseId": "2-25",
+      "chapterNo": 2,
+      "chapter": "旅行和旅游",
+      "lessonNo": 25,
+      "file": "2第二章：旅行和旅游/25.Y景点.md",
+      "title": "25.Y景点",
+      "sentences": [
+        "Hi, how can I help you?",
+        "Oh, I see, students.",
+        "How much is the ticket?"
+      ],
+      "zhHint": "",
+      "keywords": [
+        "help you"
+      ],
+      "sourceLine": 24,
+      "items": [
+        {
+          "text": "Hi, how can I help you?",
+          "zhHint": "",
+          "keywords": [
+            "help you"
+          ],
+          "sourceLine": 24
+        },
+        {
+          "text": "Oh, I see, students.",
+          "zhHint": "",
+          "keywords": [],
+          "sourceLine": 24
+        },
+        {
+          "text": "How much is the ticket?",
+          "zhHint": "",
+          "keywords": [
+            "the ticket"
+          ],
+          "sourceLine": 26
+        }
+      ]
+    },
+    {
+      "courseId": "2-26",
+      "chapterNo": 2,
+      "chapter": "旅行和旅游",
+      "lessonNo": 26,
+      "file": "2第二章：旅行和旅游/26.旅游景点（下）.md",
+      "title": "26.旅游景点（下）",
+      "sentences": [
+        "The tour was visiting the famous landmark, The Grand Palace.",
+        "The highlight of the tour was visiting the famous landmark, The Grand Palace.",
+        "Do you think I should hire a guide for the tour?"
+      ],
+      "zhHint": "",
+      "keywords": [
+        "visiting the famous",
+        "Grand Palace"
+      ],
+      "sourceLine": 28,
+      "items": [
+        {
+          "text": "The tour was visiting the famous landmark, The Grand Palace.",
+          "zhHint": "",
+          "keywords": [
+            "visiting the famous",
+            "Grand Palace"
+          ],
+          "sourceLine": 28
+        },
+        {
+          "text": "The highlight of the tour was visiting the famous landmark, The Grand Palace.",
+          "zhHint": "",
+          "keywords": [
+            "visiting the famous",
+            "Grand Palace"
+          ],
+          "sourceLine": 28
+        },
+        {
+          "text": "Do you think I should hire a guide for the tour?",
+          "zhHint": "",
+          "keywords": [
+            "hire a guide"
+          ],
+          "sourceLine": 44
+        }
+      ]
+    },
+    {
+      "courseId": "2-27",
+      "chapterNo": 2,
+      "chapter": "旅行和旅游",
+      "lessonNo": 27,
+      "file": "2第二章：旅行和旅游/27.Y迪士尼.md",
+      "title": "27.Y迪士尼",
+      "sentences": [
+        "How do I get a photopass card?",
+        "You can get it from any Disney photopass photographer.",
+        "When will there be parades?"
+      ],
+      "zhHint": "",
+      "keywords": [
+        "photopass card"
+      ],
+      "sourceLine": 27,
+      "items": [
+        {
+          "text": "How do I get a photopass card?",
+          "zhHint": "",
+          "keywords": [
+            "photopass card"
+          ],
+          "sourceLine": 27
+        },
+        {
+          "text": "You can get it from any Disney photopass photographer.",
+          "zhHint": "",
+          "keywords": [
+            "Disney photopass photographer"
+          ],
+          "sourceLine": 27
+        },
+        {
+          "text": "When will there be parades?",
+          "zhHint": "",
+          "keywords": [],
+          "sourceLine": 43
+        }
+      ]
+    },
+    {
+      "courseId": "2-28",
+      "chapterNo": 2,
+      "chapter": "旅行和旅游",
+      "lessonNo": 28,
+      "file": "2第二章：旅行和旅游/28.出现安全（上）.md",
+      "title": "28.出现安全（上）",
+      "sentences": [
+        "I always get travel insurance, just in case anything unexpected happens on the trip.",
+        "I usually get travel insurance, just in case.",
+        "What can you say to talk about travel safety habits?"
+      ],
+      "zhHint": "",
+      "keywords": [
+        "travel insurance",
+        "unexpected happens"
+      ],
+      "sourceLine": 28,
+      "items": [
+        {
+          "text": "I always get travel insurance, just in case anything unexpected happens on the trip.",
+          "zhHint": "",
+          "keywords": [
+            "travel insurance",
+            "unexpected happens"
+          ],
+          "sourceLine": 28
+        },
+        {
+          "text": "I usually get travel insurance, just in case.",
+          "zhHint": "",
+          "keywords": [
+            "travel insurance"
+          ],
+          "sourceLine": 50
+        },
+        {
+          "text": "What can you say to talk about travel safety habits?",
+          "zhHint": "",
+          "keywords": [
+            "say to talk",
+            "travel safety habits"
+          ],
+          "sourceLine": 56
+        }
+      ]
+    },
+    {
+      "courseId": "2-29",
+      "chapterNo": 2,
+      "chapter": "旅行和旅游",
+      "lessonNo": 29,
+      "file": "2第二章：旅行和旅游/29.Y问路.md",
+      "title": "29.Y问路",
+      "sentences": [
+        "Maybe I give you eat where.",
+        "Ah, yes, I know one.",
+        "Do you know where the nearest pizza place is?"
+      ],
+      "zhHint": "",
+      "keywords": [
+        "eat where"
+      ],
+      "sourceLine": 27,
+      "items": [
+        {
+          "text": "Maybe I give you eat where.",
+          "zhHint": "",
+          "keywords": [
+            "eat where"
+          ],
+          "sourceLine": 27
+        },
+        {
+          "text": "Ah, yes, I know one.",
+          "zhHint": "",
+          "keywords": [
+            "know one"
+          ],
+          "sourceLine": 27
+        },
+        {
+          "text": "Do you know where the nearest pizza place is?",
+          "zhHint": "最近的披萨店在哪里。",
+          "keywords": [
+            "nearest pizza place"
+          ],
+          "sourceLine": 29
+        }
+      ]
+    },
+    {
+      "courseId": "2-31",
+      "chapterNo": 2,
+      "chapter": "旅行和旅游",
+      "lessonNo": 31,
+      "file": "2第二章：旅行和旅游/31.Y海外租车自驾游.md",
+      "title": "31.Y海外租车自驾游",
+      "sentences": [
+        "I am here for tourism from China.",
+        "I want to rent a car.",
+        "You need to provide the original passport."
+      ],
+      "zhHint": "",
+      "keywords": [
+        "tourism from"
+      ],
+      "sourceLine": 22,
+      "items": [
+        {
+          "text": "I am here for tourism from China.",
+          "zhHint": "",
+          "keywords": [
+            "tourism from"
+          ],
+          "sourceLine": 22
+        },
+        {
+          "text": "I want to rent a car.",
+          "zhHint": "",
+          "keywords": [
+            "want to rent"
+          ],
+          "sourceLine": 22
+        },
+        {
+          "text": "You need to provide the original passport.",
+          "zhHint": "",
+          "keywords": [
+            "provide the original"
+          ],
+          "sourceLine": 26
+        }
+      ]
+    },
+    {
+      "courseId": "2-32",
+      "chapterNo": 2,
+      "chapter": "旅行和旅游",
+      "lessonNo": 32,
+      "file": "2第二章：旅行和旅游/32.Y打车.md",
+      "title": "32.Y打车",
+      "sentences": [
+        "Oh, I just passed it.",
+        "I'll be there in around five minutes.",
+        "I'm wearing a black top."
+      ],
+      "zhHint": "",
+      "keywords": [
+        "passed it"
+      ],
+      "sourceLine": 29,
+      "items": [
+        {
+          "text": "Oh, I just passed it.",
+          "zhHint": "",
+          "keywords": [
+            "passed it"
+          ],
+          "sourceLine": 29
+        },
+        {
+          "text": "I'll be there in around five minutes.",
+          "zhHint": "",
+          "keywords": [
+            "five minutes"
+          ],
+          "sourceLine": 29
+        },
+        {
+          "text": "I'm wearing a black top.",
+          "zhHint": "我穿着一件黑色的上衣。",
+          "keywords": [
+            "wearing a black"
+          ],
+          "sourceLine": 33
+        }
+      ]
+    },
+    {
+      "courseId": "2-33",
+      "chapterNo": 2,
+      "chapter": "旅行和旅游",
+      "lessonNo": 33,
+      "file": "2第二章：旅行和旅游/33.当地交通（上）.md",
+      "title": "33.当地交通（上）",
+      "sentences": [
+        "What is the best way to get around the city?",
+        "Subway is often a convenient choice.",
+        "What is often a convenient choice?"
+      ],
+      "zhHint": "",
+      "keywords": [
+        "best way",
+        "around the city"
+      ],
+      "sourceLine": 29,
+      "items": [
+        {
+          "text": "What is the best way to get around the city?",
+          "zhHint": "",
+          "keywords": [
+            "best way",
+            "around the city"
+          ],
+          "sourceLine": 29
+        },
+        {
+          "text": "Subway is often a convenient choice.",
+          "zhHint": "",
+          "keywords": [
+            "often a convenient"
+          ],
+          "sourceLine": 35
+        },
+        {
+          "text": "What is often a convenient choice?",
+          "zhHint": "",
+          "keywords": [
+            "often a convenient"
+          ],
+          "sourceLine": 35
+        }
+      ]
+    },
+    {
+      "courseId": "2-34",
+      "chapterNo": 2,
+      "chapter": "旅行和旅游",
+      "lessonNo": 34,
+      "file": "2第二章：旅行和旅游/34.Y公交.md",
+      "title": "34.Y公交",
+      "sentences": [
+        "Hi Where are you headed?",
+        "I go to eat pizza.",
+        "I'm going to Joe's."
+      ],
+      "zhHint": "",
+      "keywords": [],
+      "sourceLine": 27,
+      "items": [
+        {
+          "text": "Hi Where are you headed?",
+          "zhHint": "",
+          "keywords": [],
+          "sourceLine": 27
+        },
+        {
+          "text": "I go to eat pizza.",
+          "zhHint": "",
+          "keywords": [
+            "go to eat"
+          ],
+          "sourceLine": 27
+        },
+        {
+          "text": "I'm going to Joe's.",
+          "zhHint": "",
+          "keywords": [
+            "going to Joe's"
+          ],
+          "sourceLine": 31
+        }
+      ]
+    },
+    {
+      "courseId": "2-35",
+      "chapterNo": 2,
+      "chapter": "旅行和旅游",
+      "lessonNo": 35,
+      "file": "2第二章：旅行和旅游/35.当地交通（下）.md",
+      "title": "35.当地交通（下）",
+      "sentences": [
+        "I have more to share about this topic.",
+        "Your English should be at a level where you can travel, you can communicate, and you can have fun with it.",
+        "Does this taxi use a meter?"
+      ],
+      "zhHint": "",
+      "keywords": [
+        "share about"
+      ],
+      "sourceLine": 24,
+      "items": [
+        {
+          "text": "I have more to share about this topic.",
+          "zhHint": "",
+          "keywords": [
+            "share about"
+          ],
+          "sourceLine": 24
+        },
+        {
+          "text": "Your English should be at a level where you can travel, you can communicate, and you can have fun with it.",
+          "zhHint": "",
+          "keywords": [
+            "have fun"
+          ],
+          "sourceLine": 28
+        },
+        {
+          "text": "Does this taxi use a meter?",
+          "zhHint": "",
+          "keywords": [
+            "use a meter"
+          ],
+          "sourceLine": 38
+        }
+      ]
+    },
+    {
+      "courseId": "2-36",
+      "chapterNo": 2,
+      "chapter": "旅行和旅游",
+      "lessonNo": 36,
+      "file": "2第二章：旅行和旅游/36.Y地铁.md",
+      "title": "36.Y地铁",
+      "sentences": [
+        "Hi, how can I help you?",
+        "No good, me I buy the ticket.",
+        "How can I help you?"
+      ],
+      "zhHint": "",
+      "keywords": [
+        "help you"
+      ],
+      "sourceLine": 28,
+      "items": [
+        {
+          "text": "Hi, how can I help you?",
+          "zhHint": "",
+          "keywords": [
+            "help you"
+          ],
+          "sourceLine": 28
+        },
+        {
+          "text": "No good, me I buy the ticket.",
+          "zhHint": "",
+          "keywords": [
+            "buy the ticket"
+          ],
+          "sourceLine": 28
+        },
+        {
+          "text": "How can I help you?",
+          "zhHint": "",
+          "keywords": [
+            "help you"
+          ],
+          "sourceLine": 30
+        }
+      ]
+    },
+    {
+      "courseId": "2-37",
+      "chapterNo": 2,
+      "chapter": "旅行和旅游",
+      "lessonNo": 37,
+      "file": "2第二章：旅行和旅游/37.Bonus Time - Tongue Twister.md",
+      "title": "37.Bonus Time - Tongue Twister",
+      "sentences": [
+        "A good cook could cook as many cookies as a good cook who could cook cookies.",
+        "Good cook who could cook cookies.",
+        "Do you want to try?"
+      ],
+      "zhHint": "",
+      "keywords": [
+        "good cook",
+        "good cook",
+        "cook cookies"
+      ],
+      "sourceLine": 22,
+      "items": [
+        {
+          "text": "A good cook could cook as many cookies as a good cook who could cook cookies.",
+          "zhHint": "",
+          "keywords": [
+            "good cook",
+            "good cook",
+            "cook cookies"
+          ],
+          "sourceLine": 22
+        },
+        {
+          "text": "Good cook who could cook cookies.",
+          "zhHint": "",
+          "keywords": [
+            "Good cook",
+            "cook cookies"
+          ],
+          "sourceLine": 26
+        },
+        {
+          "text": "Do you want to try?",
+          "zhHint": "",
+          "keywords": [
+            "want to try"
+          ],
+          "sourceLine": 30
+        }
+      ]
+    },
+    {
+      "courseId": "3-38",
+      "chapterNo": 3,
+      "chapter": "健康与健身",
+      "lessonNo": 38,
+      "file": "3第三章：健康与健身/38.健康饮食（上）.md",
+      "title": "38.健康饮食（上）",
+      "sentences": [
+        "This morning I had oatmeal with fruits."
+      ],
+      "zhHint": "",
+      "keywords": [
+        "oatmeal with fruits"
+      ],
+      "sourceLine": 45,
+      "items": [
+        {
+          "text": "This morning I had oatmeal with fruits.",
+          "zhHint": "",
+          "keywords": [
+            "oatmeal with fruits"
+          ],
+          "sourceLine": 45
+        }
+      ]
+    },
+    {
+      "courseId": "3-39",
+      "chapterNo": 3,
+      "chapter": "健康与健身",
+      "lessonNo": 39,
+      "file": "3第三章：健康与健身/39.健康饮食（下）.md",
+      "title": "39.健康饮食（下）",
+      "sentences": [
+        "We've been focusing on healthy eating.",
+        "And today, we're going to explore more aspects of this vital topic.",
+        "Eating healthy is an essential part of a balanced lifestyle."
+      ],
+      "zhHint": "",
+      "keywords": [
+        "focusing on healthy"
+      ],
+      "sourceLine": 23,
+      "items": [
+        {
+          "text": "We've been focusing on healthy eating.",
+          "zhHint": "",
+          "keywords": [
+            "focusing on healthy"
+          ],
+          "sourceLine": 23
+        },
+        {
+          "text": "And today, we're going to explore more aspects of this vital topic.",
+          "zhHint": "",
+          "keywords": [
+            "going to explore",
+            "vital topic"
+          ],
+          "sourceLine": 23
+        },
+        {
+          "text": "Eating healthy is an essential part of a balanced lifestyle.",
+          "zhHint": "",
+          "keywords": [
+            "Eating healthy",
+            "essential part",
+            "balanced lifestyle"
+          ],
+          "sourceLine": 29
+        }
+      ]
+    },
+    {
+      "courseId": "3-40",
+      "chapterNo": 3,
+      "chapter": "健康与健身",
+      "lessonNo": 40,
+      "file": "3第三章：健康与健身/40.减肥计划（上）.md",
+      "title": "40.减肥计划（上）",
+      "sentences": [
+        "Many of us have tried to lose weight, whether for health or specific goals.",
+        "I incorporate more cardio exercises into my routine to boost my metabolism.",
+        "Losing weight requires setting clear weight loss goals."
+      ],
+      "zhHint": "",
+      "keywords": [
+        "tried to lose",
+        "whether for health",
+        "specific goals"
+      ],
+      "sourceLine": 23,
+      "items": [
+        {
+          "text": "Many of us have tried to lose weight, whether for health or specific goals.",
+          "zhHint": "",
+          "keywords": [
+            "tried to lose",
+            "whether for health",
+            "specific goals"
+          ],
+          "sourceLine": 23
+        },
+        {
+          "text": "I incorporate more cardio exercises into my routine to boost my metabolism.",
+          "zhHint": "",
+          "keywords": [
+            "cardio exercises",
+            "routine to boost"
+          ],
+          "sourceLine": 31
+        },
+        {
+          "text": "Losing weight requires setting clear weight loss goals.",
+          "zhHint": "",
+          "keywords": [
+            "weight requires setting",
+            "clear weight loss"
+          ],
+          "sourceLine": 31
+        }
+      ]
+    },
+    {
+      "courseId": "3-41",
+      "chapterNo": 3,
+      "chapter": "健康与健身",
+      "lessonNo": 41,
+      "file": "3第三章：健康与健身/41.减肥计划（下）.md",
+      "title": "41.减肥计划（下）",
+      "sentences": [
+        "High protein diet to help me feel fuller for longer.",
+        "Regular physical activity is a must.",
+        "I pay attention to portion sizes to avoid overeating."
+      ],
+      "zhHint": "",
+      "keywords": [
+        "High protein diet",
+        "fuller for longer"
+      ],
+      "sourceLine": 29,
+      "items": [
+        {
+          "text": "High protein diet to help me feel fuller for longer.",
+          "zhHint": "",
+          "keywords": [
+            "High protein diet",
+            "fuller for longer"
+          ],
+          "sourceLine": 29
+        },
+        {
+          "text": "Regular physical activity is a must.",
+          "zhHint": "",
+          "keywords": [
+            "Regular physical activity"
+          ],
+          "sourceLine": 29
+        },
+        {
+          "text": "I pay attention to portion sizes to avoid overeating.",
+          "zhHint": "",
+          "keywords": [
+            "attention to portion",
+            "sizes to avoid"
+          ],
+          "sourceLine": 37
+        }
+      ]
+    },
+    {
+      "courseId": "3-42",
+      "chapterNo": 3,
+      "chapter": "健康与健身",
+      "lessonNo": 42,
+      "file": "3第三章：健康与健身/42.Bonus Time - A Piece of Cake.md",
+      "title": "42.Bonus Time - A Piece of Cake",
+      "sentences": [
+        "Why did the student eat his homework?",
+        "The reason is: the teacher told him it was a piece of cake.",
+        "A piece of cake actually means that it was something very easy to do."
+      ],
+      "zhHint": "",
+      "keywords": [
+        "student eat"
+      ],
+      "sourceLine": 26,
+      "items": [
+        {
+          "text": "Why did the student eat his homework?",
+          "zhHint": "",
+          "keywords": [
+            "student eat"
+          ],
+          "sourceLine": 26
+        },
+        {
+          "text": "The reason is: the teacher told him it was a piece of cake.",
+          "zhHint": "",
+          "keywords": [
+            "teacher told",
+            "piece of cake"
+          ],
+          "sourceLine": 30
+        },
+        {
+          "text": "A piece of cake actually means that it was something very easy to do.",
+          "zhHint": "",
+          "keywords": [
+            "cake actually means"
+          ],
+          "sourceLine": 30
+        }
+      ]
+    },
+    {
+      "courseId": "3-43",
+      "chapterNo": 3,
+      "chapter": "健康与健身",
+      "lessonNo": 43,
+      "file": "3第三章：健康与健身/43.日常锻炼（上）.md",
+      "title": "43.日常锻炼（上）",
+      "sentences": [
+        "I start with running.",
+        "This helps me wake up my body and prepare my muscles for the day.",
+        "He prepares his notes for the presentation."
+      ],
+      "zhHint": "",
+      "keywords": [
+        "start with running"
+      ],
+      "sourceLine": 33,
+      "items": [
+        {
+          "text": "I start with running.",
+          "zhHint": "",
+          "keywords": [
+            "start with running"
+          ],
+          "sourceLine": 33
+        },
+        {
+          "text": "This helps me wake up my body and prepare my muscles for the day.",
+          "zhHint": "",
+          "keywords": [
+            "muscles for"
+          ],
+          "sourceLine": 33
+        },
+        {
+          "text": "He prepares his notes for the presentation.",
+          "zhHint": "",
+          "keywords": [
+            "prepares his"
+          ],
+          "sourceLine": 41
+        }
+      ]
+    },
+    {
+      "courseId": "3-44",
+      "chapterNo": 3,
+      "chapter": "健康与健身",
+      "lessonNo": 44,
+      "file": "3第三章：健康与健身/44.日常锻炼（下）.md",
+      "title": "44.日常锻炼（下）",
+      "sentences": [
+        "I always ensure I get adequate sleep.",
+        "I ensure you can get enough sleep."
+      ],
+      "zhHint": "",
+      "keywords": [
+        "always ensure",
+        "adequate sleep"
+      ],
+      "sourceLine": 37,
+      "items": [
+        {
+          "text": "I always ensure I get adequate sleep.",
+          "zhHint": "",
+          "keywords": [
+            "always ensure",
+            "adequate sleep"
+          ],
+          "sourceLine": 37
+        },
+        {
+          "text": "I ensure you can get enough sleep.",
+          "zhHint": "",
+          "keywords": [
+            "enough sleep"
+          ],
+          "sourceLine": 45
+        }
+      ]
+    },
+    {
+      "courseId": "3-45",
+      "chapterNo": 3,
+      "chapter": "健康与健身",
+      "lessonNo": 45,
+      "file": "3第三章：健康与健身/45.狗狗散步（上）.md",
+      "title": "45.狗狗散步（上）",
+      "sentences": [
+        "I'm excited to keep learning English with you.",
+        "I take my dog for a walk.",
+        "We usually have fun together."
+      ],
+      "zhHint": "",
+      "keywords": [
+        "keep learning English"
+      ],
+      "sourceLine": 23,
+      "items": [
+        {
+          "text": "I'm excited to keep learning English with you.",
+          "zhHint": "",
+          "keywords": [
+            "keep learning English"
+          ],
+          "sourceLine": 23
+        },
+        {
+          "text": "I take my dog for a walk.",
+          "zhHint": "",
+          "keywords": [
+            "dog for"
+          ],
+          "sourceLine": 35
+        },
+        {
+          "text": "We usually have fun together.",
+          "zhHint": "",
+          "keywords": [
+            "have fun"
+          ],
+          "sourceLine": 39
+        }
+      ]
+    },
+    {
+      "courseId": "3-46",
+      "chapterNo": 3,
+      "chapter": "健康与健身",
+      "lessonNo": 46,
+      "file": "3第三章：健康与健身/46.狗狗散步（下）.md",
+      "title": "46.狗狗散步（下）",
+      "sentences": [
+        "Walking the dog provides a good opportunity for people to socialize with others.",
+        "For example, we can make more friends.",
+        "This is a great way to expand our social circle."
+      ],
+      "zhHint": "",
+      "keywords": [
+        "Walking the dog",
+        "opportunity for people",
+        "socialize with others"
+      ],
+      "sourceLine": 31,
+      "items": [
+        {
+          "text": "Walking the dog provides a good opportunity for people to socialize with others.",
+          "zhHint": "",
+          "keywords": [
+            "Walking the dog",
+            "opportunity for people",
+            "socialize with others"
+          ],
+          "sourceLine": 31
+        },
+        {
+          "text": "For example, we can make more friends.",
+          "zhHint": "",
+          "keywords": [
+            "make more"
+          ],
+          "sourceLine": 31
+        },
+        {
+          "text": "This is a great way to expand our social circle.",
+          "zhHint": "",
+          "keywords": [
+            "great way",
+            "social circle"
+          ],
+          "sourceLine": 37
+        }
+      ]
+    },
+    {
+      "courseId": "3-47",
+      "chapterNo": 3,
+      "chapter": "健康与健身",
+      "lessonNo": 47,
+      "file": "3第三章：健康与健身/47.医生预约（上）.md",
+      "title": "47.医生预约（上）",
+      "sentences": [
+        "Regular health checkups are essential for a good life.",
+        "One day, I noticed that I was feeling more tired than usual, even with my regular workouts and plenty of rest.",
+        "Concerned about my health, I decided it was time to see a doctor."
+      ],
+      "zhHint": "",
+      "keywords": [
+        "Regular health checkups",
+        "good life"
+      ],
+      "sourceLine": 29,
+      "items": [
+        {
+          "text": "Regular health checkups are essential for a good life.",
+          "zhHint": "",
+          "keywords": [
+            "Regular health checkups",
+            "good life"
+          ],
+          "sourceLine": 29
+        },
+        {
+          "text": "One day, I noticed that I was feeling more tired than usual, even with my regular workouts and plenty of rest.",
+          "zhHint": "",
+          "keywords": [
+            "One day",
+            "regular workouts",
+            "plenty of rest"
+          ],
+          "sourceLine": 29
+        },
+        {
+          "text": "Concerned about my health, I decided it was time to see a doctor.",
+          "zhHint": "",
+          "keywords": [
+            "see a doctor"
+          ],
+          "sourceLine": 33
+        }
+      ]
+    },
+    {
+      "courseId": "3-48",
+      "chapterNo": 3,
+      "chapter": "健康与健身",
+      "lessonNo": 48,
+      "file": "3第三章：健康与健身/48.医生预约（下）.md",
+      "title": "48.医生预约（下）",
+      "sentences": [
+        "We've been focusing on the doctor's appointments.",
+        "And today, we're going to explore more aspects of this vital topic.",
+        "On the day of the appointment, I arrived at the clinic early."
+      ],
+      "zhHint": "",
+      "keywords": [
+        "doctor's appointments"
+      ],
+      "sourceLine": 23,
+      "items": [
+        {
+          "text": "We've been focusing on the doctor's appointments.",
+          "zhHint": "",
+          "keywords": [
+            "doctor's appointments"
+          ],
+          "sourceLine": 23
+        },
+        {
+          "text": "And today, we're going to explore more aspects of this vital topic.",
+          "zhHint": "",
+          "keywords": [
+            "going to explore",
+            "vital topic"
+          ],
+          "sourceLine": 23
+        },
+        {
+          "text": "On the day of the appointment, I arrived at the clinic early.",
+          "zhHint": "",
+          "keywords": [
+            "clinic early"
+          ],
+          "sourceLine": 35
+        }
+      ]
+    },
+    {
+      "courseId": "3-49",
+      "chapterNo": 3,
+      "chapter": "健康与健身",
+      "lessonNo": 49,
+      "file": "3第三章：健康与健身/49.Y药店.md",
+      "title": "49.Y药店",
+      "sentences": [
+        "Hi, how may I help you?",
+        "I had to give me some medication to eat.",
+        "I'm looking for something to take for my cold."
+      ],
+      "zhHint": "",
+      "keywords": [
+        "help you"
+      ],
+      "sourceLine": 29,
+      "items": [
+        {
+          "text": "Hi, how may I help you?",
+          "zhHint": "",
+          "keywords": [
+            "help you"
+          ],
+          "sourceLine": 29
+        },
+        {
+          "text": "I had to give me some medication to eat.",
+          "zhHint": "",
+          "keywords": [
+            "had to give",
+            "medication to eat"
+          ],
+          "sourceLine": 29
+        },
+        {
+          "text": "I'm looking for something to take for my cold.",
+          "zhHint": "",
+          "keywords": [
+            "looking for"
+          ],
+          "sourceLine": 31
+        }
+      ]
+    },
+    {
+      "courseId": "3-50",
+      "chapterNo": 3,
+      "chapter": "健康与健身",
+      "lessonNo": 50,
+      "file": "3第三章：健康与健身/50.Bonus Time - Kiss and Make up.md",
+      "title": "50.Bonus Time - Kiss and Make up",
+      "sentences": [
+        "Kiss, as a sign of putting their differences aside, and make up, restoring a friendly or harmonious relationship."
+      ],
+      "zhHint": "",
+      "keywords": [
+        "sign of putting",
+        "restoring a friendly",
+        "harmonious relationship"
+      ],
+      "sourceLine": 30,
+      "items": [
+        {
+          "text": "Kiss, as a sign of putting their differences aside, and make up, restoring a friendly or harmonious relationship.",
+          "zhHint": "",
+          "keywords": [
+            "sign of putting",
+            "restoring a friendly",
+            "harmonious relationship"
+          ],
+          "sourceLine": 30
+        }
+      ]
+    },
+    {
+      "courseId": "4-51",
+      "chapterNo": 4,
+      "chapter": "购物与消费",
+      "lessonNo": 51,
+      "file": "4第四章：购物与消费/51.超市购物（上）.md",
+      "title": "51.超市购物（上）",
+      "sentences": [
+        "I go to this supermarket every week to buy groceries.",
+        "I usually make a shopping list before I go.",
+        "I go to the supermarket every week to buy groceries."
+      ],
+      "zhHint": "",
+      "keywords": [
+        "week to buy"
+      ],
+      "sourceLine": 26,
+      "items": [
+        {
+          "text": "I go to this supermarket every week to buy groceries.",
+          "zhHint": "",
+          "keywords": [
+            "week to buy"
+          ],
+          "sourceLine": 26
+        },
+        {
+          "text": "I usually make a shopping list before I go.",
+          "zhHint": "",
+          "keywords": [
+            "usually make",
+            "shopping list before"
+          ],
+          "sourceLine": 26
+        },
+        {
+          "text": "I go to the supermarket every week to buy groceries.",
+          "zhHint": "",
+          "keywords": [
+            "week to buy"
+          ],
+          "sourceLine": 32
+        }
+      ]
+    },
+    {
+      "courseId": "4-52",
+      "chapterNo": 4,
+      "chapter": "购物与消费",
+      "lessonNo": 52,
+      "file": "4第四章：购物与消费/52.超市购物（下）.md",
+      "title": "52.超市购物（下）",
+      "sentences": [
+        "Excuse me, where is the snack section?"
+      ],
+      "zhHint": "",
+      "keywords": [
+        "snack section"
+      ],
+      "sourceLine": 40,
+      "items": [
+        {
+          "text": "Excuse me, where is the snack section?",
+          "zhHint": "",
+          "keywords": [
+            "snack section"
+          ],
+          "sourceLine": 40
+        }
+      ]
+    },
+    {
+      "courseId": "4-53",
+      "chapterNo": 4,
+      "chapter": "购物与消费",
+      "lessonNo": 53,
+      "file": "4第四章：购物与消费/53.Y购物.md",
+      "title": "53.Y购物",
+      "sentences": [
+        "Is this on sale?",
+        "Yes, it's on sale, buy one get one free.",
+        "Can I try this on?"
+      ],
+      "zhHint": "",
+      "keywords": [],
+      "sourceLine": 27,
+      "items": [
+        {
+          "text": "Is this on sale?",
+          "zhHint": "",
+          "keywords": [],
+          "sourceLine": 27
+        },
+        {
+          "text": "Yes, it's on sale, buy one get one free.",
+          "zhHint": "",
+          "keywords": [
+            "buy one",
+            "one free"
+          ],
+          "sourceLine": 27
+        },
+        {
+          "text": "Can I try this on?",
+          "zhHint": "",
+          "keywords": [
+            "try this"
+          ],
+          "sourceLine": 39
+        }
+      ]
+    },
+    {
+      "courseId": "4-54",
+      "chapterNo": 4,
+      "chapter": "购物与消费",
+      "lessonNo": 54,
+      "file": "4第四章：购物与消费/54.退货和换货（上）.md",
+      "title": "54.退货和换货（上）",
+      "sentences": [
+        "Have you ever bought something that didn't work out and needed to return it?",
+        "This doesn't fit me.",
+        "It's not what I expected."
+      ],
+      "zhHint": "",
+      "keywords": [
+        "ever bought",
+        "didn't work",
+        "needed to return"
+      ],
+      "sourceLine": 20,
+      "items": [
+        {
+          "text": "Have you ever bought something that didn't work out and needed to return it?",
+          "zhHint": "",
+          "keywords": [
+            "ever bought",
+            "didn't work",
+            "needed to return"
+          ],
+          "sourceLine": 20
+        },
+        {
+          "text": "This doesn't fit me.",
+          "zhHint": "",
+          "keywords": [
+            "doesn't fit"
+          ],
+          "sourceLine": 32
+        },
+        {
+          "text": "It's not what I expected.",
+          "zhHint": "",
+          "keywords": [],
+          "sourceLine": 32
+        }
+      ]
+    },
+    {
+      "courseId": "4-55",
+      "chapterNo": 4,
+      "chapter": "购物与消费",
+      "lessonNo": 55,
+      "file": "4第四章：购物与消费/55.退货和换货（下）.md",
+      "title": "55.退货和换货（下）",
+      "sentences": [
+        "I'd like to exchange this item.",
+        "It's the wrong size.",
+        "Could I exchange this for a different size?"
+      ],
+      "zhHint": "",
+      "keywords": [
+        "exchange this"
+      ],
+      "sourceLine": 30,
+      "items": [
+        {
+          "text": "I'd like to exchange this item.",
+          "zhHint": "",
+          "keywords": [
+            "exchange this"
+          ],
+          "sourceLine": 30
+        },
+        {
+          "text": "It's the wrong size.",
+          "zhHint": "",
+          "keywords": [
+            "wrong size"
+          ],
+          "sourceLine": 30
+        },
+        {
+          "text": "Could I exchange this for a different size?",
+          "zhHint": "我可以换一个不同尺码的吗？",
+          "keywords": [
+            "different size"
+          ],
+          "sourceLine": 36
+        }
+      ]
+    },
+    {
+      "courseId": "4-56",
+      "chapterNo": 4,
+      "chapter": "购物与消费",
+      "lessonNo": 56,
+      "file": "4第四章：购物与消费/56.Daniel趣味分享.md",
+      "title": "56.Daniel趣味分享",
+      "sentences": [],
+      "zhHint": "",
+      "keywords": [],
+      "sourceLine": 0,
+      "items": []
+    },
+    {
+      "courseId": "4-57",
+      "chapterNo": 4,
+      "chapter": "购物与消费",
+      "lessonNo": 57,
+      "file": "4第四章：购物与消费/57.讨价还价（上）.md",
+      "title": "57.讨价还价（上）",
+      "sentences": [
+        "Can we negotiate the price?",
+        "I think the price is a bit high.",
+        "What is the lowest price you can offer?"
+      ],
+      "zhHint": "",
+      "keywords": [
+        "negotiate the price"
+      ],
+      "sourceLine": 24,
+      "items": [
+        {
+          "text": "Can we negotiate the price?",
+          "zhHint": "",
+          "keywords": [
+            "negotiate the price"
+          ],
+          "sourceLine": 24
+        },
+        {
+          "text": "I think the price is a bit high.",
+          "zhHint": "",
+          "keywords": [
+            "think the price",
+            "bit high"
+          ],
+          "sourceLine": 24
+        },
+        {
+          "text": "What is the lowest price you can offer?",
+          "zhHint": "可以帮助我们试探商家的底线。",
+          "keywords": [
+            "lowest price"
+          ],
+          "sourceLine": 34
+        }
+      ]
+    },
+    {
+      "courseId": "4-58",
+      "chapterNo": 4,
+      "chapter": "购物与消费",
+      "lessonNo": 58,
+      "file": "4第四章：购物与消费/58.讨价还价（下）.md",
+      "title": "58.讨价还价（下）",
+      "sentences": [
+        "Can we make that work?",
+        "I'm looking to spend closer to $40.",
+        "Does that sound reasonable?"
+      ],
+      "zhHint": "",
+      "keywords": [
+        "make that"
+      ],
+      "sourceLine": 28,
+      "items": [
+        {
+          "text": "Can we make that work?",
+          "zhHint": "",
+          "keywords": [
+            "make that"
+          ],
+          "sourceLine": 28
+        },
+        {
+          "text": "I'm looking to spend closer to $40.",
+          "zhHint": "",
+          "keywords": [
+            "looking to spend"
+          ],
+          "sourceLine": 28
+        },
+        {
+          "text": "Does that sound reasonable?",
+          "zhHint": "",
+          "keywords": [
+            "sound reasonable"
+          ],
+          "sourceLine": 38
+        }
+      ]
+    },
+    {
+      "courseId": "4-59",
+      "chapterNo": 4,
+      "chapter": "购物与消费",
+      "lessonNo": 59,
+      "file": "4第四章：购物与消费/59.使用折扣和优惠券（上）.md",
+      "title": "59.使用折扣和优惠券（上）",
+      "sentences": [
+        "Is there a sale going on right now?",
+        "Do you have any discounts available?",
+        "What promotions are currently running?"
+      ],
+      "zhHint": "",
+      "keywords": [
+        "sale going"
+      ],
+      "sourceLine": 25,
+      "items": [
+        {
+          "text": "Is there a sale going on right now?",
+          "zhHint": "",
+          "keywords": [
+            "sale going"
+          ],
+          "sourceLine": 25
+        },
+        {
+          "text": "Do you have any discounts available?",
+          "zhHint": "",
+          "keywords": [
+            "discounts available"
+          ],
+          "sourceLine": 31
+        },
+        {
+          "text": "What promotions are currently running?",
+          "zhHint": "",
+          "keywords": [
+            "currently running"
+          ],
+          "sourceLine": 31
+        }
+      ]
+    },
+    {
+      "courseId": "4-60",
+      "chapterNo": 4,
+      "chapter": "购物与消费",
+      "lessonNo": 60,
+      "file": "4第四章：购物与消费/60.使用折扣和优惠券（下）.md",
+      "title": "60.使用折扣和优惠券（下）",
+      "sentences": [
+        "How much can I save with this code?",
+        "Is this coupon still valid?",
+        "What percentage is the discount?"
+      ],
+      "zhHint": "",
+      "keywords": [
+        "save with"
+      ],
+      "sourceLine": 26,
+      "items": [
+        {
+          "text": "How much can I save with this code?",
+          "zhHint": "",
+          "keywords": [
+            "save with"
+          ],
+          "sourceLine": 26
+        },
+        {
+          "text": "Is this coupon still valid?",
+          "zhHint": "",
+          "keywords": [
+            "coupon still"
+          ],
+          "sourceLine": 26
+        },
+        {
+          "text": "What percentage is the discount?",
+          "zhHint": "",
+          "keywords": [
+            "percentage is"
+          ],
+          "sourceLine": 32
+        }
+      ]
+    },
+    {
+      "courseId": "4-61",
+      "chapterNo": 4,
+      "chapter": "购物与消费",
+      "lessonNo": 61,
+      "file": "4第四章：购物与消费/61.化妆品购物.md",
+      "title": "61.化妆品购物",
+      "sentences": [
+        "Hi, what can I do for you?",
+        "I'm looking for foundation for dry skin.",
+        "What can I do for you?"
+      ],
+      "zhHint": "",
+      "keywords": [],
+      "sourceLine": 26,
+      "items": [
+        {
+          "text": "Hi, what can I do for you?",
+          "zhHint": "",
+          "keywords": [],
+          "sourceLine": 26
+        },
+        {
+          "text": "I'm looking for foundation for dry skin.",
+          "zhHint": "",
+          "keywords": [
+            "looking for foundation",
+            "dry skin"
+          ],
+          "sourceLine": 26
+        },
+        {
+          "text": "What can I do for you?",
+          "zhHint": "",
+          "keywords": [],
+          "sourceLine": 28
+        }
+      ]
+    },
+    {
+      "courseId": "4-62",
+      "chapterNo": 4,
+      "chapter": "购物与消费",
+      "lessonNo": 62,
+      "file": "4第四章：购物与消费/62.购买衣服（上）.md",
+      "title": "62.购买衣服（上）",
+      "sentences": [
+        "Shopping is fun, right?",
+        "I'm looking for a pair of jeans.",
+        "I'm looking for a winter coat."
+      ],
+      "zhHint": "",
+      "keywords": [
+        "Shopping is"
+      ],
+      "sourceLine": 20,
+      "items": [
+        {
+          "text": "Shopping is fun, right?",
+          "zhHint": "",
+          "keywords": [
+            "Shopping is"
+          ],
+          "sourceLine": 20
+        },
+        {
+          "text": "I'm looking for a pair of jeans.",
+          "zhHint": "我在找一条牛仔裤。",
+          "keywords": [
+            "pair of jeans"
+          ],
+          "sourceLine": 28
+        },
+        {
+          "text": "I'm looking for a winter coat.",
+          "zhHint": "我在找一件冬天的外套。",
+          "keywords": [
+            "winter coat"
+          ],
+          "sourceLine": 28
+        }
+      ]
+    },
+    {
+      "courseId": "4-63",
+      "chapterNo": 4,
+      "chapter": "购物与消费",
+      "lessonNo": 63,
+      "file": "4第四章：购物与消费/63.购买衣服（下）.md",
+      "title": "63.购买衣服（下）",
+      "sentences": [
+        "What fabric is this made of?",
+        "How much is this?",
+        "Do you have any other brands for this style?"
+      ],
+      "zhHint": "",
+      "keywords": [
+        "fabric is"
+      ],
+      "sourceLine": 26,
+      "items": [
+        {
+          "text": "What fabric is this made of?",
+          "zhHint": "",
+          "keywords": [
+            "fabric is"
+          ],
+          "sourceLine": 26
+        },
+        {
+          "text": "How much is this?",
+          "zhHint": "",
+          "keywords": [],
+          "sourceLine": 26
+        },
+        {
+          "text": "Do you have any other brands for this style?",
+          "zhHint": "",
+          "keywords": [
+            "brands for"
+          ],
+          "sourceLine": 28
+        }
+      ]
+    },
+    {
+      "courseId": "4-64",
+      "chapterNo": 4,
+      "chapter": "购物与消费",
+      "lessonNo": 64,
+      "file": "4第四章：购物与消费/64.Y丢东西.md",
+      "title": "64.Y丢东西",
+      "sentences": [
+        "Hi, what can I do for you?",
+        "The bag I don't see, I don't see.",
+        "I've lost my passport."
+      ],
+      "zhHint": "",
+      "keywords": [],
+      "sourceLine": 26,
+      "items": [
+        {
+          "text": "Hi, what can I do for you?",
+          "zhHint": "",
+          "keywords": [],
+          "sourceLine": 26
+        },
+        {
+          "text": "The bag I don't see, I don't see.",
+          "zhHint": "",
+          "keywords": [
+            "don't see",
+            "don't see"
+          ],
+          "sourceLine": 26
+        },
+        {
+          "text": "I've lost my passport.",
+          "zhHint": "",
+          "keywords": [
+            "lost my"
+          ],
+          "sourceLine": 30
+        }
+      ]
+    },
+    {
+      "courseId": "4-65",
+      "chapterNo": 4,
+      "chapter": "购物与消费",
+      "lessonNo": 65,
+      "file": "4第四章：购物与消费/65.Daniel趣味分享.md",
+      "title": "65.Daniel趣味分享",
+      "sentences": [
+        "English is full of colorful slang and idioms, such as \"think outside the box\".",
+        "What do you think \"think outside the box\" means?",
+        "It means don't be trapped by the old framework."
+      ],
+      "zhHint": "",
+      "keywords": [
+        "full of colorful slang",
+        "outside the box"
+      ],
+      "sourceLine": 18,
+      "items": [
+        {
+          "text": "English is full of colorful slang and idioms, such as \"think outside the box\".",
+          "zhHint": "",
+          "keywords": [
+            "full of colorful slang",
+            "outside the box"
+          ],
+          "sourceLine": 18
+        },
+        {
+          "text": "What do you think \"think outside the box\" means?",
+          "zhHint": "",
+          "keywords": [
+            "outside the box"
+          ],
+          "sourceLine": 18
+        },
+        {
+          "text": "It means don't be trapped by the old framework.",
+          "zhHint": "",
+          "keywords": [
+            "means don't",
+            "old framework"
+          ],
+          "sourceLine": 22
+        }
+      ]
+    },
+    {
+      "courseId": "5-01",
+      "chapterNo": 5,
+      "chapter": "餐饮与饮食",
+      "lessonNo": 1,
+      "file": "5第五章：餐饮与饮食/01餐馆点餐（上）.md",
+      "title": "01餐馆点餐（上）",
+      "sentences": [
+        "Do you have a reservation?",
+        "Then after we sat down, I asked to see the menu.",
+        "I was having trouble deciding, but finally I told the server, I'd like the grilled chicken please."
+      ],
+      "zhHint": "",
+      "keywords": [
+        "have a reservation"
+      ],
+      "sourceLine": 28,
+      "items": [
+        {
+          "text": "Do you have a reservation?",
+          "zhHint": "",
+          "keywords": [
+            "have a reservation"
+          ],
+          "sourceLine": 28
+        },
+        {
+          "text": "Then after we sat down, I asked to see the menu.",
+          "zhHint": "",
+          "keywords": [
+            "asked to see"
+          ],
+          "sourceLine": 28
+        },
+        {
+          "text": "I was having trouble deciding, but finally I told the server, I'd like the grilled chicken please.",
+          "zhHint": "",
+          "keywords": [
+            "having trouble deciding",
+            "told the server",
+            "grilled chicken"
+          ],
+          "sourceLine": 30
+        }
+      ]
+    },
+    {
+      "courseId": "5-02",
+      "chapterNo": 5,
+      "chapter": "餐饮与饮食",
+      "lessonNo": 2,
+      "file": "5第五章：餐饮与饮食/02餐馆点餐（下）.md",
+      "title": "02餐馆点餐（下）",
+      "sentences": [
+        "The server will ask, Would you like something to drink?",
+        "And you can reply, Yes, I'll have a glass of water please.",
+        "Would you like something to drink?"
+      ],
+      "zhHint": "",
+      "keywords": [
+        "server will"
+      ],
+      "sourceLine": 22,
+      "items": [
+        {
+          "text": "The server will ask, Would you like something to drink?",
+          "zhHint": "",
+          "keywords": [
+            "server will"
+          ],
+          "sourceLine": 22
+        },
+        {
+          "text": "And you can reply, Yes, I'll have a glass of water please.",
+          "zhHint": "",
+          "keywords": [
+            "glass of water"
+          ],
+          "sourceLine": 22
+        },
+        {
+          "text": "Would you like something to drink?",
+          "zhHint": "你需要喝点什么吗？",
+          "keywords": [],
+          "sourceLine": 26
+        }
+      ]
+    },
+    {
+      "courseId": "5-04",
+      "chapterNo": 5,
+      "chapter": "餐饮与饮食",
+      "lessonNo": 4,
+      "file": "5第五章：餐饮与饮食/04烹饪和食谱（上）.md",
+      "title": "04烹饪和食谱（上）",
+      "sentences": [
+        "I'm really excited to continue our English learning journey.",
+        "What's your favorite dish?",
+        "My favorite dish is spaghetti with tomato sauce."
+      ],
+      "zhHint": "",
+      "keywords": [
+        "excited to continue",
+        "English learning journey"
+      ],
+      "sourceLine": 22,
+      "items": [
+        {
+          "text": "I'm really excited to continue our English learning journey.",
+          "zhHint": "",
+          "keywords": [
+            "excited to continue",
+            "English learning journey"
+          ],
+          "sourceLine": 22
+        },
+        {
+          "text": "What's your favorite dish?",
+          "zhHint": "什么是你最喜欢的菜？",
+          "keywords": [
+            "favorite dish"
+          ],
+          "sourceLine": 34
+        },
+        {
+          "text": "My favorite dish is spaghetti with tomato sauce.",
+          "zhHint": "",
+          "keywords": [
+            "favorite dish",
+            "spaghetti with tomato"
+          ],
+          "sourceLine": 34
+        }
+      ]
+    },
+    {
+      "courseId": "5-05",
+      "chapterNo": 5,
+      "chapter": "餐饮与饮食",
+      "lessonNo": 5,
+      "file": "5第五章：餐饮与饮食/05烹饪和食谱（下）.md",
+      "title": "05烹饪和食谱（下）",
+      "sentences": [
+        "After all that, it's time to serve the dish.",
+        "I can't wait to taste it.",
+        "OK, first, mix the flour, sugar, eggs, and butter."
+      ],
+      "zhHint": "",
+      "keywords": [
+        "serve the dish"
+      ],
+      "sourceLine": 35,
+      "items": [
+        {
+          "text": "After all that, it's time to serve the dish.",
+          "zhHint": "",
+          "keywords": [
+            "serve the dish"
+          ],
+          "sourceLine": 35
+        },
+        {
+          "text": "I can't wait to taste it.",
+          "zhHint": "",
+          "keywords": [
+            "can't wait"
+          ],
+          "sourceLine": 35
+        },
+        {
+          "text": "OK, first, mix the flour, sugar, eggs, and butter.",
+          "zhHint": "",
+          "keywords": [
+            "mix the flour"
+          ],
+          "sourceLine": 41
+        }
+      ]
+    },
+    {
+      "courseId": "5-06",
+      "chapterNo": 5,
+      "chapter": "餐饮与饮食",
+      "lessonNo": 6,
+      "file": "5第五章：餐饮与饮食/06面包.md",
+      "title": "06面包",
+      "sentences": [
+        "Hi, what can I get you?",
+        "Sure, they're very healthy.",
+        "What can I get you?"
+      ],
+      "zhHint": "",
+      "keywords": [],
+      "sourceLine": 28,
+      "items": [
+        {
+          "text": "Hi, what can I get you?",
+          "zhHint": "",
+          "keywords": [],
+          "sourceLine": 28
+        },
+        {
+          "text": "Sure, they're very healthy.",
+          "zhHint": "",
+          "keywords": [],
+          "sourceLine": 30
+        },
+        {
+          "text": "What can I get you?",
+          "zhHint": "",
+          "keywords": [],
+          "sourceLine": 34
+        }
+      ]
+    },
+    {
+      "courseId": "5-07",
+      "chapterNo": 5,
+      "chapter": "餐饮与饮食",
+      "lessonNo": 7,
+      "file": "5第五章：餐饮与饮食/07饮食偏好（上）.md",
+      "title": "07饮食偏好（上）",
+      "sentences": [
+        "This means talking about what foods we like, don't like, or choose to eat for health reasons.",
+        "Snow loves salads, pasta and vegetable stir fry.",
+        "I really dislike mushrooms."
+      ],
+      "zhHint": "",
+      "keywords": [
+        "means talking",
+        "choose to eat",
+        "health reasons"
+      ],
+      "sourceLine": 22,
+      "items": [
+        {
+          "text": "This means talking about what foods we like, don't like, or choose to eat for health reasons.",
+          "zhHint": "",
+          "keywords": [
+            "means talking",
+            "choose to eat",
+            "health reasons"
+          ],
+          "sourceLine": 22
+        },
+        {
+          "text": "Snow loves salads, pasta and vegetable stir fry.",
+          "zhHint": "",
+          "keywords": [
+            "Snow loves salads",
+            "vegetable stir fry"
+          ],
+          "sourceLine": 32
+        },
+        {
+          "text": "I really dislike mushrooms.",
+          "zhHint": "",
+          "keywords": [
+            "dislike mushrooms"
+          ],
+          "sourceLine": 32
+        }
+      ]
+    },
+    {
+      "courseId": "5-08",
+      "chapterNo": 5,
+      "chapter": "餐饮与饮食",
+      "lessonNo": 8,
+      "file": "5第五章：餐饮与饮食/08饮食偏好（下）.md",
+      "title": "08饮食偏好（下）",
+      "sentences": [
+        "I love meat, my favorite is steak, especially when it's medium rare.",
+        "I follow a gluten-free diet for health reasons.",
+        "I'm allergic to peanuts, so I avoid foods that might contain them."
+      ],
+      "zhHint": "",
+      "keywords": [
+        "love meat",
+        "medium rare"
+      ],
+      "sourceLine": 30,
+      "items": [
+        {
+          "text": "I love meat, my favorite is steak, especially when it's medium rare.",
+          "zhHint": "",
+          "keywords": [
+            "love meat",
+            "medium rare"
+          ],
+          "sourceLine": 30
+        },
+        {
+          "text": "I follow a gluten-free diet for health reasons.",
+          "zhHint": "",
+          "keywords": [
+            "follow a gluten-free",
+            "health reasons"
+          ],
+          "sourceLine": 30
+        },
+        {
+          "text": "I'm allergic to peanuts, so I avoid foods that might contain them.",
+          "zhHint": "",
+          "keywords": [
+            "allergic to peanuts",
+            "avoid foods"
+          ],
+          "sourceLine": 36
+        }
+      ]
+    },
+    {
+      "courseId": "5-09",
+      "chapterNo": 5,
+      "chapter": "餐饮与饮食",
+      "lessonNo": 9,
+      "file": "5第五章：餐饮与饮食/09国际美食（上）.md",
+      "title": "09国际美食（上）",
+      "sentences": [
+        "I love the flavors of Thai food.",
+        "It's spicy, savory, and full of herbs.",
+        "I've tried traditional Italian dishes like pasta."
+      ],
+      "zhHint": "",
+      "keywords": [
+        "love the flavors",
+        "Thai food"
+      ],
+      "sourceLine": 30,
+      "items": [
+        {
+          "text": "I love the flavors of Thai food.",
+          "zhHint": "",
+          "keywords": [
+            "love the flavors",
+            "Thai food"
+          ],
+          "sourceLine": 30
+        },
+        {
+          "text": "It's spicy, savory, and full of herbs.",
+          "zhHint": "",
+          "keywords": [
+            "full of herbs"
+          ],
+          "sourceLine": 30
+        },
+        {
+          "text": "I've tried traditional Italian dishes like pasta.",
+          "zhHint": "",
+          "keywords": [
+            "traditional Italian dishes"
+          ],
+          "sourceLine": 32
+        }
+      ]
+    },
+    {
+      "courseId": "5-10",
+      "chapterNo": 5,
+      "chapter": "餐饮与饮食",
+      "lessonNo": 10,
+      "file": "5第五章：餐饮与饮食/10国际美食（下）.md",
+      "title": "10国际美食（下）",
+      "sentences": [
+        "Between sweet dishes and savory dishes, I prefer sweet desserts like French pastries.",
+        "I find Chinese cuisine unique.",
+        "This dish is known for its regional spices."
+      ],
+      "zhHint": "",
+      "keywords": [
+        "Between sweet dishes",
+        "prefer sweet desserts",
+        "French pastries"
+      ],
+      "sourceLine": 31,
+      "items": [
+        {
+          "text": "Between sweet dishes and savory dishes, I prefer sweet desserts like French pastries.",
+          "zhHint": "",
+          "keywords": [
+            "Between sweet dishes",
+            "prefer sweet desserts",
+            "French pastries"
+          ],
+          "sourceLine": 31
+        },
+        {
+          "text": "I find Chinese cuisine unique.",
+          "zhHint": "",
+          "keywords": [
+            "Chinese cuisine unique"
+          ],
+          "sourceLine": 31
+        },
+        {
+          "text": "This dish is known for its regional spices.",
+          "zhHint": "",
+          "keywords": [
+            "regional spices"
+          ],
+          "sourceLine": 37
+        }
+      ]
+    },
+    {
+      "courseId": "5-11",
+      "chapterNo": 5,
+      "chapter": "餐饮与饮食",
+      "lessonNo": 11,
+      "file": "5第五章：餐饮与饮食/11西餐厅.md",
+      "title": "11西餐厅",
+      "sentences": [
+        "Would you like a booth or a table?",
+        "A table for one, please.",
+        "A table for two, please."
+      ],
+      "zhHint": "",
+      "keywords": [
+        "booth or"
+      ],
+      "sourceLine": 28,
+      "items": [
+        {
+          "text": "Would you like a booth or a table?",
+          "zhHint": "",
+          "keywords": [
+            "booth or"
+          ],
+          "sourceLine": 28
+        },
+        {
+          "text": "A table for one, please.",
+          "zhHint": "",
+          "keywords": [
+            "table for one"
+          ],
+          "sourceLine": 28
+        },
+        {
+          "text": "A table for two, please.",
+          "zhHint": "",
+          "keywords": [
+            "table for two"
+          ],
+          "sourceLine": 36
+        }
+      ]
+    },
+    {
+      "courseId": "5-12",
+      "chapterNo": 5,
+      "chapter": "餐饮与饮食",
+      "lessonNo": 12,
+      "file": "5第五章：餐饮与饮食/12咖啡馆对话（上）.md",
+      "title": "12咖啡馆对话（上）",
+      "sentences": [
+        "What types of tea do you have?",
+        "What pastries do you have today?",
+        "Can I get a cup of coffee, please?"
+      ],
+      "zhHint": "",
+      "keywords": [
+        "types of tea"
+      ],
+      "sourceLine": 32,
+      "items": [
+        {
+          "text": "What types of tea do you have?",
+          "zhHint": "",
+          "keywords": [
+            "types of tea"
+          ],
+          "sourceLine": 32
+        },
+        {
+          "text": "What pastries do you have today?",
+          "zhHint": "",
+          "keywords": [
+            "have today"
+          ],
+          "sourceLine": 32
+        },
+        {
+          "text": "Can I get a cup of coffee, please?",
+          "zhHint": "我可以点一杯咖啡吗？",
+          "keywords": [
+            "cup of coffee"
+          ],
+          "sourceLine": 42
+        }
+      ]
+    },
+    {
+      "courseId": "5-13",
+      "chapterNo": 5,
+      "chapter": "餐饮与饮食",
+      "lessonNo": 13,
+      "file": "5第五章：餐饮与饮食/13咖啡馆对话（下）.md",
+      "title": "13咖啡馆对话（下）",
+      "sentences": [
+        "I like coffee shops with quiet and relaxing music.",
+        "Can you recommend a tea for me?",
+        "The cafe has a cozy ambiance."
+      ],
+      "zhHint": "",
+      "keywords": [
+        "shops with quiet",
+        "relaxing music"
+      ],
+      "sourceLine": 31,
+      "items": [
+        {
+          "text": "I like coffee shops with quiet and relaxing music.",
+          "zhHint": "",
+          "keywords": [
+            "shops with quiet",
+            "relaxing music"
+          ],
+          "sourceLine": 31
+        },
+        {
+          "text": "Can you recommend a tea for me?",
+          "zhHint": "",
+          "keywords": [
+            "recommend a tea"
+          ],
+          "sourceLine": 31
+        },
+        {
+          "text": "The cafe has a cozy ambiance.",
+          "zhHint": "",
+          "keywords": [
+            "has a cozy"
+          ],
+          "sourceLine": 37
+        }
+      ]
+    },
+    {
+      "courseId": "5-14",
+      "chapterNo": 5,
+      "chapter": "餐饮与饮食",
+      "lessonNo": 14,
+      "file": "5第五章：餐饮与饮食/14星巴克点餐.md",
+      "title": "14星巴克点餐",
+      "sentences": [
+        "What can I get you?",
+        "I'd like a green tea latte, please.",
+        "Would you like to make it hot or iced?"
+      ],
+      "zhHint": "需要点些什么？",
+      "keywords": [],
+      "sourceLine": 30,
+      "items": [
+        {
+          "text": "What can I get you?",
+          "zhHint": "需要点些什么？",
+          "keywords": [],
+          "sourceLine": 30
+        },
+        {
+          "text": "I'd like a green tea latte, please.",
+          "zhHint": "一杯抹茶拿铁，谢谢。",
+          "keywords": [
+            "green tea latte"
+          ],
+          "sourceLine": 34
+        },
+        {
+          "text": "Would you like to make it hot or iced?",
+          "zhHint": "",
+          "keywords": [
+            "make it"
+          ],
+          "sourceLine": 44
+        }
+      ]
+    },
+    {
+      "courseId": "5-15",
+      "chapterNo": 5,
+      "chapter": "餐饮与饮食",
+      "lessonNo": 15,
+      "file": "5第五章：餐饮与饮食/15 Daniel趣味分享.md",
+      "title": "15 Daniel趣味分享",
+      "sentences": [
+        "I fly without wings.",
+        "I cry without eyes.",
+        "If you like it, give me a high five."
+      ],
+      "zhHint": "",
+      "keywords": [
+        "fly without wings"
+      ],
+      "sourceLine": 25,
+      "items": [
+        {
+          "text": "I fly without wings.",
+          "zhHint": "",
+          "keywords": [
+            "fly without wings"
+          ],
+          "sourceLine": 25
+        },
+        {
+          "text": "I cry without eyes.",
+          "zhHint": "",
+          "keywords": [
+            "cry without eyes"
+          ],
+          "sourceLine": 25
+        },
+        {
+          "text": "If you like it, give me a high five.",
+          "zhHint": "",
+          "keywords": [
+            "high five"
+          ],
+          "sourceLine": 33
+        }
+      ]
+    },
+    {
+      "courseId": "5-16",
+      "chapterNo": 5,
+      "chapter": "餐饮与饮食",
+      "lessonNo": 16,
+      "file": "5第五章：餐饮与饮食/16 Daniel趣味分享.md",
+      "title": "16 Daniel趣味分享",
+      "sentences": [
+        "English is full of colorful slang and idioms, such as raining cats and dogs.",
+        "What does it mean?",
+        "The idiom raining cats and dogs means that it is raining extremely heavily."
+      ],
+      "zhHint": "",
+      "keywords": [
+        "full of colorful slang",
+        "raining cats"
+      ],
+      "sourceLine": 21,
+      "items": [
+        {
+          "text": "English is full of colorful slang and idioms, such as raining cats and dogs.",
+          "zhHint": "",
+          "keywords": [
+            "full of colorful slang",
+            "raining cats"
+          ],
+          "sourceLine": 21
+        },
+        {
+          "text": "What does it mean?",
+          "zhHint": "",
+          "keywords": [],
+          "sourceLine": 21
+        },
+        {
+          "text": "The idiom raining cats and dogs means that it is raining extremely heavily.",
+          "zhHint": "",
+          "keywords": [
+            "idiom raining cats",
+            "dogs means",
+            "raining extremely heavily"
+          ],
+          "sourceLine": 25
+        }
+      ]
+    },
+    {
+      "courseId": "6-01",
+      "chapterNo": 6,
+      "chapter": "娱乐与消费",
+      "lessonNo": 1,
+      "file": "6第六章：娱乐与消费/01电影和电视节目（上）.md",
+      "title": "01电影和电视节目（上）",
+      "sentences": [
+        "Who doesn't love a good film or series, right?",
+        "I like action movies.",
+        "What is your favorite color?"
+      ],
+      "zhHint": "",
+      "keywords": [
+        "doesn't love",
+        "good film"
+      ],
+      "sourceLine": 21,
+      "items": [
+        {
+          "text": "Who doesn't love a good film or series, right?",
+          "zhHint": "",
+          "keywords": [
+            "doesn't love",
+            "good film"
+          ],
+          "sourceLine": 21
+        },
+        {
+          "text": "I like action movies.",
+          "zhHint": "",
+          "keywords": [
+            "action movies"
+          ],
+          "sourceLine": 31
+        },
+        {
+          "text": "What is your favorite color?",
+          "zhHint": "你最喜欢的颜色是什么？",
+          "keywords": [
+            "favorite color"
+          ],
+          "sourceLine": 31
+        }
+      ]
+    },
+    {
+      "courseId": "6-02",
+      "chapterNo": 6,
+      "chapter": "娱乐与消费",
+      "lessonNo": 2,
+      "file": "6第六章：娱乐与消费/02电影和电视节目（下）.md",
+      "title": "02电影和电视节目（下）",
+      "sentences": [
+        "Have you seen the latest episode of this show?",
+        "The plot of this series is very interesting.",
+        "Do you like watching TV shows?"
+      ],
+      "zhHint": "",
+      "keywords": [
+        "seen the latest"
+      ],
+      "sourceLine": 27,
+      "items": [
+        {
+          "text": "Have you seen the latest episode of this show?",
+          "zhHint": "",
+          "keywords": [
+            "seen the latest"
+          ],
+          "sourceLine": 27
+        },
+        {
+          "text": "The plot of this series is very interesting.",
+          "zhHint": "",
+          "keywords": [
+            "series is"
+          ],
+          "sourceLine": 27
+        },
+        {
+          "text": "Do you like watching TV shows?",
+          "zhHint": "",
+          "keywords": [
+            "watching TV shows"
+          ],
+          "sourceLine": 35
+        }
+      ]
+    },
+    {
+      "courseId": "6-03",
+      "chapterNo": 6,
+      "chapter": "娱乐与消费",
+      "lessonNo": 3,
+      "file": "6第六章：娱乐与消费/03音乐会和演唱会（上）.md",
+      "title": "03音乐会和演唱会（上）",
+      "sentences": [
+        "I'm so excited to be here with you today.",
+        "Who doesn't love live music, right?",
+        "I find going to concerts to be a great stress reliever."
+      ],
+      "zhHint": "",
+      "keywords": [
+        "excited to"
+      ],
+      "sourceLine": 22,
+      "items": [
+        {
+          "text": "I'm so excited to be here with you today.",
+          "zhHint": "",
+          "keywords": [
+            "excited to"
+          ],
+          "sourceLine": 22
+        },
+        {
+          "text": "Who doesn't love live music, right?",
+          "zhHint": "",
+          "keywords": [
+            "doesn't love",
+            "live music"
+          ],
+          "sourceLine": 22
+        },
+        {
+          "text": "I find going to concerts to be a great stress reliever.",
+          "zhHint": "",
+          "keywords": [
+            "going to concerts",
+            "great stress reliever"
+          ],
+          "sourceLine": 28
+        }
+      ]
+    },
+    {
+      "courseId": "6-04",
+      "chapterNo": 6,
+      "chapter": "娱乐与消费",
+      "lessonNo": 4,
+      "file": "6第六章：娱乐与消费/04音乐会和演唱会（下）.md",
+      "title": "04音乐会和演唱会（下）",
+      "sentences": [
+        "I hope you enjoyed our last lesson about concerts.",
+        "The audience was so excited throughout the concert.",
+        "Everyone cheered loudly when the singer came on stage."
+      ],
+      "zhHint": "",
+      "keywords": [
+        "lesson about concerts"
+      ],
+      "sourceLine": 21,
+      "items": [
+        {
+          "text": "I hope you enjoyed our last lesson about concerts.",
+          "zhHint": "",
+          "keywords": [
+            "lesson about concerts"
+          ],
+          "sourceLine": 21
+        },
+        {
+          "text": "The audience was so excited throughout the concert.",
+          "zhHint": "",
+          "keywords": [
+            "throughout the concert"
+          ],
+          "sourceLine": 27
+        },
+        {
+          "text": "Everyone cheered loudly when the singer came on stage.",
+          "zhHint": "",
+          "keywords": [
+            "Everyone cheered loudly",
+            "came on stage"
+          ],
+          "sourceLine": 27
+        }
+      ]
+    },
+    {
+      "courseId": "6-05",
+      "chapterNo": 6,
+      "chapter": "娱乐与消费",
+      "lessonNo": 5,
+      "file": "6第六章：娱乐与消费/05读书和书评（上）.md",
+      "title": "05读书和书评（上）",
+      "sentences": [
+        "Sure, I love reading novels.",
+        "Right now, I'm reading Dune by Frank Herbert, who is one of my favorite authors.",
+        "It's a sci-fi novel, and I'm really enjoying the story."
+      ],
+      "zhHint": "",
+      "keywords": [
+        "love reading novels"
+      ],
+      "sourceLine": 23,
+      "items": [
+        {
+          "text": "Sure, I love reading novels.",
+          "zhHint": "",
+          "keywords": [
+            "love reading novels"
+          ],
+          "sourceLine": 23
+        },
+        {
+          "text": "Right now, I'm reading Dune by Frank Herbert, who is one of my favorite authors.",
+          "zhHint": "",
+          "keywords": [
+            "reading Dune",
+            "Frank Herbert",
+            "favorite authors"
+          ],
+          "sourceLine": 23
+        },
+        {
+          "text": "It's a sci-fi novel, and I'm really enjoying the story.",
+          "zhHint": "",
+          "keywords": [
+            "sci-fi novel",
+            "enjoying the story"
+          ],
+          "sourceLine": 27
+        }
+      ]
+    },
+    {
+      "courseId": "6-06",
+      "chapterNo": 6,
+      "chapter": "娱乐与消费",
+      "lessonNo": 6,
+      "file": "6第六章：娱乐与消费/06读书和书评（下）.md",
+      "title": "06读书和书评（下）",
+      "sentences": [
+        "It's a pleasure to have you join me for yet another fascinating lesson.",
+        "We reviewed and went over some fundamental texts about books last time.",
+        "The summary of the book intrigued me."
+      ],
+      "zhHint": "",
+      "keywords": [
+        "pleasure to have",
+        "fascinating lesson"
+      ],
+      "sourceLine": 21,
+      "items": [
+        {
+          "text": "It's a pleasure to have you join me for yet another fascinating lesson.",
+          "zhHint": "",
+          "keywords": [
+            "pleasure to have",
+            "fascinating lesson"
+          ],
+          "sourceLine": 21
+        },
+        {
+          "text": "We reviewed and went over some fundamental texts about books last time.",
+          "zhHint": "",
+          "keywords": [
+            "texts about books",
+            "last time"
+          ],
+          "sourceLine": 21
+        },
+        {
+          "text": "The summary of the book intrigued me.",
+          "zhHint": "",
+          "keywords": [
+            "book intrigued"
+          ],
+          "sourceLine": 31
+        }
+      ]
+    },
+    {
+      "courseId": "6-07",
+      "chapterNo": 6,
+      "chapter": "娱乐与消费",
+      "lessonNo": 7,
+      "file": "6第六章：娱乐与消费/07游戏和娱乐（上）.md",
+      "title": "07游戏和娱乐（上）",
+      "sentences": [
+        "Do you like playing games with your family or friends?",
+        "This board game is really challenging.",
+        "This game requires strategy to win."
+      ],
+      "zhHint": "",
+      "keywords": [
+        "playing games"
+      ],
+      "sourceLine": 21,
+      "items": [
+        {
+          "text": "Do you like playing games with your family or friends?",
+          "zhHint": "",
+          "keywords": [
+            "playing games"
+          ],
+          "sourceLine": 21
+        },
+        {
+          "text": "This board game is really challenging.",
+          "zhHint": "",
+          "keywords": [
+            "board game"
+          ],
+          "sourceLine": 27
+        },
+        {
+          "text": "This game requires strategy to win.",
+          "zhHint": "",
+          "keywords": [
+            "game requires strategy"
+          ],
+          "sourceLine": 27
+        }
+      ]
+    },
+    {
+      "courseId": "6-08",
+      "chapterNo": 6,
+      "chapter": "娱乐与消费",
+      "lessonNo": 8,
+      "file": "6第六章：娱乐与消费/08游戏和娱乐（下）.md",
+      "title": "08游戏和娱乐（下）",
+      "sentences": [
+        "Are you a fan of video games?",
+        "Have you played any VR games before?",
+        "Do you like playing video games?"
+      ],
+      "zhHint": "",
+      "keywords": [
+        "fan of video"
+      ],
+      "sourceLine": 21,
+      "items": [
+        {
+          "text": "Are you a fan of video games?",
+          "zhHint": "",
+          "keywords": [
+            "fan of video"
+          ],
+          "sourceLine": 21
+        },
+        {
+          "text": "Have you played any VR games before?",
+          "zhHint": "",
+          "keywords": [
+            "VR games before"
+          ],
+          "sourceLine": 21
+        },
+        {
+          "text": "Do you like playing video games?",
+          "zhHint": "",
+          "keywords": [
+            "playing video games"
+          ],
+          "sourceLine": 27
+        }
+      ]
+    },
+    {
+      "courseId": "6-09",
+      "chapterNo": 6,
+      "chapter": "娱乐与消费",
+      "lessonNo": 9,
+      "file": "6第六章：娱乐与消费/09运动和比赛（上）.md",
+      "title": "09运动和比赛（上）",
+      "sentences": [
+        "Sports are not only fun, but also a great way to stay healthy.",
+        "My favorite sport is basketball.",
+        "What is your favorite sport?"
+      ],
+      "zhHint": "",
+      "keywords": [
+        "great way",
+        "stay healthy"
+      ],
+      "sourceLine": 21,
+      "items": [
+        {
+          "text": "Sports are not only fun, but also a great way to stay healthy.",
+          "zhHint": "",
+          "keywords": [
+            "great way",
+            "stay healthy"
+          ],
+          "sourceLine": 21
+        },
+        {
+          "text": "My favorite sport is basketball.",
+          "zhHint": "",
+          "keywords": [
+            "favorite sport"
+          ],
+          "sourceLine": 31
+        },
+        {
+          "text": "What is your favorite sport?",
+          "zhHint": "",
+          "keywords": [
+            "favorite sport"
+          ],
+          "sourceLine": 31
+        }
+      ]
+    },
+    {
+      "courseId": "6-10",
+      "chapterNo": 6,
+      "chapter": "娱乐与消费",
+      "lessonNo": 10,
+      "file": "6第六章：娱乐与消费/10运动和比赛（下）.md",
+      "title": "10运动和比赛（下）",
+      "sentences": [
+        "Have you ever watched a live table tennis match?",
+        "The World Table Tennis Championships is one of the most prestigious events in the sport.",
+        "The World Table Tennis Championships is the most prestigious event in the sport."
+      ],
+      "zhHint": "",
+      "keywords": [
+        "watched a live",
+        "table tennis"
+      ],
+      "sourceLine": 28,
+      "items": [
+        {
+          "text": "Have you ever watched a live table tennis match?",
+          "zhHint": "",
+          "keywords": [
+            "watched a live",
+            "table tennis"
+          ],
+          "sourceLine": 28
+        },
+        {
+          "text": "The World Table Tennis Championships is one of the most prestigious events in the sport.",
+          "zhHint": "",
+          "keywords": [
+            "Table Tennis Championships",
+            "prestigious events"
+          ],
+          "sourceLine": 34
+        },
+        {
+          "text": "The World Table Tennis Championships is the most prestigious event in the sport.",
+          "zhHint": "",
+          "keywords": [
+            "Table Tennis Championships",
+            "prestigious event"
+          ],
+          "sourceLine": 34
+        }
+      ]
+    },
+    {
+      "courseId": "6-11",
+      "chapterNo": 6,
+      "chapter": "娱乐与消费",
+      "lessonNo": 11,
+      "file": "6第六章：娱乐与消费/11 Daniel趣味分享.md",
+      "title": "11 Daniel趣味分享",
+      "sentences": [
+        "Alright, here comes a brand new riddle.",
+        "What is the smallest room in the world?",
+        "If you like it, give me a high five."
+      ],
+      "zhHint": "",
+      "keywords": [
+        "brand new"
+      ],
+      "sourceLine": 21,
+      "items": [
+        {
+          "text": "Alright, here comes a brand new riddle.",
+          "zhHint": "",
+          "keywords": [
+            "brand new"
+          ],
+          "sourceLine": 21
+        },
+        {
+          "text": "What is the smallest room in the world?",
+          "zhHint": "",
+          "keywords": [
+            "smallest room"
+          ],
+          "sourceLine": 21
+        },
+        {
+          "text": "If you like it, give me a high five.",
+          "zhHint": "",
+          "keywords": [
+            "high five"
+          ],
+          "sourceLine": 29
+        }
+      ]
+    },
+    {
+      "courseId": "6-12",
+      "chapterNo": 6,
+      "chapter": "娱乐与消费",
+      "lessonNo": 12,
+      "file": "6第六章：娱乐与消费/12 Daniel趣味分享.md",
+      "title": "12 Daniel趣味分享",
+      "sentences": [],
+      "zhHint": "",
+      "keywords": [],
+      "sourceLine": 0,
+      "items": []
+    },
+    {
+      "courseId": "7-01",
+      "chapterNo": 7,
+      "chapter": "职业与工作",
+      "lessonNo": 1,
+      "file": "7第七章：职业与工作/01职业规划（上）.md",
+      "title": "01职业规划（上）",
+      "sentences": [
+        "Sure, career planning is really important to me.",
+        "I have a clear career plan for the next five years.",
+        "My career plan is to find a job in a big company and gain experience."
+      ],
+      "zhHint": "",
+      "keywords": [
+        "career planning"
+      ],
+      "sourceLine": 25,
+      "items": [
+        {
+          "text": "Sure, career planning is really important to me.",
+          "zhHint": "",
+          "keywords": [
+            "career planning"
+          ],
+          "sourceLine": 25
+        },
+        {
+          "text": "I have a clear career plan for the next five years.",
+          "zhHint": "",
+          "keywords": [
+            "clear career plan",
+            "next five years"
+          ],
+          "sourceLine": 25
+        },
+        {
+          "text": "My career plan is to find a job in a big company and gain experience.",
+          "zhHint": "",
+          "keywords": [
+            "career plan",
+            "find a job",
+            "gain experience"
+          ],
+          "sourceLine": 33
+        }
+      ]
+    },
+    {
+      "courseId": "7-02",
+      "chapterNo": 7,
+      "chapter": "职业与工作",
+      "lessonNo": 2,
+      "file": "7第七章：职业与工作/02职业规划（下）.md",
+      "title": "02职业规划（下）",
+      "sentences": [
+        "In the future, I want to lead a great team and inspire people.",
+        "Developing new skills is vital for career advancement."
+      ],
+      "zhHint": "",
+      "keywords": [
+        "want to lead",
+        "great team",
+        "inspire people"
+      ],
+      "sourceLine": 27,
+      "items": [
+        {
+          "text": "In the future, I want to lead a great team and inspire people.",
+          "zhHint": "",
+          "keywords": [
+            "want to lead",
+            "great team",
+            "inspire people"
+          ],
+          "sourceLine": 27
+        },
+        {
+          "text": "Developing new skills is vital for career advancement.",
+          "zhHint": "技能提升是职业发展的重要部分。",
+          "keywords": [
+            "Developing new skills",
+            "vital for career"
+          ],
+          "sourceLine": 31
+        }
+      ]
+    },
+    {
+      "courseId": "7-03",
+      "chapterNo": 7,
+      "chapter": "职业与工作",
+      "lessonNo": 3,
+      "file": "7第七章：职业与工作/03工作面试（上）.md",
+      "title": "03工作面试（上）",
+      "sentences": [
+        "We all know that interviews are really important for getting a good job.",
+        "I prepared my resume for the interview.",
+        "The company is looking for qualified candidates for this position."
+      ],
+      "zhHint": "",
+      "keywords": [
+        "important for getting",
+        "good job"
+      ],
+      "sourceLine": 21,
+      "items": [
+        {
+          "text": "We all know that interviews are really important for getting a good job.",
+          "zhHint": "",
+          "keywords": [
+            "important for getting",
+            "good job"
+          ],
+          "sourceLine": 21
+        },
+        {
+          "text": "I prepared my resume for the interview.",
+          "zhHint": "",
+          "keywords": [
+            "resume for"
+          ],
+          "sourceLine": 29
+        },
+        {
+          "text": "The company is looking for qualified candidates for this position.",
+          "zhHint": "",
+          "keywords": [
+            "looking for qualified"
+          ],
+          "sourceLine": 29
+        }
+      ]
+    },
+    {
+      "courseId": "7-04",
+      "chapterNo": 7,
+      "chapter": "职业与工作",
+      "lessonNo": 4,
+      "file": "7第七章：职业与工作/04工作面试（下）.md",
+      "title": "04工作面试（下）",
+      "sentences": [
+        "In today's class, we'll continue learning about job interviews.",
+        "Ok, knowing that your job interview is coming soon, you might feel both excited and nervous.",
+        "To feel more confident, you should have some interview skills."
+      ],
+      "zhHint": "",
+      "keywords": [
+        "today's class",
+        "learning about job"
+      ],
+      "sourceLine": 21,
+      "items": [
+        {
+          "text": "In today's class, we'll continue learning about job interviews.",
+          "zhHint": "",
+          "keywords": [
+            "today's class",
+            "learning about job"
+          ],
+          "sourceLine": 21
+        },
+        {
+          "text": "Ok, knowing that your job interview is coming soon, you might feel both excited and nervous.",
+          "zhHint": "",
+          "keywords": [
+            "job interview",
+            "coming soon"
+          ],
+          "sourceLine": 25
+        },
+        {
+          "text": "To feel more confident, you should have some interview skills.",
+          "zhHint": "",
+          "keywords": [
+            "interview skills"
+          ],
+          "sourceLine": 25
+        }
+      ]
+    },
+    {
+      "courseId": "7-05",
+      "chapterNo": 7,
+      "chapter": "职业与工作",
+      "lessonNo": 5,
+      "file": "7第七章：职业与工作/05工作职责（上）.md",
+      "title": "05工作职责（上）",
+      "sentences": [
+        "My position is a teacher and my role is to educate and inspire students."
+      ],
+      "zhHint": "",
+      "keywords": [
+        "inspire students"
+      ],
+      "sourceLine": 34,
+      "items": [
+        {
+          "text": "My position is a teacher and my role is to educate and inspire students.",
+          "zhHint": "",
+          "keywords": [
+            "inspire students"
+          ],
+          "sourceLine": 34
+        }
+      ]
+    },
+    {
+      "courseId": "7-07",
+      "chapterNo": 7,
+      "chapter": "职业与工作",
+      "lessonNo": 7,
+      "file": "7第七章：职业与工作/07工作中的挑战（上）.md",
+      "title": "07工作中的挑战（上）",
+      "sentences": [
+        "Understanding how to describe challenges and pressures in your job is an important skill.",
+        "A common issue at work is a tight deadline.",
+        "I sometimes face difficulties when learning new software."
+      ],
+      "zhHint": "",
+      "keywords": [
+        "describe challenges",
+        "important skill"
+      ],
+      "sourceLine": 21,
+      "items": [
+        {
+          "text": "Understanding how to describe challenges and pressures in your job is an important skill.",
+          "zhHint": "",
+          "keywords": [
+            "describe challenges",
+            "important skill"
+          ],
+          "sourceLine": 21
+        },
+        {
+          "text": "A common issue at work is a tight deadline.",
+          "zhHint": "",
+          "keywords": [
+            "issue at work",
+            "tight deadline"
+          ],
+          "sourceLine": 25
+        },
+        {
+          "text": "I sometimes face difficulties when learning new software.",
+          "zhHint": "",
+          "keywords": [
+            "sometimes face difficulties",
+            "learning new software"
+          ],
+          "sourceLine": 25
+        }
+      ]
+    },
+    {
+      "courseId": "7-08",
+      "chapterNo": 7,
+      "chapter": "职业与工作",
+      "lessonNo": 8,
+      "file": "7第七章：职业与工作/08工作中的挑战（下）.md",
+      "title": "08工作中的挑战（下）",
+      "sentences": [
+        "Problem solving refers to finding solutions to challenges or difficulties.",
+        "It's a key skill in the workplace.",
+        "What strategies do you use for problem solving?"
+      ],
+      "zhHint": "",
+      "keywords": [
+        "Problem solving refers",
+        "solutions to challenges"
+      ],
+      "sourceLine": 30,
+      "items": [
+        {
+          "text": "Problem solving refers to finding solutions to challenges or difficulties.",
+          "zhHint": "",
+          "keywords": [
+            "Problem solving refers",
+            "solutions to challenges"
+          ],
+          "sourceLine": 30
+        },
+        {
+          "text": "It's a key skill in the workplace.",
+          "zhHint": "",
+          "keywords": [
+            "key skill"
+          ],
+          "sourceLine": 30
+        },
+        {
+          "text": "What strategies do you use for problem solving?",
+          "zhHint": "",
+          "keywords": [
+            "use for problem"
+          ],
+          "sourceLine": 34
+        }
+      ]
+    },
+    {
+      "courseId": "7-09",
+      "chapterNo": 7,
+      "chapter": "职业与工作",
+      "lessonNo": 9,
+      "file": "7第七章：职业与工作/09工作目标（上）.md",
+      "title": "09工作目标（上）",
+      "sentences": [
+        "Understanding how to set, describe and achieve your goals at work is an important skill.",
+        "Our target for this quarter is to increase sales by 15%."
+      ],
+      "zhHint": "",
+      "keywords": [
+        "goals at work",
+        "important skill"
+      ],
+      "sourceLine": 21,
+      "items": [
+        {
+          "text": "Understanding how to set, describe and achieve your goals at work is an important skill.",
+          "zhHint": "",
+          "keywords": [
+            "goals at work",
+            "important skill"
+          ],
+          "sourceLine": 21
+        },
+        {
+          "text": "Our target for this quarter is to increase sales by 15%.",
+          "zhHint": "",
+          "keywords": [
+            "increase sales"
+          ],
+          "sourceLine": 37
+        }
+      ]
+    },
+    {
+      "courseId": "7-10",
+      "chapterNo": 7,
+      "chapter": "职业与工作",
+      "lessonNo": 10,
+      "file": "7第七章：职业与工作/10工作目标（下）.md",
+      "title": "10工作目标（下）",
+      "sentences": [
+        "Tracking progress is important to accomplish goals.",
+        "What progress have you made so far?",
+        "I have achieved most of my work goals."
+      ],
+      "zhHint": "",
+      "keywords": [
+        "Tracking progress",
+        "important to accomplish"
+      ],
+      "sourceLine": 28,
+      "items": [
+        {
+          "text": "Tracking progress is important to accomplish goals.",
+          "zhHint": "",
+          "keywords": [
+            "Tracking progress",
+            "important to accomplish"
+          ],
+          "sourceLine": 28
+        },
+        {
+          "text": "What progress have you made so far?",
+          "zhHint": "",
+          "keywords": [
+            "progress have"
+          ],
+          "sourceLine": 36
+        },
+        {
+          "text": "I have achieved most of my work goals.",
+          "zhHint": "",
+          "keywords": [
+            "have achieved",
+            "work goals"
+          ],
+          "sourceLine": 36
+        }
+      ]
+    },
+    {
+      "courseId": "7-11",
+      "chapterNo": 7,
+      "chapter": "职业与工作",
+      "lessonNo": 11,
+      "file": "7第七章：职业与工作/11 Daniel趣味分享.md",
+      "title": "11 Daniel趣味分享",
+      "sentences": [
+        "What gets wet while drying?",
+        "As it dries other things or people, while absorbing water, it gets wetter.",
+        "The towel itself gets wetter when it dries something else."
+      ],
+      "zhHint": "",
+      "keywords": [
+        "wet while drying"
+      ],
+      "sourceLine": 22,
+      "items": [
+        {
+          "text": "What gets wet while drying?",
+          "zhHint": "",
+          "keywords": [
+            "wet while drying"
+          ],
+          "sourceLine": 22
+        },
+        {
+          "text": "As it dries other things or people, while absorbing water, it gets wetter.",
+          "zhHint": "",
+          "keywords": [
+            "while absorbing water",
+            "gets wetter"
+          ],
+          "sourceLine": 26
+        },
+        {
+          "text": "The towel itself gets wetter when it dries something else.",
+          "zhHint": "",
+          "keywords": [
+            "itself gets wetter"
+          ],
+          "sourceLine": 30
+        }
+      ]
+    },
+    {
+      "courseId": "7-12",
+      "chapterNo": 7,
+      "chapter": "职业与工作",
+      "lessonNo": 12,
+      "file": "7第七章：职业与工作/12 Daniel趣味分享.md",
+      "title": "12 Daniel趣味分享",
+      "sentences": [
+        "English is full of colorful slang and idioms.",
+        "What does it usually mean to hit the books?",
+        "It means study hard."
+      ],
+      "zhHint": "",
+      "keywords": [
+        "full of colorful slang"
+      ],
+      "sourceLine": 22,
+      "items": [
+        {
+          "text": "English is full of colorful slang and idioms.",
+          "zhHint": "",
+          "keywords": [
+            "full of colorful slang"
+          ],
+          "sourceLine": 22
+        },
+        {
+          "text": "What does it usually mean to hit the books?",
+          "zhHint": "",
+          "keywords": [
+            "usually mean",
+            "hit the books"
+          ],
+          "sourceLine": 22
+        },
+        {
+          "text": "It means study hard.",
+          "zhHint": "",
+          "keywords": [
+            "means study hard"
+          ],
+          "sourceLine": 26
+        }
+      ]
+    }
+  ]
+}

@@ -24,6 +24,12 @@ tasks.register("copyWebAssets") {
         copy { from new File(webRoot, "index.html"); into v12 }
         copy { from new File(gatewayRoot, "profile-sync.js"); into v12 }
         copy { from new File(webRoot, "source/places-115.json"); into seed }
+        // N08：课程只读索引由页面 /v12/n08-course-index.json 读取（缺失时不生成假课程）
+        def n08Index = new File(webRoot, "source/n08-course-index.json")
+        if (n08Index.exists()) {
+            inputs.file(n08Index)
+            copy { from n08Index; into v12 }
+        }
         // V1.7：公开 115 地点图片离线（约 54MB；构建时复制，APK 会变大）。
         if (imagesRoot.exists()) {
             copy { from imagesRoot; into new File(generatedAssets, "img") }
