@@ -737,9 +737,9 @@ body.sm-immersive .chatv15.v152{height:calc(100vh - 12px - 56px - env(safe-area-
 </style><style id="n08-style">
 .n08wrap{display:flex;flex-direction:column;gap:10px}
 .n08acts{display:flex;gap:8px}
-.topactions.n08ops{display:flex;gap:6px;align-items:center;flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;padding:2px 8px;scrollbar-width:none}
+.topactions.n08ops{display:flex;gap:6px;align-items:center;flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;padding:2px 14px 2px 8px;scrollbar-width:none}
 .topactions.n08ops::-webkit-scrollbar{display:none}
-.n08top{flex:0 0 auto;min-height:34px;padding:0 11px;border-radius:9px;border:1px solid var(--pine);background:var(--paper);color:var(--pine);font-size:15px;font-weight:800;white-space:nowrap}
+.n08top{flex:0 0 auto;min-height:34px;padding:0 10px;border-radius:9px;border:1px solid var(--pine);background:var(--paper);color:var(--pine);font-size:15px;font-weight:800;white-space:nowrap}
 .n08top.on{background:var(--pine);color:#fff}
 header.top.exprmode{height:auto;min-height:0;padding:4px 8px}
 header.top.exprmode h1,header.top.exprmode .sup,header.top.exprmode .right{display:none!important}
@@ -2390,7 +2390,7 @@ function n08Item(id){return (S.n08.items||[]).find(x=>x.id===id)}
 function n08Add(o){
   n08Ensure();
   const en=String(o.en||'').trim(),zh=String(o.zh||'').trim();
-  if(!en||!zh)return null;
+  if(!en)return null;
   const norm=n08Norm(en);
   const hit=S.n08.items.find(x=>n08Norm(x.en)===norm);
   if(hit){hit.count=(hit.count||1)+1;hit.lastAt=Date.now();hit.zh=hit.zh||zh;if(o.phraseEn&&!hit.phraseEn){hit.phraseEn=o.phraseEn;hit.phraseZh=o.phraseZh||''}n08Save();return hit}
@@ -2431,7 +2431,7 @@ function n08ItemHtml(x){
     <div class="n08line">
       <button type="button" class="n08pick" data-n08="pick" data-id="${esc(x.id)}" aria-pressed="${sel?'true':'false'}">${sel?'✓':'○'}</button>
       <div class="n08body">
-        <p class="n08zh">${esc(x.zh)}</p>
+        ${x.zh?`<p class="n08zh">${esc(x.zh)}</p>`:''}
         <p class="n08en" lang="en">${esc(x.en)}</p>
         ${x.phraseEn?`<div class="n08phrase">词组：${esc(x.phraseZh||'')} · ${esc(x.phraseEn)}</div>`:''}
         <div class="n08meta">${esc(x.source==='course'?'课程':'随手')} · 查/用 ${x.count||1} 次${x.placeId?' · 地点':''}</div>
@@ -2565,8 +2565,10 @@ function n08LoadCourses(){
   if(S.n08.courses)return;
   fetch('/v12/n08-course-index.json',{cache:'no-store'}).then(r=>r.ok?r.json():null).then(d=>{
     if(!d||!Array.isArray(d.courses))return;
-    const chapters={};d.courses.forEach(x=>{(chapters[x.chapter]=chapters[x.chapter]||[]).push(x)});
-    S.n08.courses={courses:d.courses,chapters};
+    // 用户 2026-11-16 明确要求：Bonus Time 课全部不显示、不加入复习卡
+    const kept=d.courses.filter(x=>!/bonus\s*time/i.test(String(x.title||'')+' '+String(x.file||'')));
+    const chapters={};kept.forEach(x=>{(chapters[x.chapter]=chapters[x.chapter]||[]).push(x)});
+    S.n08.courses={courses:kept,chapters,total:d.courses.length,excluded:d.courses.length-kept.length};
     if(S.tab==='expr')render();
   }).catch(()=>{});
 }
@@ -2701,8 +2703,12 @@ document.addEventListener('click',function(e){
   if(a==='courses'){st.view='courses';n08LoadCourses();render();return}
   if(a==='back'){st.view='list';render();return}
   if(a==='make-card'){const id=t.dataset.id;const c=st.courses&&(st.courses.courses||[]).find(x=>x.courseId===id);if(!c){n08Toast('课程未加载');return}
-    let n=0;(c.sentences||[]).forEach((s,i)=>{if(n08Add({zh:(c.zhHints&&c.zhHints[i])||'',en:s,phraseZh:c.keywords&&c.keywords[0]||'',phraseEn:'',source:'course',courseId:id}))n++});
-    n08Toast(n?'已转 '+n+' 条复习卡':'该课没有可提取的英文句子');return}
+    const list=Array.isArray(c.items)&&c.items.length?c.items:(c.sentences||[]).map(x=>({text:x,zhHint:typeof c.zhHint==='string'?c.zhHint:'',keywords:c.keywords||[]}));
+    let n=0,dup=0;
+    list.forEach(it=>{const r=n08Add({zh:it.zhHint||'',en:it.text,phraseZh:'',phraseEn:(it.keywords&&it.keywords[0])||'',source:'course',courseId:id});if(r){if(r.count>1)dup++;else n++}});
+    n08Save();
+    n08Toast(n?('已转 '+n+' 条复习卡'+(dup?'，'+dup+' 条已存在只累加次数':'')):'该课没有可提取的英文句子');
+    return}
   if(a==='speak'){const it=n08Item(t.dataset.id);if(!it)return;try{if(window.SocialMateAndroid&&window.SocialMateAndroid.speak)window.SocialMateAndroid.speak(it.en,'en');else n08Toast('当前环境不支持朗读')}catch(err){n08Toast('朗读失败')}return}
 });
 document.addEventListener('input',function(e){
