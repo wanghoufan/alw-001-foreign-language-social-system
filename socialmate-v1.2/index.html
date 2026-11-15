@@ -737,6 +737,13 @@ body.sm-immersive .chatv15.v152{height:calc(100vh - 12px - 56px - env(safe-area-
 </style><style id="n08-style">
 .n08wrap{display:flex;flex-direction:column;gap:10px}
 .n08acts{display:flex;gap:8px}
+.topactions.n08ops{display:flex;gap:6px;align-items:center;flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;padding:2px 8px;scrollbar-width:none}
+.topactions.n08ops::-webkit-scrollbar{display:none}
+.n08top{flex:0 0 auto;min-height:34px;padding:0 11px;border-radius:9px;border:1px solid var(--pine);background:var(--paper);color:var(--pine);font-size:15px;font-weight:800;white-space:nowrap}
+.n08top.on{background:var(--pine);color:#fff}
+header.top.exprmode{height:auto;min-height:0;padding:4px 8px}
+header.top.exprmode h1,header.top.exprmode .sup,header.top.exprmode .right{display:none!important}
+header.top.exprmode #topActions{flex:1 1 auto;min-width:0}
 .n08act{flex:1 1 0;min-height:46px;border-radius:12px;border:1px solid var(--pine);background:var(--soft);color:var(--pine);font-weight:800;font-size:17px}
 .n08wk{flex:1 1 0;min-height:42px;border-radius:12px;border:1px solid var(--stroke);background:var(--paper);color:var(--ink);font-weight:700;font-size:16px}
 .n08search{margin:0;width:100%}
@@ -2314,9 +2321,12 @@ function renderTopActions(){
  const host=$('#topActions');if(!host)return;
  const header=host.closest('header');
  if(header)header.classList.toggle('chatmode',S.tab==='chat');
+ if(header)header.classList.toggle('exprmode',S.tab==='expr');
  host.classList.toggle('chatops',S.tab==='chat');
+ host.classList.toggle('n08ops',S.tab==='expr');
  host.innerHTML='';
  if(S.tab==='chat'){host.innerHTML=chatTopBar();return}
+ if(S.tab==='expr'){host.innerHTML=n08TopBar();return}
  if(!['topics','hainan','self','people'].includes(S.tab))return;
  const content=$('#content');if(!content)return;
  const rows=[...content.querySelectorAll('.searchrow')];
@@ -2327,6 +2337,15 @@ function renderTopActions(){
 }
 
 /* ===================== N08「表达」Tab ===================== */
+function n08TopBar(){
+  const st=n08Ensure();
+  const learnedN=Object.keys(st.learned||{}).filter(k=>st.learned[k]).length;
+  return `<button type="button" class="n08top" data-n08="compose" data-kind="zh">说中文</button>
+  <button type="button" class="n08top" data-n08="compose" data-kind="en">查英文</button>
+  <button type="button" class="n08top" data-n08="compose" data-kind="batch">粘贴</button>
+  <button type="button" class="n08top${st.pack?' on':''}" data-n08="week">本周${st.pack?' ✓':''}</button>
+  <button type="button" class="n08top" data-n08="courses">课程${learnedN?' '+learnedN:''}</button>`;
+}
 const N08_LS='sm.n08.v1';
 function n08Ensure(){
   if(S.n08)return S.n08;
@@ -2432,15 +2451,6 @@ function expr(){
   const list=n08Filtered();
   const learnedN=Object.keys(st.learned||{}).filter(k=>st.learned[k]).length;
   return `<div class="n08wrap">
-   <div class="n08acts">
-     <button type="button" class="n08act" data-n08="compose" data-kind="zh">说中文</button>
-     <button type="button" class="n08act" data-n08="compose" data-kind="en">查英文</button>
-     <button type="button" class="n08act" data-n08="compose" data-kind="batch">批量粘贴</button>
-   </div>
-   <div class="n08acts">
-     <button type="button" class="n08wk" data-n08="week">本周巩固${st.pack?' · 已生成':''}</button>
-     <button type="button" class="n08wk" data-n08="courses">课程 ${learnedN} 已学</button>
-   </div>
    ${st.sheet==='week'?n08WeekSheet():''}
    ${st.sheet==='place'?n08PlaceSheet():''}
    ${st.composer?n08Composer(st.composer):''}
