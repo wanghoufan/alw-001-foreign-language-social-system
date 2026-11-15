@@ -51,7 +51,9 @@ public final class LocalServer {
     private static final String ASSET_PAGE = "v12/index.html";
     private static final String ASSET_PROFILE_SYNC = "v12/profile-sync.js";
     private static final String ASSET_N08_INDEX = "v12/n08-course-index.json";
+    private static final String ASSET_N08_WEEKLY = "v12/n08-weekly.js";
     private byte[] n08IndexCache;
+    private byte[] n08WeeklyCache;
 
     private final Context appContext;
     private final LocalStore store;
@@ -222,6 +224,10 @@ public final class LocalServer {
 
         if ("GET".equals(method) && (path.equals("/v12") || path.equals("/v12/") || path.equals("/v12/index.html"))) {
             writeBytes(out, 200, "text/html; charset=utf-8", pageBytes(), false);
+            return;
+        }
+        if ("GET".equals(method) && (path.equals("/v12/n08-weekly.js") || path.equals("/n08-weekly.js"))) {
+            writeBytes(out, 200, "application/javascript; charset=utf-8", n08WeeklyBytes(), true);
             return;
         }
         if ("GET".equals(method) && (path.equals("/v12/n08-course-index.json") || path.equals("/n08-course-index.json"))) {
@@ -707,6 +713,11 @@ public final class LocalServer {
     private byte[] pageBytes() {
         if (pageCache == null) pageCache = readAsset(ASSET_PAGE);
         return pageCache;
+    }
+
+    private byte[] n08WeeklyBytes() {
+        if (n08WeeklyCache == null) n08WeeklyCache = readAsset(ASSET_N08_WEEKLY);
+        return n08WeeklyCache;
     }
 
     private byte[] n08IndexBytes() {
