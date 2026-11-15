@@ -464,10 +464,10 @@ html[data-theme=dark] .n05ttsstate[data-state=paused]{background:#3d3220;color:#
 @media(max-width:700px){.chatv15.v152{height:calc(100vh - 200px)}}
 @supports(height:100dvh){.chatv15.v152{height:calc(100dvh - 194px)}@media(max-width:700px){.chatv15.v152{height:calc(100dvh - 200px)}}}
 .v152person{flex:0 0 auto;display:flex;align-items:center}
-.v152avatar{width:44px;height:44px;min-width:44px;border-radius:50%;border:1px solid var(--stroke);background:var(--paper);color:var(--muted);display:grid;place-items:center;padding:0;flex:0 0 auto}
+.v152avatar{width:36px;height:36px;min-width:36px;border-radius:50%;border:1px solid var(--stroke);background:var(--paper);color:var(--muted);display:grid;place-items:center;padding:0;flex:0 0 auto}
 .v152avatar.on{border-color:var(--pine);background:var(--soft);color:var(--pine)}
 .v152avatarch{font-size:19px;font-weight:800;line-height:1}
-.v152state{display:inline-flex;align-items:center;gap:5px;background:var(--soft);color:var(--pine);border-radius:999px;padding:5px 9px;font-size:15px;font-weight:800;white-space:nowrap;flex:0 1 auto;min-width:0;max-width:34vw;overflow:hidden}
+.v152state{display:inline-flex;align-items:center;gap:5px;background:var(--soft);color:var(--pine);border-radius:999px;padding:3px 8px;font-size:15px;font-weight:800;white-space:nowrap;flex:0 1 auto;min-width:0;max-width:34vw;overflow:hidden}
 .v152state b{font-weight:800;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .v152state i{width:7px;height:7px;border-radius:50%;background:#2f9e6a;flex:0 0 auto}
 .v152state[data-state="reconnecting"] i,.v152state[data-state="connecting"] i{background:var(--amber,#a35d18)}
@@ -480,30 +480,30 @@ html[data-theme=dark] .n05ttsstate[data-state=paused]{background:#3d3220;color:#
 .topactions.chatops{gap:6px;overflow:hidden;align-items:center;flex-wrap:nowrap}
 .topactions.chatops .v152person{flex:0 0 auto}
 .topactions.chatops .v152state{flex:0 1 auto;min-width:0;max-width:30vw;font-size:15px}
-.topactions.chatops .v152enbtn,.topactions.chatops .v152start,.topactions.chatops .v152stop,.topactions.chatops .v152pause{min-height:44px;border:1px solid var(--pine);border-radius:11px;font-size:15px;font-weight:800;padding:0 11px;flex:0 0 auto;white-space:nowrap;background:var(--pine);color:#fff}
+.topactions.chatops .v152enbtn,.topactions.chatops .v152start,.topactions.chatops .v152stop,.topactions.chatops .v152pause{min-height:34px;border:1px solid var(--pine);border-radius:9px;font-size:15px;font-weight:800;padding:0 10px;flex:0 0 auto;white-space:nowrap;background:var(--pine);color:#fff}
 .topactions.chatops .v152enbtn{background:var(--paper);color:var(--pine)}
 .topactions.chatops .v152pause{border-color:var(--amber,#a35d18);background:var(--amber,#a35d18)}
-.topactions.chatops .v152end{min-height:44px;border:1px solid var(--danger);border-radius:11px;font-size:15px;font-weight:800;padding:0 11px;flex:0 0 auto;white-space:nowrap;background:var(--danger-soft);color:var(--danger)}
-.topactions.chatops .v152more{min-width:44px;min-height:44px}
-header.top.chatmode{gap:6px;padding:5px 12px}
+.topactions.chatops .v152end{min-height:34px;border:1px solid var(--danger);border-radius:9px;font-size:15px;font-weight:800;padding:0 10px;flex:0 0 auto;white-space:nowrap;background:var(--danger-soft);color:var(--danger)}
+.topactions.chatops .v152more{min-width:34px;min-height:34px;font-size:18px}
+header.top.chatmode{gap:5px;padding:2px 10px;min-height:0}
 .v152state[data-state="paused"]{background:var(--soft);color:var(--amber,#a35d18)}
 .v152state[data-state="paused"] i{background:var(--amber,#a35d18)}
 .v152bubble.pick{outline:2px solid var(--pine);outline-offset:1px}
 .v152picktag{display:inline-block;font-size:14px;font-weight:800;color:var(--pine);background:var(--soft);border-radius:999px;padding:1px 8px;margin:0 0 3px}
-.v152endraft{margin:4px 0 0 41px;font-size:19px;line-height:1.35;font-weight:600;color:var(--pine);overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.v152endraft{margin:3px 0 0 36px;font-size:17px;line-height:1.32;font-weight:600;color:var(--pine);overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .v152endraft.loading,.v152endraft.err{margin-left:41px;font-size:15px;font-weight:400}
 .v152endraft.loading{color:var(--muted)}
 .v152endraft.err{color:var(--amber,#a35d18)}
 @media(max-width:430px){header.top.chatmode .right{display:none}}
 @media(max-width:400px){.topactions.chatops{gap:4px}.topactions.chatops .v152state{max-width:26vw;font-size:14px;padding:4px 7px}.topactions.chatops .v152enbtn{padding:0 8px}.topactions.chatops .v152start,.topactions.chatops .v152stop,.topactions.chatops .v152pause,.topactions.chatops .v152end{padding:0 9px}}
-.v152subs{flex:2 1 0;min-height:0;overflow:hidden;display:flex;flex-direction:column;gap:4px;border-bottom:1px solid var(--stroke);padding-bottom:4px}
-.v152msgs{flex:1;min-height:0;overflow-y:auto;display:flex;flex-direction:column;gap:5px;padding:2px 0}
+.v152subs{flex:3 1 0;min-width:0;min-height:0;overflow:hidden;display:flex;flex-direction:column;gap:3px;border-bottom:2px solid var(--pine);padding-bottom:4px}
+.v152msgs{flex:1;min-width:0;min-height:0;overflow-y:auto;overflow-x:hidden;display:flex;flex-direction:column;gap:4px;padding:2px 0}
 .v152bubble{background:var(--paper);border:1px solid var(--stroke);border-radius:12px;padding:7px 10px 6px}
 .v152bubble.mine{background:var(--soft)}
-.v152line{display:flex;gap:7px;align-items:flex-start}
-.v152who{flex:0 0 34px;font-size:14px;color:var(--muted);line-height:1.6;padding-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.v152en{flex:1;min-width:0;font-size:19px;line-height:1.35;margin:0;color:var(--ink);overflow-wrap:anywhere}
-.v152tr{flex:0 0 auto;border:0;background:transparent;color:var(--pine);font-size:15px;font-weight:800;min-height:32px;padding:2px 0;text-decoration:underline}
+.v152line{display:flex;gap:6px;align-items:flex-start}
+.v152who{flex:0 0 30px;font-size:13px;color:var(--muted);line-height:1.6;padding-top:1px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.v152en{flex:1;min-width:0;font-size:17px;line-height:1.34;margin:0;color:var(--ink);overflow-wrap:anywhere}
+.v152tr{flex:0 0 auto;border:0;background:transparent;color:var(--pine);font-size:14px;font-weight:800;min-height:28px;padding:2px 0;text-decoration:underline}
 .v152tr[disabled]{color:var(--muted);text-decoration:none}
 .v152zh{margin:4px 0 0 41px;font-size:15px;line-height:1.45;color:var(--muted)}
 .v152en[data-term-src]{cursor:text}
@@ -541,7 +541,7 @@ header.top.chatmode{gap:6px;padding:5px 12px}
 .termmore input{width:100%;margin:7px 0 0;min-height:40px;border:1px solid var(--stroke);border-radius:9px;background:var(--paper);color:var(--ink);padding:0 10px;font-size:16px}
 .termmore .termgo{width:100%;margin-top:7px;min-height:40px;border:0;border-radius:9px;background:var(--soft);color:var(--pine);font-weight:800;font-size:15px}
 .termctx{font-size:14px;line-height:1.45;color:var(--muted);border-left:2px solid var(--stroke);padding-left:8px;margin:7px 0 0}
-.v152coach{flex:1 1 0;min-height:0;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding:0 2px 2px 0}
+.v152coach{flex:2 1 0;min-width:0;min-height:0;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding:4px 6px;background:var(--paper);border:1px solid var(--stroke);border-radius:12px}
 .v152coach .coachtopic{display:none}
 .v152coach .sgroup{margin:0}
 .v152coach .sgroup h3{font-size:15px;margin:2px 0 2px;display:flex;align-items:baseline;gap:6px;color:var(--pine);font-weight:800}
@@ -556,9 +556,9 @@ header.top.chatmode{gap:6px;padding:5px 12px}
 .v152fav.on{background:var(--soft);border-color:var(--amber,#a35d18)}
 .v152badgewrap{position:sticky;top:0;z-index:3;display:flex;justify-content:flex-end;padding:0;background:var(--bg)}
 .v152badgewrap .badge{font-size:15px;min-height:36px}
-.v152refs{flex:0 0 50px;min-height:0;max-height:52px;display:flex;align-items:center;gap:6px;overflow-x:auto;overflow-y:hidden;white-space:nowrap;padding:4px 1px 6px;scrollbar-width:none}
+.v152refs{flex:0 0 36px;min-height:0;max-height:38px;display:flex;align-items:center;gap:6px;overflow-x:auto;overflow-y:hidden;white-space:nowrap;padding:1px 1px 2px;scrollbar-width:none}
 .v152refs::-webkit-scrollbar{display:none}
-.v152chip{white-space:nowrap;border:1px solid #cddbd2;background:var(--soft);color:var(--pine);border-radius:999px;padding:5px 10px;font-size:15px;min-height:40px;display:inline-flex;align-items:center}
+.v152chip{white-space:nowrap;border:1px solid #cddbd2;background:var(--soft);color:var(--pine);border-radius:999px;padding:2px 8px;font-size:14px;min-height:28px;display:inline-flex;align-items:center}
 .v152chip.on{background:var(--pine);color:#fff;border-color:var(--pine)}
 .v152chiptip{font-size:15px;color:var(--muted);padding:6px 2px}
 .v152menubg{position:fixed;inset:0;z-index:19;background:transparent}
@@ -611,11 +611,38 @@ header.top.chatmode{gap:6px;padding:5px 12px}
 .v152block p[lang="en"]{font-size:19px}
 .v152originfoot{flex:0 0 auto;text-align:center;font-size:15px;color:var(--muted);padding:8px 0 4px}
 body.sm-immersive .mobilebar{display:none!important}
-body.sm-immersive .top{display:flex!important;position:sticky;top:0;z-index:6;height:auto;min-height:52px;padding:calc(4px + env(safe-area-inset-top)) 10px 4px;justify-content:flex-start;gap:6px;background:var(--nav);border-bottom:1px solid var(--stroke)}
+body.sm-immersive .top{display:flex!important;position:sticky;top:0;z-index:6;height:auto;min-height:0;padding:calc(2px + env(safe-area-inset-top)) 8px 2px;justify-content:flex-start;gap:5px;background:var(--nav);border-bottom:1px solid var(--stroke)}
 body.sm-immersive .top .right,body.sm-immersive .top .previewtag{display:none!important}
 body.sm-immersive .side{display:none}
 body.sm-immersive #app{display:block}
-body.sm-immersive .content{padding:6px 10px 6px!important;max-width:none}
+body.sm-immersive .content{padding:4px 8px 2px!important;max-width:none}
+/* 2026-11-14：屏幕用满（不再写死 100dvh-200px 预留），对话:接话 = 3:2 */
+body.sm-immersive .main{display:flex;flex-direction:column;height:100vh;min-height:0;overflow:hidden}
+@supports(height:100dvh){body.sm-immersive .main{height:100dvh}}
+body.sm-immersive .top{flex:0 0 auto}
+body.sm-immersive .content{flex:1 1 auto;min-height:0;display:flex;flex-direction:column;overflow:hidden}
+body.sm-immersive .content>.chatv15.v152{flex:1 1 auto;height:auto!important;min-height:0}
+/* 接话/追问/换题/分享：标签内联到卡片首行，卡片压成一行行；中文/☆ 贴右侧同排 */
+.v152coach .sgroup{margin:0 0 3px}
+.v152coach .sgroup h3{display:none}
+.v152coach .suggcard{display:flex;flex-direction:column;min-height:0;padding:4px 7px;margin-bottom:2px;border-radius:10px;overflow:visible}
+.v152coach .v152row1{display:flex;align-items:flex-start;gap:6px;min-width:0}
+.v152coach .suggtext{flex:1 1 auto;min-width:0;font-size:16px;line-height:1.28;margin:0}
+.v152glabel{flex:0 0 auto;font-size:13px;line-height:1.5;color:var(--muted);background:var(--soft);border-radius:6px;padding:0 5px;margin-top:1px;white-space:nowrap}
+.v152coach .v152acts{flex:0 0 auto;display:flex;gap:4px;align-items:center}
+.v152coach .v152mini,.v152coach .v152fav{min-height:22px;font-size:13px;padding:0 5px;border-radius:6px}
+.v152coach .v152fav{min-width:26px;font-size:14px}
+.v152coach .v152zh{margin:3px 0 0;font-size:14px;line-height:1.35}
+/* 聊天页（录制/回看）整屏参与布局：对话 3 : 接话 2，屏幕用满 */
+body.sm-fillchat{overflow:hidden}
+body.sm-fillchat .main{display:flex;flex-direction:column;height:100vh;min-height:0;overflow:hidden}
+@supports(height:100dvh){body.sm-fillchat .main{height:100dvh}}
+body.sm-fillchat .top{flex:0 0 auto;padding-top:2px!important;padding-bottom:2px!important}
+body.sm-fillchat .content{flex:1 1 auto;min-height:0;display:flex;flex-direction:column;overflow:hidden;padding:2px 8px 0!important}
+body.sm-fillchat .content>.chatv15.v152{flex:1 1 auto;width:100%;max-width:100%;height:auto!important;min-width:0;min-height:0}
+body.sm-fillchat .v152refs{min-width:0;max-width:100%}
+body.sm-fillchat .v152line,body.sm-fillchat .v152bubble{min-width:0}
+body.sm-fillchat .main,body.sm-fillchat .content{width:100%;max-width:100%;min-width:0}
 body.sm-immersive .chatv15.v152{height:calc(100vh - 12px - 56px - env(safe-area-inset-top) - env(safe-area-inset-bottom))}
 @supports(height:100dvh){body.sm-immersive .chatv15.v152{height:calc(100dvh - 12px - 56px - env(safe-area-inset-top) - env(safe-area-inset-bottom))}}
 
@@ -1306,12 +1333,12 @@ function chat(){
  if(S.v152.view==='origin')return originView();
  if(S.session)S.session.messages.forEach(m=>{if(m.speaker)speakerLabel(m.speaker)});
  const msgs=S.session?S.session.messages:[];
- const last=msgs.slice(-3).reverse();
+ const tail=msgs.slice(-80);
  return `<div class="chatv15 v152">
  ${S.v152.menu?vsMenu():''}
  <section class="v152subs" id="v152subs" aria-label="对话">
   <div id="asrInterim" class="live-interim" aria-live="polite">${esc(S.asrInterim||'')}</div>
-  <div id="messages" class="v152msgs">${last.length?last.map(m=>bubbleHTML(m)).join(''):'<div class="stateempty">'+esc(t('chat.empty'))+'</div>'}</div>
+  <div id="messages" class="v152msgs">${tail.length?tail.map(m=>bubbleHTML(m)).join(''):'<div class="stateempty">'+esc(t('chat.empty'))+'</div>'}</div>
  </section>
  <section class="v152coach" id="suggestionArea" aria-label="接话建议">
   <div class="v152badgewrap"><button type="button" id="suggNewBadge" class="badge hidden" data-act="refresh-sugg">有新的接话建议 · 点击更新</button></div>
@@ -1445,8 +1472,9 @@ function originView(){
 }
 function vsRefreshMessages(){
  const box=$('#messages');if(!box)return;
- const last=(S.session?.messages||[]).slice(-3).reverse();
- box.innerHTML=last.map(m=>bubbleHTML(m)).join('');
+ const tail=(S.session?.messages||[]).slice(-80);
+ box.innerHTML=tail.map(m=>bubbleHTML(m)).join('');
+ box.scrollTop=box.scrollHeight;
 }
 function vsTranslateMessage(id){
  const m=(S.session?.messages||[]).find(x=>msgId(x)===id);
@@ -1532,7 +1560,7 @@ function vsToggleZh(ref){
   if(open&&!zh){
    zh=document.createElement('p');zh.className='v152zh';
    zh.textContent=String(item.zh||'').trim()||'暂无中文释义，可先用英文。';
-   if(acts)card.insertBefore(zh,acts);else card.appendChild(zh);
+   card.appendChild(zh);
   }else if(!open&&zh){zh.remove()}
   const b=card.querySelector('[data-v152zh]');
   if(b){b.textContent=open?'收起':'中文';b.setAttribute('aria-expanded',String(open))}
@@ -2179,16 +2207,16 @@ function planNow(){
   askZh:(s.groups.find(g=>g.key==='ask')?.items||[]).map(x=>x.zh),
   share:pick('share').en,shareZh:pick('share').zh,ai:s.ai};
 }
-function suggCard(key,index,item,name){
+function suggCard(key,index,item,name,label){
  const ref=key+'-'+index,open=S.v152.zhOpen.has(ref);
  const zh=String(item.zh||'').trim()||'暂无中文释义，可先用英文。';
  return `<article class="suggcard v152card" data-sugg="${esc(ref)}">
-  <p class="suggtext" lang="en">${esc(item.en)}</p>
-  ${open?`<p class="v152zh">${esc(zh)}</p>`:''}
+  <div class="v152row1">${label?`<span class="v152glabel">${esc(label)}</span>`:''}<p class="suggtext" lang="en">${esc(item.en)}</p>
   <div class="v152acts">
    <button type="button" class="v152mini" data-v152zh="${esc(ref)}" aria-expanded="${open}">${open?'收起':'中文'}</button>
    <button type="button" class="v152fav${S.v152.favs.has(ref)?' on':''}" data-v152fav="${esc(ref)}" aria-label="收藏">${S.v152.favs.has(ref)?'★':'☆'}</button>
-  </div>
+  </div></div>
+  ${open?`<p class="v152zh">${esc(zh)}</p>`:''}
  </article>`;
 }
 function vsGroups(sugg){
@@ -2216,7 +2244,7 @@ function showRecs(force){
    host.dataset.sig=sig;S.suggStale='';
    const badge=$('#suggNewBadge');if(badge)badge.classList.add('hidden');
    host.innerHTML=!S.session?.messages.length?('<div class="stateempty">'+esc(t('chat.coachEmpty'))+'</div>'):
-    groups.map(g=>`<section class="sgroup" data-sgroup="${g.key}"><h3>${esc(g.label)}<small>${g.items.length} 条</small></h3>${g.items.map((it,i)=>suggCard(g.key,i,it,sugg.name)).join('')}</section>`).join('');
+    groups.map(g=>`<section class="sgroup" data-sgroup="${g.key}">${g.items.map((it,i)=>suggCard(g.key,i,it,sugg.name,i===0?g.label:'')).join('')}</section>`).join('');
   }
  }
  const refs=[...S.recs];
@@ -2253,7 +2281,9 @@ function renderTopActions(){
  [...lang,...rows,...n05].forEach(n=>host.appendChild(n));
  if(S.tab==='self'){const sync=host.querySelector('#syncProfile');if(sync){const c=$('#content');c.insertBefore(sync,c.firstChild)}}
 }
-function render(){let view=S.tab==='topics'?topics():S.tab==='software'?software():S.tab==='hainan'?hainan():S.tab==='self'?self():S.tab==='people'?people():chat();$('#content').innerHTML=view;renderTopActions();if(S.tab==='chat'){refreshLiveFacts();showRecs();layoutCoach();smApplyImmersive();return}updateResults();if(S.tab==='self')renderFavList();smApplyImmersive();try{smCardSyncList()}catch{}}
+function render(){let view=S.tab==='topics'?topics():S.tab==='software'?software():S.tab==='hainan'?hainan():S.tab==='self'?self():S.tab==='people'?people():chat();$('#content').innerHTML=view;renderTopActions();smFillChat(!!(S.tab==='chat'&&document.querySelector('.chatv15.v152')));if(S.tab==='chat'){refreshLiveFacts();showRecs();layoutCoach();smApplyImmersive();const box=document.getElementById('messages');if(box&&S.autoTop!==false)box.scrollTop=box.scrollHeight;return}updateResults();if(S.tab==='self')renderFavList();smApplyImmersive();try{smCardSyncList()}catch{}}
+/* 2026-11-14：聊天页让整屏参与布局（对话 3 : 接话 2），不再用 100dvh-200px 写死预留 */
+function smFillChat(on){try{document.body.classList.toggle('sm-fillchat',!!on)}catch{}}
 function updateResults(){let q=S.q.trim().toLowerCase(),res=[],count='';if(S.tab==='software'||(S.tab==='topics'&&S.topic==='works')){res=D.apps.filter(a=>a.cat===S.group&&[a.id,a.name,a.cn,a.en].join(' ').toLowerCase().includes(q));$('#results').innerHTML=res.map(appCard).join('')||('<div class="stateempty">'+esc(t('soft.empty'))+'</div>');count=tf('soft.count',{n:res.length},res.length);}if(S.tab==='hainan'){res=D.places.filter(x=>(S.cat==='全部'||x.category===S.cat)&&[x.cnName,x.enName,x.category,x.cn,x.en].join(' ').toLowerCase().includes(q));$('#results').innerHTML=res.map(placeCard).join('')||('<div class="stateempty">'+esc(t('hainan.empty'))+'</div>');count=tf('hainan.count',{n:res.length,total:D.places.length});}if(S.tab==='self'){res=SAV.stories.filter(x=>(S.storyTag==='全部'||storyTags(x).includes(S.storyTag))&&[x.title,x.cn,x.en,storyTags(x).join(' ')].join(' ').toLowerCase().includes(q));$('#results').innerHTML='<div class="cards">'+res.map(storyCard).join('')+'</div>';count=tf('self.count',{n:res.length},res.length);}if(S.tab==='people'){count=renderPeopleResults(q);}if(S.tab!=='people'&&S.tab!=='self'&&S.tab!=='hainan'&&S.tab!=='software'&&S.tab!=='topics')return;if((S.tab==='software'||S.tab==='hainan'||(S.tab==='topics'&&S.topic==='works'))&&$('#results')){$('#results').className='cards'}if($('#count'))$('#count').textContent=count;try{window.__smCards&&window.__smCards.syncList((S.tab==='software'||S.tab==='topics')?'app':S.tab==='hainan'?'place':S.tab==='self'?'story':'')}catch{}}
 function closeDrawer(){$('#drawer').classList.remove('open');$('#drawerbg').classList.remove('open')}
 function openDrawer(content){$('#drawerbody').innerHTML=content;$('#drawer').classList.add('open');$('#drawerbg').classList.add('open')}
@@ -3154,13 +3184,13 @@ function appendBubble(m){
  const box=$('#messages');
  if(!box||typeof box.insertAdjacentHTML!=='function')return render();
  if(typeof box.querySelector==='function'&&box.querySelector('.stateempty'))box.innerHTML='';
- box.insertAdjacentHTML('afterbegin',bubbleHTML(m));
- while(box.children.length>3)box.removeChild(box.lastElementChild);
+ box.insertAdjacentHTML('beforeend',bubbleHTML(m));
+ while(box.children.length>80)box.removeChild(box.firstElementChild);
  const history=$('#msgHistory');
- if(history)history.insertAdjacentHTML('afterbegin',bubbleHTML(m));
+ if(history)history.insertAdjacentHTML('beforeend',bubbleHTML(m));
  const summary=document.querySelector('.historybox summary');
  if(summary&&S.session)summary.textContent='展开历史（'+S.session.messages.length+' 句）';
- if(S.autoTop!==false){try{box.scrollTop=0}catch{}}
+ if(S.autoTop!==false){try{box.scrollTop=box.scrollHeight}catch{}}
  const back=$('#backlatest');if(back)back.classList.toggle('hidden',S.autoTop!==false);
  const interim=$('#asrInterim');if(interim)interim.textContent='';
 }
@@ -5834,4 +5864,21 @@ small,.tag,.bubble small,.previewtag,.sidetip,.hero .number small,.autorec .sour
 .filter{margin-bottom:8px}
 .top .iconbutton{min-height:34px;min-width:34px}
 @media(max-width:700px){.cards{gap:8px}.sectiontitle{margin:10px 0 8px}}
+<style id="v152-chat-dense">
+/* 2026-11-14：用户明确要求聊天页字号再小两号（仅聊天页突破 19px 正文下限，其他页面不变） */
+body.sm-fillchat .v152msgs .v152en{font-size:17px!important;line-height:1.34!important}
+body.sm-fillchat .v152msgs .v152who{font-size:13px!important;line-height:1.55!important}
+body.sm-fillchat .v152msgs .v152tr{font-size:14px!important;min-height:26px!important}
+body.sm-fillchat .v152endraft{font-size:17px!important;line-height:1.32!important}
+body.sm-fillchat .v152coach .suggtext{font-size:16px!important;line-height:1.26!important}
+body.sm-fillchat .v152coach .suggcard{padding:4px 7px!important;margin-bottom:2px!important}
+body.sm-fillchat .v152glabel{font-size:12px!important;padding:0 4px!important}
+body.sm-fillchat .v152coach .v152mini,body.sm-fillchat .v152coach .v152fav{font-size:12px!important;min-height:22px!important;padding:0 5px!important}
+body.sm-fillchat .v152coach .v152zh{font-size:14px!important}
+body.sm-fillchat .v152chip{font-size:14px!important;min-height:28px!important}
+body.sm-fillchat .topactions.chatops button{font-size:14px!important}
+body.sm-fillchat .topactions.chatops .v152state{font-size:14px!important}
+/* 实时字幕行固定高度：避免每条中间结果把整段对话顶下去（抖动根因：0/51/80px 三次跳动） */
+body.sm-fillchat #asrInterim{flex:0 0 auto;display:flex!important;align-items:flex-end;height:38px;min-height:38px;max-height:38px;padding:0 2px;border:0;margin:0;overflow:hidden;font-size:15px;line-height:19px;color:var(--pine);white-space:normal;overflow-wrap:anywhere}
+body.sm-fillchat #asrInterim:empty{display:flex!important}
 </style><script src="/profile-sync.js" defer></script><script type="application/json" id="demo-fixture">{"fixtureVersion": "N04-DEMO-1.0", "notice": "所有姓名/性格/经历/对话均为虚构，仅作为可长期保留的演示数据。虚构人物的人设由场景手动设定，不基于国籍推断性格。绝不能作为真实好友、真人录音或真实腾讯ASR证据。", "personas": [{"slug": "demo-oliver-uk", "name": "Oliver Reed", "region": "英国·伦敦", "regionEn": "London, United Kingdom", "fictional": true, "personality": "注重计划、讲话简洁、喜欢用实际训练进展交流的健身爱好者（虚构设定，与国籍无推断关系）", "stylePreference": "简短、直接、具体、少闲聊", "conversationCautions": "不主动建议吵闹酒吧，避免给自己或对方编造训练成绩", "topics": ["strength-training", "cycling", "race-training"], "baselineConfirmedFacts": [{"section": "interest", "text": "Oliver goes strength training three mornings a week.", "source": {"sessionId": "sess_n04_demo_oliver_uk_1", "segmentIndex": 1}, "confirmed": true, "confirmedBy": "demo-scenario-author", "demonstration": true}, {"section": "plan", "text": "Oliver is working toward his first strict pull-up.", "source": {"sessionId": "sess_n04_demo_oliver_uk_1", "segmentIndex": 3}, "confirmed": true, "confirmedBy": "demo-scenario-author", "demonstration": true}], "pendingCandidate": {"section": "plan", "text": "Oliver is preparing for his first 10-kilometre race in December.", "source": {"sessionId": "sess_n04_demo_oliver_uk_2", "segmentIndex": 3}, "confirmed": false, "attribution": "unknown-until-demo-user-confirms", "demonstration": true}, "expected": {"beforeCustomized": ["How is the pull-up goal going?", "Have you found a routine that works for your three gym mornings?"], "afterCustomized": ["How is your 10K training for December going?", "Are easy runs affecting your gym sessions?"], "generic": ["What has been the highlight of your week?"], "forbidden": ["You've already completed a 10K.", "I also train six days a week."]}, "sessions": [{"sessionId": "sess_n04_demo_oliver_uk_1", "personSlug": "demo-oliver-uk", "startedAt": "2026-10-20T09:00:00.000Z", "endedAt": "2026-10-20T09:00:30.000Z", "appVersion": "DEMO-N04", "demo": true, "synthetic": true, "provider": "synthetic", "mock": true, "consent": {"recording": true, "retention": true, "cloudAi": false}, "revision": 1, "segments": [{"eventId": "demo-demo-oliver-uk-1-0", "index": 0, "startMs": 0, "endMs": 4000, "receivedAt": "2026-10-20T09:00:04.000Z", "speakerId": "spk_0", "track": "mix", "provider": "synthetic", "mock": true, "final": true, "textOriginal": "What do you enjoy doing before work?"}, {"eventId": "demo-demo-oliver-uk-1-1", "index": 1, "startMs": 5000, "endMs": 9000, "receivedAt": "2026-10-20T09:00:09.000Z", "speakerId": "spk_1", "track": "mix", "provider": "synthetic", "mock": true, "final": true, "textOriginal": "I go strength training three mornings a week."}, {"eventId": "demo-demo-oliver-uk-1-2", "index": 2, "startMs": 10000, "endMs": 14000, "receivedAt": "2026-10-20T09:00:14.000Z", "speakerId": "spk_0", "track": "mix", "provider": "synthetic", "mock": true, "final": true, "textOriginal": "Do you have a particular goal at the gym?"}, {"eventId": "demo-demo-oliver-uk-1-3", "index": 3, "startMs": 15000, "endMs": 19000, "receivedAt": "2026-10-20T09:00:19.000Z", "speakerId": "spk_1", "track": "mix", "provider": "synthetic", "mock": true, "final": true, "textOriginal": "I'm working toward my first strict pull-up."}, {"eventId": "demo-demo-oliver-uk-1-4", "index": 4, "startMs": 20000, "endMs": 24000, "receivedAt": "2026-10-20T09:00:24.000Z", "speakerId": "spk_0", "track": "mix", "provider": "synthetic", "mock": true, "final": true, "textOriginal": "That sounds like a good challenge."}, {"eventId": "demo-demo-oliver-uk-1-5", "index": 5, "startMs": 25000, "endMs": 29000, "receivedAt": "2026-10-20T09:00:29.000Z", "speakerId": "spk_1", "track": "mix", "provider": "synthetic", "mock": true, "final": true, "textOriginal": "Yes, I like keeping a simple training log."}]}, {"sessionId": "sess_n04_demo_oliver_uk_2", "personSlug": "demo-oliver-uk", "startedAt": "2026-10-27T09:00:00.000Z", "endedAt": "2026-10-27T09:00:30.000Z", "appVersion": "DEMO-N04", "demo": true, "synthetic": true, "provider": "synthetic", "mock": true, "consent": {"recording": true, "retention": true, "cloudAi": false}, "revision": 1, "segments": [{"eventId": "demo-demo-oliver-uk-2-0", "index": 0, "startMs": 0, "endMs": 4000, "receivedAt": "2026-10-27T09:00:04.000Z", "speakerId": "spk_0", "track": "mix", "provider": "synthetic", "mock": true, "final": true, "textOriginal": "How has your training been going?"}, {"eventId": "demo-demo-oliver-uk-2-1", "index": 1, "startMs": 5000, "endMs": 9000, "receivedAt": "2026-10-27T09:00:09.000Z", "speakerId": "spk_1", "track": "mix", "provider": "synthetic", "mock": true, "final": true, "textOriginal": "The pull-up work is progressing, thanks."}, {"eventId": "demo-demo-oliver-uk-2-2", "index": 2, "startMs": 10000, "endMs": 14000, "receivedAt": "2026-10-27T09:00:14.000Z", "speakerId": "spk_0", "track": "mix", "provider": "synthetic", "mock": true, "final": true, "textOriginal": "Any new goals?"}, {"eventId": "demo-demo-oliver-uk-2-3", "index": 3, "startMs": 15000, "endMs": 19000, "receivedAt": "2026-10-27T09:00:19.000Z", "speakerId": "spk_1", "track": "mix", "provider": "synthetic", "mock": true, "final": true, "textOriginal": "I'm preparing for my first 10-kilometre race in December."}, {"eventId": "demo-demo-oliver-uk-2-4", "index": 4, "startMs": 20000, "endMs": 24000, "receivedAt": "2026-10-27T09:00:24.000Z", "speakerId": "spk_0", "track": "mix", "provider": "synthetic", "mock": true, "final": true, "textOriginal": "Have you changed your weekly schedule?"}, {"eventId": "demo-demo-oliver-uk-2-5", "index": 5, "startMs": 25000, "endMs": 29000, "receivedAt": "2026-10-27T09:00:29.000Z", "speakerId": "spk_1", "track": "mix", "provider": "synthetic", "mock": true, "final": true, "textOriginal": "I'm trying to fit easy runs around the gym sessions."}]}, {"sessionId": "sess_n04_demo_oliver_uk_3", "personSlug": "demo-oliver-uk", "startedAt": "2026-11-01T09:00:00.000Z", "endedAt": "2026-11-01T09:00:30.000Z", "appVersion": "DEMO-N04", "demo": true, "synthetic": true, "provider": "synthetic", "mock": true, "consent": {"recording": true, "retention": true, "cloudAi": false}, "revision": 1, "segments": [{"eventId": "demo-demo-oliver-uk-3-0", "index": 0, "startMs": 0, "endMs": 4000, "receivedAt": "2026-11-01T09:00:04.000Z", "speakerId": "spk_0", "track": "mix", "provider": "synthetic", "mock": true, "final": true, "textOriginal": "How are you balancing your gym work and the 10K plan?"}, {"eventId": "demo-demo-oliver-uk-3-1", "index": 1, "startMs": 5000, "endMs": 9000, "receivedAt": "2026-11-01T09:00:09.000Z", "speakerId": "spk_1", "track": "mix", "provider": "synthetic", "mock": true, "final": true, "textOriginal": "I keep the runs easy after heavy lifting days."}, {"eventId": "demo-demo-oliver-uk-3-2", "index": 2, "startMs": 10000, "endMs": 14000, "receivedAt": "2026-11-01T09:00:14.000Z", "speakerId": "spk_0", "track": "mix", "provider": "synthetic", "mock": true, "final": true, "textOriginal": "What is the next milestone?"}, {"eventId": "demo-demo-oliver-uk-3-3", "index": 3, "startMs": 15000, "endMs": 19000, "receivedAt": "2026-11-01T09:00:19.000Z", "speakerId": "spk_1", "track": "mix", "provider": "synthetic", "mock": true, "final": true, "textOriginal": "I'd like to run the full distance comfortably."}, {"eventId": "demo-demo-oliver-uk-3-4", "index": 4, "startMs": 20000, "endMs": 24000, "receivedAt": "2026-11-01T09:00:24.000Z", "speakerId": "spk_0", "track": "mix", "provider": "synthetic", "mock": true, "final": true, "textOriginal": "Thanks for sharing. I hope training goes well."}, {"eventId": "demo-demo-oliver-uk-3-5", "index": 5, "startMs": 25000, "endMs": 29000, "receivedAt": "2026-11-01T09:00:29.000Z", "speakerId": "spk_1", "track": "mix", "provider": "synthetic", "mock": true, "final": true, "textOriginal": "Thank you!"}]}]}, {"slug": "demo-maya-us", "name": "Maya Torres", "region": "美国·奥斯汀", "regionEn": "Austin, United States", "fictional": true, "personality": "热情健谈，喜欢分享设计、独立音乐演出和新鲜体验的创意从业者（虚构）", "stylePreference": "轻松、积极、开放式、有趣的追问", "conversationCautions": "不要假定她已到海南、已去某场演出或接受邀约", "topics": ["graphic-design", "live-music", "haikou-food"], "baselineConfirmedFacts": [{"section": "work", "text": "Maya designs posters for small local bands.", "source": {"sessionId": "sess_n04_demo_maya_us_1", "segmentIndex": 1}, "confirmed": true, "confirmedBy": "demo-scenario-author", "demonstration": true}, {"section": "interest", "text": "Maya enjoys small live-music gigs.", "source": {"sessionId": "sess_n04_demo_maya_us_1", "segmentIndex": 3}, "confirmed": true, "confirmedBy": "demo-scenario-author", "demonstration": true}], "pendingCandidate": {"section": "plan", "text": "Maya is considering a trip to Haikou and wants to try local street food.", "source": {"sessionId": "sess_n04_demo_maya_us_2", "segmentIndex": 3}, "confirmed": false, "attribution": "unknown-until-demo-user-confirms", "demonstration": true}, "expected": {"beforeCustomized": ["Have you made any new posters for local bands?", "What's the best small gig you've seen recently?"], "afterCustomized": ["What kind of Haikou street food would you like to try?", "Would you rather explore food stalls or small music venues first?"], "generic": ["What is something new you discovered this month?"], "forbidden": ["You already booked your flight to Haikou.", "We saw the concert together."]}, "sessions": [{"sessionId": "sess_n04_demo_maya_us_1", "personSlug": "demo-maya-us", "startedAt": "2026-10-20T14:00:00.000Z", "endedAt": "2026-10-20T14:00:30.000Z", "appVersion": "DEMO-N04", "demo": true, "synthetic": true, "provider": "synthetic", "mock": true, "consent": {"recording": true, "retention": true, "cloudAi": false}, "revision": 1, "segments": [{"eventId": "demo-demo-maya-us-1-0", "index": 0, "startMs": 0, "endMs": 4000, "receivedAt": "2026-10-20T14:00:04.000Z", "speakerId": "spk_0", "track": "mix", "provider": "synthetic", "mock": true, "final": true, "textOriginal": "What kind of creative work do you do?"}, {"eventId": "demo-demo-maya-us-1-1", "index": 1, "startMs": 5000, "endMs": 9000, "receivedAt": "2026-10-20T14:00:09.000Z", "speakerId": "spk_1", "track": "mix", "provider": "synthetic", "mock": true, "final": true, "textOriginal": "I design posters for small local bands."}, {"eventId": "demo-demo-maya-us-1-2", "index": 2, "startMs": 10000, "endMs": 14000, "receivedAt": "2026-10-20T14:00:14.000Z", "speakerId": "spk_0", "track": "mix", "provider": "synthetic", "mock": true, "final": true, "textOriginal": "That sounds fun! Do you listen to their music too?"}, {"eventId": "demo-demo-maya-us-1-3", "index": 3, "startMs": 15000, "endMs": 19000, "receivedAt": "2026-10-20T14:00:19.000Z", "speakerId": "spk_1", "track": "mix", "provider": "synthetic", "mock": true, "final": true, "textOriginal": "I love going to small live-music gigs."}, {"eventId": "demo-demo-maya-us-1-4", "index": 4, "startMs": 20000, "endMs": 24000, "receivedAt": "2026-10-20T14:00:24.000Z", "speakerId": "spk_0", "track": "mix", "provider": "synthetic", "mock": true, "final": true, "textOriginal": "What do you like about smaller shows?"}, {"eventId": "demo-demo-maya-us-1-5", "index": 5, "startMs": 25000, "endMs": 29000, "receivedAt": "2026-10-20T14:00:29.000Z", "speakerId": "spk_1", "track": "mix", "provider": "synthetic", "mock": true, "final": true, "textOriginal": "It's easier to feel connected to the musicians."}]}, {"sessionId": "sess_n04_demo_maya_us_2", "personSlug": "demo-maya-us", "startedAt": "2026-10-27T14:00:00.000Z", "endedAt": "2026-10-27T14:00:30.000Z", "appVersion": "DEMO-N04", "demo": true, "synthetic": true, "provider": "synthetic", "mock": true, "consent": {"recording": true, "retention": true, "cloudAi": false}, "revision": 1, "segments": [{"eventId": "demo-demo-maya-us-2-0", "index": 0, "startMs": 0, "endMs": 4000, "receivedAt": "2026-10-27T14:00:04.000Z", "speakerId": "spk_0", "track": "mix", "provider": "synthetic", "mock": true, "final": true, "textOriginal": "Did you find any new bands this week?"}, {"eventId": "demo-demo-maya-us-2-1", "index": 1, "startMs": 5000, "endMs": 9000, "receivedAt": "2026-10-27T14:00:09.000Z", "speakerId": "spk_1", "track": "mix", "provider": "synthetic", "mock": true, "final": true, "textOriginal": "Yes, a friend sent me a brilliant playlist."}, {"eventId": "demo-demo-maya-us-2-2", "index": 2, "startMs": 10000, "endMs": 14000, "receivedAt": "2026-10-27T14:00:14.000Z", "speakerId": "spk_0", "track": "mix", "provider": "synthetic", "mock": true, "final": true, "textOriginal": "Do you have any travel ideas coming up?"}, {"eventId": "demo-demo-maya-us-2-3", "index": 3, "startMs": 15000, "endMs": 19000, "receivedAt": "2026-10-27T14:00:19.000Z", "speakerId": "spk_1", "track": "mix", "provider": "synthetic", "mock": true, "final": true, "textOriginal": "I'm considering a trip to Haikou and want to try local street food."}, {"eventId": "demo-demo-maya-us-2-4", "index": 4, "startMs": 20000, "endMs": 24000, "receivedAt": "2026-10-27T14:00:24.000Z", "speakerId": "spk_0", "track": "mix", "provider": "synthetic", "mock": true, "final": true, "textOriginal": "What kinds of dishes are you curious about?"}, {"eventId": "demo-demo-maya-us-2-5", "index": 5, "startMs": 25000, "endMs": 29000, "receivedAt": "2026-10-27T14:00:29.000Z", "speakerId": "spk_1", "track": "mix", "provider": "synthetic", "mock": true, "final": true, "textOriginal": "I like trying something people actually eat every day."}]}, {"sessionId": "sess_n04_demo_maya_us_3", "personSlug": "demo-maya-us", "startedAt": "2026-11-01T14:00:00.000Z", "endedAt": "2026-11-01T14:00:30.000Z", "appVersion": "DEMO-N04", "demo": true, "synthetic": true, "provider": "synthetic", "mock": true, "consent": {"recording": true, "retention": true, "cloudAi": false}, "revision": 1, "segments": [{"eventId": "demo-demo-maya-us-3-0", "index": 0, "startMs": 0, "endMs": 4000, "receivedAt": "2026-11-01T14:00:04.000Z", "speakerId": "spk_0", "track": "mix", "provider": "synthetic", "mock": true, "final": true, "textOriginal": "Are you still thinking of visiting Haikou?"}, {"eventId": "demo-demo-maya-us-3-1", "index": 1, "startMs": 5000, "endMs": 9000, "receivedAt": "2026-11-01T14:00:09.000Z", "speakerId": "spk_1", "track": "mix", "provider": "synthetic", "mock": true, "final": true, "textOriginal": "Yes, I'm checking dates, but nothing is booked yet."}, {"eventId": "demo-demo-maya-us-3-2", "index": 2, "startMs": 10000, "endMs": 14000, "receivedAt": "2026-11-01T14:00:14.000Z", "speakerId": "spk_0", "track": "mix", "provider": "synthetic", "mock": true, "final": true, "textOriginal": "Would you like a few local food ideas?"}, {"eventId": "demo-demo-maya-us-3-3", "index": 3, "startMs": 15000, "endMs": 19000, "receivedAt": "2026-11-01T14:00:19.000Z", "speakerId": "spk_1", "track": "mix", "provider": "synthetic", "mock": true, "final": true, "textOriginal": "Absolutely, especially casual places."}, {"eventId": "demo-demo-maya-us-3-4", "index": 4, "startMs": 20000, "endMs": 24000, "receivedAt": "2026-11-01T14:00:24.000Z", "speakerId": "spk_0", "track": "mix", "provider": "synthetic", "mock": true, "final": true, "textOriginal": "Do you want food options or music venues first?"}, {"eventId": "demo-demo-maya-us-3-5", "index": 5, "startMs": 25000, "endMs": 29000, "receivedAt": "2026-11-01T14:00:29.000Z", "speakerId": "spk_1", "track": "mix", "provider": "synthetic", "mock": true, "final": true, "textOriginal": "Maybe food first, then some live music."}]}]}, {"slug": "demo-jieun-kr", "name": "Ji-eun Park", "region": "韩国·首尔", "regionEn": "Seoul, South Korea", "fictional": true, "personality": "耐心内敛、偏好安静环境、喜欢街拍与咖啡馆，交流时更乐于回答具体问题的摄影爱好者（虚构）", "stylePreference": "温和、留停顿、一次只问一件事", "conversationCautions": "不要用性格标签定义所有韩国人；不建议在很吵的LiveHouse深入长聊", "topics": ["street-photography", "quiet-cafe", "learning-english"], "baselineConfirmedFacts": [{"section": "interest", "text": "Ji-eun enjoys photographing old streets.", "source": {"sessionId": "sess_n04_demo_jieun_kr_1", "segmentIndex": 1}, "confirmed": true, "confirmedBy": "demo-scenario-author", "demonstration": true}, {"section": "preference", "text": "Ji-eun prefers quiet cafes to crowded bars.", "source": {"sessionId": "sess_n04_demo_jieun_kr_1", "segmentIndex": 3}, "confirmed": true, "confirmedBy": "demo-scenario-author", "demonstration": true}], "pendingCandidate": {"section": "plan", "text": "Ji-eun is practising English to talk about her photography.", "source": {"sessionId": "sess_n04_demo_jieun_kr_2", "segmentIndex": 3}, "confirmed": false, "attribution": "unknown-until-demo-user-confirms", "demonstration": true}, "expected": {"beforeCustomized": ["Have you found another old street you'd like to photograph?", "Did you try any new quiet cafes recently?"], "afterCustomized": ["Would you like to practise describing a photograph in English?", "What story does your morning-light picture tell?"], "generic": ["What have you enjoyed this week?"], "forbidden": ["You love noisy bars.", "Your English is poor."]}, "sessions": [{"sessionId": "sess_n04_demo_jieun_kr_1", "personSlug": "demo-jieun-kr", "startedAt": "2026-10-20T04:00:00.000Z", "endedAt": "2026-10-20T04:00:30.000Z", "appVersion": "DEMO-N04", "demo": true, "synthetic": true, "provider": "synthetic", "mock": true, "consent": {"recording": true, "retention": true, "cloudAi": false}, "revision": 1, "segments": [{"eventId": "demo-demo-jieun-kr-1-0", "index": 0, "startMs": 0, "endMs": 4000, "receivedAt": "2026-10-20T04:00:04.000Z", "speakerId": "spk_0", "track": "mix", "provider": "synthetic", "mock": true, "final": true, "textOriginal": "What do you enjoy doing on a quiet weekend?"}, {"eventId": "demo-demo-jieun-kr-1-1", "index": 1, "startMs": 5000, "endMs": 9000, "receivedAt": "2026-10-20T04:00:09.000Z", "speakerId": "spk_1", "track": "mix", "provider": "synthetic", "mock": true, "final": true, "textOriginal": "I like taking photographs of old streets."}, {"eventId": "demo-demo-jieun-kr-1-2", "index": 2, "startMs": 10000, "endMs": 14000, "receivedAt": "2026-10-20T04:00:14.000Z", "speakerId": "spk_0", "track": "mix", "provider": "synthetic", "mock": true, "final": true, "textOriginal": "Where do you prefer to sit and edit photos?"}, {"eventId": "demo-demo-jieun-kr-1-3", "index": 3, "startMs": 15000, "endMs": 19000, "receivedAt": "2026-10-20T04:00:19.000Z", "speakerId": "spk_1", "track": "mix", "provider": "synthetic", "mock": true, "final": true, "textOriginal": "I prefer quiet cafes to crowded bars."}, {"eventId": "demo-demo-jieun-kr-1-4", "index": 4, "startMs": 20000, "endMs": 24000, "receivedAt": "2026-10-20T04:00:24.000Z", "speakerId": "spk_0", "track": "mix", "provider": "synthetic", "mock": true, "final": true, "textOriginal": "Do you shoot more in the morning or evening?"}, {"eventId": "demo-demo-jieun-kr-1-5", "index": 5, "startMs": 25000, "endMs": 29000, "receivedAt": "2026-10-20T04:00:29.000Z", "speakerId": "spk_1", "track": "mix", "provider": "synthetic", "mock": true, "final": true, "textOriginal": "Usually early morning, when the streets are calm."}]}, {"sessionId": "sess_n04_demo_jieun_kr_2", "personSlug": "demo-jieun-kr", "startedAt": "2026-10-27T04:00:00.000Z", "endedAt": "2026-10-27T04:00:30.000Z", "appVersion": "DEMO-N04", "demo": true, "synthetic": true, "provider": "synthetic", "mock": true, "consent": {"recording": true, "retention": true, "cloudAi": false}, "revision": 1, "segments": [{"eventId": "demo-demo-jieun-kr-2-0", "index": 0, "startMs": 0, "endMs": 4000, "receivedAt": "2026-10-27T04:00:04.000Z", "speakerId": "spk_0", "track": "mix", "provider": "synthetic", "mock": true, "final": true, "textOriginal": "Have you taken any interesting photos lately?"}, {"eventId": "demo-demo-jieun-kr-2-1", "index": 1, "startMs": 5000, "endMs": 9000, "receivedAt": "2026-10-27T04:00:09.000Z", "speakerId": "spk_1", "track": "mix", "provider": "synthetic", "mock": true, "final": true, "textOriginal": "I found a beautiful old alley last weekend."}, {"eventId": "demo-demo-jieun-kr-2-2", "index": 2, "startMs": 10000, "endMs": 14000, "receivedAt": "2026-10-27T04:00:14.000Z", "speakerId": "spk_0", "track": "mix", "provider": "synthetic", "mock": true, "final": true, "textOriginal": "Would you like to share the story in English?"}, {"eventId": "demo-demo-jieun-kr-2-3", "index": 3, "startMs": 15000, "endMs": 19000, "receivedAt": "2026-10-27T04:00:19.000Z", "speakerId": "spk_1", "track": "mix", "provider": "synthetic", "mock": true, "final": true, "textOriginal": "I'm practising English to talk about my photography."}, {"eventId": "demo-demo-jieun-kr-2-4", "index": 4, "startMs": 20000, "endMs": 24000, "receivedAt": "2026-10-27T04:00:24.000Z", "speakerId": "spk_0", "track": "mix", "provider": "synthetic", "mock": true, "final": true, "textOriginal": "We can take it slowly. Which photo would you start with?"}, {"eventId": "demo-demo-jieun-kr-2-5", "index": 5, "startMs": 25000, "endMs": 29000, "receivedAt": "2026-10-27T04:00:29.000Z", "speakerId": "spk_1", "track": "mix", "provider": "synthetic", "mock": true, "final": true, "textOriginal": "The one with the morning light."}]}, {"sessionId": "sess_n04_demo_jieun_kr_3", "personSlug": "demo-jieun-kr", "startedAt": "2026-11-01T04:00:00.000Z", "endedAt": "2026-11-01T04:00:30.000Z", "appVersion": "DEMO-N04", "demo": true, "synthetic": true, "provider": "synthetic", "mock": true, "consent": {"recording": true, "retention": true, "cloudAi": false}, "revision": 1, "segments": [{"eventId": "demo-demo-jieun-kr-3-0", "index": 0, "startMs": 0, "endMs": 4000, "receivedAt": "2026-11-01T04:00:04.000Z", "speakerId": "spk_0", "track": "mix", "provider": "synthetic", "mock": true, "final": true, "textOriginal": "Would you like to describe your morning-light photo?"}, {"eventId": "demo-demo-jieun-kr-3-1", "index": 1, "startMs": 5000, "endMs": 9000, "receivedAt": "2026-11-01T04:00:09.000Z", "speakerId": "spk_1", "track": "mix", "provider": "synthetic", "mock": true, "final": true, "textOriginal": "Yes, but I may need a little time to find the words."}, {"eventId": "demo-demo-jieun-kr-3-2", "index": 2, "startMs": 10000, "endMs": 14000, "receivedAt": "2026-11-01T04:00:14.000Z", "speakerId": "spk_0", "track": "mix", "provider": "synthetic", "mock": true, "final": true, "textOriginal": "Of course. What caught your eye first?"}, {"eventId": "demo-demo-jieun-kr-3-3", "index": 3, "startMs": 15000, "endMs": 19000, "receivedAt": "2026-11-01T04:00:19.000Z", "speakerId": "spk_1", "track": "mix", "provider": "synthetic", "mock": true, "final": true, "textOriginal": "The shadows on the walls."}, {"eventId": "demo-demo-jieun-kr-3-4", "index": 4, "startMs": 20000, "endMs": 24000, "receivedAt": "2026-11-01T04:00:24.000Z", "speakerId": "spk_0", "track": "mix", "provider": "synthetic", "mock": true, "final": true, "textOriginal": "That's a lovely detail."}, {"eventId": "demo-demo-jieun-kr-3-5", "index": 5, "startMs": 25000, "endMs": 29000, "receivedAt": "2026-11-01T04:00:29.000Z", "speakerId": "spk_1", "track": "mix", "provider": "synthetic", "mock": true, "final": true, "textOriginal": "Thank you for giving me time to explain."}]}]}]}</script><div id="n06lightbox" class="n06lb" hidden><button type="button" class="n06lb-close" data-n06lbclose="1" aria-label="关闭">×</button><button type="button" class="n06lb-nav prev" data-n06lbprev="1" aria-label="上一张">‹</button><img id="n06lbimg" alt=""><button type="button" class="n06lb-nav next" data-n06lbnext="1" aria-label="下一张">›</button><span id="n06lbcount" class="n06lb-count"></span></div></body></html>

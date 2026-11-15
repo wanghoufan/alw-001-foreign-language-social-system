@@ -1,0 +1,15 @@
+# 0.9.33 覆盖安装 2026-11-14 18:28:16
+adb: device '3B15CW00KND00000' not found
+adb: device '3B15CW00KND00000' not found
+adb: device '3B15CW00KND00000' not found
+# 0.9.33 覆盖安装 2026-11-14 18:33:05
+5c707a8b43aef9f8a5862ad921a2829c49c710d16b6f060141f5a6ba465b6ae0  android-poc/app/build/outputs/apk/debug/app-debug.apk
+Performing Streamed Install
+Success
+    versionCode=101 minSdk=26 targetSdk=35
+    versionName=0.9.33
+    lastUpdateTime=2026-11-14 18:33:06
+-rw-rw---- 1 u0_a444 u0_a444 282 2026-11-08 18:01 socialmate-config.xml
+-rw-rw---- 1 u0_a444 u0_a444 710 2026-11-08 17:41 socialmate-secure.xml
+-rw-rw---- 1 u0_a444 u0_a444 217088 2026-11-13 20:13 socialmate_local.db
+-rw------- 1 u0_a444 u0_a444      0 2026-11-08 17:34 socialmate_local.db-journal

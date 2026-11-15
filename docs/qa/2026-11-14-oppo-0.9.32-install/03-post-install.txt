@@ -1,0 +1,14 @@
+# 装后状态 2026-11-14 18:00:56
+    versionCode=100 minSdk=26 targetSdk=35
+    versionName=0.9.32
+    lastUpdateTime=2026-11-14 18:00:50
+--- prefs/db ---
+-rw-rw---- 1 u0_a444 u0_a444 156 2026-11-08 17:34 socialmate-archive.xml
+-rw-rw---- 1 u0_a444 u0_a444 407 2026-11-14 17:56 socialmate-cloud-usage.xml
+-rw-rw---- 1 u0_a444 u0_a444 282 2026-11-08 18:01 socialmate-config.xml
+-rw-rw---- 1 u0_a444 u0_a444 710 2026-11-08 17:41 socialmate-secure.xml
+-rw-rw---- 1 u0_a444 u0_a444 142 2026-11-14 10:25 socialmate-tts.xml
+---
+total 212
+-rw-rw---- 1 u0_a444 u0_a444 217088 2026-11-13 20:13 socialmate_local.db
+-rw------- 1 u0_a444 u0_a444      0 2026-11-08 17:34 socialmate_local.db-journal

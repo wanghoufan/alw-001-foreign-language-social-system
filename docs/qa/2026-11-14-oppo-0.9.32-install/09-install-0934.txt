@@ -1,0 +1,11 @@
+# 0.9.34 覆盖安装 2026-11-14 19:35:48
+ae6be7adc13949ae3c5871f6d2095a25ebf4366f978b9715f499828eb0bd3df3  android-poc/app/build/outputs/apk/debug/app-debug.apk
+Performing Streamed Install
+Success
+    versionCode=102 minSdk=26 targetSdk=35
+    versionName=0.9.34
+    lastUpdateTime=2026-11-14 19:35:49
+-rw-rw---- 1 u0_a444 u0_a444 282 2026-11-08 18:01 socialmate-config.xml
+-rw-rw---- 1 u0_a444 u0_a444 710 2026-11-08 17:41 socialmate-secure.xml
+-rw-rw---- 1 u0_a444 u0_a444 217088 2026-11-13 20:13 socialmate_local.db
+-rw------- 1 u0_a444 u0_a444      0 2026-11-08 17:34 socialmate_local.db-journal
