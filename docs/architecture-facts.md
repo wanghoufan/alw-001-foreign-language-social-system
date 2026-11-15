@@ -259,3 +259,12 @@
 - 渲染：`render()` 渲染最近 80 条（正序），`appendBubble()` 末尾追加并裁到 80；两者口径必须一致，否则会出现「3 条 ↔ 满屏」抖动。
 - 字号：`body.sm-fillchat` 作用域内经 `#v152-chat-dense` 覆盖全局 `p{font-size:19px!important}` 下限（字幕 17 / 接话 16 / 标签 12）。
 - 构建：`android-poc/app/build.gradle` 的 `copyWebAssets` 从 `socialmate-v1.2/index.html` 复制进 `assets/v12`；改页面必须重新 assembleDebug，并 `unzip -p <apk> assets/v12/index.html | grep <特征串>` 回读。
+
+## N08 表达页与周包（2026-11-16，0.9.54/vc122）
+
+- 数据：`/v12/api/n08`（GET 读、POST 存整份 state），落 SQLite `meta` 表 `n08.state`（`LocalStore.getN08State/putN08State`）；页面 localStorage 仅作首屏缓存，进入表达页后与服务端对账（服务端条数不少于本地才采服务端）。
+- 资源：`/v12/n08-course-index.json`（100 课索引，`copyWebAssets` 从 `socialmate-v1.2/source/` 拷入 assets）与 `/v12/n08-weekly.js`（周包纯函数，页面 defer 加载成 `window.N08W`）。
+- 语音：表达页「按住说中文」复用原生录音与实时字幕；原生开录会重载 WebView 到 `?live=1`，捕获标记走 sessionStorage（20s TTL），累计 final + 静默 900ms 提交。
+- 周包：`buildWeeklyPack({items,size,seed,now})` 出 5/10/15 题（模式 1/2/3，中文题干）；回填格式 `题号 | 结果`（也兼容 4 列三模式），解析器容忍 ``` 围栏与块外总结句；`stampSubmit` 幂等，同包同日重复回贴拒绝。
+- 教练提示词由 `n08PackPrompt(pack)` 生成：纪律 + 评分标准 + 题库 + 参考答案（禁止提前透露）+ 带「待填」的回填块。
+- 日期一律本地时区（`n08Today()`），禁止 `toISOString().slice(0,10)`。
