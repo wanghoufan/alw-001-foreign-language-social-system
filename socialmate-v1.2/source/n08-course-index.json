@@ -13,13 +13,10 @@
   "gapNote": "差额未经核实：只读扫描全部 .md 后仍差 5 节，源目录未发现其它存放位置，不补齐、不生成不存在的课程。见 missing（编号空洞，verified=false）与 unreadable（读不到的文件）。",
   "chapterSumOfRanges": 105,
   "chapterCount": 7,
-  "sentenceTotal": 274,
+  "sentenceTotal": 280,
   "zhHintCount": 11,
   "coursesWithoutEnglishSentence": [
-    "1第一章：家庭与朋友/2.家庭成员（下）.md",
-    "2第二章：旅行和旅游/23.Bonus Time - Throw in the Towel.md",
-    "4第四章：购物与消费/56.Daniel趣味分享.md",
-    "6第六章：娱乐与消费/12 Daniel趣味分享.md"
+    "4第四章：购物与消费/56.Daniel趣味分享.md"
   ],
   "chapters": [
     {
@@ -201,6 +198,7 @@
         "English learning journey"
       ],
       "sourceLine": 21,
+      "extract": "sentence",
       "items": [
         {
           "text": "I can't wait to start our English learning journey.",
@@ -220,11 +218,43 @@
       "lessonNo": 2,
       "file": "1第一章：家庭与朋友/2.家庭成员（下）.md",
       "title": "2.家庭成员（下）",
-      "sentences": [],
+      "sentences": [
+        "I have three siblings in my family",
+        "How many siblings do you have",
+        "I don't have any siblings"
+      ],
       "zhHint": "",
-      "keywords": [],
-      "sourceLine": 0,
-      "items": []
+      "keywords": [
+        "I have three siblings in my family"
+      ],
+      "sourceLine": 43,
+      "extract": "phrase-fallback",
+      "items": [
+        {
+          "text": "I have three siblings in my family",
+          "zhHint": "",
+          "keywords": [
+            "I have three siblings in my family"
+          ],
+          "sourceLine": 43
+        },
+        {
+          "text": "How many siblings do you have",
+          "zhHint": "",
+          "keywords": [
+            "How many siblings do you have"
+          ],
+          "sourceLine": 12
+        },
+        {
+          "text": "I don't have any siblings",
+          "zhHint": "",
+          "keywords": [
+            "I don't have any siblings"
+          ],
+          "sourceLine": 39
+        }
+      ]
     },
     {
       "courseId": "1-03",
@@ -243,6 +273,7 @@
         "describe a family"
       ],
       "sourceLine": 44,
+      "extract": "sentence",
       "items": [
         {
           "text": "How do you describe a family vacation?",
@@ -288,6 +319,7 @@
         "spend time"
       ],
       "sourceLine": 26,
+      "extract": "sentence",
       "items": [
         {
           "text": "I'd love to share more about how we spend time as a family.",
@@ -326,6 +358,7 @@
         "two hands"
       ],
       "sourceLine": 22,
+      "extract": "sentence",
       "items": [
         {
           "text": "What has a face and two hands, but no arms or legs?",
@@ -373,6 +406,7 @@
         "twice a day"
       ],
       "sourceLine": 29,
+      "extract": "sentence",
       "items": [
         {
           "text": "I need to feed my dog twice a day.",
@@ -418,6 +452,7 @@
         "love playing"
       ],
       "sourceLine": 39,
+      "extract": "sentence",
       "items": [
         {
           "text": "I love playing with my pet in the park.",
@@ -463,6 +498,7 @@
         "spend time"
       ],
       "sourceLine": 22,
+      "extract": "sentence",
       "items": [
         {
           "text": "I have a lot of friends, we often get together, and to spend time with friends is always very good.",
@@ -508,6 +544,7 @@
         "old friends"
       ],
       "sourceLine": 27,
+      "extract": "sentence",
       "items": [
         {
           "text": "What do you usually do with your old friends?",
@@ -553,6 +590,7 @@
         "going to"
       ],
       "sourceLine": 27,
+      "extract": "sentence",
       "items": [
         {
           "text": "Hi, we are going to get you.",
@@ -595,6 +633,7 @@
         "good relationship relies"
       ],
       "sourceLine": 31,
+      "extract": "sentence",
       "items": [
         {
           "text": "A good relationship relies on trust and communication.",
@@ -642,6 +681,7 @@
         "high quality relationship"
       ],
       "sourceLine": 23,
+      "extract": "sentence",
       "items": [
         {
           "text": "In this class, we'll discuss the different ways to maintain a high quality relationship with your loved one.",
@@ -690,6 +730,7 @@
         "sound terrible"
       ],
       "sourceLine": 22,
+      "extract": "sentence",
       "items": [
         {
           "text": "Doesn't that sound terrible?",
@@ -734,6 +775,7 @@
         "book a flight"
       ],
       "sourceLine": 50,
+      "extract": "sentence",
       "items": [
         {
           "text": "What can you say if you want to book a flight?",
@@ -779,6 +821,7 @@
         "the chicken"
       ],
       "sourceLine": 31,
+      "extract": "sentence",
       "items": [
         {
           "text": "Would you like the beef or the chicken?",
@@ -824,6 +867,7 @@
         "love to"
       ],
       "sourceLine": 28,
+      "extract": "sentence",
       "items": [
         {
           "text": "Sure, I would love to.",
@@ -866,6 +910,7 @@
       "zhHint": "",
       "keywords": [],
       "sourceLine": 28,
+      "extract": "sentence",
       "items": [
         {
           "text": "Would you like some water?",
@@ -907,6 +952,7 @@
         "key questions"
       ],
       "sourceLine": 24,
+      "extract": "sentence",
       "items": [
         {
           "text": "All right, booking a hotel involves some key questions and steps.",
@@ -952,6 +998,7 @@
         "have a reservation"
       ],
       "sourceLine": 26,
+      "extract": "sentence",
       "items": [
         {
           "text": "Do you have a reservation?",
@@ -994,6 +1041,7 @@
       "zhHint": "",
       "keywords": [],
       "sourceLine": 33,
+      "extract": "sentence",
       "items": [
         {
           "text": "Hello, this is Adam.",
@@ -1027,11 +1075,34 @@
       "lessonNo": 23,
       "file": "2第二章：旅行和旅游/23.Bonus Time - Throw in the Towel.md",
       "title": "23.Bonus Time - Throw in the Towel",
-      "sentences": [],
+      "sentences": [
+        "his coach or assistant throws a towel into the ring and that means he's giving up",
+        "Throw in the Towel"
+      ],
       "zhHint": "",
-      "keywords": [],
-      "sourceLine": 0,
-      "items": []
+      "keywords": [
+        "his coach or assistant throws a towel into the ring and that means he's giving up"
+      ],
+      "sourceLine": 30,
+      "extract": "phrase-fallback",
+      "items": [
+        {
+          "text": "his coach or assistant throws a towel into the ring and that means he's giving up",
+          "zhHint": "",
+          "keywords": [
+            "his coach or assistant throws a towel into the ring and that means he's giving up"
+          ],
+          "sourceLine": 30
+        },
+        {
+          "text": "Throw in the Towel",
+          "zhHint": "",
+          "keywords": [
+            "Throw in the Towel"
+          ],
+          "sourceLine": 2
+        }
+      ]
     },
     {
       "courseId": "2-24",
@@ -1050,6 +1121,7 @@
         "places to visit"
       ],
       "sourceLine": 22,
+      "extract": "sentence",
       "items": [
         {
           "text": "Alright, there are so many amazing places to visit.",
@@ -1096,6 +1168,7 @@
         "help you"
       ],
       "sourceLine": 24,
+      "extract": "sentence",
       "items": [
         {
           "text": "Hi, how can I help you?",
@@ -1139,6 +1212,7 @@
         "Grand Palace"
       ],
       "sourceLine": 28,
+      "extract": "sentence",
       "items": [
         {
           "text": "The tour was visiting the famous landmark, The Grand Palace.",
@@ -1185,6 +1259,7 @@
         "photopass card"
       ],
       "sourceLine": 27,
+      "extract": "sentence",
       "items": [
         {
           "text": "How do I get a photopass card?",
@@ -1228,6 +1303,7 @@
         "unexpected happens"
       ],
       "sourceLine": 28,
+      "extract": "sentence",
       "items": [
         {
           "text": "I always get travel insurance, just in case anything unexpected happens on the trip.",
@@ -1274,6 +1350,7 @@
         "eat where"
       ],
       "sourceLine": 27,
+      "extract": "sentence",
       "items": [
         {
           "text": "Maybe I give you eat where.",
@@ -1318,6 +1395,7 @@
         "tourism from"
       ],
       "sourceLine": 22,
+      "extract": "sentence",
       "items": [
         {
           "text": "I am here for tourism from China.",
@@ -1362,6 +1440,7 @@
         "passed it"
       ],
       "sourceLine": 29,
+      "extract": "sentence",
       "items": [
         {
           "text": "Oh, I just passed it.",
@@ -1407,6 +1486,7 @@
         "around the city"
       ],
       "sourceLine": 29,
+      "extract": "sentence",
       "items": [
         {
           "text": "What is the best way to get around the city?",
@@ -1450,6 +1530,7 @@
       "zhHint": "",
       "keywords": [],
       "sourceLine": 27,
+      "extract": "sentence",
       "items": [
         {
           "text": "Hi Where are you headed?",
@@ -1492,6 +1573,7 @@
         "share about"
       ],
       "sourceLine": 24,
+      "extract": "sentence",
       "items": [
         {
           "text": "I have more to share about this topic.",
@@ -1536,6 +1618,7 @@
         "help you"
       ],
       "sourceLine": 28,
+      "extract": "sentence",
       "items": [
         {
           "text": "Hi, how can I help you?",
@@ -1582,6 +1665,7 @@
         "cook cookies"
       ],
       "sourceLine": 22,
+      "extract": "sentence",
       "items": [
         {
           "text": "A good cook could cook as many cookies as a good cook who could cook cookies.",
@@ -1627,6 +1711,7 @@
         "oatmeal with fruits"
       ],
       "sourceLine": 45,
+      "extract": "sentence",
       "items": [
         {
           "text": "This morning I had oatmeal with fruits.",
@@ -1655,6 +1740,7 @@
         "focusing on healthy"
       ],
       "sourceLine": 23,
+      "extract": "sentence",
       "items": [
         {
           "text": "We've been focusing on healthy eating.",
@@ -1704,6 +1790,7 @@
         "specific goals"
       ],
       "sourceLine": 23,
+      "extract": "sentence",
       "items": [
         {
           "text": "Many of us have tried to lose weight, whether for health or specific goals.",
@@ -1753,6 +1840,7 @@
         "fuller for longer"
       ],
       "sourceLine": 29,
+      "extract": "sentence",
       "items": [
         {
           "text": "High protein diet to help me feel fuller for longer.",
@@ -1799,6 +1887,7 @@
         "student eat"
       ],
       "sourceLine": 26,
+      "extract": "sentence",
       "items": [
         {
           "text": "Why did the student eat his homework?",
@@ -1844,6 +1933,7 @@
         "start with running"
       ],
       "sourceLine": 33,
+      "extract": "sentence",
       "items": [
         {
           "text": "I start with running.",
@@ -1888,6 +1978,7 @@
         "adequate sleep"
       ],
       "sourceLine": 37,
+      "extract": "sentence",
       "items": [
         {
           "text": "I always ensure I get adequate sleep.",
@@ -1925,6 +2016,7 @@
         "keep learning English"
       ],
       "sourceLine": 23,
+      "extract": "sentence",
       "items": [
         {
           "text": "I'm excited to keep learning English with you.",
@@ -1971,6 +2063,7 @@
         "socialize with others"
       ],
       "sourceLine": 31,
+      "extract": "sentence",
       "items": [
         {
           "text": "Walking the dog provides a good opportunity for people to socialize with others.",
@@ -2019,6 +2112,7 @@
         "good life"
       ],
       "sourceLine": 29,
+      "extract": "sentence",
       "items": [
         {
           "text": "Regular health checkups are essential for a good life.",
@@ -2066,6 +2160,7 @@
         "doctor's appointments"
       ],
       "sourceLine": 23,
+      "extract": "sentence",
       "items": [
         {
           "text": "We've been focusing on the doctor's appointments.",
@@ -2111,6 +2206,7 @@
         "help you"
       ],
       "sourceLine": 29,
+      "extract": "sentence",
       "items": [
         {
           "text": "Hi, how may I help you?",
@@ -2156,6 +2252,7 @@
         "harmonious relationship"
       ],
       "sourceLine": 30,
+      "extract": "sentence",
       "items": [
         {
           "text": "Kiss, as a sign of putting their differences aside, and make up, restoring a friendly or harmonious relationship.",
@@ -2186,6 +2283,7 @@
         "week to buy"
       ],
       "sourceLine": 26,
+      "extract": "sentence",
       "items": [
         {
           "text": "I go to this supermarket every week to buy groceries.",
@@ -2229,6 +2327,7 @@
         "snack section"
       ],
       "sourceLine": 40,
+      "extract": "sentence",
       "items": [
         {
           "text": "Excuse me, where is the snack section?",
@@ -2255,6 +2354,7 @@
       "zhHint": "",
       "keywords": [],
       "sourceLine": 27,
+      "extract": "sentence",
       "items": [
         {
           "text": "Is this on sale?",
@@ -2300,6 +2400,7 @@
         "needed to return"
       ],
       "sourceLine": 20,
+      "extract": "sentence",
       "items": [
         {
           "text": "Have you ever bought something that didn't work out and needed to return it?",
@@ -2344,6 +2445,7 @@
         "exchange this"
       ],
       "sourceLine": 30,
+      "extract": "sentence",
       "items": [
         {
           "text": "I'd like to exchange this item.",
@@ -2382,6 +2484,7 @@
       "zhHint": "",
       "keywords": [],
       "sourceLine": 0,
+      "extract": "sentence",
       "items": []
     },
     {
@@ -2401,6 +2504,7 @@
         "negotiate the price"
       ],
       "sourceLine": 24,
+      "extract": "sentence",
       "items": [
         {
           "text": "Can we negotiate the price?",
@@ -2446,6 +2550,7 @@
         "make that"
       ],
       "sourceLine": 28,
+      "extract": "sentence",
       "items": [
         {
           "text": "Can we make that work?",
@@ -2490,6 +2595,7 @@
         "sale going"
       ],
       "sourceLine": 25,
+      "extract": "sentence",
       "items": [
         {
           "text": "Is there a sale going on right now?",
@@ -2534,6 +2640,7 @@
         "save with"
       ],
       "sourceLine": 26,
+      "extract": "sentence",
       "items": [
         {
           "text": "How much can I save with this code?",
@@ -2576,6 +2683,7 @@
       "zhHint": "",
       "keywords": [],
       "sourceLine": 26,
+      "extract": "sentence",
       "items": [
         {
           "text": "Hi, what can I do for you?",
@@ -2617,6 +2725,7 @@
         "Shopping is"
       ],
       "sourceLine": 20,
+      "extract": "sentence",
       "items": [
         {
           "text": "Shopping is fun, right?",
@@ -2661,6 +2770,7 @@
         "fabric is"
       ],
       "sourceLine": 26,
+      "extract": "sentence",
       "items": [
         {
           "text": "What fabric is this made of?",
@@ -2701,6 +2811,7 @@
       "zhHint": "",
       "keywords": [],
       "sourceLine": 26,
+      "extract": "sentence",
       "items": [
         {
           "text": "Hi, what can I do for you?",
@@ -2745,6 +2856,7 @@
         "outside the box"
       ],
       "sourceLine": 18,
+      "extract": "sentence",
       "items": [
         {
           "text": "English is full of colorful slang and idioms, such as \"think outside the box\".",
@@ -2791,6 +2903,7 @@
         "have a reservation"
       ],
       "sourceLine": 28,
+      "extract": "sentence",
       "items": [
         {
           "text": "Do you have a reservation?",
@@ -2837,6 +2950,7 @@
         "server will"
       ],
       "sourceLine": 22,
+      "extract": "sentence",
       "items": [
         {
           "text": "The server will ask, Would you like something to drink?",
@@ -2880,6 +2994,7 @@
         "English learning journey"
       ],
       "sourceLine": 22,
+      "extract": "sentence",
       "items": [
         {
           "text": "I'm really excited to continue our English learning journey.",
@@ -2926,6 +3041,7 @@
         "serve the dish"
       ],
       "sourceLine": 35,
+      "extract": "sentence",
       "items": [
         {
           "text": "After all that, it's time to serve the dish.",
@@ -2968,6 +3084,7 @@
       "zhHint": "",
       "keywords": [],
       "sourceLine": 28,
+      "extract": "sentence",
       "items": [
         {
           "text": "Hi, what can I get you?",
@@ -3008,6 +3125,7 @@
         "health reasons"
       ],
       "sourceLine": 22,
+      "extract": "sentence",
       "items": [
         {
           "text": "This means talking about what foods we like, don't like, or choose to eat for health reasons.",
@@ -3056,6 +3174,7 @@
         "medium rare"
       ],
       "sourceLine": 30,
+      "extract": "sentence",
       "items": [
         {
           "text": "I love meat, my favorite is steak, especially when it's medium rare.",
@@ -3104,6 +3223,7 @@
         "Thai food"
       ],
       "sourceLine": 30,
+      "extract": "sentence",
       "items": [
         {
           "text": "I love the flavors of Thai food.",
@@ -3151,6 +3271,7 @@
         "French pastries"
       ],
       "sourceLine": 31,
+      "extract": "sentence",
       "items": [
         {
           "text": "Between sweet dishes and savory dishes, I prefer sweet desserts like French pastries.",
@@ -3197,6 +3318,7 @@
         "booth or"
       ],
       "sourceLine": 28,
+      "extract": "sentence",
       "items": [
         {
           "text": "Would you like a booth or a table?",
@@ -3241,6 +3363,7 @@
         "types of tea"
       ],
       "sourceLine": 32,
+      "extract": "sentence",
       "items": [
         {
           "text": "What types of tea do you have?",
@@ -3286,6 +3409,7 @@
         "relaxing music"
       ],
       "sourceLine": 31,
+      "extract": "sentence",
       "items": [
         {
           "text": "I like coffee shops with quiet and relaxing music.",
@@ -3329,6 +3453,7 @@
       "zhHint": "需要点些什么？",
       "keywords": [],
       "sourceLine": 30,
+      "extract": "sentence",
       "items": [
         {
           "text": "What can I get you?",
@@ -3371,6 +3496,7 @@
         "fly without wings"
       ],
       "sourceLine": 25,
+      "extract": "sentence",
       "items": [
         {
           "text": "I fly without wings.",
@@ -3416,6 +3542,7 @@
         "raining cats"
       ],
       "sourceLine": 21,
+      "extract": "sentence",
       "items": [
         {
           "text": "English is full of colorful slang and idioms, such as raining cats and dogs.",
@@ -3462,6 +3589,7 @@
         "good film"
       ],
       "sourceLine": 21,
+      "extract": "sentence",
       "items": [
         {
           "text": "Who doesn't love a good film or series, right?",
@@ -3507,6 +3635,7 @@
         "seen the latest"
       ],
       "sourceLine": 27,
+      "extract": "sentence",
       "items": [
         {
           "text": "Have you seen the latest episode of this show?",
@@ -3551,6 +3680,7 @@
         "excited to"
       ],
       "sourceLine": 22,
+      "extract": "sentence",
       "items": [
         {
           "text": "I'm so excited to be here with you today.",
@@ -3597,6 +3727,7 @@
         "lesson about concerts"
       ],
       "sourceLine": 21,
+      "extract": "sentence",
       "items": [
         {
           "text": "I hope you enjoyed our last lesson about concerts.",
@@ -3642,6 +3773,7 @@
         "love reading novels"
       ],
       "sourceLine": 23,
+      "extract": "sentence",
       "items": [
         {
           "text": "Sure, I love reading novels.",
@@ -3690,6 +3822,7 @@
         "fascinating lesson"
       ],
       "sourceLine": 21,
+      "extract": "sentence",
       "items": [
         {
           "text": "It's a pleasure to have you join me for yet another fascinating lesson.",
@@ -3736,6 +3869,7 @@
         "playing games"
       ],
       "sourceLine": 21,
+      "extract": "sentence",
       "items": [
         {
           "text": "Do you like playing games with your family or friends?",
@@ -3780,6 +3914,7 @@
         "fan of video"
       ],
       "sourceLine": 21,
+      "extract": "sentence",
       "items": [
         {
           "text": "Are you a fan of video games?",
@@ -3825,6 +3960,7 @@
         "stay healthy"
       ],
       "sourceLine": 21,
+      "extract": "sentence",
       "items": [
         {
           "text": "Sports are not only fun, but also a great way to stay healthy.",
@@ -3871,6 +4007,7 @@
         "table tennis"
       ],
       "sourceLine": 28,
+      "extract": "sentence",
       "items": [
         {
           "text": "Have you ever watched a live table tennis match?",
@@ -3918,6 +4055,7 @@
         "brand new"
       ],
       "sourceLine": 21,
+      "extract": "sentence",
       "items": [
         {
           "text": "Alright, here comes a brand new riddle.",
@@ -3952,11 +4090,25 @@
       "lessonNo": 12,
       "file": "6第六章：娱乐与消费/12 Daniel趣味分享.md",
       "title": "12 Daniel趣味分享",
-      "sentences": [],
+      "sentences": [
+        "paint the town red"
+      ],
       "zhHint": "",
-      "keywords": [],
-      "sourceLine": 0,
-      "items": []
+      "keywords": [
+        "paint the town red"
+      ],
+      "sourceLine": 9,
+      "extract": "phrase-fallback",
+      "items": [
+        {
+          "text": "paint the town red",
+          "zhHint": "",
+          "keywords": [
+            "paint the town red"
+          ],
+          "sourceLine": 9
+        }
+      ]
     },
     {
       "courseId": "7-01",
@@ -3975,6 +4127,7 @@
         "career planning"
       ],
       "sourceLine": 25,
+      "extract": "sentence",
       "items": [
         {
           "text": "Sure, career planning is really important to me.",
@@ -4023,6 +4176,7 @@
         "inspire people"
       ],
       "sourceLine": 27,
+      "extract": "sentence",
       "items": [
         {
           "text": "In the future, I want to lead a great team and inspire people.",
@@ -4063,6 +4217,7 @@
         "good job"
       ],
       "sourceLine": 21,
+      "extract": "sentence",
       "items": [
         {
           "text": "We all know that interviews are really important for getting a good job.",
@@ -4109,6 +4264,7 @@
         "learning about job"
       ],
       "sourceLine": 21,
+      "extract": "sentence",
       "items": [
         {
           "text": "In today's class, we'll continue learning about job interviews.",
@@ -4153,6 +4309,7 @@
         "inspire students"
       ],
       "sourceLine": 34,
+      "extract": "sentence",
       "items": [
         {
           "text": "My position is a teacher and my role is to educate and inspire students.",
@@ -4182,6 +4339,7 @@
         "important skill"
       ],
       "sourceLine": 21,
+      "extract": "sentence",
       "items": [
         {
           "text": "Understanding how to describe challenges and pressures in your job is an important skill.",
@@ -4230,6 +4388,7 @@
         "solutions to challenges"
       ],
       "sourceLine": 30,
+      "extract": "sentence",
       "items": [
         {
           "text": "Problem solving refers to finding solutions to challenges or difficulties.",
@@ -4275,6 +4434,7 @@
         "important skill"
       ],
       "sourceLine": 21,
+      "extract": "sentence",
       "items": [
         {
           "text": "Understanding how to set, describe and achieve your goals at work is an important skill.",
@@ -4313,6 +4473,7 @@
         "important to accomplish"
       ],
       "sourceLine": 28,
+      "extract": "sentence",
       "items": [
         {
           "text": "Tracking progress is important to accomplish goals.",
@@ -4359,6 +4520,7 @@
         "wet while drying"
       ],
       "sourceLine": 22,
+      "extract": "sentence",
       "items": [
         {
           "text": "What gets wet while drying?",
@@ -4404,6 +4566,7 @@
         "full of colorful slang"
       ],
       "sourceLine": 22,
+      "extract": "sentence",
       "items": [
         {
           "text": "English is full of colorful slang and idioms.",

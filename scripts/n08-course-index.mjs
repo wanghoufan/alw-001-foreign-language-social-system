@@ -308,6 +308,38 @@ function isUsableSentence(s) {
   return true;
 }
 
+/**
+ * 兜底：整句抽不到时，从中文讲解里抽嵌在句子中的英文短语（≥3 词）。
+ * 只做机械截取，不翻译、不补全；质量靠下游人工核对。
+ */
+function phraseCandidates(lines) {
+  const out = [];
+  const seen = new Set();
+  const runRe = /[A-Za-z][A-Za-z'’-]*(?:[ ,]+[A-Za-z][A-Za-z'’-]*){2,}/g;
+  for (let li = 0; li < lines.length; li += 1) {
+    const text = typeof lines[li] === 'string' ? lines[li] : String(lines[li] && lines[li].text || '');
+    if (!text || /^\s*#{1,6}\s/.test(text)) continue;
+    const no = li + 1;
+    runRe.lastIndex = 0;
+    let m;
+    while ((m = runRe.exec(text)) !== null) {
+      const raw = m[0].replace(/\s+/g, ' ').trim().replace(/[ ,]+$/, '');
+      const words = raw.split(' ');
+      const letters = (raw.match(/[A-Za-z]/g) || []).length;
+      if (words.length < 3 || letters < 10) continue;
+      if (BOILERPLATE.some((re) => re.test(raw)) || META.some((re) => re.test(raw))) continue;
+      const key = raw.toLowerCase();
+      if (seen.has(key)) continue;
+      seen.add(key);
+      out.push({ text: raw, zhHint: '', start: m.index, end: m.index + raw.length, sourceLine: no, phrase: true });
+    }
+  }
+  // 优先带常见动词/疑问词的片段，其次按长度
+  const boost = /\b(is|are|was|were|do|does|did|have|has|can|could|will|would|want|like|enjoy|love|go|get|take|make|how|what|when|where|why|who)\b/i;
+  out.sort((a, b) => (boost.test(b.text) ? 1 : 0) - (boost.test(a.text) ? 1 : 0) || b.text.length - a.text.length);
+  return out;
+}
+
 function sentenceCandidates(line) {
   const out = [];
   ASCII_RUN.lastIndex = 0;
@@ -632,6 +664,7 @@ function main() {
         rel,
         title: p.title,
         candidates: p.candidates,
+        lines: p.lines,
         lineCount: p.lines.length,
       });
     }
@@ -652,11 +685,16 @@ function main() {
   const courses = [];
   const titleMap = new Map(); // 归一化标题 → [{courseId, title}]
   for (const p of parsed) {
-    const picked = pickSentences(p.candidates);
+    let picked = pickSentences(p.candidates);
+    let fallbackUsed = false;
+    if (!picked.length && Array.isArray(p.lines) && p.lines.length) {
+      const fb = phraseCandidates(p.lines).slice(0, 3);
+      if (fb.length) { picked = fb; fallbackUsed = true; }
+    }
     const items = picked.map((it) => ({
       text: it.text,
       zhHint: it.zhHint,
-      keywords: extractKeywords(it.text, df),
+      keywords: it.phrase ? [it.text] : extractKeywords(it.text, df),
       sourceLine: it.sourceLine,
     }));
     if (items.length === 0) noEnglish.push(p.rel);
@@ -673,6 +711,7 @@ function main() {
       zhHint: primary ? primary.zhHint : '',
       keywords: primary ? primary.keywords : [],
       sourceLine: primary ? primary.sourceLine : 0,
+      extract: fallbackUsed ? 'phrase-fallback' : 'sentence',
       items,
     });
     const normTitle = p.title.replace(/^\d+[.\s]*/, '').trim();
