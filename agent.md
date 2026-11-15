@@ -28,15 +28,6 @@
 - 2026-11-10 · 分类维度 · 用户指出只有生活/文化/健身太少 · 96 条内容压在「更多」大杂烩 · 补球类 18、板类与户外 14、工作学习 20、家庭与关系 17、金钱健康科技 18，共 170 条；一级标签不增，页内按 `subtheme` 分组渲染，避免顶部标签继续膨胀。`建议进用户级`
 - 2026-11-10 · 球类内容 · 外国朋友爱打球，原有仅足球/篮球 · 缺乒乓球、网球、匹克球等 · 按项目一条，来源用国际单项联合会（ITTF/Wimbledon/Pickleball Canada/BWF/FIVB/WBSC/ICC/World Rugby/R&A/WPBSA/USBC/World Squash/IHF），便于后续按兴趣扩展。
 
-## 2026-11-10 体验修正（0.9.21）
-
-- 2026-11-10 · 点词提示勾选 · 页面根本没有该复选框，`cloudConsentChecked()` 恒 false，自动接话也从未触发 · 改版删了 UI 但门禁代码残留 · 取消门禁代码而不是把复选框加回来；移除前先 grep 所有 `cloudConsent/translateConsent/ttsConsent/aiConsent`。`建议进用户级`
-- 2026-11-10 · 翻译/接话 401 · APK 内 `/api/ai/*` 要求 `x-archive-token`，页面直连 fetch 未带 · 之前被 consent 门禁挡住没暴露 · 所有 `/api/ai/*` 页面请求统一带 `uiToken()`，并用真机回读验证。`建议进用户级`
-- 2026-11-10 · 接话显示 `[object Object]` · 真实 AI `reply` 是对象，渲染按字符串拼接 · 门禁取消后 AI 首次真正触发 · 新增 `aiReplyParts()` 兼容字符串/对象，网页断言检查无 `[object Object]`。`建议进用户级`
-- 2026-11-10 · 点词卡字号被放大 · 卡片内 p 继承全局 `p{font-size:19px!important}`，四问每条 134px、整卡 961px · 全局字号下限规则优先级最高 · 卡片作用域加 `!important` 覆盖；改完用 CDP 量 scrollHeight，目标 ≤ 视口。`建议进用户级`
-- 2026-11-10 · 复制提示受浏览器限制 · JS 合成 click 无用户手势，`execCommand('copy')` 与 clipboard 都被拒 · 真机验证不能用 `element.click()` 判剪贴板 · 用 CDP `Input.dispatchMouseEvent` 派发真实输入再读 toast；真实手指点击可正常复制。`建议进用户级`
-- 2026-11-10 · 英文问句断行难看 · 复制按钮与问句同行挤占 232px 宽 · 长英文在窄栏被挤成「it?」 · 按钮移到中文行右侧，英文独占整行；先量宽再调布局。`建议进用户级`
-
 ## 2026-11-11 N07 译英 / 暂停继续 / 顶栏
 
 - 2026-11-11 · 译英永不触发 · 点顶部「译英」无请求、无译文 · 腾讯 ASR 只给 `spk_0/spk_5`，页面 `m.who` 恒为 `unknown`，`chatEnRun()` 只认 `who==='me'`，两条路径都 return · 点选优先不再校验 who，自动路径放宽到 `speakerLabel==='我'`；同时把按钮下放到中文气泡。`建议进用户级`
@@ -47,3 +38,14 @@
 - 2026-11-11 · 子代理越权改文档 · `CURRENT_TASK.md` 被删 N06 历史并写回「唯一 OPPO 验收」 · 白名单只写了实现文件，未明确禁止改指针/文档 · 子代理收工必须 `git status` 核对并读 diff；指针类文档由主代理在复盘阶段统一改。
 - 2026-11-11 · CodeArts 积分耗尽 · F 路首条即报「积分已耗尽」并退出 · 并发额度用完后 CLI 仍能启动 · 先跑阶段 0 的最小调用确认额度；失败立即切内置子代理，不重试刷额度。`建议进用户级`
 - 2026-11-11 · mock 事件验 UI · 注入 `handleLiveAsrEvent({mock:true})` 能渲染气泡并触发真实译英 · 页面函数挂在全局，取证方便 · 用 mock 只能证明 UI 与接口链路，报告必须标注 mock，不得写成 ASR 通过。`建议进用户级`
+
+## 2026-11-14~15 N08 聊天页版式与渲染口径
+
+- 2026-11-14 · OPPO 上看不到「译英」 · 已装 0.9.28/vc96，功能在 0.9.32/vc100 · 版本真源是台账 §H 与 `dumpsys package`，不是项目文档或记忆 · 先读设备 versionCode，再 `adb pull` 已装包 grep 特征串（`译英`/`draft-en`），最后才谈升级。`建议进用户级`
+- 2026-11-14 · 装完仍是旧版面 · 我把「改文件」和「构建」两个调用并行发出，Gradle 先跑完 · 构建按内容哈希判 up-to-date，编辑未落盘就构建 · 编辑→构建必须串行；构建后用 `unzip -p <apk> assets/v12/index.html | grep <特征串>` 回读产物。`建议进用户级`
+- 2026-11-14 · 聊天容器被撑到 898px、文字跑出屏幕 · 列向 flex 子项默认 `min-width:auto`，长内容把宽度顶开 · CSS 只设了 `min-height:0`，没有 `min-width:0` · 容器链统一 `min-width:0` + `width:100%`，用 CDP 量 `document.scrollWidth` 与逐个元素 right 边复核。`建议进用户级`
+- 2026-11-14 · 对话永远只显示 3 条 · 新句子走 `appendBubble()`（`afterbegin`+`while(children>3)`），其它重绘走 `render()`（80 条正序） · 同一列表存在两套渲染口径，历史遗留的 3 条截断从未清理 · 收敛成单一口径：末尾追加、上限 80、滚到底；验收用「DOM 条数 == 会话条数」逐条对齐。`建议进用户级`
+- 2026-11-14 · 录音时画面反复抖动 · 采样实测对话区顶部 43→97→126→43px 三跳 · `.live-interim` 没有固定高度且 `:empty{display:none}`，每条中间结果都在增删一段 51–80px 的块 · 实时字幕行固定 38px、`display:flex!important`、底部对齐；改后用 200ms 采样确认 top/height 位移为 0。`建议进用户级`
+- 2026-11-14 · 聊天页字号改不动 · 设 16/17px 无效，`getComputedStyle` 仍 19px · 文末「字号下限」块用 `p{font-size:19px!important}` 兜底 · 聊天页用更高特异性 + `!important` 覆盖，并记明这是用户授权的例外；改前先读 `getComputedStyle` 确认真值。`建议进用户级`
+- 2026-11-14 · 安装前一再掉设备 · `adb install` 报 `device not found`，`adb devices` 已无该机 · 线/转接头接触，且 USB 总线上已无设备（非 adb 服务挂掉） · 先看 `adb devices -l` 判断是掉线还是未授权，再请用户重插；掉线期间不重试安装。`建议进用户级`
+- 2026-11-15 · 用户报「抖动」我先问描述 · 用户拒绝口述并要求自查，随后用采样器一次定位 · 现象可量化时问一句不如量一次 · top/height/类名按 200ms 采样、对比变化次数，是定位抖动最快路径。`建议进用户级`

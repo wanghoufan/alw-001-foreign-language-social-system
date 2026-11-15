@@ -251,3 +251,11 @@
 - AI：`POST /api/ai/draft-en`，`consent:true` 必填，复用 DeepSeek 账本与 `AI_BUSY` 闸，只返回草稿。
 - 前端桥：卡片模块位于 N05 的 IIFE 内，页面其它脚本通过 `window.__smCards` 调用；令牌注入后由 `__smAfterToken` 补拉三类卡片。
 - 原生：`AsrActivity` 注册 `WebChromeClient` 仅覆盖 `onShowFileChooser`，`onActivityResult` 用 `FileChooserParams.parseResult` 回传；不接管 alert/confirm。
+
+## N08 聊天页布局事实（2026-11-15，0.9.40/vc108）
+
+- 布局链：`body.sm-fillchat` 由 `render()` 每次切换；`.main` 变 flex 列、`height:100dvh`，`.content` 充满，`.chatv15.v152` 用 `height:auto!important` 吃掉剩余高度（不再用 `calc(100dvh-200px)`）。非聊天页不受影响。
+- 分区：`.v152subs{flex:3}` / `.v152coach{flex:2}`；`.v152refs` 固定 36px；实时字幕行 `#asrInterim` 固定 38px，是防抖动的关键件。
+- 渲染：`render()` 渲染最近 80 条（正序），`appendBubble()` 末尾追加并裁到 80；两者口径必须一致，否则会出现「3 条 ↔ 满屏」抖动。
+- 字号：`body.sm-fillchat` 作用域内经 `#v152-chat-dense` 覆盖全局 `p{font-size:19px!important}` 下限（字幕 17 / 接话 16 / 标签 12）。
+- 构建：`android-poc/app/build.gradle` 的 `copyWebAssets` 从 `socialmate-v1.2/index.html` 复制进 `assets/v12`；改页面必须重新 assembleDebug，并 `unzip -p <apk> assets/v12/index.html | grep <特征串>` 回读。
