@@ -2530,7 +2530,7 @@ function n08Call(url,text,kind,extra){
 function n08VoiceStart(){
   const st=n08Ensure();
   if(!(window.SocialMateAndroid&&window.SocialMateAndroid.requestRecording)){st.voiceErr='当前环境没有原生录音通道';render();return}
-  st.capture=true;st.listening=true;st.voiceErr='';st.composer='zh';
+  st.capture=true;st.listening=true;st.voiceErr='';st.composer='zh';st.captureParts=[];
   st.captureUntil=Date.now()+20000;
   try{sessionStorage.setItem('sm.n08.capture','1');sessionStorage.setItem('sm.n08.until',String(st.captureUntil))}catch(e){}
   try{if(typeof ensureSession==='function')ensureSession()}catch(e){}
@@ -2541,7 +2541,7 @@ function n08VoiceStart(){
 }
 function n08VoiceStop(msg){
   const st=n08Ensure();
-  st.capture=false;st.listening=false;
+  st.capture=false;st.listening=false;st.captureParts=[];
   try{sessionStorage.removeItem('sm.n08.capture');sessionStorage.removeItem('sm.n08.until')}catch(e){}
   clearTimeout(n08VoiceStart._t);
   try{if(window.SocialMateAndroid&&window.SocialMateAndroid.stopRecording)window.SocialMateAndroid.stopRecording()}catch(e){}
@@ -2549,6 +2549,20 @@ function n08VoiceStop(msg){
   if(S.tab==='expr')render();
 }
 function n08VoiceDone(text){
+  const st=n08Ensure();
+  const t=String(text||'').trim();
+  if(!t)return;
+  const joined=((st.captureParts||[]).concat([t])).join('，');
+  st.captureParts=joined.split('，').filter(Boolean);
+  clearTimeout(n08VoiceDone._t);
+  n08VoiceDone._t=setTimeout(function(){
+    const all=(st.captureParts||[]).join('，');
+    st.captureParts=[];
+    n08VoiceSubmit(all);
+  },900);
+  if(S.tab==='expr'&&st.composer)render();
+}
+function n08VoiceSubmit(text){
   const st=n08Ensure();
   const t=String(text||'').trim();
   if(!t){n08VoiceStop('没有识别到内容，请再说一次');return}
