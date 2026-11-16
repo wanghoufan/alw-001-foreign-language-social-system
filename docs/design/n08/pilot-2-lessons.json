@@ -1,0 +1,250 @@
+[
+  {
+    "courseId": "1-02",
+    "title": "2.家庭成员（下）",
+    "chapter": "家庭与朋友",
+    "cards": [
+      {
+        "courseId": "1-02",
+        "topic": "家庭成员",
+        "mode": 2,
+        "base": {
+          "promptZh": "你问对方有几个兄弟姐妹",
+          "answerEn": "How many siblings do you have?"
+        },
+        "generalize": [
+          {
+            "kind": "person",
+            "promptZh": "问别人（他）有几个兄弟姐妹",
+            "answerEn": "How many siblings does he have?"
+          },
+          {
+            "kind": "object",
+            "promptZh": "问对方有几个孩子",
+            "answerEn": "How many children do you have?"
+          }
+        ],
+        "keywords": [
+          "How many siblings do you have"
+        ],
+        "sourceLine": 2,
+        "why": "西方常见开场问句，骨架清晰，适合零基础直接套用"
+      },
+      {
+        "courseId": "1-02",
+        "topic": "家庭成员",
+        "mode": 3,
+        "base": {
+          "promptZh": "我是独生子女",
+          "answerEn": "I am an only child."
+        },
+        "generalize": [
+          {
+            "kind": "form",
+            "promptZh": "问对方是不是独生子女",
+            "answerEn": "Are you an only child?"
+          },
+          {
+            "kind": "person",
+            "promptZh": "说她是独生子女",
+            "answerEn": "She is an only child."
+          }
+        ],
+        "keywords": [
+          "an only child"
+        ],
+        "sourceLine": 11,
+        "why": "独生子女高频表达，陈述与疑问转换简单实用"
+      },
+      {
+        "courseId": "1-02",
+        "topic": "兴趣爱好",
+        "mode": 3,
+        "base": {
+          "promptZh": "我喜欢旅行",
+          "answerEn": "I love traveling."
+        },
+        "generalize": [
+          {
+            "kind": "object",
+            "promptZh": "我喜欢游泳",
+            "answerEn": "I love swimming."
+          },
+          {
+            "kind": "person",
+            "promptZh": "说他喜欢旅行",
+            "answerEn": "He loves traveling."
+          }
+        ],
+        "keywords": [
+          "love + 动词ing"
+        ],
+        "sourceLine": 6,
+        "why": "love加动名词与enjoy同骨架，适合对比练习第三人称单数"
+      },
+      {
+        "courseId": "1-02",
+        "topic": "来源与现居",
+        "mode": 3,
+        "base": {
+          "promptZh": "他来自美国",
+          "answerEn": "He's from the USA."
+        },
+        "generalize": [
+          {
+            "kind": "object",
+            "promptZh": "他来自英国",
+            "answerEn": "He's from the UK."
+          },
+          {
+            "kind": "person",
+            "promptZh": "我来自美国",
+            "answerEn": "I'm from the USA."
+          }
+        ],
+        "keywords": [
+          "He's from the USA"
+        ],
+        "sourceLine": 13,
+        "why": "介绍家人国籍的核心句型，替换国家名即可大量复用"
+      },
+      {
+        "courseId": "1-02",
+        "topic": "来源与现居",
+        "mode": 3,
+        "base": {
+          "promptZh": "但他现在住在中国",
+          "answerEn": "But at the moment he lives in China."
+        },
+        "generalize": [
+          {
+            "kind": "object",
+            "promptZh": "但他现在住在加拿大",
+            "answerEn": "But at the moment he lives in Canada."
+          },
+          {
+            "kind": "person",
+            "promptZh": "但我现在住在中国",
+            "answerEn": "But at the moment I live in China."
+          }
+        ],
+        "keywords": [
+          "at the moment he lives in"
+        ],
+        "sourceLine": 7,
+        "why": "说明现居地的完整句块，与来源句搭配可组成自我介绍"
+      }
+    ]
+  },
+  {
+    "courseId": "2-17",
+    "title": "17.Y机舱服务1",
+    "chapter": "旅行和旅游",
+    "cards": [
+      {
+        "courseId": "2-17",
+        "topic": "场景短语",
+        "mode": 3,
+        "base": {
+          "promptZh": "不好意思，你能帮我找个放包的地方吗？",
+          "answerEn": "Could you help me find a place for my bag?"
+        },
+        "generalize": [
+          {
+            "kind": "object",
+            "promptZh": "不好意思，你能帮我找个放背包的地方吗？",
+            "answerEn": "Could you help me find a place for my backpack?"
+          },
+          {
+            "kind": "object",
+            "promptZh": "不好意思，你能帮我找个放自行车的地方吗？",
+            "answerEn": "Could you help me find a place for my bike?"
+          }
+        ],
+        "keywords": [
+          "Could you help me find a place for"
+        ],
+        "sourceLine": 4,
+        "why": "放行李万能句型，替换物品即可复用，适合零基础开口求助。"
+      },
+      {
+        "courseId": "2-17",
+        "topic": "场景短语",
+        "mode": 3,
+        "base": {
+          "promptZh": "可以给我一条毯子吗？",
+          "answerEn": "Can I have a blanket?"
+        },
+        "generalize": [
+          {
+            "kind": "object",
+            "promptZh": "可以给我一杯水吗？",
+            "answerEn": "Can I have a glass of water?"
+          },
+          {
+            "kind": "object",
+            "promptZh": "可以给我一杯咖啡吗？",
+            "answerEn": "Can I have a coffee?"
+          }
+        ],
+        "keywords": [
+          "Can I have"
+        ],
+        "sourceLine": 6,
+        "why": "Can I have 是机上要东西的万能骨架，替换物品即可。"
+      },
+      {
+        "courseId": "2-17",
+        "topic": "场景短语",
+        "mode": 3,
+        "base": {
+          "promptZh": "我可以坐那边靠窗的座位吗？",
+          "answerEn": "Can I take the window seat over there?"
+        },
+        "generalize": [
+          {
+            "kind": "object",
+            "promptZh": "我可以坐那边靠过道的座位吗？",
+            "answerEn": "Can I take the aisle seat over there?"
+          },
+          {
+            "kind": "object",
+            "promptZh": "我可以坐那边中间的座位吗？",
+            "answerEn": "Can I take the middle seat over there?"
+          }
+        ],
+        "keywords": [
+          "Can I take the ... seat over there"
+        ],
+        "sourceLine": 14,
+        "why": "换座位核心句型，三种座位词块一次覆盖。"
+      },
+      {
+        "courseId": "2-17",
+        "topic": "场景短语",
+        "mode": 3,
+        "base": {
+          "promptZh": "到纽约要多久？",
+          "answerEn": "How long will it take to reach New York?"
+        },
+        "generalize": [
+          {
+            "kind": "object",
+            "promptZh": "到加拿大要多久？",
+            "answerEn": "How long will it take to reach Canada?"
+          },
+          {
+            "kind": "form",
+            "promptZh": "到纽约要多久？（改成一般疑问句）",
+            "answerEn": "Will it take long to reach New York?"
+          }
+        ],
+        "keywords": [
+          "How long will it take to reach"
+        ],
+        "sourceLine": 19,
+        "why": "询问飞行时长的核心问句，替换地点即可复用。"
+      }
+    ]
+  }
+]

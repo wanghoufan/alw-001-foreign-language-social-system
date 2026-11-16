@@ -96,6 +96,39 @@ ${cands.map((c, i) => `${i + 1}. ${c.text}${c.zhHint ? '（原文中文：' + c.
 {"courseId":"${course.courseId}","topic":"场景短语","mode":3,"base":{"promptZh":"中文提示","answerEn":"原句"},"generalize":[{"kind":"person","promptZh":"改成说他/她之后的中文提示","answerEn":"变式英文"},{"kind":"form","promptZh":"改成疑问句的中文提示","answerEn":"变式英文"},{"kind":"object","promptZh":"换掉对象后的中文提示","answerEn":"变式英文"}],"keywords":["骨架词组"],"sourceLine":22,"why":"为什么选它"}`;
 }
 
+async function qaCards(key, cards) {
+  const rules = `你是英语教学编辑，负责给复习卡做质检。输入是一批卡片 JSON。
+请逐条检查，只保留合格的，并把不合格的改好（改不了就删掉）：
+1. 原句必须是完整、语法正确的英文，逐字可用；不是语音转写碎片。
+2. 泛化必须与它标注的 kind 相符：
+   - person＝只换主语（并保证三单正确）；
+   - form＝只改句式（陈述↔疑问、肯定↔否定），不是换同义词；
+   - object＝只换宾语/地点/物品；
+   - tense＝只改时态。
+3. 泛化语义必须通顺、日常可用；像「他真的很冷」这种把天气句硬套到人身上的，删除。
+4. 泛化不超过 10 个词，零基础能答。
+5. 每张卡至少保留 2 条泛化；不足就从同骨架另造，造不出就删卡。
+只输出修正后的 JSON 数组，字段结构不变，不要解释。`;
+  const r = await fetch(API, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + key },
+    body: JSON.stringify({
+      model: 'deepseek-chat',
+      temperature: 0.1,
+      messages: [
+        { role: 'system', content: '你是严格的英语教学质检，只输出合法 JSON 数组。' },
+        { role: 'user', content: rules + '\n\n输入：\n' + JSON.stringify(cards) },
+      ],
+    }),
+  });
+  const d = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error('QA ' + r.status);
+  const text = d.choices && d.choices[0] ? d.choices[0].message.content : '';
+  const a = text.indexOf('['), b = text.lastIndexOf(']');
+  if (a < 0 || b < a) return cards;
+  try { return JSON.parse(text.slice(a, b + 1)); } catch (e) { return cards; }
+}
+
 async function callDeepSeek(key, prompt) {
   const r = await fetch(API, {
     method: 'POST',
@@ -175,8 +208,9 @@ async function main() {
       card.generalize = (card.generalize || []).map(fix);
       return card;
     });
-    results.push({ courseId: course.courseId, title: course.title, chapter: course.chapter, cards });
-    console.log(`✔ ${id} ${course.title} → ${cards.length} 张卡`);
+    const checked = await qaCards(key, cards);
+    results.push({ courseId: course.courseId, title: course.title, chapter: course.chapter, cards: checked });
+    console.log(`✔ ${id} ${course.title} → 生成 ${cards.length} 张，质检后 ${checked.length} 张`);
   }
   if (o.dryRun) return 0;
   if (o.out) {
@@ -184,6 +218,9 @@ async function main() {
     await fs.writeFile(path.resolve(o.out), render(results) + '\n', 'utf8');
     console.log('写出：' + path.resolve(o.out));
   }
+  const jsonOut = path.resolve(o.out || 'docs/design/n08/pilot-2-lessons.md').replace(/\.md$/, '.json');
+  await fs.writeFile(jsonOut, JSON.stringify(results, null, 2) + '\n', 'utf8');
+  console.log('JSON：' + jsonOut);
   console.log(JSON.stringify(results, null, 2));
   return 0;
 }
