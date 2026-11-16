@@ -268,3 +268,11 @@
 - 周包：`buildWeeklyPack({items,size,seed,now})` 出 5/10/15 题（模式 1/2/3，中文题干）；回填格式 `题号 | 结果`（也兼容 4 列三模式），解析器容忍 ``` 围栏与块外总结句；`stampSubmit` 幂等，同包同日重复回贴拒绝。
 - 教练提示词由 `n08PackPrompt(pack)` 生成：纪律 + 评分标准 + 题库 + 参考答案（禁止提前透露）+ 带「待填」的回填块。
 - 日期一律本地时区（`n08Today()`），禁止 `toISOString().slice(0,10)`。
+
+## N08 课程卡与复习卡（2026-11-16）
+
+- 索引：`socialmate-v1.2/source/n08-course-index.json`（100 课 / 699 句候选），字段 `courseId/chapter/title/items[{text,zhHint,keywords,sourceLine}]/extract`；`extract=phrase-fallback` 表示整句抽不到时从中文讲解里截取的短语。
+- 抽取：整句规则（大写开头+完整标点+纯英文行）→ 抽不到则短语兜底（≥3 词、≥10 字母）；**上限 `MAX_PER_COURSE` 只防刷屏**，默认按内容量取。
+- 策展：`scripts/n08-curate-cards.mjs` 调 DeepSeek，输入「本课总结 + 候选句」，输出卡片 JSON（base 原句 + generalize 变式），再做一轮 QA（骨架/语义/标签/长度），失败项删或改写。
+- 变式类型：`person`（换人称，含三单）｜`form`（陈述↔疑问、肯定↔否定）｜`object`（换对象/地点/物品）｜`tense`（换时态）。
+- 入库：原句与变式都作为独立条目（`source=course`，带 `courseId` 与 `variant`），周包按条目抽题；页面「课程 → 转复习卡」走同一套字段。
