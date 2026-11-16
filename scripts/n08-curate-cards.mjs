@@ -81,17 +81,19 @@ ${cands.map((c, i) => `${i + 1}. ${c.text}${c.zhHint ? '（原文中文：' + c.
 【硬性要求】
 1. 原句必须逐字来自候选列表；只允许补句末标点、首字母大写，其余一字不改。
 2. 丢弃语法不成立、断句错、明显语音转写串词的句子。
-3. 每张卡必须带 1–2 条泛化，泛化的目的是「把课本句换成我自己的情况」，做法固定：
-   - 优先换动词宾语/活动：enjoy reading books → enjoy running / enjoy swimming；
-   - 其次换物品、地点、人：for my backpack → for my bike；in China → in Canada；
-   - 每次只换 1 个成分，换完仍不超过 8 个词。
+3. 每张卡必须带 2–3 条泛化，泛化不是「换个单词」，而是**同骨架的句式变式**，必须覆盖至少 2 种不同类型：
+   - person｜换人称：I enjoy reading → He enjoys reading（注意第三人称单数）
+   - form｜换句式：陈述 ↔ 疑问（I am an only child → Are you an only child?）、肯定 ↔ 否定（I have siblings → I don't have any siblings）
+   - object｜换对象/地点/物品：for my bag → for my bike；in China → in Canada
+   - tense｜换时态（仅当原句简单且时态明确时用）：I went hiking → I will go hiking
+   每条泛化只允许一处结构性变化（换人称、改句式、换对象其中之一），换完不超过 10 个词，保持零基础可答。
 4. 泛化的中文提示必须写出替换后的具体意思（如「我喜欢打羽毛球」），不许出现答案英文。
 5. 每题一模式：1=中文→英文词组；2=中文情境→英文完整句；3=中文整句→英文完整句。
 6. 题干中文自足，不许出现「这个」「那样」这类指代。
 7. 只输出 JSON 数组，不要代码块、不要解释。
 
 每个对象格式：
-{"courseId":"${course.courseId}","topic":"场景短语","mode":3,"base":{"promptZh":"中文提示","answerEn":"原句"},"generalize":[{"promptZh":"换成我自己的情况后的中文提示","answerEn":"替换后的英文","swap":"换了哪个词"}],"keywords":["骨架词组"],"sourceLine":22,"why":"为什么选它"}`;
+{"courseId":"${course.courseId}","topic":"场景短语","mode":3,"base":{"promptZh":"中文提示","answerEn":"原句"},"generalize":[{"kind":"person","promptZh":"改成说他/她之后的中文提示","answerEn":"变式英文"},{"kind":"form","promptZh":"改成疑问句的中文提示","answerEn":"变式英文"},{"kind":"object","promptZh":"换掉对象后的中文提示","answerEn":"变式英文"}],"keywords":["骨架词组"],"sourceLine":22,"why":"为什么选它"}`;
 }
 
 async function callDeepSeek(key, prompt) {
@@ -127,7 +129,7 @@ function render(courses, outPath) {
     lines.push(`## ${c.courseId} 《${c.title}》（${c.chapter}）`, '');
     lines.push('| # | 模式 | 中文提示（原句） | 原句 | 泛化：中文提示 → 英文 |', '|---|---|---|---|---|');
     c.cards.forEach((card, i) => {
-      const g = (card.generalize || []).map((x) => `${x.promptZh} → ${x.answerEn}`).join('<br>');
+      const g = (card.generalize || []).map((x) => `[${x.kind || '—'}] ${x.promptZh} → ${x.answerEn}`).join('<br>');
       lines.push(`| ${i + 1} | ${card.mode} | ${card.base.promptZh} | ${card.base.answerEn} | ${g || '—'} |`);
     });
     lines.push('');
