@@ -2,8 +2,8 @@
   "task": "n08-responsive-check",
   "page": "file:///Users/zzymima0000/Developer/coding/1.Active/alw-001-%E5%A4%96%E8%AF%AD%E7%A4%BE%E4%BA%A4%E7%B3%BB%E7%BB%9F/socialmate-v1.2/index.html",
   "pageFile": "/Users/zzymima0000/Developer/coding/1.Active/alw-001-外语社交系统/socialmate-v1.2/index.html",
-  "generatedAt": "2026-11-15T23:01:18.562+08:00",
-  "startedAt": "2026-11-15T23:01:10.584+08:00",
+  "generatedAt": "2026-11-18T17:51:50.230+08:00",
+  "startedAt": "2026-11-18T17:51:41.711+08:00",
   "engine": "system-chrome-headless-cdp: /Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
   "engineNotes": [
     "playwright 自带 chromium 不可用：Cannot find package 'playwright' imported from /Users/zzymima0000/Developer/coding/1.Active/alw-001-外语社交系统/scripts/n08-responsive-check.mjs",
@@ -132,22 +132,22 @@
               "index": 3,
               "navKey": "chat",
               "label": "◉ 聊天",
-              "textLength": 115,
+              "textLength": 117,
               "pass": true,
               "thinView": true,
               "thinReason": "聊天页空态：未开始录音时只有两行占位说明（实测约 110 字）",
-              "textHead": "未 未开始 译英 开始 ⋯ 点「开始录音」后，对话原文会实时出现在这里。 说一句之后，这里固定给一条接话和一条追问。 感恩节 ▦ 话题 ⌖ 海南 ◉ 聊天 ✎ ",
+              "textHead": "未 未开始 译英 开始 ⋯ 点「开始录音」后，对话原文会实时出现在这里。 说一句之后，这里固定给一条接话和一条追问。 圣安德鲁日 ▦ 话题 ⌖ 海南 ◉ 聊天 ",
               "errors": []
             },
             {
               "index": 4,
               "navKey": "expr",
               "label": "✎ 表达",
-              "textLength": 131,
+              "textLength": 118,
               "pass": true,
               "thinView": true,
               "thinReason": "表达页空态：还没有表达记录时只有入口与空态文案（实测约 131 字）",
-              "textHead": "◐ ⚙ 说中文 查英文 批量粘贴 本周巩固 课程 0 已学 ⌕ 全部 待复习 已收藏 有地点 还没有表达记录。点上面「说中文」说一句，或用「批量粘贴」导入。 ▦",
+              "textHead": "说中文 查英文 粘贴 本周 课程 ⌕ 全部 待复习 已收藏 有地点 还没有表达记录。点上面「说中文」说一句，或用「批量粘贴」导入。 ▦ 话题 ⌖ 海南 ◉ 聊天",
               "errors": []
             },
             {
@@ -255,14 +255,14 @@
             "index": 3,
             "navKey": "chat",
             "label": "◉ 聊天",
-            "textLength": 115,
+            "textLength": 117,
             "reason": "聊天页空态：未开始录音时只有两行占位说明（实测约 110 字）"
           },
           {
             "index": 4,
             "navKey": "expr",
             "label": "✎ 表达",
-            "textLength": 131,
+            "textLength": 118,
             "reason": "表达页空态：还没有表达记录时只有入口与空态文案（实测约 131 字）"
           },
           {
@@ -359,22 +359,22 @@
               "index": 3,
               "navKey": "chat",
               "label": "◉ 聊天",
-              "textLength": 115,
+              "textLength": 117,
               "pass": true,
               "thinView": true,
               "thinReason": "聊天页空态：未开始录音时只有两行占位说明（实测约 110 字）",
-              "textHead": "未 未开始 译英 开始 ⋯ 点「开始录音」后，对话原文会实时出现在这里。 说一句之后，这里固定给一条接话和一条追问。 感恩节 ▦ 话题 ⌖ 海南 ◉ 聊天 ✎ ",
+              "textHead": "未 未开始 译英 开始 ⋯ 点「开始录音」后，对话原文会实时出现在这里。 说一句之后，这里固定给一条接话和一条追问。 圣安德鲁日 ▦ 话题 ⌖ 海南 ◉ 聊天 ",
               "errors": []
             },
             {
               "index": 4,
               "navKey": "expr",
               "label": "✎ 表达",
-              "textLength": 131,
+              "textLength": 118,
               "pass": true,
               "thinView": true,
               "thinReason": "表达页空态：还没有表达记录时只有入口与空态文案（实测约 131 字）",
-              "textHead": "◐ ⚙ 说中文 查英文 批量粘贴 本周巩固 课程 0 已学 ⌕ 全部 待复习 已收藏 有地点 还没有表达记录。点上面「说中文」说一句，或用「批量粘贴」导入。 ▦",
+              "textHead": "说中文 查英文 粘贴 本周 课程 ⌕ 全部 待复习 已收藏 有地点 还没有表达记录。点上面「说中文」说一句，或用「批量粘贴」导入。 ▦ 话题 ⌖ 海南 ◉ 聊天",
               "errors": []
             },
             {
@@ -482,14 +482,14 @@
             "index": 3,
             "navKey": "chat",
             "label": "◉ 聊天",
-            "textLength": 115,
+            "textLength": 117,
             "reason": "聊天页空态：未开始录音时只有两行占位说明（实测约 110 字）"
           },
           {
             "index": 4,
             "navKey": "expr",
             "label": "✎ 表达",
-            "textLength": 131,
+            "textLength": 118,
             "reason": "表达页空态：还没有表达记录时只有入口与空态文案（实测约 131 字）"
           },
           {
@@ -586,22 +586,22 @@
               "index": 3,
               "navKey": "chat",
               "label": "◉ 聊天",
-              "textLength": 115,
+              "textLength": 117,
               "pass": true,
               "thinView": true,
               "thinReason": "聊天页空态：未开始录音时只有两行占位说明（实测约 110 字）",
-              "textHead": "未 未开始 译英 开始 ⋯ 点「开始录音」后，对话原文会实时出现在这里。 说一句之后，这里固定给一条接话和一条追问。 感恩节 ▦ 话题 ⌖ 海南 ◉ 聊天 ✎ ",
+              "textHead": "未 未开始 译英 开始 ⋯ 点「开始录音」后，对话原文会实时出现在这里。 说一句之后，这里固定给一条接话和一条追问。 圣安德鲁日 ▦ 话题 ⌖ 海南 ◉ 聊天 ",
               "errors": []
             },
             {
               "index": 4,
               "navKey": "expr",
               "label": "✎ 表达",
-              "textLength": 131,
+              "textLength": 118,
               "pass": true,
               "thinView": true,
               "thinReason": "表达页空态：还没有表达记录时只有入口与空态文案（实测约 131 字）",
-              "textHead": "◐ ⚙ 说中文 查英文 批量粘贴 本周巩固 课程 0 已学 ⌕ 全部 待复习 已收藏 有地点 还没有表达记录。点上面「说中文」说一句，或用「批量粘贴」导入。 ▦",
+              "textHead": "说中文 查英文 粘贴 本周 课程 ⌕ 全部 待复习 已收藏 有地点 还没有表达记录。点上面「说中文」说一句，或用「批量粘贴」导入。 ▦ 话题 ⌖ 海南 ◉ 聊天",
               "errors": []
             },
             {
@@ -709,14 +709,14 @@
             "index": 3,
             "navKey": "chat",
             "label": "◉ 聊天",
-            "textLength": 115,
+            "textLength": 117,
             "reason": "聊天页空态：未开始录音时只有两行占位说明（实测约 110 字）"
           },
           {
             "index": 4,
             "navKey": "expr",
             "label": "✎ 表达",
-            "textLength": 131,
+            "textLength": 118,
             "reason": "表达页空态：还没有表达记录时只有入口与空态文案（实测约 131 字）"
           },
           {
@@ -813,22 +813,22 @@
               "index": 3,
               "navKey": "chat",
               "label": "◉ 聊天",
-              "textLength": 119,
+              "textLength": 121,
               "pass": true,
               "thinView": true,
               "thinReason": "聊天页空态：未开始录音时只有两行占位说明（实测约 110 字）",
-              "textHead": "未 未开始 译英 开始 ⋯ ◐ ⚙ 点「开始录音」后，对话原文会实时出现在这里。 说一句之后，这里固定给一条接话和一条追问。 感恩节 ▦ 话题 ⌖ 海南 ◉ 聊",
+              "textHead": "未 未开始 译英 开始 ⋯ ◐ ⚙ 点「开始录音」后，对话原文会实时出现在这里。 说一句之后，这里固定给一条接话和一条追问。 圣安德鲁日 ▦ 话题 ⌖ 海南 ◉",
               "errors": []
             },
             {
               "index": 4,
               "navKey": "expr",
               "label": "✎ 表达",
-              "textLength": 131,
+              "textLength": 118,
               "pass": true,
               "thinView": true,
               "thinReason": "表达页空态：还没有表达记录时只有入口与空态文案（实测约 131 字）",
-              "textHead": "◐ ⚙ 说中文 查英文 批量粘贴 本周巩固 课程 0 已学 ⌕ 全部 待复习 已收藏 有地点 还没有表达记录。点上面「说中文」说一句，或用「批量粘贴」导入。 ▦",
+              "textHead": "说中文 查英文 粘贴 本周 课程 ⌕ 全部 待复习 已收藏 有地点 还没有表达记录。点上面「说中文」说一句，或用「批量粘贴」导入。 ▦ 话题 ⌖ 海南 ◉ 聊天",
               "errors": []
             },
             {
@@ -929,14 +929,14 @@
             "index": 3,
             "navKey": "chat",
             "label": "◉ 聊天",
-            "textLength": 119,
+            "textLength": 121,
             "reason": "聊天页空态：未开始录音时只有两行占位说明（实测约 110 字）"
           },
           {
             "index": 4,
             "navKey": "expr",
             "label": "✎ 表达",
-            "textLength": 131,
+            "textLength": 118,
             "reason": "表达页空态：还没有表达记录时只有入口与空态文案（实测约 131 字）"
           },
           {

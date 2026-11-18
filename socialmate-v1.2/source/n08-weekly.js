@@ -237,6 +237,7 @@
         phraseZh: clean(raw.phraseZh),
         phraseEn: clean(raw.phraseEn),
         sceneZh: clean(raw.sceneZh),
+        tag: clean(raw.tag),
         mode: MODES.indexOf(pinned) >= 0 ? pinned : 0,
         weight: intOr(raw.weight, 1),
         courseId: raw.courseId === undefined ? null : raw.courseId,
@@ -299,7 +300,7 @@
     var prompt;
     if (mode === 1) prompt = '中文→英文词组：' + phraseZhOf(it);
     else if (mode === 2) prompt = '中文情境→英文完整句：' + sceneOf(it);
-    else prompt = '中文整句→英文完整句：' + it.zh;
+    else prompt = '中文整句→英文完整句' + (it.tag ? '（' + it.tag + '）' : '') + '：' + it.zh;
     prompt = clean(prompt);
     // 模式 2 绝不允许把答案英文泄进题干（先剥离拉丁字母，再按答案词做兜底抹除）
     if (mode === 2) prompt = stripLatin(stripAnswerLeak(prompt, it.en));
@@ -335,10 +336,11 @@
 
     // ① 显式指定模式的条目先占位（按权重/抖动顺序）
     var flexible = [];
+    var overflow = [];
     for (var i = 0; i < ordered.length; i++) {
       var it = ordered[i];
       if (it.mode && buckets[it.mode].length < quota[it.mode]) buckets[it.mode].push(it);
-      else if (it.mode) continue; // 超额的固定模式条目不强塞给别的模式
+      else if (it.mode) overflow.push(it); // 超额的固定模式条目先进候补，绝不串到别的模式
       else flexible.push(it);
     }
 
@@ -369,6 +371,14 @@
       if (take < 0) take = 0;
       buckets[best].push(flexible[take]);
       flexible.splice(take, 1);
+    }
+
+    // ③b 题量还不够时用「同模式的超额条目」补满（仍是自己的模式，不串模式、不造假题）
+    while (overflow.length) {
+      var total2 = buckets[1].length + buckets[2].length + buckets[3].length;
+      if (total2 >= size) break;
+      var extra = overflow.shift();
+      buckets[extra.mode].push(extra);
     }
 
     // ④ 稳定 ID：同一天同一 key 永远同一个序号（序号只由 key + 日期决定）

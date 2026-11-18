@@ -174,6 +174,27 @@ test('buildWeeklyPack: 条目不足 size 时不补假题；固定模式超额不
   assert.ok(pack.questions.every((q) => q.mode === 1), '固定模式条目不得被塞进其它模式');
 });
 
+test('buildWeeklyPack: 只有单一模式时用同模式候补补满题数（不串模式）', () => {
+  const onlyM3 = ITEMS.map((it, i) => ({ ...it, key: 'm3_' + i, mode: 3 }));
+  const pack = buildWeeklyPack({ items: onlyM3, size: 10, seed: 'fill', now: NOW });
+  assert.equal(pack.questions.length, 10, '同模式素材足够时应补满 10 题');
+  assert.ok(pack.questions.every((q) => q.mode === 3), '补满的题必须仍是模式 3');
+  assert.equal(new Set(pack.questions.map((q) => q.id)).size, 10, '题号不得重复');
+});
+
+test('buildWeeklyPack: 模式 3 的 tag 会写进题干（原句/换人称可区分）', () => {
+  const items = [
+    { key: 't_base', zh: '我是独生子女', en: 'I am an only child.', mode: 3 },
+    { key: 't_person', zh: '说她是独生子女', en: 'She is an only child.', mode: 3, tag: '换人称' }
+  ];
+  const pack = buildWeeklyPack({ items, size: 5, seed: 'tag', now: NOW });
+  const byKey = {};
+  pack.questions.forEach((q) => { byKey[q.source.key] = q.promptZh; });
+  assert.equal(byKey.t_base, '中文整句→英文完整句：我是独生子女');
+  assert.equal(byKey.t_person, '中文整句→英文完整句（换人称）：说她是独生子女');
+  assert.ok(pack.questions.every((q) => !/[A-Za-z]{2,}/.test(q.promptZh)), '题干不得出现英文');
+});
+
 test('buildWeeklyPack: 脏数据被过滤且不改入参', () => {
   const items = [
     { key: 'ok1', zh: '你好', en: 'Hello.' },

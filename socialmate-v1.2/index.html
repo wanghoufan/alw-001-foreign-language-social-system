@@ -2351,12 +2351,16 @@ function n08Ensure(){
   if(S.n08)return S.n08;
   S.n08={items:[],q:'',filter:'all',sel:[],view:'list',composer:null,pack:null,state:null,courses:null,learned:{},busy:'',err:'',lastRejected:[]};
   try{const raw=localStorage.getItem(N08_LS);if(raw){const d=JSON.parse(raw);Object.assign(S.n08,{items:d.items||[],pack:d.pack||null,state:d.state||null,learned:d.learned||{}})} }catch(e){}
+  // 端口每次启动会变 → localStorage 可能是空的；先跟服务端 SQLite 对账，避免拿空库覆盖真源
+  setTimeout(function(){try{if(typeof n08Sync==='function')n08Sync()}catch(e){}},0);
   return S.n08;
 }
 function n08Save(push){
   const st=S.n08||{};const d={items:st.items||[],pack:st.pack||null,state:st.state||null,learned:st.learned||{}};
   try{localStorage.setItem(N08_LS,JSON.stringify(d))}catch(e){}
   if(push===false)return;
+  // 还没跟服务端对账过、本地又是空库：拒绝推送，否则一次「组包」就能把手机里的题库清空
+  if(!st.remoteLoaded&&!(d.items||[]).length)return;
   clearTimeout(n08Save._t);
   n08Save._t=setTimeout(function(){
     try{
@@ -2646,7 +2650,7 @@ function n08Batch(text){
 function n08GenPack(size){
   const st=S.n08,W=window.N08W;
   if(!W||typeof W.buildWeeklyPack!=='function'){n08Toast('周包模块未加载');return}
-  const items=(st.items||[]).map(x=>({key:x.id,zh:x.zh,en:x.en,phraseZh:x.phraseZh,phraseEn:x.phraseEn,courseId:x.courseId,recordId:x.id,weight:x.fav?3:((x.count||1)>=2?2:1)}));
+  const items=(st.items||[]).map(x=>({key:x.id,zh:x.zh,en:x.en,phraseZh:x.phraseZh,phraseEn:x.phraseEn,courseId:x.courseId,recordId:x.id,mode:(x.source==='course'?3:(x.mode||0)),sceneZh:x.sceneZh||'',tag:(x.variant&&x.variant!=='base'?({'person':'换人称','form':'换句式','object':'换对象','tense':'换时态'}[x.variant]||''):''),weight:x.fav?3:((x.count||1)>=2?2:1)}));
   if(items.length<size){n08Toast('知识点不足 '+size+' 条，先多说多查几句');return}
   try{
     const pack=W.buildWeeklyPack({items,size,seed:'week',now:new Date()});
@@ -2707,8 +2711,10 @@ document.addEventListener('click',function(e){
     let n=0,dup=0;
     list.forEach(it=>{const r=n08Add({zh:it.zhHint||'',en:it.text,phraseZh:'',phraseEn:(it.keywords&&it.keywords[0])||'',source:'course',courseId:id});if(r){if(r.count>1)dup++;else n++}});
     n08Save();
-    n08Toast(n?('已转 '+n+' 条复习卡'+(dup?'，'+dup+' 条已存在只累加次数':'')):'该课没有可提取的英文句子');
-    return}
+     const all=(S.n08.items||[]).length;
+     n08Toast(n?('已转 '+n+' 条复习卡'+(dup?'，'+dup+' 条早就在库里（只累加次数）':'')):(dup?('本课 '+dup+' 条早就在库里（只累加次数），题库共 '+all+' 条，去「本周」组包'):'该课没有可提取的英文句子'));
+     if(dup&&!n){st.view='list';render()}
+     return}
   if(a==='speak'){const it=n08Item(t.dataset.id);if(!it)return;try{if(window.SocialMateAndroid&&window.SocialMateAndroid.speak)window.SocialMateAndroid.speak(it.en,'en');else n08Toast('当前环境不支持朗读')}catch(err){n08Toast('朗读失败')}return}
 });
 document.addEventListener('input',function(e){
