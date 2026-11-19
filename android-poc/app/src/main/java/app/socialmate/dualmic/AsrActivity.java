@@ -196,6 +196,8 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
     private volatile boolean pageLoadFailed;
     /** 主线维护的「当前可信页面地址」；JavaBridge 线程只读它，不直接调用 WebView。 */
     private volatile String trustedPageUrl;
+    /** 本次录音是否由网页内联入口发起：为 true 时不重载 WebView，页面原地录音。 */
+    private volatile boolean inlineRecording = false;
     /** T4 只读降级面板：服务不可达时替代白屏，永远只读。 */
     private ScrollView offlinePanel;
     private TextView offlineBody;
@@ -1017,8 +1019,9 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
         if (socialMateWebView != null) {
             socialMateWebView.onResume();
             // If the panel was opened manually before recording, switch it to live mode now.
+            // 内联录音（表达页原地开录）不重载，避免页面跳回聊天页。
             String current = socialMateWebView.getUrl();
-            if (running && (current == null || !current.contains("live=1"))) {
+            if (!inlineRecording && running && (current == null || !current.contains("live=1"))) {
                 socialMateWebView.loadUrl(privateUiUrl());
             }
         }
@@ -2047,7 +2050,27 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
 
         @JavascriptInterface
         public boolean requestRecording() {
+            // 普通入口：清掉可能残留的内联标记，保持「重载到 ?live=1」的原有行为。
+            inlineRecording = false;
             // 暂停态下网页若仍走旧的「开始录音」入口，继续同一轮，不新开会话。
+            if ("paused".equals(recState)) return resumeRecording();
+            runOnUiThread(() -> {
+                String current = socialMateWebView == null ? null : socialMateWebView.getUrl();
+                if (current == null || !isPrivatePanelUrl(Uri.parse(current))) {
+                    toast(L("当前页面不可录音，请回到聊天页重试", "This page cannot record; return to Chat and retry."));
+                    return;
+                }
+                trustedPageUrl = current;
+                if (status != null) status.setText(L("正在打开麦克风…", "Starting microphone…"));
+                startStreaming(true);
+            });
+            return true;
+        }
+
+        /** 内联录音入口：与 requestRecording 等价，但页面原地开录、不重载 WebView。 */
+        @JavascriptInterface
+        public boolean requestInlineRecording() {
+            inlineRecording = true;
             if ("paused".equals(recState)) return resumeRecording();
             runOnUiThread(() -> {
                 String current = socialMateWebView == null ? null : socialMateWebView.getUrl();
@@ -3221,6 +3244,8 @@ public final class AsrActivity extends Activity implements AsrClient.Listener {
     }
 
     private void stopStreaming(String reason) {
+        // 本轮结束即复位内联标记，避免下一次从原生面板开录时页面被误判为内联而不再重载。
+        inlineRecording = false;
         // 暂停也是同一轮，用户显式停止时必须能真正结束本轮；只有 idle 才是无轮可停。
         if ("idle".equals(recState)) return;
         final boolean wasPaused = "paused".equals(recState);

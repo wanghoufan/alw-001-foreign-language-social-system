@@ -282,4 +282,6 @@
 - 组包：`buildWeeklyPack` 先按模式配额占位，超额的同模式素材进候补（③b），题量不足时用候补补满，**不串模式、不造假题**。
 - 课程来源条目统一走模式 3（中文整句→英文完整句），题干直接用卡片中文提示；变式条目带 `tag`（换人称/换句式/换对象/换时态）写进题干。
 - 持久化哨兵：`S.n08.remoteLoaded` 未置位且本地空库时，`n08Save` 不推送；`n08Ensure` 首次创建状态后自动 `n08Sync`。
-- 当前装机：0.9.63 / vc131，题库 `n08w-20261118-10-4e18c2a8`（10 题，1-02 + 2-17）。
+- 当前装机：0.9.65 / vc133（OPPO PLG110），题库 `n08w-20261118-10-4e18c2a8`（10 题，1-02 + 2-17）。
+- 原地录音：原生 `requestInlineRecording()` 置 `inlineRecording=true`，跳过 `showSocialMatePanel()` 的 `?live=1` 重载；`requestRecording()` 与 `stopStreaming()` 均复位该标记。页面 `smNativeRecordingStarted` 在 `S.n08.capture` 时不切聊天页。
+- 双语片段：`S.n08.passages[{id,title,zh,en,phrases[],createdAt}]` 随 `/v12/api/n08` state 持久化；解析 `n08ParsePaste` 支持 `中文 | 英文`、整段中英对照、`中文 english` 词组；播放经 `window.__n08Audio` 复用 smq 队列与豆包 Web Audio。
