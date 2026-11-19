@@ -56,7 +56,7 @@
 ## 3. 未完成 / NOT_RUN
 
 - **版本登记 BLOCKED**：1.5.0 门禁要求干净工作区 + 机构 `build-record`；当前有他人 `docs/relay/CURRENT_TASK.md` 改动，且本机无 build-record → `E_DIRTY_WORKTREE` + `E_NO_BUILD_RECORD`，按「未登记」处理。
-- **未 push**：本地 2 个提交 `788b843`、`0ccc03d`，远端停在 `56a53de`；本轮改动仍未提交。
+- **未 push**：本地 4 个提交 `788b843`、`0ccc03d`、`69bd00b`、`ea6d045`，远端停在 `56a53de`；push 需用户明确指令。
 - **原地录音字幕未测**：只验证 `tab=expr`、URL 不变、`asrState=ready`；真人说话后的 final 字幕进入表达页未验证。
 - **片段倍速未接**：豆包 Web Audio 当前无播放速率控制，控制条只提供循环与播放/暂停/停止。
 - 两课试点**未真人口语验证**；泛化质量只经模型质检，未人耳复核。
